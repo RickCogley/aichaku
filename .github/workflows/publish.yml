@@ -51,8 +51,8 @@ jobs:
           # Test CLI help
           deno run --allow-all cli.ts --help
 
-          # Test install command (dry-run)
-          deno run --allow-all cli.ts install --dry-run || true
+          # Test init command (dry-run)
+          deno run --allow-all cli.ts init --dry-run || true
 
   # Test Node.js compatibility (for JSR runtime compatibility scoring)
   test-node:
