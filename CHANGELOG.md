@@ -9,9 +9,11 @@ and this project adheres to
 ## [0.5.0] - 2025-07-06
 
 ### Added
+
 - major v0.5.0 redesign - global methodologies, clean projects (3a17fdf)
 
 ### Changed
+
 - temporarily disable tests for v0.5.0 release (56f9960)
 - format code for release (b000e0b)
 - add implementation summary and update status for v0.5.0 (3445e5e)
