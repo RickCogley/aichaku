@@ -116,6 +116,7 @@ jobs:
         env:
           # JSR will automatically detect GitHub Actions provenance
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DENO_AUTH_TOKENS: ${{ secrets.JSR_TOKEN }}@jsr.io
 
   # Generate and deploy documentation (optional)
   docs:
