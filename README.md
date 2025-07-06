@@ -11,15 +11,16 @@
 Aichaku (愛着 - "affection/attachment") provides adaptive methodology support
 for Claude Code. Install once globally, use everywhere. Rather than forcing you
 to choose a single methodology, aichaku provides all of them and helps Claude
-Code blend approaches based on your natural language. Say "sprint" and get
-Scrum practices; mention "shaping" and get Shape Up principles - all seamlessly
+Code blend approaches based on your natural language. Say "sprint" and get Scrum
+practices; mention "shaping" and get Shape Up principles - all seamlessly
 integrated.
 
 **✨ Key Features:**
 
 - 🌍 **Global install, works everywhere** - One-time setup, all projects benefit
 - 🎯 **Adaptive blending** - Methodologies adapt to your language
-- 🔄 **All methodologies included** - Shape Up, Scrum, Kanban, XP, Lean, Scrumban
+- 🔄 **All methodologies included** - Shape Up, Scrum, Kanban, XP, Lean,
+  Scrumban
 - 🧠 **Context-aware** - AI responds to your terminology and needs
 - 📁 **Clean projects** - No methodology file duplication
 - 🚀 **Simple lifecycle** - Just init, integrate, upgrade, and uninstall
@@ -38,7 +39,8 @@ aichaku init
 # This creates minimal setup and prompts to integrate with CLAUDE.md
 ```
 
-That's it! Claude Code now has adaptive methodology support in all your projects.
+That's it! Claude Code now has adaptive methodology support in all your
+projects.
 
 ## How It Works
 
@@ -182,6 +184,7 @@ await integrate({
 ## Architecture
 
 ### Global Installation (One Time)
+
 ```
 ~/.claude/
 ├── methodologies/          # All methodology files live here
@@ -197,6 +200,7 @@ await integrate({
 ```
 
 ### Project Integration (Per Project)
+
 ```
 project/
 ├── CLAUDE.md             # Contains reference to global Aichaku
@@ -205,7 +209,8 @@ project/
     └── .aichaku-project  # Project marker file
 ```
 
-**Key Point**: Methodologies are NEVER copied to projects - they're referenced from the global installation. This keeps your git repositories clean!
+**Key Point**: Methodologies are NEVER copied to projects - they're referenced
+from the global installation. This keeps your git repositories clean!
 
 ## User Customization
 
@@ -273,6 +278,7 @@ helpful without getting in the way.
 If you're upgrading from v0.4.x, the architecture has significantly improved:
 
 **What's Changed:**
+
 - Methodologies now live globally only (no more project duplication)
 - Projects only contain customizations, not methodology files
 - Much cleaner git repositories
@@ -281,16 +287,19 @@ If you're upgrading from v0.4.x, the architecture has significantly improved:
 **Migration Steps:**
 
 1. **Update the CLI tool:**
+
 ```bash
 deno install -g -A -n aichaku --force jsr:@rick/aichaku@0.5.0/cli
 ```
 
 2. **Keep your global installation** (if you have one):
+
 ```bash
 # No changes needed to ~/.claude/
 ```
 
 3. **Clean up existing projects:**
+
 ```bash
 # In each project that has aichaku:
 rm -rf .claude/methodologies .claude/.aichaku.json
@@ -298,6 +307,7 @@ rm -rf .claude/methodologies .claude/.aichaku.json
 ```
 
 4. **Re-initialize projects:**
+
 ```bash
 aichaku init
 # This will create the new minimal structure
