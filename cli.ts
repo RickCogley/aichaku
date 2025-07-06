@@ -84,10 +84,11 @@ if (!args.silent) {
 🎉 ${methodology} installed successfully!
 
 Next steps:
-${result.path.includes('.claude') 
-  ? '- Start Claude Code in your project directory'
-  : '- The methodology is now available globally'
-}
+${
+    result.path.includes(".claude")
+      ? "- Start Claude Code in your project directory"
+      : "- The methodology is now available globally"
+  }
 - Use /shape command to shape a new feature
 - Check ${result.path} for all methodology files
 `);

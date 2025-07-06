@@ -1,24 +1,28 @@
 # Extreme Programming (XP)
 
-**BEST FOR**: Quality-critical code, learning teams, complex technical challenges
+**BEST FOR**: Quality-critical code, learning teams, complex technical
+challenges
 
 **TRIGGERS**: "TDD", "test first", "pair programming", "refactor", "XP"
 
 ## Core Rules
 
 ### Planning Rules
+
 - Small stories (1-3 days)
 - Technical tasks included
 - Customer sets priorities
 - Team estimates
 
 ### Execution Rules
+
 - Test first, always
 - Pair when complex
 - Refactor mercilessly
 - Integrate continuously
 
 ### Improvement Rules
+
 - Track test coverage
 - Measure defect rates
 - Monitor build times
@@ -27,6 +31,7 @@
 ## Quick Templates
 
 ### TDD Cycle
+
 ```
 1. RED: Write failing test
    test("user can login", () => {
@@ -43,6 +48,7 @@
 ```
 
 ### Story Card
+
 ```
 Story: [Feature name]
 Estimate: [1-3 days]
@@ -54,6 +60,7 @@ Tasks:
 ```
 
 ### Pairing Schedule
+
 ```
 Morning: Alice + Bob on Feature A
 Afternoon: Alice + Carol on Bug B
@@ -62,9 +69,9 @@ Rule: Switch pairs daily
 
 ## Context Adaptations
 
-**Solo**: Self-review protocols, rubber duck debugging
-**Remote**: Screen sharing tools, collaborative IDEs
-**Learning**: Start with TDD, add practices gradually
+**Solo**: Self-review protocols, rubber duck debugging **Remote**: Screen
+sharing tools, collaborative IDEs **Learning**: Start with TDD, add practices
+gradually
 
 ## Key Decisions
 

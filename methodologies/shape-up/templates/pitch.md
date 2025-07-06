@@ -1,8 +1,9 @@
 # [Feature Name] Pitch
 
-**PHASE**: SHAPING  
-**NEXT PHASE**: BETTING (when pitch is complete)  
-**TEMPLATE COMPLIANCE**: All 5 sections must be completed before moving to betting
+**PHASE**: SHAPING\
+**NEXT PHASE**: BETTING (when pitch is complete)\
+**TEMPLATE COMPLIANCE**: All 5 sections must be completed before moving to
+betting
 
 ## 1. Problem
 
@@ -138,10 +139,13 @@ These are out of scope because:
 ## Phase Transition Checklist
 
 **Before moving to BETTING phase, verify:**
+
 - [ ] Problem is clearly defined with evidence
 - [ ] Appetite is set and justified
 - [ ] Solution is sketched at the right level of detail
 - [ ] All major rabbit holes are identified and patched
 - [ ] No-gos explicitly state what we're NOT doing
 
-**Claude Code Reminder**: This pitch should be saved to `.claude/output/[status-YYYYMM-projectname]/pitch.md`. Only proceed to betting when all sections are complete.
+**Claude Code Reminder**: This pitch should be saved to
+`.claude/output/[status-YYYYMM-projectname]/pitch.md`. Only proceed to betting
+when all sections are complete.

@@ -44,8 +44,7 @@
 
 ### ◉ A: [Scope Name]
 
-**Position**: 20% - Early uphill
-**Status**: Exploring the problem space
+**Position**: 20% - Early uphill **Status**: Exploring the problem space
 
 Currently figuring out:
 
@@ -62,8 +61,7 @@ Next steps:
 
 ### ◉ B: [Scope Name]
 
-**Position**: 40% - Climbing uphill
-**Status**: Getting clarity on approach
+**Position**: 40% - Climbing uphill **Status**: Getting clarity on approach
 
 Currently figuring out:
 
@@ -79,8 +77,7 @@ Next steps:
 
 ### ◉ C: [Scope Name]
 
-**Position**: 50% - At the peak
-**Status**: Just cracked it! Know what to do
+**Position**: 50% - At the peak **Status**: Just cracked it! Know what to do
 
 The solution:
 
@@ -97,8 +94,7 @@ Execution plan:
 
 ### ◉ D: [Scope Name]
 
-**Position**: 75% - Rolling downhill
-**Status**: Pure execution, no unknowns
+**Position**: 75% - Rolling downhill **Status**: Pure execution, no unknowns
 
 Building:
 
@@ -111,8 +107,7 @@ Building:
 
 ### ◉ E: [Scope Name]
 
-**Position**: 100% - Complete ✅
-**Status**: Done and integrated
+**Position**: 100% - Complete ✅ **Status**: Done and integrated
 
 Completed:
 

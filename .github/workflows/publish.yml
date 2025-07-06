@@ -50,7 +50,7 @@ jobs:
         run: |
           # Test CLI help
           deno run --allow-all cli.ts --help
-          
+
           # Test install command (dry-run)
           deno run --allow-all cli.ts install --dry-run || true
 

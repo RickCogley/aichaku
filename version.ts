@@ -4,7 +4,11 @@
  */
 
 export const VERSION = "0.0.1";
-export const VERSION_INFO = {
+export const VERSION_INFO: {
+  version: string;
+  gitCommit: string;
+  buildTime: string;
+} = {
   version: "0.0.1",
   gitCommit: "",
   buildTime: new Date().toISOString(),

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(deno task release:minor:*)",
+      "Bash(deno fmt:*)",
+      "Bash(deno lint:*)",
+      "Bash(deno test:*)",
+      "Bash(ls:*)"
+    ],
+    "deny": []
+  }
+}

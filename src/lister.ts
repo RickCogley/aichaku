@@ -1,11 +1,11 @@
-import type { ListResult, Methodology } from "./types.ts";
+import type { ListResult } from "./types.ts";
 
 /**
  * List available and installed methodologies
  */
-export async function list(): Promise<ListResult> {
+export function list(): Promise<ListResult> {
   // TODO: Implement listing functionality
-  return {
+  return Promise.resolve({
     available: [
       {
         name: "shape-up",
@@ -25,5 +25,5 @@ export async function list(): Promise<ListResult> {
       global: [],
       local: [],
     },
-  };
+  });
 }

@@ -7,18 +7,21 @@
 ## Core Rules
 
 ### Planning Rules
+
 - Hypotheses over requirements
 - Minimum viable everything
 - Measure what matters
 - Plan to learn, not build
 
 ### Execution Rules
+
 - Build only to test hypothesis
 - Ship as soon as learnable
 - Automate everything possible
 - Cut features ruthlessly
 
 ### Improvement Rules
+
 - Pivot based on data
 - Eliminate waste constantly
 - Shorten cycle times
@@ -27,6 +30,7 @@
 ## Quick Templates
 
 ### Experiment Plan
+
 ```
 Hypothesis: [What we believe]
 Test: [Minimum way to validate]
@@ -36,6 +40,7 @@ Timeline: [Days not months]
 ```
 
 ### MVP Definition
+
 ```
 Problem: [User pain point]
 Riskiest assumption: [What might be wrong]
@@ -46,6 +51,7 @@ NOT doing: [Everything else]
 ```
 
 ### Learning Report
+
 ```
 Tested: [What we tried]
 Result: [What happened]
@@ -55,9 +61,8 @@ Next: [Pivot or persevere]
 
 ## Context Adaptations
 
-**Startup**: Full build-measure-learn cycle
-**Enterprise**: Lean experiments within constraints
-**Technical**: Spike solutions, POCs
+**Startup**: Full build-measure-learn cycle **Enterprise**: Lean experiments
+within constraints **Technical**: Spike solutions, POCs
 
 ## Key Decisions
 

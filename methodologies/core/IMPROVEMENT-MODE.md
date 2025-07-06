@@ -2,7 +2,8 @@
 
 **ACTIVATES WHEN**: User wants to review, reflect, measure, or improve process
 
-**TRIGGERS**: "how are we doing", "retrospective", "metrics", "what's working", "review"
+**TRIGGERS**: "how are we doing", "retrospective", "metrics", "what's working",
+"review"
 
 ## Quick Start
 
@@ -36,6 +37,7 @@ MEASURE performance → IDENTIFY patterns → SUGGEST improvements
 ## Methodology Metrics
 
 ### Shape Up
+
 ```
 MEASURE:
 - Cycles completed on time
@@ -50,6 +52,7 @@ HEALTHY:
 ```
 
 ### Scrum
+
 ```
 MEASURE:
 - Velocity trend
@@ -64,6 +67,7 @@ HEALTHY:
 ```
 
 ### Kanban
+
 ```
 MEASURE:
 - Cycle time trend
@@ -78,6 +82,7 @@ HEALTHY:
 ```
 
 ### Lean
+
 ```
 MEASURE:
 - Time to validate
@@ -94,6 +99,7 @@ HEALTHY:
 ## Quick Assessments
 
 ### "How are we doing?"
+
 ```
 Last [period] summary:
 ✅ Delivered: [X items/points]
@@ -106,6 +112,7 @@ Top insight: [Most important pattern]
 ```
 
 ### "What should we improve?"
+
 ```
 Based on data, prioritize:
 
@@ -121,6 +128,7 @@ Based on data, prioritize:
 ## Retrospective Formats
 
 ### Solo Reflection (5 min)
+
 ```
 This [period] I:
 ✅ Succeeded at: [wins]
@@ -129,6 +137,7 @@ This [period] I:
 ```
 
 ### Team Retro (30 min)
+
 ```
 1. Data review (5 min)
 2. What went well? (10 min)
@@ -139,6 +148,7 @@ Output: 1-3 specific actions
 ```
 
 ### Continuous Improvement
+
 ```
 Weekly metrics check:
 □ Review dashboard
@@ -150,6 +160,7 @@ Weekly metrics check:
 ## Pattern Recognition
 
 ### Velocity Issues
+
 ```
 SYMPTOM: Declining delivery
 CHECK: 
@@ -160,6 +171,7 @@ CHECK:
 ```
 
 ### Quality Issues
+
 ```
 SYMPTOM: More defects/rework
 CHECK:
@@ -170,6 +182,7 @@ CHECK:
 ```
 
 ### Flow Issues
+
 ```
 SYMPTOM: Work getting stuck
 CHECK:
@@ -182,6 +195,7 @@ CHECK:
 ## Improvement Experiments
 
 ### Small (Try immediately)
+
 ```
 "Let's try [change] for one [cycle]"
 - Adjust WIP limit by 1
@@ -190,6 +204,7 @@ CHECK:
 ```
 
 ### Medium (One cycle)
+
 ```
 "This [cycle] we'll experiment with..."
 - New estimation method
@@ -198,6 +213,7 @@ CHECK:
 ```
 
 ### Large (Multiple cycles)
+
 ```
 "Consider switching to..."
 - Different methodology
@@ -208,18 +224,21 @@ CHECK:
 ## Health Indicators
 
 ### 🟢 Healthy
+
 - Consistent delivery
 - Happy team
 - Few surprises
 - Continuous learning
 
 ### 🟡 Caution
+
 - Irregular patterns
 - Some frustration
 - Repeated issues
 - Stagnant metrics
 
 ### 🔴 Needs Help
+
 - Missing commitments
 - Team conflict
 - Many blockers
@@ -228,6 +247,7 @@ CHECK:
 ## Quick Wins Library
 
 ### For any methodology:
+
 - Visualize work better
 - Reduce meeting time
 - Clarify definitions
@@ -235,6 +255,7 @@ CHECK:
 - Remove one step
 
 ### Methodology-specific:
+
 - Shape Up: Tighter no-gos
 - Scrum: Shorter standups
 - Kanban: Lower WIP limits
@@ -243,4 +264,6 @@ CHECK:
 
 ## Remember
 
-Improvement Mode is about learning from data, not blame. Focus on system improvements, not individual performance. Small, continuous improvements beat big changes.
+Improvement Mode is about learning from data, not blame. Focus on system
+improvements, not individual performance. Small, continuous improvements beat
+big changes.

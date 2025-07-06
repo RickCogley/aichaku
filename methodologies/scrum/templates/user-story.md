@@ -1,21 +1,23 @@
 # User Story Template
 
 ## Story ID: [PROJ-123]
-**Title**: [Brief descriptive title]  
-**Epic**: [Parent epic if applicable]  
-**Sprint**: [Target sprint or backlog]  
-**Priority**: High / Medium / Low  
+
+**Title**: [Brief descriptive title]\
+**Epic**: [Parent epic if applicable]\
+**Sprint**: [Target sprint or backlog]\
+**Priority**: High / Medium / Low\
 **Story Points**: [Fibonacci: 1, 2, 3, 5, 8, 13, 21]
 
 ## User Story
 
-**As a** [type of user/persona]  
-**I want** [goal/desire/feature]  
+**As a** [type of user/persona]\
+**I want** [goal/desire/feature]\
 **So that** [benefit/value/reason]
 
 ## Background/Context
 
-[Provide any additional context that helps understand why this story is valuable and what problem it solves]
+[Provide any additional context that helps understand why this story is valuable
+and what problem it solves]
 
 ## Acceptance Criteria
 
@@ -40,13 +42,16 @@
 ## Test Scenarios
 
 ### Happy Path
+
 1. [Step-by-step description of primary use case]
 
 ### Edge Cases
+
 - [Edge case 1 and expected behavior]
 - [Edge case 2 and expected behavior]
 
 ### Error Scenarios
+
 - [Error scenario and expected handling]
 
 ## Questions/Clarifications Needed
@@ -68,10 +73,11 @@
 
 ## Notes
 
-[Any additional information, decisions made, or context from refinement sessions]
+[Any additional information, decisions made, or context from refinement
+sessions]
 
 ---
 
-**Created**: [Date]  
-**Last Updated**: [Date]  
+**Created**: [Date]\
+**Last Updated**: [Date]\
 **Author**: [Name]

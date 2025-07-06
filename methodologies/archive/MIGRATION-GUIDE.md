@@ -3,12 +3,14 @@
 ## What's Changing
 
 ### OLD: Complex Persona System
+
 - 12+ persona files
 - Role-playing approach
 - Verbose documentation
 - Confusing overlaps
 
 ### NEW: Three Simple Modes
+
 - Planning Mode
 - Execution Mode
 - Improvement Mode
@@ -17,6 +19,7 @@
 ## File Structure Changes
 
 ### Before
+
 ```
 methodologies/
 ├── shape-up/
@@ -36,6 +39,7 @@ methodologies/
 ```
 
 ### After
+
 ```
 methodologies/
 ├── core/
@@ -56,6 +60,7 @@ methodologies/
 ### Planning Example
 
 **OLD**:
+
 ```
 User: "Let's shape a new feature"
 Claude: *Loads Shaper persona*
@@ -65,6 +70,7 @@ Shaping is a closed-door, creative process where..."
 ```
 
 **NEW**:
+
 ```
 User: "Let's shape a new feature"
 Claude: [Planning Mode + Shape Up rules]
@@ -78,6 +84,7 @@ Let's start: What problem are we solving?"
 ### Execution Example
 
 **OLD**:
+
 ```
 User: "Start building"
 Claude: *Loads Builder/Developer/AI Executor persona*
@@ -86,6 +93,7 @@ Claude: *Loads Builder/Developer/AI Executor persona*
 ```
 
 **NEW**:
+
 ```
 User: "Start building"  
 Claude: [Execution Mode + detected methodology]
@@ -96,33 +104,36 @@ First task: [Immediate action]"
 
 ## How Modes Replace Personas
 
-| Old Personas | New Mode | Key Difference |
-|-------------|----------|----------------|
-| Shaper, Product Owner, Lean Entrepreneur | Planning Mode | One mode, different rules |
-| Developer, Builder, Team Member, XP Developer | Execution Mode | Focus on constraints, not identity |
-| Scrum Master, Flow Manager, Facilitator | Improvement Mode | Measure and improve, don't facilitate |
+| Old Personas                                  | New Mode         | Key Difference                        |
+| --------------------------------------------- | ---------------- | ------------------------------------- |
+| Shaper, Product Owner, Lean Entrepreneur      | Planning Mode    | One mode, different rules             |
+| Developer, Builder, Team Member, XP Developer | Execution Mode   | Focus on constraints, not identity    |
+| Scrum Master, Flow Manager, Facilitator       | Improvement Mode | Measure and improve, don't facilitate |
 
 ## Advantages for Users
 
 1. **Faster Response**: No persona loading
 2. **Natural Language**: Just describe what you need
-3. **Less Confusion**: Three modes vs twelve personas  
+3. **Less Confusion**: Three modes vs twelve personas
 4. **Easy Mixing**: Combine methodologies naturally
 5. **Context Aware**: Adapts to team size and urgency
 
 ## Implementation Timeline
 
 ### Phase 1: Parallel Systems
+
 - Keep old system working
 - New system in `/core` and `-SIMPLE.md` files
 - Test with users
 
 ### Phase 2: Default to Simple
+
 - Make simple system primary
 - Old system still accessible
 - Update documentation
 
 ### Phase 3: Archive Complex
+
 - Move old files to `/archive`
 - Simple system only
 - Clean, maintainable
@@ -130,12 +141,16 @@ First task: [Immediate action]"
 ## For Library Users
 
 ### If you liked personas
+
 The modes still guide Claude's behavior, just without the role-playing overhead.
 
 ### If personas confused you
-The new system responds to what you want to do, not what role Claude should play.
+
+The new system responds to what you want to do, not what role Claude should
+play.
 
 ### If you mix methodologies
+
 The new system makes this natural - modes adapt to any methodology.
 
 ## Quick Test
@@ -147,6 +162,7 @@ Try these commands with both systems:
 3. "How are we doing?"
 
 Notice how the simple system:
+
 - Responds faster
 - Asks better questions
 - Provides clearer next steps
@@ -154,4 +170,5 @@ Notice how the simple system:
 
 ## Remember
 
-The goal is to make Claude Code's methodology support invisible but effective. Users should focus on their work, not on managing Claude's personas.
+The goal is to make Claude Code's methodology support invisible but effective.
+Users should focus on their work, not on managing Claude's personas.

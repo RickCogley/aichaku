@@ -1,10 +1,12 @@
 # GitHub Actions Security Workflows
 
-This document explains the security and publishing workflows configured for Aichaku.
+This document explains the security and publishing workflows configured for
+Aichaku.
 
 ## Workflows Overview
 
 ### 1. **publish.yml** - JSR Publishing
+
 - **Triggers**: Version tags (v*) and manual dispatch
 - **Purpose**: Publish releases to JSR registry
 - **Features**:
@@ -14,6 +16,7 @@ This document explains the security and publishing workflows configured for Aich
   - Documentation generation
 
 ### 2. **security.yml** - Comprehensive Security Testing
+
 - **Triggers**: Push, PR, daily schedule (2 AM UTC)
 - **Purpose**: Run security-focused tests
 - **Features**:
@@ -26,6 +29,7 @@ This document explains the security and publishing workflows configured for Aich
   - Security audit reports
 
 ### 3. **codeql.yml** - Static Code Analysis
+
 - **Triggers**: Push, PR, weekly (Monday 3 AM UTC)
 - **Purpose**: Deep code analysis for vulnerabilities
 - **Features**:
@@ -35,6 +39,7 @@ This document explains the security and publishing workflows configured for Aich
   - GitHub Security tab integration
 
 ### 4. **devskim.yml** - Microsoft DevSkim Scanner
+
 - **Triggers**: Push, PR, weekly (Tuesday 4:30 AM UTC)
 - **Purpose**: Additional security pattern detection
 - **Features**:
@@ -43,6 +48,7 @@ This document explains the security and publishing workflows configured for Aich
   - Complements CodeQL analysis
 
 ### 5. **dependency-review.yml** - Supply Chain Security
+
 - **Triggers**: Pull requests only
 - **Purpose**: Check for vulnerable dependencies
 - **Features**:
@@ -63,6 +69,7 @@ This document explains the security and publishing workflows configured for Aich
 ### Aichaku-Specific Adaptations
 
 Unlike Salty (cryptographic tool) or Nagare (release tool), Aichaku focuses on:
+
 - **Path Security**: File system operations safety
 - **Input Validation**: Preventing injection in generated files
 - **No Network Operations**: Reduced attack surface

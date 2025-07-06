@@ -1,7 +1,7 @@
 # Sprint Planning - Sprint [Number]
 
-**Date**: [Date]  
-**Sprint Duration**: [Start Date] - [End Date]  
+**Date**: [Date]\
+**Sprint Duration**: [Start Date] - [End Date]\
 **Participants**: [List team members]
 
 ## Sprint Goal
@@ -10,30 +10,32 @@
 
 ## Team Capacity
 
-| Team Member | Days Available | Hours | Notes |
-|------------|---------------|-------|-------|
-| [Name] | [Days] | [Hours] | [PTO, meetings, etc.] |
-| [Name] | [Days] | [Hours] | |
+| Team Member | Days Available | Hours   | Notes                 |
+| ----------- | -------------- | ------- | --------------------- |
+| [Name]      | [Days]         | [Hours] | [PTO, meetings, etc.] |
+| [Name]      | [Days]         | [Hours] |                       |
 
 **Total Capacity**: [Total hours]
 
 ## Selected User Stories
 
 ### Story 1: [Title]
-**Story Points**: [Points]  
+
+**Story Points**: [Points]\
 **Priority**: High/Medium/Low
 
-**User Story**:
-As a [user type]  
-I want [functionality]  
+**User Story**: As a [user type]\
+I want [functionality]\
 So that [benefit]
 
 **Acceptance Criteria**:
+
 - [ ] [Criterion 1]
 - [ ] [Criterion 2]
 - [ ] [Criterion 3]
 
 **Tasks**:
+
 - [ ] [Task description] - [Estimate]
 - [ ] [Task description] - [Estimate]
 - [ ] [Task description] - [Estimate]
@@ -41,12 +43,13 @@ So that [benefit]
 ---
 
 ### Story 2: [Title]
+
 [Repeat pattern for each story]
 
 ## Sprint Backlog Summary
 
-| Story | Points | Status | Owner |
-|-------|--------|--------|-------|
+| Story     | Points   | Status    | Owner  |
+| --------- | -------- | --------- | ------ |
 | [Story 1] | [Points] | Committed | [Name] |
 | [Story 2] | [Points] | Committed | [Name] |
 
@@ -55,10 +58,12 @@ So that [benefit]
 ## Dependencies & Risks
 
 ### Dependencies
+
 - [External dependency and mitigation plan]
 - [Team dependency and coordination approach]
 
 ### Risks
+
 - [Risk description and mitigation strategy]
 - [Risk description and mitigation strategy]
 
@@ -86,9 +91,11 @@ So that [benefit]
 ---
 
 **Next Steps**:
+
 1. Update sprint board with all tasks
 2. Set up sprint tracking/burndown
 3. Schedule sprint review and retrospective
 4. Begin daily standups
 
-**Sprint Commitment**: The team commits to completing the above stories to the Definition of Done by [sprint end date].
+**Sprint Commitment**: The team commits to completing the above stories to the
+Definition of Done by [sprint end date].

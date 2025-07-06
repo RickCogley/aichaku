@@ -1,9 +1,9 @@
 /**
  * aichaku (愛着) - AI-optimized project methodology installer for Claude Code
- * 
+ *
  * Brings affection and attachment to your development workflow by installing
  * AI-friendly methodologies like Shape Up into your projects.
- * 
+ *
  * @module
  */
 
@@ -19,10 +19,10 @@ export { VERSION, VERSION_INFO } from "./version.ts";
  * Example usage:
  * ```typescript
  * import { install } from "jsr:@rick/aichaku";
- * 
+ *
  * // Install Shape Up methodology globally
  * await install("shape-up", { global: true });
- * 
+ *
  * // Install to current project
  * await install("shape-up", { projectPath: "./.claude" });
  * ```

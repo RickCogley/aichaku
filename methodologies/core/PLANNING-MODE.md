@@ -1,8 +1,10 @@
 # Planning Mode
 
-**ACTIVATES WHEN**: User needs to decide what to build, prioritize work, or define features
+**ACTIVATES WHEN**: User needs to decide what to build, prioritize work, or
+define features
 
-**TRIGGERS**: "plan", "shape", "prioritize", "what should we build", "define", "scope"
+**TRIGGERS**: "plan", "shape", "prioritize", "what should we build", "define",
+"scope"
 
 ## Quick Start
 
@@ -37,6 +39,7 @@ DETECT context → APPLY methodology rules → OUTPUT actionable plan
 ## Methodology Rules
 
 ### Shape Up Planning
+
 ```
 INPUT: Problem or opportunity
 PROCESS:
@@ -49,6 +52,7 @@ OUTPUT: pitch.md
 ```
 
 ### Scrum Planning
+
 ```
 INPUT: Prioritized backlog + capacity
 PROCESS:
@@ -60,6 +64,7 @@ OUTPUT: sprint-plan.md
 ```
 
 ### Kanban Planning
+
 ```
 INPUT: Work requests
 PROCESS:
@@ -71,6 +76,7 @@ OUTPUT: Updated board state
 ```
 
 ### Lean Planning
+
 ```
 INPUT: Hypothesis or problem
 PROCESS:
@@ -84,16 +90,19 @@ OUTPUT: mvp-plan.md
 ## Context Adaptations
 
 ### Solo Mode
+
 - Skip coordination steps
 - Simplify templates
 - Direct decisions
 
 ### Team Mode
+
 - Add stakeholder check
 - Include capacity planning
 - Document decisions
 
 ### Urgent Mode
+
 - Minimal planning
 - Focus on immediate action
 - Document later
@@ -101,6 +110,7 @@ OUTPUT: mvp-plan.md
 ## Quick Decision Templates
 
 ### "What should we build next?"
+
 ```
 Based on: [detected context]
 Options ranked by value:
@@ -113,6 +123,7 @@ Start with: [specific next action]
 ```
 
 ### "How should we scope this?"
+
 ```
 Detected complexity: [Simple/Medium/Complex]
 Suggested approach:
@@ -130,6 +141,7 @@ Key decisions needed:
 ## Output Examples
 
 ### Minimal (Solo Kanban)
+
 ```
 Task: Add user auth
 Priority: High
@@ -138,6 +150,7 @@ Start: When current task done
 ```
 
 ### Detailed (Team Shape Up)
+
 ```
 # User Authentication Pitch
 
@@ -149,12 +162,11 @@ Start: When current task done
 
 ## Anti-Patterns to Avoid
 
-❌ Over-planning for simple tasks
-❌ Under-planning for complex work
-❌ Skipping context detection
-❌ Using wrong methodology for situation
-❌ Creating plans without clear next actions
+❌ Over-planning for simple tasks ❌ Under-planning for complex work ❌ Skipping
+context detection ❌ Using wrong methodology for situation ❌ Creating plans
+without clear next actions
 
 ## Remember
 
-Planning Mode is about making decisions quickly with the right amount of detail. Always end with a clear next action.
+Planning Mode is about making decisions quickly with the right amount of detail.
+Always end with a clear next action.

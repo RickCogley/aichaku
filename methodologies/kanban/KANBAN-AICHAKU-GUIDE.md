@@ -1,24 +1,28 @@
 # Kanban
 
-**BEST FOR**: Continuous flow work, support teams, varying priorities, starting simply
+**BEST FOR**: Continuous flow work, support teams, varying priorities, starting
+simply
 
 **TRIGGERS**: "kanban", "flow", "WIP limit", "continuous", "pull"
 
 ## Core Rules
 
 ### Planning Rules
+
 - Just-in-time decisions
 - Pull when ready
 - Limit work in progress
 - Visualize everything
 
 ### Execution Rules
+
 - Respect WIP limits absolutely
 - Pull, don't push work
 - Update board immediately
 - Finish before starting
 
 ### Improvement Rules
+
 - Measure cycle time
 - Optimize bottlenecks
 - Adjust WIP limits based on data
@@ -27,11 +31,13 @@
 ## Quick Templates
 
 ### Board Setup
+
 ```
 | Backlog | Ready(5) | Doing(3) | Review(2) | Done |
 ```
 
 ### Work Item
+
 ```
 #123: [Title]
 Type: [Feature/Bug/Debt]
@@ -41,6 +47,7 @@ Blocked: [Yes/No]
 ```
 
 ### Flow Metrics
+
 ```
 This week:
 Items completed: [X]
@@ -51,9 +58,8 @@ Bottleneck: [Column]
 
 ## Context Adaptations
 
-**Solo**: Personal kanban (To Do → Doing → Done)
-**Team**: Full board with handoff states
-**Mixed Work**: Separate swim lanes by type
+**Solo**: Personal kanban (To Do → Doing → Done) **Team**: Full board with
+handoff states **Mixed Work**: Separate swim lanes by type
 
 ## Key Decisions
 

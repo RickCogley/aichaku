@@ -3,6 +3,7 @@
 ## Natural Language First
 
 Claude Code responds best to natural descriptions:
+
 - "I need to build user authentication"
 - "Let's plan the next sprint"
 - "How are we doing this week?"
@@ -12,7 +13,9 @@ Claude Code responds best to natural descriptions:
 ### Mode Commands
 
 #### /plan [methodology]
+
 Activate planning mode with optional methodology
+
 ```
 /plan - Auto-detect best methodology
 /plan shape-up - Use Shape Up specifically
@@ -20,14 +23,18 @@ Activate planning mode with optional methodology
 ```
 
 #### /build
+
 Start execution with current plan
+
 ```
 /build - Continue from existing plan
 /build task-name - Jump to specific task
 ```
 
 #### /review
+
 Check metrics and improvements
+
 ```
 /review - Current period metrics
 /review week - Last week's data
@@ -37,14 +44,18 @@ Check metrics and improvements
 ### Methodology Shortcuts
 
 #### /shape
+
 Quick Shape Up shaping session
+
 ```
 /shape feature-name
 → Creates pitch with 2/6 week appetite
 ```
 
 #### /sprint
+
 Scrum sprint operations
+
 ```
 /sprint plan - Plan next sprint
 /sprint status - Current progress
@@ -52,7 +63,9 @@ Scrum sprint operations
 ```
 
 #### /kanban
+
 Kanban board operations
+
 ```
 /kanban - Show current board
 /kanban metrics - Flow metrics
@@ -60,14 +73,18 @@ Kanban board operations
 ```
 
 #### /tdd
+
 Start TDD cycle
+
 ```
 /tdd feature-name
 → Guides through red-green-refactor
 ```
 
 #### /mvp
+
 Define lean MVP
+
 ```
 /mvp idea
 → Creates minimal experiment plan
@@ -76,7 +93,9 @@ Define lean MVP
 ### Quick Actions
 
 #### /status
+
 Universal status check
+
 ```
 Shows:
 - Active methodology
@@ -86,7 +105,9 @@ Shows:
 ```
 
 #### /switch [methodology]
+
 Change active methodology
+
 ```
 /switch kanban - Move to Kanban
 /switch scrum - Move to Scrum
@@ -94,7 +115,9 @@ Warns about work in progress
 ```
 
 #### /help [topic]
+
 Get specific help
+
 ```
 /help - General guidance
 /help shape-up - Methodology details
@@ -104,6 +127,7 @@ Get specific help
 ## Smart Defaults
 
 Even with commands, Claude Code:
+
 - Detects context (team size, urgency)
 - Suggests best approach
 - Adapts complexity
@@ -112,6 +136,7 @@ Even with commands, Claude Code:
 ## Examples
 
 ### Natural Language
+
 ```
 You: "We have too many bugs"
 Claude: *Detects problem* 
@@ -120,6 +145,7 @@ Claude: *Detects problem*
 ```
 
 ### With Commands
+
 ```
 You: "/kanban"
 Claude: *Shows current board state*
@@ -128,6 +154,7 @@ Claude: *Shows current board state*
 ```
 
 ### Mixed Approach
+
 ```
 You: "Let's plan" 
 Claude: "What type of work?"
@@ -145,4 +172,5 @@ Claude: *Sprint planning mode*
 
 ## Remember
 
-Commands are shortcuts, not requirements. Describe what you need naturally, and Claude Code will help. Use commands when you know exactly what you want.
+Commands are shortcuts, not requirements. Describe what you need naturally, and
+Claude Code will help. Use commands when you know exactly what you want.

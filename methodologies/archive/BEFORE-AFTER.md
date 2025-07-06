@@ -3,6 +3,7 @@
 ## File Count Reduction
 
 ### Before: 50+ Files
+
 ```
 5 methodologies × 
   - 4 personas each (20 files)
@@ -14,6 +15,7 @@
 ```
 
 ### After: 15 Core Files
+
 ```
 Core System:
   - 3 mode files
@@ -31,11 +33,13 @@ Methodologies:
 ## Line Count Reduction
 
 ### Before: ~8,000 Lines
+
 - Average persona: 200 lines × 20 = 4,000 lines
-- Method documentation: 300 lines × 10 = 3,000 lines  
+- Method documentation: 300 lines × 10 = 3,000 lines
 - Other files: ~1,000 lines
 
 ### After: ~1,500 Lines
+
 - Three modes: 150 lines × 3 = 450 lines
 - Simple rules: 100 lines × 5 = 500 lines
 - Core docs: ~550 lines
@@ -45,6 +49,7 @@ Methodologies:
 ## Complexity Reduction
 
 ### Before: Learn 12 Personas
+
 ```
 Scrum: Product Owner, Scrum Master, Developer
 Kanban: Flow Manager, Team Member  
@@ -54,6 +59,7 @@ Lean: Startup Founder
 ```
 
 ### After: Understand 3 Modes
+
 ```
 Planning Mode - Decide what to build
 Execution Mode - Build it
@@ -65,6 +71,7 @@ Improvement Mode - Get better
 ## Response Time Improvement
 
 ### Before: Multi-Step Process
+
 ```
 1. User input
 2. Detect methodology (maybe)
@@ -76,6 +83,7 @@ Time: 3-5 seconds cognitive load
 ```
 
 ### After: Direct Response
+
 ```
 1. User input
 2. Detect mode + methodology
@@ -91,6 +99,7 @@ Time: <1 second cognitive load
 ### Planning a Feature
 
 **Before**:
+
 ```
 You: "I want to add user auth"
 
@@ -111,6 +120,7 @@ problems it would solve?"
 ```
 
 **After**:
+
 ```
 You: "I want to add user auth"
 
@@ -125,6 +135,7 @@ Based on your answers, I'll recommend the best approach.
 ### Starting Work
 
 **Before**:
+
 ```
 You: "Let's build it"
 
@@ -138,6 +149,7 @@ delivering a potentially shippable increment..."
 ```
 
 **After**:
+
 ```
 You: "Let's build it"
 
@@ -151,6 +163,7 @@ Starting now...
 ### Checking Progress
 
 **Before**:
+
 ```
 You: "How are we doing?"
 
@@ -160,6 +173,7 @@ Claude: *Loads Scrum Master/Flow Manager persona*
 ```
 
 **After**:
+
 ```
 You: "How are we doing?"
 
@@ -175,12 +189,14 @@ Claude: Week 1 metrics:
 ### Mixing Methods
 
 **Before**: Confusing persona switches
+
 ```
 "Now switching from Scrum Master to Kanban Flow Manager 
 to handle your bug tracking needs..."
 ```
 
 **After**: Natural combination
+
 ```
 "Adding Kanban board for bugs alongside your Scrum sprints.
 WIP limit: 3 bugs in progress."
@@ -188,8 +204,8 @@ WIP limit: 3 bugs in progress."
 
 ### Context Adaptation
 
-**Before**: One-size-fits-all personas
-**After**: Automatic scaling
+**Before**: One-size-fits-all personas **After**: Automatic scaling
+
 ```
 Solo: Simplified process
 Small team: Balanced approach
@@ -200,20 +216,23 @@ Urgent: Streamlined flow
 ## The Bottom Line
 
 ### For Users
-- **78% less to read** 
+
+- **78% less to read**
 - **75% fewer concepts**
 - **80% faster responses**
 - **100% more natural**
 
 ### For Maintainers
+
 - **81% less code**
 - **One place to update**
 - **Clear separation of concerns**
 - **Easy to extend**
 
 ### For Claude Code
+
 - **Simpler prompts**
-- **Faster processing**  
+- **Faster processing**
 - **Better responses**
 - **Natural conversation**
 

@@ -130,32 +130,35 @@ FROM Waterfall TO Agile:
 ### 🤔 When User is Unsure
 
 "Based on what you've told me, I notice:
+
 - Work type: [detected type]
-- Team size: [detected size]  
+- Team size: [detected size]
 - Key needs: [extracted needs]
 
 I recommend **[Methodology]** because:
+
 - [Specific reason 1]
 - [Specific reason 2]
 
-Would you like to:
-A) Try this methodology now
-B) Learn more about it first
-C) Explore alternatives"
+Would you like to: A) Try this methodology now B) Learn more about it first C)
+Explore alternatives"
 
 ### 🎯 Multi-Methodology Proposal
 
 "Your project has different types of work. Consider:
 
 **For feature development**: Shape Up
+
 - Fixed time, variable scope
 - Clear pitches before building
 
 **For bug fixes**: Kanban board
+
 - Continuous flow
 - WIP limits prevent overload
 
 **For quality**: XP practices
+
 - TDD for new code
 - Pair programming for complex parts
 
@@ -165,36 +168,36 @@ Shall I set up this hybrid approach?"
 
 "Want to get started quickly? Choose:
 
-A) **Minimal Process** → Kanban
-   Just visualize and limit WIP
+A) **Minimal Process** → Kanban Just visualize and limit WIP
 
-B) **Structured Sprints** → Scrum
-   2-week cycles with ceremonies
+B) **Structured Sprints** → Scrum 2-week cycles with ceremonies
 
-C) **Feature Focused** → Shape Up
-   Shape, bet, build in cycles
+C) **Feature Focused** → Shape Up Shape, bet, build in cycles
 
-D) **Quality First** → XP
-   TDD and pairing from day one"
+D) **Quality First** → XP TDD and pairing from day one"
 
 ## CONTEXTUAL ADAPTATION
 
 ### Client Work Indicators
+
 - "Contract", "client", "deliverable", "milestone"
 - PREFER: Scrum or Scrumban for visibility
 - ADD: Regular demos and reports
 
-### Internal Product Indicators  
+### Internal Product Indicators
+
 - "Product", "users", "features", "roadmap"
 - PREFER: Shape Up or Lean
 - ADD: User feedback loops
 
 ### Platform/Infrastructure Indicators
+
 - "Platform", "infrastructure", "DevOps", "reliability"
 - PREFER: Kanban + XP
 - ADD: Strong automation focus
 
 ### Innovation/R&D Indicators
+
 - "Research", "prototype", "explore", "innovative"
 - PREFER: Lean with Shape Up shaping
 - ADD: Experiment tracking
@@ -202,6 +205,7 @@ D) **Quality First** → XP
 ## OUTPUT
 
 AFTER methodology selection:
+
 ```
 SELECTED: [Methodology]
 RATIONALE: [Why this fits]

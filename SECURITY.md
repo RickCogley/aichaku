@@ -2,17 +2,24 @@
 
 ## 🛡️ Security Overview
 
-Aichaku is designed with security as a fundamental principle. While it doesn't handle cryptographic operations like Salty or release management like Nagare, it maintains strict security standards for file operations, path validation, and user input handling. This document outlines our security measures, compliance status, and responsible disclosure process.
+Aichaku is designed with security as a fundamental principle. While it doesn't
+handle cryptographic operations like Salty or release management like Nagare, it
+maintains strict security standards for file operations, path validation, and
+user input handling. This document outlines our security measures, compliance
+status, and responsible disclosure process.
 
 ## ✅ OWASP Top 10 Compliance
 
-Aichaku has been assessed against the OWASP Top 10 (2021) security risks, adapted for a methodology support library context:
+Aichaku has been assessed against the OWASP Top 10 (2021) security risks,
+adapted for a methodology support library context:
 
 ### A01: Broken Access Control ✅
 
-- **Path Validation**: Strict validation of all file paths and output directories
+- **Path Validation**: Strict validation of all file paths and output
+  directories
 - **Directory Traversal Protection**: Prevents `../` and absolute path exploits
-- **Write Restrictions**: Only writes to designated `.claude/output/` directories
+- **Write Restrictions**: Only writes to designated `.claude/output/`
+  directories
 - **Read Limitations**: Only reads from bundled methodology files
 
 ### A02: Cryptographic Failures ✅
@@ -207,7 +214,8 @@ Aichaku tracks:
 
 ### Security Principles Applied
 
-Following security principles from [Salty](https://github.com/eSolia/salty.esolia.pro/blob/main/SECURITY.md):
+Following security principles from
+[Salty](https://github.com/eSolia/salty.esolia.pro/blob/main/SECURITY.md):
 
 1. **Never Trust User Input**: All paths and names validated
 2. **Fail Securely**: Safe defaults and graceful failures
@@ -218,6 +226,7 @@ Following security principles from [Salty](https://github.com/eSolia/salty.esoli
 
 ---
 
-**Last Security Review**: 2025-01-05  
-**Next Scheduled Review**: 2025-04-05  
-**Security Contact**: [Create Issue](https://github.com/YOUR_ORG/aichaku/issues/new?labels=security)
+**Last Security Review**: 2025-01-05\
+**Next Scheduled Review**: 2025-04-05\
+**Security Contact**:
+[Create Issue](https://github.com/YOUR_ORG/aichaku/issues/new?labels=security)

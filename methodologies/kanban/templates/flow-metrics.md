@@ -1,21 +1,22 @@
 # Flow Metrics Report - [Period]
 
-**Team**: [Team Name]  
-**Period**: [Start Date] - [End Date]  
+**Team**: [Team Name]\
+**Period**: [Start Date] - [End Date]\
 **Generated**: [Date]
 
 ## Executive Summary
 
-| Key Metric | This Period | Last Period | Change | Target |
-|------------|-------------|-------------|---------|---------|
-| Throughput | 24 items | 20 items | ↑ 20% | 25 items |
-| Avg Cycle Time | 4.2 days | 5.1 days | ↓ 18% | 4 days |
-| Avg Lead Time | 12.3 days | 14.7 days | ↓ 16% | 10 days |
-| Flow Efficiency | 34% | 28% | ↑ 6pp | 40% |
+| Key Metric      | This Period | Last Period | Change | Target   |
+| --------------- | ----------- | ----------- | ------ | -------- |
+| Throughput      | 24 items    | 20 items    | ↑ 20%  | 25 items |
+| Avg Cycle Time  | 4.2 days    | 5.1 days    | ↓ 18%  | 4 days   |
+| Avg Lead Time   | 12.3 days   | 14.7 days   | ↓ 16%  | 10 days  |
+| Flow Efficiency | 34%         | 28%         | ↑ 6pp  | 40%      |
 
 ## Throughput Analysis
 
 ### Weekly Throughput
+
 ```
 Week 1: ████████████ 12 items
 Week 2: ██████████ 10 items  
@@ -24,6 +25,7 @@ Week 4: ██████████████ 14 items
 ```
 
 ### By Type
+
 - Features: 45% (11 items)
 - Bugs: 30% (7 items)
 - Tech Debt: 15% (4 items)
@@ -32,6 +34,7 @@ Week 4: ██████████████ 14 items
 ## Cycle Time Distribution
 
 ### Histogram
+
 ```
 1 day:  ██ 2 items
 2 days: ████████ 8 items
@@ -42,6 +45,7 @@ Week 4: ██████████████ 14 items
 ```
 
 ### Percentiles
+
 - 50th percentile: 3 days
 - 85th percentile: 5 days
 - 95th percentile: 7 days
@@ -51,6 +55,7 @@ Week 4: ██████████████ 14 items
 ## Lead Time Analysis
 
 ### Components
+
 ```
 Wait Time:      ████████░░░░ 67% (8.2 days)
 Active Time:    ████░░░░░░░░ 33% (4.1 days)
@@ -58,6 +63,7 @@ Flow Efficiency: 33%
 ```
 
 ### By Priority
+
 - Expedite: 1.2 days average
 - High: 8.4 days average
 - Normal: 14.2 days average
@@ -66,6 +72,7 @@ Flow Efficiency: 33%
 ## WIP and Flow
 
 ### Average WIP by Column
+
 ```
 Ready:       ████ 4.2
 In Progress: ███ 3.1
@@ -75,6 +82,7 @@ Total WIP:   11.5
 ```
 
 ### Little's Law Validation
+
 ```
 Throughput = WIP / Cycle Time
 5.7 items/week = 11.5 / 2.0 weeks ✓
@@ -83,11 +91,13 @@ Throughput = WIP / Cycle Time
 ## Blockers and Impediments
 
 ### Blocker Statistics
+
 - Total blockers: 18
 - Avg resolution time: 1.8 days
 - Items blocked >1 time: 6 (25%)
 
 ### Blocker Categories
+
 ```
 External Dependencies: ████████ 40%
 Technical Issues:      ██████ 30%
@@ -98,11 +108,13 @@ Resource Availability: ██ 10%
 ## Cumulative Flow Diagram Insights
 
 ### Observations
+
 - WIP growing in Review stage (potential bottleneck)
 - Smooth flow through Development
 - Backlog growth rate sustainable
 
 ### Recommendations
+
 1. Increase Review capacity or reduce WIP limit
 2. Consider pairing for review activities
 3. Automate more review checklist items
@@ -110,6 +122,7 @@ Resource Availability: ██ 10%
 ## Monte Carlo Forecast
 
 ### How many items in next 2 weeks?
+
 ```
 Percentile | Items
 -----------|-------
@@ -119,6 +132,7 @@ Percentile | Items
 ```
 
 ### When will 20 items be complete?
+
 ```
 Percentile | Days
 -----------|------
@@ -130,11 +144,13 @@ Percentile | Days
 ## Process Health Indicators
 
 ### Positive Trends ✅
+
 - Cycle time decreasing consistently
 - Blocker resolution time improving
 - WIP limits mostly respected
 
 ### Areas of Concern ⚠️
+
 - Flow efficiency below target
 - Review stage becoming bottleneck
 - Expedite lane used 3 times (target: 1)
@@ -156,11 +172,13 @@ Percentile | Days
 ## Period Highlights
 
 ### Wins
+
 - Delivered critical payment feature on time
 - Reduced average cycle time by nearly 20%
 - Zero critical bugs escaped to production
 
 ### Challenges
+
 - Two expedite items (system outages)
 - Review bottleneck emerged week 3
 - Some items aged >10 days in backlog
@@ -174,6 +192,6 @@ Percentile | Days
 
 ---
 
-**Next Review Date**: [Date]  
-**Prepared by**: [Name]  
+**Next Review Date**: [Date]\
+**Prepared by**: [Name]\
 **Distribution**: Team, Stakeholders

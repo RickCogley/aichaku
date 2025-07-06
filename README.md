@@ -7,9 +7,13 @@
 
 ## What is aichaku?
 
-Aichaku (愛着 - "affection/attachment") brings intelligent, adaptive methodology support to Claude Code. Instead of forcing you to learn complex frameworks, aichaku helps Claude Code understand what you're trying to do and guides you using the best methodology for your situation.
+Aichaku (愛着 - "affection/attachment") brings intelligent, adaptive methodology
+support to Claude Code. Instead of forcing you to learn complex frameworks,
+aichaku helps Claude Code understand what you're trying to do and guides you
+using the best methodology for your situation.
 
 **✨ Key Features:**
+
 - 🎯 **Natural language first** - Just describe what you need
 - 🔄 **6 methodologies included** - Shape Up, Scrum, Kanban, XP, Lean, Scrumban
 - 🧠 **Context-aware** - Adapts to team size, urgency, and work type
@@ -33,17 +37,24 @@ That's it! Claude Code now has intelligent methodology support.
 Aichaku uses a revolutionary **3-mode system** instead of complex personas:
 
 ### 📋 Planning Mode
-When you say "let's plan" or "what should we build", Claude Code helps you define work using the best methodology for your context.
 
-### 🔨 Execution Mode  
-When you say "let's build" or "start coding", Claude Code guides development with appropriate constraints (sprints, WIP limits, etc).
+When you say "let's plan" or "what should we build", Claude Code helps you
+define work using the best methodology for your context.
+
+### 🔨 Execution Mode
+
+When you say "let's build" or "start coding", Claude Code guides development
+with appropriate constraints (sprints, WIP limits, etc).
 
 ### 📊 Improvement Mode
-When you say "how are we doing" or "retrospective", Claude Code measures progress and suggests concrete improvements.
+
+When you say "how are we doing" or "retrospective", Claude Code measures
+progress and suggests concrete improvements.
 
 ## Usage Examples
 
 ### Natural Conversation
+
 ```
 You: "I need to add user authentication to my app"
 Claude: [Detects feature work, suggests Shape Up with 2-week appetite]
@@ -54,6 +65,7 @@ Claude: [Detects feature work, suggests Shape Up with 2-week appetite]
 ```
 
 ### Handling Multiple Work Types
+
 ```
 You: "We have features to build and bugs to fix"
 Claude: "I suggest a hybrid approach:
@@ -63,6 +75,7 @@ Claude: "I suggest a hybrid approach:
 ```
 
 ### Team Adaptation
+
 ```
 You: "Our team of 6 is struggling with delivery"
 Claude: [Detects team size, suggests Scrum]
@@ -72,18 +85,19 @@ Claude: [Detects team size, suggests Scrum]
 
 ## Included Methodologies
 
-| Methodology | Best For | Key Concept |
-|------------|----------|-------------|
+| Methodology  | Best For            | Key Concept                |
+| ------------ | ------------------- | -------------------------- |
 | **Shape Up** | Feature development | Fixed time, variable scope |
-| **Scrum** | Team coordination | Sprints and ceremonies |
-| **Kanban** | Continuous flow | WIP limits and pull |
-| **XP** | Code quality | TDD and pairing |
-| **Lean** | Validation | Build-measure-learn |
-| **Scrumban** | Hybrid teams | Sprint planning + flow |
+| **Scrum**    | Team coordination   | Sprints and ceremonies     |
+| **Kanban**   | Continuous flow     | WIP limits and pull        |
+| **XP**       | Code quality        | TDD and pairing            |
+| **Lean**     | Validation          | Build-measure-learn        |
+| **Scrumban** | Hybrid teams        | Sprint planning + flow     |
 
 ## Installation Options
 
 ### Basic Install
+
 ```bash
 # Install to current project
 aichaku install
@@ -93,6 +107,7 @@ aichaku install --global
 ```
 
 ### Advanced Options
+
 ```bash
 # Force reinstall/update
 aichaku install --force
@@ -105,13 +120,14 @@ aichaku install --path ./custom/.claude
 ```
 
 ### Programmatic Usage
+
 ```typescript
 import { install } from "jsr:@rick/aichaku";
 
 // Install all methodologies
-await install("all", { 
+await install("all", {
   global: true,
-  force: false 
+  force: false,
 });
 ```
 
@@ -133,7 +149,8 @@ await install("all", {
     └── [other methodologies...]
 ```
 
-Each methodology includes an **Aichaku Guide** - a simplified, AI-friendly ruleset that helps Claude Code understand and apply the methodology effectively.
+Each methodology includes an **Aichaku Guide** - a simplified, AI-friendly
+ruleset that helps Claude Code understand and apply the methodology effectively.
 
 ## Commands (Optional)
 
@@ -165,11 +182,16 @@ deno task release:patch
 
 ## Philosophy
 
-Traditional methodology tools force you to adapt to them. Aichaku reverses this - it helps Claude Code adapt to you. Whether you're a solo developer, startup team, or enterprise group, aichaku provides just enough process to be helpful without getting in the way.
+Traditional methodology tools force you to adapt to them. Aichaku reverses
+this - it helps Claude Code adapt to you. Whether you're a solo developer,
+startup team, or enterprise group, aichaku provides just enough process to be
+helpful without getting in the way.
 
 ## Why "aichaku"?
 
-愛着 (aichaku) means developing attachment or affection for something over time. We chose this name because good development practices should feel natural and become something you're attached to, not forced to follow.
+愛着 (aichaku) means developing attachment or affection for something over time.
+We chose this name because good development practices should feel natural and
+become something you're attached to, not forced to follow.
 
 ## Future Roadmap
 

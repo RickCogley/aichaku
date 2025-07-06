@@ -1,13 +1,13 @@
 import { ensureDir, exists } from "https://deno.land/std@0.208.0/fs/mod.ts";
 import { join, resolve } from "https://deno.land/std@0.208.0/path/mod.ts";
-import type { InstallOptions, InstallResult, Methodology } from "./types.ts";
+import type { InstallOptions, InstallResult } from "./types.ts";
 
 const HOME_DIR = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
 const GLOBAL_CLAUDE_DIR = join(HOME_DIR, ".claude");
 
 /**
  * Install a methodology to the specified location
- * 
+ *
  * @param methodologyName - Name of the methodology to install (e.g., "shape-up")
  * @param options - Installation options
  * @returns Installation result
@@ -16,17 +16,22 @@ export async function install(
   methodologyName: string,
   options: InstallOptions = {},
 ): Promise<InstallResult> {
-  const { global = false, projectPath, force = false, symlink = false, silent = false } = options;
+  const {
+    global = false,
+    projectPath,
+    force = false,
+    symlink = false,
+    silent = false,
+  } = options;
 
   // Determine installation path
-  const targetPath = global 
+  const targetPath = global
     ? join(GLOBAL_CLAUDE_DIR, methodologyName)
     : resolve(projectPath || "./.claude");
 
   // Check if methodology exists
-  const methodologyPath = join(
-    new URL(".", import.meta.url).pathname,
-    "..",
+  const methodologyPath = resolve(
+    new URL("..", import.meta.url).pathname,
     "methodologies",
     methodologyName,
   );
@@ -94,11 +99,11 @@ export async function install(
 
 async function copyMethodology(source: string, target: string): Promise<void> {
   const entries = await Array.fromAsync(Deno.readDir(source));
-  
+
   for (const entry of entries) {
     const sourcePath = join(source, entry.name);
     const targetPath = join(target, entry.name);
-    
+
     if (entry.isDirectory) {
       await ensureDir(targetPath);
       await copyMethodology(sourcePath, targetPath);
@@ -108,13 +113,17 @@ async function copyMethodology(source: string, target: string): Promise<void> {
   }
 }
 
-async function createSymlinks(source: string, target: string, methodology: string): Promise<void> {
+async function createSymlinks(
+  source: string,
+  target: string,
+  _methodology: string,
+): Promise<void> {
   const dirs = ["commands", "methods", "personas", "templates", "scripts"];
-  
+
   for (const dir of dirs) {
     const sourceDir = join(source, dir);
     const targetDir = join(target, dir);
-    
+
     if (await exists(sourceDir)) {
       // Remove existing if force is implied
       try {
@@ -122,13 +131,16 @@ async function createSymlinks(source: string, target: string, methodology: strin
       } catch {
         // Ignore if doesn't exist
       }
-      
+
       await Deno.symlink(sourceDir, targetDir);
     }
   }
 }
 
-async function updateClaudeMd(projectPath: string, methodology: string): Promise<void> {
+async function updateClaudeMd(
+  projectPath: string,
+  methodology: string,
+): Promise<void> {
   const claudeMdPath = join(projectPath, "..", "CLAUDE.md");
   const methodologyNote = `
 ## Active Methodology

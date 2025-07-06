@@ -37,6 +37,7 @@ LOAD plan → APPLY constraints → EXECUTE work → REPORT progress
 ## Methodology Constraints
 
 ### Shape Up Execution
+
 ```
 RULES:
 - Stop at appetite limit (no extensions)
@@ -49,6 +50,7 @@ PROGRESS:
 ```
 
 ### Scrum Execution
+
 ```
 RULES:
 - Complete sprint commitment
@@ -64,6 +66,7 @@ Daily standup format:
 ```
 
 ### Kanban Execution
+
 ```
 RULES:
 - Pull only when capacity
@@ -76,6 +79,7 @@ PROGRESS:
 ```
 
 ### XP Execution
+
 ```
 RULES:
 - Write test first
@@ -90,6 +94,7 @@ PATTERN:
 ## Context Adaptations
 
 ### Solo Execution
+
 ```
 - Direct implementation
 - Self-review patterns
@@ -98,6 +103,7 @@ PATTERN:
 ```
 
 ### Team Execution
+
 ```
 - Coordinate handoffs
 - Update shared board
@@ -106,6 +112,7 @@ PATTERN:
 ```
 
 ### Urgent Execution
+
 ```
 - Minimal process
 - Focus on delivery
@@ -116,6 +123,7 @@ PATTERN:
 ## Common Patterns
 
 ### Starting Work
+
 ```
 ✅ Ready to start [task name]
 Approach: [brief strategy]
@@ -124,6 +132,7 @@ First step: [specific action]
 ```
 
 ### Hitting a Blocker
+
 ```
 🚫 BLOCKED on [task]
 Issue: [specific problem]
@@ -132,6 +141,7 @@ Meanwhile: [alternative work]
 ```
 
 ### Completing Work
+
 ```
 ✅ COMPLETE: [task name]
 What: [brief summary]
@@ -142,6 +152,7 @@ Next: [logical next task]
 ## Quick Actions
 
 ### "Just build it"
+
 ```
 Detected: Simple task, solo context
 Skipping: Formal planning
@@ -151,6 +162,7 @@ Starting: Now
 ```
 
 ### "Implement the plan"
+
 ```
 Loading: [plan document]
 Tasks: [1, 2, 3...]
@@ -160,6 +172,7 @@ First task: Starting now
 ```
 
 ### "Fix this bug"
+
 ```
 Mode: Kanban flow
 Priority: [Urgent/High/Normal]
@@ -170,11 +183,13 @@ Action: [Pull/Queue/Defer]
 ## Progress Tracking
 
 ### Minimal (Solo)
+
 ```
 □ □ □ ■ ■ ■ ■ ■ (37% complete)
 ```
 
 ### Detailed (Team)
+
 ```
 Sprint Progress: Day 3 of 10
 - Completed: 5 points
@@ -184,6 +199,7 @@ Sprint Progress: Day 3 of 10
 ```
 
 ### Continuous (Kanban)
+
 ```
 This week: 12 items completed
 Average cycle time: 2.3 days
@@ -193,6 +209,7 @@ Current WIP: 5 of 6 (near limit)
 ## Quality Checks
 
 Before marking complete:
+
 ```
 □ Meets requirements
 □ Tests pass (if applicable)
@@ -203,12 +220,11 @@ Before marking complete:
 
 ## Anti-Patterns to Avoid
 
-❌ Starting without clear requirements
-❌ Ignoring methodology constraints  
-❌ Silent struggles with blockers
-❌ Scope creep during execution
-❌ Skipping quality checks
+❌ Starting without clear requirements ❌ Ignoring methodology constraints\
+❌ Silent struggles with blockers ❌ Scope creep during execution ❌ Skipping
+quality checks
 
 ## Remember
 
-Execution Mode is about getting things done within constraints. Focus on progress, communicate blockers, maintain quality.
+Execution Mode is about getting things done within constraints. Focus on
+progress, communicate blockers, maintain quality.

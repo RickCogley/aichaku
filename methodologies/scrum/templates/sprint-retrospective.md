@@ -1,19 +1,19 @@
 # Sprint Retrospective - Sprint [Number]
 
-**Date**: [Date]  
-**Sprint**: [Start Date] - [End Date]  
-**Facilitator**: [Name]  
+**Date**: [Date]\
+**Sprint**: [Start Date] - [End Date]\
+**Facilitator**: [Name]\
 **Participants**: [List attendees]
 
 ## Sprint Metrics Review
 
-| Metric | Target | Actual | Trend |
-|--------|--------|--------|-------|
-| Stories Committed | [#] | [#] | ↑↓→ |
-| Stories Completed | [#] | [#] | ↑↓→ |
-| Story Points | [#] | [#] | ↑↓→ |
-| Defects Found | [#] | [#] | ↑↓→ |
-| Sprint Goal Met | Yes/No | Yes/No | |
+| Metric            | Target | Actual | Trend |
+| ----------------- | ------ | ------ | ----- |
+| Stories Committed | [#]    | [#]    | ↑↓→   |
+| Stories Completed | [#]    | [#]    | ↑↓→   |
+| Story Points      | [#]    | [#]    | ↑↓→   |
+| Defects Found     | [#]    | [#]    | ↑↓→   |
+| Sprint Goal Met   | Yes/No | Yes/No |       |
 
 ## Format: [Start, Stop, Continue / Other]
 
@@ -43,6 +43,7 @@
 ### Issue: [Main problem identified]
 
 **5 Whys Analysis**:
+
 1. Why? [First level cause]
 2. Why? [Second level cause]
 3. Why? [Third level cause]
@@ -51,11 +52,11 @@
 
 ## Action Items
 
-| Action | Owner | Due Date | Success Criteria |
-|--------|-------|----------|-----------------|
-| [Specific action] | [Name] | [Date] | [How we'll know it's done] |
-| [Specific action] | [Name] | [Date] | [How we'll know it's done] |
-| [Specific action] | [Name] | [Date] | [How we'll know it's done] |
+| Action            | Owner  | Due Date | Success Criteria           |
+| ----------------- | ------ | -------- | -------------------------- |
+| [Specific action] | [Name] | [Date]   | [How we'll know it's done] |
+| [Specific action] | [Name] | [Date]   | [How we'll know it's done] |
+| [Specific action] | [Name] | [Date]   | [How we'll know it's done] |
 
 ## Team Health Check
 
@@ -70,14 +71,15 @@ Rate each area from 1 (poor) to 5 (excellent):
 ## Kudos & Recognition
 
 🌟 **Shout-outs to team members**:
+
 - [Name] for [specific contribution]
 - [Name] for [going above and beyond]
 - [Name] for [helping teammates]
 
 ## Experiments for Next Sprint
 
-| Experiment | Hypothesis | How to Measure |
-|------------|------------|----------------|
+| Experiment       | Hypothesis         | How to Measure   |
+| ---------------- | ------------------ | ---------------- |
 | [What we'll try] | [Expected outcome] | [Success metric] |
 
 ## Key Learnings
@@ -88,8 +90,8 @@ Rate each area from 1 (poor) to 5 (excellent):
 
 ## Follow-up from Previous Retrospective
 
-| Previous Action | Status | Impact |
-|----------------|--------|---------|
+| Previous Action          | Status                       | Impact         |
+| ------------------------ | ---------------------------- | -------------- |
 | [Action from last retro] | Complete/In Progress/Blocked | [What changed] |
 
 ## Team Agreements Updated
@@ -99,7 +101,8 @@ Rate each area from 1 (poor) to 5 (excellent):
 
 ## Notes for Next Sprint
 
-[Any specific considerations or context the team should remember for next sprint planning]
+[Any specific considerations or context the team should remember for next sprint
+planning]
 
 ---
 

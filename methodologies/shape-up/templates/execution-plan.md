@@ -1,7 +1,7 @@
 # Execution Plan: [Feature Name]
 
-**PHASE**: BUILDING (AI Executor Mode)  
-**EXECUTION**: Single-run implementation  
+**PHASE**: BUILDING (AI Executor Mode)\
+**EXECUTION**: Single-run implementation\
 **TEMPLATE COMPLIANCE**: All tasks must be executable without human intervention
 
 ## Metadata
@@ -53,12 +53,9 @@ Unit and integration tests.
 
 ### Task #1: [Task Name]
 
-**Type**: Create
-**File**: `src/models/Example.js`
-**Dependencies**: None
+**Type**: Create **File**: `src/models/Example.js` **Dependencies**: None
 
-**Context**:
-[Why this task exists and what it enables]
+**Context**: [Why this task exists and what it enables]
 
 **Current State**:
 
@@ -104,19 +101,17 @@ export class Example extends Model {
 - Exports correctly
 - No syntax errors
 
-**Test Approach**:
-Create `test/models/Example.test.js` with basic instantiation and validation tests.
+**Test Approach**: Create `test/models/Example.test.js` with basic instantiation
+and validation tests.
 
 ---
 
 ### Task #2: [Task Name]
 
-**Type**: Modify
-**File**: `src/services/ExampleService.js`
-**Dependencies**: [Task #1]
+**Type**: Modify **File**: `src/services/ExampleService.js` **Dependencies**:
+[Task #1]
 
-**Context**:
-[Why modifying this file]
+**Context**: [Why modifying this file]
 
 **Current State**:
 
@@ -274,6 +269,7 @@ After execution, verify:
 ## Phase Transition Checklist
 
 **DURING BUILDING phase:**
+
 - [ ] Execute tasks in specified order
 - [ ] Report progress after each task
 - [ ] Stop immediately if blocked
@@ -281,9 +277,12 @@ After execution, verify:
 - [ ] Focus only on implementation
 
 **Moving to COOLDOWN phase requires:**
+
 - [ ] All tasks completed successfully
 - [ ] Tests passing
 - [ ] Feature working end-to-end
 - [ ] Execution report generated
 
-**Claude Code Reminder**: Save execution reports to `.claude/output/[status-YYYYMM-projectname]/execution-report.md`. Focus on DOING, not discussing. Execute the plan exactly as written.
+**Claude Code Reminder**: Save execution reports to
+`.claude/output/[status-YYYYMM-projectname]/execution-report.md`. Focus on
+DOING, not discussing. Execute the plan exactly as written.

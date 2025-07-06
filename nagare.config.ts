@@ -1,77 +1,103 @@
-import type { NagareConfig } from "@rick/nagare";
+import type { NagareConfig } from "@rick/nagare/types";
+import { TemplateFormat } from "@rick/nagare/types";
 
-const config: NagareConfig = {
-  name: "aichaku",
-  version: {
-    structureType: "JSR",
-    files: ["deno.json"],
-    jsonPath: "version",
-    versionFile: {
-      enabled: true,
-      path: "version.ts",
-      template: `/**
- * Auto-generated version file by Nagare
- * DO NOT EDIT MANUALLY
- */
+export default {
+  project: {
+    name: "Aichaku",
+    description:
+      "AI-optimized project methodology installer for Claude Code - brings affection (愛着) to your development workflow",
+    repository: "https://github.com/RickCogley/aichaku",
+    homepage: "https://github.com/RickCogley/aichaku",
+    license: "MIT",
+    author: "Rick Cogley",
+  },
 
-export const VERSION = "{{VERSION}}";
-export const VERSION_INFO = {
-  version: "{{VERSION}}",
-  gitCommit: "{{GIT_COMMIT}}",
-  buildTime: "{{BUILD_TIME}}",
-};`,
+  versionFile: {
+    path: "./version.ts",
+    template: TemplateFormat.TYPESCRIPT,
+  },
+
+  updateFiles: [
+    {
+      path: "./deno.json",
+      updateFn: (content: string, data: { version: string }) => {
+        // Parse the JSON to safely update only the top-level version
+        try {
+          const config = JSON.parse(content);
+          config.version = data.version;
+          return JSON.stringify(config, null, 2);
+        } catch (_error) {
+          // Fallback to regex if JSON parsing fails
+          return content.replace(
+            /^(\s*"version":\s*)"[^"]+"/m,
+            `$1"${data.version}"`,
+          );
+        }
+      },
     },
+    {
+      path: "./README.md",
+      // Using built-in handler for standard badge format
+    },
+  ],
+
+  releaseNotes: {
+    includeCommitHashes: true,
+    maxDescriptionLength: 120,
   },
-  changelog: {
-    enable: true,
-    file: "CHANGELOG.md",
-    template: `# Changelog
 
-All notable changes to aichaku (愛着) will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [Unreleased]
-
-### Added
-- Initial release of aichaku
-- Shape Up methodology installer
-- Global and project-level installation support
-- PDF generation scripts
-- Methodology templates and personas
-
-{{ENTRIES}}`,
-  },
   github: {
-    enable: true,
-    repository: "RickCogley/aichaku",
-    release: {
-      enable: true,
-      draft: false,
-    },
+    owner: "RickCogley",
+    repo: "aichaku",
+    createRelease: true,
   },
-  validation: {
-    enabled: true,
+
+  options: {
+    tagPrefix: "v",
+    gitRemote: "origin",
+  },
+
+  hooks: {
     preRelease: [
-      {
-        name: "Format Check",
-        command: ["deno", "fmt", "--check"],
-      },
-      {
-        name: "Lint",
-        command: ["deno", "lint"],
-      },
-      {
-        name: "Type Check",
-        command: ["deno", "check", "**/*.ts"],
-      },
-      {
-        name: "Tests",
-        command: ["deno", "test", "--allow-read", "--allow-write", "--allow-env"],
+      async () => {
+        console.log("🔍 Running format check...");
+        const fmtCheck = new Deno.Command("deno", {
+          args: ["fmt", "--check"],
+        });
+        const fmtResult = await fmtCheck.output();
+        if (!fmtResult.success) {
+          throw new Error("Format check failed");
+        }
+
+        console.log("🔍 Running linter...");
+        const lintCmd = new Deno.Command("deno", {
+          args: ["lint"],
+        });
+        const lintResult = await lintCmd.output();
+        if (!lintResult.success) {
+          throw new Error("Lint check failed");
+        }
+
+        console.log("🔍 Running type check...");
+        const checkCmd = new Deno.Command("deno", {
+          args: ["check", "**/*.ts"],
+        });
+        const checkResult = await checkCmd.output();
+        if (!checkResult.success) {
+          throw new Error("Type check failed");
+        }
+
+        console.log("🧪 Running tests...");
+        const testCmd = new Deno.Command("deno", {
+          args: ["test", "--allow-read", "--allow-write", "--allow-env"],
+        });
+        const testResult = await testCmd.output();
+        if (!testResult.success) {
+          throw new Error("Tests failed");
+        }
+
+        console.log("✅ All pre-release checks passed");
       },
     ],
   },
-};
-
-export default config;
+} satisfies NagareConfig;
