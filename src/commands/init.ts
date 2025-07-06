@@ -17,37 +17,77 @@ interface InitResult {
   path: string;
   message?: string;
   globalDetected?: boolean;
+  action?: "created" | "exists" | "error";
 }
 
 /**
- * Initialize Aichaku with all methodologies
+ * Initialize Aichaku - globally or in a project
+ *
+ * Global: Installs all methodologies to ~/.claude/
+ * Project: Creates minimal structure and references global
  *
  * @param options - Initialization options
  * @returns Promise with initialization result
  */
 export async function init(options: InitOptions = {}): Promise<InitResult> {
   const isGlobal = options.global || false;
-  const targetPath = isGlobal
-    ? join(Deno.env.get("HOME") || "", ".claude")
-    : resolve(options.projectPath || "./.claude");
+  const home = Deno.env.get("HOME") || "";
+  const globalPath = join(home, ".claude");
+  const projectPath = resolve(options.projectPath || ".");
+  const targetPath = isGlobal ? globalPath : join(projectPath, ".claude");
+
+  // For project init, check if global exists first
+  if (!isGlobal) {
+    const globalExists = await exists(join(globalPath, ".aichaku.json"));
+    if (!globalExists) {
+      return {
+        success: false,
+        path: targetPath,
+        message: "Please install Aichaku globally first: aichaku init --global",
+        action: "error",
+      };
+    }
+  }
 
   // Check if already initialized
   const aichakuJsonPath = join(targetPath, ".aichaku.json");
-  if (await exists(aichakuJsonPath) && !options.force) {
+  const projectMarkerPath = join(targetPath, ".aichaku-project");
+
+  if (isGlobal && await exists(aichakuJsonPath) && !options.force) {
     return {
       success: false,
       path: targetPath,
       message:
-        `Aichaku is already initialized at ${targetPath}. Use --force to reinitialize or 'aichaku upgrade' to update.`,
+        `Global Aichaku already initialized. Use --force to reinstall or 'aichaku upgrade' to update.`,
+      action: "exists",
+    };
+  }
+
+  if (!isGlobal && await exists(projectMarkerPath) && !options.force) {
+    return {
+      success: false,
+      path: targetPath,
+      message: `Project already initialized. Use --force to reinitialize.`,
+      action: "exists",
     };
   }
 
   if (options.dryRun) {
-    console.log(`[DRY RUN] Would initialize Aichaku at: ${targetPath}`);
-    console.log("[DRY RUN] Would create:");
-    console.log("  - methodologies/ (all methodology files)");
-    console.log("  - user/ (customization directory)");
-    console.log("  - .aichaku.json (metadata)");
+    if (isGlobal) {
+      console.log(
+        `[DRY RUN] Would initialize global Aichaku at: ${targetPath}`,
+      );
+      console.log("[DRY RUN] Would create:");
+      console.log("  - methodologies/ (all methodology files)");
+      console.log("  - user/ (global customization directory)");
+      console.log("  - .aichaku.json (metadata)");
+    } else {
+      console.log(`[DRY RUN] Would initialize project at: ${targetPath}`);
+      console.log("[DRY RUN] Would create:");
+      console.log("  - user/ (project customization directory)");
+      console.log("  - .aichaku-project (marker file)");
+      console.log("[DRY RUN] Would prompt to integrate with CLAUDE.md");
+    }
     return {
       success: true,
       path: targetPath,
@@ -56,35 +96,49 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
   }
 
   try {
-    // Check if global Aichaku exists
-    const globalPath = join(Deno.env.get("HOME") || "", ".claude");
-    const globalAichakuExists = !isGlobal &&
-      await exists(join(globalPath, ".aichaku.json"));
+    if (!options.silent) {
+      if (isGlobal) {
+        console.log("\n🌍 Installing Aichaku globally...");
+      } else {
+        console.log("\n🔍 Checking requirements...");
+        const globalMetadata = JSON.parse(
+          await Deno.readTextFile(join(globalPath, ".aichaku.json")),
+        );
+        console.log(`✓ Global Aichaku found (v${globalMetadata.version})`);
+        console.log("\n📁 Creating project structure...");
+      }
+    }
 
     // Create target directory
     await ensureDir(targetPath);
 
-    // Copy all methodologies
+    // Global install: Copy all methodologies
+    // Project install: Just create user dir
     const isJSR = import.meta.url.startsWith("https://jsr.io");
 
-    if (isJSR) {
-      // Fetch from GitHub when running from JSR
-      await fetchMethodologies(targetPath, VERSION, { silent: options.silent });
-    } else {
-      // Local development - copy from source
-      const sourceMethodologies = join(
-        new URL(".", import.meta.url).pathname,
-        "../../../methodologies",
-      );
-      const targetMethodologies = join(targetPath, "methodologies");
+    if (isGlobal) {
+      // Only copy methodologies for global install
+      if (isJSR) {
+        // Fetch from GitHub when running from JSR
+        await fetchMethodologies(targetPath, VERSION, {
+          silent: options.silent,
+        });
+      } else {
+        // Local development - copy from source
+        const sourceMethodologies = join(
+          new URL(".", import.meta.url).pathname,
+          "../../../methodologies",
+        );
+        const targetMethodologies = join(targetPath, "methodologies");
 
-      if (!options.silent) {
-        console.log("\n🔄 Initializing adaptive methodologies...");
+        if (!options.silent) {
+          console.log("\n🔄 Installing adaptive methodologies...");
+        }
+
+        await copy(sourceMethodologies, targetMethodologies, {
+          overwrite: options.force,
+        });
       }
-
-      await copy(sourceMethodologies, targetMethodologies, {
-        overwrite: options.force,
-      });
     }
 
     // Create user directory structure
@@ -95,45 +149,102 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
 
     // Create user README
     const userReadmePath = join(userDir, "README.md");
-    await Deno.writeTextFile(userReadmePath, getUserReadmeContent());
+    await Deno.writeTextFile(userReadmePath, getUserReadmeContent(isGlobal));
 
     // Create .gitkeep files
     await Deno.writeTextFile(join(userDir, "prompts", ".gitkeep"), "");
     await Deno.writeTextFile(join(userDir, "templates", ".gitkeep"), "");
     await Deno.writeTextFile(join(userDir, "methods", ".gitkeep"), "");
 
-    // Create .aichaku.json
-    const metadata = {
-      version: VERSION,
-      initializedAt: new Date().toISOString(),
-      installationType: isGlobal ? "global" : "local",
-      lastUpgrade: null,
-      globalAichakuDetected: globalAichakuExists,
-    };
-    await Deno.writeTextFile(
-      aichakuJsonPath,
-      JSON.stringify(metadata, null, 2),
-    );
+    if (!options.silent) {
+      console.log("✓ Created user customization directory");
+    }
+
+    // Create metadata file
+    if (isGlobal) {
+      // Global: Create .aichaku.json
+      const metadata = {
+        version: VERSION,
+        initializedAt: new Date().toISOString(),
+        installationType: "global",
+        lastUpgrade: null,
+      };
+      await Deno.writeTextFile(
+        aichakuJsonPath,
+        JSON.stringify(metadata, null, 2),
+      );
+    } else {
+      // Project: Create .aichaku-project marker
+      const globalMetadata = JSON.parse(
+        await Deno.readTextFile(join(globalPath, ".aichaku.json")),
+      );
+      const projectMetadata = {
+        version: VERSION,
+        globalVersion: globalMetadata.version,
+        createdAt: new Date().toISOString(),
+        customizations: {
+          userDir: "./user",
+        },
+      };
+      await Deno.writeTextFile(
+        projectMarkerPath,
+        JSON.stringify(projectMetadata, null, 2),
+      );
+    }
+
+    // For project init, prompt for integration
+    if (!isGlobal && !options.silent) {
+      console.log(
+        "\n🤔 Would you like to add Aichaku to this project's CLAUDE.md?",
+      );
+      console.log("   This helps Claude Code understand your methodologies.");
+      console.log("\n[Y/n]: ");
+
+      const buf = new Uint8Array(1024);
+      const n = await Deno.stdin.read(buf);
+      const answer = new TextDecoder().decode(buf.subarray(0, n || 0)).trim()
+        .toLowerCase();
+
+      if (answer === "" || answer === "y" || answer === "yes") {
+        console.log("\n✏️  Updating CLAUDE.md...");
+
+        // Import integrate function and run it
+        const { integrate } = await import("./integrate.ts");
+        const integrateResult = await integrate({
+          projectPath,
+          silent: true,
+        });
+
+        if (integrateResult.success) {
+          console.log("✓ CLAUDE.md updated with Aichaku reference");
+        }
+      }
+    }
 
     return {
       success: true,
       path: targetPath,
-      message: `Initialized at ${targetPath}`,
-      globalDetected: globalAichakuExists,
+      message: isGlobal
+        ? `Global installation complete at ${targetPath}`
+        : `Project initialized`,
+      globalDetected: !isGlobal,
+      action: "created",
     };
   } catch (error) {
     return {
       success: false,
       path: targetPath,
-      message: `Installation failed: ${
-        error instanceof Error ? error.message : String(error)
-      }`,
+      message: `${
+        isGlobal ? "Global installation" : "Project initialization"
+      } failed: ${error instanceof Error ? error.message : String(error)}`,
+      action: "error",
     };
   }
 }
 
-function getUserReadmeContent(): string {
-  return `# Aichaku User Customizations
+function getUserReadmeContent(isGlobal: boolean): string {
+  const scope = isGlobal ? "Global" : "Project";
+  return `# Aichaku ${scope} Customizations
 
 This directory is yours to customize Aichaku's behavior. Files here are never modified during upgrades.
 

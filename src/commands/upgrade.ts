@@ -17,6 +17,9 @@ interface UpgradeResult {
   success: boolean;
   path: string;
   message?: string;
+  action?: "check" | "upgraded" | "current" | "error";
+  version?: string;
+  latestVersion?: string;
 }
 
 interface AichakuMetadata {
@@ -69,22 +72,24 @@ export async function upgrade(
   // Check version
   if (options.check) {
     if (metadata.version === VERSION) {
-      if (!options.silent) {
-        console.log(`✓ Aichaku is up to date (v${VERSION})`);
-      }
       return {
         success: true,
         path: targetPath,
-        message: `Already on latest version (v${VERSION})`,
+        message:
+          `ℹ️  Current version: v${VERSION}\n    Latest version:  v${VERSION}\n    \n✓ You're up to date!`,
+        action: "check",
+        version: metadata.version,
+        latestVersion: VERSION,
       };
     } else {
-      if (!options.silent) {
-        console.log(`Update available: v${metadata.version} → v${VERSION}`);
-      }
       return {
         success: true,
         path: targetPath,
-        message: `Update available: v${metadata.version} → v${VERSION}`,
+        message:
+          `📦 Update available: v${metadata.version} → v${VERSION}\n\nRun 'aichaku upgrade' to install the latest version.`,
+        action: "check",
+        version: metadata.version,
+        latestVersion: VERSION,
       };
     }
   }
@@ -96,6 +101,7 @@ export async function upgrade(
       path: targetPath,
       message:
         `Already on latest version (v${VERSION}). Use --force to reinstall.`,
+      action: "current",
     };
   }
 
@@ -166,7 +172,10 @@ export async function upgrade(
     return {
       success: true,
       path: targetPath,
-      message: `Upgraded to v${VERSION} at ${targetPath}`,
+      message:
+        `Upgraded to v${VERSION}!\n\n💡 All your projects now have the latest methodologies!`,
+      action: "upgraded",
+      version: VERSION,
     };
   } catch (error) {
     return {
@@ -175,6 +184,7 @@ export async function upgrade(
       message: `Upgrade failed: ${
         error instanceof Error ? error.message : String(error)
       }`,
+      action: "error",
     };
   }
 }

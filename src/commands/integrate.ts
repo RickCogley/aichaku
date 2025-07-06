@@ -13,18 +13,23 @@ interface IntegrateResult {
   path: string;
   message?: string;
   action?: "created" | "updated" | "skipped";
+  lineNumber?: number;
 }
 
 const METHODOLOGY_SECTION = `## Methodologies
 
-This project uses the globally installed Aichaku adaptive methodology system. Claude Code will automatically blend methodologies based on natural language:
+This project uses the Aichaku adaptive methodology system.
 
-- Say "sprint" for Scrum practices
-- Say "shape" for Shape Up principles  
-- Say "kanban board" for flow visualization
-- Say "MVP" for Lean approaches
+Aichaku is installed globally and provides adaptive methodology support
+that blends approaches based on your natural language:
+- Say "sprint" → Scrum practices activate
+- Say "shape" → Shape Up principles engage  
+- Say "kanban" → Flow-based practices emerge
 
-The methodologies are installed globally in ~/.claude/methodologies/ and will adapt to how you naturally talk about work.
+Global methodologies location: ~/.claude/methodologies/
+Project customizations: ./.claude/user/
+
+Learn more: https://github.com/RickCogley/aichaku
 `;
 
 /**
@@ -122,11 +127,7 @@ export async function integrate(
         action = "updated";
       }
 
-      if (!options.silent) {
-        console.log(
-          "📝 Updated existing CLAUDE.md with Aichaku methodology section",
-        );
-      }
+      // Console output removed - CLI handles messaging
     } else {
       // Create new CLAUDE.md
       const defaultContent = `# CLAUDE.md
@@ -143,18 +144,28 @@ ${METHODOLOGY_SECTION}
       await Deno.writeTextFile(claudeMdPath, defaultContent);
       action = "created";
 
-      if (!options.silent) {
-        console.log(
-          "📝 Created new CLAUDE.md with Aichaku methodology section",
-        );
+      // Console output removed - CLI handles messaging
+    }
+
+    // Find line number where we added the content
+    const fileContent = await Deno.readTextFile(claudeMdPath);
+    const lines = fileContent.split("\n");
+    let lineNumber = 0;
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].includes("## Methodologies")) {
+        lineNumber = i + 1;
+        break;
       }
     }
 
     return {
       success: true,
       path: claudeMdPath,
-      message: `Successfully ${action} CLAUDE.md with Aichaku reference`,
+      message: `${
+        action === "created" ? "Created new" : "Updated"
+      } project CLAUDE.md`,
       action,
+      lineNumber,
     };
   } catch (error) {
     return {

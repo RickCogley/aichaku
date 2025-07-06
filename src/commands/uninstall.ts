@@ -13,6 +13,7 @@ interface UninstallResult {
   success: boolean;
   path: string;
   message?: string;
+  claudeMdReferences?: { line: number; text: string }[];
 }
 
 /**
@@ -74,6 +75,26 @@ export async function uninstall(
   }
 
   try {
+    // Check for CLAUDE.md references
+    const projectPath = isGlobal
+      ? Deno.cwd()
+      : resolve(options.projectPath || ".");
+    const claudeMdPath = join(projectPath, "CLAUDE.md");
+    const claudeMdReferences: { line: number; text: string }[] = [];
+
+    if (await exists(claudeMdPath)) {
+      const content = await Deno.readTextFile(claudeMdPath);
+      const lines = content.split("\n");
+      lines.forEach((line, index) => {
+        if (
+          line.toLowerCase().includes("aichaku") ||
+          line.includes("## Methodologies")
+        ) {
+          claudeMdReferences.push({ line: index + 1, text: line.trim() });
+        }
+      });
+    }
+
     if (!options.silent) {
       console.log("🗑️  Removing Aichaku...");
     }
@@ -119,6 +140,7 @@ export async function uninstall(
       success: true,
       path: targetPath,
       message: `Uninstalled Aichaku from ${targetPath}`,
+      claudeMdReferences,
     };
   } catch (error) {
     return {

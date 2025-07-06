@@ -68,8 +68,8 @@ Usage:
   aichaku <command> [options]
 
 Commands:
-  init        Initialize Aichaku with all methodologies
-  upgrade     Upgrade to latest version (preserves customizations)
+  init        Initialize Aichaku (global: install, project: setup)
+  upgrade     Upgrade methodologies to latest version
   uninstall   Remove Aichaku from your system
   integrate   Add Aichaku reference to project's CLAUDE.md
 
@@ -128,31 +128,33 @@ try {
         Deno.exit(1);
       }
       if (!args.silent) {
-        console.log(`
-╭──────────────────────────────────────╮
-│  ✅ Aichaku initialized successfully  │
-╰──────────────────────────────────────╯
+        if (result.action === "exists") {
+          console.log(`\nℹ️  ${result.message}`);
+        } else if (options.global) {
+          // Global installation success
+          console.log(`
+✅ Global installation complete!
 
-📍 ${result.message}
-${
-          result.globalDetected
-            ? "\n🌍 Global Aichaku detected - project overrides active\n"
-            : ""
-        }
-🎯 Next steps:
-   • Run 'aichaku integrate' to add Aichaku to your CLAUDE.md
-   • Start Claude Code in your project
-   • Customize in ${result.path}/user/ (optional)
+📁 Installed to: ${result.path}
+📚 Methodologies: Shape Up, Scrum, Kanban, Lean, XP, Scrumban
+🎯 Next: Run 'aichaku init' in any project
 
-📚 Commands:
-   • aichaku integrate - Add to project's CLAUDE.md
-   • aichaku upgrade   - Update methodologies
-   • aichaku --help    - Show all commands
-
-💡 Aichaku adapts to your language - just start working naturally!
-
-🔗 Learn more: https://github.com/RickCogley/aichaku
+💡 Pro tip: Aichaku works best through natural language.
+   Just tell Claude Code what you want to do!
 `);
+        } else {
+          // Project initialization success
+          console.log(`
+✅ Project initialized with Aichaku!
+
+Your project now has:
+  • Access to all global methodologies
+  • Local customization directory
+  ${result.message?.includes("CLAUDE.md") ? "• CLAUDE.md integration" : ""}
+
+💡 Start working naturally - just tell Claude Code what you need!
+`);
+        }
       }
       break;
     }
@@ -165,11 +167,16 @@ ${
         Deno.exit(1);
       }
       if (!args.silent) {
-        console.log(`
-✅ Aichaku upgraded successfully!
-
-${result.message}
-`);
+        if (result.action === "check") {
+          // Just checking, no action taken
+          console.log(`\n🔍 Checking for updates...\n\n${result.message}`);
+        } else if (result.action === "upgraded") {
+          // Actually upgraded
+          console.log(`\n✅ ${result.message}`);
+        } else {
+          // Already up to date
+          console.log(`\nℹ️  ${result.message}`);
+        }
       }
       break;
     }
@@ -182,11 +189,19 @@ ${result.message}
         Deno.exit(1);
       }
       if (!args.silent) {
-        console.log(`
-✅ Aichaku uninstalled successfully!
+        console.log(`\n✅ ${result.message}`);
 
-${result.message}
-`);
+        if (result.claudeMdReferences && result.claudeMdReferences.length > 0) {
+          console.log(`
+ℹ️  CLAUDE.md still contains Aichaku references:
+${
+            result.claudeMdReferences.map((ref) =>
+              `    Line ${ref.line}: "${ref.text}"`
+            ).join("\n")
+          }
+    
+    Remove these manually if no longer needed.`);
+        }
       }
       break;
     }
@@ -198,17 +213,24 @@ ${result.message}
         Deno.exit(1);
       }
       if (!args.silent) {
-        console.log(`
-✅ Aichaku reference ${
-          result.action === "created"
-            ? "added to new"
-            : result.action === "updated"
-            ? "added to existing"
-            : "already in"
-        } CLAUDE.md!
+        if (result.action === "skipped") {
+          console.log(`\nℹ️  Aichaku reference already exists in CLAUDE.md`);
+        } else {
+          console.log(`
+📄 Analyzing CLAUDE.md...
+✏️  Adding Aichaku methodology section...
 
-${result.message}
+✅ Integration complete!
+
+📍 ${result.action === "created" ? "Created" : "Added"} at line ${
+            result.lineNumber || "N/A"
+          }
+📚 Methodologies available: 6
+🔗 Using global: ~/.claude/
+
+✨ Claude Code now understands your methodology preferences!
 `);
+        }
       }
       break;
     }

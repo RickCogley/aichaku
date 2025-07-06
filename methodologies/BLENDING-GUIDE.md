@@ -1,5 +1,18 @@
 # Aichaku Methodology Blending Guide
 
+## 🏗️ PROJECT STRUCTURE - ALWAYS START HERE
+
+For ANY new work, feature, or change, IMMEDIATELY create: 📁
+`.claude/output/active-{YYYY-MM-DD}-{descriptive-name}/` └── STATUS.md
+
+This happens AUTOMATICALLY when users say:
+
+- "Let's..." / "I want to..." / "Can we..."
+- "Help me..." / "We need to..." / "Fix..."
+- "Add..." / "Improve..." / "Change..."
+
+Users should NEVER need to ask for this structure!
+
 ## Core Principle
 
 **Adapt to the user's language, don't force them to adapt to yours.**

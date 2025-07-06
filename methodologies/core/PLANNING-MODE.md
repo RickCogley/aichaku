@@ -1,5 +1,19 @@
 # Planning Mode
 
+## 🏗️ PROJECT STRUCTURE - ALWAYS START HERE
+
+When you hear any of these:
+
+- "Let's add..." / "I want to..." / "Can we..."
+- "Help me implement..." / "We need to..."
+- "Fix..." / "Improve..." / "Change..."
+- "Plan..." / "Shape..." / "Define..."
+
+IMMEDIATELY create: 📁 `.claude/output/active-{YYYY-MM-DD}-{descriptive-name}/`
+└── STATUS.md
+
+This is automatic - users shouldn't need to ask!
+
 **ACTIVATES WHEN**: User needs to decide what to build, prioritize work, or
 define features
 
@@ -32,8 +46,9 @@ DETECT context → APPLY methodology rules → OUTPUT actionable plan
 
 3. **OUTPUT STRUCTURED PLAN**
    ```
-   SAVE TO: .claude/output/active-YYYYMM-[project]/
+   SAVE TO: .claude/output/active-YYYY-MM-DD-[descriptive-name]/
    FORMAT: Methodology-specific template
+   TRACK: Progress in STATUS.md
    ```
 
 ## Methodology Rules

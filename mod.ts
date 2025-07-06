@@ -27,17 +27,15 @@
  *
  * @example Install globally via CLI
  * ```bash
- * # Install aichaku globally
+ * # Install aichaku CLI globally
  * deno install -g -A -n aichaku jsr:@rick/aichaku/cli
  *
- * # Initialize in your project
- * aichaku init
- *
- * # Initialize globally for all projects
+ * # Initialize global methodologies (one time)
  * aichaku init --global
  *
- * # Add Aichaku reference to project's CLAUDE.md
- * aichaku integrate
+ * # In any project:
+ * aichaku init  # Creates minimal setup
+ * # Prompts to integrate with CLAUDE.md automatically
  * ```
  *
  * @example Programmatic usage

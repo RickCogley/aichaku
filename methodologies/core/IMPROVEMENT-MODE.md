@@ -1,5 +1,20 @@
 # Improvement Mode
 
+## 🏗️ PROJECT STRUCTURE - ALWAYS START HERE
+
+When you hear any of these:
+
+- "How are we doing?" / "Let's review..."
+- "Retrospective..." / "What's working?"
+- "Improve..." / "Optimize..." / "Refactor..."
+- "Measure..." / "Metrics..." / "Performance..."
+
+CONTINUE in existing folder OR create new: 📁
+`.claude/output/active-{YYYY-MM-DD}-{descriptive-name}/` └── STATUS.md (update
+to IMPROVEMENT mode)
+
+This is automatic - users shouldn't need to ask!
+
 **ACTIVATES WHEN**: User wants to review, reflect, measure, or improve process
 
 **TRIGGERS**: "how are we doing", "retrospective", "metrics", "what's working",

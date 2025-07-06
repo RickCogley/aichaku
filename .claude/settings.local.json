@@ -28,7 +28,8 @@
       "WebFetch(domain:jsr.io)",
       "Bash(deno run:*)",
       "Bash(deno task:*)",
-      "Bash(deno check:*)"
+      "Bash(deno check:*)",
+      "Bash(mv:*)"
     ],
     "deny": []
   }

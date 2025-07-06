@@ -9,34 +9,36 @@
 ## What is aichaku?
 
 Aichaku (愛着 - "affection/attachment") provides adaptive methodology support
-for Claude Code. Rather than forcing you to choose a single methodology, aichaku
-installs all of them and helps Claude Code blend approaches based on your
-natural language. Say "sprint" and get Scrum practices; mention "shaping" and
-get Shape Up principles - all seamlessly integrated.
+for Claude Code. Install once globally, use everywhere. Rather than forcing you
+to choose a single methodology, aichaku provides all of them and helps Claude
+Code blend approaches based on your natural language. Say "sprint" and get
+Scrum practices; mention "shaping" and get Shape Up principles - all seamlessly
+integrated.
 
 **✨ Key Features:**
 
+- 🌍 **Global install, works everywhere** - One-time setup, all projects benefit
 - 🎯 **Adaptive blending** - Methodologies adapt to your language
-- 🔄 **All-in-one install** - Shape Up, Scrum, Kanban, XP, Lean, Scrumban
-  included
+- 🔄 **All methodologies included** - Shape Up, Scrum, Kanban, XP, Lean, Scrumban
 - 🧠 **Context-aware** - AI responds to your terminology and needs
-- 📁 **User customization** - Your modifications survive upgrades
-- 🚀 **Simple lifecycle** - Just init, upgrade, and uninstall
+- 📁 **Clean projects** - No methodology file duplication
+- 🚀 **Simple lifecycle** - Just init, integrate, upgrade, and uninstall
 
 ## Quick Start
 
 ```bash
-# Install globally
+# 1. Install aichaku CLI globally
 deno install -g -A -n aichaku jsr:@rick/aichaku/cli
 
-# Initialize in your project
-aichaku init
-
-# Or initialize globally for all projects
+# 2. Initialize global methodologies (one time)
 aichaku init --global
+
+# 3. In any project, run:
+aichaku init
+# This creates minimal setup and prompts to integrate with CLAUDE.md
 ```
 
-That's it! Claude Code now has adaptive methodology support.
+That's it! Claude Code now has adaptive methodology support in all your projects.
 
 ## How It Works
 
@@ -104,13 +106,16 @@ Claude: [Recognizes Scrum ceremony + general terms]
 ### Initialize
 
 ```bash
-# Initialize in current project
-aichaku init
-
-# Initialize globally for all projects  
+# First time: Install global methodologies
 aichaku init --global
 
-# Preview what would be installed
+# Per project: Create minimal setup
+aichaku init
+# → Creates .claude/user/ for customizations
+# → Prompts to add Aichaku to CLAUDE.md
+# → No methodology files copied!
+
+# Preview what would happen
 aichaku init --dry-run
 ```
 
@@ -156,38 +161,51 @@ aichaku integrate --force
 ### Programmatic Usage
 
 ```typescript
-import { init } from "jsr:@rick/aichaku";
+import { init, integrate } from "jsr:@rick/aichaku";
 
-// Initialize with all methodologies
+// Initialize global methodologies
 await init({
   global: true,
-  force: false,
+});
+
+// Initialize project
+await init({
+  projectPath: "./my-project",
+});
+
+// Add to CLAUDE.md
+await integrate({
+  projectPath: "./my-project",
 });
 ```
 
-## What Gets Installed?
+## Architecture
 
+### Global Installation (One Time)
 ```
-.claude/
-├── methodologies/          # All methodology files (updated on upgrade)
-│   ├── core/
+~/.claude/
+├── methodologies/          # All methodology files live here
+│   ├── core/              # Universal modes
 │   │   ├── PLANNING-MODE.md
 │   │   ├── EXECUTION-MODE.md
 │   │   └── IMPROVEMENT-MODE.md
 │   ├── shape-up/
-│   │   ├── SHAPE-UP-AICHAKU-GUIDE.md
-│   │   └── templates/
 │   ├── scrum/
-│   │   ├── SCRUM-AICHAKU-GUIDE.md
-│   │   └── templates/
 │   └── [other methodologies...]
-├── user/                   # Your customizations (never touched by upgrades)
-│   ├── README.md          # Customization guide
-│   ├── prompts/           # Custom AI prompts
-│   ├── templates/         # Your document templates
-│   └── methods/           # Methodology extensions
-└── .aichaku.json          # Installation metadata
+├── user/                  # Global customizations
+└── .aichaku.json         # Global metadata
 ```
+
+### Project Integration (Per Project)
+```
+project/
+├── CLAUDE.md             # Contains reference to global Aichaku
+└── .claude/              # Optional, only if customizations needed
+    ├── user/             # Project-specific overrides
+    └── .aichaku-project  # Project marker file
+```
+
+**Key Point**: Methodologies are NEVER copied to projects - they're referenced from the global installation. This keeps your git repositories clean!
 
 ## User Customization
 
@@ -249,6 +267,43 @@ Traditional methodology tools force you to adapt to them. Aichaku reverses
 this - it helps Claude Code adapt to you. Whether you're a solo developer,
 startup team, or enterprise group, aichaku provides just enough process to be
 helpful without getting in the way.
+
+## Migrating from v0.4.x
+
+If you're upgrading from v0.4.x, the architecture has significantly improved:
+
+**What's Changed:**
+- Methodologies now live globally only (no more project duplication)
+- Projects only contain customizations, not methodology files
+- Much cleaner git repositories
+- Better command output with no redundancy
+
+**Migration Steps:**
+
+1. **Update the CLI tool:**
+```bash
+deno install -g -A -n aichaku --force jsr:@rick/aichaku@0.5.0/cli
+```
+
+2. **Keep your global installation** (if you have one):
+```bash
+# No changes needed to ~/.claude/
+```
+
+3. **Clean up existing projects:**
+```bash
+# In each project that has aichaku:
+rm -rf .claude/methodologies .claude/.aichaku.json
+# Keep .claude/user/ if you have customizations
+```
+
+4. **Re-initialize projects:**
+```bash
+aichaku init
+# This will create the new minimal structure
+```
+
+Your customizations in `.claude/user/` are preserved!
 
 ## Why "aichaku"?
 
