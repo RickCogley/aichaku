@@ -48,9 +48,10 @@
 </nav>
 <div id="searchResults"></div><div id="content">
     <main><section>
-  <div class="space-y-2 flex-1"><div class="space-y-7" id="module_doc"><div class="markdown"><p>Aichaku (愛着) is an AI-optimized project methodology installer for Claude Code that brings
-affection and attachment to your development workflow by providing contextual, mode-aware
-methodology guidance for AI pair programming.</p>
+  <div class="space-y-2 flex-1"><div class="space-y-7" id="module_doc"><div class="markdown"><p>Aichaku (愛着) provides adaptive methodology support for Claude Code that blends
+approaches based on how you naturally work. Rather than forcing you to choose a
+methodology, Aichaku installs all of them and helps Claude Code adapt to your
+terminology and context.</p>
 <table>
 <thead>
 <tr>
@@ -61,7 +62,7 @@ methodology guidance for AI pair programming.</p>
 <tbody>
 <tr>
 <td align="left">Version</td>
-<td align="left">0.2.2</td>
+<td align="left">0.3.0</td>
 </tr>
 <tr>
 <td align="left">Repository</td>
@@ -88,13 +89,13 @@ methodology guidance for AI pair programming.</p>
 <h2 id="core-features">
 Core Features</h2>
 <ul>
-<li><strong>🤖 AI-First Design</strong> - Methodologies optimized for AI pair programming</li>
-<li><strong>🎭 Smart Mode Detection</strong> - Automatically detects context and switches between planning, execution, and improvement modes</li>
-<li><strong>📦 Multiple Methodologies</strong> - Shape Up, Scrum, Kanban, Lean, and XP support</li>
+<li><strong>🔄 Adaptive Blending</strong> - Methodologies adapt to your natural language</li>
+<li><strong>📦 All-in-One Install</strong> - Shape Up, Scrum, Kanban, Lean, XP, and Scrumban included</li>
+<li><strong>🧠 Context Aware</strong> - AI responds to your terminology and needs</li>
+<li><strong>📁 User Customization</strong> - Your modifications survive upgrades</li>
+<li><strong>🚀 Simple Lifecycle</strong> - Just init, upgrade, and uninstall</li>
 <li><strong>🔒 Security First</strong> - Path validation, no network operations, minimal permissions</li>
-<li><strong>🚀 Zero Configuration</strong> - Works out of the box with sensible defaults</li>
-<li><strong>📝 Rich Templates</strong> - Comprehensive templates for each methodology</li>
-<li><strong>🛠️ Extensible</strong> - Easy to add new methodologies or customize existing ones</li>
+<li><strong>🎯 Zero Configuration</strong> - Works out of the box with sensible defaults</li>
 </ul>
 <h2 id="quick-start">
 Quick Start</h2>
@@ -147,14 +148,14 @@ Examples</h2></div><div class="space-y-8"><div class="anchorable"><a href="#exam
 </div></h3>
   <div><div class="markdown"><pre class="highlight"><code class="language-bash">deno install -A -n aichaku jsr:@rick/aichaku/cli
 
-aichaku shape-up
+aichaku init
 
-aichaku shape-up --global
+aichaku init --global
 </code><button class="copyButton" data-copy="deno install -A -n aichaku jsr:@rick/aichaku/cli
 
-aichaku shape-up
+aichaku init
 
-aichaku shape-up --global
+aichaku init --global
 "><svg class="copy" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="2" y="2" width="7" height="7" fill="none"/>
 <rect x="6" y="6" width="7" height="7" fill="none"/>
@@ -191,29 +192,29 @@ aichaku shape-up --global
 </a>
 <h3 class="example-header"><div class="markdown"><p>Programmatic usage</p>
 </div></h3>
-  <div><div class="markdown"><pre class="highlight"><code class="language-typescript">import { install } from &quot;jsr:@rick/aichaku&quot;;
+  <div><div class="markdown"><pre class="highlight"><code class="language-typescript">import { init } from &quot;jsr:@rick/aichaku&quot;;
 
-// Install Shape Up methodology locally
-const result = await install(&quot;shape-up&quot;, {
-  projectPath: &quot;./.claude&quot;,
+// Initialize with all methodologies
+const result = await init({
+  global: false,
   force: false,
   silent: false
 });
 
 if (result.success) {
-  console.log(`Installed to ${result.path}`);
+  console.log(`Initialized at ${result.path}`);
 }
-</code><button class="copyButton" data-copy="import { install } from &quot;jsr:@rick/aichaku&quot;;
+</code><button class="copyButton" data-copy="import { init } from &quot;jsr:@rick/aichaku&quot;;
 
-// Install Shape Up methodology locally
-const result = await install(&quot;shape-up&quot;, {
-  projectPath: &quot;./.claude&quot;,
+// Initialize with all methodologies
+const result = await init({
+  global: false,
   force: false,
   silent: false
 });
 
 if (result.success) {
-  console.log(`Installed to ${result.path}`);
+  console.log(`Initialized at ${result.path}`);
 }
 "><svg class="copy" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="2" y="2" width="7" height="7" fill="none"/>
@@ -249,16 +250,24 @@ if (result.success) {
   </defs>
 </svg>
 </a>
-<h3 class="example-header"><div class="markdown"><p>List available methodologies</p>
+<h3 class="example-header"><div class="markdown"><p>Upgrade to latest version</p>
 </div></h3>
-  <div><div class="markdown"><pre class="highlight"><code class="language-typescript">import { list } from &quot;jsr:@rick/aichaku&quot;;
+  <div><div class="markdown"><pre class="highlight"><code class="language-typescript">import { upgrade } from &quot;jsr:@rick/aichaku&quot;;
 
-const { available, installed } = await list();
-console.log(`Available: ${available.map(m =&gt; m.name).join(&quot;, &quot;)}`);
-</code><button class="copyButton" data-copy="import { list } from &quot;jsr:@rick/aichaku&quot;;
+// Check for updates
+const checkResult = await upgrade({ check: true });
 
-const { available, installed } = await list();
-console.log(`Available: ${available.map(m =&gt; m.name).join(&quot;, &quot;)}`);
+// Perform upgrade
+const result = await upgrade();
+console.log(`Upgraded to ${result.version}`);
+</code><button class="copyButton" data-copy="import { upgrade } from &quot;jsr:@rick/aichaku&quot;;
+
+// Check for updates
+const checkResult = await upgrade({ check: true });
+
+// Perform upgrade
+const result = await upgrade();
+console.log(`Upgraded to ${result.version}`);
 "><svg class="copy" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="2" y="2" width="7" height="7" fill="none"/>
 <rect x="6" y="6" width="7" height="7" fill="none"/>
@@ -269,14 +278,16 @@ console.log(`Available: ${available.map(m =&gt; m.name).join(&quot;, &quot;)}`);
 <path d="M5 12l5 5l10 -10" />
 </svg>
 </button><code></code></pre>
-<h2 id="mode-system">
-Mode System</h2>
-<p>Aichaku uses a simple 3-mode system that AI assistants can detect:</p>
+<h2 id="adaptive-system">
+Adaptive System</h2>
+<p>Aichaku uses a simple 3-mode system that adapts to your context:</p>
 <ul>
-<li><strong>PLANNING MODE</strong> - When starting something new (bet shaping, sprint planning)</li>
+<li><strong>PLANNING MODE</strong> - When starting something new (shaping, sprint planning)</li>
 <li><strong>EXECUTION MODE</strong> - When actively working (building, coding, testing)</li>
 <li><strong>IMPROVEMENT MODE</strong> - When reflecting and optimizing (retrospectives, refactoring)</li>
 </ul>
+<p>The AI blends methodologies based on your language. Say &quot;sprint&quot; and get Scrum
+practices; mention &quot;shaping&quot; and get Shape Up principles - all seamlessly integrated.</p>
 <h2 id="security">
 Security</h2>
 <p>Following OWASP principles adapted for CLI tools:</p>
@@ -326,7 +337,7 @@ Security</h2>
                   </span>
                 </a>
               </li></ul><a class="flex items-center gap-0.5" href=".&#x2F;all_symbols.html">
-              <span class="leading-none">view all 17 symbols</span><svg
+              <span class="leading-none">view all 23 symbols</span><svg
 	width="16"
 	height="16"
 	viewBox="0 0 16 16"
@@ -335,7 +346,7 @@ Security</h2>
 	<path fill-rule="evenodd" clip-rule="evenodd" d="M5.76748 11.8159C5.5378 11.577 5.54525 11.1972 5.78411 10.9675L8.93431 8L5.78411 5.0325C5.54525 4.80282 5.5378 4.423 5.76748 4.18413C5.99715 3.94527 6.37698 3.93782 6.61584 4.1675L10.2158 7.5675C10.3335 7.68062 10.4 7.83679 10.4 8C10.4 8.16321 10.3335 8.31938 10.2158 8.4325L6.61584 11.8325C6.37698 12.0622 5.99715 12.0547 5.76748 11.8159Z" fill="currentColor" />
 </svg>
 </a></nav><nav class="documentNavigation">
-          <h3>Document Navigation</h3><ul><li><a href="#examples" title="Examples">Examples</a></li><li><ul><li><a href="#example_0" title="Install globally via CLI">Install globally via CLI</a></li><li><a href="#example_1" title="Programmatic usage">Programmatic usage</a></li><li><a href="#example_2" title="List available methodologies">List available methodologies</a></li><li><ul><li><a href="#core-features" title="Core Features">Core Features</a></li><li><a href="#quick-start" title="Quick Start">Quick Start</a></li></ul></li></ul></li></ul></nav></div>
+          <h3>Document Navigation</h3><ul><li><a href="#examples" title="Examples">Examples</a></li><li><ul><li><a href="#example_0" title="Install globally via CLI">Install globally via CLI</a></li><li><a href="#example_1" title="Programmatic usage">Programmatic usage</a></li><li><a href="#example_2" title="Upgrade to latest version">Upgrade to latest version</a></li><li><ul><li><a href="#core-features" title="Core Features">Core Features</a></li><li><a href="#quick-start" title="Quick Start">Quick Start</a></li></ul></li></ul></li></ul></nav></div>
   </div></div>
 </div>
 </div>

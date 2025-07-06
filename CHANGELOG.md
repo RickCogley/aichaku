@@ -10,28 +10,15 @@ and this project adheres to
 
 ### Added
 
-- Command-based CLI architecture with init, upgrade, and uninstall commands
-  (0679017, c9163c7)
-- User customization system that survives upgrades with dedicated user/
-  directory (0679017)
-- Adaptive methodology blending based on natural language detection (7c15cb6)
-- Version tracking with .aichaku.json metadata file (0679017)
-- Comprehensive blending guide for AI assistants (7c15cb6)
-- Planning documents using Aichaku's own methodology (2767e43)
+- add adaptive blending guides to methodologies (7c15cb6)
+- implement upgrade and uninstall commands (c9163c7)
+- refactor CLI to command-based structure with init command (0679017)
 
 ### Changed
 
-- **BREAKING**: CLI commands restructured - use `aichaku init` instead of
-  `aichaku install`
-- Methodologies now support adaptive blending rather than single selection
-- Directory structure enhanced with clear separation of Aichaku vs user files
-- Improved error handling and user feedback throughout CLI
-
-### Fixed
-
-- Upgrade process now preserves user customizations
-- Better path validation for security
-- Clearer help messages and command documentation
+- add release notes and changelog for v0.3.0 (a2dd9f4)
+- add planning documents for adaptive refactor using Aichaku methodology
+  (2767e43)
 
 ## [0.2.2] - 2025-07-06
 
