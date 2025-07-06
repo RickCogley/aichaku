@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2025-07-06
+
+### Fixed
+
+- resolve type error in methodology-fetcher (1da605a)
+- resolve lint error in methodology-fetcher (bc6472c)
+- add methodology fetcher for JSR installations (f7062d9)
+
 ## [0.3.0] - 2025-07-06
 
 ### Added
