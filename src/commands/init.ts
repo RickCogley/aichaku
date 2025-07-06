@@ -16,6 +16,7 @@ interface InitResult {
   success: boolean;
   path: string;
   message?: string;
+  globalDetected?: boolean;
 }
 
 /**
@@ -55,6 +56,11 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
   }
 
   try {
+    // Check if global Aichaku exists
+    const globalPath = join(Deno.env.get("HOME") || "", ".claude");
+    const globalAichakuExists = !isGlobal &&
+      await exists(join(globalPath, ".aichaku.json"));
+
     // Create target directory
     await ensureDir(targetPath);
 
@@ -73,7 +79,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
       const targetMethodologies = join(targetPath, "methodologies");
 
       if (!options.silent) {
-        console.log("📦 Installing adaptive methodologies...");
+        console.log("\n🔄 Initializing adaptive methodologies...");
       }
 
       await copy(sourceMethodologies, targetMethodologies, {
@@ -99,9 +105,10 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     // Create .aichaku.json
     const metadata = {
       version: VERSION,
-      installedAt: new Date().toISOString(),
+      initializedAt: new Date().toISOString(),
       installationType: isGlobal ? "global" : "local",
       lastUpgrade: null,
+      globalAichakuDetected: globalAichakuExists,
     };
     await Deno.writeTextFile(
       aichakuJsonPath,
@@ -111,7 +118,8 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     return {
       success: true,
       path: targetPath,
-      message: `Installed at ${targetPath}`,
+      message: `Initialized at ${targetPath}`,
+      globalDetected: globalAichakuExists,
     };
   } catch (error) {
     return {

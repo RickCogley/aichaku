@@ -117,14 +117,17 @@ aichaku init --dry-run
 ### Upgrade
 
 ```bash
-# Check for updates
-aichaku upgrade --check
+# Upgrade the CLI tool itself
+deno install -g -A -n aichaku --force jsr:@rick/aichaku/cli
 
-# Upgrade to latest version (preserves customizations)
-aichaku upgrade
+# Then upgrade methodologies (preserves customizations)
+aichaku upgrade --global
 
-# Force reinstall
-aichaku upgrade --force
+# Check for methodology updates
+aichaku upgrade --check --global
+
+# Force reinstall methodologies
+aichaku upgrade --force --global
 ```
 
 ### Uninstall

@@ -129,16 +129,22 @@ try {
       }
       if (!args.silent) {
         console.log(`
-✅ Aichaku initialized successfully!
+╭──────────────────────────────────────╮
+│  ✅ Aichaku initialized successfully  │
+╰──────────────────────────────────────╯
 
-${result.message}
+📍 ${result.message}
+${
+          result.globalDetected
+            ? "\n🌍 Global Aichaku detected - project overrides active\n"
+            : ""
+        }
+🎯 Next steps:
+   • Start Claude Code in your project
+   • The AI now has adaptive methodology support
+   • Customize in ${result.path}/user/ (optional)
 
-Next steps:
-- Start Claude Code in your project
-- The AI now has adaptive methodology support
-- Customize in ${result.path}/user/ (optional)
-
-Aichaku adapts to your language - just start working naturally!
+💡 Aichaku adapts to your language - just start working naturally!
 `);
       }
       break;

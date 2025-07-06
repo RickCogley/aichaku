@@ -78,7 +78,7 @@ export async function fetchMethodologies(
   };
 
   if (!options.silent) {
-    console.log("📥 Fetching methodologies from GitHub...");
+    console.log("\n🔄 Initializing adaptive methodologies...");
   }
 
   async function fetchFile(relativePath: string): Promise<void> {
@@ -124,6 +124,6 @@ export async function fetchMethodologies(
   await processStructure(structure);
 
   if (!options.silent) {
-    console.log("✅ Methodologies installed successfully");
+    console.log("✨ Methodologies initialized successfully\n");
   }
 }
