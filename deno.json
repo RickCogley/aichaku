@@ -50,5 +50,26 @@
       "scratch/",
       "version.ts"
     ]
+  },
+  "publish": {
+    "include": [
+      "mod.ts",
+      "cli.ts",
+      "version.ts",
+      "src/",
+      "methodologies/",
+      "README.md",
+      "LICENSE",
+      "CHANGELOG.md"
+    ],
+    "exclude": [
+      "**/*_test.ts",
+      "**/*.test.ts",
+      ".github/",
+      ".claude/",
+      "nagare-launcher.ts",
+      "nagare.config.ts",
+      "deno.lock"
+    ]
   }
 }
