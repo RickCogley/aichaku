@@ -57,6 +57,12 @@ export default {
     gitRemote: "origin",
   },
 
+  docs: {
+    enabled: true,
+    outputDir: "./docs",
+    includePrivate: false,
+  },
+
   hooks: {
     preRelease: [
       async () => {

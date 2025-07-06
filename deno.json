@@ -71,5 +71,12 @@
       "nagare.config.ts",
       "deno.lock"
     ]
+  },
+  "compilerOptions": {
+    "lib": ["deno.window"],
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
   }
 }

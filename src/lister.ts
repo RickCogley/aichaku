@@ -2,6 +2,16 @@ import type { ListResult } from "./types.ts";
 
 /**
  * List available and installed methodologies
+ *
+ * @returns Promise containing available and installed methodologies
+ *
+ * @example
+ * ```typescript
+ * const { available, installed } = await list();
+ * console.log(`Available: ${available.length} methodologies`);
+ * console.log(`Installed globally: ${installed.global.length}`);
+ * console.log(`Installed locally: ${installed.local.length}`);
+ * ```
  */
 export function list(): Promise<ListResult> {
   // TODO: Implement listing functionality

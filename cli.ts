@@ -2,6 +2,20 @@
 
 /**
  * aichaku CLI - Install AI-optimized methodologies for Claude Code
+ *
+ * @module
+ *
+ * @example
+ * ```bash
+ * # Install Shape Up methodology globally
+ * aichaku install shape-up --global
+ *
+ * # Install to current project
+ * aichaku install shape-up
+ *
+ * # List available methodologies
+ * aichaku list
+ * ```
  */
 
 import { parseArgs } from "jsr:@std/cli@1/parse-args";

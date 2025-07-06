@@ -19,7 +19,8 @@
       "Bash(mkdir:*)",
       "Bash(chmod:*)",
       "Bash(git config:*)",
-      "Bash(gh workflow view:*)"
+      "Bash(gh workflow view:*)",
+      "Bash(deno doc:*)"
     ],
     "deny": []
   }
