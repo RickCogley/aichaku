@@ -111,9 +111,9 @@ export async function fetchMethodologies(
     for (const [key, value] of Object.entries(obj)) {
       const path = currentPath ? `${currentPath}/${key}` : key;
 
-      if (typeof value === "object") {
+      if (typeof value === "object" && value !== null) {
         // It's a directory
-        await processStructure(value, path);
+        await processStructure(value as Record<string, unknown>, path);
       } else {
         // It's a file
         await fetchFile(path);
