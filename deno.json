@@ -1,6 +1,6 @@
 {
   "name": "@rick/aichaku",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "exports": {
     ".": "./mod.ts",
     "./cli": "./cli.ts"
@@ -82,13 +82,17 @@
     ]
   },
   "compilerOptions": {
-    "lib": ["deno.window"],
+    "lib": [
+      "deno.window"
+    ],
     "strict": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
   "test": {
-    "include": ["src/**/*_test.ts"]
+    "include": [
+      "src/**/*_test.ts"
+    ]
   }
 }

@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2025-07-06
+
+### Added
+
+- improve JSR score and add documentation (48188f6)
+- add pre-commit hook for automatic formatting (f5fc19e)
+
+### Changed
+
+- update deno.lock (17ab089)
+- add claude code settings (cb14858)
+- fix import order formatting (7c70533)
+- add publish configuration for JSR (47c32b2)
+
+### Fixed
+
+- exclude docs from linting and improve JSR documentation (b6cd23f)
+- update imports to use JSR specifiers for publishing (4bc9aa5)
+
 ## [0.1.0] - 2025-07-06
 
 ### Added
