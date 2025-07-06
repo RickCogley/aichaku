@@ -9,9 +9,11 @@ and this project adheres to
 ## [0.4.0] - 2025-07-06
 
 ### Added
+
 - add integrate command to add Aichaku reference to CLAUDE.md (23887aa)
 
 ### Changed
+
 - format code for release (7589d4e)
 - update documentation for integrate command (3eb985f)
 - move release notes to output folder (27a707d)
