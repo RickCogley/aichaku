@@ -74,7 +74,7 @@
  *
  * // Add to current project's CLAUDE.md
  * const result = await integrate();
- * 
+ *
  * // Add to specific project
  * const result = await integrate({ projectPath: "/path/to/project" });
  * ```

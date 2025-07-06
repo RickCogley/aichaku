@@ -29,7 +29,7 @@ The methodologies are installed globally in ~/.claude/methodologies/ and will ad
 
 /**
  * Integrate Aichaku reference into project's CLAUDE.md
- * 
+ *
  * @param options - Integration options
  * @returns Promise with integration result
  */
@@ -41,11 +41,19 @@ export async function integrate(
 
   if (options.dryRun) {
     const fileExists = await checkFileExists(claudeMdPath);
-    console.log(`[DRY RUN] Would ${fileExists ? "update" : "create"} CLAUDE.md at: ${claudeMdPath}`);
+    console.log(
+      `[DRY RUN] Would ${
+        fileExists ? "update" : "create"
+      } CLAUDE.md at: ${claudeMdPath}`,
+    );
     if (fileExists) {
-      console.log("[DRY RUN] Would check if methodology section exists and add if missing");
+      console.log(
+        "[DRY RUN] Would check if methodology section exists and add if missing",
+      );
     } else {
-      console.log("[DRY RUN] Would create new CLAUDE.md with Aichaku methodology section");
+      console.log(
+        "[DRY RUN] Would create new CLAUDE.md with Aichaku methodology section",
+      );
     }
     return {
       success: true,
@@ -57,59 +65,67 @@ export async function integrate(
 
   try {
     let action: "created" | "updated" | "skipped" = "skipped";
-    
+
     if (await exists(claudeMdPath)) {
       // File exists - check if methodology section already present
       const content = await Deno.readTextFile(claudeMdPath);
-      
+
       // Check if Aichaku is already mentioned
       if (content.includes("Aichaku") || content.includes("aichaku")) {
         if (!options.force) {
           return {
             success: true,
             path: claudeMdPath,
-            message: "CLAUDE.md already contains Aichaku reference. Use --force to add anyway.",
+            message:
+              "CLAUDE.md already contains Aichaku reference. Use --force to add anyway.",
             action: "skipped",
           };
         }
       }
-      
+
       // Check if there's already a ## Methodologies section
       if (content.includes("## Methodologies")) {
         // Append to existing section
         const updatedContent = content.replace(
           /## Methodologies\n/,
-          `## Methodologies\n\n${METHODOLOGY_SECTION.split('\n').slice(2).join('\n')}\n\n`
+          `## Methodologies\n\n${
+            METHODOLOGY_SECTION.split("\n").slice(2).join("\n")
+          }\n\n`,
         );
         await Deno.writeTextFile(claudeMdPath, updatedContent);
         action = "updated";
       } else {
         // Add new section after the first paragraph or at the beginning
-        const lines = content.split('\n');
+        const lines = content.split("\n");
         let insertIndex = 0;
-        
+
         // Find the first empty line after initial content
         for (let i = 0; i < lines.length; i++) {
-          if (lines[i].startsWith('#')) {
+          if (lines[i].startsWith("#")) {
             // Found a section, insert before it
             insertIndex = i;
             break;
           }
         }
-        
+
         if (insertIndex === 0) {
           // No sections found, append at end
-          await Deno.writeTextFile(claudeMdPath, content + "\n\n" + METHODOLOGY_SECTION);
+          await Deno.writeTextFile(
+            claudeMdPath,
+            content + "\n\n" + METHODOLOGY_SECTION,
+          );
         } else {
           // Insert before the first section
           lines.splice(insertIndex, 0, "", METHODOLOGY_SECTION, "");
-          await Deno.writeTextFile(claudeMdPath, lines.join('\n'));
+          await Deno.writeTextFile(claudeMdPath, lines.join("\n"));
         }
         action = "updated";
       }
-      
+
       if (!options.silent) {
-        console.log("📝 Updated existing CLAUDE.md with Aichaku methodology section");
+        console.log(
+          "📝 Updated existing CLAUDE.md with Aichaku methodology section",
+        );
       }
     } else {
       // Create new CLAUDE.md
@@ -123,12 +139,14 @@ ${METHODOLOGY_SECTION}
 
 [Add your project-specific information here]
 `;
-      
+
       await Deno.writeTextFile(claudeMdPath, defaultContent);
       action = "created";
-      
+
       if (!options.silent) {
-        console.log("📝 Created new CLAUDE.md with Aichaku methodology section");
+        console.log(
+          "📝 Created new CLAUDE.md with Aichaku methodology section",
+        );
       }
     }
 

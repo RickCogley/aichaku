@@ -5,14 +5,16 @@ the Aichaku methodology library.
 
 ## Methodologies
 
-This project uses the globally installed Aichaku adaptive methodology system. Claude Code will automatically blend methodologies based on natural language:
+This project uses the globally installed Aichaku adaptive methodology system.
+Claude Code will automatically blend methodologies based on natural language:
 
 - Say "sprint" for Scrum practices
-- Say "shape" for Shape Up principles  
+- Say "shape" for Shape Up principles
 - Say "kanban board" for flow visualization
 - Say "MVP" for Lean approaches
 
-The methodologies are installed globally in ~/.claude/methodologies/ and will adapt to how you naturally talk about work.
+The methodologies are installed globally in ~/.claude/methodologies/ and will
+adapt to how you naturally talk about work.
 
 ## Security & Compliance Standards
 

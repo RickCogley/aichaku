@@ -186,7 +186,13 @@ ${result.message}
       }
       if (!args.silent) {
         console.log(`
-✅ Aichaku reference ${result.action === "created" ? "added to new" : result.action === "updated" ? "added to existing" : "already in"} CLAUDE.md!
+✅ Aichaku reference ${
+          result.action === "created"
+            ? "added to new"
+            : result.action === "updated"
+            ? "added to existing"
+            : "already in"
+        } CLAUDE.md!
 
 ${result.message}
 `);
