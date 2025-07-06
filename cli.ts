@@ -140,11 +140,18 @@ ${
             : ""
         }
 🎯 Next steps:
+   • Run 'aichaku integrate' to add Aichaku to your CLAUDE.md
    • Start Claude Code in your project
-   • The AI now has adaptive methodology support
    • Customize in ${result.path}/user/ (optional)
 
+📚 Commands:
+   • aichaku integrate - Add to project's CLAUDE.md
+   • aichaku upgrade   - Update methodologies
+   • aichaku --help    - Show all commands
+
 💡 Aichaku adapts to your language - just start working naturally!
+
+🔗 Learn more: https://github.com/RickCogley/aichaku
 `);
       }
       break;
