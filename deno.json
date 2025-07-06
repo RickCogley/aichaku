@@ -20,7 +20,11 @@
   },
   "imports": {
     "@rick/nagare": "jsr:@rick/nagare@2.2.1",
-    "@std/semver": "jsr:@std/semver@^1.0.4"
+    "@std/semver": "jsr:@std/semver@^1.0.4",
+    "@std/cli": "jsr:@std/cli@^1.0.0",
+    "@std/fs": "jsr:@std/fs@^1.0.0",
+    "@std/path": "jsr:@std/path@^1.0.0",
+    "@std/assert": "jsr:@std/assert@^1.0.0"
   },
   "tasks": {
     "dev": "deno run --watch mod.ts",

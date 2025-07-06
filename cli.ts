@@ -4,7 +4,7 @@
  * aichaku CLI - Install AI-optimized methodologies for Claude Code
  */
 
-import { parseArgs } from "https://deno.land/std@0.208.0/cli/parse_args.ts";
+import { parseArgs } from "jsr:@std/cli@1/parse-args";
 import { install } from "./src/installer.ts";
 import { VERSION } from "./mod.ts";
 

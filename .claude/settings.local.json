@@ -5,7 +5,13 @@
       "Bash(deno fmt:*)",
       "Bash(deno lint:*)",
       "Bash(deno test:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh run view:*)",
+      "Bash(curl:*)",
+      "Bash(deno publish:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": []
   }

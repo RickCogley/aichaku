@@ -13,7 +13,7 @@ export { update } from "./src/updater.ts";
 export type { InstallOptions, Methodology } from "./src/types.ts";
 
 // Re-export version from auto-generated version.ts
-export { VERSION, VERSION_INFO } from "./version.ts";
+export { VERSION, BUILD_INFO, APP_INFO } from "./version.ts";
 
 /**
  * Example usage:

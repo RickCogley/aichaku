@@ -1,7 +1,7 @@
-import { assertEquals } from "https://deno.land/std@0.208.0/assert/mod.ts";
+import { assertEquals } from "jsr:@std/assert@1";
 import { install } from "./installer.ts";
-import { exists } from "https://deno.land/std@0.208.0/fs/mod.ts";
-import { join } from "https://deno.land/std@0.208.0/path/mod.ts";
+import { exists } from "jsr:@std/fs@1";
+import { join } from "jsr:@std/path@1";
 
 Deno.test("installer - should detect missing methodology", async () => {
   const result = await install("non-existent", { silent: true });

@@ -9,12 +9,14 @@ and this project adheres to
 ## [0.1.0] - 2025-07-06
 
 ### Added
+
 - add comprehensive security scanning workflows (b8d959b)
 - add JSR publishing workflow (85c61a5)
 - add simplified 3-mode methodology system (ea3290d)
 - initial aichaku project setup with Deno and Nagare (d652886)
 
 ### Changed
+
 - prepare for v0.1.0 release (e86dde6)
 - add GitHub configuration and documentation (a90098a)
 - add comprehensive README and changelog (501125c)

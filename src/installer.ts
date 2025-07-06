@@ -1,5 +1,5 @@
-import { ensureDir, exists } from "https://deno.land/std@0.208.0/fs/mod.ts";
-import { join, resolve } from "https://deno.land/std@0.208.0/path/mod.ts";
+import { ensureDir, exists } from "jsr:@std/fs@1";
+import { join, resolve } from "jsr:@std/path@1";
 import type { InstallOptions, InstallResult } from "./types.ts";
 
 const HOME_DIR = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
