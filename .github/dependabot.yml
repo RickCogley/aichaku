@@ -1,0 +1,28 @@
+# Dependabot configuration for Aichaku
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+
+updates:
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "03:00"
+    pull-request-branch-name:
+      separator: "/"
+    assignees:
+      - "RickCogley"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "chore"
+      prefix-development: "chore"
+      include: "scope"
+
+  # Note: Dependabot doesn't have native support for Deno dependencies yet.
+  # Once Deno support is added, we can monitor deno.json dependencies.
+  # For now, we only monitor GitHub Actions.
