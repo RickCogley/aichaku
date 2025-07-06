@@ -14,6 +14,8 @@ import type { InstallOptions, InstallResult } from "./types.ts";
  *   console.log(`Updated ${result.methodology} at ${result.path}`);
  * }
  * ```
+ *
+ * @public
  */
 export function update(
   methodologyName: string,

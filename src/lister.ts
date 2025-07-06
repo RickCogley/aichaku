@@ -12,6 +12,8 @@ import type { ListResult } from "./types.ts";
  * console.log(`Installed globally: ${installed.global.length}`);
  * console.log(`Installed locally: ${installed.local.length}`);
  * ```
+ *
+ * @public
  */
 export function list(): Promise<ListResult> {
   // TODO: Implement listing functionality

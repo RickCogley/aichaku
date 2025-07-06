@@ -20,7 +20,8 @@
       "Bash(chmod:*)",
       "Bash(git config:*)",
       "Bash(gh workflow view:*)",
-      "Bash(deno doc:*)"
+      "Bash(deno doc:*)",
+      "Bash(gh api:*)"
     ],
     "deny": []
   }

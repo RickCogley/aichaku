@@ -222,6 +222,10 @@
   "workspace": {
     "dependencies": [
       "jsr:@rick/nagare@2.2.1",
+      "jsr:@std/assert@1",
+      "jsr:@std/cli@1",
+      "jsr:@std/fs@1",
+      "jsr:@std/path@1",
       "jsr:@std/semver@^1.0.4"
     ]
   }

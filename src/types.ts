@@ -1,7 +1,14 @@
 /**
  * Type definitions for aichaku
+ *
+ * @module
  */
 
+/**
+ * Represents a project methodology that can be installed by aichaku
+ *
+ * @public
+ */
 export interface Methodology {
   name: string;
   description: string;
@@ -16,6 +23,11 @@ export interface Methodology {
   };
 }
 
+/**
+ * Options for installing a methodology
+ *
+ * @public
+ */
 export interface InstallOptions {
   /** Install globally to ~/.claude */
   global?: boolean;
@@ -29,6 +41,11 @@ export interface InstallOptions {
   silent?: boolean;
 }
 
+/**
+ * Result returned after installing a methodology
+ *
+ * @public
+ */
 export interface InstallResult {
   success: boolean;
   path: string;
@@ -36,6 +53,11 @@ export interface InstallResult {
   message?: string;
 }
 
+/**
+ * Result returned when listing available and installed methodologies
+ *
+ * @public
+ */
 export interface ListResult {
   available: Methodology[];
   installed: {

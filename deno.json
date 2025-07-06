@@ -48,7 +48,16 @@
     "exclude": [
       ".claude/",
       "scratch/",
-      "version.ts"
+      "version.ts",
+      "docs/"
+    ]
+  },
+  "lint": {
+    "exclude": [
+      ".claude/",
+      "scratch/",
+      "version.ts",
+      "docs/"
     ]
   },
   "publish": {
@@ -78,5 +87,8 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
+  },
+  "test": {
+    "include": ["src/**/*_test.ts"]
   }
 }
