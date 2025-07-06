@@ -1,0 +1,26 @@
+name: "Dependency Review"
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  dependency-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v4
+
+      - name: "Dependency Review"
+        uses: actions/dependency-review-action@v4
+        with:
+          # Fail on vulnerabilities of moderate severity or higher
+          fail-on-severity: moderate
+          # Check for vulnerabilities in all scopes
+          fail-on-scopes: runtime, development
+          # Comment on PR with results
+          comment-summary-in-pr: true

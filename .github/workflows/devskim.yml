@@ -1,0 +1,45 @@
+name: DevSkim Security Scan
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Run at 4:30 AM UTC on Tuesdays (after CodeQL on Mondays)
+    - cron: "30 4 * * 2"
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  devskim:
+    name: DevSkim Security Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run DevSkim scanner
+        uses: microsoft/DevSkim-Action@v1
+        with:
+          directory-to-scan: .
+          should-scan-archives: false
+          output-filename: devskim-results.sarif
+
+      - name: Upload DevSkim results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: devskim-results.sarif
+          category: devskim
+
+      - name: Upload DevSkim results as artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: devskim-results
+          path: devskim-results.sarif
+          retention-days: 30

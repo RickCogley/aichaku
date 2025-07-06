@@ -1,0 +1,106 @@
+name: Security Tests
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  security-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.deno
+            ~/.cache/deno
+          key: ${{ runner.os }}-deno-${{ hashFiles('**/deno.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-deno-
+
+      - name: Run format check
+        run: deno fmt --check
+
+      - name: Run linter
+        run: deno lint
+
+      - name: Run type checking
+        run: deno check **/*.ts
+
+      - name: Run all tests with coverage
+        run: deno test --allow-all --coverage=coverage
+
+      - name: Generate coverage report
+        run: deno coverage coverage --lcov > coverage.lcov
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          file: ./coverage.lcov
+          fail_ci_if_error: false
+
+      - name: Check for hardcoded secrets
+        run: |
+          # Check for potential hardcoded secrets
+          ! grep -r -E "(api_key|apikey|password|secret|private_key|token)\s*[:=]\s*[\"'][^\"']+[\"']" \
+            --include="*.ts" --include="*.js" \
+            --exclude-dir=".git" --exclude-dir="node_modules" \
+            --exclude="*_test.ts" --exclude="*.md" \
+            . | grep -v -E "(test|example|sample|mock|fake|dummy|env\.get|process\.env|import|from)"
+
+      - name: Check for dangerous patterns
+        run: |
+          # Check for eval, Function constructor, etc.
+          ! grep -r -E "^\s*[^\"'/]*\b(eval\s*\(|new\s+Function\s*\()" \
+            --include="*.ts" --include="*.js" \
+            --exclude-dir=".git" --exclude-dir="node_modules" \
+            --exclude="*_test.ts" \
+            .
+
+      - name: Check for path traversal vulnerabilities
+        run: |
+          # Check for potential path traversal patterns
+          ! grep -r -E "\.\./|\.\.\\\\|path\.join.*\.\." \
+            --include="*.ts" --include="*.js" \
+            --exclude-dir=".git" --exclude-dir="node_modules" \
+            --exclude="*_test.ts" \
+            . | grep -v -E "(test|example|comment|//|/\*)"
+
+      - name: Security audit report
+        if: always()
+        run: |
+          echo "Security Test Summary" > security-report.txt
+          echo "===================" >> security-report.txt
+          echo "Date: $(date)" >> security-report.txt
+          echo "Branch: ${{ github.ref }}" >> security-report.txt
+          echo "Commit: ${{ github.sha }}" >> security-report.txt
+          echo "" >> security-report.txt
+          echo "All security tests completed" >> security-report.txt
+
+      - name: Upload security report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-report
+          path: security-report.txt
+          retention-days: 30
