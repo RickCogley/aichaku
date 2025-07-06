@@ -1,7 +1,8 @@
 /**
- * Aichaku (愛着) is an AI-optimized project methodology installer for Claude Code that brings
- * affection and attachment to your development workflow by providing contextual, mode-aware
- * methodology guidance for AI pair programming.
+ * Aichaku (愛着) provides adaptive methodology support for Claude Code that blends
+ * approaches based on how you naturally work. Rather than forcing you to choose a
+ * methodology, Aichaku installs all of them and helps Claude Code adapt to your
+ * terminology and context.
  *
  * | **Aichaku** | **Specifications** |
  * | :------- | :------- |
@@ -14,13 +15,13 @@
  *
  * ## Core Features
  *
- * - **🤖 AI-First Design** - Methodologies optimized for AI pair programming
- * - **🎭 Smart Mode Detection** - Automatically detects context and switches between planning, execution, and improvement modes
- * - **📦 Multiple Methodologies** - Shape Up, Scrum, Kanban, Lean, and XP support
+ * - **🔄 Adaptive Blending** - Methodologies adapt to your natural language
+ * - **📦 All-in-One Install** - Shape Up, Scrum, Kanban, Lean, XP, and Scrumban included
+ * - **🧠 Context Aware** - AI responds to your terminology and needs
+ * - **📁 User Customization** - Your modifications survive upgrades
+ * - **🚀 Simple Lifecycle** - Just init, upgrade, and uninstall
  * - **🔒 Security First** - Path validation, no network operations, minimal permissions
- * - **🚀 Zero Configuration** - Works out of the box with sensible defaults
- * - **📝 Rich Templates** - Comprehensive templates for each methodology
- * - **🛠️ Extensible** - Easy to add new methodologies or customize existing ones
+ * - **🎯 Zero Configuration** - Works out of the box with sensible defaults
  *
  * ## Quick Start
  *
@@ -29,44 +30,51 @@
  * # Install aichaku globally
  * deno install -A -n aichaku jsr:@rick/aichaku/cli
  *
- * # Install Shape Up methodology to your project
- * aichaku shape-up
+ * # Initialize in your project
+ * aichaku init
  *
- * # Install globally for all projects
- * aichaku shape-up --global
+ * # Initialize globally for all projects
+ * aichaku init --global
  * ```
  *
  * @example Programmatic usage
  * ```typescript
- * import { install } from "jsr:@rick/aichaku";
+ * import { init } from "jsr:@rick/aichaku";
  *
- * // Install Shape Up methodology locally
- * const result = await install("shape-up", {
- *   projectPath: "./.claude",
+ * // Initialize with all methodologies
+ * const result = await init({
+ *   global: false,
  *   force: false,
  *   silent: false
  * });
  *
  * if (result.success) {
- *   console.log(`Installed to ${result.path}`);
+ *   console.log(`Initialized at ${result.path}`);
  * }
  * ```
  *
- * @example List available methodologies
+ * @example Upgrade to latest version
  * ```typescript
- * import { list } from "jsr:@rick/aichaku";
+ * import { upgrade } from "jsr:@rick/aichaku";
  *
- * const { available, installed } = await list();
- * console.log(`Available: ${available.map(m => m.name).join(", ")}`);
+ * // Check for updates
+ * const checkResult = await upgrade({ check: true });
+ *
+ * // Perform upgrade
+ * const result = await upgrade();
+ * console.log(`Upgraded to ${result.version}`);
  * ```
  *
- * ## Mode System
+ * ## Adaptive System
  *
- * Aichaku uses a simple 3-mode system that AI assistants can detect:
+ * Aichaku uses a simple 3-mode system that adapts to your context:
  *
- * - **PLANNING MODE** - When starting something new (bet shaping, sprint planning)
+ * - **PLANNING MODE** - When starting something new (shaping, sprint planning)
  * - **EXECUTION MODE** - When actively working (building, coding, testing)
  * - **IMPROVEMENT MODE** - When reflecting and optimizing (retrospectives, refactoring)
+ *
+ * The AI blends methodologies based on your language. Say "sprint" and get Scrum
+ * practices; mention "shaping" and get Shape Up principles - all seamlessly integrated.
  *
  * ## Security
  *
@@ -79,9 +87,17 @@
  * @module
  */
 
+// Export new command functions
+export { init } from "./src/commands/init.ts";
+export { upgrade } from "./src/commands/upgrade.ts";
+export { uninstall } from "./src/commands/uninstall.ts";
+
+// Keep legacy exports for backward compatibility
 export { install } from "./src/installer.ts";
 export { list } from "./src/lister.ts";
 export { update } from "./src/updater.ts";
+
+// Export types
 export type {
   InstallOptions,
   InstallResult,

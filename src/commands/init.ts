@@ -108,7 +108,9 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     return {
       success: false,
       path: targetPath,
-      message: `Installation failed: ${error.message}`,
+      message: `Installation failed: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
     };
   }
 }

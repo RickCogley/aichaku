@@ -1,24 +1,27 @@
 # aichaku (愛着)
 
-> Intelligent methodology support for Claude Code that adapts to how you work
+> Adaptive methodology support for Claude Code that blends approaches based on
+> how you naturally work
 
 [![JSR](https://jsr.io/badges/@rick/aichaku)](https://jsr.io/@rick/aichaku)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## What is aichaku?
 
-Aichaku (愛着 - "affection/attachment") brings intelligent, adaptive methodology
-support to Claude Code. Instead of forcing you to learn complex frameworks,
-aichaku helps Claude Code understand what you're trying to do and guides you
-using the best methodology for your situation.
+Aichaku (愛着 - "affection/attachment") provides adaptive methodology support
+for Claude Code. Rather than forcing you to choose a single methodology, aichaku
+installs all of them and helps Claude Code blend approaches based on your
+natural language. Say "sprint" and get Scrum practices; mention "shaping" and
+get Shape Up principles - all seamlessly integrated.
 
 **✨ Key Features:**
 
-- 🎯 **Natural language first** - Just describe what you need
-- 🔄 **6 methodologies included** - Shape Up, Scrum, Kanban, XP, Lean, Scrumban
-- 🧠 **Context-aware** - Adapts to team size, urgency, and work type
-- 🚀 **Zero learning curve** - Start working immediately
-- 🔧 **Mix and match** - Combine methodologies naturally
+- 🎯 **Adaptive blending** - Methodologies adapt to your language
+- 🔄 **All-in-one install** - Shape Up, Scrum, Kanban, XP, Lean, Scrumban
+  included
+- 🧠 **Context-aware** - AI responds to your terminology and needs
+- 📁 **User customization** - Your modifications survive upgrades
+- 🚀 **Simple lifecycle** - Just init, upgrade, and uninstall
 
 ## Quick Start
 
@@ -26,15 +29,18 @@ using the best methodology for your situation.
 # Install globally
 deno install -A -n aichaku jsr:@rick/aichaku/cli
 
-# Install methodologies to your project
-aichaku install
+# Initialize in your project
+aichaku init
+
+# Or initialize globally for all projects
+aichaku init --global
 ```
 
-That's it! Claude Code now has intelligent methodology support.
+That's it! Claude Code now has adaptive methodology support.
 
 ## How It Works
 
-Aichaku uses a revolutionary **3-mode system** instead of complex personas:
+Aichaku uses a simple **3-mode system** that adapts to your context:
 
 ### 📋 Planning Mode
 
@@ -53,34 +59,33 @@ progress and suggests concrete improvements.
 
 ## Usage Examples
 
-### Natural Conversation
+### Adaptive Blending
 
 ```
-You: "I need to add user authentication to my app"
-Claude: [Detects feature work, suggests Shape Up with 2-week appetite]
-        "Let's shape this feature. Key questions:
-         - Password only or social login too?
-         - New users or existing database?
-         Based on complexity, this feels like a 2-week appetite."
+You: "Let's plan our next sprint, but I want to shape this feature properly"
+Claude: [Blends Scrum structure with Shape Up shaping]
+        "I'll help you shape the feature first, then fit it into your sprint.
+         Let's start with the problem definition and appetite..."
 ```
 
-### Handling Multiple Work Types
+### Natural Language Detection
 
 ```
-You: "We have features to build and bugs to fix"
-Claude: "I suggest a hybrid approach:
-         - Shape Up for features (clear appetites)
-         - Kanban board for bugs (continuous flow)
-         Set up both? (y/n)"
+You: "We need a kanban board for tracking our 6-week cycle"
+Claude: [Detects Kanban + Shape Up terminology]
+        "I'll create a Kanban board structured around your Shape Up cycle.
+         We'll use swimlanes for different bets and track progress visually."
 ```
 
-### Team Adaptation
+### Team Vocabulary
 
 ```
-You: "Our team of 6 is struggling with delivery"
-Claude: [Detects team size, suggests Scrum]
-        "For a 6-person team, 2-week Scrum sprints often work well.
-         Want me to help plan your first sprint?"
+You: "Time for our daily standup to check the backlog"
+Claude: [Recognizes Scrum ceremony + general terms]
+        "Let's run through the standup format:
+         - What did you complete yesterday?
+         - What will you work on today?
+         - Any blockers?"
 ```
 
 ## Included Methodologies
@@ -94,38 +99,51 @@ Claude: [Detects team size, suggests Scrum]
 | **Lean**     | Validation          | Build-measure-learn        |
 | **Scrumban** | Hybrid teams        | Sprint planning + flow     |
 
-## Installation Options
+## Lifecycle Commands
 
-### Basic Install
+### Initialize
 
 ```bash
-# Install to current project
-aichaku install
+# Initialize in current project
+aichaku init
 
-# Install globally for all projects
-aichaku install --global
+# Initialize globally for all projects  
+aichaku init --global
+
+# Preview what would be installed
+aichaku init --dry-run
 ```
 
-### Advanced Options
+### Upgrade
 
 ```bash
-# Force reinstall/update
-aichaku install --force
+# Check for updates
+aichaku upgrade --check
 
-# Install specific methodology only
-aichaku install scrum
+# Upgrade to latest version (preserves customizations)
+aichaku upgrade
 
-# Custom installation path
-aichaku install --path ./custom/.claude
+# Force reinstall
+aichaku upgrade --force
+```
+
+### Uninstall
+
+```bash
+# Remove from current project
+aichaku uninstall
+
+# Remove global installation
+aichaku uninstall --global
 ```
 
 ### Programmatic Usage
 
 ```typescript
-import { install } from "jsr:@rick/aichaku";
+import { init } from "jsr:@rick/aichaku";
 
-// Install all methodologies
-await install("all", {
+// Initialize with all methodologies
+await init({
   global: true,
   force: false,
 });
@@ -135,22 +153,36 @@ await install("all", {
 
 ```
 .claude/
-└── methodologies/
-    ├── core/
-    │   ├── PLANNING-MODE.md
-    │   ├── EXECUTION-MODE.md
-    │   └── IMPROVEMENT-MODE.md
-    ├── shape-up/
-    │   ├── SHAPE-UP-AICHAKU-GUIDE.md
-    │   └── templates/
-    ├── scrum/
-    │   ├── SCRUM-AICHAKU-GUIDE.md
-    │   └── templates/
-    └── [other methodologies...]
+├── methodologies/          # All methodology files (updated on upgrade)
+│   ├── core/
+│   │   ├── PLANNING-MODE.md
+│   │   ├── EXECUTION-MODE.md
+│   │   └── IMPROVEMENT-MODE.md
+│   ├── shape-up/
+│   │   ├── SHAPE-UP-AICHAKU-GUIDE.md
+│   │   └── templates/
+│   ├── scrum/
+│   │   ├── SCRUM-AICHAKU-GUIDE.md
+│   │   └── templates/
+│   └── [other methodologies...]
+├── user/                   # Your customizations (never touched by upgrades)
+│   ├── README.md          # Customization guide
+│   ├── prompts/           # Custom AI prompts
+│   ├── templates/         # Your document templates
+│   └── methods/           # Methodology extensions
+└── .aichaku.json          # Installation metadata
 ```
 
-Each methodology includes an **Aichaku Guide** - a simplified, AI-friendly
-ruleset that helps Claude Code understand and apply the methodology effectively.
+## User Customization
+
+The `user/` directory is yours to customize how Aichaku works for your team:
+
+- **prompts/**: Override or extend AI behavior
+- **templates/**: Add your organization's document templates
+- **methods/**: Define custom practices or terminology
+
+All customizations are preserved during upgrades. See `user/README.md` after
+installation for detailed examples.
 
 ## Commands (Optional)
 
@@ -212,11 +244,12 @@ become something you're attached to, not forced to follow.
 
 - [x] Core 3-mode system
 - [x] 6 major methodologies
-- [x] Natural language activation
-- [ ] Custom methodology builder
-- [ ] Team analytics dashboard
+- [x] Adaptive methodology blending
+- [x] User customization system
+- [ ] Methodology lock for compliance
+- [ ] Usage analytics (opt-in)
+- [ ] Organization templates
 - [ ] IDE integrations
-- [ ] Methodology mixing wizard
 
 ## Contributing
 

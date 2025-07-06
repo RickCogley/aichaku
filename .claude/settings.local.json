@@ -25,7 +25,10 @@
       "Bash(deno task release:patch:*)",
       "Bash(git push:*)",
       "Bash(gh run watch:*)",
-      "WebFetch(domain:jsr.io)"
+      "WebFetch(domain:jsr.io)",
+      "Bash(deno run:*)",
+      "Bash(deno task:*)",
+      "Bash(deno check:*)"
     ],
     "deny": []
   }
