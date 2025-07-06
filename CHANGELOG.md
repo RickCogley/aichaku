@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2025-07-06
+
+### Added
+- add integrate command to add Aichaku reference to CLAUDE.md (23887aa)
+
+### Changed
+- format code for release (7589d4e)
+- update documentation for integrate command (3eb985f)
+- move release notes to output folder (27a707d)
+
 ## [0.3.1] - 2025-07-06
 
 ### Fixed
