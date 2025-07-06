@@ -27,7 +27,7 @@ get Shape Up principles - all seamlessly integrated.
 
 ```bash
 # Install globally
-deno install -A -n aichaku jsr:@rick/aichaku/cli
+deno install -g -A -n aichaku jsr:@rick/aichaku/cli
 
 # Initialize in your project
 aichaku init

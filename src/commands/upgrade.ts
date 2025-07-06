@@ -2,6 +2,7 @@ import { exists } from "jsr:@std/fs@1";
 import { join, resolve } from "jsr:@std/path@1";
 import { copy } from "jsr:@std/fs@1/copy";
 import { VERSION } from "../../mod.ts";
+import { fetchMethodologies } from "./methodology-fetcher.ts";
 
 interface UpgradeOptions {
   global?: boolean;
@@ -129,21 +130,30 @@ export async function upgrade(
     }
 
     // Update methodologies only
-    const sourceMethodologies = join(
-      new URL(".", import.meta.url).pathname,
-      "../../../methodologies",
-    );
+    const isJSR = import.meta.url.startsWith("https://jsr.io");
     const targetMethodologies = join(targetPath, "methodologies");
 
-    if (!options.silent) {
-      console.log("📚 Updating methodology files...");
-    }
-
-    // Remove old methodologies and copy new ones
+    // Remove old methodologies
     if (await exists(targetMethodologies)) {
       await Deno.remove(targetMethodologies, { recursive: true });
     }
-    await copy(sourceMethodologies, targetMethodologies);
+
+    if (isJSR) {
+      // Fetch from GitHub when running from JSR
+      await fetchMethodologies(targetPath, VERSION, { silent: options.silent });
+    } else {
+      // Local development - copy from source
+      const sourceMethodologies = join(
+        new URL(".", import.meta.url).pathname,
+        "../../../methodologies",
+      );
+
+      if (!options.silent) {
+        console.log("📚 Updating methodology files...");
+      }
+
+      await copy(sourceMethodologies, targetMethodologies);
+    }
 
     // Update metadata
     metadata.version = VERSION;

@@ -2,6 +2,7 @@ import { ensureDir, exists } from "jsr:@std/fs@1";
 import { join, resolve } from "jsr:@std/path@1";
 import { copy } from "jsr:@std/fs@1/copy";
 import { VERSION } from "../../mod.ts";
+import { fetchMethodologies } from "./methodology-fetcher.ts";
 
 interface InitOptions {
   global?: boolean;
@@ -58,19 +59,27 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     await ensureDir(targetPath);
 
     // Copy all methodologies
-    const sourceMethodologies = join(
-      new URL(".", import.meta.url).pathname,
-      "../../../methodologies",
-    );
-    const targetMethodologies = join(targetPath, "methodologies");
+    const isJSR = import.meta.url.startsWith("https://jsr.io");
 
-    if (!options.silent) {
-      console.log("📦 Installing adaptive methodologies...");
+    if (isJSR) {
+      // Fetch from GitHub when running from JSR
+      await fetchMethodologies(targetPath, VERSION, { silent: options.silent });
+    } else {
+      // Local development - copy from source
+      const sourceMethodologies = join(
+        new URL(".", import.meta.url).pathname,
+        "../../../methodologies",
+      );
+      const targetMethodologies = join(targetPath, "methodologies");
+
+      if (!options.silent) {
+        console.log("📦 Installing adaptive methodologies...");
+      }
+
+      await copy(sourceMethodologies, targetMethodologies, {
+        overwrite: options.force,
+      });
     }
-
-    await copy(sourceMethodologies, targetMethodologies, {
-      overwrite: options.force,
-    });
 
     // Create user directory structure
     const userDir = join(targetPath, "user");

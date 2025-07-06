@@ -1,0 +1,129 @@
+import { ensureDir } from "jsr:@std/fs@1";
+import { join } from "jsr:@std/path@1";
+
+interface FetchOptions {
+  silent?: boolean;
+}
+
+/**
+ * Fetches methodologies from GitHub for JSR installations
+ */
+export async function fetchMethodologies(
+  targetPath: string,
+  version: string,
+  options: FetchOptions = {},
+): Promise<void> {
+  const baseUrl =
+    `https://raw.githubusercontent.com/RickCogley/aichaku/v${version}/methodologies`;
+
+  // Define the methodology structure to fetch
+  const structure = {
+    "BLENDING-GUIDE.md": "",
+    "core": {
+      "PLANNING-MODE.md": "",
+      "PLANNING-MODE-ADAPTIVE.md": "",
+      "EXECUTION-MODE.md": "",
+      "IMPROVEMENT-MODE.md": "",
+    },
+    "shape-up": {
+      "SHAPE-UP-AICHAKU-GUIDE.md": "",
+      "SHAPE-UP-ADAPTIVE.md": "",
+      "templates": {
+        "pitch.md": "",
+        "bet.md": "",
+        "cycle-announcement.md": "",
+      },
+    },
+    "scrum": {
+      "SCRUM-AICHAKU-GUIDE.md": "",
+      "templates": {
+        "sprint-plan.md": "",
+        "daily-standup.md": "",
+        "sprint-review.md": "",
+        "retrospective.md": "",
+      },
+    },
+    "kanban": {
+      "KANBAN-AICHAKU-GUIDE.md": "",
+      "templates": {
+        "board-setup.md": "",
+        "flow-metrics.md": "",
+        "wip-limits.md": "",
+      },
+    },
+    "lean": {
+      "LEAN-AICHAKU-GUIDE.md": "",
+      "templates": {
+        "mvp-plan.md": "",
+        "experiment-design.md": "",
+        "pivot-decision.md": "",
+      },
+    },
+    "xp": {
+      "XP-AICHAKU-GUIDE.md": "",
+      "templates": {
+        "user-story.md": "",
+        "test-plan.md": "",
+        "refactoring-plan.md": "",
+      },
+    },
+    "scrumban": {
+      "SCRUMBAN-AICHAKU-GUIDE.md": "",
+      "templates": {
+        "hybrid-board.md": "",
+        "sprint-flow.md": "",
+        "planning-trigger.md": "",
+      },
+    },
+  };
+
+  if (!options.silent) {
+    console.log("📥 Fetching methodologies from GitHub...");
+  }
+
+  async function fetchFile(relativePath: string): Promise<void> {
+    const url = `${baseUrl}/${relativePath}`;
+    const localPath = join(targetPath, "methodologies", relativePath);
+
+    try {
+      const response = await fetch(url);
+      if (response.ok) {
+        const content = await response.text();
+        await ensureDir(join(localPath, ".."));
+        await Deno.writeTextFile(localPath, content);
+      }
+    } catch (error) {
+      // Silently skip files that don't exist
+      if (!options.silent) {
+        console.warn(
+          `⚠️  Failed to fetch ${relativePath}: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
+        );
+      }
+    }
+  }
+
+  async function processStructure(
+    obj: any,
+    currentPath: string = "",
+  ): Promise<void> {
+    for (const [key, value] of Object.entries(obj)) {
+      const path = currentPath ? `${currentPath}/${key}` : key;
+
+      if (typeof value === "object") {
+        // It's a directory
+        await processStructure(value, path);
+      } else {
+        // It's a file
+        await fetchFile(path);
+      }
+    }
+  }
+
+  await processStructure(structure);
+
+  if (!options.silent) {
+    console.log("✅ Methodologies installed successfully");
+  }
+}

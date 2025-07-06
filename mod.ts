@@ -28,7 +28,7 @@
  * @example Install globally via CLI
  * ```bash
  * # Install aichaku globally
- * deno install -A -n aichaku jsr:@rick/aichaku/cli
+ * deno install -g -A -n aichaku jsr:@rick/aichaku/cli
  *
  * # Initialize in your project
  * aichaku init

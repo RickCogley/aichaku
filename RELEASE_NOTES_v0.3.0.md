@@ -83,7 +83,7 @@ aichaku uninstall          # Remove installation
 
 1. **Update Aichaku**:
    ```bash
-   deno install -A -n aichaku --force jsr:@aichaku/aichaku@0.3.0
+   deno install -g -A -n aichaku --force jsr:@rick/aichaku@0.3.0/cli
    ```
 
 2. **Backup existing installation** (recommended):
@@ -112,7 +112,7 @@ Simply run:
 
 ```bash
 # Install Aichaku
-deno install -A -n aichaku jsr:@aichaku/aichaku@0.3.0
+deno install -g -A -n aichaku jsr:@rick/aichaku@0.3.0/cli
 
 # Initialize globally
 aichaku init --global
