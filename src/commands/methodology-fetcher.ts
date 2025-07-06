@@ -105,7 +105,7 @@ export async function fetchMethodologies(
   }
 
   async function processStructure(
-    obj: any,
+    obj: Record<string, unknown>,
     currentPath: string = "",
   ): Promise<void> {
     for (const [key, value] of Object.entries(obj)) {
