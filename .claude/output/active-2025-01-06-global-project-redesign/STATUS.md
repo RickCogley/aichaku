@@ -1,6 +1,6 @@
 # Status: Global vs Project Redesign
 
-**Status**: ACTIVE - Planning
+**Status**: ACTIVE - Complete, ready for release
 **Started**: 2025-01-06
 **Target**: v0.5.0
 
