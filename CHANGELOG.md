@@ -9,6 +9,7 @@ and this project adheres to
 ## [0.4.1] - 2025-07-06
 
 ### Changed
+
 - improve init command output with better messaging (c2edce4)
 
 ## [0.4.0] - 2025-07-06
