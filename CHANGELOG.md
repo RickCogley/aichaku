@@ -6,6 +6,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2025-07-06
+
+### Added
+
+- Command-based CLI architecture with init, upgrade, and uninstall commands
+  (0679017, c9163c7)
+- User customization system that survives upgrades with dedicated user/
+  directory (0679017)
+- Adaptive methodology blending based on natural language detection (7c15cb6)
+- Version tracking with .aichaku.json metadata file (0679017)
+- Comprehensive blending guide for AI assistants (7c15cb6)
+- Planning documents using Aichaku's own methodology (2767e43)
+
+### Changed
+
+- **BREAKING**: CLI commands restructured - use `aichaku init` instead of
+  `aichaku install`
+- Methodologies now support adaptive blending rather than single selection
+- Directory structure enhanced with clear separation of Aichaku vs user files
+- Improved error handling and user feedback throughout CLI
+
+### Fixed
+
+- Upgrade process now preserves user customizations
+- Better path validation for security
+- Clearer help messages and command documentation
+
 ## [0.2.2] - 2025-07-06
 
 ### Changed
