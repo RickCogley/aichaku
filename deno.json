@@ -1,12 +1,18 @@
 {
   "name": "@rick/aichaku",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "exports": {
     ".": "./mod.ts",
     "./cli": "./cli.ts"
   },
   "description": "AI-optimized project methodology installer for Claude Code - brings affection (愛着) to your development workflow",
-  "keywords": ["claude", "ai", "methodology", "shape-up", "project-management"],
+  "keywords": [
+    "claude",
+    "ai",
+    "methodology",
+    "shape-up",
+    "project-management"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -35,6 +41,10 @@
     "validate": "deno task nagare validate"
   },
   "fmt": {
-    "exclude": [".claude/", "scratch/", "version.ts"]
+    "exclude": [
+      ".claude/",
+      "scratch/",
+      "version.ts"
+    ]
   }
 }
