@@ -1,37 +1,44 @@
 #!/usr/bin/env -S deno run --allow-read --allow-write --allow-env
 
 /**
- * aichaku CLI - Install AI-optimized methodologies for Claude Code
+ * aichaku CLI - Adaptive methodology support for Claude Code
  *
  * @module
  *
  * @example
  * ```bash
- * # Install Shape Up methodology globally
- * aichaku install shape-up --global
+ * # Initialize Aichaku in current project
+ * aichaku init
  *
- * # Install to current project
- * aichaku install shape-up
+ * # Initialize globally
+ * aichaku init --global
  *
- * # List available methodologies
- * aichaku list
+ * # Upgrade to latest version
+ * aichaku upgrade
+ *
+ * # Uninstall
+ * aichaku uninstall
  * ```
  */
 
 import { parseArgs } from "jsr:@std/cli@1/parse-args";
-import { install } from "./src/installer.ts";
+import { init } from "./src/commands/init.ts";
+import { upgrade } from "./src/commands/upgrade.ts";
+import { uninstall } from "./src/commands/uninstall.ts";
 import { VERSION } from "./mod.ts";
 
 const args = parseArgs(Deno.args, {
-  boolean: ["help", "version", "global", "force", "symlink", "silent"],
+  boolean: ["help", "version", "global", "force", "silent", "dry-run", "check"],
   string: ["path"],
   alias: {
     h: "help",
     v: "version",
     g: "global",
     f: "force",
-    p: "path",
     s: "silent",
+    p: "path",
+    d: "dry-run",
+    c: "check",
   },
 });
 
@@ -41,69 +48,134 @@ if (args.version) {
   Deno.exit(0);
 }
 
+// Get command
+const command = args._[0]?.toString().toLowerCase();
+
 // Show help
-if (args.help || args._.length === 0) {
+if (args.help || !command) {
   console.log(`
-aichaku (愛着) - AI-optimized project methodology installer for Claude Code
+aichaku (愛着) - Adaptive methodology support for Claude Code
 Version ${VERSION}
 
-Usage:
-  aichaku <methodology> [options]
+Aichaku provides context-aware methodology guidance that adapts to your needs.
+It doesn't force you to choose - it blends methodologies based on your language.
 
-Available methodologies:
-  shape-up    Shape Up methodology optimized for AI execution
+Usage:
+  aichaku <command> [options]
+
+Commands:
+  init        Initialize Aichaku with all methodologies
+  upgrade     Upgrade to latest version (preserves customizations)
+  uninstall   Remove Aichaku from your system
 
 Options:
-  -g, --global     Install globally to ~/.claude
-  -p, --path      Project path for local installation (default: ./.claude)
-  -f, --force     Force overwrite existing installation
-  --symlink       Create symlinks instead of copying files
-  -s, --silent    Silent mode - no console output
-  -h, --help      Show this help message
-  -v, --version   Show version number
+  -g, --global     Apply to global installation (~/.claude)
+  -p, --path       Project path (default: ./.claude)
+  -f, --force      Force overwrite existing files
+  -s, --silent     Silent mode - minimal output
+  -d, --dry-run    Preview changes without applying them
+  -c, --check      Check for updates without installing
+  -h, --help       Show this help message
+  -v, --version    Show version number
 
 Examples:
-  # Install Shape Up globally
-  aichaku shape-up --global
+  # Initialize in current project
+  aichaku init
 
-  # Install to current project
-  aichaku shape-up
+  # Initialize globally for all projects
+  aichaku init --global
 
-  # Install to specific path
-  aichaku shape-up --path ./my-project/.claude
+  # Check for updates
+  aichaku upgrade --check
 
-  # Force reinstall with symlinks
-  aichaku shape-up --force --symlink
+  # Upgrade to latest version
+  aichaku upgrade
+
+  # Remove Aichaku
+  aichaku uninstall
+
+Learn more: https://github.com/RickCogley/aichaku
 `);
   Deno.exit(0);
 }
 
-// Install methodology
-const methodology = String(args._[0]);
-const result = await install(methodology, {
+// Common options for all commands
+const options = {
   global: args.global,
   projectPath: args.path,
   force: args.force,
-  symlink: args.symlink,
   silent: args.silent,
-});
+  dryRun: args["dry-run"],
+  check: args.check,
+};
 
-if (!result.success) {
-  console.error(`❌ ${result.message}`);
-  Deno.exit(1);
-}
+// Execute command
+try {
+  switch (command) {
+    case "init":
+    case "initialize": {
+      const result = await init(options);
+      if (!result.success) {
+        console.error(`❌ ${result.message}`);
+        Deno.exit(1);
+      }
+      if (!args.silent) {
+        console.log(`
+✅ Aichaku initialized successfully!
 
-if (!args.silent) {
-  console.log(`
-🎉 ${methodology} installed successfully!
+${result.message}
 
 Next steps:
-${
-    result.path.includes(".claude")
-      ? "- Start Claude Code in your project directory"
-      : "- The methodology is now available globally"
-  }
-- Use /shape command to shape a new feature
-- Check ${result.path} for all methodology files
+- Start Claude Code in your project
+- The AI now has adaptive methodology support
+- Customize in ${result.path}/user/ (optional)
+
+Aichaku adapts to your language - just start working naturally!
 `);
+      }
+      break;
+    }
+
+    case "upgrade":
+    case "update": {
+      const result = await upgrade(options);
+      if (!result.success) {
+        console.error(`❌ ${result.message}`);
+        Deno.exit(1);
+      }
+      if (!args.silent) {
+        console.log(`
+✅ Aichaku upgraded successfully!
+
+${result.message}
+`);
+      }
+      break;
+    }
+
+    case "uninstall":
+    case "remove": {
+      const result = await uninstall(options);
+      if (!result.success) {
+        console.error(`❌ ${result.message}`);
+        Deno.exit(1);
+      }
+      if (!args.silent) {
+        console.log(`
+✅ Aichaku uninstalled successfully!
+
+${result.message}
+`);
+      }
+      break;
+    }
+
+    default:
+      console.error(`❌ Unknown command: ${command}`);
+      console.log(`Run 'aichaku --help' for usage information.`);
+      Deno.exit(1);
+  }
+} catch (error) {
+  console.error(`❌ Error: ${error.message}`);
+  Deno.exit(1);
 }
