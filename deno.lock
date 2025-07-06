@@ -4,11 +4,12 @@
     "jsr:@davidbonnet/astring@1.8.6": "1.8.6",
     "jsr:@rick/nagare@2.2.1": "2.2.1",
     "jsr:@std/assert@1": "1.0.13",
+    "jsr:@std/cli@1": "1.0.20",
     "jsr:@std/fs@1": "1.0.19",
     "jsr:@std/html@1.0.3": "1.0.3",
     "jsr:@std/internal@^1.0.6": "1.0.9",
     "jsr:@std/internal@^1.0.9": "1.0.9",
-    "jsr:@std/path@1": "1.0.8",
+    "jsr:@std/path@1": "1.1.1",
     "jsr:@std/path@1.0.8": "1.0.8",
     "jsr:@std/path@^1.1.1": "1.1.1",
     "jsr:@std/semver@1": "1.0.5",
@@ -35,6 +36,9 @@
       "dependencies": [
         "jsr:@std/internal@^1.0.6"
       ]
+    },
+    "@std/cli@1.0.20": {
+      "integrity": "a8c384a2c98cec6ec6a2055c273a916e2772485eb784af0db004c5ab8ba52333"
     },
     "@std/fs@1.0.19": {
       "integrity": "051968c2b1eae4d2ea9f79a08a3845740ef6af10356aff43d3e2ef11ed09fb06",

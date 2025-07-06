@@ -21,7 +21,9 @@
       "Bash(git config:*)",
       "Bash(gh workflow view:*)",
       "Bash(deno doc:*)",
-      "Bash(gh api:*)"
+      "Bash(gh api:*)",
+      "Bash(deno task release:patch:*)",
+      "Bash(git push:*)"
     ],
     "deny": []
   }
