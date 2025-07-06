@@ -88,6 +88,19 @@ Following Salty's security-first approach:
 
 ## Initial Setup
 
+### Development Setup
+
+```bash
+# Clone repository
+git clone https://github.com/RickCogley/aichaku.git
+cd aichaku
+
+# IMPORTANT: Setup git hooks for automatic formatting
+git config core.hooksPath .githooks
+```
+
+This ensures all commits are properly formatted, preventing CI failures.
+
 ### Installation
 
 ```bash

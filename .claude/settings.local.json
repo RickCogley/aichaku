@@ -11,7 +11,14 @@
       "Bash(curl:*)",
       "Bash(deno publish:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(echo:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(git -C /Users/rcogley/dev/salty.esolia.pro-dd config --get core.hooksPath)",
+      "Bash(mkdir:*)",
+      "Bash(chmod:*)",
+      "Bash(git config:*)"
     ],
     "deny": []
   }

@@ -165,16 +165,31 @@ While aichaku works best with natural language, shortcuts are available:
 
 ## Development
 
+### Setup
+
 ```bash
 # Clone repository
 git clone https://github.com/RickCogley/aichaku.git
 cd aichaku
 
+# Setup git hooks for automatic formatting
+git config core.hooksPath .githooks
+```
+
+### Commands
+
+```bash
 # Run tests
 deno task test
 
 # Type check
 deno task check
+
+# Format code (automatic with git hook)
+deno task fmt
+
+# Lint code
+deno task lint
 
 # Create release
 deno task release:patch

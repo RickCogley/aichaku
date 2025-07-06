@@ -1,0 +1,20 @@
+#!/bin/sh
+# Pre-commit hook to automatically format code before committing
+
+echo "Running pre-commit formatting..."
+
+# Run deno fmt to format all files
+deno fmt
+
+# Check if any files were modified
+if [ -n "$(git diff --name-only)" ]; then
+    echo "✅ Files were formatted. Adding changes to commit..."
+    # Add the formatted files to the staging area
+    git add -u
+    echo "✅ Formatting complete and changes staged!"
+else
+    echo "✅ All files already properly formatted!"
+fi
+
+# Always exit 0 to allow the commit to proceed
+exit 0
