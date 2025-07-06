@@ -25,6 +25,7 @@ import { parseArgs } from "jsr:@std/cli@1/parse-args";
 import { init } from "./src/commands/init.ts";
 import { upgrade } from "./src/commands/upgrade.ts";
 import { uninstall } from "./src/commands/uninstall.ts";
+import { integrate } from "./src/commands/integrate.ts";
 import { VERSION } from "./mod.ts";
 
 const args = parseArgs(Deno.args, {
@@ -67,6 +68,7 @@ Commands:
   init        Initialize Aichaku with all methodologies
   upgrade     Upgrade to latest version (preserves customizations)
   uninstall   Remove Aichaku from your system
+  integrate   Add Aichaku reference to project's CLAUDE.md
 
 Options:
   -g, --global     Apply to global installation (~/.claude)
@@ -93,6 +95,9 @@ Examples:
 
   # Remove Aichaku
   aichaku uninstall
+
+  # Add Aichaku to project's CLAUDE.md
+  aichaku integrate
 
 Learn more: https://github.com/RickCogley/aichaku
 `);
@@ -163,6 +168,22 @@ ${result.message}
       if (!args.silent) {
         console.log(`
 ✅ Aichaku uninstalled successfully!
+
+${result.message}
+`);
+      }
+      break;
+    }
+
+    case "integrate": {
+      const result = await integrate(options);
+      if (!result.success) {
+        console.error(`❌ ${result.message}`);
+        Deno.exit(1);
+      }
+      if (!args.silent) {
+        console.log(`
+✅ Aichaku reference ${result.action === "created" ? "added to new" : result.action === "updated" ? "added to existing" : "already in"} CLAUDE.md!
 
 ${result.message}
 `);

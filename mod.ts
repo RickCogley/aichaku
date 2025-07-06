@@ -91,6 +91,7 @@
 export { init } from "./src/commands/init.ts";
 export { upgrade } from "./src/commands/upgrade.ts";
 export { uninstall } from "./src/commands/uninstall.ts";
+export { integrate } from "./src/commands/integrate.ts";
 
 // Keep legacy exports for backward compatibility
 export { install } from "./src/installer.ts";
