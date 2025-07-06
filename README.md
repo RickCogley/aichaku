@@ -137,6 +137,19 @@ aichaku uninstall
 aichaku uninstall --global
 ```
 
+### Integrate
+
+```bash
+# Add Aichaku reference to current project's CLAUDE.md
+aichaku integrate
+
+# Preview what would be added
+aichaku integrate --dry-run
+
+# Force add even if already present
+aichaku integrate --force
+```
+
 ### Programmatic Usage
 
 ```typescript

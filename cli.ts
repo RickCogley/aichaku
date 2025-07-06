@@ -18,6 +18,9 @@
  *
  * # Uninstall
  * aichaku uninstall
+ *
+ * # Add Aichaku to project's CLAUDE.md
+ * aichaku integrate
  * ```
  */
 

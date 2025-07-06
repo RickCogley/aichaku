@@ -35,6 +35,9 @@
  *
  * # Initialize globally for all projects
  * aichaku init --global
+ *
+ * # Add Aichaku reference to project's CLAUDE.md
+ * aichaku integrate
  * ```
  *
  * @example Programmatic usage
@@ -63,6 +66,17 @@
  * // Perform upgrade
  * const result = await upgrade();
  * console.log(`Upgraded to ${result.version}`);
+ * ```
+ *
+ * @example Add Aichaku reference to project
+ * ```typescript
+ * import { integrate } from "jsr:@rick/aichaku";
+ *
+ * // Add to current project's CLAUDE.md
+ * const result = await integrate();
+ * 
+ * // Add to specific project
+ * const result = await integrate({ projectPath: "/path/to/project" });
  * ```
  *
  * ## Adaptive System
