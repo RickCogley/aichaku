@@ -39,6 +39,18 @@ export default {
       path: "./README.md",
       // Using built-in handler for standard badge format
     },
+    {
+      path: "./mod.ts",
+      patterns: {
+        version: /(\| Version \| )([^\s]+)( \|)/,
+      },
+      updateFn: (content: string, data: { version: string }) => {
+        return content.replace(
+          /(\| Version \| )([^\s]+)( \|)/,
+          `$1${data.version}$3`,
+        );
+      },
+    },
   ],
 
   releaseNotes: {

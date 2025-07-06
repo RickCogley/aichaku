@@ -23,7 +23,9 @@
       "Bash(deno doc:*)",
       "Bash(gh api:*)",
       "Bash(deno task release:patch:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(gh run watch:*)",
+      "WebFetch(domain:jsr.io)"
     ],
     "deny": []
   }
