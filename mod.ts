@@ -5,7 +5,7 @@
  *
  * | **Aichaku** | **Specifications** |
  * | :------- | :------- |
- * | Version | 0.2.1 |
+ * | Version | 0.2.2 |
  * | Repository | {@link https://github.com/RickCogley/aichaku} |
  * | JSR Package | {@link https://jsr.io/@rick/aichaku} |
  * | Documentation | {@link https://aichaku.esolia.deno.net/} |
