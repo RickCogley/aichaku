@@ -7,12 +7,15 @@ The Security Tests GitHub Action is failing on every commit due to formatting is
 2 weeks (but actually just a few minutes)
 
 ## Solution
-The CLAUDE.md file has formatting issues where long lines are being broken up incorrectly. The formatter wants to reformat these lines but the file isn't being formatted before commit.
+Two issues need fixing:
+1. ~~CLAUDE.md formatting (already fixed)~~
+2. No test files exist, causing test step to fail
 
 ### Rough Sketch
-1. Run `deno fmt` on CLAUDE.md to fix formatting
-2. Commit the formatted version
-3. Security tests should pass
+1. ~~Run `deno fmt` on CLAUDE.md to fix formatting~~ ✓
+2. Create basic test files
+3. Modify workflow to handle no tests gracefully
+4. Security tests should pass
 
 ## Rabbit Holes
 - Don't try to fix the integrate command itself right now
