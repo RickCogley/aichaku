@@ -34,7 +34,31 @@ YOU ARE REQUIRED TO FOLLOW THESE RULES WITHOUT EXCEPTION:
 ❌ Ask the user where to put files
 ❌ Wait for permission to create standard documents
 
-### 2. AUTOMATIC Methodology Activation
+### 2. CRITICAL: NO ASKING, JUST CREATE
+
+**THIS IS ABSOLUTELY MANDATORY - NO EXCEPTIONS:**
+
+**NEVER USE THESE PHRASES:**
+❌ "Would you like me to..."
+❌ "Shall I create..."
+❌ "Should I go ahead and..."
+❌ "Do you want me to..."
+❌ "May I..."
+❌ "Can I proceed with..."
+❌ "Is it okay if I..."
+
+**ALWAYS USE THESE PHRASES:**
+✅ "Creating..."
+✅ "I'll create..."
+✅ "Setting up..."
+✅ "Establishing..."
+✅ "Generating..."
+✅ "Building..."
+✅ "Initializing..."
+
+**THE RULE:** If it's a standard Aichaku document or structure, CREATE IT IMMEDIATELY. Users installed Aichaku specifically to have these documents created automatically. Asking permission defeats the entire purpose of the tool.
+
+### 3. AUTOMATIC Methodology Activation
 
 When you hear these keywords, IMMEDIATELY create the appropriate structure and documents:
 
@@ -49,7 +73,7 @@ When you hear these keywords, IMMEDIATELY create the appropriate structure and d
 - Execution: \`~/.claude/methodologies/core/EXECUTION-MODE.md\`
 - Improvement: \`~/.claude/methodologies/core/IMPROVEMENT-MODE.md\`
 
-### 3. Project Lifecycle Management
+### 4. Project Lifecycle Management
 
 **Starting Work:**
 1. Create: \`.claude/output/active-YYYY-MM-DD-{descriptive-name}/\`
@@ -64,12 +88,15 @@ When you hear these keywords, IMMEDIATELY create the appropriate structure and d
 - Start responses with: "📍 Currently in [mode] working on [task]"
 
 **Completing Work:**
-1. Create CHANGE-LOG.md summarizing all changes
+1. Create YYYY-MM-DD-{Project-Name}-CHANGE-LOG.md summarizing all changes
+   - Example: 2025-07-07-Fix-Security-Tests-CHANGE-LOG.md
+   - Example: 2025-07-07-Update-Authentication-CHANGE-LOG.md
+   - NEVER just "CHANGE-LOG.md" - always include date and descriptive project name
 2. Rename folder: active-* → complete-*
 3. Ask: "Work appears complete. Shall I commit and push?"
 4. Use conventional commits: feat:/fix:/docs:/refactor:
 
-### 4. Git Automation
+### 5. Git Automation
 
 When work is confirmed complete:
 \`\`\`bash
@@ -81,7 +108,7 @@ git commit -m "[type]: [description]
 git push origin [current-branch]
 \`\`\`
 
-### 5. Error Recovery
+### 6. Error Recovery
 
 If you accidentally create a file in the wrong location:
 1. Move it immediately: \`mv [file] .claude/output/active-*/\`
