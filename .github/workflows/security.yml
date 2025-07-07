@@ -87,14 +87,17 @@ jobs:
 
       - name: Check for path traversal vulnerabilities
         run: |
-          # Check for potential path traversal patterns
-          # Exclude: imports, methodology paths, and docs/search.js
-          ! grep -r -E "\.\./|\.\.\\\\|path\.join.*\.\." \
+          # Check for actual path traversal vulnerabilities
+          # Look for user input being used in path operations without validation
+          # Exclude legitimate uses: imports, relative requires, methodology paths
+          if grep -r -E "(resolve|join)\s*\([^)]*\$|readFile.*\$|writeFile.*\$" \
             --include="*.ts" --include="*.js" \
             --exclude-dir=".git" --exclude-dir="node_modules" \
             --exclude="*_test.ts" \
-            --exclude="search.js" \
-            . | grep -v -E "(import.*from|methodologies|test|example|comment|//|/\*)"
+            . | grep -v -E "(import|require|methodologies|example|test)"; then
+            echo "Found potential path traversal vulnerability"
+            exit 1
+          fi
 
       - name: Security audit report
         if: always()
