@@ -61,10 +61,13 @@ Sprint 15 [Day 6/10] ██████░░░░ 60% (24/40 pts)
 
 ### Visual Identity in Action
 ```
-🪴 Aichaku: I notice you're discussing a sprint. Let me help nurture this idea...
-🪴 Aichaku: Growing Shape Up project: user-authentication-redesign
-🪴 Aichaku: Your workflow is taking root in .claude/output/
+🪴 Aichaku: I notice you're discussing a sprint. Let me help shape this idea...
+🪴 Aichaku: Creating Shape Up project: user-authentication-redesign
+🪴 Aichaku: Documents created in .claude/output/
 ```
+
+**Key Principle**: Use 🪴 as identity marker and growth icons (🌱🌿🌳🍃) as subtle visual 
+indicators, but keep language clear and technical to avoid confusion.
 
 ### Progress in STATUS.md
 ```markdown

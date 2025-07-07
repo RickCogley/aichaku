@@ -37,25 +37,29 @@ When Aichaku functionality is active, prefix messages with:
 🪴 Aichaku: [your message]
 
 Examples:
-- "🪴 Aichaku: I notice you're discussing a sprint. Let me help nurture this idea..."
-- "🪴 Aichaku: Growing Shape Up project: user-authentication-redesign"
-- "🪴 Aichaku: Your workflow is taking root in .claude/output/"
+- "🪴 Aichaku: I notice you're discussing a sprint. Let me help shape this idea..."
+- "🪴 Aichaku: Creating Shape Up project: user-authentication-redesign"
+- "🪴 Aichaku: Documents created in .claude/output/"
+
+Note: Keep language clear and technical. Use growth icons (🌱🌿🌳🍃) as subtle 
+visual indicators for project phases, but avoid garden metaphors in text.
 ```
 
 ### 2. Project Phase Indicators
 
 **ASCII Progress Bar Approach:**
 ```
-🪴 Aichaku Progress: [Seedling] ━━━○━━━━━━ [Growing] ━━━━━━━━━━ [Blooming]
+🪴 Aichaku Progress: [Planning] ━━━○━━━━━━ [Executing] ━━━━━━━━━━ [Complete]
                      ████████████              
 ```
 
-**Emoji Phase Indicators:**
+**Subtle Phase Indicators:**
 ```
-🪴 Aichaku: Project Growth
-🌱 Seedling → 🌿 Growing → 🌳 Established → 🌺 Blooming → 🍃 Renewal
+🪴 Aichaku: Project Phase
+Planning → Executing → Reviewing → Complete
+Icons: 🌱     🌿         🌳         🍃
 
-Current: 🌿 Growing
+Current: Executing 🌿
 ```
 
 **For Different Methodologies:**
@@ -63,15 +67,17 @@ Current: 🌿 Growing
 **Shape Up:**
 ```
 🪴 Aichaku Shape Up: 
-[🌱 Shaping] → [🌿 Betting] → [🌳 Building] → [🍃 Cool-down]
-     ▲ Your project is here
+[Shaping] → [Betting] → [Building] → [Cool-down]
+    ▲ Current phase
+Visual: 🌱→🌿→🌳→🍃 (subtle indicators)
 ```
 
 **Scrum:**
 ```
-🪴 Aichaku Sprint Growth:
-[🌱 Planning] → [🌿 Daily] → [🌺 Review] → [🍃 Retro]
-                    ▲ Growing here
+🪴 Aichaku Sprint Progress:
+[Planning] → [Daily] → [Review] → [Retro]
+                ▲ Current
+Sprint 15, Day 6/10 🌿
 ```
 
 **Implementation Using Node Libraries:**
