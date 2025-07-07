@@ -32,9 +32,9 @@ Shape Up Progress:
 ### Key Decisions
 
 #### 1. Visual Identity
-- **Primary Icon**: 🎯 (target/bullseye)
-- **Format**: `🎯 Aichaku: [message]`
-- **Rationale**: Represents adaptive precision, culturally neutral
+- **Primary Icon**: 🪴 (potted plant)
+- **Format**: `🪴 Aichaku: [message]`
+- **Rationale**: Represents 愛着 - nurturing attachment that grows over time
 
 #### 2. Progress Indicators
 
@@ -61,8 +61,9 @@ Sprint 15 [Day 6/10] ██████░░░░ 60% (24/40 pts)
 
 ### Visual Identity in Action
 ```
-🎯 Aichaku: I notice you're discussing a sprint. Let me help shape this idea...
-🎯 Aichaku: Creating Shape Up project: user-authentication-redesign
+🪴 Aichaku: I notice you're discussing a sprint. Let me help nurture this idea...
+🪴 Aichaku: Growing Shape Up project: user-authentication-redesign
+🪴 Aichaku: Your workflow is taking root in .claude/output/
 ```
 
 ### Progress in STATUS.md
@@ -76,7 +77,7 @@ Week 3.5/6 - 2.5 weeks remaining
 ### Smart Reminder
 ```
 ╭─────────────────────────────────────────╮
-│ 🎯 Aichaku Active (3 projects)          │
+│ 🪴 Aichaku Active (3 projects growing)  │
 ├─────────────────────────────────────────┤
 │ • PDF Generation (Building - Day 2/6)   │
 │ • Visual UX (Shaping - Day 1/2)        │

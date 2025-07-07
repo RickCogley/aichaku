@@ -12,59 +12,66 @@ Currently, Aichaku operates invisibly, leading to:
 ### 1. Aichaku Visual Identity
 
 **Icon Options:**
-- 🎯 **Target** - Represents focused methodology
-- 🧭 **Compass** - Guides your project direction  
-- ⚡ **Lightning** - Adaptive and responsive
-- 🔄 **Cycle** - Iterative methodologies
-- 📐 **Triangular Ruler** - Structured approach
+- 🪴 **Potted Plant** - Nurturing methodologies that grow with you
+- 🫶 **Hands Holding Heart** - Cherishing your workflows  
+- 🍵 **Teacup** - Daily ritual and comfort
+- 🌱 **Seedling** - Growth from small beginnings
+- 🏮 **Paper Lantern** - Warm, guiding light
 
-**Recommended Identity:**
+**Chosen Identity:**
 ```
-🧭 Aichaku: [message]
+🪴 Aichaku: [message]
 ```
+
+**Why 🪴 Potted Plant:**
+- Represents 愛着 (aichaku) - the warm attachment that grows over time
+- Shows ongoing nurturing and care
+- Methodologies that become more valuable with use
+- Perfect metaphor for workflows that grow with your team
 
 **Implementation in CLAUDE.md:**
 ```markdown
 ### Visual Communication
 
 When Aichaku functionality is active, prefix messages with:
-🧭 Aichaku: [your message]
+🪴 Aichaku: [your message]
 
 Examples:
-- "🧭 Aichaku: I notice you're discussing a sprint. Let me help shape this idea..."
-- "🧭 Aichaku: Creating Shape Up project: user-authentication-redesign"
+- "🪴 Aichaku: I notice you're discussing a sprint. Let me help nurture this idea..."
+- "🪴 Aichaku: Growing Shape Up project: user-authentication-redesign"
+- "🪴 Aichaku: Your workflow is taking root in .claude/output/"
 ```
 
 ### 2. Project Phase Indicators
 
 **ASCII Progress Bar Approach:**
 ```
-🧭 Aichaku Progress: [Discussion] ━━━○━━━━━━ [Ready] ━━━━━━━━━━ [Created]
+🪴 Aichaku Progress: [Seedling] ━━━○━━━━━━ [Growing] ━━━━━━━━━━ [Blooming]
                      ████████████              
 ```
 
 **Emoji Phase Indicators:**
 ```
-🧭 Aichaku: Project Phase
-💭 Discussion → 📝 Shaping → ✅ Ready → 📁 Created → 🚀 Active
+🪴 Aichaku: Project Growth
+🌱 Seedling → 🌿 Growing → 🌳 Established → 🌺 Blooming → 🍃 Renewal
 
-Current: 📝 Shaping
+Current: 🌿 Growing
 ```
 
 **For Different Methodologies:**
 
 **Shape Up:**
 ```
-🧭 Aichaku Shape Up: 
-[🔍 Shaping] → [💰 Betting] → [🔨 Building] → [❄️ Cool-down]
-     ▲ You are here
+🪴 Aichaku Shape Up: 
+[🌱 Shaping] → [🌿 Betting] → [🌳 Building] → [🍃 Cool-down]
+     ▲ Your project is here
 ```
 
 **Scrum:**
 ```
-🧭 Aichaku Sprint Progress:
-[📋 Planning] → [🏃 Daily] → [👀 Review] → [🔄 Retro]
-                    ▲ Current
+🪴 Aichaku Sprint Growth:
+[🌱 Planning] → [🌿 Daily] → [🌺 Review] → [🍃 Retro]
+                    ▲ Growing here
 ```
 
 **Implementation Using Node Libraries:**
