@@ -38,7 +38,9 @@
       "WebFetch(domain:qiita.com)",
       "Bash(gh release list:*)",
       "Bash(gh release view:*)",
-      "Bash(gh release edit:*)"
+      "Bash(gh release edit:*)",
+      "Bash(deno install:*)",
+      "Bash(aichaku upgrade:*)"
     ],
     "deny": []
   }
