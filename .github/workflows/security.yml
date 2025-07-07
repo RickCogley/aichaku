@@ -91,7 +91,7 @@ jobs:
           # Look for user input being used directly in path operations
           # Focus on actual vulnerabilities: unchecked user input in paths
           echo "Checking for path traversal vulnerabilities..."
-          
+
           # Look for common patterns of unsafe path usage
           if grep -r -E "path\.(join|resolve)\([^)]*\[(req|request|params|query|body)" \
             --include="*.ts" --include="*.js" \
@@ -101,7 +101,7 @@ jobs:
             echo "Found potential path traversal vulnerability"
             exit 1
           fi
-          
+
           echo "No path traversal vulnerabilities found"
 
       - name: Security audit report
