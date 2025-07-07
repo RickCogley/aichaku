@@ -9,9 +9,11 @@ and this project adheres to
 ## [0.6.0] - 2025-07-07
 
 ### Changed
+
 - design magical Aichaku integration behavior (6b78942)
 
 ### Fixed
+
 - correct all dates and standardize change log naming (47c0795)
 
 ## [0.5.0] - 2025-07-06
