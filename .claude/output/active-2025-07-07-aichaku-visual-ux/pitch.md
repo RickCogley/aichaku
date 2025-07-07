@@ -67,8 +67,8 @@ Current: Executing 🌿
 **Shape Up:**
 ```
 🪴 Aichaku Shape Up: 
-[Shaping] → [Betting] → [Building] → [Cool-down]
-    ▲ Current phase
+[Shaping] → [**Betting**] → [Building] → [Cool-down]
+                ▲
 Visual: 🌱→🌿→🌳→🍃 (subtle indicators)
 ```
 
