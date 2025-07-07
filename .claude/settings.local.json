@@ -29,7 +29,16 @@
       "Bash(deno run:*)",
       "Bash(deno task:*)",
       "Bash(deno check:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(gh workflow run:*)",
+      "Bash(git tag:*)",
+      "Bash(pandoc:*)",
+      "Bash(.claude/scripts/generate-pdf.sh:*)",
+      "Bash(cp:*)",
+      "WebFetch(domain:qiita.com)",
+      "Bash(gh release list:*)",
+      "Bash(gh release view:*)",
+      "Bash(gh release edit:*)"
     ],
     "deny": []
   }

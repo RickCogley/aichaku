@@ -184,7 +184,7 @@ Automatic structure creation:
 ```
 You: "Let's add a new authentication feature"
 Claude: "I'll help you add authentication. I've created the project structure at:
-📁 .claude/output/active-2025-01-06-authentication-feature/
+📁 .claude/output/active-2025-07-06-authentication-feature/
 
 Let me start by understanding your requirements..."
 ```

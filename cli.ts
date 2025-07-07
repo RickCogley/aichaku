@@ -139,8 +139,12 @@ try {
 📚 Methodologies: Shape Up, Scrum, Kanban, Lean, XP, Scrumban
 🎯 Next: Run 'aichaku init' in any project
 
-💡 Pro tip: Aichaku works best through natural language.
-   Just tell Claude Code what you want to do!
+💡 Claude Code will now automatically:
+   • Create documents in .claude/output/
+   • Follow methodology patterns
+   • Respond to "shape", "sprint", "kanban", etc.
+   
+   Just start talking naturally!
 `);
         } else {
           // Project initialization success
@@ -149,10 +153,20 @@ try {
 
 Your project now has:
   • Access to all global methodologies
-  • Local customization directory
-  ${result.message?.includes("CLAUDE.md") ? "• CLAUDE.md integration" : ""}
+  • Pre-created output directory for documents
+  • Behavioral guidelines for Claude Code
+  ${
+            result.message?.includes("CLAUDE.md")
+              ? "• CLAUDE.md integration with clear directives"
+              : ""
+          }
 
-💡 Start working naturally - just tell Claude Code what you need!
+💡 Just start talking! Say things like:
+   • "Let's shape a new feature"
+   • "Plan our next sprint"
+   • "Show me our kanban board"
+   
+   Documents will automatically appear in .claude/output/
 `);
         }
       }

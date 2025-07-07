@@ -16,19 +16,81 @@ interface IntegrateResult {
   lineNumber?: number;
 }
 
-const METHODOLOGY_SECTION = `## Methodologies
+const METHODOLOGY_SECTION = `## 🎯 MANDATORY: Aichaku Integration Rules
 
-This project uses the Aichaku adaptive methodology system.
+YOU ARE REQUIRED TO FOLLOW THESE RULES WITHOUT EXCEPTION:
 
-Aichaku is installed globally and provides adaptive methodology support
-that blends approaches based on your natural language:
-- Say "sprint" → Scrum practices activate
-- Say "shape" → Shape Up principles engage  
-- Say "kanban" → Flow-based practices emerge
+### 1. AUTOMATIC Document Creation Behavior
 
-Global methodologies location: ~/.claude/methodologies/
-Project customizations: ./.claude/user/
+**YOU MUST ALWAYS:**
+✅ Create ALL documents in: \`.claude/output/active-YYYY-MM-DD-{descriptive-name}/\`
+✅ Create STATUS.md FIRST for every new project
+✅ Update STATUS.md after EVERY significant action
+✅ Read methodology guides from \`~/.claude/methodologies/\`
 
+**YOU MUST NEVER:**
+❌ Create documents in the project root directory
+❌ Create documents in .claude/user/ (that's for customizations)
+❌ Ask the user where to put files
+❌ Wait for permission to create standard documents
+
+### 2. AUTOMATIC Methodology Activation
+
+When you hear these keywords, IMMEDIATELY create the appropriate structure and documents:
+
+**Planning Keywords** → Create in \`.claude/output/active-*/\`:
+- "shape"/"pitch" → Read \`~/.claude/methodologies/shape-up/SHAPE-UP-AICHAKU-GUIDE.md\` → Create pitch.md
+- "sprint"/"scrum" → Read \`~/.claude/methodologies/scrum/SCRUM-AICHAKU-GUIDE.md\` → Create sprint-planning.md
+- "kanban"/"board" → Read \`~/.claude/methodologies/kanban/KANBAN-AICHAKU-GUIDE.md\` → Create kanban-board.md
+- "mvp"/"lean" → Read \`~/.claude/methodologies/lean/LEAN-AICHAKU-GUIDE.md\` → Create experiment-plan.md
+
+**ALWAYS** read the mode guide first:
+- Planning: \`~/.claude/methodologies/core/PLANNING-MODE.md\`
+- Execution: \`~/.claude/methodologies/core/EXECUTION-MODE.md\`
+- Improvement: \`~/.claude/methodologies/core/IMPROVEMENT-MODE.md\`
+
+### 3. Project Lifecycle Management
+
+**Starting Work:**
+1. Create: \`.claude/output/active-YYYY-MM-DD-{descriptive-name}/\`
+2. Create STATUS.md immediately
+3. Read appropriate methodology guides
+4. Create planning documents
+5. WAIT for human approval before coding
+
+**During Work:**
+- Update STATUS.md regularly
+- Create supporting documents freely
+- Start responses with: "📍 Currently in [mode] working on [task]"
+
+**Completing Work:**
+1. Create CHANGE-LOG.md summarizing all changes
+2. Rename folder: active-* → complete-*
+3. Ask: "Work appears complete. Shall I commit and push?"
+4. Use conventional commits: feat:/fix:/docs:/refactor:
+
+### 4. Git Automation
+
+When work is confirmed complete:
+\`\`\`bash
+git add .claude/output/[current-project]/
+git commit -m "[type]: [description]
+
+- [what was done]
+- [key changes]"
+git push origin [current-branch]
+\`\`\`
+
+### 5. Error Recovery
+
+If you accidentally create a file in the wrong location:
+1. Move it immediately: \`mv [file] .claude/output/active-*/\`
+2. Update STATUS.md noting the correction
+3. Continue without asking
+
+REMEMBER: This is AUTOMATIC behavior. Users expect documents to appear in the right place without asking.
+
+Methodologies: Shape Up, Scrum, Kanban, Lean, XP, Scrumban
 Learn more: https://github.com/RickCogley/aichaku
 `;
 

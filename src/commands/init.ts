@@ -160,6 +160,25 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
       console.log("✓ Created user customization directory");
     }
 
+    // Create output directory structure (for both global and project)
+    const outputDir = join(targetPath, "output");
+    await ensureDir(outputDir);
+
+    // Create output README
+    const outputReadmePath = join(outputDir, "README.md");
+    await Deno.writeTextFile(outputReadmePath, getOutputReadmeContent());
+
+    // Create behavioral reinforcement files
+    const aichakuBehaviorPath = join(targetPath, ".aichaku-behavior");
+    await Deno.writeTextFile(aichakuBehaviorPath, getBehaviorContent());
+
+    const rulesReminderPath = join(targetPath, "RULES-REMINDER.md");
+    await Deno.writeTextFile(rulesReminderPath, getRulesReminderContent());
+
+    if (!options.silent) {
+      console.log("✓ Created output directory and behavioral guides");
+    }
+
     // Create metadata file
     if (isGlobal) {
       // Global: Create .aichaku.json
@@ -356,5 +375,108 @@ Define your organization's vocabulary:
 - Note terminology that's unique to your org
 
 Remember: These customizations make Aichaku work better for YOUR team.
+`;
+}
+
+function getOutputReadmeContent(): string {
+  return `# Aichaku Output Directory
+
+This directory contains all project documentation organized by status and date.
+
+## Structure
+
+- \`active-*\` - Currently ongoing work
+- \`complete-*\` - Successfully completed projects
+- \`cancelled-*\` - Cancelled projects
+- \`paused-*\` - Projects on hold
+
+## Naming Convention
+
+\`[status]-YYYY-MM-DD-[descriptive-kebab-case-name]\`
+
+Examples:
+- active-2025-01-07-user-authentication
+- active-2025-01-07-fix-performance-issues
+- complete-2025-01-06-global-project-redesign
+
+## What Goes Here
+
+Each project directory should contain:
+- STATUS.md - Current status and progress (ALWAYS create this first)
+- Planning documents (pitches, specs, backlogs)
+- Progress updates
+- Metrics and reviews
+- CHANGE-LOG.md - Summary when complete
+
+## For Claude Code
+
+When users discuss new work, IMMEDIATELY create a new active-* directory here.
+Don't wait to be asked. This is expected behavior.
+
+### Quick Reference
+- User says "let's shape X" → Create active-YYYY-MM-DD-shape-X/
+- User says "plan sprint" → Create active-YYYY-MM-DD-sprint-planning/
+- User says "fix bug" → Create active-YYYY-MM-DD-fix-[bug-description]/
+`;
+}
+
+function getBehaviorContent(): string {
+  return `# 🎯 Quick Reference for Claude Code
+
+## Before ANY work:
+1. Check .claude/output/ for existing active-* directories
+2. Create new active-YYYY-MM-DD-{name} for new work
+3. ALWAYS create STATUS.md first
+4. Read methodology guides from ~/.claude/methodologies/
+
+## Key Behaviors:
+✅ Documents ALWAYS go in .claude/output/active-*/
+✅ Update STATUS.md after each work session
+✅ Create documents without asking permission
+✅ Rename to complete-* when done
+
+❌ NEVER create documents in project root
+❌ NEVER use .claude/user/ for output
+❌ NEVER wait for permission to create standard docs
+❌ NEVER proceed with implementation without approval
+
+## Status Transitions:
+- active-* → Work in progress
+- complete-* → Successfully finished
+- cancelled-* → Work stopped
+- paused-* → Temporarily on hold
+
+IMPORTANT: Creating proper structure is AUTOMATIC, not optional.
+`;
+}
+
+function getRulesReminderContent(): string {
+  return `# 🚨 AICHAKU RULES REMINDER
+
+## Before creating ANY file, check:
+
+1. ✅ Is it going in \`.claude/output/active-*/\`?
+2. ✅ Does STATUS.md exist there?
+3. ✅ Have I updated STATUS.md recently?
+
+If any answer is NO → FIX IT FIRST!
+
+## Quick Fixes:
+
+### Wrong location?
+\`\`\`bash
+mv [file] .claude/output/active-[current-project]/
+\`\`\`
+
+### No STATUS.md?
+Create it immediately with project info.
+
+### Not sure where to put files?
+ALWAYS: \`.claude/output/active-YYYY-MM-DD-{project-name}/\`
+
+## Remember:
+- This is AUTOMATIC behavior
+- Users expect files in the right place
+- No asking, just doing
 `;
 }
