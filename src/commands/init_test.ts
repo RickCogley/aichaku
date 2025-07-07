@@ -35,7 +35,7 @@ Deno.test("init dry run completes successfully", async () => {
 Deno.test("init handles existing installations correctly", async () => {
   // Test with a unique temp path to avoid conflicts
   const tempPath = `/tmp/test-aichaku-${Date.now()}`;
-  
+
   // Test project init with dry run (should always succeed in dry run mode)
   const result = await init({
     global: false,
