@@ -17,9 +17,9 @@ Shape Up Progress:
 - [x] Research icon options
 - [x] Design progress indicators
 - [x] Plan startup reminder system
-- [ ] Implement visual identity in integrate.ts
-- [ ] Create progress indicator templates
-- [ ] Add startup reminder logic
+- [x] Implement visual identity in integrate.ts
+- [x] Create progress indicator templates
+- [x] Add visual guidelines to CLAUDE.md directives
 
 ## Updates
 ### 2025-07-07T11:42:00Z
