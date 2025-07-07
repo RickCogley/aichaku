@@ -74,10 +74,10 @@ Visual: 🌱→🌿→🌳→🍃 (subtle indicators)
 
 **Scrum:**
 ```
-🪴 Aichaku Sprint Progress:
-[Planning] → [Daily] → [Review] → [Retro]
-                ▲ Current
-Sprint 15, Day 6/10 🌿
+🪴 Aichaku Sprint 15:
+Day 6/10 ████████░░░░░░ 60% 🌿
+Ceremonies: ✅ Planning | 🔄 Daily (ongoing) | ⏳ Review | ⏳ Retro
+Points: 24/40 complete
 ```
 
 **Implementation Using Node Libraries:**

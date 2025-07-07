@@ -32,8 +32,9 @@ Minimal: ████░░░░░░░░░░░░ 14%
 ### Scrum Sprint
 ```
 Sprint 15 - Payment Gateway
-[Planning:✓][Execution:████████░░░░░░░░][Review:░░][Retro:░░]
-📍 Day 6/10 - ON TRACK ✅ - 24/40 points complete
+Day 6/10 ████████░░░░░░ 60% - 24/40 points complete
+✅ Planning | 🔄 Daily x6 | ⏳ Review (Day 9) | ⏳ Retro (Day 10)
+Status: ON TRACK 🌿
 
 Compact: Sprint 15 [Day 6/10] ██████░░░░ 60%
 Minimal: S15:D6 ██████░░░░
