@@ -78,7 +78,10 @@ async function getLatestVersion(): Promise<string> {
 }
 
 // Install Aichaku globally
-async function installGlobal(): Promise<boolean> {
+async function installGlobal(
+  version: string,
+  isUpgrade: boolean,
+): Promise<boolean> {
   console.log("📦 Installing Aichaku CLI globally...");
 
   const installArgs = [
@@ -89,11 +92,19 @@ async function installGlobal(): Promise<boolean> {
     PACKAGE_NAME,
   ];
 
-  if (args.force) {
+  if (args.force || isUpgrade) {
     installArgs.push("--force");
+    // Add --reload for upgrades to bypass cache
+    if (isUpgrade) {
+      installArgs.push("--reload");
+      console.log("   • Clearing Deno cache...");
+    }
   }
 
-  installArgs.push(JSR_URL);
+  // Always specify exact version
+  const versionedUrl = `jsr:@${SCOPE}/${PACKAGE_NAME}@${version}/cli`;
+  installArgs.push(versionedUrl);
+  console.log(`   • Installing v${version}...`);
 
   const cmd = new Deno.Command("deno", {
     args: installArgs,
@@ -163,23 +174,60 @@ async function main() {
   if (currentVersion) {
     console.log(`\n📦 Current: v${currentVersion}`);
     console.log(`📦 Latest:  v${latestVersion}`);
-    console.log(`\n🔄 Upgrading...`);
+    console.log(`\n🔄 Upgrading Aichaku...`);
   } else {
     console.log(`\n📦 Installing v${latestVersion}...`);
   }
 
   // Install globally
-  const installSuccess = await installGlobal();
+  const isUpgrade = !!currentVersion;
+  const installSuccess = await installGlobal(latestVersion, isUpgrade);
   if (!installSuccess) {
     console.error("\n❌ Installation failed!");
+    console.error("\n🔧 Manual fix required:");
+    console.error(
+      `   deno install -g -A -n aichaku --force --reload jsr:@rick/aichaku@${latestVersion}/cli`,
+    );
     Deno.exit(1);
   }
 
+  // Verify installation
+  console.log("   • Verifying installation...");
+  const installedVersion = await getCurrentVersion();
+  if (installedVersion !== latestVersion) {
+    console.error("\n❌ Installation verification failed!");
+    console.error(`   Expected: v${latestVersion}`);
+    console.error(`   Actual:   v${installedVersion || "not found"}`);
+    console.error("\n🔧 Manual fix required:");
+    console.error(
+      `   deno cache --reload jsr:@rick/aichaku@${latestVersion}/cli`,
+    );
+    console.error(
+      `   deno install -g -A -n aichaku --force jsr:@rick/aichaku@${latestVersion}/cli`,
+    );
+    Deno.exit(1);
+  }
+  console.log("   ✓ Installation verified");
+
   // Initialize global methodologies
+  console.log("\n🌍 Setting up global methodologies...");
   const initSuccess = await initGlobal();
   if (!initSuccess) {
     console.error("\n❌ Failed to initialize global methodologies!");
-    console.log("Try running: aichaku init --global");
+
+    if (isUpgrade) {
+      console.error("\n📝 This usually happens when upgrading.");
+      console.error("   Your methodologies are from an older version.\n");
+      console.error("🔧 To fix this, run:");
+      console.error(`   aichaku upgrade --global`);
+    } else {
+      console.error("\n📝 To manually initialize:");
+      console.error(`   aichaku init --global`);
+    }
+
+    console.error(
+      "\n📚 If issues persist: https://github.com/RickCogley/aichaku/issues",
+    );
     Deno.exit(1);
   }
 
