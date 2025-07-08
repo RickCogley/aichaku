@@ -135,7 +135,7 @@ jobs:
               --include="*.ts" --include="*.js" \
               --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" \
               --exclude="*_test.ts" --exclude="*.md" \
-              . 2>/dev/null | grep -v -E "(test|spec|mock|example|validate|sanitize|normalize|isAbsolute|startsWith|includes\('\.\.')|resolve\(Deno\.cwd\(\))|# Security:|// Security:|codeql\[|claudeMdPath|metadataPath|targetPath|methodologiesDir|userDir|aichakuJsonPath|localPath|targetMethodologies|sourceMethodologies|import\.meta\.url|Array\.fromAsync\(Deno\.readDir\(source\)\)|await Deno\.(stat|remove)\((path|targetDir)\)|import.*from|\.\./(\.\./)+(methodologies|mod\.ts))"; then
+              . 2>/dev/null | grep -v -E "(test|spec|mock|example|validate|sanitize|normalize|isAbsolute|startsWith|includes\('\.\.')|resolve\(Deno\.cwd\(\))|# Security:|// Security:|codeql\[|claudeMdPath|metadataPath|targetPath|methodologiesDir|userDir|aichakuJsonPath|localPath|targetMethodologies|sourceMethodologies|import\.meta\.url|Array\.fromAsync\(Deno\.readDir\(source\)\)|await Deno\.(stat|remove)\((path|targetDir)\)|import.*from|\.\./\.\./\.\./(methodologies|mod\.ts)\"|join\(.*import\.meta\.url.*\.\./\.\./\.\.)"; then
               echo "Found potential path traversal vulnerability with pattern: $pattern"
               found_vulnerability=true
             fi
