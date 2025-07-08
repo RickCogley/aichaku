@@ -118,11 +118,10 @@ export async function fetchMethodologies(
       }
     } catch (error) {
       // Only show warnings for actual fetch failures, not permission issues
-      if (!options.silent && !error.message?.includes("Requires net access")) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      if (!options.silent && !errorMessage.includes("Requires net access")) {
         console.warn(
-          `⚠️  Failed to fetch ${relativePath}: ${
-            error instanceof Error ? error.message : String(error)
-          }`,
+          `⚠️  Failed to fetch ${relativePath}: ${errorMessage}`,
         );
       }
     }
