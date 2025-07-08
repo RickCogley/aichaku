@@ -316,7 +316,7 @@ export function help(options: HelpOptions = {}): HelpResult {
     // List all methodologies
     if (options.list) {
       const list = Object.entries(METHODOLOGIES)
-        .map(([key, meta], index) =>
+        .map(([_key, meta], index) =>
           `  ${index + 1}. ${meta.icon} ${
             meta.name.padEnd(18)
           } - ${meta.summary}`
