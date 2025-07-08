@@ -208,7 +208,13 @@ export async function upgrade(
       // Type assertion to handle const literal type
       const currentVersion = VERSION as string;
 
-      if (currentVersion === "0.9.1") {
+      if (currentVersion === "0.11.0") {
+        console.log("\n✨ What's new in v0.11.0:");
+        console.log("   • 🔄 Automatic methodology updates during upgrade");
+        console.log("   • 📁 Downloads new files added in releases");
+        console.log("   • ✨ Overwrites existing files with latest content");
+        console.log("   • 🚫 No more confusing network permission warnings");
+      } else if (currentVersion === "0.9.1") {
         console.log("\n✨ What's new in v0.9.1:");
         console.log("   • 🔧 Fixed installer upgrade verification");
         console.log("   • 📁 Support for new project marker format");
