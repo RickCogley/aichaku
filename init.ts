@@ -11,7 +11,6 @@ import { parseArgs } from "jsr:@std/cli@1/parse-args";
 
 const PACKAGE_NAME = "aichaku";
 const SCOPE = "rick";
-const JSR_URL = `jsr:@${SCOPE}/${PACKAGE_NAME}/cli`;
 const PERMISSIONS = ["--allow-read", "--allow-write", "--allow-env"];
 
 // Parse arguments
