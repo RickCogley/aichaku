@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.1] - 2025-07-08
+
+### Changed
+
+- update deno.lock (cc92ffd)
+- format files for release (81f91d0)
+- bump nagare version (280917f)
+- use GitHub Pages URL and clarify API documentation (8a08c5d)
+
+### Fixed
+
+- remove unused JSR_URL variable (c4bae6f)
+- installer now actually upgrades Aichaku (8bd4e73)
+
 ## [0.8.0] - 2025-07-08
 
 ### Added
