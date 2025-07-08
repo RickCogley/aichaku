@@ -218,15 +218,11 @@ async function main() {
     Deno.exit(1);
   }
 
-  // Show installation paths
-  const binPath = Deno.build.os === "windows"
-    ? `${Deno.env.get("USERPROFILE")}\\.deno\\bin\\aichaku.exe`
-    : `${Deno.env.get("HOME")}/.deno/bin/aichaku`;
+  // Show methodologies path (CLI path already shown by Deno)
   const methodologyPath = Deno.build.os === "windows"
     ? `${Deno.env.get("USERPROFILE")}\\.claude\\methodologies`
     : `${Deno.env.get("HOME")}/.claude/methodologies`;
 
-  console.log(`   📍 CLI: ${binPath}`);
   console.log(`   📚 Methodologies: ${methodologyPath}`);
 
   // Verify installation (with retry for PATH updates)
@@ -278,7 +274,8 @@ async function main() {
     Deno.exit(1);
   }
 
-  console.log(`\n✅ Aichaku v${latestVersion} installed!`);
+  // Show single success message after all installation steps
+  console.log(`\n✅ Aichaku v${latestVersion} ready!`);
 
   // Initialize current project unless global-only
   let projectInitialized = false;

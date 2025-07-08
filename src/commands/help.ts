@@ -22,38 +22,83 @@ const METHODOLOGIES = {
     icon: "🎯",
     summary: "Fixed time, variable scope - for teams building new features",
     keyIdea: "6-week cycles with betting and shaping",
+    triggers: ["shape", "appetite", "bet", "pitch"],
   },
   "scrum": {
     name: "Scrum",
     icon: "🏃",
     summary: "Sprint-based agile framework with ceremonies",
     keyIdea: "2-4 week sprints with daily standups",
+    triggers: ["sprint", "standup", "retrospective", "backlog"],
   },
   "kanban": {
     name: "Kanban",
     icon: "📋",
     summary: "Visual workflow management with WIP limits",
     keyIdea: "Continuous flow with pull-based work",
+    triggers: ["kanban board", "WIP", "flow", "pull"],
   },
   "lean": {
     name: "Lean",
     icon: "🚀",
     summary: "Build-measure-learn for rapid validation",
     keyIdea: "MVP focus and hypothesis testing",
+    triggers: ["MVP", "hypothesis", "validate", "pivot"],
   },
   "xp": {
     name: "Extreme Programming",
     icon: "💻",
     summary: "Engineering practices for quality code",
     keyIdea: "TDD, pair programming, continuous integration",
+    triggers: ["pair", "TDD", "test first", "refactor"],
   },
   "scrumban": {
     name: "Scrumban",
     icon: "🔄",
     summary: "Hybrid of Scrum structure with Kanban flow",
     keyIdea: "Sprint planning with continuous delivery",
+    triggers: ["bucket", "ready queue", "flow metrics"],
   },
 };
+
+// Normalize methodology name for lookup
+function normalizeMethodologyName(name: string): string | undefined {
+  // Check if it's a number
+  const num = parseInt(name);
+  if (!isNaN(num) && num >= 1 && num <= Object.keys(METHODOLOGIES).length) {
+    return Object.keys(METHODOLOGIES)[num - 1];
+  }
+  
+  const normalized = name.toLowerCase().replace(/[\s-_]/g, "");
+  
+  // Direct matches
+  const directMatches: Record<string, string> = {
+    "shapeup": "shape-up",
+    "extremeprogramming": "xp",
+    "extreme": "xp",
+    "programming": "xp",
+  };
+  
+  if (directMatches[normalized]) {
+    return directMatches[normalized];
+  }
+  
+  // Check if it matches any key directly
+  for (const key of Object.keys(METHODOLOGIES)) {
+    if (key.replace(/-/g, "") === normalized) {
+      return key;
+    }
+  }
+  
+  // Check if it matches any display name
+  for (const [key, meta] of Object.entries(METHODOLOGIES)) {
+    if (meta.name.toLowerCase().replace(/[\s-_]/g, "") === normalized) {
+      return key;
+    }
+  }
+  
+  return undefined;
+}
 
 // Help content for each methodology
 const HELP_CONTENT: Record<string, string> = {
@@ -241,15 +286,19 @@ export function help(options: HelpOptions = {}): HelpResult {
     // List all methodologies
     if (options.list) {
       const list = Object.entries(METHODOLOGIES)
-        .map(([_key, meta]) =>
-          `  ${meta.icon} ${meta.name.padEnd(20)} - ${meta.summary}`
+        .map(([key, meta], index) =>
+          `  ${index + 1}. ${meta.icon} ${meta.name.padEnd(18)} - ${meta.summary}`
         )
         .join("\n");
+      
+      const methodNames = Object.entries(METHODOLOGIES)
+        .map(([key, meta]) => `"${meta.name.toLowerCase()}", "${key}"`)
+        .join(", ");
 
       return {
         success: true,
         content:
-          `Available Methodologies:\n\n${list}\n\nUse 'aichaku help <methodology>' for detailed information.`,
+          `Available Methodologies:\n\n${list}\n\n📝 Get help using:\n  • Number: aichaku help 1\n  • Name: aichaku help "shape up"\n  • Code: aichaku help shape-up\n\n✨ All names work: ${methodNames}`,
       };
     }
 
@@ -276,14 +325,21 @@ export function help(options: HelpOptions = {}): HelpResult {
 
     // Show specific methodology help
     if (options.methodology) {
-      const methodology = options.methodology.toLowerCase();
-      const content = HELP_CONTENT[methodology];
-
-      if (!content) {
+      const normalizedName = normalizeMethodologyName(options.methodology);
+      
+      if (!normalizedName) {
         return {
           success: false,
           message:
             `Unknown methodology: ${options.methodology}. Use 'aichaku help --list' to see available options.`,
+        };
+      }
+      
+      const content = HELP_CONTENT[normalizedName];
+      if (!content) {
+        return {
+          success: false,
+          message: `No detailed help available for ${options.methodology} yet.`,
         };
       }
 
@@ -296,22 +352,29 @@ export function help(options: HelpOptions = {}): HelpResult {
     // Default help about the help command
     return {
       success: true,
-      content: `Aichaku Help System
+      content: `🪴 Aichaku - Adaptive Methodology Support
 
-Learn about available methodologies and how to use them with Claude Code.
+📚 Quick Reference
+  aichaku init          Initialize a project
+  aichaku upgrade       Update to latest version  
+  aichaku help          Show this help
+  aichaku --version     Show version info
 
-Usage:
-  aichaku help [methodology]     Show detailed help for a methodology
-  aichaku help --list           List all available methodologies  
-  aichaku help --compare        Show comparison table
+🎯 Methodology Help
+  aichaku help shape up     Learn about Shape Up
+  aichaku help scrum        Learn about Scrum
+  aichaku help --list       See all methodologies
+  aichaku help --compare    Compare methodologies
 
-Examples:
-  aichaku help shape-up         Learn about Shape Up methodology
-  aichaku help scrum           Learn about Scrum framework
-  aichaku help --list          See all methodologies
-  aichaku help --compare       Compare methodologies side-by-side
+💡 How It Works with Claude Code
+  Say "let's shape a feature"    → Activates Shape Up mode
+  Say "plan our sprint"          → Uses Scrum practices  
+  Say "show the kanban board"    → Displays work tracking
+  Say "write tests first"        → Applies XP principles
 
-Methodologies adapt to your language. Just start talking naturally!`,
+✨ Natural language triggers adapt methodologies to how you work!
+
+📖 Docs: https://github.com/RickCogley/aichaku`,
     };
   } catch (error) {
     return {

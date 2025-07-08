@@ -109,6 +109,11 @@ Examples:
   # Upgrade to latest version
   aichaku upgrade
 
+  # Learn about methodologies
+  aichaku help
+  aichaku help shape up
+  aichaku help --list
+
   # Remove Aichaku
   aichaku uninstall
 
