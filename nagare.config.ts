@@ -86,7 +86,13 @@ export default {
         thinkingLevel: "ultrathink", // You have the max plan
         maxAttempts: 5,
       },
-      types: ["lint", "format", "security-scan", "type-check", "version-conflict"],
+      types: [
+        "lint",
+        "format",
+        "security-scan",
+        "type-check",
+        "version-conflict",
+      ],
     },
 
     // Progress visualization
