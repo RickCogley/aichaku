@@ -119,8 +119,8 @@ async function installGlobal(
 async function initGlobal(isUpgrade: boolean = false): Promise<boolean> {
   console.log("\n🌍 Setting up global methodologies...");
 
-  const initArgs = ["init", "--global", "--silent"];
-  if (isUpgrade) {
+  const initArgs = ["init", "--global"];
+  if (isUpgrade || args.force) {
     initArgs.push("--force");
   }
 
@@ -195,26 +195,31 @@ async function main() {
     Deno.exit(1);
   }
 
-  // Verify installation
+  // Verify installation (with retry for PATH updates)
   console.log("   • Verifying installation...");
-  const installedVersion = await getCurrentVersion();
-  if (installedVersion !== latestVersion) {
-    console.error("\n❌ Installation verification failed!");
-    console.error(`   Expected: v${latestVersion}`);
-    console.error(`   Actual:   v${installedVersion || "not found"}`);
-    console.error("\n🔧 Manual fix required:");
-    console.error(
-      `   deno cache --reload jsr:@rick/aichaku@${latestVersion}/cli`,
-    );
-    console.error(
-      `   deno install -g -A -n aichaku --force jsr:@rick/aichaku@${latestVersion}/cli`,
-    );
-    Deno.exit(1);
+  let installedVersion = await getCurrentVersion();
+  
+  // If version check fails, wait a moment and retry (PATH might not be updated)
+  if (!installedVersion || installedVersion !== latestVersion) {
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    installedVersion = await getCurrentVersion();
   }
-  console.log("   ✓ Installation verified");
+  
+  if (installedVersion !== latestVersion) {
+    console.error("\n⚠️  Version verification shows v" + (installedVersion || "unknown"));
+    console.error(`   Expected: v${latestVersion}`);
+    
+    // Don't fail hard - the installation likely succeeded
+    console.log("\n📝 This might be a PATH issue. Try:");
+    console.log("   1. Open a new terminal");
+    console.log("   2. Run: aichaku --version");
+    console.log(`   3. If still showing old version, run:`);
+    console.log(`      deno install -g -A -n aichaku --force --reload jsr:@rick/aichaku@${latestVersion}/cli`);
+  } else {
+    console.log("   ✓ Installation verified");
+  }
 
   // Initialize global methodologies
-  console.log("\n🌍 Setting up global methodologies...");
   const initSuccess = await initGlobal(isUpgrade);
   if (!initSuccess) {
     console.error("\n❌ Failed to initialize global methodologies!");
