@@ -43,9 +43,18 @@ export async function upgrade(
     ? join(Deno.env.get("HOME") || "", ".claude")
     : resolve(options.projectPath || "./.claude");
 
-  // Check if Aichaku is installed
+  // Check if Aichaku is installed (try both old and new marker files)
   const aichakuJsonPath = join(targetPath, ".aichaku.json");
-  if (!await exists(aichakuJsonPath)) {
+  const aichakuProjectPath = join(targetPath, ".aichaku-project");
+  
+  let metadataPath: string | null = null;
+  if (await exists(aichakuJsonPath)) {
+    metadataPath = aichakuJsonPath;
+  } else if (!isGlobal && await exists(aichakuProjectPath)) {
+    metadataPath = aichakuProjectPath;
+  }
+  
+  if (!metadataPath) {
     return {
       success: false,
       path: targetPath,
@@ -57,8 +66,16 @@ export async function upgrade(
   // Read current metadata
   let metadata: AichakuMetadata;
   try {
-    const content = await Deno.readTextFile(aichakuJsonPath);
-    metadata = JSON.parse(content);
+    const content = await Deno.readTextFile(metadataPath);
+    const rawMetadata = JSON.parse(content);
+    
+    // Handle both old and new metadata formats
+    metadata = {
+      version: rawMetadata.version || VERSION,
+      installedAt: rawMetadata.installedAt || rawMetadata.createdAt || new Date().toISOString(),
+      installationType: rawMetadata.installationType || (isGlobal ? "global" : "local"),
+      lastUpgrade: rawMetadata.lastUpgrade || null,
+    };
   } catch (error) {
     return {
       success: false,
@@ -166,7 +183,17 @@ export async function upgrade(
       // Type assertion to handle const literal type
       const currentVersion = VERSION as string;
 
-      if (currentVersion === "0.8.0") {
+      if (currentVersion === "0.9.1") {
+        console.log("\n✨ What's new in v0.9.1:");
+        console.log("   • 🔧 Fixed installer upgrade verification");
+        console.log("   • 📁 Support for new project marker format");
+        console.log("   • 🚀 Better error handling during upgrades");
+      } else if (currentVersion === "0.9.0") {
+        console.log("\n✨ What's new in v0.9.0:");
+        console.log("   • 🎯 Unified upgrade command (no more integrate --force!)");
+        console.log("   • ✂️  Surgical CLAUDE.md updates with markers");
+        console.log("   • 🔄 Automatic project updates during upgrade");
+      } else if (currentVersion === "0.8.0") {
         console.log("\n✨ What's new in v0.8.0:");
         console.log("   • 🚀 Ultra-simple installation: deno run -A init.ts");
         console.log("   • 📦 Enhanced install script with version feedback");
@@ -185,7 +212,7 @@ export async function upgrade(
     metadata.version = VERSION;
     metadata.lastUpgrade = new Date().toISOString();
     await Deno.writeTextFile(
-      aichakuJsonPath,
+      metadataPath,
       JSON.stringify(metadata, null, 2),
     );
 
