@@ -36,6 +36,30 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
   const projectPath = resolve(options.projectPath || ".");
   const targetPath = isGlobal ? globalPath : join(projectPath, ".claude");
 
+  // Check for dry-run first, before any filesystem checks
+  if (options.dryRun) {
+    if (isGlobal) {
+      console.log(
+        `[DRY RUN] Would initialize global Aichaku at: ${targetPath}`,
+      );
+      console.log("[DRY RUN] Would create:");
+      console.log("  - methodologies/ (all methodology files)");
+      console.log("  - user/ (global customization directory)");
+      console.log("  - .aichaku.json (metadata)");
+    } else {
+      console.log(`[DRY RUN] Would initialize project at: ${targetPath}`);
+      console.log("[DRY RUN] Would create:");
+      console.log("  - user/ (project customization directory)");
+      console.log("  - .aichaku-project (marker file)");
+      console.log("[DRY RUN] Would prompt to integrate with CLAUDE.md");
+    }
+    return {
+      success: true,
+      path: targetPath,
+      message: "Dry run completed. No files were modified.",
+    };
+  }
+
   // For project init, check if global exists first
   if (!isGlobal) {
     const globalExists = await exists(join(globalPath, ".aichaku.json"));
@@ -69,29 +93,6 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
       path: targetPath,
       message: `Project already initialized. Use --force to reinitialize.`,
       action: "exists",
-    };
-  }
-
-  if (options.dryRun) {
-    if (isGlobal) {
-      console.log(
-        `[DRY RUN] Would initialize global Aichaku at: ${targetPath}`,
-      );
-      console.log("[DRY RUN] Would create:");
-      console.log("  - methodologies/ (all methodology files)");
-      console.log("  - user/ (global customization directory)");
-      console.log("  - .aichaku.json (metadata)");
-    } else {
-      console.log(`[DRY RUN] Would initialize project at: ${targetPath}`);
-      console.log("[DRY RUN] Would create:");
-      console.log("  - user/ (project customization directory)");
-      console.log("  - .aichaku-project (marker file)");
-      console.log("[DRY RUN] Would prompt to integrate with CLAUDE.md");
-    }
-    return {
-      success: true,
-      path: targetPath,
-      message: "Dry run completed. No files were modified.",
     };
   }
 

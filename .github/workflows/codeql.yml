@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ["javascript"]
+        language: ["javascript-typescript"]
 
     steps:
       - name: Checkout repository
@@ -34,7 +34,7 @@ jobs:
         with:
           languages: ${{ matrix.language }}
           # Specify queries to run
-          queries: security-extended,security-and-quality
+          queries: security-and-quality
 
       - name: Setup Deno
         uses: denoland/setup-deno@v2

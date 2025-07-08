@@ -50,7 +50,7 @@ jobs:
       - name: Run all tests with coverage
         run: |
           if find . -name "*_test.ts" -type f | grep -q .; then
-            deno test --allow-all --coverage=coverage
+            deno test --allow-read --allow-write --allow-env --allow-run --coverage=coverage
           else
             echo "No test files found, skipping tests"
             echo "no_tests=true" >> $GITHUB_ENV
@@ -69,40 +69,116 @@ jobs:
 
       - name: Check for hardcoded secrets
         run: |
-          # Check for potential hardcoded secrets
-          ! grep -r -E "(api_key|apikey|password|secret|private_key|token)\s*[:=]\s*[\"'][^\"']+[\"']" \
-            --include="*.ts" --include="*.js" \
-            --exclude-dir=".git" --exclude-dir="node_modules" \
-            --exclude="*_test.ts" --exclude="*.md" \
-            . | grep -v -E "(test|example|sample|mock|fake|dummy|env\.get|process\.env|import|from)"
+          # Check for potential hardcoded secrets with comprehensive patterns
+          ! grep -r -E "(api[_-]?key|apikey|password|passwd|pwd|secret|private[_-]?key|token|auth[_-]?token|access[_-]?token|bearer|credential|client[_-]?secret|jwt[_-]?secret|database[_-]?url|connection[_-]?string|ssh[_-]?key|gpg[_-]?key|encryption[_-]?key|salt|oauth|github[_-]?token|gitlab[_-]?token|slack[_-]?token|aws[_-]?access|aws[_-]?secret|stripe[_-]?key|sendgrid[_-]?key|mailgun[_-]?key|twilio[_-]?auth)\s*[:=]\s*[\"'][^\"']+[\"']" \
+            --include="*.ts" --include="*.js" --include="*.json" \
+            --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" \
+            --exclude="*_test.ts" --exclude="*.md" --exclude="deno.lock" \
+            . | grep -v -E "(test|example|sample|mock|fake|dummy|placeholder|env\.get|process\.env|import|from|export|interface|type|const.*=.*require)"
 
       - name: Check for dangerous patterns
         run: |
-          # Check for eval, Function constructor, etc.
-          ! grep -r -E "^\s*[^\"'/]*\b(eval\s*\(|new\s+Function\s*\()" \
-            --include="*.ts" --include="*.js" \
-            --exclude-dir=".git" --exclude-dir="node_modules" \
-            --exclude="*_test.ts" \
-            .
+          # Check for eval, Function constructor, and other dangerous patterns
+          dangerous_patterns=(
+            # eval and Function constructor
+            "^\s*[^\"'/]*\b(eval\s*\(|new\s+Function\s*\()"
+            # Dynamic imports without validation
+            "import\s*\([^)]*\$\{[^}]*\}"
+            # Shell command execution
+            "child_process\.(exec|execSync|spawn|spawnSync)\s*\("
+            # Deno command execution without validation
+            "Deno\.run\s*\(\s*\{[^}]*cmd:\s*\[[^]]*\$"
+            # innerHTML usage
+            "\.innerHTML\s*="
+            # document.write
+            "document\.write\s*\("
+          )
 
-      - name: Check for path traversal vulnerabilities
-        run: |
-          # Check for actual path traversal vulnerabilities
-          # Look for user input being used directly in path operations
-          # Focus on actual vulnerabilities: unchecked user input in paths
-          echo "Checking for path traversal vulnerabilities..."
+          found_dangerous=false
+          for pattern in "${dangerous_patterns[@]}"; do
+            if grep -r -E "$pattern" \
+              --include="*.ts" --include="*.js" \
+              --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" \
+              --exclude="*_test.ts" \
+              . 2>/dev/null; then
+              echo "Found dangerous pattern: $pattern"
+              found_dangerous=true
+            fi
+          done
 
-          # Look for common patterns of unsafe path usage
-          if grep -r -E "path\.(join|resolve)\([^)]*\[(req|request|params|query|body)" \
-            --include="*.ts" --include="*.js" \
-            --exclude-dir=".git" --exclude-dir="node_modules" \
-            --exclude="*_test.ts" \
-            . 2>/dev/null; then
-            echo "Found potential path traversal vulnerability"
+          if [ "$found_dangerous" = true ]; then
             exit 1
           fi
 
-          echo "No path traversal vulnerabilities found"
+      - name: Check for path traversal vulnerabilities
+        run: |
+          # Check for potential path traversal vulnerabilities
+          echo "Checking for path traversal vulnerabilities..."
+
+          # Check for unsafe path operations without validation
+          patterns=(
+            # Direct file operations with user input
+            "Deno\.(readFile|readTextFile|open|stat|lstat|readDir|remove|rename|mkdir)\s*\([^)]*\[(req|request|params|query|body|input|userInput|args)"
+            # Path operations without validation
+            "path\.(join|resolve)\s*\([^)]*\[(req|request|params|query|body|input|userInput|args)"
+            # String concatenation in file paths
+            "(readFile|writeFile|open|stat)\s*\([^)]*\+[^)]*\[(req|request|params|query|body|input|userInput|args)"
+            # Direct usage of user input in file operations
+            "(Deno\.(readFile|readTextFile|open|stat|lstat|readDir|remove|rename|mkdir)|fs\.(readFile|writeFile|readdir|stat|unlink|rename|mkdir))\s*\(\s*[a-zA-Z_$][a-zA-Z0-9_$]*\s*[,)]"
+            # Path traversal sequences in strings
+            "\.\./\.\./|\\.\\.\\\\\\.\.\\\\"
+          )
+
+          found_vulnerability=false
+          for pattern in "${patterns[@]}"; do
+            if grep -r -E "$pattern" \
+              --include="*.ts" --include="*.js" \
+              --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" \
+              --exclude="*_test.ts" --exclude="*.md" \
+              . 2>/dev/null | grep -v -E "(test|spec|mock|example|validate|sanitize|normalize|isAbsolute|startsWith|includes\('\.\.')|resolve\(Deno\.cwd\(\))"; then
+              echo "Found potential path traversal vulnerability with pattern: $pattern"
+              found_vulnerability=true
+            fi
+          done
+
+          if [ "$found_vulnerability" = true ]; then
+            exit 1
+          else
+            echo "No path traversal vulnerabilities found"
+          fi
+
+      - name: Check for insecure randomness
+        run: |
+          # Check for use of Math.random() for security purposes
+          echo "Checking for insecure random number generation..."
+          
+          if grep -r -E "Math\.random\s*\(\s*\)" \
+            --include="*.ts" --include="*.js" \
+            --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" \
+            --exclude="*_test.ts" \
+            . 2>/dev/null | grep -E "(token|password|secret|key|salt|iv|nonce|session|id)" | grep -v -E "(test|mock|example|sample)"; then
+            echo "Found potential use of Math.random() for security-sensitive operations"
+            echo "Use crypto.getRandomValues() or crypto.randomUUID() instead"
+            exit 1
+          else
+            echo "No insecure randomness found"
+          fi
+
+      - name: Check for permission issues
+        run: |
+          # Check for overly broad Deno permissions
+          echo "Checking for overly broad permissions..."
+          
+          if grep -r -E "deno\s+(run|test|install)\s+.*--allow-all" \
+            --include="*.ts" --include="*.js" --include="*.json" --include="*.md" --include="*.yml" --include="*.yaml" \
+            --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" \
+            . 2>/dev/null | grep -v -E "(# Example|# BAD|# Don't|# Never|# Avoid)"; then
+            echo "Found use of --allow-all flag"
+            echo "Use specific permissions instead"
+            exit 1
+          else
+            echo "No overly broad permissions found"
+          fi
 
       - name: Security audit report
         if: always()
