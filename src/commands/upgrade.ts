@@ -166,7 +166,7 @@ export async function upgrade(
       // First try to update in place (preserves any user modifications)
       const fetchSuccess = await fetchMethodologies(targetPath, VERSION, {
         silent: options.silent,
-        force: true, // Force re-download all files
+        overwrite: true, // Always overwrite during upgrades to get latest content
       });
 
       if (!fetchSuccess) {
@@ -178,7 +178,7 @@ export async function upgrade(
 
         const retrySuccess = await fetchMethodologies(targetPath, VERSION, {
           silent: options.silent,
-          force: true,
+          overwrite: true,
         });
 
         if (!retrySuccess) {

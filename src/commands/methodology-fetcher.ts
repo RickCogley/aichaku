@@ -3,7 +3,7 @@ import { join } from "jsr:@std/path@1";
 
 interface FetchOptions {
   silent?: boolean;
-  force?: boolean;
+  overwrite?: boolean; // More explicit than "force"
 }
 
 /**
@@ -93,8 +93,8 @@ export async function fetchMethodologies(
   async function fetchFile(relativePath: string): Promise<void> {
     const localPath = join(targetPath, "methodologies", relativePath);
 
-    // For force updates, always fetch. Otherwise, skip existing files
-    if (!options.force) {
+    // Skip if file exists and we're not overwriting
+    if (!options.overwrite) {
       try {
         await Deno.stat(localPath);
         successCount++; // Count existing files as successes

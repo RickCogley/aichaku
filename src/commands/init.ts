@@ -127,7 +127,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
           // Fetch from GitHub when running from JSR
           const fetchSuccess = await fetchMethodologies(targetPath, VERSION, {
             silent: options.silent,
-            force: options.force,
+            overwrite: options.force, // Only overwrite if user explicitly uses --force
           });
 
           if (!fetchSuccess) {
