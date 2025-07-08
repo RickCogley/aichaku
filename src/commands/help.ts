@@ -68,9 +68,9 @@ function normalizeMethodologyName(name: string): string | undefined {
   if (!isNaN(num) && num >= 1 && num <= Object.keys(METHODOLOGIES).length) {
     return Object.keys(METHODOLOGIES)[num - 1];
   }
-  
+
   const normalized = name.toLowerCase().replace(/[\s-_]/g, "");
-  
+
   // Direct matches
   const directMatches: Record<string, string> = {
     "shapeup": "shape-up",
@@ -78,116 +78,146 @@ function normalizeMethodologyName(name: string): string | undefined {
     "extreme": "xp",
     "programming": "xp",
   };
-  
+
   if (directMatches[normalized]) {
     return directMatches[normalized];
   }
-  
+
   // Check if it matches any key directly
   for (const key of Object.keys(METHODOLOGIES)) {
     if (key.replace(/-/g, "") === normalized) {
       return key;
     }
   }
-  
+
   // Check if it matches any display name
   for (const [key, meta] of Object.entries(METHODOLOGIES)) {
     if (meta.name.toLowerCase().replace(/[\s-_]/g, "") === normalized) {
       return key;
     }
   }
-  
+
   return undefined;
 }
 
 // Help content for each methodology
 const HELP_CONTENT: Record<string, string> = {
   "shape-up": `
-Shape Up Methodology
+🎯 Shape Up Methodology
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Brought to you by Aichaku (愛着) - Adaptive Methodology Support
 
-Shape Up is Basecamp's product development methodology that emphasizes:
-- Fixed time periods (6 weeks) with variable scope
-- Shaping work before committing to it
-- Betting on projects instead of estimating
-- Cool-down periods between cycles
+Shape Up is Basecamp's product development methodology that emphasizes
+fixed time periods with variable scope. Perfect for product teams!
 
-Key Concepts:
-• Appetite: How much time you want to spend
-• Shaping: Defining the problem and rough solution
-• Betting: Choosing what to work on
-• Circuit Breaker: Hard stop at 6 weeks
+📊 The Basics
+  • 6-week cycles (no extensions!)
+  • 2-week cooldown between cycles
+  • Shaping before building
+  • Betting on projects, not estimating
 
-Best For:
-- Product teams building new features
-- Teams that want clear boundaries
-- Projects with flexibility in scope
+🎯 Key Concepts
+  • Appetite → How much time are we willing to spend?
+  • Shaping → Define problem + rough solution upfront
+  • Betting → Choose what to work on (and what not to)
+  • Circuit Breaker → Hard stop at 6 weeks, no exceptions
 
-Not Ideal For:
-- Maintenance work or bug fixes
-- Teams needing daily coordination
-- Strict deadline projects
+✅ Best For
+  • Product teams building new features
+  • Teams that want clear time boundaries
+  • Projects where scope can be flexible
 
-Quick Start:
-Say "let's shape a new feature" or "what's our appetite for this?"
+❌ Not Ideal For
+  • Maintenance work or bug fixes
+  • Teams needing daily coordination
+  • Projects with strict feature requirements
+
+💡 Quick Start with Claude Code
+  You: "Let's shape a new feature for user profiles"
+  You: "What's our appetite for this?"
+  You: "Time to bet on next cycle's work"
+
+📚 Learn More: https://basecamp.com/shapeup
 `,
 
   "scrum": `
-Scrum Framework
+🏃 Scrum Framework
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Brought to you by Aichaku (愛着) - Adaptive Methodology Support
 
-Scrum is an agile framework for managing product development:
-- Fixed-length iterations called Sprints (2-4 weeks)
-- Defined roles: Product Owner, Scrum Master, Development Team
-- Regular ceremonies for planning and reflection
-- Empirical process control through transparency
+The world's most popular agile framework. Sprint your way to success
+with time-boxed iterations and regular team ceremonies.
 
-Key Concepts:
-• Sprint: Time-boxed iteration
-• Product Backlog: Prioritized list of features
-• Sprint Planning: Selecting work for the sprint
-• Daily Scrum: 15-minute synchronization
-• Sprint Review & Retrospective: Inspect and adapt
+📊 The Basics
+  • 2-4 week Sprints (fixed length)
+  • 3 roles: Product Owner, Scrum Master, Dev Team
+  • 5 ceremonies that keep you on track
+  • Deliver working software every Sprint
 
-Best For:
-- Teams needing regular delivery cadence
-- Projects with changing requirements
-- Cross-functional collaboration
+🏃 Key Ceremonies
+  • Sprint Planning → What will we build this Sprint?
+  • Daily Scrum → 15-min sync (aka standup)
+  • Sprint Review → Demo what we built
+  • Sprint Retrospective → How can we improve?
+  • Backlog Refinement → Keep stories ready
 
-Not Ideal For:
-- Solo developers
-- Exploratory research projects
-- Continuous flow operations
+✅ Best For
+  • Teams wanting predictable delivery
+  • Projects with evolving requirements
+  • Cross-functional collaboration
+  • Regular stakeholder feedback
 
-Quick Start:
-Say "let's plan our sprint" or "time for standup"
+❌ Not Ideal For
+  • Solo developers
+  • Pure research projects
+  • Continuous deployment environments
+
+💡 Quick Start with Claude Code
+  You: "Let's plan our next sprint"
+  You: "Time for our daily standup"
+  You: "Create a sprint retrospective"
+
+📚 Learn More: https://scrum.org
 `,
 
   "kanban": `
-Kanban Method
+📋 Kanban Method
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Brought to you by Aichaku (愛着) - Adaptive Methodology Support
 
-Kanban visualizes work and optimizes flow:
-- Visual board showing work states
-- Work-in-Progress (WIP) limits
-- Pull-based system
-- Continuous delivery
+Visualize your work, limit work in progress, and maximize flow.
+Perfect for teams that need flexibility and continuous delivery.
 
-Key Concepts:
-• Kanban Board: Visual representation of workflow
-• WIP Limits: Maximum items in each state
-• Flow Metrics: Lead time, cycle time
-• Pull System: Take work when ready
+📊 The Basics
+  • Visual board with columns for each state
+  • WIP limits prevent overload
+  • Pull work when you have capacity
+  • Measure and optimize flow
 
-Best For:
-- Operations and maintenance teams
-- Continuous delivery environments
-- Teams with varying work types
+📋 Key Practices
+  • Visualize → See all work on the board
+  • Limit WIP → Don't start what you can't finish
+  • Manage Flow → Track cycle time & throughput
+  • Make Policies Explicit → Clear rules for all
+  • Improve Collaboratively → Evolve together
 
-Not Ideal For:
-- Fixed deadline projects
-- Teams needing synchronized work
-- Large batch releases
+✅ Best For
+  • Support & maintenance teams
+  • Continuous delivery environments
+  • Teams with unpredictable work
+  • Mixed types of work (features, bugs, ops)
 
-Quick Start:
-Say "show our kanban board" or "check WIP limits"
+❌ Not Ideal For
+  • Fixed deadline projects
+  • Teams needing synchronized releases
+  • Heavy upfront planning needs
+
+💡 Quick Start with Claude Code
+  You: "Show our kanban board"
+  You: "What's our WIP limit for testing?"
+  You: "Track cycle time for this feature"
+
+📚 Learn More: https://kanban.university
 `,
 
   "lean": `
@@ -287,10 +317,12 @@ export function help(options: HelpOptions = {}): HelpResult {
     if (options.list) {
       const list = Object.entries(METHODOLOGIES)
         .map(([key, meta], index) =>
-          `  ${index + 1}. ${meta.icon} ${meta.name.padEnd(18)} - ${meta.summary}`
+          `  ${index + 1}. ${meta.icon} ${
+            meta.name.padEnd(18)
+          } - ${meta.summary}`
         )
         .join("\n");
-      
+
       const methodNames = Object.entries(METHODOLOGIES)
         .map(([key, meta]) => `"${meta.name.toLowerCase()}", "${key}"`)
         .join(", ");
@@ -326,7 +358,7 @@ export function help(options: HelpOptions = {}): HelpResult {
     // Show specific methodology help
     if (options.methodology) {
       const normalizedName = normalizeMethodologyName(options.methodology);
-      
+
       if (!normalizedName) {
         return {
           success: false,
@@ -334,7 +366,7 @@ export function help(options: HelpOptions = {}): HelpResult {
             `Unknown methodology: ${options.methodology}. Use 'aichaku help --list' to see available options.`,
         };
       }
-      
+
       const content = HELP_CONTENT[normalizedName];
       if (!content) {
         return {

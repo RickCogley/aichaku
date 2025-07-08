@@ -70,11 +70,13 @@ const command = args._[0]?.toString().toLowerCase();
 // Show help
 if (args.help || !command) {
   console.log(`
-aichaku (愛着) - Adaptive methodology support for Claude Code
-Version ${VERSION}
+🪴 aichaku (愛着) - Adaptive Methodology Support for Claude Code
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Version ${VERSION} | MIT License | github.com/RickCogley/aichaku
 
-Aichaku provides context-aware methodology guidance that adapts to your needs.
-It doesn't force you to choose - it blends methodologies based on your language.
+Bringing affection (愛着) to your development workflow by adapting
+methodologies to how YOU naturally work. Say "sprint" → get Scrum.
+Say "shape" → get Shape Up. It's that simple!
 
 Usage:
   aichaku <command> [options]
