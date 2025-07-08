@@ -118,7 +118,9 @@ export async function fetchMethodologies(
       }
     } catch (error) {
       // Only show warnings for actual fetch failures, not permission issues
-      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorMessage = error instanceof Error
+        ? error.message
+        : String(error);
       if (!options.silent && !errorMessage.includes("Requires net access")) {
         console.warn(
           `⚠️  Failed to fetch ${relativePath}: ${errorMessage}`,
