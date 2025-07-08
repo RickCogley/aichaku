@@ -187,6 +187,15 @@ Your project now has:
         } else if (result.action === "upgraded") {
           // Actually upgraded
           console.log(`\n✅ ${result.message}`);
+
+          // Show next steps for project upgrades
+          if (options.global) {
+            console.log(`
+📚 Next steps for your projects:
+   • Run 'aichaku upgrade' in each project
+   • Or 'aichaku integrate --force' to update CLAUDE.md
+            `);
+          }
         } else {
           // Already up to date
           console.log(`\nℹ️  ${result.message}`);

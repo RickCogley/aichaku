@@ -161,6 +161,15 @@ export async function upgrade(
       await copy(sourceMethodologies, targetMethodologies);
     }
 
+    // Show what's new in this version
+    if (!options.silent && VERSION === "0.7.0") {
+      console.log("\n✨ What's new in v0.7.0:");
+      console.log("   • 🪴 Visual identity with progress indicators");
+      console.log("   • 💬 Discussion-first document creation");
+      console.log("   • 📊 Mermaid diagram integration");
+      console.log("   • ✅ Fixed TODO lists and formatting");
+    }
+
     // Update metadata
     metadata.version = VERSION;
     metadata.lastUpgrade = new Date().toISOString();

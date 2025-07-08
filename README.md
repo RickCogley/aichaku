@@ -28,19 +28,24 @@ integrated.
 ## Quick Start
 
 ```bash
-# 1. Install aichaku CLI globally
-deno install -g -A -n aichaku jsr:@rick/aichaku/cli
-
-# 2. Initialize global methodologies (one time)
-aichaku init --global
-
-# 3. In any project, run:
-aichaku init
-# This creates minimal setup and prompts to integrate with CLAUDE.md
+# Install and initialize everything with one command:
+deno run -A https://raw.githubusercontent.com/RickCogley/aichaku/main/init.ts
 ```
 
-That's it! Claude Code now has adaptive methodology support in all your
-projects.
+That's it! This single command will:
+
+- Install the Aichaku CLI globally
+- Set up global methodologies
+- Optionally initialize your current project
+
+### Alternative installation methods:
+
+```bash
+# Traditional approach (if you prefer explicit steps):
+deno install -g -A -n aichaku jsr:@rick/aichaku/cli
+aichaku init --global
+aichaku init
+```
 
 ## How It Works
 
@@ -121,19 +126,43 @@ aichaku init
 aichaku init --dry-run
 ```
 
-### Upgrade
+### Upgrading
+
+#### Global CLI
 
 ```bash
-# Upgrade the CLI tool itself
+# Simplest upgrade (with feedback):
+deno run -A https://raw.githubusercontent.com/RickCogley/aichaku/main/init.ts --force
+
+# Or traditional upgrade:
 deno install -g -A -n aichaku --force jsr:@rick/aichaku/cli
 
-# Then upgrade methodologies (preserves customizations)
+# Verify what version you have
+aichaku --version
+```
+
+#### Update Projects
+
+After upgrading the global CLI:
+
+```bash
+# In each project, refresh the integration
+aichaku integrate --force
+
+# Or do a full methodology upgrade
+aichaku upgrade
+```
+
+#### Global Methodologies
+
+```bash
+# Update global methodology files
 aichaku upgrade --global
 
-# Check for methodology updates
+# Check what would be updated
 aichaku upgrade --check --global
 
-# Force reinstall methodologies
+# Force reinstall (overwrites customizations)
 aichaku upgrade --force --global
 ```
 
