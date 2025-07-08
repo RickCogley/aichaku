@@ -151,7 +151,7 @@ jobs:
         run: |
           # Check for use of Math.random() for security purposes
           echo "Checking for insecure random number generation..."
-          
+
           if grep -r -E "Math\.random\s*\(\s*\)" \
             --include="*.ts" --include="*.js" \
             --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" \
@@ -168,7 +168,7 @@ jobs:
         run: |
           # Check for overly broad Deno permissions
           echo "Checking for overly broad permissions..."
-          
+
           if grep -r -E "deno\s+(run|test|install)\s+.*--allow-all" \
             --include="*.ts" --include="*.js" --include="*.json" --include="*.md" --include="*.yml" --include="*.yaml" \
             --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" \
