@@ -189,6 +189,31 @@ export async function upgrade(
       JSON.stringify(metadata, null, 2),
     );
 
+    // NEW: If upgrading a project (not global), also update CLAUDE.md
+    if (!isGlobal && !options.dryRun) {
+      const projectPath = resolve(targetPath, "..");
+      const claudeMdPath = join(projectPath, "CLAUDE.md");
+
+      if (await exists(claudeMdPath)) {
+        if (!options.silent) {
+          console.log("\n📄 Updating CLAUDE.md with latest directives...");
+        }
+
+        // Import integrate function
+        const { integrate } = await import("./integrate.ts");
+
+        const integrateResult = await integrate({
+          projectPath,
+          force: true,
+          silent: options.silent,
+        });
+
+        if (integrateResult.success && !options.silent) {
+          console.log("✅ CLAUDE.md updated successfully");
+        }
+      }
+    }
+
     return {
       success: true,
       path: targetPath,

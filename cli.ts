@@ -192,8 +192,7 @@ Your project now has:
           if (options.global) {
             console.log(`
 📚 Next steps for your projects:
-   • Run 'aichaku upgrade' in each project
-   • Or 'aichaku integrate --force' to update CLAUDE.md
+   • Run 'aichaku upgrade' in each project to update everything
             `);
           }
         } else {

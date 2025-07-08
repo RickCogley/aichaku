@@ -42,7 +42,8 @@
       "Bash(deno install:*)",
       "Bash(aichaku upgrade:*)",
       "Bash(aichaku:*)",
-      "Bash(/Users/rcogley/.deno/bin/aichaku:*)"
+      "Bash(/Users/rcogley/.deno/bin/aichaku:*)",
+      "Bash(deno info:*)"
     ],
     "deny": []
   }

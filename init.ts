@@ -116,11 +116,16 @@ async function installGlobal(
 }
 
 // Initialize global methodologies
-async function initGlobal(): Promise<boolean> {
+async function initGlobal(isUpgrade: boolean = false): Promise<boolean> {
   console.log("\n🌍 Setting up global methodologies...");
 
+  const initArgs = ["init", "--global", "--silent"];
+  if (isUpgrade) {
+    initArgs.push("--force");
+  }
+
   const cmd = new Deno.Command("aichaku", {
-    args: ["init", "--global", "--silent"],
+    args: initArgs,
     stdout: "inherit",
     stderr: "inherit",
   });
@@ -210,7 +215,7 @@ async function main() {
 
   // Initialize global methodologies
   console.log("\n🌍 Setting up global methodologies...");
-  const initSuccess = await initGlobal();
+  const initSuccess = await initGlobal(isUpgrade);
   if (!initSuccess) {
     console.error("\n❌ Failed to initialize global methodologies!");
 

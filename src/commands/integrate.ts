@@ -8,6 +8,10 @@ interface IntegrateOptions {
   dryRun?: boolean;
 }
 
+// Markers for surgical updates
+const MARKER_START = "<!-- AICHAKU:START -->";
+const MARKER_END = "<!-- AICHAKU:END -->";
+
 interface IntegrateResult {
   success: boolean;
   path: string;
@@ -245,30 +249,56 @@ export async function integrate(
     let action: "created" | "updated" | "skipped" = "skipped";
 
     if (await exists(claudeMdPath)) {
-      // File exists - check if methodology section already present
+      // File exists - check for markers or existing content
       const content = await Deno.readTextFile(claudeMdPath);
 
-      // Check if Aichaku is already mentioned
-      if (content.includes("Aichaku") || content.includes("aichaku")) {
+      // Check for markers
+      const startIdx = content.indexOf(MARKER_START);
+      const endIdx = content.indexOf(MARKER_END);
+
+      if (startIdx !== -1 && endIdx !== -1) {
+        // Markers found - surgical replacement
+        const before = content.slice(0, startIdx);
+        const after = content.slice(endIdx + MARKER_END.length);
+        const newContent =
+          `${before}${MARKER_START}\n${METHODOLOGY_SECTION}\n${MARKER_END}${after}`;
+
+        await Deno.writeTextFile(claudeMdPath, newContent);
+
+        return {
+          success: true,
+          path: claudeMdPath,
+          message: "Updated Aichaku methodology section",
+          action: "updated",
+          lineNumber: content.slice(0, startIdx).split("\n").length,
+        };
+      } else if (content.includes("Aichaku") || content.includes("aichaku")) {
+        // Legacy format detected
         if (!options.force) {
           return {
             success: true,
             path: claudeMdPath,
             message:
-              "CLAUDE.md already contains Aichaku reference. Use --force to add anyway.",
+              "Legacy Aichaku section found. Use --force to upgrade to marker-based format.",
             action: "skipped",
           };
         }
+        // If force is true, we'll add the new marked section below
       }
 
-      // Check if there's already a ## Methodologies section
-      if (content.includes("## Methodologies")) {
-        // Append to existing section
+      // Add new section with markers
+      const markedSection =
+        `${MARKER_START}\n${METHODOLOGY_SECTION}\n${MARKER_END}`;
+
+      // Check if there's already a ## Methodologies section (legacy)
+      if (
+        content.includes("## Methodologies") && !content.includes(MARKER_START)
+      ) {
+        // Replace existing section with marked version
+        const methodologiesRegex = /## Methodologies[\s\S]*?(?=\n##|$)/;
         const updatedContent = content.replace(
-          /## Methodologies\n/,
-          `## Methodologies\n\n${
-            METHODOLOGY_SECTION.split("\n").slice(2).join("\n")
-          }\n\n`,
+          methodologiesRegex,
+          markedSection,
         );
         await Deno.writeTextFile(claudeMdPath, updatedContent);
         action = "updated";
@@ -290,11 +320,11 @@ export async function integrate(
           // No sections found, append at end
           await Deno.writeTextFile(
             claudeMdPath,
-            content + "\n\n" + METHODOLOGY_SECTION,
+            content + "\n\n" + markedSection,
           );
         } else {
           // Insert before the first section
-          lines.splice(insertIndex, 0, "", METHODOLOGY_SECTION, "");
+          lines.splice(insertIndex, 0, "", markedSection, "");
           await Deno.writeTextFile(claudeMdPath, lines.join("\n"));
         }
         action = "updated";
@@ -302,12 +332,14 @@ export async function integrate(
 
       // Console output removed - CLI handles messaging
     } else {
-      // Create new CLAUDE.md
+      // Create new CLAUDE.md with markers
+      const markedSection =
+        `${MARKER_START}\n${METHODOLOGY_SECTION}\n${MARKER_END}`;
       const defaultContent = `# CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with this project.
 
-${METHODOLOGY_SECTION}
+${markedSection}
 
 ## Project Overview
 
