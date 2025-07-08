@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.0] - 2025-07-08
+
+### Added
+
+- support updating changed methodology files during upgrades (cf807f4)
+
+### Changed
+
+- clarify automatic methodology updates during upgrades (d857d21)
+- simplify methodology updates - always overwrite during upgrades (76d2942)
+
+### Fixed
+
+- remove unused variable to pass linting (426b08e)
+- ensure new methodology files are downloaded during upgrades (16177be)
+
 ## [0.10.0] - 2025-07-08
 
 ### Added

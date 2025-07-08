@@ -62,7 +62,7 @@ terminology and context.</p>
 <tbody>
 <tr>
 <td align="left">Version</td>
-<td align="left">0.10.0</td>
+<td align="left">0.11.0</td>
 </tr>
 <tr>
 <td align="left">Repository</td>
@@ -90,6 +90,7 @@ Core Features</h2>
 <li><strong>🧠 Context Aware</strong> - AI responds to your terminology and needs</li>
 <li><strong>📁 User Customization</strong> - Your modifications survive upgrades</li>
 <li><strong>🚀 Simple Lifecycle</strong> - Just init, upgrade, and uninstall</li>
+<li><strong>🔄 Auto-updating</strong> - Upgrade command always fetches latest methodology content</li>
 <li><strong>🔒 Security First</strong> - Path validation, no network operations, minimal permissions</li>
 <li><strong>🎯 Zero Configuration</strong> - Works out of the box with sensible defaults</li>
 </ul>
@@ -250,20 +251,26 @@ if (result.success) {
 </div></h3>
   <div><div class="markdown"><pre class="highlight"><code class="language-typescript">import { upgrade } from &quot;jsr:@rick/aichaku&quot;;
 
-// Check for updates
-const checkResult = await upgrade({ check: true });
+// Upgrade global installation (updates all methodology files)
+const result = await upgrade({ global: true });
 
-// Perform upgrade
-const result = await upgrade();
-console.log(`Upgraded to ${result.version}`);
+// Upgrade project (updates methodologies + CLAUDE.md)
+const projectResult = await upgrade();
+console.log(`Upgraded to ${projectResult.version}`);
+
+// Note: Upgrades always download the latest methodology files
+// to ensure you have the most up-to-date content
 </code><button class="copyButton" data-copy="import { upgrade } from &quot;jsr:@rick/aichaku&quot;;
 
-// Check for updates
-const checkResult = await upgrade({ check: true });
+// Upgrade global installation (updates all methodology files)
+const result = await upgrade({ global: true });
 
-// Perform upgrade
-const result = await upgrade();
-console.log(`Upgraded to ${result.version}`);
+// Upgrade project (updates methodologies + CLAUDE.md)
+const projectResult = await upgrade();
+console.log(`Upgraded to ${projectResult.version}`);
+
+// Note: Upgrades always download the latest methodology files
+// to ensure you have the most up-to-date content
 "><svg class="copy" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="2" y="2" width="7" height="7" fill="none"/>
 <rect x="6" y="6" width="7" height="7" fill="none"/>
