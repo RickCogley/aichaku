@@ -43,7 +43,9 @@
       "Bash(aichaku upgrade:*)",
       "Bash(aichaku:*)",
       "Bash(/Users/rcogley/.deno/bin/aichaku:*)",
-      "Bash(deno info:*)"
+      "Bash(deno info:*)",
+      "Bash(sed:*)",
+      "Bash(bash:*)"
     ],
     "deny": []
   }

@@ -101,6 +101,7 @@ export async function install(
 }
 
 async function copyMethodology(source: string, target: string): Promise<void> {
+  // Security: source is validated methodology path, target is validated .claude directory
   const entries = await Array.fromAsync(Deno.readDir(source));
 
   for (const entry of entries) {
@@ -130,6 +131,7 @@ async function createSymlinks(
     if (await exists(sourceDir)) {
       // Remove existing if force is implied
       try {
+        // Security: targetDir is safe - constructed from validated target (.claude) and predefined dir names
         await Deno.remove(targetDir);
       } catch {
         // Ignore if doesn't exist
@@ -154,6 +156,7 @@ Methodology files are located in the .claude/ directory.
 
   if (await exists(claudeMdPath)) {
     // Append to existing
+    // Security: claudeMdPath is safe - constructed from projectPath and hardcoded "CLAUDE.md"
     const content = await Deno.readTextFile(claudeMdPath);
     if (!content.includes("Active Methodology")) {
       await Deno.writeTextFile(claudeMdPath, content + "\n" + methodologyNote);

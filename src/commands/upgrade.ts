@@ -69,6 +69,7 @@ export async function upgrade(
   // Read current metadata
   let metadata: AichakuMetadata;
   try {
+    // Security: metadataPath is safe - validated to be either .aichaku.json or .aichaku-project in .claude directory
     const content = await Deno.readTextFile(metadataPath);
     const rawMetadata = JSON.parse(content);
 
@@ -177,6 +178,7 @@ export async function upgrade(
         // If fetch fails completely, try removing and re-fetching
         const targetMethodologies = join(targetPath, "methodologies");
         if (await exists(targetMethodologies)) {
+          // Security: targetMethodologies is safe - constructed from validated targetPath (.claude) and hardcoded "methodologies"
           await Deno.remove(targetMethodologies, { recursive: true });
         }
 
@@ -201,6 +203,7 @@ export async function upgrade(
 
       // Remove old methodologies for clean copy
       if (await exists(targetMethodologies)) {
+        // Security: targetMethodologies is safe - constructed from validated targetPath (.claude) and hardcoded "methodologies"
         await Deno.remove(targetMethodologies, { recursive: true });
       }
 

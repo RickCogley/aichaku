@@ -86,6 +86,7 @@ export async function uninstall(
     const claudeMdReferences: { line: number; text: string }[] = [];
 
     if (await exists(claudeMdPath)) {
+      // Security: claudeMdPath is safe - constructed from resolved projectPath and hardcoded "CLAUDE.md"
       const content = await Deno.readTextFile(claudeMdPath);
       const lines = content.split("\n");
       lines.forEach((line, index) => {
@@ -110,6 +111,7 @@ export async function uninstall(
     if (hasOnlyAichaku) {
       // Check if there are other files in .claude besides Aichaku
       const entries = [];
+      // Security: targetPath is safe - validated to be .claude directory
       for await (const entry of Deno.readDir(targetPath)) {
         if (
           entry.name !== "methodologies" && entry.name !== "user" &&
@@ -121,16 +123,20 @@ export async function uninstall(
 
       if (entries.length === 0) {
         // Only Aichaku files, safe to remove entire directory
+        // Security: targetPath is safe - validated to be .claude directory
         await Deno.remove(targetPath, { recursive: true });
         if (!options.silent) {
           console.log(`✓ Removed ${targetPath}`);
         }
       } else {
         // Other files exist, only remove Aichaku files
+        // Security: methodologiesDir is safe - constructed from validated targetPath and hardcoded "methodologies"
         await Deno.remove(methodologiesDir, { recursive: true });
         if (hasCustomizations) {
+          // Security: userDir is safe - constructed from validated targetPath and hardcoded "user"
           await Deno.remove(userDir, { recursive: true });
         }
+        // Security: aichakuJsonPath is safe - constructed from validated targetPath and hardcoded ".aichaku.json"
         await Deno.remove(aichakuJsonPath);
         if (!options.silent) {
           console.log("✓ Removed Aichaku files");

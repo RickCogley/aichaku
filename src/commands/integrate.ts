@@ -251,6 +251,7 @@ export async function integrate(
 
     if (await exists(claudeMdPath)) {
       // File exists - check for markers or existing content
+      // Security: claudeMdPath is safe - constructed from resolved projectPath and hardcoded "CLAUDE.md"
       const content = await Deno.readTextFile(claudeMdPath);
 
       // Check for markers
@@ -354,6 +355,7 @@ ${markedSection}
     }
 
     // Find line number where we added the content
+    // Security: claudeMdPath is safe - constructed from resolved projectPath and hardcoded "CLAUDE.md"
     const fileContent = await Deno.readTextFile(claudeMdPath);
     const lines = fileContent.split("\n");
     let lineNumber = 0;
@@ -386,6 +388,7 @@ ${markedSection}
 
 async function checkFileExists(path: string): Promise<boolean> {
   try {
+    // Security: path is always claudeMdPath - constructed from resolved projectPath and hardcoded "CLAUDE.md"
     await Deno.stat(path);
     return true;
   } catch {

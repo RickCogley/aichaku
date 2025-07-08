@@ -85,6 +85,7 @@ export async function fetchMethodologies(
     // Skip if file exists and we're not overwriting
     if (!options.overwrite) {
       try {
+        // Security: localPath is safe - constructed from validated targetPath (.claude) and relativePath from static structure
         await Deno.stat(localPath);
         successCount++; // Count existing files as successes
         return; // File exists, skip fetching
@@ -101,6 +102,7 @@ export async function fetchMethodologies(
         const content = await response.text();
         // codeql[js/path-injection] Safe because localPath is constructed from validated components
         await ensureDir(join(localPath, ".."));
+        // Security: localPath is safe - constructed from validated targetPath (.claude) and relativePath from static structure
         await Deno.writeTextFile(localPath, content);
         successCount++;
       } else {
