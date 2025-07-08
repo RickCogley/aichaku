@@ -322,4 +322,3 @@ Methodologies adapt to your language. Just start talking naturally!`,
     };
   }
 }
-
