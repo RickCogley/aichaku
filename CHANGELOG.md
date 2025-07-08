@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.1] - 2025-07-08
+
+### Changed
+
+- format init.ts for release (d3336b3)
+
+### Fixed
+
+- improve installer upgrade handling and verification (32e461b)
+
 ## [0.9.0] - 2025-07-08
 
 ### Added
