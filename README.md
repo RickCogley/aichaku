@@ -16,7 +16,9 @@ Code blend approaches based on your natural language. Say "sprint" and get Scrum
 practices; mention "shaping" and get Shape Up principles - all seamlessly
 integrated.
 
-📚 **[API Documentation](https://aichaku.esolia.deno.net/)** | 📦 **[JSR Package](https://jsr.io/@rick/aichaku)** | 🐙 **[GitHub](https://github.com/RickCogley/aichaku)**
+📚 **[API Documentation](https://aichaku.esolia.deno.net/)** | 📦
+**[JSR Package](https://jsr.io/@rick/aichaku)** | 🐙
+**[GitHub](https://github.com/RickCogley/aichaku)**
 
 **✨ Key Features:**
 
@@ -366,7 +368,8 @@ become something you're attached to, not forced to follow.
 
 ## API Documentation
 
-For detailed API documentation, visit [https://aichaku.esolia.deno.net/](https://aichaku.esolia.deno.net/)
+For detailed API documentation, visit
+[https://aichaku.esolia.deno.net/](https://aichaku.esolia.deno.net/)
 
 ## Contributing
 

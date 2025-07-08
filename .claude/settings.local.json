@@ -40,7 +40,9 @@
       "Bash(gh release view:*)",
       "Bash(gh release edit:*)",
       "Bash(deno install:*)",
-      "Bash(aichaku upgrade:*)"
+      "Bash(aichaku upgrade:*)",
+      "Bash(aichaku:*)",
+      "Bash(/Users/rcogley/.deno/bin/aichaku:*)"
     ],
     "deny": []
   }
