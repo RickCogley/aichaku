@@ -69,6 +69,41 @@ export default {
     gitRemote: "origin",
   },
 
+  release: {
+    // Verify package appears on JSR after release
+    verifyJsrPublish: true,
+
+    // Auto-fix configuration for CI/CD errors
+    autoFix: {
+      basic: true, // Enable deterministic fixes
+      ai: {
+        enabled: true, // Enable AI-powered fixes
+        provider: "claude-code",
+        // Choose thinking level based on your plan:
+        // - "think": Basic analysis (lowest token usage)
+        // - "megathink": Deeper analysis (medium token usage)
+        // - "ultrathink": Deepest analysis (highest token usage)
+        thinkingLevel: "ultrathink", // You have the max plan
+        maxAttempts: 5,
+      },
+      types: ["lint", "format", "security-scan", "type-check", "version-conflict"],
+    },
+
+    // Progress visualization
+    progress: {
+      enabled: true,
+      style: "detailed",
+      showElapsedTime: true,
+    },
+
+    // GitHub Actions monitoring
+    monitoring: {
+      workflowFile: ".github/workflows/publish.yml",
+      pollInterval: 10000, // 10 seconds
+      timeout: 600000, // 10 minutes
+    },
+  },
+
   docs: {
     enabled: true,
     outputDir: "./docs",
