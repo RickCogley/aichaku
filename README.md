@@ -5,6 +5,7 @@
 
 [![JSR](https://jsr.io/badges/@rick/aichaku)](https://jsr.io/@rick/aichaku)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![API Documentation](https://img.shields.io/badge/API_docs-deno.dev-blue)](https://aichaku.esolia.deno.net/)
 
 ## What is aichaku?
 
@@ -14,6 +15,8 @@ to choose a single methodology, aichaku provides all of them and helps Claude
 Code blend approaches based on your natural language. Say "sprint" and get Scrum
 practices; mention "shaping" and get Shape Up principles - all seamlessly
 integrated.
+
+📚 **[API Documentation](https://aichaku.esolia.deno.net/)** | 📦 **[JSR Package](https://jsr.io/@rick/aichaku)** | 🐙 **[GitHub](https://github.com/RickCogley/aichaku)**
 
 **✨ Key Features:**
 
@@ -29,7 +32,7 @@ integrated.
 
 ```bash
 # Install and initialize everything with one command:
-deno run -A https://raw.githubusercontent.com/RickCogley/aichaku/main/init.ts
+deno run -A https://rickcogley.github.io/aichaku/init.ts
 ```
 
 That's it! This single command will:
@@ -132,7 +135,7 @@ aichaku init --dry-run
 
 ```bash
 # Simplest upgrade (with feedback):
-deno run -A https://raw.githubusercontent.com/RickCogley/aichaku/main/init.ts --force
+deno run -A https://rickcogley.github.io/aichaku/init.ts --force
 
 # Or traditional upgrade:
 deno install -g -A -n aichaku --force jsr:@rick/aichaku/cli
@@ -360,6 +363,10 @@ become something you're attached to, not forced to follow.
 - [ ] Usage analytics (opt-in)
 - [ ] Organization templates
 - [ ] IDE integrations
+
+## API Documentation
+
+For detailed API documentation, visit [https://aichaku.esolia.deno.net/](https://aichaku.esolia.deno.net/)
 
 ## Contributing
 

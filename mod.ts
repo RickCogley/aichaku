@@ -9,7 +9,6 @@
  * | Version | 0.8.0 |
  * | Repository | {@link https://github.com/RickCogley/aichaku} |
  * | JSR Package | {@link https://jsr.io/@rick/aichaku} |
- * | Documentation | {@link https://aichaku.esolia.deno.net/} |
  * | License | MIT |
  * | Author | Rick Cogley |
  *
