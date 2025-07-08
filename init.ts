@@ -247,11 +247,14 @@ async function main() {
   console.log(`\n✅ Aichaku v${latestVersion} installed successfully!`);
 
   // Initialize current project unless global-only
+  let projectInitialized = false;
   if (!args["global-only"]) {
     console.log(`\n📁 Initialize current directory as an Aichaku project?`);
     const response = prompt("(Y/n):");
     if (!response || response.toLowerCase() !== "n") {
-      await initProject();
+      projectInitialized = await initProject();
+    } else {
+      console.log("\n⏭️  Skipped project initialization");
     }
   }
 
@@ -259,8 +262,8 @@ async function main() {
   console.log(`
 💡 Next steps:
    ${
-    args["global-only"]
-      ? "• Run 'aichaku init' in any project"
+    !projectInitialized
+      ? "• Run 'aichaku init' in your Claude Code project folders"
       : "• Start using natural language with Claude Code"
   }
    • Say "let's shape a feature" or "plan our sprint"
