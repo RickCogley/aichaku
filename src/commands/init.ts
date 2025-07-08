@@ -125,9 +125,15 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
       if (!methodologiesExist || options.force) {
         if (isJSR) {
           // Fetch from GitHub when running from JSR
-          await fetchMethodologies(targetPath, VERSION, {
+          const fetchSuccess = await fetchMethodologies(targetPath, VERSION, {
             silent: options.silent,
           });
+          
+          if (!fetchSuccess) {
+            throw new Error(
+              "Failed to fetch methodologies. Check network permissions."
+            );
+          }
         } else {
           // Local development - copy from source
           const sourceMethodologies = join(

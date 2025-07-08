@@ -12,21 +12,10 @@ export async function fetchMethodologies(
   targetPath: string,
   version: string,
   options: FetchOptions = {},
-): Promise<void> {
-  // Check if methodologies already exist
+): Promise<boolean> {
+  // Note: We check individual files rather than skipping if directory exists
+  // This ensures new files are downloaded during upgrades
   const methodologiesPath = join(targetPath, "methodologies");
-  try {
-    const stat = await Deno.stat(methodologiesPath);
-    if (stat.isDirectory) {
-      // Methodologies already exist, skip fetching
-      if (!options.silent) {
-        console.log("✨ Methodologies already installed");
-      }
-      return;
-    }
-  } catch {
-    // Directory doesn't exist, continue with fetch
-  }
 
   const baseUrl =
     `https://raw.githubusercontent.com/RickCogley/aichaku/v${version}/methodologies`;
@@ -96,13 +85,18 @@ export async function fetchMethodologies(
     console.log("\n🔄 Initializing adaptive methodologies...");
   }
 
+  let successCount = 0;
+  let failureCount = 0;
+  const failedFiles: string[] = [];
+
   async function fetchFile(relativePath: string): Promise<void> {
     const localPath = join(targetPath, "methodologies", relativePath);
 
     // Skip if file already exists
     try {
       await Deno.stat(localPath);
-      return; // File exists, skip
+      successCount++; // Count existing files as successes
+      return; // File exists, skip fetching
     } catch {
       // File doesn't exist, continue to fetch
     }
@@ -115,13 +109,30 @@ export async function fetchMethodologies(
         const content = await response.text();
         await ensureDir(join(localPath, ".."));
         await Deno.writeTextFile(localPath, content);
+        successCount++;
+      } else {
+        failureCount++;
+        failedFiles.push(relativePath);
       }
     } catch (error) {
-      // Only show warnings for actual fetch failures, not permission issues
+      failureCount++;
+      failedFiles.push(relativePath);
+      
       const errorMessage = error instanceof Error
         ? error.message
         : String(error);
-      if (!options.silent && !errorMessage.includes("Requires net access")) {
+      
+      // Track network permission errors separately
+      if (errorMessage.includes("Requires net access")) {
+        if (!options.silent) {
+          console.error(
+            "\n❌ Network permission denied. Cannot fetch methodologies from GitHub.",
+          );
+          console.error(
+            "   The installer needs --allow-net permission to download files.",
+          );
+        }
+      } else if (!options.silent) {
         console.warn(
           `⚠️  Failed to fetch ${relativePath}: ${errorMessage}`,
         );
@@ -148,7 +159,23 @@ export async function fetchMethodologies(
 
   await processStructure(structure);
 
+  // Report results
   if (!options.silent) {
-    console.log("✨ Methodologies initialized successfully\n");
+    if (successCount === 0 && failureCount > 0) {
+      console.error("\n❌ Failed to fetch any methodology files!");
+      console.error(`   ${failureCount} files could not be downloaded.`);
+      if (failedFiles.length > 0 && failedFiles.length <= 5) {
+        console.error("   Failed files:");
+        failedFiles.forEach(file => console.error(`     - ${file}`));
+      }
+      return false;
+    } else if (failureCount > 0) {
+      console.warn(`\n⚠️  Partial success: ${successCount} files ready, ${failureCount} failed`);
+      return true; // Partial success is still considered success
+    } else if (successCount > 0) {
+      console.log(`✨ Methodologies ready (${successCount} files verified/updated)\n`);
+    }
   }
+  
+  return successCount > 0;
 }

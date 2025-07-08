@@ -11,7 +11,7 @@ import { parseArgs } from "jsr:@std/cli@1/parse-args";
 
 const PACKAGE_NAME = "aichaku";
 const SCOPE = "rick";
-const PERMISSIONS = ["--allow-read", "--allow-write", "--allow-env"];
+const PERMISSIONS = ["--allow-read", "--allow-write", "--allow-env", "--allow-net"];
 
 // Parse arguments
 const args = parseArgs(Deno.args, {
@@ -124,10 +124,16 @@ async function initGlobal(isUpgrade: boolean = false): Promise<boolean> {
     initArgs.push("--force");
   }
 
+  // Pass network permissions for methodology fetching from GitHub
   const cmd = new Deno.Command("aichaku", {
     args: initArgs,
     stdout: "inherit",
     stderr: "inherit",
+    // Explicitly pass permissions to subprocess
+    env: {
+      ...Deno.env.toObject(),
+      DENO_PERMISSIONS: "--allow-read --allow-write --allow-env --allow-net",
+    },
   });
 
   const { code } = await cmd.output();
