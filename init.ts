@@ -198,23 +198,27 @@ async function main() {
   // Verify installation (with retry for PATH updates)
   console.log("   • Verifying installation...");
   let installedVersion = await getCurrentVersion();
-  
+
   // If version check fails, wait a moment and retry (PATH might not be updated)
   if (!installedVersion || installedVersion !== latestVersion) {
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     installedVersion = await getCurrentVersion();
   }
-  
+
   if (installedVersion !== latestVersion) {
-    console.error("\n⚠️  Version verification shows v" + (installedVersion || "unknown"));
+    console.error(
+      "\n⚠️  Version verification shows v" + (installedVersion || "unknown"),
+    );
     console.error(`   Expected: v${latestVersion}`);
-    
+
     // Don't fail hard - the installation likely succeeded
     console.log("\n📝 This might be a PATH issue. Try:");
     console.log("   1. Open a new terminal");
     console.log("   2. Run: aichaku --version");
     console.log(`   3. If still showing old version, run:`);
-    console.log(`      deno install -g -A -n aichaku --force --reload jsr:@rick/aichaku@${latestVersion}/cli`);
+    console.log(
+      `      deno install -g -A -n aichaku --force --reload jsr:@rick/aichaku@${latestVersion}/cli`,
+    );
   } else {
     console.log("   ✓ Installation verified");
   }
