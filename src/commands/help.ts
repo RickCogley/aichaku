@@ -122,6 +122,17 @@ fixed time periods with variable scope. Perfect for product teams!
   • Betting → Choose what to work on (and what not to)
   • Circuit Breaker → Hard stop at 6 weeks, no exceptions
 
+📈 Shape Up Cycle
+  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+  │   Shaping   │→ │   Betting   │→ │   Building  │
+  │  (ongoing)  │  │  (1 week)   │  │  (6 weeks)  │
+  └─────────────┘  └─────────────┘  └─────────────┘
+                                     ↓
+  ┌─────────────┐                   ┌─────────────┐
+  │  Cool-down  │←──────────────────│   Ship It!  │
+  │  (2 weeks)  │                   │             │
+  └─────────────┘                   └─────────────┘
+
 ✅ Best For
   • Product teams building new features
   • Teams that want clear time boundaries
@@ -160,6 +171,14 @@ with time-boxed iterations and regular team ceremonies.
   • Sprint Review → Demo what we built
   • Sprint Retrospective → How can we improve?
   • Backlog Refinement → Keep stories ready
+
+🔄 Scrum Flow
+  Product      Sprint       Sprint        Daily
+  Backlog  →  Planning  →  Backlog   →  Development
+     ↑                                        ↓
+     ↑                                    Increment
+     ↑                                        ↓
+  Retrospective  ←  Sprint Review  ←  Sprint End
 
 ✅ Best For
   • Teams wanting predictable delivery
@@ -201,6 +220,16 @@ Perfect for teams that need flexibility and continuous delivery.
   • Make Policies Explicit → Clear rules for all
   • Improve Collaboratively → Evolve together
 
+📊 Kanban Board Example
+  ┌─────────┬─────────┬─────────┬─────────┬─────────┐
+  │ Backlog │  To Do  │  Doing  │ Review  │  Done   │
+  ├─────────┼─────────┼─────────┼─────────┼─────────┤
+  │ Story A │ Story C │ Story E │ Story G │ Story I │
+  │ Story B │ Story D │ Story F │ Story H │ Story J │
+  │   ...   │ [WIP:3] │ [WIP:2] │ [WIP:1] │   ...   │
+  └─────────┴─────────┴─────────┴─────────┴─────────┘
+            ← Pull when capacity available →
+
 ✅ Best For
   • Support & maintenance teams
   • Continuous delivery environments
@@ -221,90 +250,146 @@ Perfect for teams that need flexibility and continuous delivery.
 `,
 
   "lean": `
-Lean Startup
+🚀 Lean Startup
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Brought to you by Aichaku (愛着) - Adaptive Methodology Support
 
-Lean methodology focuses on validated learning:
-- Build-Measure-Learn feedback loop
-- Minimum Viable Product (MVP)
-- Pivot or persevere decisions
-- Innovation accounting
+Move fast and learn faster. Build MVPs, test hypotheses, and 
+pivot based on real customer feedback. Perfect for startups!
 
-Key Concepts:
-• MVP: Simplest version to test hypotheses
-• Validated Learning: Test assumptions with data
-• Pivot: Change strategy based on learning
-• Innovation Accounting: Measure progress
+📊 The Basics
+  • Build-Measure-Learn cycle
+  • Minimum Viable Product (MVP)
+  • Validated learning over opinions
+  • Pivot or persevere decisions
 
-Best For:
-- Startups and new products
-- High uncertainty environments
-- Hypothesis-driven development
+🔄 The Lean Cycle
+  ┌─────────┐
+  │  BUILD  │ → Create MVP
+  └────┬────┘
+       ↓
+  ┌─────────┐
+  │ MEASURE │ → Collect Data
+  └────┬────┘
+       ↓
+  ┌─────────┐
+  │  LEARN  │ → Validate/Invalidate
+  └────┬────┘
+       ↓
+    Pivot or
+   Persevere?
 
-Not Ideal For:
-- Well-defined requirements
-- Regulatory compliance projects
-- Infrastructure work
+✅ Best For
+  • Startups and new products
+  • High uncertainty environments  
+  • Hypothesis-driven development
+  • Fast iteration needs
 
-Quick Start:
-Say "what's our hypothesis?" or "define the MVP"
+❌ Not Ideal For
+  • Well-defined requirements
+  • Regulatory compliance projects
+  • Infrastructure work
+  • Risk-averse environments
+
+💡 Quick Start with Claude Code
+  You: "What's our riskiest assumption?"
+  You: "Define an MVP to test this"
+  You: "Create metrics for validation"
+
+📚 Learn More: http://theleanstartup.com
 `,
 
   "xp": `
-Extreme Programming (XP)
+💻 Extreme Programming (XP)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Brought to you by Aichaku (愛着) - Adaptive Methodology Support
 
-XP emphasizes engineering excellence:
-- Test-Driven Development (TDD)
-- Pair programming
-- Continuous integration
-- Small releases
+Engineering excellence through disciplined practices. Write tests
+first, pair program, and deliver quality code continuously.
 
-Key Concepts:
-• TDD: Write tests first
-• Pair Programming: Two developers, one computer
-• Refactoring: Continuous code improvement
-• Collective Code Ownership: Everyone owns the code
+📊 The Basics
+  • Test-Driven Development (TDD)
+  • Pair programming sessions
+  • Continuous integration
+  • Small, frequent releases
 
-Best For:
-- Teams focused on code quality
-- Complex technical projects
-- Experienced developers
+🔧 XP Practices
+  ┌─────────────┐     ┌─────────────┐
+  │ Write Test  │ → │ Test Fails  │
+  └─────────────┘     └──────┬──────┘
+         ↑                    ↓
+  ┌─────────────┐     ┌─────────────┐
+  │  Refactor   │ ← │ Test Passes │
+  └─────────────┘     └─────────────┘
+        TDD Cycle
 
-Not Ideal For:
-- Non-technical projects
-- Distributed teams (for pairing)
-- Quick prototypes
+  👥 Pair Programming = Driver + Navigator
 
-Quick Start:
-Say "let's pair on this" or "write the test first"
+✅ Best For
+  • Teams prioritizing code quality
+  • Complex technical challenges
+  • Experienced developers
+  • Safety-critical systems
+
+❌ Not Ideal For
+  • Non-technical projects
+  • Distributed teams (pairing is hard)
+  • Quick prototypes
+  • Solo developers
+
+💡 Quick Start with Claude Code
+  You: "Let's pair on this feature"
+  You: "Write the test first"
+  You: "Time to refactor this code"
+
+📚 Learn More: http://www.extremeprogramming.org
 `,
 
   "scrumban": `
-Scrumban Hybrid
+🔄 Scrumban Hybrid
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Brought to you by Aichaku (愛着) - Adaptive Methodology Support
 
-Scrumban combines Scrum structure with Kanban flow:
-- Sprint planning from Scrum
-- Continuous flow from Kanban
-- WIP limits and pull system
-- Optional ceremonies
+The best of both worlds! Combine Scrum's structure with Kanban's
+flow. Perfect for teams wanting flexibility with some ceremonies.
 
-Key Concepts:
-• Planning on Demand: Plan when backlog is low
-• Feature Freeze: Optional sprint boundaries
-• Bucket Planning: Long, medium, short-term
-• Flow Metrics: From Kanban
+📊 The Basics
+  • Planning on demand (not fixed sprints)
+  • WIP limits from Kanban
+  • Optional Scrum ceremonies
+  • Flow metrics and forecasting
 
-Best For:
-- Teams transitioning between methods
-- Mixed project types
-- Flexible planning needs
+🔀 Scrumban Flow
+  ┌─────────────┐
+  │   Backlog   │ → Prioritized work
+  └──────┬──────┘
+         ↓ Planning Trigger
+  ┌─────────────┬─────────────┬─────────────┐
+  │   To Do     │    Doing    │    Done     │
+  │  [WIP: 5]   │  [WIP: 3]   │             │
+  └─────────────┴─────────────┴─────────────┘
+         ← Pull when ready →
 
-Not Ideal For:
-- Teams needing pure Scrum or Kanban
-- Very small teams
-- Highly regulated environments
+  📊 Bucket Planning: 1yr → 6mo → 3mo → Ready
 
-Quick Start:
-Say "plan with buckets" or "check flow metrics"
+✅ Best For
+  • Teams transitioning methodologies
+  • Mixed work types (planned + reactive)
+  • Flexible planning needs
+  • Evolutionary improvement
+
+❌ Not Ideal For
+  • Teams needing pure Scrum/Kanban
+  • Very small teams (< 3 people)
+  • Highly regulated environments
+  • Fixed release schedules
+
+💡 Quick Start with Claude Code
+  You: "Set up our bucket planning"
+  You: "What triggers planning?"
+  You: "Show flow metrics"
+
+📚 Learn More: https://scrumban.org
 `,
 };
 
@@ -385,12 +470,10 @@ export function help(options: HelpOptions = {}): HelpResult {
     return {
       success: true,
       content: `🪴 Aichaku - Adaptive Methodology Support
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📚 Quick Reference
-  aichaku init          Initialize a project
-  aichaku upgrade       Update to latest version  
-  aichaku help          Show this help
-  aichaku --version     Show version info
+This is the methodology help system. Learn how methodologies
+work with Claude Code and adapt to your natural language.
 
 🎯 Methodology Help
   aichaku help shape up     Learn about Shape Up
@@ -405,6 +488,11 @@ export function help(options: HelpOptions = {}): HelpResult {
   Say "write tests first"        → Applies XP principles
 
 ✨ Natural language triggers adapt methodologies to how you work!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📍 Looking for CLI commands and options?
+   Run 'aichaku --help' to see all available commands
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📖 Docs: https://github.com/RickCogley/aichaku`,
     };
