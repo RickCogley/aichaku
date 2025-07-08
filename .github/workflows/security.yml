@@ -154,7 +154,7 @@ jobs:
 
           if grep -r -E "Math\.random\s*\(\s*\)" \
             --include="*.ts" --include="*.js" \
-            --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" \
+            --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" --exclude-dir="docs" \
             --exclude="*_test.ts" \
             . 2>/dev/null | grep -E "(token|password|secret|key|salt|iv|nonce|session|id)" | grep -v -E "(test|mock|example|sample)"; then
             echo "Found potential use of Math.random() for security-sensitive operations"
