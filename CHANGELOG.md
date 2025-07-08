@@ -6,6 +6,36 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] - 2025-07-08
+
+### Added
+- implement three major enhancements for v0.7.0 (0b9253c)
+- improve current phase visibility (129bc47)
+
+### Changed
+- update deno.lock (b1964ea)
+- format nagare.config.ts (a45d2f0)
+- bump nagare to latest version (c55aa06)
+- balance visual identity approach for clarity (71e41b9)
+- update visual identity to 🪴 potted plant icon (68cb1b6)
+- shape visual UX enhancements for Aichaku (32fa599)
+- shape two new enhancements for Aichaku (f635a92)
+- move completed projects to done directories (427ee5e)
+- shape three enhancement projects (c69bc2a)
+- organize output documents (ece1b07)
+- integrate Aichaku v0.6.0 directives (14ffc6a)
+
+### Fixed
+- correct Scrum progress visualization (8991549)
+- format security workflow YAML file (284eddb)
+- simplify path traversal check to avoid false positives (dddf477)
+- improve path traversal detection in security workflow (019eba5)
+- update security workflow to handle legitimate relative paths (7d076dc)
+- add missing newline at end of init_test.ts (69533fb)
+- update tests to handle existing global installation (09c0627)
+- format test files for CI compliance (7a81f71)
+- format CLAUDE.md to pass security tests (3088884)
+
 ## [0.6.0] - 2025-07-07
 
 ### Changed
