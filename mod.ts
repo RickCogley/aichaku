@@ -19,6 +19,7 @@
  * - **🧠 Context Aware** - AI responds to your terminology and needs
  * - **📁 User Customization** - Your modifications survive upgrades
  * - **🚀 Simple Lifecycle** - Just init, upgrade, and uninstall
+ * - **🔄 Auto-updating** - Upgrade command always fetches latest methodology content
  * - **🔒 Security First** - Path validation, no network operations, minimal permissions
  * - **🎯 Zero Configuration** - Works out of the box with sensible defaults
  *
@@ -57,12 +58,15 @@
  * ```typescript
  * import { upgrade } from "jsr:@rick/aichaku";
  *
- * // Check for updates
- * const checkResult = await upgrade({ check: true });
- *
- * // Perform upgrade
- * const result = await upgrade();
- * console.log(`Upgraded to ${result.version}`);
+ * // Upgrade global installation (updates all methodology files)
+ * const result = await upgrade({ global: true });
+ * 
+ * // Upgrade project (updates methodologies + CLAUDE.md)
+ * const projectResult = await upgrade();
+ * console.log(`Upgraded to ${projectResult.version}`);
+ * 
+ * // Note: Upgrades always download the latest methodology files
+ * // to ensure you have the most up-to-date content
  * ```
  *
  * @example Add Aichaku reference to project

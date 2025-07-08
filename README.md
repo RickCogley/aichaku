@@ -151,24 +151,23 @@ aichaku --version
 After upgrading the global CLI:
 
 ```bash
-# In each project, refresh the integration
-aichaku integrate --force
-
-# Or do a full methodology upgrade
+# In each project, run upgrade to get latest methodologies and update CLAUDE.md
 aichaku upgrade
+
+# This automatically:
+# - Downloads all updated methodology files
+# - Updates CLAUDE.md with latest integration
+# - Preserves your user customizations
 ```
 
 #### Global Methodologies
 
 ```bash
-# Update global methodology files
+# Update global methodology files to latest version
 aichaku upgrade --global
 
-# Check what would be updated
-aichaku upgrade --check --global
-
-# Force reinstall (overwrites customizations)
-aichaku upgrade --force --global
+# This automatically downloads all new and updated methodology files
+# Your user customizations in ~/.claude/user/ are always preserved
 ```
 
 ### Uninstall
