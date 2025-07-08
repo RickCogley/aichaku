@@ -137,7 +137,7 @@ try {
 
 📁 Installed to: ${result.path}
 📚 Methodologies: Shape Up, Scrum, Kanban, Lean, XP, Scrumban
-🎯 Next: Run 'aichaku init' in any project
+🎯 Next: Run 'aichaku init' (new) or 'aichaku upgrade' (existing) in your Claude Code projects
 
 💡 Claude Code will now automatically:
    • Create documents in .claude/output/

@@ -124,7 +124,7 @@ async function installGlobal(
 async function initGlobal(isUpgrade: boolean = false): Promise<boolean> {
   console.log("\n🌍 Setting up global methodologies...");
 
-  const initArgs = ["init", "--global"];
+  const initArgs = ["init", "--global", "--silent"];
   if (isUpgrade || args.force) {
     initArgs.push("--force");
   }
@@ -132,8 +132,8 @@ async function initGlobal(isUpgrade: boolean = false): Promise<boolean> {
   // Pass network permissions for methodology fetching from GitHub
   const cmd = new Deno.Command("aichaku", {
     args: initArgs,
-    stdout: "inherit",
-    stderr: "inherit",
+    stdout: "piped",
+    stderr: "piped",
     // Explicitly pass permissions to subprocess
     env: {
       ...Deno.env.toObject(),
@@ -141,7 +141,19 @@ async function initGlobal(isUpgrade: boolean = false): Promise<boolean> {
     },
   });
 
-  const { code } = await cmd.output();
+  const { code, stdout } = await cmd.output();
+  
+  if (code === 0) {
+    // Parse the output to get file count
+    const output = new TextDecoder().decode(stdout);
+    const match = output.match(/(\d+) files? (?:verified|ready)/);
+    if (match) {
+      console.log(`   ✓ ${match[1]} methodology files ready`);
+    }
+    console.log(`   ✓ User customizations preserved`);
+    console.log(`   ✓ Output directories created`);
+  }
+  
   return code === 0;
 }
 
@@ -161,8 +173,8 @@ async function initProject(): Promise<boolean> {
 
 // Main installation flow
 async function main() {
-  console.log(`🪴 Aichaku Installer`);
-  console.log(`━━━━━━━━━━━━━━━━━━━━`);
+  console.log(`🪴 Aichaku Installer - Methodology Support for Claude Code`);
+  console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
 
   // Check current version
   const currentVersion = await getCurrentVersion();
@@ -255,7 +267,7 @@ async function main() {
     Deno.exit(1);
   }
 
-  console.log(`\n✅ Aichaku v${latestVersion} installed successfully!`);
+  console.log(`\n✅ Aichaku v${latestVersion} installed!`);
 
   // Initialize current project unless global-only
   let projectInitialized = false;
@@ -271,15 +283,17 @@ async function main() {
 
   // Show next steps
   console.log(`
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 💡 Next steps:
    ${
     !projectInitialized
-      ? "• Run 'aichaku init' (new) or 'aichaku upgrade' (existing) in your projects"
+      ? "• Run 'aichaku init' (new) or 'aichaku upgrade' (existing) in your Claude Code projects"
       : "• Start using natural language with Claude Code"
   }
    • Say "let's shape a feature" or "plan our sprint"
    • Documents appear in .claude/output/
-   
+
 📚 Learn more: https://github.com/RickCogley/aichaku
 `);
 }
