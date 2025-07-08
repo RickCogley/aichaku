@@ -44,7 +44,7 @@ jobs:
         run: deno check **/*.ts
 
       - name: Run tests
-        run: deno test --allow-all || true
+        run: deno test --allow-all
 
       - name: Test CLI functionality
         run: |
@@ -52,7 +52,7 @@ jobs:
           deno run --allow-all cli.ts --help
 
           # Test init command (dry-run)
-          deno run --allow-all cli.ts init --dry-run || true
+          deno run --allow-all cli.ts init --dry-run
 
   # Test Node.js compatibility (for JSR runtime compatibility scoring)
   test-node:
