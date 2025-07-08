@@ -142,7 +142,7 @@ async function initGlobal(isUpgrade: boolean = false): Promise<boolean> {
   });
 
   const { code, stdout } = await cmd.output();
-  
+
   if (code === 0) {
     // Parse the output to get file count
     const output = new TextDecoder().decode(stdout);
@@ -153,7 +153,7 @@ async function initGlobal(isUpgrade: boolean = false): Promise<boolean> {
     console.log(`   ✓ User customizations preserved`);
     console.log(`   ✓ Output directories created`);
   }
-  
+
   return code === 0;
 }
 
