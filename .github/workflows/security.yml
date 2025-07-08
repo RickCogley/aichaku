@@ -64,7 +64,7 @@ jobs:
         if: env.no_tests != 'true'
         uses: codecov/codecov-action@v5
         with:
-          file: ./coverage.lcov
+          files: ./coverage.lcov
           fail_ci_if_error: false
 
       - name: Check for hardcoded secrets

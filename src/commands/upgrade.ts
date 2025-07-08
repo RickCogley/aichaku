@@ -158,6 +158,7 @@ export async function upgrade(
     }
 
     // Update methodologies
+    // codeql[js/incomplete-url-substring-sanitization] Safe because import.meta.url is trusted and controlled by runtime
     const isJSR = import.meta.url.startsWith("https://jsr.io");
 
     if (!options.silent) {

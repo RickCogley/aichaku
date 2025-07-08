@@ -119,6 +119,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
 
     // Global install: Copy all methodologies
     // Project install: Just create user dir
+    // codeql[js/incomplete-url-substring-sanitization] Safe because import.meta.url is trusted and controlled by runtime
     const isJSR = import.meta.url.startsWith("https://jsr.io");
 
     if (isGlobal) {
