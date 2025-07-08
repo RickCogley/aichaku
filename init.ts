@@ -274,7 +274,7 @@ async function main() {
 💡 Next steps:
    ${
     !projectInitialized
-      ? "• Run 'aichaku init' in your Claude Code project folders"
+      ? "• Run 'aichaku init' (new) or 'aichaku upgrade' (existing) in your projects"
       : "• Start using natural language with Claude Code"
   }
    • Say "let's shape a feature" or "plan our sprint"

@@ -28,54 +28,43 @@ export async function fetchMethodologies(
       "PLANNING-MODE-ADAPTIVE.md": "",
       "EXECUTION-MODE.md": "",
       "IMPROVEMENT-MODE.md": "",
+      "STATUS-TEMPLATE.md": "",
     },
     "shape-up": {
       "SHAPE-UP-AICHAKU-GUIDE.md": "",
       "SHAPE-UP-ADAPTIVE.md": "",
       "templates": {
         "pitch.md": "",
-        "bet.md": "",
-        "cycle-announcement.md": "",
+        "hill-chart.md": "",
+        "cycle-plan.md": "",
+        "execution-plan.md": "",
+        "change-summary.md": "",
       },
     },
     "scrum": {
       "SCRUM-AICHAKU-GUIDE.md": "",
       "templates": {
-        "sprint-plan.md": "",
-        "daily-standup.md": "",
-        "sprint-review.md": "",
-        "retrospective.md": "",
+        "sprint-planning.md": "",
+        "sprint-retrospective.md": "",
+        "user-story.md": "",
       },
     },
     "kanban": {
       "KANBAN-AICHAKU-GUIDE.md": "",
       "templates": {
-        "board-setup.md": "",
+        "kanban-board.md": "",
         "flow-metrics.md": "",
-        "wip-limits.md": "",
       },
     },
     "lean": {
       "LEAN-AICHAKU-GUIDE.md": "",
-      "templates": {
-        "mvp-plan.md": "",
-        "experiment-design.md": "",
-        "pivot-decision.md": "",
-      },
     },
     "xp": {
       "XP-AICHAKU-GUIDE.md": "",
-      "templates": {
-        "user-story.md": "",
-        "test-plan.md": "",
-        "refactoring-plan.md": "",
-      },
     },
     "scrumban": {
       "SCRUMBAN-AICHAKU-GUIDE.md": "",
       "templates": {
-        "hybrid-board.md": "",
-        "sprint-flow.md": "",
         "planning-trigger.md": "",
       },
     },
