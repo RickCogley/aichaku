@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.0] - 2025-07-08
+
+### Added
+
+- improve installer feedback and next steps messaging (4dee101)
+
+### Changed
+
+- format methodology-fetcher.ts (5cfaa53)
+
+### Fixed
+
+- type error in methodology fetcher (0373080)
+- eliminate misleading network permission warnings during upgrade (d621073)
+
 ## [0.9.2] - 2025-07-08
 
 ### Changed
