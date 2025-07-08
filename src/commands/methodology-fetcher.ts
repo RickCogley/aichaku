@@ -16,7 +16,6 @@ export async function fetchMethodologies(
 ): Promise<boolean> {
   // Note: We check individual files rather than skipping if directory exists
   // This ensures new files are downloaded during upgrades
-  const methodologiesPath = join(targetPath, "methodologies");
 
   const baseUrl =
     `https://raw.githubusercontent.com/RickCogley/aichaku/v${version}/methodologies`;

@@ -60,11 +60,11 @@
  *
  * // Upgrade global installation (updates all methodology files)
  * const result = await upgrade({ global: true });
- * 
+ *
  * // Upgrade project (updates methodologies + CLAUDE.md)
  * const projectResult = await upgrade();
  * console.log(`Upgraded to ${projectResult.version}`);
- * 
+ *
  * // Note: Upgrades always download the latest methodology files
  * // to ensure you have the most up-to-date content
  * ```
