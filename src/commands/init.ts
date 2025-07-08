@@ -117,27 +117,33 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     const isJSR = import.meta.url.startsWith("https://jsr.io");
 
     if (isGlobal) {
-      // Only copy methodologies for global install
-      if (isJSR) {
-        // Fetch from GitHub when running from JSR
-        await fetchMethodologies(targetPath, VERSION, {
-          silent: options.silent,
-        });
-      } else {
-        // Local development - copy from source
-        const sourceMethodologies = join(
-          new URL(".", import.meta.url).pathname,
-          "../../../methodologies",
-        );
-        const targetMethodologies = join(targetPath, "methodologies");
+      // Check if methodologies already exist
+      const methodologiesPath = join(targetPath, "methodologies");
+      const methodologiesExist = await exists(methodologiesPath);
 
-        if (!options.silent) {
-          console.log("\n🔄 Installing adaptive methodologies...");
+      // Only copy/fetch methodologies for global install if they don't exist or force is used
+      if (!methodologiesExist || options.force) {
+        if (isJSR) {
+          // Fetch from GitHub when running from JSR
+          await fetchMethodologies(targetPath, VERSION, {
+            silent: options.silent,
+          });
+        } else {
+          // Local development - copy from source
+          const sourceMethodologies = join(
+            new URL(".", import.meta.url).pathname,
+            "../../../methodologies",
+          );
+          const targetMethodologies = join(targetPath, "methodologies");
+
+          if (!options.silent) {
+            console.log("\n🔄 Installing adaptive methodologies...");
+          }
+
+          await copy(sourceMethodologies, targetMethodologies, {
+            overwrite: options.force,
+          });
         }
-
-        await copy(sourceMethodologies, targetMethodologies, {
-          overwrite: options.force,
-        });
       }
     }
 

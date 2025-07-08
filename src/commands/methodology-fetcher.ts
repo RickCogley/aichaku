@@ -13,6 +13,21 @@ export async function fetchMethodologies(
   version: string,
   options: FetchOptions = {},
 ): Promise<void> {
+  // Check if methodologies already exist
+  const methodologiesPath = join(targetPath, "methodologies");
+  try {
+    const stat = await Deno.stat(methodologiesPath);
+    if (stat.isDirectory) {
+      // Methodologies already exist, skip fetching
+      if (!options.silent) {
+        console.log("✨ Methodologies already installed");
+      }
+      return;
+    }
+  } catch {
+    // Directory doesn't exist, continue with fetch
+  }
+
   const baseUrl =
     `https://raw.githubusercontent.com/RickCogley/aichaku/v${version}/methodologies`;
 
@@ -82,8 +97,17 @@ export async function fetchMethodologies(
   }
 
   async function fetchFile(relativePath: string): Promise<void> {
-    const url = `${baseUrl}/${relativePath}`;
     const localPath = join(targetPath, "methodologies", relativePath);
+
+    // Skip if file already exists
+    try {
+      await Deno.stat(localPath);
+      return; // File exists, skip
+    } catch {
+      // File doesn't exist, continue to fetch
+    }
+
+    const url = `${baseUrl}/${relativePath}`;
 
     try {
       const response = await fetch(url);
@@ -93,8 +117,8 @@ export async function fetchMethodologies(
         await Deno.writeTextFile(localPath, content);
       }
     } catch (error) {
-      // Silently skip files that don't exist
-      if (!options.silent) {
+      // Only show warnings for actual fetch failures, not permission issues
+      if (!options.silent && !error.message?.includes("Requires net access")) {
         console.warn(
           `⚠️  Failed to fetch ${relativePath}: ${
             error instanceof Error ? error.message : String(error)
