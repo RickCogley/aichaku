@@ -162,12 +162,23 @@ export async function upgrade(
     }
 
     // Show what's new in this version
-    if (!options.silent && VERSION === "0.7.0") {
-      console.log("\n✨ What's new in v0.7.0:");
-      console.log("   • 🪴 Visual identity with progress indicators");
-      console.log("   • 💬 Discussion-first document creation");
-      console.log("   • 📊 Mermaid diagram integration");
-      console.log("   • ✅ Fixed TODO lists and formatting");
+    if (!options.silent && metadata.version !== VERSION) {
+      // Type assertion to handle const literal type
+      const currentVersion = VERSION as string;
+
+      if (currentVersion === "0.8.0") {
+        console.log("\n✨ What's new in v0.8.0:");
+        console.log("   • 🚀 Ultra-simple installation: deno run -A init.ts");
+        console.log("   • 📦 Enhanced install script with version feedback");
+        console.log("   • 🔄 Improved upgrade experience");
+        console.log("   • 💡 Clear next steps after installation");
+      } else if (currentVersion === "0.7.0") {
+        console.log("\n✨ What's new in v0.7.0:");
+        console.log("   • 🪴 Visual identity with progress indicators");
+        console.log("   • 💬 Discussion-first document creation");
+        console.log("   • 📊 Mermaid diagram integration");
+        console.log("   • ✅ Fixed TODO lists and formatting");
+      }
     }
 
     // Update metadata
