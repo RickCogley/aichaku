@@ -45,7 +45,8 @@
       "Bash(/Users/rcogley/.deno/bin/aichaku:*)",
       "Bash(deno info:*)",
       "Bash(sed:*)",
-      "Bash(bash:*)"
+      "Bash(bash:*)",
+      "Bash(gh workflow list:*)"
     ],
     "deny": []
   }

@@ -8,6 +8,7 @@ on:
   schedule:
     # Run at 4:30 AM UTC on Tuesdays (after CodeQL on Mondays)
     - cron: "30 4 * * 2"
+  workflow_dispatch:
 
 permissions:
   contents: read
