@@ -9,10 +9,12 @@ and this project adheres to
 ## [0.7.0] - 2025-07-08
 
 ### Added
+
 - implement three major enhancements for v0.7.0 (0b9253c)
 - improve current phase visibility (129bc47)
 
 ### Changed
+
 - update deno.lock (b1964ea)
 - format nagare.config.ts (a45d2f0)
 - bump nagare to latest version (c55aa06)
@@ -26,6 +28,7 @@ and this project adheres to
 - integrate Aichaku v0.6.0 directives (14ffc6a)
 
 ### Fixed
+
 - correct Scrum progress visualization (8991549)
 - format security workflow YAML file (284eddb)
 - simplify path traversal check to avoid false positives (dddf477)
