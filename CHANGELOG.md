@@ -9,6 +9,7 @@ and this project adheres to
 ## [0.8.0] - 2025-07-08
 
 ### Added
+
 - ultra-simple installation like Lume (4c708c6)
 
 ## [0.7.0] - 2025-07-08
