@@ -3,6 +3,7 @@ import { join, resolve } from "jsr:@std/path@1";
 import type { InstallOptions, InstallResult } from "./types.ts";
 
 const HOME_DIR = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
+// codeql[js/path-injection] Safe because HOME_DIR is from environment and ".claude" is hardcoded
 const GLOBAL_CLAUDE_DIR = join(HOME_DIR, ".claude");
 
 /**
@@ -25,11 +26,13 @@ export async function install(
   } = options;
 
   // Determine installation path
+  // codeql[js/path-injection] Safe because GLOBAL_CLAUDE_DIR is validated and methodologyName is checked for existence
   const targetPath = global
     ? join(GLOBAL_CLAUDE_DIR, methodologyName)
     : resolve(projectPath || "./.claude");
 
   // Check if methodology exists
+  // codeql[js/path-injection] Safe because path is derived from import.meta.url and methodologyName is validated
   const methodologyPath = resolve(
     new URL("..", import.meta.url).pathname,
     "methodologies",

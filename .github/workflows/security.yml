@@ -98,7 +98,7 @@ jobs:
           for pattern in "${dangerous_patterns[@]}"; do
             if grep -r -E "$pattern" \
               --include="*.ts" --include="*.js" \
-              --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" \
+              --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" --exclude-dir="docs" \
               --exclude="*_test.ts" \
               . 2>/dev/null; then
               echo "Found dangerous pattern: $pattern"

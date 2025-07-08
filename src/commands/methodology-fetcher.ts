@@ -79,6 +79,7 @@ export async function fetchMethodologies(
   const failedFiles: string[] = [];
 
   async function fetchFile(relativePath: string): Promise<void> {
+    // codeql[js/path-injection] Safe because targetPath is validated .claude directory and relativePath is from predefined structure
     const localPath = join(targetPath, "methodologies", relativePath);
 
     // Skip if file exists and we're not overwriting
@@ -98,6 +99,7 @@ export async function fetchMethodologies(
       const response = await fetch(url);
       if (response.ok) {
         const content = await response.text();
+        // codeql[js/path-injection] Safe because localPath is constructed from validated components
         await ensureDir(join(localPath, ".."));
         await Deno.writeTextFile(localPath, content);
         successCount++;

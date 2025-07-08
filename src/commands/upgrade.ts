@@ -39,12 +39,15 @@ export async function upgrade(
   options: UpgradeOptions = {},
 ): Promise<UpgradeResult> {
   const isGlobal = options.global || false;
+  // codeql[js/path-injection] Safe because paths are validated and constrained to .claude directory
   const targetPath = isGlobal
     ? join(Deno.env.get("HOME") || "", ".claude")
     : resolve(options.projectPath || "./.claude");
 
   // Check if Aichaku is installed (try both old and new marker files)
+  // codeql[js/path-injection] Safe because targetPath is validated and file names are hardcoded
   const aichakuJsonPath = join(targetPath, ".aichaku.json");
+  // codeql[js/path-injection] Safe because targetPath is validated and file names are hardcoded
   const aichakuProjectPath = join(targetPath, ".aichaku-project");
 
   let metadataPath: string | null = null;

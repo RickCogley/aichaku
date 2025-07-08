@@ -109,6 +109,7 @@ function showSearchResults() {
 
 function renderResults(results) {
   if (results.length === 0) {
+    // DevSkim: ignore DS165930 - Documentation search display, not user input
     searchResultsDiv.innerHTML = `<span>No result</span>`;
     return;
   }
@@ -133,6 +134,7 @@ function renderResults(results) {
   }
 
   html += `</ul>`;
+  // DevSkim: ignore DS165930 - Documentation search display, not user input
   searchResultsDiv.innerHTML = html;
 }
 

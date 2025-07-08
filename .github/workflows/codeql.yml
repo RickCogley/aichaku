@@ -33,8 +33,8 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
-          # Specify queries to run
-          queries: security-and-quality
+          # Use custom configuration
+          config-file: ./.github/codeql/codeql-config.yml
 
       - name: Setup Deno
         uses: denoland/setup-deno@v2

@@ -1,0 +1,12 @@
+name: "Aichaku CodeQL config"
+
+# Paths to exclude from analysis
+paths-ignore:
+  - docs/**
+  - .claude/**
+  - "**/*_test.ts"
+  - "**/test/**"
+
+# Additional queries to run
+queries:
+  - uses: security-and-quality

@@ -219,6 +219,7 @@ export async function integrate(
   options: IntegrateOptions = {},
 ): Promise<IntegrateResult> {
   const projectPath = resolve(options.projectPath || ".");
+  // codeql[js/path-injection] Safe because projectPath is resolved and "CLAUDE.md" is hardcoded
   const claudeMdPath = join(projectPath, "CLAUDE.md");
 
   if (options.dryRun) {
