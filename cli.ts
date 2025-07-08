@@ -33,7 +33,17 @@ import { help } from "./src/commands/help.ts";
 import { VERSION } from "./mod.ts";
 
 const args = parseArgs(Deno.args, {
-  boolean: ["help", "version", "global", "force", "silent", "dry-run", "check", "list", "compare"],
+  boolean: [
+    "help",
+    "version",
+    "global",
+    "force",
+    "silent",
+    "dry-run",
+    "check",
+    "list",
+    "compare",
+  ],
   string: ["path"],
   alias: {
     h: "help",
@@ -263,20 +273,20 @@ ${
     case "help": {
       // Parse methodology from remaining args
       const methodology = args._[1]?.toString();
-      
+
       const helpOptions = {
         methodology,
         list: args.list,
         compare: args.compare,
         silent: args.silent,
       };
-      
+
       const result = await help(helpOptions);
       if (!result.success) {
         console.error(`❌ ${result.message}`);
         Deno.exit(1);
       }
-      
+
       if (result.content && !args.silent) {
         console.log(result.content);
       }

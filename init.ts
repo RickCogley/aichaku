@@ -219,13 +219,13 @@ async function main() {
   }
 
   // Show installation paths
-  const binPath = Deno.build.os === "windows" 
+  const binPath = Deno.build.os === "windows"
     ? `${Deno.env.get("USERPROFILE")}\\.deno\\bin\\aichaku.exe`
     : `${Deno.env.get("HOME")}/.deno/bin/aichaku`;
   const methodologyPath = Deno.build.os === "windows"
     ? `${Deno.env.get("USERPROFILE")}\\.claude\\methodologies`
     : `${Deno.env.get("HOME")}/.claude/methodologies`;
-    
+
   console.log(`   📍 CLI: ${binPath}`);
   console.log(`   📚 Methodologies: ${methodologyPath}`);
 

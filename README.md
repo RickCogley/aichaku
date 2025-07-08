@@ -224,7 +224,7 @@ aichaku help kanban
 ### Programmatic Usage
 
 ```typescript
-import { init, integrate, help } from "jsr:@rick/aichaku";
+import { help, init, integrate } from "jsr:@rick/aichaku";
 
 // Initialize global methodologies
 await init({

@@ -241,12 +241,15 @@ export async function help(options: HelpOptions = {}): Promise<HelpResult> {
     // List all methodologies
     if (options.list) {
       const list = Object.entries(METHODOLOGIES)
-        .map(([key, meta]) => `  ${meta.icon} ${meta.name.padEnd(20)} - ${meta.summary}`)
+        .map(([key, meta]) =>
+          `  ${meta.icon} ${meta.name.padEnd(20)} - ${meta.summary}`
+        )
         .join("\n");
-      
+
       return {
         success: true,
-        content: `Available Methodologies:\n\n${list}\n\nUse 'aichaku help <methodology>' for detailed information.`,
+        content:
+          `Available Methodologies:\n\n${list}\n\nUse 'aichaku help <methodology>' for detailed information.`,
       };
     }
 
@@ -264,7 +267,7 @@ export async function help(options: HelpOptions = {}): Promise<HelpResult> {
 │ XP              │ 1-2 week iter.   │ Code quality    │ TDD & pairing    │
 │ Scrumban        │ Flexible         │ Hybrid teams    │ Pull planning    │
 └─────────────────┴──────────────────┴─────────────────┴──────────────────┘`;
-      
+
       return {
         success: true,
         content: comparison,
@@ -275,11 +278,12 @@ export async function help(options: HelpOptions = {}): Promise<HelpResult> {
     if (options.methodology) {
       const methodology = options.methodology.toLowerCase();
       const content = HELP_CONTENT[methodology];
-      
+
       if (!content) {
         return {
           success: false,
-          message: `Unknown methodology: ${options.methodology}. Use 'aichaku help --list' to see available options.`,
+          message:
+            `Unknown methodology: ${options.methodology}. Use 'aichaku help --list' to see available options.`,
         };
       }
 
@@ -309,11 +313,13 @@ Examples:
 
 Methodologies adapt to your language. Just start talking naturally!`,
     };
-
   } catch (error) {
     return {
       success: false,
-      message: `Help command failed: ${error instanceof Error ? error.message : String(error)}`,
+      message: `Help command failed: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
     };
   }
 }
+
