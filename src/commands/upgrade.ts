@@ -46,14 +46,14 @@ export async function upgrade(
   // Check if Aichaku is installed (try both old and new marker files)
   const aichakuJsonPath = join(targetPath, ".aichaku.json");
   const aichakuProjectPath = join(targetPath, ".aichaku-project");
-  
+
   let metadataPath: string | null = null;
   if (await exists(aichakuJsonPath)) {
     metadataPath = aichakuJsonPath;
   } else if (!isGlobal && await exists(aichakuProjectPath)) {
     metadataPath = aichakuProjectPath;
   }
-  
+
   if (!metadataPath) {
     return {
       success: false,
@@ -68,12 +68,14 @@ export async function upgrade(
   try {
     const content = await Deno.readTextFile(metadataPath);
     const rawMetadata = JSON.parse(content);
-    
+
     // Handle both old and new metadata formats
     metadata = {
       version: rawMetadata.version || VERSION,
-      installedAt: rawMetadata.installedAt || rawMetadata.createdAt || new Date().toISOString(),
-      installationType: rawMetadata.installationType || (isGlobal ? "global" : "local"),
+      installedAt: rawMetadata.installedAt || rawMetadata.createdAt ||
+        new Date().toISOString(),
+      installationType: rawMetadata.installationType ||
+        (isGlobal ? "global" : "local"),
       lastUpgrade: rawMetadata.lastUpgrade || null,
     };
   } catch (error) {
@@ -190,7 +192,9 @@ export async function upgrade(
         console.log("   • 🚀 Better error handling during upgrades");
       } else if (currentVersion === "0.9.0") {
         console.log("\n✨ What's new in v0.9.0:");
-        console.log("   • 🎯 Unified upgrade command (no more integrate --force!)");
+        console.log(
+          "   • 🎯 Unified upgrade command (no more integrate --force!)",
+        );
         console.log("   • ✂️  Surgical CLAUDE.md updates with markers");
         console.log("   • 🔄 Automatic project updates during upgrade");
       } else if (currentVersion === "0.8.0") {
