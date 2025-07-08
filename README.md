@@ -115,6 +115,20 @@ Claude: [Recognizes Scrum ceremony + general terms]
 
 ## Lifecycle Commands
 
+### Help System
+
+```bash
+# Learn about a specific methodology
+aichaku help shape-up
+aichaku help scrum
+
+# List all available methodologies
+aichaku help --list
+
+# Compare methodologies side-by-side
+aichaku help --compare
+```
+
 ### Initialize
 
 ```bash
@@ -193,10 +207,24 @@ aichaku integrate --dry-run
 aichaku integrate --force
 ```
 
+### Help Examples
+
+```bash
+# Get quick overview of all methodologies
+aichaku help --list
+
+# Learn when to use Shape Up vs Scrum
+aichaku help --compare
+
+# Deep dive into a specific methodology
+aichaku help kanban
+# Shows key concepts, best/not ideal for, and quick start tips
+```
+
 ### Programmatic Usage
 
 ```typescript
-import { init, integrate } from "jsr:@rick/aichaku";
+import { init, integrate, help } from "jsr:@rick/aichaku";
 
 // Initialize global methodologies
 await init({
