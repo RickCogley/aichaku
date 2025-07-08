@@ -154,27 +154,50 @@ export async function upgrade(
       console.log("✓ User customizations detected - will be preserved");
     }
 
-    // Update methodologies only
+    // Update methodologies
     const isJSR = import.meta.url.startsWith("https://jsr.io");
-    const targetMethodologies = join(targetPath, "methodologies");
 
-    // Remove old methodologies
-    if (await exists(targetMethodologies)) {
-      await Deno.remove(targetMethodologies, { recursive: true });
+    if (!options.silent) {
+      console.log("📚 Updating methodology files...");
     }
 
     if (isJSR) {
       // Fetch from GitHub when running from JSR
-      await fetchMethodologies(targetPath, VERSION, { silent: options.silent });
+      // First try to update in place (preserves any user modifications)
+      const fetchSuccess = await fetchMethodologies(targetPath, VERSION, {
+        silent: options.silent,
+        force: true, // Force re-download all files
+      });
+
+      if (!fetchSuccess) {
+        // If fetch fails completely, try removing and re-fetching
+        const targetMethodologies = join(targetPath, "methodologies");
+        if (await exists(targetMethodologies)) {
+          await Deno.remove(targetMethodologies, { recursive: true });
+        }
+
+        const retrySuccess = await fetchMethodologies(targetPath, VERSION, {
+          silent: options.silent,
+          force: true,
+        });
+
+        if (!retrySuccess) {
+          throw new Error(
+            "Failed to update methodologies. Check network permissions.",
+          );
+        }
+      }
     } else {
       // Local development - copy from source
       const sourceMethodologies = join(
         new URL(".", import.meta.url).pathname,
         "../../../methodologies",
       );
+      const targetMethodologies = join(targetPath, "methodologies");
 
-      if (!options.silent) {
-        console.log("📚 Updating methodology files...");
+      // Remove old methodologies for clean copy
+      if (await exists(targetMethodologies)) {
+        await Deno.remove(targetMethodologies, { recursive: true });
       }
 
       await copy(sourceMethodologies, targetMethodologies);

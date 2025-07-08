@@ -3,6 +3,7 @@ import { join } from "jsr:@std/path@1";
 
 interface FetchOptions {
   silent?: boolean;
+  force?: boolean;
 }
 
 /**
@@ -92,13 +93,15 @@ export async function fetchMethodologies(
   async function fetchFile(relativePath: string): Promise<void> {
     const localPath = join(targetPath, "methodologies", relativePath);
 
-    // Skip if file already exists
-    try {
-      await Deno.stat(localPath);
-      successCount++; // Count existing files as successes
-      return; // File exists, skip fetching
-    } catch {
-      // File doesn't exist, continue to fetch
+    // For force updates, always fetch. Otherwise, skip existing files
+    if (!options.force) {
+      try {
+        await Deno.stat(localPath);
+        successCount++; // Count existing files as successes
+        return; // File exists, skip fetching
+      } catch {
+        // File doesn't exist, continue to fetch
+      }
     }
 
     const url = `${baseUrl}/${relativePath}`;
@@ -117,11 +120,11 @@ export async function fetchMethodologies(
     } catch (error) {
       failureCount++;
       failedFiles.push(relativePath);
-      
+
       const errorMessage = error instanceof Error
         ? error.message
         : String(error);
-      
+
       // Track network permission errors separately
       if (errorMessage.includes("Requires net access")) {
         if (!options.silent) {
@@ -166,16 +169,20 @@ export async function fetchMethodologies(
       console.error(`   ${failureCount} files could not be downloaded.`);
       if (failedFiles.length > 0 && failedFiles.length <= 5) {
         console.error("   Failed files:");
-        failedFiles.forEach(file => console.error(`     - ${file}`));
+        failedFiles.forEach((file) => console.error(`     - ${file}`));
       }
       return false;
     } else if (failureCount > 0) {
-      console.warn(`\n⚠️  Partial success: ${successCount} files ready, ${failureCount} failed`);
+      console.warn(
+        `\n⚠️  Partial success: ${successCount} files ready, ${failureCount} failed`,
+      );
       return true; // Partial success is still considered success
     } else if (successCount > 0) {
-      console.log(`✨ Methodologies ready (${successCount} files verified/updated)\n`);
+      console.log(
+        `✨ Methodologies ready (${successCount} files verified/updated)\n`,
+      );
     }
   }
-  
+
   return successCount > 0;
 }

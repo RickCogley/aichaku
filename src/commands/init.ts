@@ -127,11 +127,12 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
           // Fetch from GitHub when running from JSR
           const fetchSuccess = await fetchMethodologies(targetPath, VERSION, {
             silent: options.silent,
+            force: options.force,
           });
-          
+
           if (!fetchSuccess) {
             throw new Error(
-              "Failed to fetch methodologies. Check network permissions."
+              "Failed to fetch methodologies. Check network permissions.",
             );
           }
         } else {

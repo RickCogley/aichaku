@@ -11,7 +11,12 @@ import { parseArgs } from "jsr:@std/cli@1/parse-args";
 
 const PACKAGE_NAME = "aichaku";
 const SCOPE = "rick";
-const PERMISSIONS = ["--allow-read", "--allow-write", "--allow-env", "--allow-net"];
+const PERMISSIONS = [
+  "--allow-read",
+  "--allow-write",
+  "--allow-env",
+  "--allow-net",
+];
 
 // Parse arguments
 const args = parseArgs(Deno.args, {
