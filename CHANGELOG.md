@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.3] - 2025-07-08
+
+### Fixed
+
+- add security suppression comments and workflow exclusions (b52236f)
+
 ## [0.15.2] - 2025-07-08
 
 ### Fixed
