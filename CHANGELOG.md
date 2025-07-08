@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.14.0] - 2025-07-08
+
+### Added
+
+- enhance help system with better branding and formatting (c7536f1)
+
+### Fixed
+
+- resolve lint error (c7a6d3b)
+- improve installer output and help command usability (d04e799)
+
 ## [0.13.0] - 2025-07-08
 
 ### Added
