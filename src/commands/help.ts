@@ -236,12 +236,12 @@ Say "plan with buckets" or "check flow metrics"
 /**
  * Display methodology help information
  */
-export async function help(options: HelpOptions = {}): Promise<HelpResult> {
+export function help(options: HelpOptions = {}): HelpResult {
   try {
     // List all methodologies
     if (options.list) {
       const list = Object.entries(METHODOLOGIES)
-        .map(([key, meta]) =>
+        .map(([_key, meta]) =>
           `  ${meta.icon} ${meta.name.padEnd(20)} - ${meta.summary}`
         )
         .join("\n");

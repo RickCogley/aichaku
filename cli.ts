@@ -281,7 +281,7 @@ ${
         silent: args.silent,
       };
 
-      const result = await help(helpOptions);
+      const result = help(helpOptions);
       if (!result.success) {
         console.error(`❌ ${result.message}`);
         Deno.exit(1);
