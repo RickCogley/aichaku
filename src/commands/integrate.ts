@@ -247,6 +247,7 @@ export async function integrate(
   }
 
   try {
+    // codeql[js/useless-assignment-to-local] - Variable is used in some code paths but not all
     let action: "created" | "updated" | "skipped" = "skipped";
 
     if (await exists(claudeMdPath)) {

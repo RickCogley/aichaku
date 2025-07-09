@@ -21,7 +21,8 @@ export function update(
   methodologyName: string,
   _options: InstallOptions = {},
 ): Promise<InstallResult> {
-  // TODO: Implement update functionality
+  // codeql[js/todo-comment] - Legitimate TODO for future feature
+  // TODO: Implement update functionality // DevSkim: ignore DS176209 - Legitimate TODO for future feature
   return Promise.resolve({
     success: false,
     path: "",

@@ -244,7 +244,8 @@ export async function upgrade(
         console.log("   • 🪴 Visual identity with progress indicators");
         console.log("   • 💬 Discussion-first document creation");
         console.log("   • 📊 Mermaid diagram integration");
-        console.log("   • ✅ Fixed TODO lists and formatting");
+        // codeql[js/todo-comment] - This is a changelog message, not a TODO comment
+        console.log("   • ✅ Fixed TODO lists and formatting"); // DevSkim: ignore DS176209 - This is a changelog message, not a TODO comment
       }
     }
 

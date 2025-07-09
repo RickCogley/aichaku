@@ -146,7 +146,8 @@ export default {
           throw new Error("Type check failed");
         }
 
-        // TODO: Re-enable tests when we have test coverage
+        // codeql[js/todo-comment] - Legitimate TODO for test coverage
+        // TODO: Re-enable tests when we have test coverage // DevSkim: ignore DS176209 - Legitimate TODO for test coverage
         // console.log("🧪 Running tests...");
         // const testCmd = new Deno.Command("deno", {
         //   args: ["test", "--allow-read", "--allow-write", "--allow-env"],

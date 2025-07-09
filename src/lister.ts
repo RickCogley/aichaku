@@ -16,7 +16,8 @@ import type { ListResult } from "./types.ts";
  * @public
  */
 export function list(): Promise<ListResult> {
-  // TODO: Implement listing functionality
+  // codeql[js/todo-comment] - Legitimate TODO for future feature
+  // TODO: Implement listing functionality // DevSkim: ignore DS176209 - Legitimate TODO for future feature
   return Promise.resolve({
     available: [
       {

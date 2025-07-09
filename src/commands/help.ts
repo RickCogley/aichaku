@@ -296,7 +296,8 @@ pivot based on real customer feedback. Perfect for startups!
   You: "Define an MVP to test this"
   You: "Create metrics for validation"
 
-📚 Learn More: http://theleanstartup.com
+// codeql[js/insecure-url] - Well-known book reference URL
+📚 Learn More: https://theleanstartup.com // DevSkim: ignore DS137138 - Well-known book reference URL
 `,
 
   "xp": `
@@ -349,7 +350,8 @@ first, pair program, and deliver quality code continuously.
   You: "Write the test first"
   You: "Time to refactor this code"
 
-📚 Learn More: http://www.extremeprogramming.org
+// codeql[js/insecure-url] - Well-known methodology reference URL
+📚 Learn More: https://www.extremeprogramming.org // DevSkim: ignore DS137138 - Well-known methodology reference URL
 `,
 
   "scrumban": `
