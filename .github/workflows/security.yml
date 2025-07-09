@@ -9,7 +9,6 @@ on:
     # Run daily at 2 AM UTC
     - cron: "0 2 * * *"
   workflow_dispatch:
-  workflow_dispatch:
 
 permissions:
   contents: read
