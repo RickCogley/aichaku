@@ -46,7 +46,9 @@
       "Bash(deno info:*)",
       "Bash(sed:*)",
       "Bash(bash:*)",
-      "Bash(gh workflow list:*)"
+      "Bash(gh workflow list:*)",
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebFetch(domain:modelcontextprotocol.io)"
     ],
     "deny": []
   }
