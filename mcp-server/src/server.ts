@@ -8,10 +8,10 @@
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
+  type CallToolRequest,
   CallToolRequestSchema,
   ListToolsRequestSchema,
   type Tool,
-  type CallToolRequest,
 } from "@modelcontextprotocol/sdk/types.js";
 import { ReviewEngine } from "./review-engine.ts";
 import { StandardsManager } from "./standards-manager.ts";
@@ -123,80 +123,85 @@ class MCPCodeReviewer {
     });
 
     // Handle tool calls
-    this.server.setRequestHandler(CallToolRequestSchema, async (request: CallToolRequest) => {
-      const { name, arguments: args } = request.params;
+    this.server.setRequestHandler(
+      CallToolRequestSchema,
+      async (request: CallToolRequest) => {
+        const { name, arguments: args } = request.params;
 
-      try {
-        switch (name) {
-          case "review_file": {
-            if (!args) {
-              throw new Error("Arguments are required for review_file");
+        try {
+          switch (name) {
+            case "review_file": {
+              if (!args) {
+                throw new Error("Arguments are required for review_file");
+              }
+              const result = await this.reviewFile(
+                args as unknown as ReviewRequest,
+              );
+              return {
+                content: [
+                  {
+                    type: "text",
+                    text: this.formatReviewResult(result),
+                  },
+                ],
+              };
             }
-            const result = await this.reviewFile(
-              args as unknown as ReviewRequest,
-            );
-            return {
-              content: [
-                {
-                  type: "text",
-                  text: this.formatReviewResult(result),
-                },
-              ],
-            };
-          }
 
-          case "review_methodology": {
-            if (!args) {
-              throw new Error("Arguments are required for review_methodology");
+            case "review_methodology": {
+              if (!args) {
+                throw new Error(
+                  "Arguments are required for review_methodology",
+                );
+              }
+              const result = await this.reviewMethodology(
+                args.projectPath as string,
+                args.methodology as string,
+              );
+              return {
+                content: [
+                  {
+                    type: "text",
+                    text: this.formatMethodologyResult(result),
+                  },
+                ],
+              };
             }
-            const result = await this.reviewMethodology(
-              args.projectPath as string,
-              args.methodology as string,
-            );
-            return {
-              content: [
-                {
-                  type: "text",
-                  text: this.formatMethodologyResult(result),
-                },
-              ],
-            };
-          }
 
-          case "get_standards": {
-            if (!args) {
-              throw new Error("Arguments are required for get_standards");
+            case "get_standards": {
+              if (!args) {
+                throw new Error("Arguments are required for get_standards");
+              }
+              const standards = await this.standardsManager.getProjectStandards(
+                args.projectPath as string,
+              );
+              return {
+                content: [
+                  {
+                    type: "text",
+                    text: JSON.stringify(standards, null, 2),
+                  },
+                ],
+              };
             }
-            const standards = await this.standardsManager.getProjectStandards(
-              args.projectPath as string,
-            );
-            return {
-              content: [
-                {
-                  type: "text",
-                  text: JSON.stringify(standards, null, 2),
-                },
-              ],
-            };
-          }
 
-          default:
-            throw new Error(`Unknown tool: ${name}`);
+            default:
+              throw new Error(`Unknown tool: ${name}`);
+          }
+        } catch (error) {
+          return {
+            content: [
+              {
+                type: "text",
+                text: `Error: ${
+                  error instanceof Error ? error.message : String(error)
+                }`,
+              },
+            ],
+            isError: true,
+          };
         }
-      } catch (error) {
-        return {
-          content: [
-            {
-              type: "text",
-              text: `Error: ${
-                error instanceof Error ? error.message : String(error)
-              }`,
-            },
-          ],
-          isError: true,
-        };
-      }
-    });
+      },
+    );
   }
 
   private async reviewFile(request: ReviewRequest): Promise<ReviewResult> {

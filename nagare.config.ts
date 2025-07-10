@@ -139,7 +139,16 @@ export default {
 
         console.log("🔍 Running type check...");
         const checkCmd = new Deno.Command("deno", {
-          args: ["check", "cli.ts", "mod.ts", "src/**/*.ts", "mcp-server/src/**/*.ts", "nagare.config.ts", "nagare-launcher.ts", "version.ts"],
+          args: [
+            "check",
+            "cli.ts",
+            "mod.ts",
+            "src/**/*.ts",
+            "mcp-server/src/**/*.ts",
+            "nagare.config.ts",
+            "nagare-launcher.ts",
+            "version.ts",
+          ],
         });
         const checkResult = await checkCmd.output();
         if (!checkResult.success) {
