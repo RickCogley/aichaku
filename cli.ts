@@ -32,6 +32,7 @@ import { integrate } from "./src/commands/integrate.ts";
 import { help } from "./src/commands/help.ts";
 import { hooks } from "./src/commands/hooks.ts";
 import { standards } from "./src/commands/standards.ts";
+import { docsStandard } from "./src/commands/docs-standard.ts";
 import { runMCPCommand } from "./src/commands/mcp.ts";
 import { VERSION } from "./mod.ts";
 
@@ -60,8 +61,10 @@ const args = parseArgs(Deno.args, {
     "config",
     "status",
     "install-mcp",
+    "quiet",
+    "fix",
   ],
-  string: ["path", "install", "add", "remove", "search"],
+  string: ["path", "install", "add", "remove", "search", "standards"],
   alias: {
     h: "help",
     v: "version",
@@ -73,6 +76,7 @@ const args = parseArgs(Deno.args, {
     c: "check",
     l: "list",
     i: "install",
+    q: "quiet",
   },
 });
 
@@ -107,6 +111,8 @@ Commands:
   help        Show methodology information and guidance
   hooks       Manage Claude Code hooks for automation
   standards   Choose modular guidance standards for your project
+  docs-standard Choose documentation writing style guides for your project
+  docs:lint   Lint documentation against selected standards
   mcp         Manage MCP (Model Context Protocol) server for code review
 
 Options:
@@ -157,6 +163,15 @@ Examples:
   # Choose standards for your project
   aichaku standards --list
   aichaku standards --add owasp-web,15-factor
+
+  # Choose documentation standards
+  aichaku docs-standard --list
+  aichaku docs-standard --add diataxis-google
+
+  # Lint documentation files
+  aichaku docs:lint
+  aichaku docs:lint README.md docs/
+  aichaku docs:lint --standards diataxis,google-style
 
 Learn more: https://github.com/RickCogley/aichaku
 `);
@@ -380,6 +395,23 @@ ${
       break;
     }
 
+    case "docs-standard":
+    case "doc-standard":
+    case "docstandard": {
+      const docStandardsOptions = {
+        list: args.list as boolean | undefined,
+        show: args.show as boolean | undefined,
+        add: args.add as string | undefined,
+        remove: args.remove as string | undefined,
+        search: args.search as string | undefined,
+        projectPath: args.path as string | undefined,
+        dryRun: args["dry-run"] as boolean | undefined,
+      };
+
+      await docsStandard(docStandardsOptions);
+      break;
+    }
+
     case "mcp": {
       const mcpOptions = {
         install: args["install-mcp"] as boolean | undefined ||
@@ -390,6 +422,22 @@ ${
       };
 
       await runMCPCommand(mcpOptions);
+      break;
+    }
+
+    case "docs:lint": {
+      // Dynamically import docs-lint command with its permissions
+      const { main: docsLint } = await import("./src/commands/docs-lint.ts");
+
+      // Pass args through to the lint command
+      Deno.args = args._.slice(1).map(String).concat(
+        args.standards ? [`--standards=${args.standards}`] : [],
+        args.quiet ? ["--quiet"] : [],
+        args.fix ? ["--fix"] : [],
+        args.help ? ["--help"] : [],
+      );
+
+      await docsLint();
       break;
     }
 

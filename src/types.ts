@@ -83,3 +83,40 @@ export interface ListResult {
     local: Methodology[];
   };
 }
+
+/**
+ * Represents a documentation standard that can be applied to projects
+ *
+ * @public
+ */
+export interface DocumentationStandard {
+  /** The unique identifier of the documentation standard */
+  id: string;
+  /** Human-readable name of the documentation standard */
+  name: string;
+  /** Description of what the documentation standard provides */
+  description: string;
+  /** Tags for categorizing and searching the standard */
+  tags: string[];
+  /** Available templates in this documentation standard */
+  templates: string[];
+}
+
+/**
+ * Configuration for documentation standards in a project
+ *
+ * @public
+ */
+export interface DocumentationStandardConfig {
+  /** Version of the configuration format */
+  version: string;
+  /** List of selected documentation standard IDs */
+  selected: string[];
+  /** Custom documentation standards defined by the user */
+  customStandards?: Record<string, {
+    name: string;
+    description: string;
+    path: string;
+    tags: string[];
+  }>;
+}
