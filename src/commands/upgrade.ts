@@ -2,7 +2,7 @@ import { exists } from "jsr:@std/fs@1";
 import { join, resolve } from "jsr:@std/path@1";
 import { copy } from "jsr:@std/fs@1/copy";
 import { VERSION } from "../../mod.ts";
-import { fetchMethodologies } from "./methodology-fetcher.ts";
+import { fetchMethodologies, fetchStandards } from "./content-fetcher.ts";
 
 interface UpgradeOptions {
   global?: boolean;
@@ -208,6 +208,56 @@ export async function upgrade(
       }
 
       await copy(sourceMethodologies, targetMethodologies);
+    }
+
+    // Update standards
+    if (!options.silent) {
+      console.log("📚 Updating standards library...");
+    }
+
+    if (isJSR) {
+      // Fetch from GitHub when running from JSR
+      const fetchSuccess = await fetchStandards(targetPath, VERSION, {
+        silent: options.silent,
+        overwrite: true, // Always overwrite during upgrades to get latest content
+      });
+
+      if (!fetchSuccess) {
+        // If fetch fails completely, try removing and re-fetching
+        const targetStandards = join(targetPath, "standards");
+        if (await exists(targetStandards)) {
+          await Deno.remove(targetStandards, { recursive: true });
+        }
+
+        const retrySuccess = await fetchStandards(targetPath, VERSION, {
+          silent: options.silent,
+          overwrite: true,
+        });
+
+        if (!retrySuccess) {
+          throw new Error(
+            "Failed to update standards. Check network permissions.",
+          );
+        }
+      }
+    } else {
+      // Local development - copy from source
+      const sourceStandards = join(
+        new URL(".", import.meta.url).pathname,
+        "../../../standards",
+      );
+      const targetStandards = join(targetPath, "standards");
+
+      // Remove old standards for clean copy
+      if (await exists(targetStandards)) {
+        await Deno.remove(targetStandards, { recursive: true });
+      }
+
+      await copy(sourceStandards, targetStandards);
+    }
+
+    if (!options.silent) {
+      console.log("✓ Standards library updated");
     }
 
     // Show what's new in this version

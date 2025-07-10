@@ -4,7 +4,11 @@
     "nist-csf",
     "tdd",
     "test-pyramid",
-    "solid",
-    "conventional-commits"
+    "conventional-commits",
+    "15-factor",
+    "clean-arch",
+    "google-style",
+    "bdd",
+    "dora"
   ]
 }

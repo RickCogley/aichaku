@@ -2,7 +2,7 @@ import { ensureDir, exists } from "jsr:@std/fs@1";
 import { join, resolve } from "jsr:@std/path@1";
 import { copy } from "jsr:@std/fs@1/copy";
 import { VERSION } from "../../mod.ts";
-import { fetchMethodologies } from "./methodology-fetcher.ts";
+import { fetchMethodologies, fetchStandards } from "./content-fetcher.ts";
 
 interface InitOptions {
   global?: boolean;
@@ -159,6 +159,50 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
           await copy(sourceMethodologies, targetMethodologies, {
             overwrite: options.force,
           });
+        }
+      }
+
+      // Check if standards already exist
+      const standardsPath = join(targetPath, "standards");
+      const standardsExist = await exists(standardsPath);
+
+      // Only copy/fetch standards for global install if they don't exist or force is used
+      if (!standardsExist || options.force) {
+        if (isJSR) {
+          // Fetch from GitHub when running from JSR
+          if (!options.silent) {
+            console.log("\n🔄 Installing standards library...");
+          }
+
+          const fetchSuccess = await fetchStandards(targetPath, VERSION, {
+            silent: options.silent,
+            overwrite: options.force,
+          });
+
+          if (!fetchSuccess) {
+            throw new Error(
+              "Failed to fetch standards. Check network permissions.",
+            );
+          }
+        } else {
+          // Local development - copy from source
+          const sourceStandards = join(
+            new URL(".", import.meta.url).pathname,
+            "../../../standards",
+          );
+          const targetStandards = join(targetPath, "standards");
+
+          if (!options.silent) {
+            console.log("\n🔄 Installing standards library...");
+          }
+
+          await copy(sourceStandards, targetStandards, {
+            overwrite: options.force,
+          });
+        }
+
+        if (!options.silent) {
+          console.log("✓ Standards library installed");
         }
       }
     }
