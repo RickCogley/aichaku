@@ -139,7 +139,7 @@ export class ReviewEngine {
       } else if (pattern.pattern) {
         // Use regex pattern
         lines.forEach((line, index) => {
-          if (pattern.pattern.test(line)) {
+          if (pattern.pattern!.test(line)) {
             findings.push({
               severity: pattern.severity,
               rule: pattern.id,

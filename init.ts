@@ -8,6 +8,7 @@
  */
 
 import { parseArgs } from "jsr:@std/cli@1/parse-args";
+import { getAichakuPaths, formatPathForDisplay } from "./src/paths.ts";
 
 const PACKAGE_NAME = "aichaku";
 const SCOPE = "rick";
@@ -221,9 +222,8 @@ async function main() {
   }
 
   // Show methodologies path (CLI path already shown by Deno)
-  const methodologyPath = Deno.build.os === "windows"
-    ? `${Deno.env.get("USERPROFILE")}\\.claude\\methodologies`
-    : `${Deno.env.get("HOME")}/.claude/methodologies`;
+  const paths = getAichakuPaths();
+  const methodologyPath = formatPathForDisplay(paths.global.methodologies);
 
   console.log(`   📚 Methodologies: ${methodologyPath}`);
 

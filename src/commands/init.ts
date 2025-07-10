@@ -3,6 +3,7 @@ import { join, resolve } from "jsr:@std/path@1";
 import { copy } from "jsr:@std/fs@1/copy";
 import { VERSION } from "../../mod.ts";
 import { fetchMethodologies, fetchStandards } from "./content-fetcher.ts";
+import { getAichakuPaths, ensureAichakuDirs } from "../paths.ts";
 
 interface InitOptions {
   global?: boolean;
@@ -31,12 +32,12 @@ interface InitResult {
  */
 export async function init(options: InitOptions = {}): Promise<InitResult> {
   const isGlobal = options.global || false;
-  const home = Deno.env.get("HOME") || "";
-  // codeql[js/path-injection] Safe because paths are validated and constrained to .claude directory
-  const globalPath = join(home, ".claude");
+  const paths = getAichakuPaths();
   const projectPath = resolve(options.projectPath || ".");
-  // codeql[js/path-injection] Safe because targetPath is always within .claude directory structure
-  const targetPath = isGlobal ? globalPath : join(projectPath, ".claude");
+  
+  // Use centralized path management
+  const targetPath = isGlobal ? paths.global.root : paths.project.root;
+  const globalPath = paths.global.root;
 
   // Check for dry-run first, before any filesystem checks
   if (options.dryRun) {
@@ -64,7 +65,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
 
   // For project init, check if global exists first
   if (!isGlobal) {
-    const globalExists = await exists(join(globalPath, ".aichaku.json"));
+    const globalExists = await exists(paths.global.config);
     if (!globalExists) {
       return {
         success: false,
@@ -76,12 +77,10 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
   }
 
   // Check if already initialized
-  // codeql[js/path-injection] Safe because targetPath is validated and file names are hardcoded
-  const aichakuJsonPath = join(targetPath, ".aichaku.json");
-  // codeql[js/path-injection] Safe because targetPath is validated and file names are hardcoded
-  const projectMarkerPath = join(targetPath, ".aichaku-project");
+  const aichakuJsonPath = isGlobal ? paths.global.config : "";
+  const projectMarkerPath = isGlobal ? "" : paths.project.config;
 
-  if (isGlobal && await exists(aichakuJsonPath) && !options.force) {
+  if (isGlobal && aichakuJsonPath && await exists(aichakuJsonPath) && !options.force) {
     return {
       success: false,
       path: targetPath,
@@ -91,7 +90,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     };
   }
 
-  if (!isGlobal && await exists(projectMarkerPath) && !options.force) {
+  if (!isGlobal && projectMarkerPath && await exists(projectMarkerPath) && !options.force) {
     return {
       success: false,
       path: targetPath,
@@ -107,15 +106,15 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
       } else {
         console.log("\n🔍 Checking requirements...");
         const globalMetadata = JSON.parse(
-          await Deno.readTextFile(join(globalPath, ".aichaku.json")),
+          await Deno.readTextFile(paths.global.config),
         );
         console.log(`✓ Global Aichaku found (v${globalMetadata.version})`);
         console.log("\n📁 Creating project structure...");
       }
     }
 
-    // Create target directory
-    await ensureDir(targetPath);
+    // Create target directory and ensure all required directories exist
+    await ensureAichakuDirs();
 
     // Global install: Copy all methodologies
     // Project install: Just create user dir
@@ -124,15 +123,14 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
 
     if (isGlobal) {
       // Check if methodologies already exist
-      // codeql[js/path-injection] Safe because targetPath is validated and "methodologies" is hardcoded
-      const methodologiesPath = join(targetPath, "methodologies");
+      const methodologiesPath = paths.global.methodologies;
       const methodologiesExist = await exists(methodologiesPath);
 
       // Only copy/fetch methodologies for global install if they don't exist or force is used
       if (!methodologiesExist || options.force) {
         if (isJSR) {
-          // Fetch from GitHub when running from JSR
-          const fetchSuccess = await fetchMethodologies(targetPath, VERSION, {
+          // Fetch from GitHub when running from JSR - use global root path
+          const fetchSuccess = await fetchMethodologies(paths.global.root, VERSION, {
             silent: options.silent,
             overwrite: options.force, // Only overwrite if user explicitly uses --force
           });
@@ -149,8 +147,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
             new URL(".", import.meta.url).pathname,
             "../../../methodologies",
           );
-          // codeql[js/path-injection] Safe because targetPath is validated and "methodologies" is hardcoded
-          const targetMethodologies = join(targetPath, "methodologies");
+          const targetMethodologies = paths.global.methodologies;
 
           if (!options.silent) {
             console.log("\n🔄 Installing adaptive methodologies...");
@@ -163,18 +160,18 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
       }
 
       // Check if standards already exist
-      const standardsPath = join(targetPath, "standards");
+      const standardsPath = paths.global.standards;
       const standardsExist = await exists(standardsPath);
 
       // Only copy/fetch standards for global install if they don't exist or force is used
       if (!standardsExist || options.force) {
         if (isJSR) {
-          // Fetch from GitHub when running from JSR
+          // Fetch from GitHub when running from JSR - use global root path
           if (!options.silent) {
             console.log("\n🔄 Installing standards library...");
           }
 
-          const fetchSuccess = await fetchStandards(targetPath, VERSION, {
+          const fetchSuccess = await fetchStandards(paths.global.root, VERSION, {
             silent: options.silent,
             overwrite: options.force,
           });
@@ -190,7 +187,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
             new URL(".", import.meta.url).pathname,
             "../../../standards",
           );
-          const targetStandards = join(targetPath, "standards");
+          const targetStandards = paths.global.standards;
 
           if (!options.silent) {
             console.log("\n🔄 Installing standards library...");
@@ -208,19 +205,16 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     }
 
     // Create user directory structure
-    // codeql[js/path-injection] Safe because targetPath is validated and subdirectory names are hardcoded
     const userDir = join(targetPath, "user");
     await ensureDir(join(userDir, "prompts"));
     await ensureDir(join(userDir, "templates"));
     await ensureDir(join(userDir, "methods"));
 
     // Create user README
-    // codeql[js/path-injection] Safe because userDir is validated and "README.md" is hardcoded
     const userReadmePath = join(userDir, "README.md");
     await Deno.writeTextFile(userReadmePath, getUserReadmeContent(isGlobal));
 
     // Create .gitkeep files
-    // codeql[js/path-injection] Safe because userDir is validated and all subdirectory/file names are hardcoded
     await Deno.writeTextFile(join(userDir, "prompts", ".gitkeep"), "");
     await Deno.writeTextFile(join(userDir, "templates", ".gitkeep"), "");
     await Deno.writeTextFile(join(userDir, "methods", ".gitkeep"), "");
@@ -230,21 +224,17 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     }
 
     // Create output directory structure (for both global and project)
-    // codeql[js/path-injection] Safe because targetPath is validated and "output" is hardcoded
-    const outputDir = join(targetPath, "output");
+    const outputDir = isGlobal ? join(targetPath, "output") : paths.project.output;
     await ensureDir(outputDir);
 
     // Create output README
-    // codeql[js/path-injection] Safe because outputDir is validated and "README.md" is hardcoded
     const outputReadmePath = join(outputDir, "README.md");
     await Deno.writeTextFile(outputReadmePath, getOutputReadmeContent());
 
     // Create behavioral reinforcement files
-    // codeql[js/path-injection] Safe because targetPath is validated and file names are hardcoded
     const aichakuBehaviorPath = join(targetPath, ".aichaku-behavior");
     await Deno.writeTextFile(aichakuBehaviorPath, getBehaviorContent());
 
-    // codeql[js/path-injection] Safe because targetPath is validated and file names are hardcoded
     const rulesReminderPath = join(targetPath, "RULES-REMINDER.md");
     await Deno.writeTextFile(rulesReminderPath, getRulesReminderContent());
 
@@ -253,8 +243,8 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     }
 
     // Create metadata file
-    if (isGlobal) {
-      // Global: Create .aichaku.json
+    if (isGlobal && aichakuJsonPath) {
+      // Global: Create config file
       const metadata = {
         version: VERSION,
         initializedAt: new Date().toISOString(),
@@ -265,11 +255,10 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
         aichakuJsonPath,
         JSON.stringify(metadata, null, 2),
       );
-    } else {
-      // Project: Create .aichaku-project marker
-      // codeql[js/path-injection] Safe because globalPath is validated home/.claude and file name is hardcoded
+    } else if (!isGlobal && projectMarkerPath) {
+      // Project: Create project config file
       const globalMetadata = JSON.parse(
-        await Deno.readTextFile(join(globalPath, ".aichaku.json")),
+        await Deno.readTextFile(paths.global.config),
       );
       const projectMetadata = {
         version: VERSION,
@@ -498,13 +487,13 @@ function getBehaviorContent(): string {
   return `# 🎯 Quick Reference for Claude Code
 
 ## Before ANY work:
-1. Check .claude/output/ for existing active-* directories
+1. Check .claude/aichaku/output/ for existing active-* directories
 2. Create new active-YYYY-MM-DD-{name} for new work
 3. ALWAYS create STATUS.md first
-4. Read methodology guides from ~/.claude/methodologies/
+4. Read methodology guides from ~/.claude/aichaku/methodologies/
 
 ## Key Behaviors:
-✅ Documents ALWAYS go in .claude/output/active-*/
+✅ Documents ALWAYS go in .claude/aichaku/output/active-*/
 ✅ Update STATUS.md after each work session
 ✅ Create documents without asking permission
 ✅ Rename to complete-* when done
@@ -529,7 +518,7 @@ function getRulesReminderContent(): string {
 
 ## Before creating ANY file, check:
 
-1. ✅ Is it going in \`.claude/output/active-*/\`?
+1. ✅ Is it going in \`.claude/aichaku/output/active-*/\`?
 2. ✅ Does STATUS.md exist there?
 3. ✅ Have I updated STATUS.md recently?
 
@@ -539,14 +528,14 @@ If any answer is NO → FIX IT FIRST!
 
 ### Wrong location?
 \`\`\`bash
-mv [file] .claude/output/active-[current-project]/
+mv [file] .claude/aichaku/output/active-[current-project]/
 \`\`\`
 
 ### No STATUS.md?
 Create it immediately with project info.
 
 ### Not sure where to put files?
-ALWAYS: \`.claude/output/active-YYYY-MM-DD-{project-name}/\`
+ALWAYS: \`.claude/aichaku/output/active-YYYY-MM-DD-{project-name}/\`
 
 ## Remember:
 - This is AUTOMATIC behavior

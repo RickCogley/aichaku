@@ -44,7 +44,11 @@ const icons = {
 async function loadDocumentationConfig(
   projectPath: string,
 ): Promise<DocumentationStandardConfig | null> {
-  const configPath = join(projectPath, ".claude", "docs-standards.json");
+  // Check new path first, then legacy path
+  const newConfigPath = join(projectPath, ".claude", "aichaku", "docs-standards.json");
+  const legacyConfigPath = join(projectPath, ".claude", "docs-standards.json");
+  
+  const configPath = (await exists(newConfigPath)) ? newConfigPath : legacyConfigPath;
 
   if (!await exists(configPath)) {
     return null;

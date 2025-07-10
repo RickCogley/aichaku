@@ -34,6 +34,7 @@ import { hooks } from "./src/commands/hooks.ts";
 import { standards } from "./src/commands/standards.ts";
 import { docsStandard } from "./src/commands/docs-standard.ts";
 import { runMCPCommand } from "./src/commands/mcp.ts";
+import { createMigrateCommand } from "./src/commands/migrate.ts";
 import { VERSION } from "./mod.ts";
 
 const args = parseArgs(Deno.args, {
@@ -63,8 +64,13 @@ const args = parseArgs(Deno.args, {
     "install-mcp",
     "quiet",
     "fix",
+    "backup",
+    "no-backup",
+    "verbose",
+    "yes",
+    "no-global",
   ],
-  string: ["path", "install", "add", "remove", "search", "standards"],
+  string: ["path", "install", "add", "remove", "search", "standards", "project"],
   alias: {
     h: "help",
     v: "version",
@@ -77,6 +83,8 @@ const args = parseArgs(Deno.args, {
     l: "list",
     i: "install",
     q: "quiet",
+    b: "backup",
+    y: "yes",
   },
 });
 
@@ -114,6 +122,7 @@ Commands:
   docs-standard Choose documentation writing style guides for your project
   docs:lint   Lint documentation against selected standards
   mcp         Manage MCP (Model Context Protocol) server for code review
+  migrate     Migrate from old ~/.claude/ to new ~/.claude/aichaku/ structure
 
 Options:
   -g, --global     Apply to global installation (~/.claude)
@@ -172,6 +181,11 @@ Examples:
   aichaku docs:lint
   aichaku docs:lint README.md docs/
   aichaku docs:lint --standards diataxis,google-style
+
+  # Migrate to new folder structure
+  aichaku migrate
+  aichaku migrate --dry-run
+  aichaku migrate --project .
 
 Learn more: https://github.com/RickCogley/aichaku
 `);
@@ -430,14 +444,47 @@ ${
       const { main: docsLint } = await import("./src/commands/docs-lint.ts");
 
       // Pass args through to the lint command
-      Deno.args = args._.slice(1).map(String).concat(
-        args.standards ? [`--standards=${args.standards}`] : [],
-        args.quiet ? ["--quiet"] : [],
-        args.fix ? ["--fix"] : [],
-        args.help ? ["--help"] : [],
+      const subArgs = parseArgs(args._.slice(1), {
+        boolean: ["help", "quiet", "fix"],
+        string: ["standards", "config"],
+      });
+      
+      Deno.args = subArgs._.map(String).concat(
+        subArgs.standards ? [`--standards=${subArgs.standards}`] : [],
+        subArgs.quiet ? ["--quiet"] : [],
+        subArgs.fix ? ["--fix"] : [],
+        subArgs.help ? ["--help"] : [],
       );
 
       await docsLint();
+      break;
+    }
+
+    case "migrate": {
+      // Use Cliffy command for migration
+      const migrateCommand = createMigrateCommand();
+      
+      // Parse subargs first
+      const subArgs = parseArgs(args._.slice(1), {
+        boolean: ["dry-run", "force", "global", "no-global", "backup", "no-backup", "verbose", "yes"],
+        string: ["path", "project"],
+      });
+      
+      // Build args for Cliffy
+      const migrateArgs: string[] = [];
+      if (subArgs["dry-run"]) migrateArgs.push("--dry-run");
+      if (subArgs.force) migrateArgs.push("--force");
+      if (subArgs.global) migrateArgs.push("--global");
+      if (subArgs["no-global"]) migrateArgs.push("--no-global");
+      if (subArgs.path) migrateArgs.push("--project", subArgs.path);
+      if (subArgs.project) migrateArgs.push("--project", subArgs.project);
+      if (subArgs.backup) migrateArgs.push("--backup");
+      if (subArgs["no-backup"]) migrateArgs.push("--no-backup");
+      if (subArgs.verbose) migrateArgs.push("--verbose");
+      if (subArgs.yes) migrateArgs.push("--yes");
+      
+      // Parse and execute
+      await migrateCommand.parse(migrateArgs);
       break;
     }
 

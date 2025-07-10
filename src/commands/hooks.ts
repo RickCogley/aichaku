@@ -8,6 +8,7 @@
 import { exists } from "jsr:@std/fs@1/exists";
 import { ensureDir } from "jsr:@std/fs@1/ensure-dir";
 import { normalize, resolve } from "jsr:@std/path@1";
+import { getAichakuPaths } from "../paths.ts";
 
 // Type definitions for better type safety
 interface HookConfig {
@@ -245,7 +246,7 @@ async function installHooks(
 ): Promise<void> {
   console.log("Installing hooks...");
 
-  const settingsPath = expandTilde("~/.claude/settings.json");
+  const settingsPath = expandTilde("~/.claude/settings.json"); // Keep in global .claude for compatibility
   let settings: Settings = {};
 
   // Load existing settings
@@ -328,7 +329,7 @@ async function installHooks(
 
   // Save settings
   if (!dryRun && installed > 0) {
-    await ensureDir(expandTilde("~/.claude"));
+    await ensureDir(expandTilde("~/.claude")); // Keep in global .claude for compatibility
     await Deno.writeTextFile(
       settingsPath,
       JSON.stringify(settings, null, 2),
@@ -347,7 +348,7 @@ async function installHooks(
 async function removeHooks(dryRun: boolean = false): Promise<void> {
   console.log("Removing Aichaku hooks...");
 
-  const settingsPath = expandTilde("~/.claude/settings.json");
+  const settingsPath = expandTilde("~/.claude/settings.json"); // Keep in global .claude for compatibility
   if (!(await exists(settingsPath))) {
     console.log(`⚠️ No settings.json found`);
     return;
@@ -391,7 +392,7 @@ async function removeHooks(dryRun: boolean = false): Promise<void> {
 async function validateHooks(): Promise<void> {
   console.log("Validating hooks...");
 
-  const settingsPath = expandTilde("~/.claude/settings.json");
+  const settingsPath = expandTilde("~/.claude/settings.json"); // Keep in global .claude for compatibility
   if (!(await exists(settingsPath))) {
     console.log(`⚠️ No settings.json found`);
     return;

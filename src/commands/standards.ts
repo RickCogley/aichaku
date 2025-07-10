@@ -8,6 +8,7 @@
 import { exists } from "jsr:@std/fs@1/exists";
 import { ensureDir } from "jsr:@std/fs@1/ensure-dir";
 import { join, normalize, resolve } from "jsr:@std/path@1";
+import { getAichakuPaths, isPathSafe } from "../paths.ts";
 
 // Type definitions for better type safety
 interface Standard {
@@ -383,7 +384,7 @@ async function showProjectStandards(projectPath?: string): Promise<void> {
   }
 
   // Check integration status and provide options
-  const claudeMdPath = join(projectPath || ".", "CLAUDE.md");
+  const claudeMdPath = join(projectPath || Deno.cwd(), "CLAUDE.md");
   const claudeExists = await exists(claudeMdPath);
   const needsIntegration = !claudeExists ||
     (claudeExists &&
@@ -590,12 +591,15 @@ needs - security, architecture, testing, and more.
  * InfoSec: Prevents path traversal attacks by validating normalized paths
  */
 function getProjectConfigPath(projectPath?: string): string {
-  const base = resolve(projectPath || ".");
-  const configPath = join(base, ".claude", ".aichaku-standards.json");
+  const paths = getAichakuPaths();
+  const base = resolve(projectPath || Deno.cwd());
+  
+  // Use new path structure under .claude/aichaku/
+  const configPath = join(base, ".claude", "aichaku", "aichaku-standards.json");
   const normalized = normalize(configPath);
 
-  // Security: Ensure the path is within the project directory
-  if (!normalized.startsWith(base)) {
+  // Security: Ensure the path is within the project directory and is safe
+  if (!normalized.startsWith(base) || !isPathSafe(normalized)) {
     throw new Error("Invalid project path: attempted directory traversal");
   }
 
@@ -648,8 +652,14 @@ async function saveProjectConfig(
 ): Promise<void> {
   // Validate path to prevent directory traversal
   const normalized = normalize(path);
-  const dir = join(normalized, "..", "..");
+  
+  // Security check using paths module
+  if (!isPathSafe(normalized)) {
+    throw new Error("Invalid configuration path: security violation");
+  }
 
+  // Ensure the directory exists (.claude/aichaku/)
+  const dir = join(normalized, "..");
   await ensureDir(dir);
 
   // Write with secure permissions (read/write for owner, read-only for others)

@@ -15,12 +15,21 @@ export class StandardsManager {
       return this.standardsCache.get(projectPath)!;
     }
 
-    // Look for .claude/.aichaku-standards.json
-    const standardsPath = join(
+    // Look for .claude/aichaku/aichaku-standards.json (new path) or .claude/.aichaku-standards.json (legacy)
+    const newStandardsPath = join(
+      projectPath,
+      ".claude",
+      "aichaku",
+      "aichaku-standards.json",
+    );
+    const legacyStandardsPath = join(
       projectPath,
       ".claude",
       ".aichaku-standards.json",
     );
+    
+    // Check new path first, then legacy
+    const standardsPath = (await exists(newStandardsPath)) ? newStandardsPath : legacyStandardsPath;
 
     if (await exists(standardsPath)) {
       try {
@@ -131,9 +140,11 @@ export class StandardsManager {
     // Try to load from Aichaku's standards directory
     const homedir = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
     const possiblePaths = [
-      join(homedir, ".claude", "standards"),
-      join(Deno.cwd(), ".claude", "standards"),
-      join(Deno.cwd(), "node_modules", "@aichaku", "standards"),
+      join(homedir, ".claude", "aichaku", "standards"), // New path
+      join(homedir, ".claude", "standards"), // Legacy path
+      join(Deno.cwd(), ".claude", "aichaku", "standards"), // Project new path
+      join(Deno.cwd(), ".claude", "standards"), // Project legacy path
+      join(Deno.cwd(), "node_modules", "@aichaku", "standards"), // npm package
     ];
 
     for (const basePath of possiblePaths) {

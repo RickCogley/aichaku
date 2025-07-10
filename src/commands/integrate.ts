@@ -1,5 +1,6 @@
 import { exists } from "jsr:@std/fs@1";
 import { isAbsolute, join, normalize, resolve } from "jsr:@std/path@1";
+import { paths } from "../paths.ts";
 
 // Type definitions
 interface ProjectStandardsConfig {
@@ -35,11 +36,15 @@ function validatePath(basePath: string, ...segments: string[]): string {
  * Load project standards configuration with validation
  */
 async function loadProjectStandards(projectPath: string): Promise<string[]> {
-  const configPath = validatePath(
-    projectPath,
-    ".claude",
-    ".aichaku-standards.json",
-  );
+  const aichakuPaths = paths.get();
+  // Check new path first, then legacy path
+  const newConfigPath = join(aichakuPaths.project.root, "standards.json");
+  const legacyConfigPath = join(projectPath, ".claude", ".aichaku-standards.json");
+  
+  let configPath = newConfigPath;
+  if (!(await exists(newConfigPath)) && (await exists(legacyConfigPath))) {
+    configPath = legacyConfigPath;
+  }
 
   if (!(await exists(configPath))) {
     return [];
@@ -69,12 +74,6 @@ async function loadProjectStandards(projectPath: string): Promise<string[]> {
  * InfoSec: Validates standard IDs to prevent path injection
  */
 async function loadStandardContent(standardId: string): Promise<string | null> {
-  const home = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
-  if (!home) {
-    console.warn("Unable to determine home directory");
-    return null;
-  }
-
   // Validate standardId to prevent path injection
   if (!/^[a-z0-9-]+$/.test(standardId)) {
     console.warn(`Invalid standard ID format: ${standardId}`);
@@ -106,16 +105,18 @@ async function loadStandardContent(standardId: string): Promise<string | null> {
     return null;
   }
 
-  // Use validatePath to ensure security
+  // Use paths module to resolve standard path with backward compatibility
   try {
-    const standardPath = validatePath(
-      home,
-      ".claude",
-      "standards",
-      category,
-      `${standardId}.md`,
-    );
-
+    const aichakuPaths = paths.get();
+    const newStandardPath = join(aichakuPaths.global.standards, category, `${standardId}.md`);
+    const legacyStandardPath = join(aichakuPaths.legacy.globalStandards, category, `${standardId}.md`);
+    
+    // Check new path first, then legacy path
+    let standardPath = newStandardPath;
+    if (!(await exists(newStandardPath)) && (await exists(legacyStandardPath))) {
+      standardPath = legacyStandardPath;
+    }
+    
     if (!(await exists(standardPath))) {
       return null;
     }
@@ -163,11 +164,15 @@ async function generateStandardsSection(projectPath: string): Promise<string> {
  * Load project documentation standards configuration with validation
  */
 async function loadProjectDocStandards(projectPath: string): Promise<string[]> {
-  const configPath = validatePath(
-    projectPath,
-    ".claude",
-    ".aichaku-doc-standards.json",
-  );
+  const aichakuPaths = paths.get();
+  // Check new path first, then legacy path
+  const newConfigPath = join(aichakuPaths.project.root, "doc-standards.json");
+  const legacyConfigPath = join(projectPath, ".claude", ".aichaku-doc-standards.json");
+  
+  let configPath = newConfigPath;
+  if (!(await exists(newConfigPath)) && (await exists(legacyConfigPath))) {
+    configPath = legacyConfigPath;
+  }
 
   if (!(await exists(configPath))) {
     return [];
@@ -203,12 +208,6 @@ async function loadProjectDocStandards(projectPath: string): Promise<string[]> {
 async function loadDocStandardContent(
   standardId: string,
 ): Promise<string | null> {
-  const home = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
-  if (!home) {
-    console.warn("Unable to determine home directory");
-    return null;
-  }
-
   // Validate standardId to prevent path injection
   if (!/^[a-z0-9-]+$/.test(standardId)) {
     console.warn(`Invalid documentation standard ID format: ${standardId}`);
@@ -217,14 +216,16 @@ async function loadDocStandardContent(
 
   // Documentation standards are all in the documentation directory
   try {
-    const standardPath = validatePath(
-      home,
-      ".claude",
-      "standards",
-      "documentation",
-      `${standardId}.md`,
-    );
-
+    const aichakuPaths = paths.get();
+    const newStandardPath = join(aichakuPaths.global.standards, "documentation", `${standardId}.md`);
+    const legacyStandardPath = join(aichakuPaths.legacy.globalStandards, "documentation", `${standardId}.md`);
+    
+    // Check new path first, then legacy path
+    let standardPath = newStandardPath;
+    if (!(await exists(newStandardPath)) && (await exists(legacyStandardPath))) {
+      standardPath = legacyStandardPath;
+    }
+    
     if (!(await exists(standardPath))) {
       return null;
     }

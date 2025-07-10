@@ -1,5 +1,6 @@
 import { exists } from "jsr:@std/fs@1";
 import { join, resolve } from "jsr:@std/path@1";
+import { getAichakuPaths } from "../paths.ts";
 
 interface UninstallOptions {
   global?: boolean;
@@ -26,14 +27,16 @@ export async function uninstall(
   options: UninstallOptions = {},
 ): Promise<UninstallResult> {
   const isGlobal = options.global || false;
+  const paths = getAichakuPaths();
+  
   // codeql[js/path-injection] Safe because paths are validated and constrained to .claude directory
   const targetPath = isGlobal
-    ? join(Deno.env.get("HOME") || "", ".claude")
-    : resolve(options.projectPath || "./.claude");
+    ? paths.global.root
+    : paths.project.root;
 
   // Check if Aichaku is installed
   // codeql[js/path-injection] Safe because targetPath is validated and file name is hardcoded
-  const aichakuJsonPath = join(targetPath, ".aichaku.json");
+  const aichakuJsonPath = isGlobal ? paths.global.config : paths.project.config;
   if (!await exists(aichakuJsonPath)) {
     return {
       success: false,
@@ -104,7 +107,7 @@ export async function uninstall(
     }
 
     // Remove the entire .claude directory if it only contains Aichaku files
-    const methodologiesDir = join(targetPath, "methodologies");
+    const methodologiesDir = isGlobal ? paths.global.methodologies : paths.project.root;
     const hasOnlyAichaku = await exists(methodologiesDir) &&
       await exists(aichakuJsonPath);
 

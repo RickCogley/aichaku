@@ -3,6 +3,7 @@ import { join, resolve } from "jsr:@std/path@1";
 import { copy } from "jsr:@std/fs@1/copy";
 import { VERSION } from "../../mod.ts";
 import { fetchMethodologies, fetchStandards } from "./content-fetcher.ts";
+import { getAichakuPaths } from "../paths.ts";
 
 interface UpgradeOptions {
   global?: boolean;
@@ -39,15 +40,14 @@ export async function upgrade(
   options: UpgradeOptions = {},
 ): Promise<UpgradeResult> {
   const isGlobal = options.global || false;
-  // codeql[js/path-injection] Safe because paths are validated and constrained to .claude directory
-  const targetPath = isGlobal
-    ? join(Deno.env.get("HOME") || "", ".claude")
-    : resolve(options.projectPath || "./.claude");
+  const paths = getAichakuPaths();
+  
+  // Use centralized path management
+  const targetPath = isGlobal ? paths.global.root : paths.project.root;
+  const projectPath = resolve(options.projectPath || ".");
 
   // Check if Aichaku is installed (try both old and new marker files)
-  // codeql[js/path-injection] Safe because targetPath is validated and file names are hardcoded
-  const aichakuJsonPath = join(targetPath, ".aichaku.json");
-  // codeql[js/path-injection] Safe because targetPath is validated and file names are hardcoded
+  const aichakuJsonPath = isGlobal ? paths.global.config : paths.project.config;
   const aichakuProjectPath = join(targetPath, ".aichaku-project");
 
   let metadataPath: string | null = null;
@@ -169,20 +169,19 @@ export async function upgrade(
     if (isJSR) {
       // Fetch from GitHub when running from JSR
       // First try to update in place (preserves any user modifications)
-      const fetchSuccess = await fetchMethodologies(targetPath, VERSION, {
+      const fetchSuccess = await fetchMethodologies(paths.global.root, VERSION, {
         silent: options.silent,
         overwrite: true, // Always overwrite during upgrades to get latest content
       });
 
       if (!fetchSuccess) {
         // If fetch fails completely, try removing and re-fetching
-        const targetMethodologies = join(targetPath, "methodologies");
+        const targetMethodologies = paths.global.methodologies;
         if (await exists(targetMethodologies)) {
-          // Security: targetMethodologies is safe - constructed from validated targetPath (.claude) and hardcoded "methodologies"
           await Deno.remove(targetMethodologies, { recursive: true });
         }
 
-        const retrySuccess = await fetchMethodologies(targetPath, VERSION, {
+        const retrySuccess = await fetchMethodologies(paths.global.root, VERSION, {
           silent: options.silent,
           overwrite: true,
         });
@@ -199,11 +198,10 @@ export async function upgrade(
         new URL(".", import.meta.url).pathname,
         "../../../methodologies",
       );
-      const targetMethodologies = join(targetPath, "methodologies");
+      const targetMethodologies = paths.global.methodologies;
 
       // Remove old methodologies for clean copy
       if (await exists(targetMethodologies)) {
-        // Security: targetMethodologies is safe - constructed from validated targetPath (.claude) and hardcoded "methodologies"
         await Deno.remove(targetMethodologies, { recursive: true });
       }
 
@@ -217,19 +215,19 @@ export async function upgrade(
 
     if (isJSR) {
       // Fetch from GitHub when running from JSR
-      const fetchSuccess = await fetchStandards(targetPath, VERSION, {
+      const fetchSuccess = await fetchStandards(paths.global.root, VERSION, {
         silent: options.silent,
         overwrite: true, // Always overwrite during upgrades to get latest content
       });
 
       if (!fetchSuccess) {
         // If fetch fails completely, try removing and re-fetching
-        const targetStandards = join(targetPath, "standards");
+        const targetStandards = paths.global.standards;
         if (await exists(targetStandards)) {
           await Deno.remove(targetStandards, { recursive: true });
         }
 
-        const retrySuccess = await fetchStandards(targetPath, VERSION, {
+        const retrySuccess = await fetchStandards(paths.global.root, VERSION, {
           silent: options.silent,
           overwrite: true,
         });
@@ -246,7 +244,7 @@ export async function upgrade(
         new URL(".", import.meta.url).pathname,
         "../../../standards",
       );
-      const targetStandards = join(targetPath, "standards");
+      const targetStandards = paths.global.standards;
 
       // Remove old standards for clean copy
       if (await exists(targetStandards)) {

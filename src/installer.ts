@@ -1,10 +1,7 @@
 import { ensureDir, exists } from "jsr:@std/fs@1";
 import { join, resolve } from "jsr:@std/path@1";
 import type { InstallOptions, InstallResult } from "./types.ts";
-
-const HOME_DIR = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
-// codeql[js/path-injection] Safe because HOME_DIR is from environment and ".claude" is hardcoded
-const GLOBAL_CLAUDE_DIR = join(HOME_DIR, ".claude");
+import { getAichakuPaths, ensureAichakuDirs } from "./paths.ts";
 
 /**
  * Install a methodology to the specified location
@@ -25,11 +22,15 @@ export async function install(
     silent = false,
   } = options;
 
+  const paths = getAichakuPaths();
+  
+  // Ensure directories exist
+  await ensureAichakuDirs();
+
   // Determine installation path
-  // codeql[js/path-injection] Safe because GLOBAL_CLAUDE_DIR is validated and methodologyName is checked for existence
   const targetPath = global
-    ? join(GLOBAL_CLAUDE_DIR, methodologyName)
-    : resolve(projectPath || "./.claude");
+    ? join(paths.global.methodologies, methodologyName.toLowerCase())
+    : resolve(projectPath || paths.project.root);
 
   // Check if methodology exists
   // codeql[js/path-injection] Safe because path is derived from import.meta.url and methodologyName is validated
@@ -77,7 +78,7 @@ export async function install(
 
     // Create/update CLAUDE.md if in project mode
     if (!global) {
-      await updateClaudeMd(targetPath, methodologyName);
+      await updateClaudeMd(paths.project.root, methodologyName);
     }
 
     if (!silent) {
@@ -151,7 +152,7 @@ async function updateClaudeMd(
 ## Active Methodology
 
 This project uses the **${methodology}** methodology installed via aichaku.
-Methodology files are located in the .claude/ directory.
+Methodology files are located in the .claude/aichaku/ directory.
 `;
 
   if (await exists(claudeMdPath)) {

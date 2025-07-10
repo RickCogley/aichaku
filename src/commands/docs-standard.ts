@@ -469,7 +469,8 @@ across your project.
  */
 function getProjectDocConfigPath(projectPath?: string): string {
   const base = resolve(projectPath || ".");
-  const configPath = join(base, ".claude", ".aichaku-doc-standards.json");
+  // Use new path structure under .claude/aichaku/
+  const configPath = join(base, ".claude", "aichaku", "doc-standards.json");
   const normalized = normalize(configPath);
 
   // Security: Ensure the path is within the project directory
@@ -484,8 +485,15 @@ function getProjectDocConfigPath(projectPath?: string): string {
  * Helper: Load project configuration with validation
  */
 async function loadProjectDocConfig(path: string): Promise<ProjectDocConfig> {
-  if (await exists(path)) {
-    const content = await Deno.readTextFile(path);
+  // Check new path first, then legacy path
+  const base = dirname(dirname(path)); // Get project root from path
+  const newConfigPath = join(base, ".claude", "aichaku", "doc-standards.json");
+  const legacyConfigPath = join(base, ".claude", ".aichaku-doc-standards.json");
+  
+  const configPath = (await exists(newConfigPath)) ? newConfigPath : legacyConfigPath;
+  
+  if (await exists(configPath)) {
+    const content = await Deno.readTextFile(configPath);
     try {
       const parsed = JSON.parse(content);
 

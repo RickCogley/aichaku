@@ -49,7 +49,15 @@
       "Bash(gh workflow list:*)",
       "WebFetch(domain:docs.anthropic.com)",
       "WebFetch(domain:modelcontextprotocol.io)",
-      "Bash(./mcp-code-reviewer --help)"
+      "Bash(./mcp-code-reviewer --help)",
+      "Bash(rg:*)",
+      "Bash(cat:*)",
+      "Bash(claude mcp:*)",
+      "mcp__aichaku-reviewer__review_file",
+      "mcp__aichaku-reviewer__review_methodology",
+      "Bash(tree:*)",
+      "Bash(../cli.ts docs-standard --list)",
+      "Bash(deno eval:*)"
     ],
     "deny": []
   }

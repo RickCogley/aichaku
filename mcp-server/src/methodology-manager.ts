@@ -15,8 +15,12 @@ export class MethodologyManager {
       return this.methodologyCache.get(projectPath)!;
     }
 
-    // Look for .claude/.aichaku-standards.json (methodologies stored there too)
-    const configPath = join(projectPath, ".claude", ".aichaku-standards.json");
+    // Look for .claude/aichaku/aichaku-standards.json (new path) or .claude/.aichaku-standards.json (legacy)
+    const newConfigPath = join(projectPath, ".claude", "aichaku", "aichaku-standards.json");
+    const legacyConfigPath = join(projectPath, ".claude", ".aichaku-standards.json");
+    
+    // Check new path first, then legacy
+    const configPath = (await exists(newConfigPath)) ? newConfigPath : legacyConfigPath;
 
     if (await exists(configPath)) {
       try {
@@ -46,6 +50,9 @@ export class MethodologyManager {
     if (
       await exists(join(projectPath, "pitch.md")) ||
       await exists(
+        join(projectPath, ".claude", "aichaku", "output", "active-*", "pitch.md"),
+      ) ||
+      await exists(
         join(projectPath, ".claude", "output", "active-*", "pitch.md"),
       )
     ) {
@@ -56,6 +63,9 @@ export class MethodologyManager {
     if (
       await exists(join(projectPath, "sprint-planning.md")) ||
       await exists(
+        join(projectPath, ".claude", "aichaku", "output", "active-*", "sprint-*.md"),
+      ) ||
+      await exists(
         join(projectPath, ".claude", "output", "active-*", "sprint-*.md"),
       )
     ) {
@@ -65,6 +75,7 @@ export class MethodologyManager {
     // Check for Kanban indicators
     if (
       await exists(join(projectPath, "kanban-board.md")) ||
+      await exists(join(projectPath, ".claude", "aichaku", "kanban.json")) ||
       await exists(join(projectPath, ".claude", "kanban.json"))
     ) {
       methodologies.push("kanban");
@@ -110,6 +121,9 @@ export class MethodologyManager {
     // Check for pitch document
     const pitchExists = await exists(join(projectPath, "pitch.md")) ||
       await exists(
+        join(projectPath, ".claude", "aichaku", "output", "active-*", "pitch.md"),
+      ) ||
+      await exists(
         join(projectPath, ".claude", "output", "active-*", "pitch.md"),
       );
 
@@ -135,6 +149,8 @@ export class MethodologyManager {
 
     // Check for cool-down documentation
     const hasCooldown = await exists(
+      join(projectPath, ".claude", "aichaku", "output", "done-*", "*CHANGE-LOG.md"),
+    ) || await exists(
       join(projectPath, ".claude", "output", "done-*", "*CHANGE-LOG.md"),
     );
     if (!hasCooldown && hasActiveProjects) {
@@ -160,6 +176,9 @@ export class MethodologyManager {
     const sprintPlanExists =
       await exists(join(projectPath, "sprint-planning.md")) ||
       await exists(
+        join(projectPath, ".claude", "aichaku", "output", "active-*", "sprint-*.md"),
+      ) ||
+      await exists(
         join(projectPath, ".claude", "output", "active-*", "sprint-*.md"),
       );
 
@@ -178,6 +197,9 @@ export class MethodologyManager {
 
     // Check for retrospective documentation
     const retroExists = await exists(join(projectPath, "retrospective.md")) ||
+      await exists(
+        join(projectPath, ".claude", "aichaku", "output", "done-*", "retrospective.md"),
+      ) ||
       await exists(
         join(projectPath, ".claude", "output", "done-*", "retrospective.md"),
       );
@@ -242,6 +264,9 @@ export class MethodologyManager {
     // Check for MVP documentation
     const mvpExists = await exists(join(projectPath, "mvp.md")) ||
       await exists(
+        join(projectPath, ".claude", "aichaku", "output", "active-*", "experiment-*.md"),
+      ) ||
+      await exists(
         join(projectPath, ".claude", "output", "active-*", "experiment-*.md"),
       );
 
@@ -299,6 +324,8 @@ export class MethodologyManager {
 
     // Check for pair programming logs
     const pairLogs = await exists(
+      join(projectPath, ".claude", "aichaku", "pair-programming.md"),
+    ) || await exists(
       join(projectPath, ".claude", "pair-programming.md"),
     );
     if (!pairLogs) {
@@ -319,9 +346,20 @@ export class MethodologyManager {
 
   private async checkActiveProjects(projectPath: string): Promise<boolean> {
     try {
-      const outputPath = join(projectPath, ".claude", "output");
-      if (await exists(outputPath)) {
-        for await (const entry of Deno.readDir(outputPath)) {
+      // Check new path first
+      const newOutputPath = join(projectPath, ".claude", "aichaku", "output");
+      if (await exists(newOutputPath)) {
+        for await (const entry of Deno.readDir(newOutputPath)) {
+          if (entry.isDirectory && entry.name.startsWith("active-")) {
+            return true;
+          }
+        }
+      }
+      
+      // Check legacy path
+      const legacyOutputPath = join(projectPath, ".claude", "output");
+      if (await exists(legacyOutputPath)) {
+        for await (const entry of Deno.readDir(legacyOutputPath)) {
           if (entry.isDirectory && entry.name.startsWith("active-")) {
             return true;
           }
