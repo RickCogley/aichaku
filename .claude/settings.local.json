@@ -48,7 +48,8 @@
       "Bash(bash:*)",
       "Bash(gh workflow list:*)",
       "WebFetch(domain:docs.anthropic.com)",
-      "WebFetch(domain:modelcontextprotocol.io)"
+      "WebFetch(domain:modelcontextprotocol.io)",
+      "Bash(./mcp-code-reviewer --help)"
     ],
     "deny": []
   }
