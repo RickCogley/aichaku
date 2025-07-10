@@ -91,7 +91,7 @@ async function installGlobal(
   const installArgs = [
     "install",
     "-g",
-    ...PERMISSIONS,
+    "-A",  // Use all permissions
     "-n",
     PACKAGE_NAME,
   ];
