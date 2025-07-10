@@ -1,12 +1,10 @@
 {
   "version": "1.0.0",
   "selected": [
-    "google-style",
     "nist-csf",
-    "conventional-commits",
     "tdd",
-    "clean-arch",
     "test-pyramid",
-    "solid"
+    "solid",
+    "conventional-commits"
   ]
 }
