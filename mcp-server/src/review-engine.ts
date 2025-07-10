@@ -45,7 +45,7 @@ export class ReviewEngine {
     // 2. Run standard-specific checks
     if (request.standards && request.standards.length > 0) {
       findings.push(
-        ...await this.runStandardsChecks(
+        ...this.runStandardsChecks(
           content,
           request.file,
           request.standards,
@@ -56,7 +56,7 @@ export class ReviewEngine {
     // 3. Run methodology checks if requested
     if (request.methodologies && request.methodologies.length > 0) {
       findings.push(
-        ...await this.runMethodologyChecks(
+        ...this.runMethodologyChecks(
           content,
           request.file,
           request.methodologies,
@@ -159,11 +159,11 @@ export class ReviewEngine {
     return true;
   }
 
-  private async runStandardsChecks(
+  private runStandardsChecks(
     content: string,
     filePath: string,
     standards: string[],
-  ): Promise<Finding[]> {
+  ): Finding[] {
     const findings: Finding[] = [];
 
     for (const standard of standards) {
@@ -283,11 +283,11 @@ export class ReviewEngine {
     return findings;
   }
 
-  private async runMethodologyChecks(
+  private runMethodologyChecks(
     content: string,
     filePath: string,
     methodologies: string[],
-  ): Promise<Finding[]> {
+  ): Finding[] {
     const findings: Finding[] = [];
 
     // Methodology checks would be more project-wide, but we can check some patterns

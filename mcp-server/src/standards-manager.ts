@@ -46,7 +46,7 @@ export class StandardsManager {
     return defaultConfig;
   }
 
-  async getStandardRules(standardId: string): Promise<string[]> {
+  getStandardRules(standardId: string): string[] {
     // In a full implementation, this would load the actual standard rules
     // For now, return a list of rule IDs
     const standardRules: Record<string, string[]> = {
@@ -115,7 +115,7 @@ export class StandardsManager {
 
   isRuleEnabled(
     standardId: string,
-    ruleId: string,
+    _ruleId: string,
     selectedStandards: string[],
   ): boolean {
     if (!selectedStandards.includes(standardId)) {

@@ -5,7 +5,7 @@
 import type { ClaudeGuidance, Finding, ReviewResult } from "./types.ts";
 
 export class FeedbackBuilder {
-  async buildGuidance(result: ReviewResult): Promise<ClaudeGuidance> {
+  buildGuidance(result: ReviewResult): ClaudeGuidance {
     // Find the most critical issue to focus on
     const criticalFinding = this.findMostCriticalFinding(result.findings);
 
@@ -29,7 +29,7 @@ export class FeedbackBuilder {
     return null;
   }
 
-  private buildGeneralGuidance(result: ReviewResult): ClaudeGuidance {
+  private buildGeneralGuidance(_result: ReviewResult): ClaudeGuidance {
     return {
       reminder: "Your code passed the basic security and standards checks!",
       pattern: "No significant issues detected",
@@ -42,7 +42,7 @@ export class FeedbackBuilder {
     finding: Finding,
     result: ReviewResult,
   ): ClaudeGuidance {
-    const guidance: ClaudeGuidance = {
+    const _guidance: ClaudeGuidance = {
       reminder: "",
       pattern: "",
       correction: "",
@@ -163,8 +163,8 @@ if (isResponseData(data)) {
   }
 
   private buildPathTraversalGuidance(
-    finding: Finding,
-    result: ReviewResult,
+    _finding: Finding,
+    _result: ReviewResult,
   ): ClaudeGuidance {
     return {
       reminder:
@@ -207,8 +207,8 @@ const content = await Deno.readTextFile(resolved);`,
   }
 
   private buildAccessControlGuidance(
-    finding: Finding,
-    result: ReviewResult,
+    _finding: Finding,
+    _result: ReviewResult,
   ): ClaudeGuidance {
     return {
       reminder:
@@ -257,8 +257,8 @@ app.get('/api/users/:id',
   }
 
   private build15FactorConfigGuidance(
-    finding: Finding,
-    result: ReviewResult,
+    _finding: Finding,
+    _result: ReviewResult,
   ): ClaudeGuidance {
     return {
       reminder: "15-Factor apps store config in the environment, not in code.",

@@ -130,7 +130,7 @@ export class MethodologyManager {
     const hasActiveProjects = await this.checkActiveProjects(projectPath);
     if (hasActiveProjects) {
       // Check if projects have clear appetite markers
-      findings.push(...await this.checkAppetiteMarkers(projectPath));
+      findings.push(...this.checkAppetiteMarkers(projectPath));
     }
 
     // Check for cool-down documentation
@@ -219,7 +219,7 @@ export class MethodologyManager {
     }
 
     // Check for WIP limits documentation
-    const hasWIPLimits = await this.checkForWIPLimits(projectPath);
+    const hasWIPLimits = this.checkForWIPLimits(projectPath);
     if (!hasWIPLimits && boardExists) {
       findings.push({
         severity: "low",
@@ -259,7 +259,7 @@ export class MethodologyManager {
     }
 
     // Check for metrics/validation
-    const hasMetrics = await this.checkForMetrics(projectPath);
+    const hasMetrics = this.checkForMetrics(projectPath);
     if (!hasMetrics) {
       findings.push({
         severity: "low",
@@ -333,19 +333,19 @@ export class MethodologyManager {
     return false;
   }
 
-  private async checkAppetiteMarkers(projectPath: string): Promise<Finding[]> {
+  private checkAppetiteMarkers(_projectPath: string): Finding[] {
     const findings: Finding[] = [];
     // Simplified check - in reality would parse pitch documents
     // for appetite declarations
     return findings;
   }
 
-  private async checkForWIPLimits(projectPath: string): Promise<boolean> {
+  private checkForWIPLimits(_projectPath: string): boolean {
     // Simplified check - would parse kanban board for WIP limits
     return false;
   }
 
-  private async checkForMetrics(projectPath: string): Promise<boolean> {
+  private checkForMetrics(_projectPath: string): boolean {
     // Simplified check - would look for metrics documentation
     return false;
   }

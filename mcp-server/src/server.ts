@@ -10,7 +10,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
-  Tool,
+  type Tool,
 } from "@modelcontextprotocol/sdk/types.js";
 import { ReviewEngine } from "./review-engine.ts";
 import { StandardsManager } from "./standards-manager.ts";
@@ -55,7 +55,7 @@ class MCPCodeReviewer {
 
   private setupHandlers() {
     // List available tools
-    this.server.setRequestHandler(ListToolsRequestSchema, async () => {
+    this.server.setRequestHandler(ListToolsRequestSchema, () => {
       return {
         tools: [
           {
@@ -217,7 +217,7 @@ class MCPCodeReviewer {
 
     // Add educational feedback if issues found
     if (result.findings.length > 0) {
-      result.claudeGuidance = await this.feedbackBuilder.buildGuidance(result);
+      result.claudeGuidance = this.feedbackBuilder.buildGuidance(result);
     }
 
     return result;
