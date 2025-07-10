@@ -7,6 +7,28 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![API Documentation](https://img.shields.io/badge/API_docs-deno.dev-blue)](https://aichaku.esolia.deno.net/)
 
+## 🚀 Quick Start (for the impatient)
+
+Don't want to read the docs? Just run this:
+
+```bash
+# Install Aichaku globally from JSR
+deno install -A -n aichaku jsr:@rick/aichaku/cli.ts
+
+# Set up everything
+aichaku init --global    # One-time global setup
+cd your-project
+aichaku init            # Add to your project
+aichaku integrate       # Tell Claude about it
+
+# Start using with Claude!
+# Say: "I need to plan a new feature"
+# Claude will use Aichaku automatically
+```
+
+That's it! Aichaku is now helping Claude understand your development workflow.
+Read on for details, or jump to [full documentation](docs/README.md).
+
 ## What is aichaku?
 
 Aichaku (愛着 - "affection/attachment") provides adaptive methodology support
@@ -30,23 +52,25 @@ integrated.
 - 📁 **Clean projects** - No methodology file duplication
 - 🚀 **Simple lifecycle** - Just init, integrate, upgrade, and uninstall
 
-## Quick Start
+## Installation Details
+
+### Recommended: One-line installer
 
 ```bash
 # Install and initialize everything with one command:
 deno run -A https://rickcogley.github.io/aichaku/init.ts
 ```
 
-That's it! This single command will:
+This single command will:
 
 - Install the Aichaku CLI globally
 - Set up global methodologies
 - Optionally initialize your current project
 
-### Alternative installation methods:
+### Alternative: Manual installation
 
 ```bash
-# Traditional approach (if you prefer explicit steps):
+# If you prefer explicit steps:
 deno install -g --allow-read --allow-write --allow-env --allow-net --allow-run -n aichaku jsr:@rick/aichaku/cli
 aichaku init --global
 aichaku init

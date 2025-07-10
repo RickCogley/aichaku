@@ -112,7 +112,7 @@ export default {
 
   docs: {
     enabled: true,
-    outputDir: "./docs",
+    outputDir: "./docs/api",
     includePrivate: false,
   },
 

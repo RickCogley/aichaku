@@ -1,0 +1,52 @@
+# Diátaxis Document Type Definitions
+# This file helps tools identify and validate document types
+
+# Tutorial documents should:
+# - Take readers through a learning experience
+# - Be hands-on with concrete steps
+# - Produce a working result
+# - Focus on learning, not accomplishing
+[tutorials]
+pattern = "tutorials/**/*.md"
+required_elements = ["steps", "prerequisites", "outcome"]
+style = "imperative"
+perspective = "we"
+
+# How-to guides should:
+# - Solve a specific problem
+# - Assume some knowledge
+# - Focus on the goal, not learning
+# - Be repeatable and reliable
+[how-to]
+pattern = "how-to/**/*.md"
+required_elements = ["goal", "prerequisites", "steps"]
+style = "imperative"
+perspective = "you"
+
+# Reference documentation should:
+# - Describe the machinery
+# - Be accurate and complete
+# - Be structured for finding information
+# - Be neutral and factual
+[reference]
+pattern = "reference/**/*.md"
+required_elements = ["description", "parameters", "examples"]
+style = "descriptive"
+perspective = "third-person"
+
+# Explanation documents should:
+# - Provide context and background
+# - Explain why, not how
+# - Consider alternatives
+# - Make connections
+[explanation]
+pattern = "explanation/**/*.md"
+required_elements = ["context", "discussion"]
+style = "discursive"
+perspective = "mixed"
+
+# Validation rules
+[validation]
+enforce_structure = true
+check_cross_references = true
+warn_on_mixed_types = true
