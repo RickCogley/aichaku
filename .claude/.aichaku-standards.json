@@ -1,0 +1,9 @@
+{
+  "version": "1.0.0",
+  "selected": [
+    "owasp-web",
+    "15-factor",
+    "google-style",
+    "nist-csf"
+  ]
+}
