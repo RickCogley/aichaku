@@ -16,7 +16,7 @@ const PERMISSIONS = [
   "--allow-write",
   "--allow-env",
   "--allow-net",
-  "--allow-run",  // Needed for git commands and other tools
+  "--allow-run", // Needed for git commands and other tools
 ];
 
 // Parse arguments
@@ -138,7 +138,8 @@ async function initGlobal(isUpgrade: boolean = false): Promise<boolean> {
     // Explicitly pass permissions to subprocess
     env: {
       ...Deno.env.toObject(),
-      DENO_PERMISSIONS: "--allow-read --allow-write --allow-env --allow-net --allow-run",
+      DENO_PERMISSIONS:
+        "--allow-read --allow-write --allow-env --allow-net --allow-run",
     },
   });
 

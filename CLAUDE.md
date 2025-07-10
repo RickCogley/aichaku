@@ -150,11 +150,15 @@ ones work ❌ Forget to update diagrams with status changes
 
 **Starting Work:**
 
-1. Create: `.claude/output/active-YYYY-MM-DD-{descriptive-name}/`
-2. Create STATUS.md immediately (with status diagram)
-3. Read appropriate methodology guides
-4. Create planning documents (with workflow diagrams)
-5. WAIT for human approval before coding
+1. ⚠️ **CHECK TODAY'S DATE**: Look for "Today's date:" in the environment info
+2. Create: `.claude/output/active-YYYY-MM-DD-{descriptive-name}/`
+   - YYYY-MM-DD must be TODAY'S actual date from environment
+   - Common mistake: Using 01 instead of current month
+   - Example if today is 2025-07-10: `active-2025-07-10-project-name/`
+3. Create STATUS.md immediately (with status diagram)
+4. Read appropriate methodology guides
+5. Create planning documents (with workflow diagrams)
+6. WAIT for human approval before coding
 
 **During Work:**
 
@@ -165,10 +169,11 @@ ones work ❌ Forget to update diagrams with status changes
 **Completing Work:**
 
 1. Create YYYY-MM-DD-{Project-Name}-CHANGE-LOG.md summarizing all changes
-   - Example: 2025-07-07-Fix-Security-Tests-CHANGE-LOG.md
-   - Example: 2025-07-07-Update-Authentication-CHANGE-LOG.md
-   - NEVER just "CHANGE-LOG.md" - always include date and descriptive project
-     name
+   - ⚠️ Use TODAY'S date from environment info (not example dates!)
+   - Example format: 2025-07-10-Fix-Security-Tests-CHANGE-LOG.md
+   - Example format: 2025-07-10-Update-Authentication-CHANGE-LOG.md
+   - NEVER just "CHANGE-LOG.md" - always include TODAY'S date and descriptive
+     project name
 2. Update final diagram states
 3. Rename folder: active-* → done-*
 4. Ask: "Work appears complete. Shall I commit and push?"

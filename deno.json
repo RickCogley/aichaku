@@ -44,7 +44,8 @@
     "changelog": "deno task nagare changelog --preview",
     "validate": "deno task nagare validate",
     "build": "deno run -A scripts/build-binaries.ts",
-    "build:upload": "deno run -A scripts/build-binaries.ts --upload"
+    "build:upload": "deno run -A scripts/build-binaries.ts --upload",
+    "docs:lint": "deno run --allow-read --allow-env src/commands/docs-lint.ts"
   },
   "fmt": {
     "exclude": [

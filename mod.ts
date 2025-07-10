@@ -108,6 +108,8 @@ export { upgrade } from "./src/commands/upgrade.ts";
 export { uninstall } from "./src/commands/uninstall.ts";
 export { integrate } from "./src/commands/integrate.ts";
 export { help } from "./src/commands/help.ts";
+export { standards } from "./src/commands/standards.ts";
+export { docsStandard } from "./src/commands/docs-standard.ts";
 
 // Keep legacy exports for backward compatibility
 export { install } from "./src/installer.ts";
@@ -116,6 +118,8 @@ export { update } from "./src/updater.ts";
 
 // Export types
 export type {
+  DocumentationStandard,
+  DocumentationStandardConfig,
   InstallOptions,
   InstallResult,
   ListResult,
