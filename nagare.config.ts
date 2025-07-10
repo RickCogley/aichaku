@@ -171,14 +171,14 @@ export default {
     postRelease: [
       async () => {
         console.log("🔨 Building and uploading binaries...");
-        
+
         // Build binaries and upload them to the GitHub release
         const buildCmd = new Deno.Command("deno", {
           args: ["run", "-A", "./scripts/build-binaries.ts", "--upload"],
           stdout: "inherit",
           stderr: "inherit",
         });
-        
+
         const result = await buildCmd.output();
         if (!result.success) {
           console.error("⚠️  Binary build/upload failed - continuing anyway");

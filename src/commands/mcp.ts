@@ -109,14 +109,18 @@ async function installMCPServer(): Promise<void> {
       platform === "windows" ? "mcp-code-reviewer.exe" : "mcp-code-reviewer",
     );
 
-    console.log(`📥 Downloading MCP server v${VERSION} for ${platform}-${arch}...`);
+    console.log(
+      `📥 Downloading MCP server v${VERSION} for ${platform}-${arch}...`,
+    );
     console.log(`   From: ${downloadUrl}`);
     console.log(`   To: ${targetPath}\n`);
 
     const response = await fetch(downloadUrl);
     if (!response.ok) {
       if (response.status === 404) {
-        throw new Error(`Binary not found. The v${VERSION} release may not have binaries uploaded yet.`);
+        throw new Error(
+          `Binary not found. The v${VERSION} release may not have binaries uploaded yet.`,
+        );
       }
       throw new Error(`Failed to download: ${response.statusText}`);
     }

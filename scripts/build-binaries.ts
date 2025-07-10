@@ -254,3 +254,4 @@ Examples:
 if (import.meta.main) {
   await main();
 }
+
