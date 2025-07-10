@@ -85,8 +85,8 @@ if (args.version) {
 // Get command
 const command = args._[0]?.toString().toLowerCase();
 
-// Show help
-if (args.help || !command) {
+// Show help only if no command or general help requested
+if (!command || (args.help && !command)) {
   console.log(`
 🪴 aichaku (愛着) - Adaptive Methodology Support for Claude Code
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
