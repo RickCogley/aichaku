@@ -13,7 +13,7 @@ export interface Finding {
   column?: number;
   suggestion?: string;
   tool: string;
-  category?: "security" | "methodology" | "standards" | "style";
+  category?: "security" | "methodology" | "standards" | "style" | "documentation";
 }
 
 export interface ReviewResult {
@@ -52,13 +52,19 @@ export interface ClaudeGuidance {
 }
 
 export interface SecurityPattern {
-  pattern: RegExp;
+  id: string;
+  name: string;
+  pattern?: RegExp;
   severity: Severity;
-  rule: string;
-  message: string;
+  rule?: string;
+  description: string;
+  message?: string;
+  fix?: string;
   suggestion?: string;
   category?: string;
   owaspMapping?: string;
+  frameworks?: string[];
+  checkFn?: (content: string) => Array<{ message?: string; line?: number }>;
 }
 
 export interface ProjectConfig {

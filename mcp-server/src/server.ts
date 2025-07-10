@@ -129,6 +129,9 @@ class MCPCodeReviewer {
         const { name, arguments: args } = request.params;
 
         try {
+          // Log all MCP tool invocations for visibility
+          console.error(`🪴 [Aichaku MCP] Tool invoked: ${name}`);
+          
           switch (name) {
             case "review_file": {
               if (!args) {
@@ -205,6 +208,9 @@ class MCPCodeReviewer {
   }
 
   private async reviewFile(request: ReviewRequest): Promise<ReviewResult> {
+    // Log MCP activity to stderr for visibility in Claude Code console
+    console.error(`🪴 [Aichaku MCP] Reviewing file: ${request.file}`);
+    
     // Load standards and methodologies for the project
     const projectPath = this.getProjectPath(request.file);
     const standards = await this.standardsManager.getProjectStandards(
@@ -213,6 +219,9 @@ class MCPCodeReviewer {
     const methodologies = await this.methodologyManager.getProjectMethodologies(
       projectPath,
     );
+
+    console.error(`🪴 [Aichaku MCP] Using standards: ${standards.selected.join(", ") || "none"}`);
+    console.error(`🪴 [Aichaku MCP] Using methodologies: ${methodologies.join(", ") || "none"}`);
 
     // Run the review
     const result = await this.reviewEngine.review({
@@ -226,6 +235,8 @@ class MCPCodeReviewer {
       result.claudeGuidance = this.feedbackBuilder.buildGuidance(result);
     }
 
+    console.error(`🪴 [Aichaku MCP] Review complete: ${result.findings.length} findings`);
+    
     return result;
   }
 
@@ -259,8 +270,18 @@ class MCPCodeReviewer {
   }
 
   private formatReviewResult(result: ReviewResult): string {
-    let output = `🪴 Aichaku Code Review Results\n\n`;
+    // Determine file type for appropriate header
+    const isMarkdown = result.file.endsWith('.md') || result.file.endsWith('.markdown');
+    const reviewType = isMarkdown ? "Documentation Review" : "Code Review";
+    
+    let output = `🪴 Aichaku ${reviewType} Results\n\n`;
     output += `📄 File: ${result.file}\n`;
+    
+    // Add console visibility note for documentation
+    if (isMarkdown) {
+      output += `📝 Document Type: ${this.detectDocumentType(result.file)}\n`;
+    }
+    
     output += `📊 Summary: ${this.formatSummary(result.summary)}\n\n`;
 
     if (result.findings.length === 0) {
@@ -448,10 +469,37 @@ class MCPCodeReviewer {
     return ".";
   }
 
+  private detectDocumentType(filePath: string): string {
+    try {
+      const content = Deno.readTextFileSync(filePath).toLowerCase();
+      const fileName = filePath.toLowerCase();
+      
+      // Check file name patterns
+      if (fileName.includes('tutorial') || content.includes('getting started')) {
+        return "Tutorial (Learning-oriented)";
+      }
+      if (fileName.includes('how-to') || content.includes('how to')) {
+        return "How-to Guide (Task-oriented)";
+      }
+      if (fileName.includes('reference') || fileName.includes('api')) {
+        return "Reference (Information-oriented)";
+      }
+      if (fileName.includes('explanation') || fileName.includes('concept')) {
+        return "Explanation (Understanding-oriented)";
+      }
+      
+      return "General Documentation";
+    } catch {
+      return "Unknown";
+    }
+  }
+
   async start() {
     const transport = new StdioServerTransport();
     await this.server.connect(transport);
-    console.error("🪴 Aichaku MCP Code Reviewer started");
+    console.error("🪴 [Aichaku MCP] Code Reviewer Server v0.1.0 started");
+    console.error("🪴 [Aichaku MCP] Ready to review code and documentation");
+    console.error("🪴 [Aichaku MCP] Available tools: review_file, review_methodology, get_standards");
   }
 }
 

@@ -11,6 +11,7 @@ import type {
 import { ScannerController } from "./scanner-controller.ts";
 import { SecurityPatterns } from "./patterns/security-patterns.ts";
 import { TypeScriptPatterns } from "./patterns/typescript-patterns.ts";
+import { DocumentationPatterns } from "./patterns/documentation-patterns.ts";
 
 export class ReviewEngine {
   private scannerController: ScannerController;
@@ -30,6 +31,7 @@ export class ReviewEngine {
     this.patterns.push(
       ...SecurityPatterns.getPatterns(),
       ...TypeScriptPatterns.getPatterns(),
+      ...DocumentationPatterns.getPatterns(),
     );
   }
 
@@ -119,20 +121,38 @@ export class ReviewEngine {
       // Check if this pattern applies to the file type
       if (!this.shouldCheckPattern(pattern, filePath)) continue;
 
-      lines.forEach((line, index) => {
-        if (pattern.pattern.test(line)) {
+      // Use custom check function if provided
+      if (pattern.checkFn) {
+        const customFindings = pattern.checkFn(content);
+        customFindings.forEach((finding) => {
           findings.push({
             severity: pattern.severity,
-            rule: pattern.rule,
-            message: pattern.message,
+            rule: pattern.id,
+            message: finding.message || pattern.description,
             file: filePath,
-            line: index + 1,
-            suggestion: pattern.suggestion,
+            line: finding.line || 1,
+            suggestion: pattern.fix,
             tool: "aichaku-patterns",
             category: pattern.category as Finding["category"],
           });
-        }
-      });
+        });
+      } else if (pattern.pattern) {
+        // Use regex pattern
+        lines.forEach((line, index) => {
+          if (pattern.pattern.test(line)) {
+            findings.push({
+              severity: pattern.severity,
+              rule: pattern.id,
+              message: pattern.description,
+              file: filePath,
+              line: index + 1,
+              suggestion: pattern.fix,
+              tool: "aichaku-patterns",
+              category: pattern.category as Finding["category"],
+            });
+          }
+        });
+      }
     }
 
     return findings;
@@ -145,6 +165,11 @@ export class ReviewEngine {
     // TypeScript patterns only for .ts/.tsx files
     if (pattern.category === "typescript") {
       return /\.(ts|tsx)$/.test(filePath);
+    }
+
+    // Documentation patterns only for .md/.markdown files
+    if (pattern.category === "documentation") {
+      return /\.(md|markdown)$/.test(filePath);
     }
 
     // Skip patterns for specific file types
