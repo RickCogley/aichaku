@@ -159,6 +159,119 @@ async function generateStandardsSection(projectPath: string): Promise<string> {
   return standardsContent;
 }
 
+/**
+ * Load project documentation standards configuration with validation
+ */
+async function loadProjectDocStandards(projectPath: string): Promise<string[]> {
+  const configPath = validatePath(
+    projectPath,
+    ".claude",
+    ".aichaku-doc-standards.json",
+  );
+
+  if (!(await exists(configPath))) {
+    return [];
+  }
+
+  try {
+    const content = await Deno.readTextFile(configPath);
+    const config = JSON.parse(content) as ProjectStandardsConfig;
+
+    // Validate and sanitize
+    if (!Array.isArray(config.selected)) {
+      console.warn(
+        "Invalid documentation standards configuration: expected array",
+      );
+      return [];
+    }
+
+    return config.selected.filter(
+      (id: unknown) => typeof id === "string" && id.length > 0,
+    );
+  } catch (_error) {
+    console.warn(
+      "Failed to load project documentation standards configuration",
+    );
+    return [];
+  }
+}
+
+/**
+ * Load content for a specific documentation standard with security validation
+ * InfoSec: Validates standard IDs to prevent path injection
+ */
+async function loadDocStandardContent(
+  standardId: string,
+): Promise<string | null> {
+  const home = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
+  if (!home) {
+    console.warn("Unable to determine home directory");
+    return null;
+  }
+
+  // Validate standardId to prevent path injection
+  if (!/^[a-z0-9-]+$/.test(standardId)) {
+    console.warn(`Invalid documentation standard ID format: ${standardId}`);
+    return null;
+  }
+
+  // Documentation standards are all in the documentation directory
+  try {
+    const standardPath = validatePath(
+      home,
+      ".claude",
+      "standards",
+      "documentation",
+      `${standardId}.md`,
+    );
+
+    if (!(await exists(standardPath))) {
+      return null;
+    }
+
+    return await Deno.readTextFile(standardPath);
+  } catch (_error) {
+    console.warn(
+      `Failed to load documentation standard content for ${standardId}`,
+    );
+    return null;
+  }
+}
+
+/**
+ * Generate documentation standards section for CLAUDE.md
+ */
+async function generateDocStandardsSection(
+  projectPath: string,
+): Promise<string> {
+  const selectedStandards = await loadProjectDocStandards(projectPath);
+
+  if (selectedStandards.length === 0) {
+    return "";
+  }
+
+  let standardsContent = `## 📝 Selected Documentation Standards
+
+🪴 Aichaku: Based on your project configuration, follow these documentation standards:
+
+`;
+
+  for (const standardId of selectedStandards) {
+    const content = await loadDocStandardContent(standardId);
+    if (content) {
+      standardsContent += `### ${standardId.toUpperCase()}\n\n`;
+      standardsContent += content;
+      standardsContent += "\n\n---\n\n";
+    } else {
+      standardsContent += `### ${standardId.toUpperCase()}\n\n`;
+      standardsContent +=
+        `Documentation standard content not found. Please ensure the standard is properly installed.\n\n---\n\n`;
+    }
+  }
+
+  return standardsContent;
+}
+
 interface IntegrateOptions {
   projectPath?: string;
   force?: boolean;
@@ -171,6 +284,8 @@ const METHODOLOGY_MARKER_START = "<!-- AICHAKU:METHODOLOGY:START -->";
 const METHODOLOGY_MARKER_END = "<!-- AICHAKU:METHODOLOGY:END -->";
 const STANDARDS_MARKER_START = "<!-- AICHAKU:STANDARDS:START -->";
 const STANDARDS_MARKER_END = "<!-- AICHAKU:STANDARDS:END -->";
+const DOC_STANDARDS_MARKER_START = "<!-- AICHAKU:DOC-STANDARDS:START -->";
+const DOC_STANDARDS_MARKER_END = "<!-- AICHAKU:DOC-STANDARDS:END -->";
 
 // Legacy markers for backward compatibility (kept for reference)
 // const LEGACY_MARKER_START = "<!-- AICHAKU:START -->";
@@ -327,11 +442,15 @@ gantt
 ### 6. Project Lifecycle Management
 
 **Starting Work:**
-1. Create: \`.claude/output/active-YYYY-MM-DD-{descriptive-name}/\`
-2. Create STATUS.md immediately (with status diagram)
-3. Read appropriate methodology guides
-4. Create planning documents (with workflow diagrams)
-5. WAIT for human approval before coding
+1. ⚠️ **CHECK TODAY'S DATE**: Look for "Today's date:" in the environment info
+2. Create: \`.claude/output/active-YYYY-MM-DD-{descriptive-name}/\`
+   - YYYY-MM-DD must be TODAY'S actual date from environment
+   - Common mistake: Using 01 instead of current month
+   - Example if today is 2025-07-10: \`active-2025-07-10-project-name/\`
+3. Create STATUS.md immediately (with status diagram)
+4. Read appropriate methodology guides
+5. Create planning documents (with workflow diagrams)
+6. WAIT for human approval before coding
 
 **During Work:**
 - Update STATUS.md regularly (including diagram state)
@@ -340,9 +459,10 @@ gantt
 
 **Completing Work:**
 1. Create YYYY-MM-DD-{Project-Name}-CHANGE-LOG.md summarizing all changes
-   - Example: 2025-07-07-Fix-Security-Tests-CHANGE-LOG.md
-   - Example: 2025-07-07-Update-Authentication-CHANGE-LOG.md
-   - NEVER just "CHANGE-LOG.md" - always include date and descriptive project name
+   - ⚠️ Use TODAY'S date from environment info (not example dates!)
+   - Example format: 2025-07-10-Fix-Security-Tests-CHANGE-LOG.md
+   - Example format: 2025-07-10-Update-Authentication-CHANGE-LOG.md
+   - NEVER just "CHANGE-LOG.md" - always include TODAY'S date and descriptive project name
 2. Update final diagram states
 3. Rename folder: active-* → done-*
 4. Ask: "Work appears complete. Shall I commit and push?"
@@ -390,6 +510,10 @@ export async function integrate(
   const standardsSection = await generateStandardsSection(projectPath);
   const selectedStandards = await loadProjectStandards(projectPath);
 
+  // Generate documentation standards section
+  const docStandardsSection = await generateDocStandardsSection(projectPath);
+  const selectedDocStandards = await loadProjectDocStandards(projectPath);
+
   if (options.dryRun) {
     const fileExists = await checkFileExists(claudeMdPath);
     console.log(
@@ -401,6 +525,11 @@ export async function integrate(
     if (selectedStandards.length > 0) {
       console.log(
         `[DRY RUN] Would add standards section with ${selectedStandards.length} standards`,
+      );
+    }
+    if (selectedDocStandards.length > 0) {
+      console.log(
+        `[DRY RUN] Would add documentation standards section with ${selectedDocStandards.length} standards`,
       );
     }
     return {
@@ -532,21 +661,91 @@ export async function integrate(
         }
       }
 
+      // Handle documentation standards section
+      if (docStandardsSection) {
+        const docStandardsStartIdx = updatedContent.indexOf(
+          DOC_STANDARDS_MARKER_START,
+        );
+        const docStandardsEndIdx = updatedContent.indexOf(
+          DOC_STANDARDS_MARKER_END,
+        );
+
+        if (docStandardsStartIdx !== -1 && docStandardsEndIdx !== -1) {
+          // Update existing documentation standards section
+          const before = updatedContent.slice(0, docStandardsStartIdx);
+          const after = updatedContent.slice(
+            docStandardsEndIdx + DOC_STANDARDS_MARKER_END.length,
+          );
+          updatedContent =
+            `${before}${DOC_STANDARDS_MARKER_START}\n${docStandardsSection}\n${DOC_STANDARDS_MARKER_END}${after}`;
+        } else {
+          // Add new documentation standards section after standards section
+          const docStandardsMarkedSection =
+            `${DOC_STANDARDS_MARKER_START}\n${docStandardsSection}\n${DOC_STANDARDS_MARKER_END}`;
+
+          // Insert after standards section if it exists
+          const standardsEndIndex = updatedContent.indexOf(
+            STANDARDS_MARKER_END,
+          );
+          if (standardsEndIndex !== -1) {
+            const insertPosition = standardsEndIndex +
+              STANDARDS_MARKER_END.length;
+            updatedContent = updatedContent.slice(0, insertPosition) +
+              "\n\n" + docStandardsMarkedSection +
+              updatedContent.slice(insertPosition);
+          } else {
+            // Insert after methodology section if it exists
+            const methodologyEndIndex = updatedContent.indexOf(
+              METHODOLOGY_MARKER_END,
+            );
+            if (methodologyEndIndex !== -1) {
+              const insertPosition = methodologyEndIndex +
+                METHODOLOGY_MARKER_END.length;
+              updatedContent = updatedContent.slice(0, insertPosition) +
+                "\n\n" + docStandardsMarkedSection +
+                updatedContent.slice(insertPosition);
+            } else {
+              // Append at end
+              updatedContent += "\n\n" + docStandardsMarkedSection;
+            }
+          }
+        }
+      } else {
+        // Remove documentation standards section if no standards are selected
+        const docStandardsStartIdx = updatedContent.indexOf(
+          DOC_STANDARDS_MARKER_START,
+        );
+        const docStandardsEndIdx = updatedContent.indexOf(
+          DOC_STANDARDS_MARKER_END,
+        );
+
+        if (docStandardsStartIdx !== -1 && docStandardsEndIdx !== -1) {
+          const before = updatedContent.slice(0, docStandardsStartIdx);
+          const after = updatedContent.slice(
+            docStandardsEndIdx + DOC_STANDARDS_MARKER_END.length,
+          );
+          updatedContent = before + after.replace(/^\n+/, ""); // Remove leading newlines
+        }
+      }
+
       await Deno.writeTextFile(claudeMdPath, updatedContent);
       action = "updated";
     } else {
-      // Create new CLAUDE.md with both sections
+      // Create new CLAUDE.md with all sections
       const methodologyMarkedSection =
         `${METHODOLOGY_MARKER_START}\n${METHODOLOGY_SECTION}\n${METHODOLOGY_MARKER_END}`;
       const standardsMarkedSection = standardsSection
         ? `\n\n${STANDARDS_MARKER_START}\n${standardsSection}\n${STANDARDS_MARKER_END}`
+        : "";
+      const docStandardsMarkedSection = docStandardsSection
+        ? `\n\n${DOC_STANDARDS_MARKER_START}\n${docStandardsSection}\n${DOC_STANDARDS_MARKER_END}`
         : "";
 
       const defaultContent = `# CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with this project.
 
-${methodologyMarkedSection}${standardsMarkedSection}
+${methodologyMarkedSection}${standardsMarkedSection}${docStandardsMarkedSection}
 
 ## Project Overview
 
