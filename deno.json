@@ -42,7 +42,9 @@
     "docs": "deno task nagare docs",
     "docs:serve": "deno task nagare docs --serve",
     "changelog": "deno task nagare changelog --preview",
-    "validate": "deno task nagare validate"
+    "validate": "deno task nagare validate",
+    "build": "deno run -A scripts/build-binaries.ts",
+    "build:upload": "deno run -A scripts/build-binaries.ts --upload"
   },
   "fmt": {
     "exclude": [

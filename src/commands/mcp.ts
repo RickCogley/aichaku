@@ -5,6 +5,7 @@
 
 import { ensureDir, exists } from "@std/fs";
 import { join } from "@std/path";
+import { VERSION } from "../../version.ts";
 
 export interface MCPOptions {
   install?: boolean;
@@ -82,32 +83,41 @@ async function installMCPServer(): Promise<void> {
 
   try {
     // Download the compiled MCP server from GitHub releases
-    const version = "0.17.0"; // TODO: Get from version.ts
     const platform = Deno.build.os;
     const arch = Deno.build.arch;
 
-    let binaryName = "mcp-code-reviewer";
+    // Map platform/arch to our naming convention
+    let platformName = "";
     if (platform === "darwin" && arch === "aarch64") {
-      binaryName = "mcp-code-reviewer-mac";
-    } else if (platform === "linux") {
-      binaryName = "mcp-code-reviewer-linux";
-    } else if (platform === "windows") {
-      binaryName = "mcp-code-reviewer.exe";
+      platformName = "macos-arm64";
+    } else if (platform === "darwin" && arch === "x86_64") {
+      platformName = "macos-x64";
+    } else if (platform === "linux" && arch === "x86_64") {
+      platformName = "linux-x64";
+    } else if (platform === "windows" && arch === "x86_64") {
+      platformName = "windows-x64";
+    } else {
+      throw new Error(`Unsupported platform: ${platform}-${arch}`);
     }
 
+    const ext = platform === "windows" ? ".exe" : "";
+    const binaryName = `mcp-code-reviewer-${VERSION}-${platformName}${ext}`;
     const downloadUrl =
-      `https://github.com/RickCogley/aichaku/releases/download/v${version}/${binaryName}`;
+      `https://github.com/RickCogley/aichaku/releases/download/v${VERSION}/${binaryName}`;
     const targetPath = join(
       mcpDir,
       platform === "windows" ? "mcp-code-reviewer.exe" : "mcp-code-reviewer",
     );
 
-    console.log(`📥 Downloading MCP server for ${platform}-${arch}...`);
+    console.log(`📥 Downloading MCP server v${VERSION} for ${platform}-${arch}...`);
     console.log(`   From: ${downloadUrl}`);
     console.log(`   To: ${targetPath}\n`);
 
     const response = await fetch(downloadUrl);
     if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error(`Binary not found. The v${VERSION} release may not have binaries uploaded yet.`);
+      }
       throw new Error(`Failed to download: ${response.statusText}`);
     }
 
