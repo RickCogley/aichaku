@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.19.0] - 2025-07-10
+
+### Added
+
+- automate binary building and uploading during releases (14d8ed9)
+
+### Changed
+
+- fix formatting (fda0cdd)
+- format code for release (7b3990a)
+
 ## [0.18.0] - 2025-07-10
 
 ### Added
