@@ -47,7 +47,7 @@ That's it! This single command will:
 
 ```bash
 # Traditional approach (if you prefer explicit steps):
-deno install -g -A -n aichaku jsr:@rick/aichaku/cli
+deno install -g --allow-read --allow-write --allow-env --allow-net --allow-run -n aichaku jsr:@rick/aichaku/cli
 aichaku init --global
 aichaku init
 ```
@@ -154,7 +154,7 @@ aichaku init --dry-run
 deno run -A https://rickcogley.github.io/aichaku/init.ts --force
 
 # Or traditional upgrade:
-deno install -g -A -n aichaku --force jsr:@rick/aichaku/cli
+deno install -g --allow-read --allow-write --allow-env --allow-net --allow-run -n aichaku --force jsr:@rick/aichaku/cli
 
 # Verify what version you have
 aichaku --version
@@ -350,7 +350,7 @@ If you're upgrading from v0.4.x, the architecture has significantly improved:
 1. **Update the CLI tool:**
 
 ```bash
-deno install -g -A -n aichaku --force jsr:@rick/aichaku@0.5.0/cli
+deno install -g --allow-read --allow-write --allow-env --allow-net --allow-run -n aichaku --force jsr:@rick/aichaku@0.5.0/cli
 ```
 
 2. **Keep your global installation** (if you have one):
