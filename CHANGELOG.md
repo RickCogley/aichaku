@@ -6,6 +6,32 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.17.0] - 2025-07-10
+
+### Added
+
+- implement MCP server for automated code review (ca06933)
+- enhance integrate command with standards support (9fd251f)
+- add hooks and standards commands (638ed97)
+- enhance help command with standards knowledge base (a780a71)
+- design MCP code reviewer with advanced prompting (d58df7c)
+- add Claude session management (f784dc3)
+
+### Changed
+
+- format code for release (5d5761f)
+- format MCP server files for release (5861e38)
+- update CLAUDE.md with latest Aichaku features (0c0647b)
+- add Aichaku project standards configuration (1d8fbb9)
+- add Claude Code session documentation (39ab925)
+- standardize output folder naming convention (6297294)
+- upgrade to latest and clean up (3add17d)
+
+### Fixed
+
+- resolve type checking errors (2870886)
+- resolve linting errors in MCP server (40abf00)
+
 ## [0.16.0] - 2025-07-09
 
 ### Added
