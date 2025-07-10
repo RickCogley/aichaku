@@ -37,18 +37,18 @@ export interface MethodologyCompliance {
 }
 
 export interface ClaudeGuidance {
-  reminder: string;      // What CLAUDE.md/standards require
-  pattern: string;       // What Claude did wrong
-  correction: string;    // How to fix it
-  example?: string;      // Correct approach
+  reminder: string; // What CLAUDE.md/standards require
+  pattern: string; // What Claude did wrong
+  correction: string; // How to fix it
+  example?: string; // Correct approach
   reinforcement?: string; // What Claude should remember
-  
+
   // Advanced prompting additions
-  context?: string;         // Why this matters
-  goodExample?: string;     // Example of correct code
-  badExample?: string;      // Example of problematic code
-  stepByStep?: string[];    // Steps to fix
-  reflection?: string;      // Question for self-reflection
+  context?: string; // Why this matters
+  goodExample?: string; // Example of correct code
+  badExample?: string; // Example of problematic code
+  stepByStep?: string[]; // Steps to fix
+  reflection?: string; // Question for self-reflection
 }
 
 export interface SecurityPattern {
@@ -63,7 +63,7 @@ export interface SecurityPattern {
 
 export interface ProjectConfig {
   version: string;
-  selected: string[];  // Selected standards
+  selected: string[]; // Selected standards
   methodologies?: string[];
   customStandards?: Record<string, CustomStandard>;
 }
@@ -94,7 +94,7 @@ export interface ReviewRequest {
   content?: string;
   standards?: string[];
   methodologies?: string[];
-  includeExternal?: boolean;  // Include external scanners
+  includeExternal?: boolean; // Include external scanners
 }
 
 export interface ReviewOptions {

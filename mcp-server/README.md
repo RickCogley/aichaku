@@ -1,15 +1,19 @@
 # 🪴 Aichaku MCP Code Reviewer
 
-An MCP (Model Context Protocol) server that provides automated security and standards review for Claude Code, based on Aichaku methodologies and standards.
+An MCP (Model Context Protocol) server that provides automated security and
+standards review for Claude Code, based on Aichaku methodologies and standards.
 
 ## Features
 
 - **Security Scanning**: Built-in patterns for OWASP Top 10 vulnerabilities
-- **Standards Compliance**: Checks against selected standards (15-Factor, TDD, etc.)
-- **Methodology Validation**: Ensures adherence to Shape Up, Scrum, Kanban practices
+- **Standards Compliance**: Checks against selected standards (15-Factor, TDD,
+  etc.)
+- **Methodology Validation**: Ensures adherence to Shape Up, Scrum, Kanban
+  practices
 - **TypeScript Support**: Specific checks for TypeScript best practices
 - **Educational Feedback**: Provides learning opportunities, not just criticism
-- **External Tool Integration**: Supports CodeQL, DevSkim, Semgrep (if installed)
+- **External Tool Integration**: Supports CodeQL, DevSkim, Semgrep (if
+  installed)
 - **Privacy-First**: All scanning happens locally, no code leaves your machine
 
 ## Installation
@@ -22,6 +26,7 @@ An MCP (Model Context Protocol) server that provides automated security and stan
 ### Quick Start
 
 1. Clone or install the MCP server:
+
 ```bash
 # From Aichaku repository
 cd mcp-server
@@ -32,6 +37,7 @@ deno install -A -n mcp-code-reviewer https://raw.githubusercontent.com/RickCogle
 ```
 
 2. Configure Claude Code to use the MCP server:
+
 ```json
 // In Claude's MCP configuration
 {
@@ -50,32 +56,35 @@ deno install -A -n mcp-code-reviewer https://raw.githubusercontent.com/RickCogle
 Once configured, the MCP server provides these tools to Claude:
 
 ### `review_file`
+
 Reviews a file for security, standards, and methodology compliance.
 
 ```typescript
 // Claude can use:
 await mcp.review_file({
   file: "/path/to/file.ts",
-  includeExternal: true  // Use external scanners if available
+  includeExternal: true, // Use external scanners if available
 });
 ```
 
 ### `review_methodology`
+
 Checks if the project follows selected methodology patterns.
 
 ```typescript
 await mcp.review_methodology({
   projectPath: "/path/to/project",
-  methodology: "shape-up"  // or "scrum", "kanban", etc.
+  methodology: "shape-up", // or "scrum", "kanban", etc.
 });
 ```
 
 ### `get_standards`
+
 Gets the currently selected standards for a project.
 
 ```typescript
 await mcp.get_standards({
-  projectPath: "/path/to/project"
+  projectPath: "/path/to/project",
 });
 ```
 

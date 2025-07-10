@@ -1,7 +1,7 @@
 #!/usr/bin/env -S deno run --allow-read --allow-write --allow-env --allow-run
 /**
  * MCP Code Reviewer Server
- * 
+ *
  * Provides automated security and standards review for Claude Code
  */
 
@@ -41,7 +41,7 @@ class MCPCodeReviewer {
         capabilities: {
           tools: {},
         },
-      }
+      },
     );
 
     // Initialize components
@@ -60,7 +60,8 @@ class MCPCodeReviewer {
         tools: [
           {
             name: "review_file",
-            description: "Review a file for security, standards, and methodology compliance",
+            description:
+              "Review a file for security, standards, and methodology compliance",
             inputSchema: {
               type: "object",
               properties: {
@@ -70,11 +71,13 @@ class MCPCodeReviewer {
                 },
                 content: {
                   type: "string",
-                  description: "File content (optional, will read from disk if not provided)",
+                  description:
+                    "File content (optional, will read from disk if not provided)",
                 },
                 includeExternal: {
                   type: "boolean",
-                  description: "Include external security scanners if available",
+                  description:
+                    "Include external security scanners if available",
                   default: true,
                 },
               },
@@ -83,7 +86,8 @@ class MCPCodeReviewer {
           },
           {
             name: "review_methodology",
-            description: "Check if project follows selected methodology patterns",
+            description:
+              "Check if project follows selected methodology patterns",
             inputSchema: {
               type: "object",
               properties: {
@@ -124,8 +128,12 @@ class MCPCodeReviewer {
       try {
         switch (name) {
           case "review_file": {
-            if (!args) throw new Error('Arguments are required for review_file');
-            const result = await this.reviewFile(args as unknown as ReviewRequest);
+            if (!args) {
+              throw new Error("Arguments are required for review_file");
+            }
+            const result = await this.reviewFile(
+              args as unknown as ReviewRequest,
+            );
             return {
               content: [
                 {
@@ -137,10 +145,12 @@ class MCPCodeReviewer {
           }
 
           case "review_methodology": {
-            if (!args) throw new Error('Arguments are required for review_methodology');
+            if (!args) {
+              throw new Error("Arguments are required for review_methodology");
+            }
             const result = await this.reviewMethodology(
               args.projectPath as string,
-              args.methodology as string
+              args.methodology as string,
             );
             return {
               content: [
@@ -153,9 +163,11 @@ class MCPCodeReviewer {
           }
 
           case "get_standards": {
-            if (!args) throw new Error('Arguments are required for get_standards');
+            if (!args) {
+              throw new Error("Arguments are required for get_standards");
+            }
             const standards = await this.standardsManager.getProjectStandards(
-              args.projectPath as string
+              args.projectPath as string,
             );
             return {
               content: [
@@ -175,7 +187,9 @@ class MCPCodeReviewer {
           content: [
             {
               type: "text",
-              text: `Error: ${error instanceof Error ? error.message : String(error)}`,
+              text: `Error: ${
+                error instanceof Error ? error.message : String(error)
+              }`,
             },
           ],
           isError: true,
@@ -187,8 +201,12 @@ class MCPCodeReviewer {
   private async reviewFile(request: ReviewRequest): Promise<ReviewResult> {
     // Load standards and methodologies for the project
     const projectPath = this.getProjectPath(request.file);
-    const standards = await this.standardsManager.getProjectStandards(projectPath);
-    const methodologies = await this.methodologyManager.getProjectMethodologies(projectPath);
+    const standards = await this.standardsManager.getProjectStandards(
+      projectPath,
+    );
+    const methodologies = await this.methodologyManager.getProjectMethodologies(
+      projectPath,
+    );
 
     // Run the review
     const result = await this.reviewEngine.review({
@@ -207,7 +225,7 @@ class MCPCodeReviewer {
 
   private async reviewMethodology(
     projectPath: string,
-    methodology?: string
+    methodology?: string,
   ): Promise<ReviewResult> {
     const methodologies = methodology
       ? [methodology]
@@ -215,7 +233,7 @@ class MCPCodeReviewer {
 
     const findings = await this.methodologyManager.checkCompliance(
       projectPath,
-      methodologies
+      methodologies,
     );
 
     return {
@@ -224,9 +242,12 @@ class MCPCodeReviewer {
       summary: this.summarizeFindings(findings),
       methodologyCompliance: {
         methodology: methodologies.join(", "),
-        status: findings.length === 0 ? "passed" : 
-                findings.some(f => f.severity === "critical") ? "failed" : "warnings",
-        details: findings.map(f => f.message),
+        status: findings.length === 0
+          ? "passed"
+          : findings.some((f) => f.severity === "critical")
+          ? "failed"
+          : "warnings",
+        details: findings.map((f) => f.message),
       },
     };
   }
@@ -246,8 +267,10 @@ class MCPCodeReviewer {
 
     for (const [severity, findings] of Object.entries(grouped)) {
       if (findings.length === 0) continue;
-      
-      output += `\n${this.getSeverityIcon(severity as Severity)} ${severity.toUpperCase()} (${findings.length})\n`;
+
+      output += `\n${
+        this.getSeverityIcon(severity as Severity)
+      } ${severity.toUpperCase()} (${findings.length})\n`;
       output += `${"-".repeat(40)}\n`;
 
       for (const finding of findings) {
@@ -274,14 +297,18 @@ class MCPCodeReviewer {
 
   private formatMethodologyResult(result: ReviewResult): string {
     let output = `🪴 Aichaku Methodology Review\n\n`;
-    
+
     if (result.methodologyCompliance) {
       const { methodology, status, details } = result.methodologyCompliance;
-      const icon = status === "passed" ? "✅" : status === "warnings" ? "⚠️" : "❌";
-      
+      const icon = status === "passed"
+        ? "✅"
+        : status === "warnings"
+        ? "⚠️"
+        : "❌";
+
       output += `📋 Methodology: ${methodology}\n`;
       output += `${icon} Status: ${status}\n\n`;
-      
+
       if (details.length > 0) {
         output += `Details:\n`;
         for (const detail of details) {
@@ -289,25 +316,25 @@ class MCPCodeReviewer {
         }
       }
     }
-    
+
     return output;
   }
 
   private formatGuidance(guidance: ClaudeGuidance): string {
     let output = "";
-    
+
     if (guidance.context) {
       output += `📖 Context: ${guidance.context}\n\n`;
     }
-    
+
     output += `⚠️ Issue: ${guidance.pattern}\n`;
     output += `📌 Reminder: ${guidance.reminder}\n\n`;
-    
+
     if (guidance.badExample && guidance.goodExample) {
       output += `❌ Bad Example:\n${guidance.badExample}\n\n`;
       output += `✅ Good Example:\n${guidance.goodExample}\n\n`;
     }
-    
+
     if (guidance.stepByStep && guidance.stepByStep.length > 0) {
       output += `🔄 Step-by-Step Fix:\n`;
       guidance.stepByStep.forEach((step, i) => {
@@ -315,17 +342,17 @@ class MCPCodeReviewer {
       });
       output += `\n`;
     }
-    
+
     output += `💡 ${guidance.correction}\n`;
-    
+
     if (guidance.reflection) {
       output += `\n🤔 Reflection: ${guidance.reflection}\n`;
     }
-    
+
     if (guidance.reinforcement) {
       output += `\n📌 Note to self: ${guidance.reinforcement}\n`;
     }
-    
+
     return output;
   }
 
@@ -336,7 +363,7 @@ class MCPCodeReviewer {
     if (summary.medium > 0) parts.push(`${summary.medium} medium`);
     if (summary.low > 0) parts.push(`${summary.low} low`);
     if (summary.info > 0) parts.push(`${summary.info} info`);
-    
+
     return parts.length > 0 ? parts.join(", ") : "No issues";
   }
 
@@ -348,21 +375,26 @@ class MCPCodeReviewer {
       low: [],
       info: [],
     };
-    
+
     for (const finding of findings) {
       grouped[finding.severity].push(finding);
     }
-    
+
     return grouped;
   }
 
   private getSeverityIcon(severity: Severity): string {
     switch (severity) {
-      case "critical": return "🔴";
-      case "high": return "🟠";
-      case "medium": return "🟡";
-      case "low": return "🔵";
-      case "info": return "⚪";
+      case "critical":
+        return "🔴";
+      case "high":
+        return "🟠";
+      case "medium":
+        return "🟡";
+      case "low":
+        return "🔵";
+      case "info":
+        return "⚪";
     }
   }
 
@@ -374,11 +406,11 @@ class MCPCodeReviewer {
       low: 0,
       info: 0,
     };
-    
+
     for (const finding of findings) {
       summary[finding.severity]++;
     }
-    
+
     return summary;
   }
 
@@ -393,7 +425,7 @@ class MCPCodeReviewer {
         } catch {
           // Continue searching
         }
-        
+
         try {
           Deno.statSync(`${current}/.git`);
           return current;
@@ -401,12 +433,12 @@ class MCPCodeReviewer {
           // Continue searching
         }
       }
-      
+
       const parent = current.split("/").slice(0, -1).join("/");
       if (parent === current) break;
       current = parent;
     }
-    
+
     return ".";
   }
 
@@ -418,7 +450,7 @@ class MCPCodeReviewer {
 }
 
 // Import type fix
-import type { Finding, Severity, ClaudeGuidance } from "./types.ts";
+import type { ClaudeGuidance, Finding, Severity } from "./types.ts";
 
 // Start the server
 if (import.meta.main) {

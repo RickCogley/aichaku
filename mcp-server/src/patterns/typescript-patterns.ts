@@ -32,7 +32,7 @@ export class TypeScriptPatterns {
         suggestion: "Remove @ts-nocheck and fix type errors properly",
         category: "typescript",
       },
-      
+
       // Type Assertions
       {
         pattern: /as\s+any(?:\s|;|,|\)|>)/,
@@ -50,13 +50,14 @@ export class TypeScriptPatterns {
         suggestion: "Use a more specific type or constraint",
         category: "typescript",
       },
-      
+
       // Non-null Assertions
       {
         pattern: /\w+\s*!\./,
         severity: "low",
         rule: "typescript-non-null-assertion",
-        message: "Non-null assertion operator (!) can hide null/undefined errors",
+        message:
+          "Non-null assertion operator (!) can hide null/undefined errors",
         suggestion: "Add proper null checks or use optional chaining",
         category: "typescript",
       },
@@ -68,7 +69,7 @@ export class TypeScriptPatterns {
         suggestion: "Validate the value is not null/undefined",
         category: "typescript",
       },
-      
+
       // Implicit Any
       {
         pattern: /function\s+\w+\s*\([^:)]+\)\s*(?:\{|=>)/,
@@ -86,7 +87,7 @@ export class TypeScriptPatterns {
         suggestion: "Consider adding return type for clarity",
         category: "typescript",
       },
-      
+
       // Unsafe Operations
       {
         pattern: /delete\s+\w+\.\w+/,
@@ -104,7 +105,7 @@ export class TypeScriptPatterns {
         suggestion: "Use spread operator {...obj} for better type inference",
         category: "typescript",
       },
-      
+
       // Best Practices
       {
         pattern: /interface\s+\w+\s*\{\s*\[key:\s*string\]:\s*any/,
@@ -118,11 +119,13 @@ export class TypeScriptPatterns {
         pattern: /enum\s+\w+\s*\{/,
         severity: "info",
         rule: "typescript-enum",
-        message: "Consider using const assertions or union types instead of enums",
-        suggestion: "Use 'as const' or string literal unions for better tree-shaking",
+        message:
+          "Consider using const assertions or union types instead of enums",
+        suggestion:
+          "Use 'as const' or string literal unions for better tree-shaking",
         category: "typescript",
       },
-      
+
       // Deprecated Patterns
       {
         pattern: /\/\/\/\s*<reference/,

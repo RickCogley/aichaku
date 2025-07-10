@@ -17,7 +17,7 @@ export class MethodologyManager {
 
     // Look for .claude/.aichaku-standards.json (methodologies stored there too)
     const configPath = join(projectPath, ".claude", ".aichaku-standards.json");
-    
+
     if (await exists(configPath)) {
       try {
         const content = await Deno.readTextFile(configPath);
@@ -26,7 +26,11 @@ export class MethodologyManager {
         this.methodologyCache.set(projectPath, methodologies);
         return methodologies;
       } catch (error) {
-        console.error(`Failed to load methodologies from ${configPath}: ${error instanceof Error ? error.message : String(error)}`);
+        console.error(
+          `Failed to load methodologies from ${configPath}: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
+        );
       }
     }
 
@@ -39,27 +43,40 @@ export class MethodologyManager {
     const methodologies: string[] = [];
 
     // Check for Shape Up indicators
-    if (await exists(join(projectPath, "pitch.md")) || 
-        await exists(join(projectPath, ".claude", "output", "active-*", "pitch.md"))) {
+    if (
+      await exists(join(projectPath, "pitch.md")) ||
+      await exists(
+        join(projectPath, ".claude", "output", "active-*", "pitch.md"),
+      )
+    ) {
       methodologies.push("shape-up");
     }
 
     // Check for Scrum indicators
-    if (await exists(join(projectPath, "sprint-planning.md")) ||
-        await exists(join(projectPath, ".claude", "output", "active-*", "sprint-*.md"))) {
+    if (
+      await exists(join(projectPath, "sprint-planning.md")) ||
+      await exists(
+        join(projectPath, ".claude", "output", "active-*", "sprint-*.md"),
+      )
+    ) {
       methodologies.push("scrum");
     }
 
     // Check for Kanban indicators
-    if (await exists(join(projectPath, "kanban-board.md")) ||
-        await exists(join(projectPath, ".claude", "kanban.json"))) {
+    if (
+      await exists(join(projectPath, "kanban-board.md")) ||
+      await exists(join(projectPath, ".claude", "kanban.json"))
+    ) {
       methodologies.push("kanban");
     }
 
     return methodologies;
   }
 
-  async checkCompliance(projectPath: string, methodologies: string[]): Promise<Finding[]> {
+  async checkCompliance(
+    projectPath: string,
+    methodologies: string[],
+  ): Promise<Finding[]> {
     const findings: Finding[] = [];
 
     for (const methodology of methodologies) {
@@ -85,13 +102,17 @@ export class MethodologyManager {
     return findings;
   }
 
-  private async checkShapeUpCompliance(projectPath: string): Promise<Finding[]> {
+  private async checkShapeUpCompliance(
+    projectPath: string,
+  ): Promise<Finding[]> {
     const findings: Finding[] = [];
 
     // Check for pitch document
     const pitchExists = await exists(join(projectPath, "pitch.md")) ||
-                       await exists(join(projectPath, ".claude", "output", "active-*", "pitch.md"));
-    
+      await exists(
+        join(projectPath, ".claude", "output", "active-*", "pitch.md"),
+      );
+
     if (!pitchExists) {
       findings.push({
         severity: "medium",
@@ -113,7 +134,9 @@ export class MethodologyManager {
     }
 
     // Check for cool-down documentation
-    const hasCooldown = await exists(join(projectPath, ".claude", "output", "done-*", "*CHANGE-LOG.md"));
+    const hasCooldown = await exists(
+      join(projectPath, ".claude", "output", "done-*", "*CHANGE-LOG.md"),
+    );
     if (!hasCooldown && hasActiveProjects) {
       findings.push({
         severity: "low",
@@ -134,9 +157,12 @@ export class MethodologyManager {
     const findings: Finding[] = [];
 
     // Check for sprint planning
-    const sprintPlanExists = await exists(join(projectPath, "sprint-planning.md")) ||
-                            await exists(join(projectPath, ".claude", "output", "active-*", "sprint-*.md"));
-    
+    const sprintPlanExists =
+      await exists(join(projectPath, "sprint-planning.md")) ||
+      await exists(
+        join(projectPath, ".claude", "output", "active-*", "sprint-*.md"),
+      );
+
     if (!sprintPlanExists) {
       findings.push({
         severity: "medium",
@@ -152,8 +178,10 @@ export class MethodologyManager {
 
     // Check for retrospective documentation
     const retroExists = await exists(join(projectPath, "retrospective.md")) ||
-                       await exists(join(projectPath, ".claude", "output", "done-*", "retrospective.md"));
-    
+      await exists(
+        join(projectPath, ".claude", "output", "done-*", "retrospective.md"),
+      );
+
     if (!retroExists) {
       findings.push({
         severity: "low",
@@ -175,8 +203,8 @@ export class MethodologyManager {
 
     // Check for board visualization
     const boardExists = await exists(join(projectPath, "kanban-board.md")) ||
-                       await exists(join(projectPath, ".claude", "kanban.json"));
-    
+      await exists(join(projectPath, ".claude", "kanban.json"));
+
     if (!boardExists) {
       findings.push({
         severity: "medium",
@@ -213,8 +241,10 @@ export class MethodologyManager {
 
     // Check for MVP documentation
     const mvpExists = await exists(join(projectPath, "mvp.md")) ||
-                     await exists(join(projectPath, ".claude", "output", "active-*", "experiment-*.md"));
-    
+      await exists(
+        join(projectPath, ".claude", "output", "active-*", "experiment-*.md"),
+      );
+
     if (!mvpExists) {
       findings.push({
         severity: "low",
@@ -251,9 +281,9 @@ export class MethodologyManager {
 
     // Check for test coverage
     const hasTests = await exists(join(projectPath, "tests")) ||
-                    await exists(join(projectPath, "test")) ||
-                    await exists(join(projectPath, "__tests__"));
-    
+      await exists(join(projectPath, "test")) ||
+      await exists(join(projectPath, "__tests__"));
+
     if (!hasTests) {
       findings.push({
         severity: "high",
@@ -268,7 +298,9 @@ export class MethodologyManager {
     }
 
     // Check for pair programming logs
-    const pairLogs = await exists(join(projectPath, ".claude", "pair-programming.md"));
+    const pairLogs = await exists(
+      join(projectPath, ".claude", "pair-programming.md"),
+    );
     if (!pairLogs) {
       findings.push({
         severity: "info",

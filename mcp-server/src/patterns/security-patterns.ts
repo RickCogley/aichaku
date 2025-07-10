@@ -13,7 +13,8 @@ export class SecurityPatterns {
         severity: "critical",
         rule: "command-injection",
         message: "Potential command injection - use parameter expansion",
-        suggestion: 'Use bash parameter expansion: bash -c \'command "$1"\' -- "${VARIABLE}"',
+        suggestion:
+          'Use bash parameter expansion: bash -c \'command "$1"\' -- "${VARIABLE}"',
         category: "security",
         owaspMapping: "A03",
       },
@@ -26,7 +27,7 @@ export class SecurityPatterns {
         category: "security",
         owaspMapping: "A03",
       },
-      
+
       // Path Traversal
       {
         pattern: /\.\.(?:\/|\\)/,
@@ -46,7 +47,7 @@ export class SecurityPatterns {
         category: "security",
         owaspMapping: "A01",
       },
-      
+
       // SQL Injection
       {
         pattern: /query\s*\([^)]*\+[^)]*\)/,
@@ -66,7 +67,7 @@ export class SecurityPatterns {
         category: "security",
         owaspMapping: "A03",
       },
-      
+
       // Sensitive Data Exposure
       {
         pattern: /password\s*[:=]\s*["'][^"']+["']/i,
@@ -95,7 +96,7 @@ export class SecurityPatterns {
         category: "security",
         owaspMapping: "A02",
       },
-      
+
       // Unsafe Deserialization
       {
         pattern: /JSON\.parse\s*\([^)]*\)\s*as\s+\w+/,
@@ -111,11 +112,12 @@ export class SecurityPatterns {
         severity: "critical",
         rule: "eval-usage",
         message: "eval() usage is dangerous and can lead to code injection",
-        suggestion: "Use safer alternatives like JSON.parse or Function constructor",
+        suggestion:
+          "Use safer alternatives like JSON.parse or Function constructor",
         category: "security",
         owaspMapping: "A03",
       },
-      
+
       // Broken Access Control
       {
         pattern: /req\.params\.[a-zA-Z]+(?!.*(?:auth|permission|role|access))/,
@@ -126,7 +128,7 @@ export class SecurityPatterns {
         category: "security",
         owaspMapping: "A01",
       },
-      
+
       // Security Misconfiguration
       {
         pattern: /cors\s*\(\s*\{\s*origin\s*:\s*(?:true|["']\*["'])/,
@@ -146,7 +148,7 @@ export class SecurityPatterns {
         category: "security",
         owaspMapping: "A05",
       },
-      
+
       // Logging Sensitive Data
       {
         pattern: /console\.(log|info|error|warn)\s*\([^)]*password[^)]*\)/i,
@@ -166,7 +168,7 @@ export class SecurityPatterns {
         category: "security",
         owaspMapping: "A09",
       },
-      
+
       // Insufficient Cryptography
       {
         pattern: /crypto\.createHash\s*\(\s*["']md5["']\s*\)/,

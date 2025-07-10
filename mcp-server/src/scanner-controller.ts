@@ -15,7 +15,7 @@ export class ScannerController {
     if (homeDir && !currentPath.includes(dotnetToolsPath)) {
       Deno.env.set("PATH", `${currentPath}:${dotnetToolsPath}`);
     }
-    
+
     this.initializeScanners();
   }
 
@@ -45,9 +45,9 @@ export class ScannerController {
       },
     ];
   }
-  
+
   private scannerDefinitions: Scanner[] = [];
-  
+
   async initialize() {
     // Check which scanners are available
     for (const scanner of this.scannerDefinitions) {
@@ -62,23 +62,32 @@ export class ScannerController {
         stdout: "null",
         stderr: "null",
       });
-      
+
       const { code } = await process.output();
       scanner.available = code === 0;
-      
+
       if (scanner.available) {
         this.scanners.set(scanner.name, scanner);
         console.error(`✅ Scanner ${scanner.name} is available`);
       } else {
-        console.error(`❌ Scanner ${scanner.name} returned non-zero exit code: ${code}`);
+        console.error(
+          `❌ Scanner ${scanner.name} returned non-zero exit code: ${code}`,
+        );
       }
     } catch (error) {
       // Scanner not found
-      console.error(`❌ Scanner ${scanner.name} is not installed: ${error instanceof Error ? error.message : String(error)}`);
+      console.error(
+        `❌ Scanner ${scanner.name} is not installed: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
     }
   }
 
-  async runAvailableScanners(filePath: string, content: string): Promise<Finding[]> {
+  async runAvailableScanners(
+    filePath: string,
+    content: string,
+  ): Promise<Finding[]> {
     const findings: Finding[] = [];
     const promises: Promise<Finding[]>[] = [];
 
@@ -95,7 +104,7 @@ export class ScannerController {
 
     // Run all scanners in parallel
     const results = await Promise.allSettled(promises);
-    
+
     for (const result of results) {
       if (result.status === "fulfilled") {
         findings.push(...result.value);
@@ -110,14 +119,14 @@ export class ScannerController {
   private async runScanner(
     scanner: Scanner,
     filePath: string,
-    _content: string
+    _content: string,
   ): Promise<Finding[]> {
     try {
       // Create a temporary file for scanning
       // In a real implementation, we might pass content via stdin
-      
+
       let args: string[] = [];
-      
+
       switch (scanner.name) {
         case "devskim":
           args = ["analyze", "-I", filePath, "-f", "json", "-E"];
@@ -127,7 +136,9 @@ export class ScannerController {
           break;
         case "codeql":
           // CodeQL requires a database, so skip for now
-          console.error("ℹ️  CodeQL requires a database to be built first, skipping");
+          console.error(
+            "ℹ️  CodeQL requires a database to be built first, skipping",
+          );
           return [];
       }
 
@@ -138,12 +149,12 @@ export class ScannerController {
       });
 
       const { stdout, stderr, code } = await process.output();
-      
+
       // DevSkim with -E flag returns the number of issues as exit code
       // Other scanners may return 1 when findings exist
       const isDevSkim = scanner.name === "devskim";
       const acceptableExitCodes = isDevSkim ? [0, 1, 2, 3, 4, 5] : [0, 1];
-      
+
       if (!acceptableExitCodes.includes(code)) {
         const error = new TextDecoder().decode(stderr);
         throw new Error(`Scanner ${scanner.name} failed: ${error}`);
@@ -152,43 +163,53 @@ export class ScannerController {
       const output = new TextDecoder().decode(stdout);
       return scanner.parse(output, filePath);
     } catch (error) {
-      console.error(`Error running ${scanner.name}: ${error instanceof Error ? error.message : String(error)}`);
+      console.error(
+        `Error running ${scanner.name}: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
       return [];
     }
   }
 
   private parseDevSkimOutput(output: string, filePath: string): Finding[] {
     const findings: Finding[] = [];
-    
+
     try {
       const results = JSON.parse(output);
-      
+
       for (const result of results) {
         findings.push({
           severity: this.mapDevSkimSeverity(result.severity),
           rule: result.rule_id || result.rule,
-          message: result.rule_name || result.message || `DevSkim rule ${result.rule_id}`,
+          message: result.rule_name || result.message ||
+            `DevSkim rule ${result.rule_id}`,
           file: filePath,
           line: result.start_line || result.line || 1,
           column: result.start_column || result.column,
-          suggestion: result.fix_it || result.suggestion || "Review the code for security issues",
+          suggestion: result.fix_it || result.suggestion ||
+            "Review the code for security issues",
           tool: "devskim",
           category: "security",
         });
       }
     } catch (error) {
-      console.error(`Failed to parse DevSkim output: ${error instanceof Error ? error.message : String(error)}`);
+      console.error(
+        `Failed to parse DevSkim output: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
     }
-    
+
     return findings;
   }
 
   private parseSemgrepOutput(output: string, filePath: string): Finding[] {
     const findings: Finding[] = [];
-    
+
     try {
       const results = JSON.parse(output);
-      
+
       if (results.results) {
         for (const result of results.results) {
           findings.push({
@@ -205,18 +226,22 @@ export class ScannerController {
         }
       }
     } catch (error) {
-      console.error(`Failed to parse Semgrep output: ${error instanceof Error ? error.message : String(error)}`);
+      console.error(
+        `Failed to parse Semgrep output: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
     }
-    
+
     return findings;
   }
 
   private parseCodeQLOutput(output: string, filePath: string): Finding[] {
     const findings: Finding[] = [];
-    
+
     try {
       const results = JSON.parse(output);
-      
+
       // CodeQL output format varies, this is simplified
       if (results.results) {
         for (const result of results.results) {
@@ -225,17 +250,23 @@ export class ScannerController {
             rule: result.ruleId,
             message: result.message,
             file: filePath,
-            line: result.locations?.[0]?.physicalLocation?.region?.startLine || 1,
-            column: result.locations?.[0]?.physicalLocation?.region?.startColumn,
+            line: result.locations?.[0]?.physicalLocation?.region?.startLine ||
+              1,
+            column: result.locations?.[0]?.physicalLocation?.region
+              ?.startColumn,
             tool: "codeql",
             category: "security",
           });
         }
       }
     } catch (error) {
-      console.error(`Failed to parse CodeQL output: ${error instanceof Error ? error.message : String(error)}`);
+      console.error(
+        `Failed to parse CodeQL output: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
     }
-    
+
     return findings;
   }
 

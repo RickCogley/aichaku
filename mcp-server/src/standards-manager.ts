@@ -16,8 +16,12 @@ export class StandardsManager {
     }
 
     // Look for .claude/.aichaku-standards.json
-    const standardsPath = join(projectPath, ".claude", ".aichaku-standards.json");
-    
+    const standardsPath = join(
+      projectPath,
+      ".claude",
+      ".aichaku-standards.json",
+    );
+
     if (await exists(standardsPath)) {
       try {
         const content = await Deno.readTextFile(standardsPath);
@@ -25,7 +29,11 @@ export class StandardsManager {
         this.standardsCache.set(projectPath, config);
         return config;
       } catch (error) {
-        console.error(`Failed to load standards from ${standardsPath}: ${error instanceof Error ? error.message : String(error)}`);
+        console.error(
+          `Failed to load standards from ${standardsPath}: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
+        );
       }
     }
 
@@ -34,7 +42,7 @@ export class StandardsManager {
       version: "1.0.0",
       selected: [],
     };
-    
+
     return defaultConfig;
   }
 
@@ -105,7 +113,11 @@ export class StandardsManager {
     return standardRules[standardId] || [];
   }
 
-  isRuleEnabled(standardId: string, ruleId: string, selectedStandards: string[]): boolean {
+  isRuleEnabled(
+    standardId: string,
+    ruleId: string,
+    selectedStandards: string[],
+  ): boolean {
     if (!selectedStandards.includes(standardId)) {
       return false;
     }
@@ -126,8 +138,14 @@ export class StandardsManager {
 
     for (const basePath of possiblePaths) {
       // Standards are organized by category
-      const categories = ["security", "architecture", "development", "testing", "devops"];
-      
+      const categories = [
+        "security",
+        "architecture",
+        "development",
+        "testing",
+        "devops",
+      ];
+
       for (const category of categories) {
         const standardPath = join(basePath, category, `${standardId}.md`);
         if (await exists(standardPath)) {
@@ -143,33 +161,36 @@ export class StandardsManager {
     return null;
   }
 
-  getStandardInfo(standardId: string): { name: string; description: string } | null {
-    const standardInfo: Record<string, { name: string; description: string }> = {
-      "owasp-web": {
-        name: "OWASP Top 10 Web",
-        description: "Web application security risks",
-      },
-      "15-factor": {
-        name: "15-Factor Apps",
-        description: "Modern cloud-native principles",
-      },
-      "tdd": {
-        name: "Test-Driven Development",
-        description: "Red-green-refactor cycle",
-      },
-      "nist-csf": {
-        name: "NIST Cybersecurity Framework",
-        description: "Governance and risk management",
-      },
-      "ddd": {
-        name: "Domain-Driven Design",
-        description: "Strategic and tactical patterns",
-      },
-      "solid": {
-        name: "SOLID Principles",
-        description: "Object-oriented design principles",
-      },
-    };
+  getStandardInfo(
+    standardId: string,
+  ): { name: string; description: string } | null {
+    const standardInfo: Record<string, { name: string; description: string }> =
+      {
+        "owasp-web": {
+          name: "OWASP Top 10 Web",
+          description: "Web application security risks",
+        },
+        "15-factor": {
+          name: "15-Factor Apps",
+          description: "Modern cloud-native principles",
+        },
+        "tdd": {
+          name: "Test-Driven Development",
+          description: "Red-green-refactor cycle",
+        },
+        "nist-csf": {
+          name: "NIST Cybersecurity Framework",
+          description: "Governance and risk management",
+        },
+        "ddd": {
+          name: "Domain-Driven Design",
+          description: "Strategic and tactical patterns",
+        },
+        "solid": {
+          name: "SOLID Principles",
+          description: "Object-oriented design principles",
+        },
+      };
 
     return standardInfo[standardId] || null;
   }
