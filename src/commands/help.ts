@@ -1,11 +1,21 @@
 /**
- * Help command for displaying methodology information
+ * Help command for displaying methodology and standards information
  */
+
+import { STANDARD_CATEGORIES } from "./standards.ts";
 
 interface HelpOptions {
   methodology?: string;
+  standard?: string;
   list?: boolean;
+  standards?: boolean;
   compare?: boolean;
+  all?: boolean;
+  security?: boolean;
+  architecture?: boolean;
+  development?: boolean;
+  testing?: boolean;
+  devops?: boolean;
   silent?: boolean;
 }
 
@@ -402,11 +412,680 @@ flow. Perfect for teams wanting flexibility with some ceremonies.
 `,
 };
 
+// Standards help content
+const STANDARDS_HELP: Record<string, string> = {
+  "owasp-web": `
+🔒 OWASP Top 10 Web Application Security
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Brought to you by Aichaku (愛着) - Adaptive Methodology Support
+
+The most critical security risks to web applications, updated every
+3-4 years by security experts worldwide. Essential for secure coding.
+
+🎯 The Top 10 (2021)
+
+A01. Broken Access Control
+  • Unauthorized access to resources
+  • Missing function level access control
+  • Elevation of privilege
+
+A02. Cryptographic Failures
+  • Sensitive data exposure
+  • Weak algorithms
+  • Poor key management
+
+A03. Injection
+  • SQL, NoSQL, OS, LDAP injection
+  • XSS (Cross-site Scripting)
+  • Code injection
+
+📊 Visual Overview
+┌─────────────────────────────────────────┐
+│           OWASP Top 10 Pyramid          │
+├─────────────────────────────────────────┤
+│ A01 │ Broken Access Control     │ 94%  │ ████████████
+│ A02 │ Cryptographic Failures    │ 77%  │ ██████████
+│ A03 │ Injection                 │ 77%  │ ██████████
+│ A04 │ Insecure Design          │ 73%  │ █████████
+│ A05 │ Security Misconfiguration │ 90%  │ ████████████
+│ ... │                           │       │
+└─────────────────────────────────────────┘
+        % of apps with vulnerability
+
+💻 Code Examples
+
+❌ Vulnerable (SQL Injection):
+  const query = \`SELECT * FROM users WHERE id = \${userId}\`;
+
+✅ Secure (Parameterized):
+  const query = 'SELECT * FROM users WHERE id = ?';
+  db.query(query, [userId]);
+
+🛡️ Implementation with Claude Code
+  You: "Check this code for OWASP violations"
+  You: "How do I prevent SQL injection here?"
+  You: "Review auth implementation for A01"
+
+📚 Resources
+  • Full Guide: https://owasp.org/Top10/
+  • Cheat Sheets: https://cheatsheetseries.owasp.org/
+  • Testing Guide: https://owasp.org/www-project-web-security-testing-guide/
+
+💡 Quick Tips
+  • Always validate input
+  • Use parameterized queries
+  • Implement proper access controls
+  • Keep dependencies updated
+  • Log security events
+`,
+
+  "15-factor": `
+☁️ 15-Factor App Methodology
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Brought to you by Aichaku (愛着) - Adaptive Methodology Support
+
+Beyond the original 12-factor, modern cloud-native best practices
+for building scalable, maintainable applications.
+
+📋 The 15 Factors
+
+I. Codebase
+   One codebase tracked in revision control, many deploys
+
+II. Dependencies
+   Explicitly declare and isolate dependencies
+
+III. Config
+   Store config in the environment
+
+IV. Backing Services
+   Treat backing services as attached resources
+
+V. Build, Release, Run
+   Strictly separate build and run stages
+
+VI. Processes
+   Execute the app as one or more stateless processes
+
+VII. Port Binding
+   Export services via port binding
+
+VIII. Concurrency
+   Scale out via the process model
+
+IX. Disposability
+   Maximize robustness with fast startup and graceful shutdown
+
+X. Dev/Prod Parity
+   Keep development, staging, and production as similar as possible
+
+XI. Logs
+   Treat logs as event streams
+
+XII. Admin Processes
+   Run admin/management tasks as one-off processes
+
+XIII. API First 🆕
+   Design API before implementation
+
+XIV. Telemetry 🆕
+   Gather metrics, logs, and traces
+
+XV. Authentication & Authorization 🆕
+   Security as a first-class concern
+
+🔄 Visual Architecture
+┌─────────────────────────────────────────────┐
+│              Load Balancer                  │
+├─────────────┬─────────────┬────────────────┤
+│   Process   │   Process   │   Process      │
+│  (Stateless)│  (Stateless)│  (Stateless)   │
+├─────────────┴─────────────┴────────────────┤
+│           Backing Services                  │
+│  ┌────────┐ ┌────────┐ ┌────────┐        │
+│  │Database│ │ Cache  │ │ Queue  │        │
+│  └────────┘ └────────┘ └────────┘        │
+└─────────────────────────────────────────────┘
+
+💻 Implementation Examples
+
+✅ Config (Factor III):
+  // Good: Environment variables
+  const dbUrl = process.env.DATABASE_URL;
+  
+  // Bad: Hardcoded values
+  const dbUrl = "postgres://localhost/myapp";
+
+✅ Logs (Factor XI):
+  // Good: Write to stdout
+  console.log(JSON.stringify({
+    timestamp: new Date().toISOString(),
+    level: 'info',
+    message: 'User logged in',
+    userId: user.id
+  }));
+
+🚀 With Claude Code
+  You: "Make this app 15-factor compliant"
+  You: "How should I handle configuration?"
+  You: "Review for factor violations"
+
+📚 Learn More
+  • Original 12-Factor: https://12factor.net/
+  • Cloud Native Patterns: https://www.cloudnativepatterns.org/
+  • Container Best Practices: https://cloud.google.com/architecture/best-practices-for-building-containers
+`,
+
+  "tdd": `
+🧪 Test-Driven Development (TDD)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Brought to you by Aichaku (愛着) - Adaptive Methodology Support
+
+Write tests first, then code. A discipline that leads to better
+design, fewer bugs, and confidence in your codebase.
+
+🔄 The TDD Cycle
+
+┌─────────────────────────────────────────┐
+│            RED-GREEN-REFACTOR           │
+│                                         │
+│     1. RED: Write failing test          │
+│         ↓                               │
+│     2. GREEN: Write minimal code        │
+│         ↓                               │
+│     3. REFACTOR: Improve the code       │
+│         ↓                               │
+│     ← ← ← ← ← ← ← ← ← ← ← ← ← ←       │
+└─────────────────────────────────────────┘
+
+📝 The Process
+
+1️⃣ RED Phase
+   • Write a test for the next bit of functionality
+   • Run the test and watch it fail
+   • Ensures test is actually testing something
+
+2️⃣ GREEN Phase
+   • Write the simplest code to make test pass
+   • Don't worry about elegance yet
+   • Just make it work
+
+3️⃣ REFACTOR Phase
+   • Clean up the code
+   • Remove duplication
+   • Improve design
+   • Tests ensure nothing breaks
+
+💻 Example: Calculator Addition
+
+// 1. RED: Write failing test
+test('adds 1 + 2 to equal 3', () => {
+  const calc = new Calculator();
+  expect(calc.add(1, 2)).toBe(3);
+});
+// ❌ Error: Calculator is not defined
+
+// 2. GREEN: Minimal code to pass
+class Calculator {
+  add(a, b) {
+    return a + b;
+  }
+}
+// ✅ Test passes!
+
+// 3. REFACTOR: Improve if needed
+class Calculator {
+  add(a: number, b: number): number {
+    return a + b;
+  }
+}
+
+📊 Benefits Visualization
+┌────────────────────────────────────┐
+│     Traditional vs TDD Coverage    │
+├────────────────────────────────────┤
+│ Traditional:                       │
+│ Code █████████░░░ 70%             │
+│ Tests ████░░░░░░░ 40%             │
+│                                    │
+│ TDD:                              │
+│ Code ████████████ 100%            │
+│ Tests ████████████ 100%           │
+└────────────────────────────────────┘
+
+✅ Benefits
+  • Forces good design (testable = good)
+  • Provides living documentation
+  • Catches regressions immediately
+  • Gives confidence to refactor
+  • Reduces debugging time
+
+❌ Common Pitfalls
+  • Writing tests after code (not TDD)
+  • Testing implementation not behavior
+  • Not refactoring in the third step
+  • Writing too much code in green phase
+
+🎯 With Claude Code
+  You: "Help me TDD this feature"
+  You: "Write a failing test for user login"
+  You: "Now make this test pass"
+
+📚 Resources
+  • Kent Beck's "Test Driven Development"
+  • Growing Object-Oriented Software (GOOS)
+  • TDD By Example: https://github.com/tastejs/todomvc
+
+💡 Pro Tips
+  • Keep tests fast (milliseconds)
+  • Test behavior, not implementation
+  • One assertion per test (usually)
+  • Use descriptive test names
+  • Delete redundant tests
+`,
+
+  "nist-csf": `
+🛡️ NIST Cybersecurity Framework
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Brought to you by Aichaku (愛着) - Adaptive Methodology Support
+
+A comprehensive approach to managing cybersecurity risk, used by
+organizations worldwide. Five core functions to protect assets.
+
+🎯 The Five Functions
+
+┌─────────────────────────────────────────────────┐
+│              NIST CSF Core Functions            │
+├─────────────────────────────────────────────────┤
+│                                                 │
+│  IDENTIFY → PROTECT → DETECT → RESPOND → RECOVER│
+│      🔍        🛡️        👁️        🚨        🔄    │
+│                                                 │
+└─────────────────────────────────────────────────┘
+
+📋 Function Breakdown
+
+1️⃣ IDENTIFY (ID)
+   • Asset Management
+   • Risk Assessment
+   • Governance
+   Know what you need to protect
+
+2️⃣ PROTECT (PR)
+   • Access Control
+   • Data Security
+   • Training
+   Implement safeguards
+
+3️⃣ DETECT (DE)
+   • Anomalies & Events
+   • Continuous Monitoring
+   • Detection Processes
+   Find incidents quickly
+
+4️⃣ RESPOND (RS)
+   • Response Planning
+   • Communications
+   • Mitigation
+   Take action on incidents
+
+5️⃣ RECOVER (RC)
+   • Recovery Planning
+   • Improvements
+   • Communications
+   Restore and learn
+
+💻 Implementation Examples
+
+// IDENTIFY: Asset inventory
+const assets = {
+  critical: ['user-database', 'payment-service'],
+  important: ['analytics', 'reporting'],
+  standard: ['blog', 'docs-site']
+};
+
+// PROTECT: Access control
+@RequireRole('admin')
+async deleteUser(userId: string) {
+  await auditLog('user.delete', { userId, deletedBy: currentUser });
+  return userService.delete(userId);
+}
+
+// DETECT: Anomaly detection
+if (loginAttempts > 5 && timeWindow < 60) {
+  alertSecurityTeam('Possible brute force attack', { ip, user });
+}
+
+📊 Maturity Levels
+Level 1: Partial    █░░░░
+Level 2: Informed   ██░░░
+Level 3: Repeatable ███░░
+Level 4: Adaptive   ████░
+Level 5: Optimized  █████
+
+🎯 Quick Wins
+  • Start with asset inventory
+  • Implement basic access controls
+  • Set up security event logging
+  • Create incident response plan
+  • Test recovery procedures
+
+📚 Learn More
+  • Framework: https://www.nist.gov/cyberframework
+  • Implementation Guide: https://csrc.nist.gov/publications/
+  • Assessment Tools: https://www.nist.gov/cyberframework/assessment-auditing-resources
+`,
+
+  "ddd": `
+🏗️ Domain-Driven Design (DDD)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Brought to you by Aichaku (愛着) - Adaptive Methodology Support
+
+Tackle complex software by focusing on the core domain and domain
+logic. Create a shared language between developers and domain experts.
+
+🎯 Core Concepts
+
+┌─────────────────────────────────────────────────┐
+│              DDD Building Blocks                │
+├─────────────────────────────────────────────────┤
+│                                                 │
+│  Bounded Context                                │
+│  ┌─────────────────────────────────┐          │
+│  │  Aggregate                       │          │
+│  │  ┌─────────────┐                │          │
+│  │  │   Entity    │ Value Objects  │          │
+│  │  │  (has ID)   │  (no ID)       │          │
+│  │  └─────────────┘                │          │
+│  │                                  │          │
+│  │  Domain Events → → → → → → → →  │          │
+│  └─────────────────────────────────┘          │
+│                                                 │
+└─────────────────────────────────────────────────┘
+
+📚 Key Patterns
+
+ENTITY
+  • Has unique identity
+  • Identity persists over time
+  • Mutable state
+  
+  class User {
+    constructor(public id: UserId, 
+                public email: Email) {}
+  }
+
+VALUE OBJECT
+  • No identity
+  • Immutable
+  • Defined by attributes
+  
+  class Money {
+    constructor(public amount: number, 
+                public currency: string) {}
+  }
+
+AGGREGATE
+  • Cluster of entities/VOs
+  • Transaction boundary
+  • Consistency boundary
+  
+  class Order {
+    constructor(
+      private id: OrderId,
+      private items: OrderItem[],
+      private customer: CustomerId
+    ) {}
+    
+    addItem(item: OrderItem) {
+      // Business rules enforced here
+    }
+  }
+
+📊 Strategic Design
+┌──────────────┬──────────────┬──────────────┐
+│   Subdomain  │   Subdomain  │   Subdomain  │
+├──────────────┼──────────────┼──────────────┤
+│     Core     │  Supporting  │   Generic    │
+│ (Your secret │   (Needed    │ (Buy don't   │
+│    sauce)    │  but not     │   build)     │
+│              │   unique)    │              │
+└──────────────┴──────────────┴──────────────┘
+
+🗣️ Ubiquitous Language
+  Team agrees: "Order" means:
+  • Has items
+  • Belongs to customer
+  • Can be placed, shipped, delivered
+  • NOT "database table orders"
+
+💻 With Claude Code
+  You: "Model this as a DDD aggregate"
+  You: "What's the bounded context here?"
+  You: "Should this be an entity or value object?"
+
+📚 Learn More
+  • Eric Evans' "Domain-Driven Design"
+  • Implementing DDD by Vaughn Vernon
+  • DDD Community: https://dddcommunity.org/
+`,
+
+  "solid": `
+🎯 SOLID Principles
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Brought to you by Aichaku (愛着) - Adaptive Methodology Support
+
+Five principles for writing maintainable object-oriented code.
+The foundation of clean architecture and good design.
+
+📋 The Principles
+
+S - Single Responsibility Principle
+O - Open/Closed Principle  
+L - Liskov Substitution Principle
+I - Interface Segregation Principle
+D - Dependency Inversion Principle
+
+🔤 Detailed Breakdown
+
+S ── SINGLE RESPONSIBILITY ─────────────────────────
+│
+│  "A class should have one reason to change"
+│
+│  ❌ Bad: Class doing too much
+│  class User {
+│    validateEmail() { }
+│    saveToDatabase() { }
+│    sendWelcomeEmail() { }
+│    generateReport() { }
+│  }
+│
+│  ✅ Good: Separate concerns
+│  class User { }
+│  class UserValidator { }
+│  class UserRepository { }
+│  class EmailService { }
+│
+O ── OPEN/CLOSED ────────────────────────────────────
+│
+│  "Open for extension, closed for modification"
+│
+│  ❌ Bad: Modifying existing code
+│  class AreaCalculator {
+│    calculate(shape) {
+│      if (shape.type === 'circle') { }
+│      if (shape.type === 'square') { }
+│      // Adding triangle requires changing this
+│    }
+│  }
+│
+│  ✅ Good: Extend via inheritance
+│  interface Shape {
+│    area(): number;
+│  }
+│  class Circle implements Shape { }
+│  class Square implements Shape { }
+│  class Triangle implements Shape { } // Just add
+│
+L ── LISKOV SUBSTITUTION ────────────────────────────
+│
+│  "Derived classes must be substitutable"
+│
+│  ❌ Bad: Breaking parent's contract
+│  class Bird {
+│    fly() { }
+│  }
+│  class Penguin extends Bird {
+│    fly() { throw Error("Can't fly!"); }
+│  }
+│
+│  ✅ Good: Proper abstraction
+│  class Bird { }
+│  class FlyingBird extends Bird {
+│    fly() { }
+│  }
+│  class Penguin extends Bird { }
+│
+I ── INTERFACE SEGREGATION ──────────────────────────
+│
+│  "Don't force clients to depend on unused methods"
+│
+│  ❌ Bad: Fat interface
+│  interface Worker {
+│    work();
+│    eat();
+│    sleep();
+│  }
+│
+│  ✅ Good: Focused interfaces
+│  interface Workable { work(); }
+│  interface Eatable { eat(); }
+│  interface Sleepable { sleep(); }
+│
+D ── DEPENDENCY INVERSION ───────────────────────────
+│
+│  "Depend on abstractions, not concretions"
+│
+│  ❌ Bad: Direct dependency
+│  class EmailService {
+│    constructor() {
+│      this.smtp = new SmtpClient();
+│    }
+│  }
+│
+│  ✅ Good: Inject abstraction
+│  class EmailService {
+│    constructor(private mailer: IMailer) { }
+│  }
+
+📊 Benefits Visualization
+         Before SOLID          After SOLID
+         ┌─────────┐          ┌───┐ ┌───┐
+         │ Big     │          │ S │ │ R │
+         │ Complex │    →     ├───┤ ├───┤
+         │ Class   │          │ P │ │ P │
+         └─────────┘          └───┘ └───┘
+         Hard to test         Easy to test
+         Hard to change       Easy to extend
+
+💡 Remember
+  • Each principle supports the others
+  • Start with S (easiest to apply)
+  • Don't over-engineer
+  • Pragmatism over dogma
+
+💻 With Claude Code
+  You: "Review this for SOLID violations"
+  You: "How do I apply SRP here?"
+  You: "Make this follow dependency inversion"
+
+📚 Learn More
+  • Clean Code by Robert C. Martin
+  • SOLID Principles: https://solidprinciples.com/
+  • Refactoring Guru: https://refactoring.guru/design-patterns
+`,
+};
+
+// Helper to normalize standard names
+function normalizeStandardName(name: string): string | undefined {
+  const normalized = name.toLowerCase().replace(/[\s-_]/g, "");
+
+  // Direct matches
+  const directMatches: Record<string, string> = {
+    "owasp": "owasp-web",
+    "owasptop10": "owasp-web",
+    "12factor": "15-factor",
+    "15factor": "15-factor",
+    "testdrivendevelopment": "tdd",
+    "nist": "nist-csf",
+    "nistcyber": "nist-csf",
+    "domaindriven": "ddd",
+    "domaindrivendesign": "ddd",
+  };
+
+  if (directMatches[normalized]) {
+    return directMatches[normalized];
+  }
+
+  // Check if it matches any standard ID directly
+  for (const id of Object.keys(STANDARDS_HELP)) {
+    if (id.replace(/-/g, "") === normalized) {
+      return id;
+    }
+  }
+
+  return undefined;
+}
+
 /**
- * Display methodology help information
+ * Display methodology and standards help information
  */
 export function help(options: HelpOptions = {}): HelpResult {
   try {
+    // List all standards
+    if (options.standards) {
+      return listStandards(options);
+    }
+
+    // Show specific standard help
+    if (options.standard) {
+      const normalizedName = normalizeStandardName(options.standard);
+
+      if (!normalizedName) {
+        return {
+          success: false,
+          message:
+            `Unknown standard: ${options.standard}. Use 'aichaku help --standards' to see available options.`,
+        };
+      }
+
+      const content = STANDARDS_HELP[normalizedName];
+      if (!content) {
+        return {
+          success: false,
+          message: `No detailed help available for ${options.standard} yet.`,
+        };
+      }
+
+      return {
+        success: true,
+        content: content.trim(),
+      };
+    }
+
+    // List all resources (methodologies + standards)
+    if (options.all) {
+      return listAllResources();
+    }
+
+    // List by category
+    if (
+      options.security || options.architecture || options.development ||
+      options.testing || options.devops
+    ) {
+      return listByCategory(options);
+    }
+
     // List all methodologies
     if (options.list) {
       const list = Object.entries(METHODOLOGIES)
@@ -478,28 +1157,36 @@ export function help(options: HelpOptions = {}): HelpResult {
     // Default help about the help command
     return {
       success: true,
-      content: `🪴 Aichaku - Adaptive Methodology Support
+      content: `🪴 Aichaku Knowledge Base
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-This is the methodology help system. Learn how methodologies
-work with Claude Code and adapt to your natural language.
+Learn methodologies and development standards to improve your
+workflow with Claude Code.
 
-🎯 Methodology Help
-  aichaku help shape up     Learn about Shape Up
+📚 Development Methodologies
+  aichaku help shape-up     Learn about Shape Up
   aichaku help scrum        Learn about Scrum
   aichaku help --list       See all methodologies
   aichaku help --compare    Compare methodologies
 
+🛡️ Standards & Best Practices
+  aichaku help owasp-web    Learn OWASP Top 10
+  aichaku help tdd          Learn Test-Driven Development
+  aichaku help --standards  See all standards
+  aichaku help --security   Security standards
+
+📋 Browse Everything
+  aichaku help --all        List all resources
+
 💡 How It Works with Claude Code
   Say "let's shape a feature"    → Activates Shape Up mode
-  Say "plan our sprint"          → Uses Scrum practices  
-  Say "show the kanban board"    → Displays work tracking
-  Say "write tests first"        → Applies XP principles
+  Say "check for OWASP issues"   → Reviews security risks
+  Say "help me TDD this"         → Guides test-first approach
 
-✨ Natural language triggers adapt methodologies to how you work!
+✨ Natural language adapts both methodologies and standards!
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📍 Looking for CLI commands and options?
+📍 Looking for CLI commands?
    Run 'aichaku --help' to see all available commands
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -513,4 +1200,125 @@ work with Claude Code and adapt to your natural language.
       }`,
     };
   }
+}
+
+/**
+ * List all standards with optional category filtering
+ */
+function listStandards(options: HelpOptions): HelpResult {
+  const categories = options.security || options.architecture ||
+    options.development || options.testing || options.devops;
+
+  if (categories) {
+    return listByCategory(options);
+  }
+
+  let content = "🪴 Aichaku: Available Standards\n\n";
+
+  // Group standards by category
+  for (const [_categoryId, category] of Object.entries(STANDARD_CATEGORIES)) {
+    content += `${category.name}\n`;
+    content += `${"-".repeat(category.name.length)}\n`;
+
+    for (const [standardId, standard] of Object.entries(category.standards)) {
+      content += `  • ${standardId}: ${standard.name}\n`;
+      content += `    ${standard.description}\n`;
+    }
+    content += "\n";
+  }
+
+  content += `\n📝 Get help using:\n`;
+  content += `  • aichaku help owasp-web\n`;
+  content += `  • aichaku help tdd\n`;
+  content += `  • aichaku help 15-factor\n`;
+  content += `\n✨ Use standards to guide Claude Code's development approach!`;
+
+  return {
+    success: true,
+    content,
+  };
+}
+
+/**
+ * List standards by category
+ */
+function listByCategory(options: HelpOptions): HelpResult {
+  let content = "🪴 Aichaku: Standards by Category\n\n";
+
+  const showCategories = [];
+  if (options.security) showCategories.push("security");
+  if (options.architecture) showCategories.push("architecture");
+  if (options.development) showCategories.push("development");
+  if (options.testing) showCategories.push("testing");
+  if (options.devops) showCategories.push("devops");
+
+  if (showCategories.length === 0) {
+    showCategories.push(...Object.keys(STANDARD_CATEGORIES));
+  }
+
+  for (const categoryId of showCategories) {
+    const category =
+      STANDARD_CATEGORIES[categoryId as keyof typeof STANDARD_CATEGORIES];
+    if (!category) continue;
+
+    content += `${category.name}\n`;
+    content += `${"-".repeat(category.name.length)}\n`;
+    content += `${category.description}\n\n`;
+
+    for (const [standardId, standard] of Object.entries(category.standards)) {
+      content += `  • ${standardId}: ${standard.name}\n`;
+      content += `    ${standard.description}\n`;
+      content += `    Tags: ${standard.tags.join(", ")}\n\n`;
+    }
+  }
+
+  return {
+    success: true,
+    content,
+  };
+}
+
+/**
+ * List all resources (methodologies + standards)
+ */
+function listAllResources(): HelpResult {
+  let content = `🪴 Aichaku: Complete Knowledge Base
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📚 Development Methodologies (${Object.keys(METHODOLOGIES).length})
+`;
+
+  // List methodologies
+  Object.entries(METHODOLOGIES).forEach(([_key, meta], index) => {
+    content += `  ${index + 1}. ${meta.icon} ${
+      meta.name.padEnd(18)
+    } - ${meta.summary}\n`;
+  });
+
+  content += `\n🛡️ Standards & Best Practices (${
+    Object.values(STANDARD_CATEGORIES).reduce((sum, cat) =>
+      sum + Object.keys(cat.standards).length, 0)
+  })\n`;
+
+  // List standards by category
+  for (const [_categoryId, category] of Object.entries(STANDARD_CATEGORIES)) {
+    content += `\n${category.name}:\n`;
+    for (const [standardId, standard] of Object.entries(category.standards)) {
+      content += `  • ${standardId.padEnd(20)} - ${standard.name}\n`;
+    }
+  }
+
+  content += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  
+📖 Learn More:
+  • Specific methodology: aichaku help shape-up
+  • Specific standard: aichaku help owasp-web
+  • Compare approaches: aichaku help --compare
+  
+✨ Use these resources to improve your development workflow!`;
+
+  return {
+    success: true,
+    content,
+  };
 }

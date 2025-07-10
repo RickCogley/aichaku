@@ -30,6 +30,8 @@ import { upgrade } from "./src/commands/upgrade.ts";
 import { uninstall } from "./src/commands/uninstall.ts";
 import { integrate } from "./src/commands/integrate.ts";
 import { help } from "./src/commands/help.ts";
+import { hooks } from "./src/commands/hooks.ts";
+import { standards } from "./src/commands/standards.ts";
 import { VERSION } from "./mod.ts";
 
 const args = parseArgs(Deno.args, {
@@ -43,8 +45,19 @@ const args = parseArgs(Deno.args, {
     "check",
     "list",
     "compare",
+    "validate",
+    "categories",
+    "select",
+    "show",
+    "standards",
+    "all",
+    "security",
+    "architecture",
+    "development",
+    "testing",
+    "devops",
   ],
-  string: ["path"],
+  string: ["path", "install", "add", "remove", "search"],
   alias: {
     h: "help",
     v: "version",
@@ -55,6 +68,7 @@ const args = parseArgs(Deno.args, {
     d: "dry-run",
     c: "check",
     l: "list",
+    i: "install",
   },
 });
 
@@ -87,6 +101,8 @@ Commands:
   uninstall   Remove Aichaku from your system
   integrate   Add Aichaku reference to project's CLAUDE.md
   help        Show methodology information and guidance
+  hooks       Manage Claude Code hooks for automation
+  standards   Choose modular guidance standards for your project
 
 Options:
   -g, --global     Apply to global installation (~/.claude)
@@ -111,16 +127,27 @@ Examples:
   # Upgrade to latest version
   aichaku upgrade
 
-  # Learn about methodologies
+  # Learn about methodologies & standards
   aichaku help
-  aichaku help shape up
+  aichaku help shape-up
+  aichaku help owasp-web
   aichaku help --list
+  aichaku help --standards
+  aichaku help --all
 
   # Remove Aichaku
   aichaku uninstall
 
   # Add Aichaku to project's CLAUDE.md
   aichaku integrate
+
+  # Manage Claude Code hooks
+  aichaku hooks --list
+  aichaku hooks --install basic
+
+  # Choose standards for your project
+  aichaku standards --list
+  aichaku standards --add owasp-web,15-factor
 
 Learn more: https://github.com/RickCogley/aichaku
 `);
@@ -277,15 +304,42 @@ ${
       break;
     }
 
+    case "hooks": {
+      const hooksOptions = {
+        list: args.list as boolean | undefined,
+        install: args.install as string | undefined,
+        validate: args.validate as boolean | undefined,
+        remove: args.remove as boolean | undefined,
+        dryRun: args["dry-run"] as boolean | undefined,
+      };
+
+      await hooks(hooksOptions);
+      break;
+    }
+
     case "help": {
-      // Parse methodology from remaining args
-      const methodology = args._[1]?.toString();
+      // Parse topic from remaining args
+      const topic = args._[1]?.toString();
+
+      // Check if it's a standard or methodology
+      const isStandard = topic &&
+        (topic.includes("owasp") || topic.includes("factor") ||
+          topic === "tdd" || topic === "nist" || topic === "ddd" ||
+          topic === "solid");
 
       const helpOptions = {
-        methodology,
-        list: args.list,
-        compare: args.compare,
-        silent: args.silent,
+        methodology: !isStandard ? topic : undefined,
+        standard: isStandard ? topic : undefined,
+        list: args.list as boolean | undefined,
+        standards: args.standards as boolean | undefined,
+        compare: args.compare as boolean | undefined,
+        all: args.all as boolean | undefined,
+        security: args.security as boolean | undefined,
+        architecture: args.architecture as boolean | undefined,
+        development: args.development as boolean | undefined,
+        testing: args.testing as boolean | undefined,
+        devops: args.devops as boolean | undefined,
+        silent: args.silent as boolean | undefined,
       };
 
       const result = help(helpOptions);
@@ -297,6 +351,23 @@ ${
       if (result.content && !args.silent) {
         console.log(result.content);
       }
+      break;
+    }
+
+    case "standards": {
+      const standardsOptions = {
+        list: args.list as boolean | undefined,
+        categories: args.categories as boolean | undefined,
+        select: args.select as boolean | undefined,
+        show: args.show as boolean | undefined,
+        add: args.add as string | undefined,
+        remove: args.remove as string | undefined,
+        search: args.search as string | undefined,
+        projectPath: args.path as string | undefined,
+        dryRun: args["dry-run"] as boolean | undefined,
+      };
+
+      await standards(standardsOptions);
       break;
     }
 
