@@ -32,6 +32,7 @@ import { integrate } from "./src/commands/integrate.ts";
 import { help } from "./src/commands/help.ts";
 import { hooks } from "./src/commands/hooks.ts";
 import { standards } from "./src/commands/standards.ts";
+import { runMCPCommand } from "./src/commands/mcp.ts";
 import { VERSION } from "./mod.ts";
 
 const args = parseArgs(Deno.args, {
@@ -56,6 +57,9 @@ const args = parseArgs(Deno.args, {
     "development",
     "testing",
     "devops",
+    "config",
+    "status",
+    "install-mcp",
   ],
   string: ["path", "install", "add", "remove", "search"],
   alias: {
@@ -103,6 +107,7 @@ Commands:
   help        Show methodology information and guidance
   hooks       Manage Claude Code hooks for automation
   standards   Choose modular guidance standards for your project
+  mcp         Manage MCP (Model Context Protocol) server for code review
 
 Options:
   -g, --global     Apply to global installation (~/.claude)
@@ -133,6 +138,10 @@ Examples:
   aichaku help owasp-web
   aichaku help --list
   aichaku help --standards
+  
+  # Install and configure MCP server
+  aichaku mcp --install
+  aichaku mcp --config
   aichaku help --all
 
   # Remove Aichaku
@@ -368,6 +377,19 @@ ${
       };
 
       await standards(standardsOptions);
+      break;
+    }
+
+    case "mcp": {
+      const mcpOptions = {
+        install: args["install-mcp"] as boolean | undefined ||
+          (args._[1] === "install"),
+        config: args.config as boolean | undefined || (args._[1] === "config"),
+        status: args.status as boolean | undefined || (args._[1] === "status"),
+        help: args.help as boolean | undefined,
+      };
+
+      await runMCPCommand(mcpOptions);
       break;
     }
 
