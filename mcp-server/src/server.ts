@@ -11,6 +11,7 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
   type Tool,
+  type CallToolRequest,
 } from "@modelcontextprotocol/sdk/types.js";
 import { ReviewEngine } from "./review-engine.ts";
 import { StandardsManager } from "./standards-manager.ts";
@@ -122,7 +123,7 @@ class MCPCodeReviewer {
     });
 
     // Handle tool calls
-    this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
+    this.server.setRequestHandler(CallToolRequestSchema, async (request: CallToolRequest) => {
       const { name, arguments: args } = request.params;
 
       try {
