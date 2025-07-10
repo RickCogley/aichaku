@@ -1,5 +1,163 @@
 import { exists } from "jsr:@std/fs@1";
-import { join, resolve } from "jsr:@std/path@1";
+import { isAbsolute, join, normalize, resolve } from "jsr:@std/path@1";
+
+// Type definitions
+interface ProjectStandardsConfig {
+  version?: string;
+  selected: string[];
+}
+
+/**
+ * Validate path to prevent directory traversal
+ * InfoSec: Ensures paths stay within intended directories
+ */
+function validatePath(basePath: string, ...segments: string[]): string {
+  // Validate each segment
+  for (const segment of segments) {
+    if (segment.includes("..") || isAbsolute(segment)) {
+      throw new Error("Invalid path segment: potential directory traversal");
+    }
+  }
+
+  const fullPath = join(basePath, ...segments);
+  const normalized = normalize(fullPath);
+  const resolvedBase = resolve(basePath);
+
+  // Ensure the path stays within the base directory
+  if (!normalized.startsWith(resolvedBase)) {
+    throw new Error("Path traversal attempt detected");
+  }
+
+  return normalized;
+}
+
+/**
+ * Load project standards configuration with validation
+ */
+async function loadProjectStandards(projectPath: string): Promise<string[]> {
+  const configPath = validatePath(
+    projectPath,
+    ".claude",
+    ".aichaku-standards.json",
+  );
+
+  if (!(await exists(configPath))) {
+    return [];
+  }
+
+  try {
+    const content = await Deno.readTextFile(configPath);
+    const config = JSON.parse(content) as ProjectStandardsConfig;
+
+    // Validate and sanitize
+    if (!Array.isArray(config.selected)) {
+      console.warn("Invalid standards configuration: expected array");
+      return [];
+    }
+
+    return config.selected.filter(
+      (id: unknown) => typeof id === "string" && id.length > 0,
+    );
+  } catch (_error) {
+    console.warn("Failed to load project standards configuration");
+    return [];
+  }
+}
+
+/**
+ * Load content for a specific standard with security validation
+ * InfoSec: Validates standard IDs to prevent path injection
+ */
+async function loadStandardContent(standardId: string): Promise<string | null> {
+  const home = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
+  if (!home) {
+    console.warn("Unable to determine home directory");
+    return null;
+  }
+
+  // Validate standardId to prevent path injection
+  if (!/^[a-z0-9-]+$/.test(standardId)) {
+    console.warn(`Invalid standard ID format: ${standardId}`);
+    return null;
+  }
+
+  const categoryMappings: Record<string, string> = {
+    "owasp-web": "security",
+    "nist-csf": "security",
+    "gdpr": "security",
+    "pci-dss": "security",
+    "15-factor": "architecture",
+    "ddd": "architecture",
+    "clean-arch": "architecture",
+    "microservices": "architecture",
+    "google-style": "development",
+    "conventional-commits": "development",
+    "solid": "development",
+    "tdd": "development",
+    "bdd": "testing",
+    "test-pyramid": "testing",
+    "sre": "devops",
+    "gitops": "devops",
+    "dora": "devops",
+  };
+
+  const category = categoryMappings[standardId];
+  if (!category) {
+    return null;
+  }
+
+  // Use validatePath to ensure security
+  try {
+    const standardPath = validatePath(
+      home,
+      ".claude",
+      "standards",
+      category,
+      `${standardId}.md`,
+    );
+
+    if (!(await exists(standardPath))) {
+      return null;
+    }
+
+    return await Deno.readTextFile(standardPath);
+  } catch (_error) {
+    console.warn(`Failed to load standard content for ${standardId}`);
+    return null;
+  }
+}
+
+/**
+ * Generate standards section for CLAUDE.md
+ */
+async function generateStandardsSection(projectPath: string): Promise<string> {
+  const selectedStandards = await loadProjectStandards(projectPath);
+
+  if (selectedStandards.length === 0) {
+    return "";
+  }
+
+  let standardsContent = `## 📚 Selected Standards & Guidelines
+
+🪴 Aichaku: Based on your project configuration, follow these standards when generating code:
+
+`;
+
+  for (const standardId of selectedStandards) {
+    const content = await loadStandardContent(standardId);
+    if (content) {
+      standardsContent += `### ${standardId.toUpperCase()}\n\n`;
+      standardsContent += content;
+      standardsContent += "\n\n---\n\n";
+    } else {
+      standardsContent += `### ${standardId.toUpperCase()}\n\n`;
+      standardsContent +=
+        `Standard content not found. Please ensure the standard is properly installed.\n\n---\n\n`;
+    }
+  }
+
+  return standardsContent;
+}
 
 interface IntegrateOptions {
   projectPath?: string;
@@ -9,8 +167,14 @@ interface IntegrateOptions {
 }
 
 // Markers for surgical updates
-const MARKER_START = "<!-- AICHAKU:START -->";
-const MARKER_END = "<!-- AICHAKU:END -->";
+const METHODOLOGY_MARKER_START = "<!-- AICHAKU:METHODOLOGY:START -->";
+const METHODOLOGY_MARKER_END = "<!-- AICHAKU:METHODOLOGY:END -->";
+const STANDARDS_MARKER_START = "<!-- AICHAKU:STANDARDS:START -->";
+const STANDARDS_MARKER_END = "<!-- AICHAKU:STANDARDS:END -->";
+
+// Legacy markers for backward compatibility (kept for reference)
+// const LEGACY_MARKER_START = "<!-- AICHAKU:START -->";
+// const LEGACY_MARKER_END = "<!-- AICHAKU:END -->";
 
 interface IntegrateResult {
   success: boolean;
@@ -222,6 +386,10 @@ export async function integrate(
   // codeql[js/path-injection] Safe because projectPath is resolved and "CLAUDE.md" is hardcoded
   const claudeMdPath = join(projectPath, "CLAUDE.md");
 
+  // Generate standards section
+  const standardsSection = await generateStandardsSection(projectPath);
+  const selectedStandards = await loadProjectStandards(projectPath);
+
   if (options.dryRun) {
     const fileExists = await checkFileExists(claudeMdPath);
     console.log(
@@ -229,13 +397,10 @@ export async function integrate(
         fileExists ? "update" : "create"
       } CLAUDE.md at: ${claudeMdPath}`,
     );
-    if (fileExists) {
+    console.log("[DRY RUN] Would add methodology section");
+    if (selectedStandards.length > 0) {
       console.log(
-        "[DRY RUN] Would check if methodology section exists and add if missing",
-      );
-    } else {
-      console.log(
-        "[DRY RUN] Would create new CLAUDE.md with Aichaku methodology section",
+        `[DRY RUN] Would add standards section with ${selectedStandards.length} standards`,
       );
     }
     return {
@@ -247,102 +412,141 @@ export async function integrate(
   }
 
   try {
-    // codeql[js/useless-assignment-to-local]
     let action: "created" | "updated" | "skipped" = "skipped";
 
     if (await exists(claudeMdPath)) {
-      // File exists - check for markers or existing content
-      // Security: claudeMdPath is safe - constructed from resolved projectPath and hardcoded "CLAUDE.md"
+      // File exists - update with surgical precision
       const content = await Deno.readTextFile(claudeMdPath);
+      let updatedContent = content;
 
-      // Check for markers
-      const startIdx = content.indexOf(MARKER_START);
-      const endIdx = content.indexOf(MARKER_END);
+      // Handle methodology section
+      const methodologyStartIdx = content.indexOf(METHODOLOGY_MARKER_START);
+      const methodologyEndIdx = content.indexOf(METHODOLOGY_MARKER_END);
 
-      if (startIdx !== -1 && endIdx !== -1) {
-        // Markers found - surgical replacement
-        const before = content.slice(0, startIdx);
-        const after = content.slice(endIdx + MARKER_END.length);
-        const newContent =
-          `${before}${MARKER_START}\n${METHODOLOGY_SECTION}\n${MARKER_END}${after}`;
-
-        await Deno.writeTextFile(claudeMdPath, newContent);
-
-        return {
-          success: true,
-          path: claudeMdPath,
-          message: "Updated Aichaku methodology section",
-          action: "updated",
-          lineNumber: content.slice(0, startIdx).split("\n").length,
-        };
-      } else if (content.includes("Aichaku") || content.includes("aichaku")) {
-        // Legacy format detected
-        if (!options.force) {
-          return {
-            success: true,
-            path: claudeMdPath,
-            message:
-              "Legacy Aichaku section found. Use --force to upgrade to marker-based format.",
-            action: "skipped",
-          };
-        }
-        // If force is true, we'll add the new marked section below
-      }
-
-      // Add new section with markers
-      const markedSection =
-        `${MARKER_START}\n${METHODOLOGY_SECTION}\n${MARKER_END}`;
-
-      // Check if there's already a ## Methodologies section (legacy)
-      if (
-        content.includes("## Methodologies") && !content.includes(MARKER_START)
-      ) {
-        // Replace existing section with marked version
-        const methodologiesRegex = /## Methodologies[\s\S]*?(?=\n##|$)/;
-        const updatedContent = content.replace(
-          methodologiesRegex,
-          markedSection,
+      if (methodologyStartIdx !== -1 && methodologyEndIdx !== -1) {
+        // Update existing methodology section
+        const before = content.slice(0, methodologyStartIdx);
+        const after = content.slice(
+          methodologyEndIdx + METHODOLOGY_MARKER_END.length,
         );
-        await Deno.writeTextFile(claudeMdPath, updatedContent);
-        action = "updated";
+        updatedContent =
+          `${before}${METHODOLOGY_MARKER_START}\n${METHODOLOGY_SECTION}\n${METHODOLOGY_MARKER_END}${after}`;
       } else {
-        // Add new section after the first paragraph or at the beginning
-        const lines = content.split("\n");
-        let insertIndex = 0;
+        // Add new methodology section
+        const methodologyMarkedSection =
+          `${METHODOLOGY_MARKER_START}\n${METHODOLOGY_SECTION}\n${METHODOLOGY_MARKER_END}`;
 
-        // Find the first empty line after initial content
-        for (let i = 0; i < lines.length; i++) {
-          if (lines[i].startsWith("#")) {
-            // Found a section, insert before it
-            insertIndex = i;
-            break;
+        // Check for legacy methodology section
+        if (
+          content.includes("## Methodologies") ||
+          content.includes("## 🎯 MANDATORY: Aichaku Integration Rules")
+        ) {
+          if (!options.force) {
+            return {
+              success: true,
+              path: claudeMdPath,
+              message:
+                "Legacy Aichaku methodology section found. Use --force to upgrade to marker-based format.",
+              action: "skipped",
+            };
           }
-        }
-
-        if (insertIndex === 0) {
-          // No sections found, append at end
-          await Deno.writeTextFile(
-            claudeMdPath,
-            content + "\n\n" + markedSection,
+          // Replace legacy section
+          const methodologiesRegex =
+            /## (🎯 MANDATORY: Aichaku Integration Rules|Methodologies)[\s\S]*?(?=\n##|$)/;
+          updatedContent = content.replace(
+            methodologiesRegex,
+            methodologyMarkedSection,
           );
         } else {
-          // Insert before the first section
-          lines.splice(insertIndex, 0, "", markedSection, "");
-          await Deno.writeTextFile(claudeMdPath, lines.join("\n"));
+          // Insert methodology section after initial content
+          const lines = content.split("\n");
+          let insertIndex = lines.length;
+
+          // Find the first section header to insert before it
+          for (let i = 0; i < lines.length; i++) {
+            if (lines[i].startsWith("## ")) {
+              insertIndex = i;
+              break;
+            }
+          }
+
+          if (insertIndex === lines.length) {
+            // No sections found, append at end
+            updatedContent = content + "\n\n" + methodologyMarkedSection;
+          } else {
+            // Insert before the first section
+            lines.splice(insertIndex, 0, "", methodologyMarkedSection, "");
+            updatedContent = lines.join("\n");
+          }
         }
-        action = "updated";
       }
 
-      // Console output removed - CLI handles messaging
+      // Handle standards section
+      if (standardsSection) {
+        const standardsStartIdx = updatedContent.indexOf(
+          STANDARDS_MARKER_START,
+        );
+        const standardsEndIdx = updatedContent.indexOf(STANDARDS_MARKER_END);
+
+        if (standardsStartIdx !== -1 && standardsEndIdx !== -1) {
+          // Update existing standards section
+          const before = updatedContent.slice(0, standardsStartIdx);
+          const after = updatedContent.slice(
+            standardsEndIdx + STANDARDS_MARKER_END.length,
+          );
+          updatedContent =
+            `${before}${STANDARDS_MARKER_START}\n${standardsSection}\n${STANDARDS_MARKER_END}${after}`;
+        } else {
+          // Add new standards section after methodology section
+          const standardsMarkedSection =
+            `${STANDARDS_MARKER_START}\n${standardsSection}\n${STANDARDS_MARKER_END}`;
+
+          // Insert after methodology section if it exists
+          const methodologyEndIndex = updatedContent.indexOf(
+            METHODOLOGY_MARKER_END,
+          );
+          if (methodologyEndIndex !== -1) {
+            const insertPosition = methodologyEndIndex +
+              METHODOLOGY_MARKER_END.length;
+            updatedContent = updatedContent.slice(0, insertPosition) +
+              "\n\n" + standardsMarkedSection +
+              updatedContent.slice(insertPosition);
+          } else {
+            // Append at end
+            updatedContent += "\n\n" + standardsMarkedSection;
+          }
+        }
+      } else {
+        // Remove standards section if no standards are selected
+        const standardsStartIdx = updatedContent.indexOf(
+          STANDARDS_MARKER_START,
+        );
+        const standardsEndIdx = updatedContent.indexOf(STANDARDS_MARKER_END);
+
+        if (standardsStartIdx !== -1 && standardsEndIdx !== -1) {
+          const before = updatedContent.slice(0, standardsStartIdx);
+          const after = updatedContent.slice(
+            standardsEndIdx + STANDARDS_MARKER_END.length,
+          );
+          updatedContent = before + after.replace(/^\n+/, ""); // Remove leading newlines
+        }
+      }
+
+      await Deno.writeTextFile(claudeMdPath, updatedContent);
+      action = "updated";
     } else {
-      // Create new CLAUDE.md with markers
-      const markedSection =
-        `${MARKER_START}\n${METHODOLOGY_SECTION}\n${MARKER_END}`;
+      // Create new CLAUDE.md with both sections
+      const methodologyMarkedSection =
+        `${METHODOLOGY_MARKER_START}\n${METHODOLOGY_SECTION}\n${METHODOLOGY_MARKER_END}`;
+      const standardsMarkedSection = standardsSection
+        ? `\n\n${STANDARDS_MARKER_START}\n${standardsSection}\n${STANDARDS_MARKER_END}`
+        : "";
+
       const defaultContent = `# CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with this project.
 
-${markedSection}
+${methodologyMarkedSection}${standardsMarkedSection}
 
 ## Project Overview
 
@@ -351,17 +555,14 @@ ${markedSection}
 
       await Deno.writeTextFile(claudeMdPath, defaultContent);
       action = "created";
-
-      // Console output removed - CLI handles messaging
     }
 
     // Find line number where we added the content
-    // Security: claudeMdPath is safe - constructed from resolved projectPath and hardcoded "CLAUDE.md"
     const fileContent = await Deno.readTextFile(claudeMdPath);
     const lines = fileContent.split("\n");
     let lineNumber = 0;
     for (let i = 0; i < lines.length; i++) {
-      if (lines[i].includes("## Methodologies")) {
+      if (lines[i].includes("🎯 MANDATORY: Aichaku Integration Rules")) {
         lineNumber = i + 1;
         break;
       }
@@ -372,7 +573,11 @@ ${markedSection}
       path: claudeMdPath,
       message: `${
         action === "created" ? "Created new" : "Updated"
-      } project CLAUDE.md`,
+      } project CLAUDE.md with methodology${
+        selectedStandards.length > 0
+          ? ` and ${selectedStandards.length} standards`
+          : ""
+      }`,
       action,
       lineNumber,
     };
