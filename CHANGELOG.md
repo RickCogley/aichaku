@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.21.1] - 2025-07-11
+
+### Changed
+
+- format code after security fixes (b00a22e)
+
+### Fixed
+
+- resolve critical path traversal vulnerabilities in MCP server and CLI
+  (39132d4)
+
 ## [0.21.0] - 2025-07-11
 
 ### Added
