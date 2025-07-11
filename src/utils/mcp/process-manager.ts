@@ -308,8 +308,26 @@ export class MCPProcessManager {
     console.log(`   • Methodology validation`);
     console.log(`   • Educational feedback`);
 
+    // MCP Tools for Claude Code
+    console.log(`\n🪴 ${colors.bold("MCP Tools for Claude Code:")}`);
+    if (status.installed) {
+      console.log(`   ${colors.cyan("mcp__aichaku-reviewer__review_file")}        Review individual files`);
+      console.log(`   ${colors.cyan("mcp__aichaku-reviewer__review_methodology")}  Check methodology compliance`);
+      console.log(`   ${colors.cyan("mcp__aichaku-reviewer__get_standards")}      Get project standards`);
+      console.log(`   ${colors.cyan("mcp__aichaku-reviewer__analyze_project")}    Analyze project structure`);
+      console.log(`   ${colors.cyan("mcp__aichaku-reviewer__generate_documentation")} Generate docs`);
+      console.log(`   ${colors.cyan("mcp__aichaku-reviewer__get_statistics")}     View usage statistics`);
+      console.log(`   ${colors.cyan("mcp__aichaku-reviewer__create_doc_template")} Create doc templates`);
+      
+      if (!status.running) {
+        console.log(`\n   ${colors.dim("Note: MCP tools are only available when the server is running")}`);
+      }
+    } else {
+      console.log(`   ${colors.dim("Install MCP server first to use these tools")}`);
+    }
+
     // Available commands
-    console.log(`\n📋 ${colors.bold("Available Commands:")}`);
+    console.log(`\n📋 ${colors.bold("Management Commands:")}`);
     if (status.installed) {
       if (status.running) {
         console.log(

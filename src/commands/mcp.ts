@@ -74,6 +74,15 @@ Features:
   • Educational feedback
   • External tool integration (CodeQL, DevSkim, Semgrep)
 
+MCP Tools for Claude Code:
+  • mcp__aichaku-reviewer__review_file        - Review individual files
+  • mcp__aichaku-reviewer__review_methodology - Check methodology compliance
+  • mcp__aichaku-reviewer__get_standards      - Get project standards
+  • mcp__aichaku-reviewer__analyze_project    - Analyze project structure
+  • mcp__aichaku-reviewer__generate_documentation - Generate docs
+  • mcp__aichaku-reviewer__get_statistics     - View usage statistics
+  • mcp__aichaku-reviewer__create_doc_template - Create doc templates
+
 Example:
   # Install MCP server
   aichaku mcp --install
@@ -227,9 +236,14 @@ async function configureMCPServer(): Promise<void> {
   console.log("\n💡 After adding the configuration:");
   console.log("   1. Restart Claude Code");
   console.log("   2. The MCP server will be available as 'aichaku-reviewer'");
-  console.log(
-    "   3. Claude can use review_file, review_methodology, and get_standards tools",
-  );
+  console.log("   3. Claude can use these MCP tools:");
+  console.log("      • mcp__aichaku-reviewer__review_file");
+  console.log("      • mcp__aichaku-reviewer__review_methodology");
+  console.log("      • mcp__aichaku-reviewer__get_standards");
+  console.log("      • mcp__aichaku-reviewer__analyze_project");
+  console.log("      • mcp__aichaku-reviewer__generate_documentation");
+  console.log("      • mcp__aichaku-reviewer__get_statistics");
+  console.log("      • mcp__aichaku-reviewer__create_doc_template");
 }
 
 async function _checkMCPStatus(): Promise<void> {
