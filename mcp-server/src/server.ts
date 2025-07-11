@@ -281,7 +281,7 @@ class MCPCodeReviewer {
                 throw new Error("Arguments are required for analyze_project");
               }
               const result = await analyzeProjectTool.execute(
-                args as AnalyzeProjectArgs,
+                args as unknown as AnalyzeProjectArgs,
               );
 
               // Record statistics
@@ -313,7 +313,7 @@ class MCPCodeReviewer {
                 );
               }
               const result = await generateDocumentationTool.execute(
-                args as GenerateDocumentationArgs,
+                args as unknown as GenerateDocumentationArgs,
               );
 
               // Record statistics
@@ -363,7 +363,7 @@ class MCPCodeReviewer {
                 );
               }
               const result = await createDocTemplateTool.execute(
-                args as CreateDocTemplateArgs,
+                args as unknown as CreateDocTemplateArgs,
               );
 
               // Record statistics

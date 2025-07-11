@@ -65,7 +65,9 @@
       "Bash(./analyze-and-document.sh:*)",
       "Bash(./advanced-workflow-test.sh:*)",
       "mcp__aichaku-reviewer__get_standards",
-      "Bash(true)"
+      "Bash(true)",
+      "Bash(/Users/rcogley/.aichaku/mcp-server/mcp-code-reviewer --version)",
+      "Bash(deno compile:*)"
     ],
     "deny": []
   }
