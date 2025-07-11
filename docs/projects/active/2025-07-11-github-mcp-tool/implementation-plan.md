@@ -11,12 +11,15 @@ Focus on the operations most critical for the nagare post-release workflow:
 4. **`mcp__github__run_view`** - Get workflow run details
 5. **`mcp__github__run_watch`** - Monitor workflow progress
 6. **`mcp__github__auth_status`** - Verify authentication
+7. **`mcp__github__version_info`** - Version compatibility checking
+8. **`mcp__github__version_check`** - System gh CLI compatibility
 
 ### Use Cases
 - **Post-Release Asset Upload**: Replace shell `gh release upload` 
 - **Workflow Monitoring**: Watch CI/CD workflows after release
 - **Release Verification**: Confirm release was published correctly
 - **Authentication Check**: Ensure GitHub access before operations
+- **Version Compatibility**: Monitor gh CLI version changes and compatibility
 
 ## Phase 2: Repository Management (Priority 2) 
 
@@ -369,13 +372,40 @@ jobs:
 
 ### Implementation Steps for Nagare Integration
 
-1. **Phase 1**: Create standalone MCP client
+1. **Phase 1**: Create standalone MCP client with version tracking
 2. **Phase 2**: Update `build-binaries.ts` to separate build from upload
 3. **Phase 3**: Update `nagare.config.ts` to use MCP client
 4. **Phase 4**: Test complete workflow
 5. **Phase 5**: Document for other nagare users
 
-This ensures that the GitHub MCP tool solves the original context dependency problem in nagare's postRelease hooks.
+### Version Compatibility Integration
+
+Add version tracking to the build process:
+
+```typescript
+// Enhanced build process in scripts/build-github-mcp.ts
+async function buildGitHubMCP() {
+  // 1. Capture current gh CLI version
+  console.log("📋 Capturing GitHub CLI reference version...");
+  await captureGitHubCLIVersion();
+  
+  // 2. Build MCP server with version info
+  console.log("🔨 Building GitHub MCP server...");
+  const buildCmd = new Deno.Command("deno", {
+    args: ["compile", "-A", "--output", "./dist/github-mcp-server", "src/server.ts"],
+    cwd: "./github-mcp-server"
+  });
+  
+  const result = await buildCmd.output();
+  if (!result.success) {
+    throw new Error("GitHub MCP build failed");
+  }
+  
+  console.log("✅ GitHub MCP server built with version compatibility tracking");
+}
+```
+
+This ensures that the GitHub MCP tool solves the original context dependency problem in nagare's postRelease hooks while maintaining awareness of GitHub CLI version changes.
 
 ## Error Handling Strategy
 
