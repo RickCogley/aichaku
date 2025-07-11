@@ -69,7 +69,9 @@ Deno.test("docsStandard - search with no results", async () => {
 });
 
 Deno.test("docsStandard - show when no standards configured", async () => {
-  const testDir = await Deno.makeTempDir({ prefix: "aichaku_test_show_no_config_" });
+  const testDir = await Deno.makeTempDir({
+    prefix: "aichaku_test_show_no_config_",
+  });
   const originalLog = console.log;
   let output = "";
   console.log = (msg: string) => {
@@ -106,7 +108,12 @@ Deno.test("docsStandard - add documentation standards", async () => {
     assertStringIncludes(output, "Added microsoft-style");
 
     // Verify config file was created
-    const configPath = join(testDir, ".claude", "aichaku", "doc-standards.json");
+    const configPath = join(
+      testDir,
+      ".claude",
+      "aichaku",
+      "doc-standards.json",
+    );
     assertEquals(await exists(configPath), true);
 
     // Read and verify config
@@ -144,7 +151,9 @@ Deno.test("docsStandard - add duplicate standard", async () => {
 });
 
 Deno.test("docsStandard - add unknown standard", async () => {
-  const testDir = await Deno.makeTempDir({ prefix: "aichaku_test_add_unknown_" });
+  const testDir = await Deno.makeTempDir({
+    prefix: "aichaku_test_add_unknown_",
+  });
   const originalLog = console.log;
   let output = "";
   console.log = (msg: string) => {
@@ -185,7 +194,12 @@ Deno.test("docsStandard - remove documentation standards", async () => {
     assertStringIncludes(output, "Removed microsoft-style");
 
     // Verify config was updated
-    const configPath = join(testDir, ".claude", "aichaku", "doc-standards.json");
+    const configPath = join(
+      testDir,
+      ".claude",
+      "aichaku",
+      "doc-standards.json",
+    );
     const config = JSON.parse(await Deno.readTextFile(configPath));
     assertEquals(config.selected.length, 1);
     assertEquals(config.selected[0], "diataxis-google");
@@ -195,7 +209,9 @@ Deno.test("docsStandard - remove documentation standards", async () => {
 });
 
 Deno.test("docsStandard - remove non-selected standard", async () => {
-  const testDir = await Deno.makeTempDir({ prefix: "aichaku_test_remove_non_" });
+  const testDir = await Deno.makeTempDir({
+    prefix: "aichaku_test_remove_non_",
+  });
   const originalLog = console.log;
   let output = "";
   console.log = (msg: string) => {
@@ -252,10 +268,10 @@ Deno.test("docsStandard - dry run mode", async () => {
   try {
     // First add a standard to create the config
     await docsStandard({ add: "diataxis-google", projectPath: testDir });
-    
+
     // Clear output
     output = "";
-    
+
     // Now test dry run
     await docsStandard({
       add: "writethedocs",
@@ -267,7 +283,12 @@ Deno.test("docsStandard - dry run mode", async () => {
     assertStringIncludes(output, "[Dry run - no changes made]");
 
     // Verify config was NOT updated
-    const configPath = join(testDir, ".claude", "aichaku", "doc-standards.json");
+    const configPath = join(
+      testDir,
+      ".claude",
+      "aichaku",
+      "doc-standards.json",
+    );
     const config = JSON.parse(await Deno.readTextFile(configPath));
     assertEquals(config.selected.includes("writethedocs"), false);
   } finally {
