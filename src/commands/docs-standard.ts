@@ -485,17 +485,9 @@ function getProjectDocConfigPath(projectPath?: string): string {
  * Helper: Load project configuration with validation
  */
 async function loadProjectDocConfig(path: string): Promise<ProjectDocConfig> {
-  // Check new path first, then legacy path
-  const base = dirname(dirname(path)); // Get project root from path
-  const newConfigPath = join(base, ".claude", "aichaku", "doc-standards.json");
-  const legacyConfigPath = join(base, ".claude", ".aichaku-doc-standards.json");
-
-  const configPath = (await exists(newConfigPath))
-    ? newConfigPath
-    : legacyConfigPath;
-
-  if (await exists(configPath)) {
-    const content = await Deno.readTextFile(configPath);
+  // The path parameter is already the full path to the config file
+  if (await exists(path)) {
+    const content = await Deno.readTextFile(path);
     try {
       const parsed = JSON.parse(content);
 
