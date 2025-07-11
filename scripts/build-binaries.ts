@@ -160,8 +160,8 @@ async function createChecksums() {
   for (const binary of binaries) {
     if (binary.isFile && binary.name.includes(VERSION)) {
       const path = `./dist/${binary.name}`;
-      // Security: Use safe file reading with dist directory validation
-      const data = await safeReadFile(path, "./dist");
+      // Security: Use safe file reading - path already includes ./dist
+      const data = await safeReadFile(path, ".");
       const hashBuffer = await crypto.subtle.digest("SHA-256", data);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
       const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0"))
