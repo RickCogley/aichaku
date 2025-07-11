@@ -373,7 +373,7 @@ aichaku init --global
         "--allow-write",
         "--allow-net",
         "--allow-env",
-        "/path/to/aichaku/mcp-server.ts"
+        "/path/to/aichaku/mcp/aichaku-mcp-server/src/server.ts"
       ],
       "env": {
         "AICHAKU_HOME": "~/.claude/aichaku"

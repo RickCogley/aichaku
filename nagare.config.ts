@@ -144,7 +144,7 @@ export default {
             "cli.ts",
             "mod.ts",
             "src/**/*.ts",
-            "mcp-server/src/**/*.ts",
+            "mcp/*/src/**/*.ts",
             "nagare.config.ts",
             "nagare-launcher.ts",
             "version.ts",

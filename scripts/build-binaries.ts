@@ -102,7 +102,7 @@ async function compileMCPServer() {
         platform.target,
         "--output",
         output,
-        "./mcp-server/src/server.ts",
+        "./mcp/aichaku-mcp-server/src/server.ts",
       ],
       stdout: "inherit",
       stderr: "inherit",

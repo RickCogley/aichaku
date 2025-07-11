@@ -112,7 +112,7 @@ export async function installMCPServer(): Promise<void> {
     return;
   }
 
-  const mcpDir = join(homeDir, ".aichaku", "mcp-server");
+  const mcpDir = join(homeDir, ".aichaku", "mcp-servers");
   await ensureDir(mcpDir);
 
   try {
@@ -140,7 +140,7 @@ export async function installMCPServer(): Promise<void> {
       `https://github.com/RickCogley/aichaku/releases/download/v${VERSION}/${binaryName}`;
     const targetPath = join(
       mcpDir,
-      platform === "windows" ? "mcp-code-reviewer.exe" : "mcp-code-reviewer",
+      platform === "windows" ? "aichaku-code-reviewer.exe" : "aichaku-code-reviewer",
     );
 
     console.log(

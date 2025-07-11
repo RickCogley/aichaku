@@ -54,7 +54,7 @@ export class MCPProcessManager {
     }
 
     const platform = Deno.build.os;
-    const mcpDir = normalize(join(normalizedHomeDir, ".aichaku", "mcp-server"));
+    const mcpDir = normalize(join(normalizedHomeDir, ".aichaku", "mcp-servers"));
 
     // Ensure the path is still within the home directory
     if (!mcpDir.startsWith(normalizedHomeDir)) {
@@ -63,7 +63,7 @@ export class MCPProcessManager {
 
     this.mcpBinaryPath = normalize(join(
       mcpDir,
-      platform === "windows" ? "mcp-code-reviewer.exe" : "mcp-code-reviewer",
+      platform === "windows" ? "aichaku-code-reviewer.exe" : "aichaku-code-reviewer",
     ));
 
     this.pidManager = new PIDManager(mcpDir);
