@@ -5,7 +5,10 @@
 import { join } from "@std/path";
 import { exists } from "@std/fs";
 import type { ProjectConfig } from "./types.ts";
-import { safeReadTextFile, validatePath } from "../../src/utils/path-security.ts";
+import {
+  safeReadTextFile,
+  validatePath,
+} from "../../src/utils/path-security.ts";
 
 export class StandardsManager {
   private standardsCache = new Map<string, ProjectConfig>();
@@ -13,7 +16,7 @@ export class StandardsManager {
   async getProjectStandards(projectPath: string): Promise<ProjectConfig> {
     // Security: Validate the project path
     const validatedProjectPath = validatePath(projectPath, Deno.cwd());
-    
+
     // Check cache first
     if (this.standardsCache.has(validatedProjectPath)) {
       return this.standardsCache.get(validatedProjectPath)!;
@@ -40,7 +43,10 @@ export class StandardsManager {
     if (await exists(standardsPath)) {
       try {
         // Security: Use safe file reading
-        const content = await safeReadTextFile(standardsPath, validatedProjectPath);
+        const content = await safeReadTextFile(
+          standardsPath,
+          validatedProjectPath,
+        );
         const config = JSON.parse(content) as ProjectConfig;
         this.standardsCache.set(validatedProjectPath, config);
         return config;
@@ -147,13 +153,19 @@ export class StandardsManager {
     // Try to load from Aichaku's standards directory
     const homedir = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
     const cwd = Deno.cwd();
-    
+
     const possiblePaths = [
-      { path: join(homedir, ".claude", "aichaku", "standards"), baseDir: homedir }, // New path
+      {
+        path: join(homedir, ".claude", "aichaku", "standards"),
+        baseDir: homedir,
+      }, // New path
       { path: join(homedir, ".claude", "standards"), baseDir: homedir }, // Legacy path
       { path: join(cwd, ".claude", "aichaku", "standards"), baseDir: cwd }, // Project new path
       { path: join(cwd, ".claude", "standards"), baseDir: cwd }, // Project legacy path
-      { path: join(cwd, "node_modules", "@aichaku", "standards"), baseDir: cwd }, // npm package
+      {
+        path: join(cwd, "node_modules", "@aichaku", "standards"),
+        baseDir: cwd,
+      }, // npm package
     ];
 
     for (const { path: basePath, baseDir } of possiblePaths) {

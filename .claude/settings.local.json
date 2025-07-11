@@ -57,7 +57,9 @@
       "mcp__aichaku-reviewer__review_methodology",
       "Bash(tree:*)",
       "Bash(../cli.ts docs-standard --list)",
-      "Bash(deno eval:*)"
+      "Bash(deno eval:*)",
+      "Bash(gh release create:*)",
+      "Bash(git restore:*)"
     ],
     "deny": []
   }

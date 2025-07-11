@@ -14,7 +14,11 @@ import {
   getUserStandardPath,
   isPathSafe,
 } from "../paths.ts";
-import { safeReadTextFile, safeRemove, safeReadDir } from "../utils/path-security.ts";
+import {
+  safeReadDir,
+  safeReadTextFile,
+  safeRemove,
+} from "../utils/path-security.ts";
 import { resolveProjectPath } from "../utils/project-paths.ts";
 
 // Type definitions for better type safety
@@ -516,12 +520,16 @@ async function showProjectStandards(projectPath?: string): Promise<void> {
   }
 
   // Check integration status and provide options
-  const validatedProjectPath = projectPath ? resolveProjectPath(projectPath) : Deno.cwd();
+  const validatedProjectPath = projectPath
+    ? resolveProjectPath(projectPath)
+    : Deno.cwd();
   const claudeMdPath = join(validatedProjectPath, "CLAUDE.md");
   const claudeExists = await exists(claudeMdPath);
   const needsIntegration = !claudeExists ||
     (claudeExists &&
-      !(await safeReadTextFile(claudeMdPath, validatedProjectPath)).includes("AICHAKU:STANDARDS"));
+      !(await safeReadTextFile(claudeMdPath, validatedProjectPath)).includes(
+        "AICHAKU:STANDARDS",
+      ));
 
   console.log(`\n💡 What you can do:`);
   if (needsIntegration) {
@@ -1091,9 +1099,9 @@ async function loadProjectConfig(path: string): Promise<ProjectConfig> {
   if (await exists(path)) {
     // Security: The path should already be validated by the caller,
     // but we'll ensure it's within the project directory
-    const projectRoot = path.includes("aichaku") 
-      ? resolve(path, "..", "..", "..")  // Go up from .claude/aichaku/standards.json
-      : resolve(path, "..", "..");        // Go up from .claude/standards.json
+    const projectRoot = path.includes("aichaku")
+      ? resolve(path, "..", "..", "..") // Go up from .claude/aichaku/standards.json
+      : resolve(path, "..", ".."); // Go up from .claude/standards.json
     const content = await safeReadTextFile(path, projectRoot);
     try {
       const parsed = JSON.parse(content);
@@ -1272,7 +1280,10 @@ async function loadCustomStandard(standardName: string): Promise<
       if (await exists(standardPath)) {
         // Security: Use safe read for custom standards
         const paths = getAichakuPaths();
-        const content = await safeReadTextFile(standardPath, paths.global.user.standards);
+        const content = await safeReadTextFile(
+          standardPath,
+          paths.global.user.standards,
+        );
 
         // Extract metadata from markdown file
         const metadata = extractStandardMetadata(content);
@@ -1384,7 +1395,9 @@ async function loadAvailableCustomStandards(): Promise<
     try {
       if (await exists(directory)) {
         // Security: Use safe directory reading
-        for await (const entry of safeReadDir(directory, paths.global.user.standards)) {
+        for await (
+          const entry of safeReadDir(directory, paths.global.user.standards)
+        ) {
           if (entry.isFile && entry.name.endsWith(".md")) {
             const standardPath = join(directory, entry.name);
 

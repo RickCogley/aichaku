@@ -364,7 +364,7 @@ async function checkProjectMigration(projectPath: string): Promise<boolean> {
 
   // Security: Validate project path
   const validatedPath = resolveProjectPath(projectPath);
-  
+
   // Use paths module to get consistent paths
   const paths = getAichakuPaths();
   const oldProjectFile = join(validatedPath, ".claude", ".aichaku-project");

@@ -33,9 +33,11 @@ export async function fetchContent(
   async function fetchFile(relativePath: string): Promise<void> {
     // Security: Validate the relative path doesn't contain traversal sequences
     if (relativePath.includes("..")) {
-      throw new Error(`Invalid path: ${relativePath} contains directory traversal`);
+      throw new Error(
+        `Invalid path: ${relativePath} contains directory traversal`,
+      );
     }
-    
+
     const url = `${baseUrl}/${relativePath}`;
     const localPath = validatePath(relativePath, targetPath);
 

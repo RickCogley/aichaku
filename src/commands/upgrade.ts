@@ -186,7 +186,9 @@ export async function upgrade(
         const targetMethodologies = paths.global.methodologies;
         if (await exists(targetMethodologies)) {
           // Security: Use safe remove
-          await safeRemove(targetMethodologies, paths.global.root, { recursive: true });
+          await safeRemove(targetMethodologies, paths.global.root, {
+            recursive: true,
+          });
         }
 
         const retrySuccess = await fetchMethodologies(
@@ -238,7 +240,9 @@ export async function upgrade(
         const targetStandards = paths.global.standards;
         if (await exists(targetStandards)) {
           // Security: Use safe remove
-          await safeRemove(targetStandards, paths.global.root, { recursive: true });
+          await safeRemove(targetStandards, paths.global.root, {
+            recursive: true,
+          });
         }
 
         const retrySuccess = await fetchStandards(paths.global.root, VERSION, {

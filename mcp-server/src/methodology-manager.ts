@@ -5,7 +5,11 @@
 import { join } from "@std/path";
 import { exists } from "@std/fs";
 import type { Finding } from "./types.ts";
-import { safeReadTextFile, validatePath, safeReadDir } from "../../src/utils/path-security.ts";
+import {
+  safeReadDir,
+  safeReadTextFile,
+  validatePath,
+} from "../../src/utils/path-security.ts";
 
 export class MethodologyManager {
   private methodologyCache = new Map<string, string[]>();
@@ -13,7 +17,7 @@ export class MethodologyManager {
   async getProjectMethodologies(projectPath: string): Promise<string[]> {
     // Security: Validate the project path
     const validatedProjectPath = validatePath(projectPath, Deno.cwd());
-    
+
     // Check cache first
     if (this.methodologyCache.has(validatedProjectPath)) {
       return this.methodologyCache.get(validatedProjectPath)!;
@@ -40,7 +44,10 @@ export class MethodologyManager {
     if (await exists(configPath)) {
       try {
         // Security: Use safe file reading
-        const content = await safeReadTextFile(configPath, validatedProjectPath);
+        const content = await safeReadTextFile(
+          configPath,
+          validatedProjectPath,
+        );
         const config = JSON.parse(content);
         const methodologies = config.methodologies || [];
         this.methodologyCache.set(validatedProjectPath, methodologies);
@@ -125,16 +132,24 @@ export class MethodologyManager {
     for (const methodology of methodologies) {
       switch (methodology) {
         case "shape-up":
-          findings.push(...await this.checkShapeUpCompliance(validatedProjectPath));
+          findings.push(
+            ...await this.checkShapeUpCompliance(validatedProjectPath),
+          );
           break;
         case "scrum":
-          findings.push(...await this.checkScrumCompliance(validatedProjectPath));
+          findings.push(
+            ...await this.checkScrumCompliance(validatedProjectPath),
+          );
           break;
         case "kanban":
-          findings.push(...await this.checkKanbanCompliance(validatedProjectPath));
+          findings.push(
+            ...await this.checkKanbanCompliance(validatedProjectPath),
+          );
           break;
         case "lean":
-          findings.push(...await this.checkLeanCompliance(validatedProjectPath));
+          findings.push(
+            ...await this.checkLeanCompliance(validatedProjectPath),
+          );
           break;
         case "xp":
           findings.push(...await this.checkXPCompliance(validatedProjectPath));
