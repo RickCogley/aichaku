@@ -8,6 +8,7 @@
 import { exists } from "jsr:@std/fs@1/exists";
 import { ensureDir } from "jsr:@std/fs@1/ensure-dir";
 import { normalize, resolve } from "jsr:@std/path@1";
+import { safeReadTextFile } from "../utils/path-security.ts";
 
 // Type definitions for better type safety
 interface HookConfig {
@@ -250,7 +251,9 @@ async function installHooks(
 
   // Load existing settings
   if (await exists(settingsPath)) {
-    const content = await Deno.readTextFile(settingsPath);
+    // Security: Use safe file reading with home directory validation
+    const home = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
+    const content = await safeReadTextFile(settingsPath, home);
     try {
       // Remove comments for parsing
       const jsonWithoutComments = content.replace(/\/\/.*$/gm, "").replace(
@@ -353,7 +356,9 @@ async function removeHooks(dryRun: boolean = false): Promise<void> {
     return;
   }
 
-  const content = await Deno.readTextFile(settingsPath);
+  // Security: Use safe file reading with home directory validation
+  const home = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
+  const content = await safeReadTextFile(settingsPath, home);
   const settings = JSON.parse(content);
 
   if (!settings.hooks) {
@@ -397,7 +402,9 @@ async function validateHooks(): Promise<void> {
     return;
   }
 
-  const content = await Deno.readTextFile(settingsPath);
+  // Security: Use safe file reading with home directory validation
+  const home = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
+  const content = await safeReadTextFile(settingsPath, home);
   let settings: Settings;
 
   try {

@@ -18,7 +18,8 @@ import { StandardsManager } from "./standards-manager.ts";
 import { MethodologyManager } from "./methodology-manager.ts";
 import { FeedbackBuilder } from "./feedback-builder.ts";
 import type { ReviewRequest, ReviewResult } from "./types.ts";
-import { validatePath } from "../../src/utils/path-security.ts";
+import { validatePath, safeStat, safeReadTextFileSync } from "../../src/utils/path-security.ts";
+import { existsSync } from "@std/fs/exists";
 
 const PACKAGE_JSON = {
   name: "@aichaku/mcp-code-reviewer",
@@ -457,20 +458,19 @@ class MCPCodeReviewer {
     // Walk up to find .claude directory or git root
     let current = filePath;
     while (current !== "/") {
-      if (Deno.statSync(current).isDirectory) {
-        try {
-          Deno.statSync(`${current}/.claude`);
-          return current;
-        } catch {
-          // Continue searching
+      // Security: Use existsSync for safe path checking
+      try {
+        const stat = Deno.statSync(current);
+        if (stat.isDirectory) {
+          if (existsSync(`${current}/.claude`)) {
+            return current;
+          }
+          if (existsSync(`${current}/.git`)) {
+            return current;
+          }
         }
-
-        try {
-          Deno.statSync(`${current}/.git`);
-          return current;
-        } catch {
-          // Continue searching
-        }
+      } catch {
+        // Path doesn't exist or not accessible, continue
       }
 
       const parent = current.split("/").slice(0, -1).join("/");
@@ -483,9 +483,8 @@ class MCPCodeReviewer {
 
   private detectDocumentType(filePath: string): string {
     try {
-      // Security: Validate the file path first
-      const validatedPath = validatePath(filePath, Deno.cwd());
-      const content = Deno.readTextFileSync(validatedPath).toLowerCase();
+      // Security: Use safe file reading
+      const content = safeReadTextFileSync(filePath, Deno.cwd()).toLowerCase();
       const fileName = filePath.toLowerCase();
 
       // Check file name patterns

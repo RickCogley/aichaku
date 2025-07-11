@@ -156,3 +156,35 @@ export function isPathSafe(userPath: string, baseDir: string): boolean {
     return false;
   }
 }
+
+/**
+ * Safely reads a text file synchronously after validating the path
+ *
+ * @param filePath - The file path to read
+ * @param baseDir - The base directory that the file must be within
+ * @returns The file contents
+ * @throws Error if path traversal is attempted or file cannot be read
+ */
+export function safeReadTextFileSync(
+  filePath: string,
+  baseDir: string,
+): string {
+  const validatedPath = validatePath(filePath, baseDir);
+  return Deno.readTextFileSync(validatedPath);
+}
+
+/**
+ * Safely gets file stats synchronously after validating the path
+ *
+ * @param filePath - The file path to stat
+ * @param baseDir - The base directory that the file must be within
+ * @returns The file stats
+ * @throws Error if path traversal is attempted or file cannot be accessed
+ */
+export function safeStatSync(
+  filePath: string,
+  baseDir: string,
+): Deno.FileInfo {
+  const validatedPath = validatePath(filePath, baseDir);
+  return Deno.statSync(validatedPath);
+}

@@ -16,6 +16,7 @@ import {
   walk,
 } from "../../deps.ts";
 import { Logger } from "../utils/logger.ts";
+import { safeRemove } from "../utils/path-security.ts";
 
 /**
  * Migration configuration
@@ -436,7 +437,9 @@ export class FolderMigration {
     for (const mapping of mappings) {
       try {
         if (await exists(mapping.source)) {
-          await Deno.remove(mapping.source, {
+          // Security: Use safe remove with base directory validation
+          const baseDir = dirname(mapping.source);
+          await safeRemove(mapping.source, baseDir, {
             recursive: mapping.type === "directory",
           });
           this.logger.debug(`Removed old file/folder: ${mapping.source}`);
@@ -745,7 +748,9 @@ export class FolderMigration {
         for (const mapping of mappings) {
           if (await exists(mapping.source)) {
             try {
-              await Deno.remove(mapping.source, { recursive: true });
+              // Security: Use safe remove with base directory validation
+              const baseDir = dirname(mapping.source);
+              await safeRemove(mapping.source, baseDir, { recursive: true });
               this.logger.debug(
                 `Removed old custom standards: ${mapping.source}`,
               );
@@ -804,7 +809,9 @@ export class FolderMigration {
         ? join(projectPath, ".claude", "aichaku")
         : this.newRoot;
       if (await exists(newPath)) {
-        await Deno.remove(newPath, { recursive: true });
+        // Security: Use safe remove with base directory validation
+        const baseDir = dirname(newPath);
+        await safeRemove(newPath, baseDir, { recursive: true });
       }
 
       // Restore from backup

@@ -16,7 +16,7 @@ import type { LintIssue, LintResult } from "../linters/base-linter.ts";
 import { DiátaxisLinter } from "../linters/diataxis-linter.ts";
 import { GoogleStyleLinter } from "../linters/google-style-linter.ts";
 import { resolveProjectPath } from "../utils/project-paths.ts";
-import { safeReadTextFile } from "../utils/path-security.ts";
+import { safeReadTextFile, safeStat } from "../utils/path-security.ts";
 
 /**
  * Colors for terminal output
@@ -153,7 +153,7 @@ async function findMarkdownFiles(paths: string[]): Promise<string[]> {
   for (const path of paths) {
     // Security: Validate path to prevent traversal
     const absPath = resolveProjectPath(path);
-    const stat = await Deno.stat(absPath);
+    const stat = await safeStat(absPath, Deno.cwd());
 
     if (stat.isFile && (path.endsWith(".md") || path.endsWith(".markdown"))) {
       files.push(absPath);

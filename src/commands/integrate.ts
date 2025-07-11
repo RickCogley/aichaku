@@ -2,6 +2,7 @@ import { exists } from "jsr:@std/fs@1";
 import { isAbsolute, join, normalize, resolve } from "jsr:@std/path@1";
 import { paths } from "../paths.ts";
 import { resolveProjectPath } from "../utils/project-paths.ts";
+import { safeReadTextFile, safeStat } from "../utils/path-security.ts";
 
 // Type definitions
 interface ProjectStandardsConfig {
@@ -56,7 +57,8 @@ async function loadProjectStandards(projectPath: string): Promise<string[]> {
   }
 
   try {
-    const content = await Deno.readTextFile(configPath);
+    // Security: Use safe file reading with validated path
+    const content = await safeReadTextFile(configPath, projectPath);
     const config = JSON.parse(content) as ProjectStandardsConfig;
 
     // Validate and sanitize
@@ -117,7 +119,8 @@ async function loadStandardContent(
 
   if (await exists(customStandardPath)) {
     try {
-      const content = await Deno.readTextFile(customStandardPath);
+      // Security: Use safe file reading with validated path
+      const content = await safeReadTextFile(customStandardPath, aichakuPaths.global.user.root);
       return {
         content,
         isCustom: true,
@@ -159,7 +162,13 @@ async function loadStandardContent(
       return null;
     }
 
-    const content = await Deno.readTextFile(standardPath);
+    // Security: Use safe file reading with validated path
+    // Determine the base directory based on the path
+    const home = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
+    const baseDir = standardPath.includes(aichakuPaths.legacy.globalStandards) 
+      ? join(home, ".claude") // Legacy global base
+      : aichakuPaths.global.root;
+    const content = await safeReadTextFile(standardPath, baseDir);
     return {
       content,
       isCustom: false,
@@ -237,7 +246,8 @@ async function loadProjectDocStandards(projectPath: string): Promise<string[]> {
   }
 
   try {
-    const content = await Deno.readTextFile(configPath);
+    // Security: Use safe file reading with validated path
+    const content = await safeReadTextFile(configPath, projectPath);
     const config = JSON.parse(content) as ProjectStandardsConfig;
 
     // Validate and sanitize
@@ -282,7 +292,8 @@ async function loadDocStandardContent(
 
   if (await exists(customStandardPath)) {
     try {
-      const content = await Deno.readTextFile(customStandardPath);
+      // Security: Use safe file reading with validated path
+      const content = await safeReadTextFile(customStandardPath, aichakuPaths.global.user.root);
       return {
         content,
         isCustom: true,
@@ -320,7 +331,13 @@ async function loadDocStandardContent(
       return null;
     }
 
-    const content = await Deno.readTextFile(standardPath);
+    // Security: Use safe file reading with validated path
+    // Determine the base directory based on the path
+    const home = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
+    const baseDir = standardPath.includes(aichakuPaths.legacy.globalStandards) 
+      ? join(home, ".claude") // Legacy global base
+      : aichakuPaths.global.root;
+    const content = await safeReadTextFile(standardPath, baseDir);
     return {
       content,
       isCustom: false,
@@ -653,7 +670,8 @@ export async function integrate(
 
     if (await exists(claudeMdPath)) {
       // File exists - update with surgical precision
-      const content = await Deno.readTextFile(claudeMdPath);
+      // Security: Use safe file reading with validated path
+      const content = await safeReadTextFile(claudeMdPath, projectPath);
       let updatedContent = content;
 
       // Handle methodology section
@@ -865,7 +883,8 @@ ${methodologyMarkedSection}${standardsMarkedSection}${docStandardsMarkedSection}
     }
 
     // Find line number where we added the content
-    const fileContent = await Deno.readTextFile(claudeMdPath);
+    // Security: Use safe file reading with validated path
+    const fileContent = await safeReadTextFile(claudeMdPath, projectPath);
     const lines = fileContent.split("\n");
     let lineNumber = 0;
     for (let i = 0; i < lines.length; i++) {
@@ -901,8 +920,10 @@ ${methodologyMarkedSection}${standardsMarkedSection}${docStandardsMarkedSection}
 
 async function checkFileExists(path: string): Promise<boolean> {
   try {
-    // Security: path is always claudeMdPath - constructed from resolved projectPath and hardcoded "CLAUDE.md"
-    await Deno.stat(path);
+    // Security: Use safe stat check - path is always claudeMdPath
+    // constructed from resolved projectPath and hardcoded "CLAUDE.md"
+    const projectPath = path.replace(/\/CLAUDE\.md$/, "");
+    await safeStat(path, projectPath);
     return true;
   } catch {
     return false;

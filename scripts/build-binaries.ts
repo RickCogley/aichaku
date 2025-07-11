@@ -7,6 +7,7 @@
 
 import { VERSION } from "../version.ts";
 import { ensureDir } from "@std/fs";
+import { safeReadFile } from "../src/utils/path-security.ts";
 
 interface Platform {
   os: string;
@@ -159,7 +160,8 @@ async function createChecksums() {
   for (const binary of binaries) {
     if (binary.isFile && binary.name.includes(VERSION)) {
       const path = `./dist/${binary.name}`;
-      const data = await Deno.readFile(path);
+      // Security: Use safe file reading with dist directory validation
+      const data = await safeReadFile(path, "./dist");
       const hashBuffer = await crypto.subtle.digest("SHA-256", data);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
       const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0"))

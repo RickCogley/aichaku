@@ -8,6 +8,7 @@
 import { exists } from "jsr:@std/fs@1/exists";
 import { ensureDir } from "jsr:@std/fs@1/ensure-dir";
 import { dirname, join, normalize, resolve } from "jsr:@std/path@1";
+import { safeReadTextFile } from "../utils/path-security.ts";
 
 // Type definitions for documentation standards
 interface DocStandard {
@@ -274,7 +275,7 @@ async function showProjectDocStandards(projectPath?: string): Promise<void> {
   const claudeExists = await exists(claudeMdPath);
   const needsIntegration = !claudeExists ||
     (claudeExists &&
-      !(await Deno.readTextFile(claudeMdPath)).includes(
+      !(await safeReadTextFile(claudeMdPath, projectPath || ".")).includes(
         "AICHAKU:DOC-STANDARDS",
       ));
 
@@ -487,7 +488,9 @@ function getProjectDocConfigPath(projectPath?: string): string {
 async function loadProjectDocConfig(path: string): Promise<ProjectDocConfig> {
   // The path parameter is already the full path to the config file
   if (await exists(path)) {
-    const content = await Deno.readTextFile(path);
+    // Security: Use safe file reading with base directory validation
+    const baseDir = dirname(path);
+    const content = await safeReadTextFile(path, baseDir);
     try {
       const parsed = JSON.parse(content);
 
