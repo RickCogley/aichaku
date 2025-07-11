@@ -266,6 +266,147 @@ await integrate({
 });
 ```
 
+## MCP Server Features
+
+Aichaku includes an enhanced Model Context Protocol (MCP) server that provides intelligent project analysis and documentation generation capabilities directly within Claude Desktop.
+
+### Available MCP Tools
+
+#### 1. **Project Analysis** (`analyze_project`)
+Performs comprehensive analysis of your codebase:
+- Detects programming languages and frameworks
+- Analyzes project structure and patterns
+- Identifies architectural decisions
+- Provides insights on code organization
+- Suggests improvements based on best practices
+
+```bash
+# Example usage in Claude Desktop:
+"Analyze this project's architecture and suggest improvements"
+```
+
+#### 2. **Documentation Template Creation** (`create_doc_template`)
+Generates context-aware documentation templates:
+- README templates tailored to your project type
+- API documentation structures
+- Architecture decision records (ADRs)
+- Contributing guidelines
+- Change logs and release notes
+
+```bash
+# Example usage in Claude Desktop:
+"Create a README template for this TypeScript project"
+"Generate an API documentation template"
+```
+
+#### 3. **Automated Documentation Generation** (`generate_documentation`)
+Creates comprehensive documentation from your codebase:
+- Auto-generates API documentation from code comments
+- Creates architecture diagrams and descriptions
+- Produces setup and installation guides
+- Generates usage examples from tests
+- Creates feature documentation from code structure
+
+```bash
+# Example usage in Claude Desktop:
+"Generate complete documentation for this project"
+"Create API docs for the authentication module"
+```
+
+### Statistics and Analytics
+
+The MCP server tracks usage statistics to help you understand how Aichaku is being used:
+
+- **Tool usage frequency**: Which tools are used most often
+- **Success rates**: How often operations complete successfully
+- **Performance metrics**: Response times and processing duration
+- **Error tracking**: Common issues and their resolutions
+
+Statistics are stored locally and can be viewed with:
+```bash
+# View MCP server statistics
+aichaku stats
+
+# Reset statistics
+aichaku stats --reset
+```
+
+### Aichaku Branding and Feedback
+
+All MCP server responses include:
+- **🪴 Aichaku branding**: Visual indicator that the response comes from Aichaku
+- **Contextual feedback**: Progress updates during long operations
+- **Success confirmations**: Clear indication when tasks complete
+- **Error guidance**: Helpful messages when issues occur
+
+### Setting Up MCP Server
+
+1. **Install the MCP server** (included with Aichaku):
+```bash
+# The MCP server is automatically installed with Aichaku
+aichaku init --global
+```
+
+2. **Configure Claude Desktop**:
+Add to your Claude Desktop configuration (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+
+```json
+{
+  "mcpServers": {
+    "aichaku": {
+      "command": "deno",
+      "args": ["run", "--allow-read", "--allow-write", "--allow-net", "--allow-env", "/path/to/aichaku/mcp-server.ts"],
+      "env": {
+        "AICHAKU_HOME": "~/.claude/aichaku"
+      }
+    }
+  }
+}
+```
+
+3. **Verify installation**:
+Restart Claude Desktop and look for Aichaku tools in the available MCP tools list.
+
+### Example Workflows
+
+#### Complete Project Documentation
+```
+You: "Analyze this project and generate complete documentation"
+Claude: [Uses analyze_project] 🪴 Aichaku: Analyzing project structure...
+        [Uses generate_documentation] 🪴 Aichaku: Generating documentation...
+        
+        I've analyzed your TypeScript project and generated comprehensive documentation:
+        - README with setup instructions
+        - API documentation for all public methods
+        - Architecture overview with diagrams
+        - Contributing guidelines
+```
+
+#### Methodology-Aware Documentation
+```
+You: "Create a Shape Up pitch document template for this feature"
+Claude: [Uses create_doc_template] 🪴 Aichaku: Creating Shape Up pitch template...
+        
+        I've created a pitch template that includes:
+        - Problem definition section
+        - Appetite constraints
+        - Solution outline
+        - Rabbit holes to avoid
+        - Nice-to-haves
+```
+
+#### Continuous Documentation Updates
+```
+You: "Update the API docs after adding the new authentication endpoints"
+Claude: [Uses generate_documentation] 🪴 Aichaku: Updating API documentation...
+        
+        I've updated the documentation with:
+        - New authentication endpoints
+        - Request/response examples
+        - Error codes and handling
+        - Integration examples
+```
+
 ## Architecture
 
 ### Global Installation (One Time)
@@ -412,10 +553,14 @@ become something you're attached to, not forced to follow.
 - [x] 6 major methodologies
 - [x] Adaptive methodology blending
 - [x] User customization system
+- [x] MCP server integration
+- [x] Project analysis tools
+- [x] Documentation generation
+- [x] Usage statistics tracking
 - [ ] Methodology lock for compliance
-- [ ] Usage analytics (opt-in)
+- [ ] Advanced analytics dashboard
 - [ ] Organization templates
-- [ ] IDE integrations
+- [ ] Additional IDE integrations
 
 ## API Documentation
 
