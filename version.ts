@@ -6,15 +6,15 @@
  * The |> safe filter is used to output raw values without escaping.
  */
 
-export const VERSION = "0.21.0";
+export const VERSION = "0.20.0";
 
 export const BUILD_INFO = {
   buildDate: "2025-07-11T02:03:03.139Z",
-  gitCommit: "ba22f02",
+  gitCommit: "9f584d4",
   buildEnvironment: "production",
   versionComponents: {
     major: 0,
-    minor: 21,
+    minor: 20,
     patch: 0,
     prerelease: null,
   },
@@ -30,14 +30,14 @@ export const APP_INFO = {
 } as const;
 export const APP_METADATA = {} as const;
 export const RELEASE_NOTES = {
-  "version": "0.21.0",
+  "version": "0.20.0",
   "date": "2025-07-11",
-  "added": [],
+  "added": [
+    "add custom standards system and folder reorganization (d2e0a2b)"
+  ],
   "changed": [],
   "deprecated": [],
   "removed": [],
-  "fixed": [
-    "include deps.ts in publish configuration (ba22f02)"
-  ],
+  "fixed": [],
   "security": []
 } as const;

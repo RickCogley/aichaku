@@ -1,6 +1,6 @@
 {
   "name": "@rick/aichaku",
-  "version": "0.21.0",
+  "version": "0.20.0",
   "exports": {
     ".": "./mod.ts",
     "./cli": "./cli.ts"
