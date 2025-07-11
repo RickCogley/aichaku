@@ -174,6 +174,23 @@ export function safeReadTextFileSync(
 }
 
 /**
+ * Safely writes text to a file synchronously after validating the path
+ *
+ * @param filePath - The file path to write to
+ * @param data - The text data to write
+ * @param baseDir - The base directory that the file must be within
+ * @throws Error if path traversal is attempted or file cannot be written
+ */
+export function safeWriteTextFileSync(
+  filePath: string,
+  data: string,
+  baseDir: string,
+): void {
+  const validatedPath = validatePath(filePath, baseDir);
+  Deno.writeTextFileSync(validatedPath, data);
+}
+
+/**
  * Safely gets file stats synchronously after validating the path
  *
  * @param filePath - The file path to stat

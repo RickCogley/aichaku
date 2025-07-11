@@ -33,6 +33,11 @@ export interface ReviewResult {
   };
   methodologyCompliance?: MethodologyCompliance;
   claudeGuidance?: ClaudeGuidance;
+  filePath?: string;
+  generatedFiles?: string[];
+  analysis?: any;
+  templateType?: string;
+  outputPath?: string;
 }
 
 export interface MethodologyCompliance {

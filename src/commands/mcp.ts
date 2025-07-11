@@ -6,12 +6,17 @@
 import { ensureDir, exists } from "@std/fs";
 import { join } from "@std/path";
 import { VERSION } from "../../version.ts";
+import { MCPProcessManager } from "../utils/mcp/process-manager.ts";
 
 export interface MCPOptions {
   install?: boolean;
   config?: boolean;
   status?: boolean;
   help?: boolean;
+  start?: boolean;
+  stop?: boolean;
+  restart?: boolean;
+  upgrade?: boolean;
 }
 
 export async function runMCPCommand(options: MCPOptions): Promise<void> {
@@ -20,15 +25,25 @@ export async function runMCPCommand(options: MCPOptions): Promise<void> {
     return;
   }
 
+  const processManager = new MCPProcessManager();
+
   if (options.install) {
     await installMCPServer();
   } else if (options.config) {
     await configureMCPServer();
+  } else if (options.start) {
+    await processManager.start();
+  } else if (options.stop) {
+    await processManager.stop();
+  } else if (options.restart) {
+    await processManager.restart();
+  } else if (options.upgrade) {
+    await processManager.upgrade();
   } else if (options.status) {
-    await checkMCPStatus();
+    await processManager.displayStatus();
   } else {
     // Default: show status
-    await checkMCPStatus();
+    await processManager.displayStatus();
   }
 }
 
@@ -45,6 +60,10 @@ Options:
   --install    Install the MCP server
   --config     Configure Claude Code to use the MCP server
   --status     Check MCP server status (default)
+  --start      Start the MCP server
+  --stop       Stop the MCP server
+  --restart    Restart the MCP server
+  --upgrade    Upgrade to the latest version
   --help       Show this help message
 
 Features:
@@ -59,17 +78,23 @@ Example:
   # Install MCP server
   aichaku mcp --install
 
+  # Start the server
+  aichaku mcp --start
+
   # Configure Claude Code
   aichaku mcp --config
 
   # Check status
   aichaku mcp --status
+  
+  # Stop the server
+  aichaku mcp --stop
 
 Learn more: https://github.com/RickCogley/aichaku/tree/main/mcp-server
 `);
 }
 
-async function installMCPServer(): Promise<void> {
+export async function installMCPServer(): Promise<void> {
   console.log("📦 Installing Aichaku MCP Server...\n");
 
   const homeDir = Deno.env.get("HOME") || Deno.env.get("USERPROFILE");

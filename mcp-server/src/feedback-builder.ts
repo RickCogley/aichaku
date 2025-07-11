@@ -81,8 +81,7 @@ export class FeedbackBuilder {
         `Your CLAUDE.md security standards require preventing command injection, but you have ${count} instance${
           count > 1 ? "s" : ""
         }.`,
-      pattern:
-        "Using shell variables directly in commands without proper escaping",
+      pattern: "Using shell variables directly in commands without proper escaping",
       correction: "Use parameter expansion to safely pass variables",
 
       context:
@@ -104,8 +103,7 @@ exec('ls', [userPath])`,
         "Consider using built-in functions instead of shell commands",
       ],
 
-      reflection:
-        "What made you use string interpolation instead of safer parameter passing?",
+      reflection: "What made you use string interpolation instead of safer parameter passing?",
 
       reinforcement:
         "Always use parameter expansion or array arguments for shell commands. This is a critical security requirement.",
@@ -211,12 +209,9 @@ const content = await Deno.readTextFile(resolved);`,
     _result: ReviewResult,
   ): ClaudeGuidance {
     return {
-      reminder:
-        "OWASP A01 (Broken Access Control) is the #1 web application security risk.",
-      pattern:
-        "Accessing resources based on user input without authorization checks",
-      correction:
-        "Add proper authorization middleware or checks before resource access",
+      reminder: "OWASP A01 (Broken Access Control) is the #1 web application security risk.",
+      pattern: "Accessing resources based on user input without authorization checks",
+      correction: "Add proper authorization middleware or checks before resource access",
 
       context:
         "Without proper access control, users can access resources they shouldn't, leading to data breaches and privilege escalation.",
@@ -248,8 +243,7 @@ app.get('/api/users/:id',
         "Log all access attempts for auditing",
       ],
 
-      reflection:
-        "How would an attacker try to access another user's data through this endpoint?",
+      reflection: "How would an attacker try to access another user's data through this endpoint?",
 
       reinforcement:
         "Every resource access must verify both authentication (who you are) and authorization (what you can do).",
@@ -290,8 +284,7 @@ if (!API_URL) {
         "Document required environment variables",
       ],
 
-      reflection:
-        "How would you deploy this code to production with different configuration?",
+      reflection: "How would you deploy this code to production with different configuration?",
 
       reinforcement:
         "Configuration belongs in the environment, not in code. This enables the same code to run anywhere.",
@@ -305,9 +298,7 @@ if (!API_URL) {
     const count = result.findings.filter((f) => f.rule === finding.rule).length;
 
     return {
-      reminder: `Found ${count} instance${
-        count > 1 ? "s" : ""
-      } of ${finding.rule} violations.`,
+      reminder: `Found ${count} instance${count > 1 ? "s" : ""} of ${finding.rule} violations.`,
       pattern: finding.message,
       correction: finding.suggestion ||
         "Follow the security and coding standards",
@@ -323,8 +314,7 @@ if (!API_URL) {
         "Look for similar patterns elsewhere in the codebase",
       ],
 
-      reflection:
-        "What can you learn from this to avoid similar issues in the future?",
+      reflection: "What can you learn from this to avoid similar issues in the future?",
 
       reinforcement:
         "Following established patterns and standards leads to more maintainable and secure code.",

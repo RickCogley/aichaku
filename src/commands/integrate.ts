@@ -120,7 +120,10 @@ async function loadStandardContent(
   if (await exists(customStandardPath)) {
     try {
       // Security: Use safe file reading with validated path
-      const content = await safeReadTextFile(customStandardPath, aichakuPaths.global.user.root);
+      const content = await safeReadTextFile(
+        customStandardPath,
+        aichakuPaths.global.user.root,
+      );
       return {
         content,
         isCustom: true,
@@ -165,7 +168,7 @@ async function loadStandardContent(
     // Security: Use safe file reading with validated path
     // Determine the base directory based on the path
     const home = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
-    const baseDir = standardPath.includes(aichakuPaths.legacy.globalStandards) 
+    const baseDir = standardPath.includes(aichakuPaths.legacy.globalStandards)
       ? join(home, ".claude") // Legacy global base
       : aichakuPaths.global.root;
     const content = await safeReadTextFile(standardPath, baseDir);
@@ -293,7 +296,10 @@ async function loadDocStandardContent(
   if (await exists(customStandardPath)) {
     try {
       // Security: Use safe file reading with validated path
-      const content = await safeReadTextFile(customStandardPath, aichakuPaths.global.user.root);
+      const content = await safeReadTextFile(
+        customStandardPath,
+        aichakuPaths.global.user.root,
+      );
       return {
         content,
         isCustom: true,
@@ -334,7 +340,7 @@ async function loadDocStandardContent(
     // Security: Use safe file reading with validated path
     // Determine the base directory based on the path
     const home = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
-    const baseDir = standardPath.includes(aichakuPaths.legacy.globalStandards) 
+    const baseDir = standardPath.includes(aichakuPaths.legacy.globalStandards)
       ? join(home, ".claude") // Legacy global base
       : aichakuPaths.global.root;
     const content = await safeReadTextFile(standardPath, baseDir);

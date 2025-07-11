@@ -17,9 +17,17 @@ import { ReviewEngine } from "./review-engine.ts";
 import { StandardsManager } from "./standards-manager.ts";
 import { MethodologyManager } from "./methodology-manager.ts";
 import { FeedbackBuilder } from "./feedback-builder.ts";
+import { AichakuFormatter, ConsoleOutputManager } from "./feedback-system.ts";
+import { feedbackSystem } from "./feedback/feedback-system.ts";
 import type { ReviewRequest, ReviewResult } from "./types.ts";
-import { validatePath, safeStat, safeReadTextFileSync } from "../../src/utils/path-security.ts";
 import { existsSync } from "@std/fs/exists";
+import { detectEnvironmentConfig, StatisticsManager } from "./statistics/mod.ts";
+import { type AnalyzeProjectArgs, analyzeProjectTool } from "./tools/analyze-project.ts";
+import {
+  type GenerateDocumentationArgs,
+  generateDocumentationTool,
+} from "./tools/generate-documentation.ts";
+import { type CreateDocTemplateArgs, createDocTemplateTool } from "./tools/create-doc-template.ts";
 
 const PACKAGE_JSON = {
   name: "@aichaku/mcp-code-reviewer",
@@ -33,6 +41,7 @@ class MCPCodeReviewer {
   private standardsManager: StandardsManager;
   private methodologyManager: MethodologyManager;
   private feedbackBuilder: FeedbackBuilder;
+  private statisticsManager: StatisticsManager;
 
   constructor() {
     this.server = new Server(
@@ -52,6 +61,7 @@ class MCPCodeReviewer {
     this.standardsManager = new StandardsManager();
     this.methodologyManager = new MethodologyManager();
     this.feedbackBuilder = new FeedbackBuilder();
+    this.statisticsManager = new StatisticsManager(detectEnvironmentConfig());
 
     this.setupHandlers();
   }
@@ -63,8 +73,7 @@ class MCPCodeReviewer {
         tools: [
           {
             name: "review_file",
-            description:
-              "Review a file for security, standards, and methodology compliance",
+            description: "Review a file for security, standards, and methodology compliance",
             inputSchema: {
               type: "object",
               properties: {
@@ -74,13 +83,11 @@ class MCPCodeReviewer {
                 },
                 content: {
                   type: "string",
-                  description:
-                    "File content (optional, will read from disk if not provided)",
+                  description: "File content (optional, will read from disk if not provided)",
                 },
                 includeExternal: {
                   type: "boolean",
-                  description:
-                    "Include external security scanners if available",
+                  description: "Include external security scanners if available",
                   default: true,
                 },
               },
@@ -89,8 +96,7 @@ class MCPCodeReviewer {
           },
           {
             name: "review_methodology",
-            description:
-              "Check if project follows selected methodology patterns",
+            description: "Check if project follows selected methodology patterns",
             inputSchema: {
               type: "object",
               properties: {
@@ -120,6 +126,34 @@ class MCPCodeReviewer {
               required: ["projectPath"],
             },
           },
+          {
+            name: "get_statistics",
+            description: "Get usage statistics and analytics for MCP tool usage",
+            inputSchema: {
+              type: "object",
+              properties: {
+                type: {
+                  type: "string",
+                  enum: ["dashboard", "realtime", "insights", "export"],
+                  description: "Type of statistics to retrieve",
+                  default: "dashboard",
+                },
+                format: {
+                  type: "string",
+                  enum: ["json", "csv"],
+                  description: "Export format (only for type=export)",
+                  default: "json",
+                },
+                question: {
+                  type: "string",
+                  description: "Specific question to answer about usage",
+                },
+              },
+            },
+          },
+          analyzeProjectTool,
+          generateDocumentationTool,
+          createDocTemplateTool,
         ] as Tool[],
       };
     });
@@ -131,8 +165,9 @@ class MCPCodeReviewer {
         const { name, arguments: args } = request.params;
 
         try {
-          // Log all MCP tool invocations for visibility
-          console.error(`🪴 [Aichaku MCP] Tool invoked: ${name}`);
+          // Enhanced feedback for tool invocations using new system
+          const operationId = feedbackSystem.startOperation(name, args);
+          const startTime = new Date();
 
           switch (name) {
             case "review_file": {
@@ -141,12 +176,24 @@ class MCPCodeReviewer {
               }
               const result = await this.reviewFile(
                 args as unknown as ReviewRequest,
+                operationId,
               );
+
+              // Record statistics
+              await this.statisticsManager.recordInvocation(
+                name,
+                operationId,
+                args as Record<string, unknown>,
+                startTime,
+                true,
+                result,
+              );
+
               return {
                 content: [
                   {
                     type: "text",
-                    text: this.formatReviewResult(result),
+                    text: feedbackSystem.formatResults(result),
                   },
                 ],
               };
@@ -161,12 +208,24 @@ class MCPCodeReviewer {
               const result = await this.reviewMethodology(
                 args.projectPath as string,
                 args.methodology as string,
+                operationId,
               );
+
+              // Record statistics
+              await this.statisticsManager.recordInvocation(
+                name,
+                operationId,
+                args as Record<string, unknown>,
+                startTime,
+                true,
+                result,
+              );
+
               return {
                 content: [
                   {
                     type: "text",
-                    text: this.formatMethodologyResult(result),
+                    text: feedbackSystem.formatResults(result),
                   },
                 ],
               };
@@ -179,6 +238,16 @@ class MCPCodeReviewer {
               const standards = await this.standardsManager.getProjectStandards(
                 args.projectPath as string,
               );
+
+              // Record statistics
+              await this.statisticsManager.recordInvocation(
+                name,
+                operationId,
+                args as Record<string, unknown>,
+                startTime,
+                true,
+              );
+
               return {
                 content: [
                   {
@@ -189,16 +258,203 @@ class MCPCodeReviewer {
               };
             }
 
+            case "analyze_project": {
+              if (!args) {
+                throw new Error("Arguments are required for analyze_project");
+              }
+              const result = await analyzeProjectTool.execute(args as AnalyzeProjectArgs);
+
+              // Record statistics
+              await this.statisticsManager.recordInvocation(
+                name,
+                operationId,
+                args as Record<string, unknown>,
+                startTime,
+                result.success,
+                result,
+              );
+
+              return {
+                content: [
+                  {
+                    type: "text",
+                    text: result.success
+                      ? JSON.stringify(result.analysis, null, 2)
+                      : `Error: ${result.error}`,
+                  },
+                ],
+              };
+            }
+
+            case "generate_documentation": {
+              if (!args) {
+                throw new Error(
+                  "Arguments are required for generate_documentation",
+                );
+              }
+              const result = await generateDocumentationTool.execute(
+                args as GenerateDocumentationArgs,
+              );
+
+              // Record statistics
+              await this.statisticsManager.recordInvocation(
+                name,
+                operationId,
+                args as Record<string, unknown>,
+                startTime,
+                result.success,
+                result,
+              );
+
+              if (result.success) {
+                const summary = [
+                  `✅ Successfully generated documentation`,
+                  `📁 Output path: ${result.outputPath}`,
+                  `📄 Generated ${result.generatedFiles?.length || 0} files`,
+                  ``,
+                  `Next steps:`,
+                  ...(result.nextSteps || []).map((step) => `  - ${step}`),
+                ].join("\n");
+
+                return {
+                  content: [
+                    {
+                      type: "text",
+                      text: summary,
+                    },
+                  ],
+                };
+              } else {
+                return {
+                  content: [
+                    {
+                      type: "text",
+                      text: `❌ Error: ${result.error}`,
+                    },
+                  ],
+                };
+              }
+            }
+
+            case "create_doc_template": {
+              if (!args) {
+                throw new Error(
+                  "Arguments are required for create_doc_template",
+                );
+              }
+              const result = await createDocTemplateTool.execute(args as CreateDocTemplateArgs);
+
+              // Record statistics
+              await this.statisticsManager.recordInvocation(
+                name,
+                operationId,
+                args as Record<string, unknown>,
+                startTime,
+                result.success,
+                result,
+              );
+
+              if (result.success) {
+                return {
+                  content: [
+                    {
+                      type: "text",
+                      text: `✅ Created template at: ${result.filePath}`,
+                    },
+                  ],
+                };
+              } else {
+                return {
+                  content: [
+                    {
+                      type: "text",
+                      text: `❌ Error: ${result.error}`,
+                    },
+                  ],
+                };
+              }
+            }
+
+            case "get_statistics": {
+              const type = (args?.type as string) || "dashboard";
+              const format = (args?.format as string) || "json";
+              const question = args?.question as string;
+
+              let result: string;
+
+              switch (type) {
+                case "dashboard":
+                  result = await this.statisticsManager.generateDashboard();
+                  break;
+                case "realtime":
+                  result = await this.statisticsManager.getRealTimeStats();
+                  break;
+                case "insights":
+                  result = await this.statisticsManager.getInsights();
+                  break;
+                case "export":
+                  result = await this.statisticsManager.exportData(
+                    format as "json" | "csv",
+                  );
+                  break;
+                default:
+                  if (question) {
+                    result = await this.statisticsManager.answerQuestion(
+                      question,
+                    );
+                  } else {
+                    result = await this.statisticsManager.generateDashboard();
+                  }
+              }
+
+              // Record statistics for this operation too
+              await this.statisticsManager.recordInvocation(
+                name,
+                operationId,
+                args as Record<string, unknown>,
+                startTime,
+                true,
+              );
+
+              return {
+                content: [
+                  {
+                    type: "text",
+                    text: result,
+                  },
+                ],
+              };
+            }
+
             default:
               throw new Error(`Unknown tool: ${name}`);
           }
         } catch (error) {
+          feedbackSystem.reportError(
+            operationId || `${name}-error`,
+            error instanceof Error ? error : new Error(String(error)),
+          );
+
+          // Record failed operation statistics
+          await this.statisticsManager.recordInvocation(
+            name,
+            operationId || `${name}-error`,
+            args as Record<string, unknown> || {},
+            startTime,
+            false,
+            undefined,
+            error instanceof Error ? error : new Error(String(error)),
+          );
+
           return {
             content: [
               {
                 type: "text",
-                text: `Error: ${
-                  error instanceof Error ? error.message : String(error)
+                text: `${
+                  AichakuFormatter.formatBrandedMessage(
+                    "❌",
+                    `Error: ${error instanceof Error ? error.message : String(error)}`,
+                  )
                 }`,
               },
             ],
@@ -209,10 +465,10 @@ class MCPCodeReviewer {
     );
   }
 
-  private async reviewFile(request: ReviewRequest): Promise<ReviewResult> {
-    // Log MCP activity to stderr for visibility in Claude Code console
-    console.error(`🪴 [Aichaku MCP] Reviewing file: ${request.file}`);
-
+  private async reviewFile(
+    request: ReviewRequest,
+    operationId?: string,
+  ): Promise<ReviewResult> {
     // Load standards and methodologies for the project
     const projectPath = this.getProjectPath(request.file);
     const standards = await this.standardsManager.getProjectStandards(
@@ -222,16 +478,19 @@ class MCPCodeReviewer {
       projectPath,
     );
 
-    console.error(
-      `🪴 [Aichaku MCP] Using standards: ${
-        standards.selected.join(", ") || "none"
-      }`,
-    );
-    console.error(
-      `🪴 [Aichaku MCP] Using methodologies: ${
-        methodologies.join(", ") || "none"
-      }`,
-    );
+    // Enhanced feedback for standards and methodologies using new system
+    feedbackSystem.showStandardsLoaded(standards.selected);
+    if (methodologies.length > 0) {
+      methodologies.forEach((m) => feedbackSystem.showMethodologyCheck(m));
+    }
+
+    if (operationId) {
+      feedbackSystem.updateProgress(
+        operationId,
+        "analyzing",
+        "Running security and standards checks",
+      );
+    }
 
     // Run the review
     const result = await this.reviewEngine.review({
@@ -245,9 +504,9 @@ class MCPCodeReviewer {
       result.claudeGuidance = this.feedbackBuilder.buildGuidance(result);
     }
 
-    console.error(
-      `🪴 [Aichaku MCP] Review complete: ${result.findings.length} findings`,
-    );
+    if (operationId) {
+      feedbackSystem.completeOperation(operationId, result);
+    }
 
     return result;
   }
@@ -255,17 +514,26 @@ class MCPCodeReviewer {
   private async reviewMethodology(
     projectPath: string,
     methodology?: string,
+    operationId?: string,
   ): Promise<ReviewResult> {
     const methodologies = methodology
       ? [methodology]
       : await this.methodologyManager.getProjectMethodologies(projectPath);
+
+    if (operationId) {
+      feedbackSystem.updateProgress(
+        operationId,
+        "checking methodology",
+        methodologies.join(", "),
+      );
+    }
 
     const findings = await this.methodologyManager.checkCompliance(
       projectPath,
       methodologies,
     );
 
-    return {
+    const result = {
       file: projectPath,
       findings,
       summary: this.summarizeFindings(findings),
@@ -279,163 +547,12 @@ class MCPCodeReviewer {
         details: findings.map((f) => f.message),
       },
     };
-  }
 
-  private formatReviewResult(result: ReviewResult): string {
-    // Determine file type for appropriate header
-    const isMarkdown = result.file.endsWith(".md") ||
-      result.file.endsWith(".markdown");
-    const reviewType = isMarkdown ? "Documentation Review" : "Code Review";
-
-    let output = `🪴 Aichaku ${reviewType} Results\n\n`;
-    output += `📄 File: ${result.file}\n`;
-
-    // Add console visibility note for documentation
-    if (isMarkdown) {
-      output += `📝 Document Type: ${this.detectDocumentType(result.file)}\n`;
+    if (operationId) {
+      feedbackSystem.completeOperation(operationId, result);
     }
 
-    output += `📊 Summary: ${this.formatSummary(result.summary)}\n\n`;
-
-    if (result.findings.length === 0) {
-      output += `✅ No issues found! Great job following the standards.\n`;
-      return output;
-    }
-
-    // Group findings by severity
-    const grouped = this.groupBySeverity(result.findings);
-
-    for (const [severity, findings] of Object.entries(grouped)) {
-      if (findings.length === 0) continue;
-
-      output += `\n${
-        this.getSeverityIcon(severity as Severity)
-      } ${severity.toUpperCase()} (${findings.length})\n`;
-      output += `${"-".repeat(40)}\n`;
-
-      for (const finding of findings) {
-        output += `  • Line ${finding.line}: ${finding.message}\n`;
-        output += `    Rule: ${finding.rule}`;
-        if (finding.category) output += ` | Category: ${finding.category}`;
-        output += `\n`;
-        if (finding.suggestion) {
-          output += `    💡 Suggestion: ${finding.suggestion}\n`;
-        }
-        output += `\n`;
-      }
-    }
-
-    // Add educational feedback
-    if (result.claudeGuidance) {
-      output += `\n🌱 Learning Opportunity\n`;
-      output += `${"-".repeat(40)}\n`;
-      output += this.formatGuidance(result.claudeGuidance);
-    }
-
-    return output;
-  }
-
-  private formatMethodologyResult(result: ReviewResult): string {
-    let output = `🪴 Aichaku Methodology Review\n\n`;
-
-    if (result.methodologyCompliance) {
-      const { methodology, status, details } = result.methodologyCompliance;
-      const icon = status === "passed"
-        ? "✅"
-        : status === "warnings"
-        ? "⚠️"
-        : "❌";
-
-      output += `📋 Methodology: ${methodology}\n`;
-      output += `${icon} Status: ${status}\n\n`;
-
-      if (details.length > 0) {
-        output += `Details:\n`;
-        for (const detail of details) {
-          output += `  • ${detail}\n`;
-        }
-      }
-    }
-
-    return output;
-  }
-
-  private formatGuidance(guidance: ClaudeGuidance): string {
-    let output = "";
-
-    if (guidance.context) {
-      output += `📖 Context: ${guidance.context}\n\n`;
-    }
-
-    output += `⚠️ Issue: ${guidance.pattern}\n`;
-    output += `📌 Reminder: ${guidance.reminder}\n\n`;
-
-    if (guidance.badExample && guidance.goodExample) {
-      output += `❌ Bad Example:\n${guidance.badExample}\n\n`;
-      output += `✅ Good Example:\n${guidance.goodExample}\n\n`;
-    }
-
-    if (guidance.stepByStep && guidance.stepByStep.length > 0) {
-      output += `🔄 Step-by-Step Fix:\n`;
-      guidance.stepByStep.forEach((step, i) => {
-        output += `${i + 1}. ${step}\n`;
-      });
-      output += `\n`;
-    }
-
-    output += `💡 ${guidance.correction}\n`;
-
-    if (guidance.reflection) {
-      output += `\n🤔 Reflection: ${guidance.reflection}\n`;
-    }
-
-    if (guidance.reinforcement) {
-      output += `\n📌 Note to self: ${guidance.reinforcement}\n`;
-    }
-
-    return output;
-  }
-
-  private formatSummary(summary: ReviewResult["summary"]): string {
-    const parts = [];
-    if (summary.critical > 0) parts.push(`${summary.critical} critical`);
-    if (summary.high > 0) parts.push(`${summary.high} high`);
-    if (summary.medium > 0) parts.push(`${summary.medium} medium`);
-    if (summary.low > 0) parts.push(`${summary.low} low`);
-    if (summary.info > 0) parts.push(`${summary.info} info`);
-
-    return parts.length > 0 ? parts.join(", ") : "No issues";
-  }
-
-  private groupBySeverity(findings: Finding[]): Record<Severity, Finding[]> {
-    const grouped: Record<Severity, Finding[]> = {
-      critical: [],
-      high: [],
-      medium: [],
-      low: [],
-      info: [],
-    };
-
-    for (const finding of findings) {
-      grouped[finding.severity].push(finding);
-    }
-
-    return grouped;
-  }
-
-  private getSeverityIcon(severity: Severity): string {
-    switch (severity) {
-      case "critical":
-        return "🔴";
-      case "high":
-        return "🟠";
-      case "medium":
-        return "🟡";
-      case "low":
-        return "🔵";
-      case "info":
-        return "⚪";
-    }
+    return result;
   }
 
   private summarizeFindings(findings: Finding[]): ReviewResult["summary"] {
@@ -481,47 +598,24 @@ class MCPCodeReviewer {
     return ".";
   }
 
-  private detectDocumentType(filePath: string): string {
-    try {
-      // Security: Use safe file reading
-      const content = safeReadTextFileSync(filePath, Deno.cwd()).toLowerCase();
-      const fileName = filePath.toLowerCase();
-
-      // Check file name patterns
-      if (
-        fileName.includes("tutorial") || content.includes("getting started")
-      ) {
-        return "Tutorial (Learning-oriented)";
-      }
-      if (fileName.includes("how-to") || content.includes("how to")) {
-        return "How-to Guide (Task-oriented)";
-      }
-      if (fileName.includes("reference") || fileName.includes("api")) {
-        return "Reference (Information-oriented)";
-      }
-      if (fileName.includes("explanation") || fileName.includes("concept")) {
-        return "Explanation (Understanding-oriented)";
-      }
-
-      return "General Documentation";
-    } catch {
-      return "Unknown";
-    }
-  }
-
   async start() {
     const transport = new StdioServerTransport();
+
+    // Initialize statistics manager
+    await this.statisticsManager.init();
+
+    // Show startup banner using new feedback system
+    feedbackSystem.showStartupBanner();
+
     await this.server.connect(transport);
-    console.error("🪴 [Aichaku MCP] Code Reviewer Server v0.1.0 started");
-    console.error("🪴 [Aichaku MCP] Ready to review code and documentation");
-    console.error(
-      "🪴 [Aichaku MCP] Available tools: review_file, review_methodology, get_standards",
-    );
+
+    // Additional startup feedback for backward compatibility
+    ConsoleOutputManager.formatServerStartup();
   }
 }
 
 // Import type fix
-import type { ClaudeGuidance, Finding, Severity } from "./types.ts";
+import type { Finding } from "./types.ts";
 
 // Start the server
 if (import.meta.main) {

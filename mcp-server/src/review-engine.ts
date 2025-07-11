@@ -2,12 +2,7 @@
  * Review Engine - Core review logic
  */
 
-import type {
-  Finding,
-  ReviewRequest,
-  ReviewResult,
-  SecurityPattern,
-} from "./types.ts";
+import type { Finding, ReviewRequest, ReviewResult, SecurityPattern } from "./types.ts";
 import { ScannerController } from "./scanner-controller.ts";
 import { SecurityPatterns } from "./patterns/security-patterns.ts";
 import { TypeScriptPatterns } from "./patterns/typescript-patterns.ts";
@@ -225,12 +220,10 @@ export class ReviewEngine {
         findings.push({
           severity: "high",
           rule: "owasp-a01-access-control",
-          message:
-            "OWASP A01: Potential broken access control - no authorization check found",
+          message: "OWASP A01: Potential broken access control - no authorization check found",
           file: filePath,
           line: index + 1,
-          suggestion:
-            "Add proper authorization checks before accessing resources",
+          suggestion: "Add proper authorization checks before accessing resources",
           tool: "aichaku-owasp",
           category: "security",
         });
@@ -246,8 +239,7 @@ export class ReviewEngine {
         findings.push({
           severity: "critical",
           rule: "owasp-a03-injection",
-          message:
-            "OWASP A03: Potential injection vulnerability - template literal in query",
+          message: "OWASP A03: Potential injection vulnerability - template literal in query",
           file: filePath,
           line: index + 1,
           suggestion: "Use parameterized queries or prepared statements",
@@ -271,8 +263,7 @@ export class ReviewEngine {
         findings.push({
           severity: "medium",
           rule: "15factor-config",
-          message:
-            "15-Factor III: Hardcoded localhost URL - use environment variables",
+          message: "15-Factor III: Hardcoded localhost URL - use environment variables",
           file: filePath,
           line: index + 1,
           suggestion: "Use process.env.API_URL or similar environment variable",
@@ -345,12 +336,10 @@ export class ReviewEngine {
       findings.push({
         severity: "medium",
         rule: "shape-up-scope",
-        message:
-          "Shape Up: Potential scope creep - 'nice to have' found in feature",
+        message: "Shape Up: Potential scope creep - 'nice to have' found in feature",
         file: filePath,
         line: 1,
-        suggestion:
-          "Fixed time, variable scope - consider removing nice-to-haves",
+        suggestion: "Fixed time, variable scope - consider removing nice-to-haves",
         tool: "aichaku-methodology",
         category: "methodology",
       });
