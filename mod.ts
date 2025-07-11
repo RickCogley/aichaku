@@ -6,7 +6,7 @@
  *
  * | **Aichaku** | **Specifications** |
  * | :------- | :------- |
- * | Version | 0.20.0 |
+ * | Version | 0.21.0 |
  * | Repository | {@link https://github.com/RickCogley/aichaku} |
  * | JSR Package | {@link https://jsr.io/@rick/aichaku} |
  * | License | MIT |
