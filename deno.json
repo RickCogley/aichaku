@@ -68,6 +68,7 @@
       "mod.ts",
       "cli.ts",
       "version.ts",
+      "deps.ts",
       "src/",
       "methodologies/",
       "README.md",
