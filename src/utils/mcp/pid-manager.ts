@@ -5,14 +5,20 @@
 
 import { dirname, join, normalize } from "@std/path";
 import { ensureDir, exists } from "@std/fs";
+import {
+  safeReadTextFile,
+  safeRemove,
+  safeWriteTextFile,
+} from "../path-security.ts";
 
 export class PIDManager {
   private pidFilePath: string;
+  private baseDir: string;
 
   constructor(mcpDir: string) {
     // Normalize the directory path
-    const normalizedDir = normalize(mcpDir);
-    this.pidFilePath = join(normalizedDir, "mcp-server.pid");
+    this.baseDir = normalize(mcpDir);
+    this.pidFilePath = join(this.baseDir, "mcp-server.pid");
   }
 
   /**
@@ -24,7 +30,7 @@ export class PIDManager {
         return null;
       }
 
-      const content = await Deno.readTextFile(this.pidFilePath);
+      const content = await safeReadTextFile("mcp-server.pid", this.baseDir);
       const pid = parseInt(content.trim(), 10);
 
       if (isNaN(pid) || pid <= 0) {
@@ -50,7 +56,7 @@ export class PIDManager {
       await ensureDir(dir);
 
       // Write PID to file
-      await Deno.writeTextFile(this.pidFilePath, pid.toString());
+      await safeWriteTextFile("mcp-server.pid", pid.toString(), this.baseDir);
     } catch (error) {
       throw new Error(`Failed to write PID file: ${error}`);
     }
@@ -62,7 +68,7 @@ export class PIDManager {
   async removePID(): Promise<void> {
     try {
       if (await exists(this.pidFilePath)) {
-        await Deno.remove(this.pidFilePath);
+        await safeRemove("mcp-server.pid", this.baseDir);
       }
     } catch (error) {
       // Log but don't throw - not critical if we can't remove
@@ -75,12 +81,13 @@ export class PIDManager {
    */
   async getMetadata(): Promise<Record<string, unknown> | null> {
     try {
-      const metaPath = this.pidFilePath.replace(".pid", ".meta.json");
+      const metaFileName = "mcp-server.meta.json";
+      const metaPath = join(this.baseDir, metaFileName);
       if (!await exists(metaPath)) {
         return null;
       }
 
-      const content = await Deno.readTextFile(metaPath);
+      const content = await safeReadTextFile(metaFileName, this.baseDir);
       return JSON.parse(content);
     } catch {
       return null;
@@ -92,8 +99,12 @@ export class PIDManager {
    */
   async setMetadata(metadata: Record<string, unknown>): Promise<void> {
     try {
-      const metaPath = this.pidFilePath.replace(".pid", ".meta.json");
-      await Deno.writeTextFile(metaPath, JSON.stringify(metadata, null, 2));
+      const metaFileName = "mcp-server.meta.json";
+      await safeWriteTextFile(
+        metaFileName,
+        JSON.stringify(metadata, null, 2),
+        this.baseDir,
+      );
     } catch (error) {
       // Non-critical, just log
       console.error("Error writing metadata:", error);
@@ -105,9 +116,10 @@ export class PIDManager {
    */
   async removeMetadata(): Promise<void> {
     try {
-      const metaPath = this.pidFilePath.replace(".pid", ".meta.json");
+      const metaFileName = "mcp-server.meta.json";
+      const metaPath = join(this.baseDir, metaFileName);
       if (await exists(metaPath)) {
-        await Deno.remove(metaPath);
+        await safeRemove(metaFileName, this.baseDir);
       }
     } catch {
       // Non-critical

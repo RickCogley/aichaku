@@ -19,6 +19,7 @@ import {
   FilePathAnonymizer,
   UserIdentifierAnonymizer,
 } from "./privacy.ts";
+import { safeStat } from "../../../src/utils/path-security.ts";
 
 export class StatisticsCollector {
   private storage: StorageBackend;
@@ -444,7 +445,12 @@ export class StatisticsCollector {
    */
   private async getFileSize(filePath: string): Promise<number> {
     try {
-      const stat = await Deno.stat(filePath);
+      // Extract base directory from the file path for validation
+      const pathParts = filePath.split("/");
+      const baseDir = pathParts.slice(0, -1).join("/") || "/";
+      const fileName = pathParts[pathParts.length - 1];
+
+      const stat = await safeStat(fileName, baseDir);
       return stat.size;
     } catch {
       return 0;

@@ -7,7 +7,10 @@
 import { existsSync } from "@std/fs/exists";
 import { walk } from "@std/fs/walk";
 import { extname, join, relative } from "@std/path";
-import { safeReadTextFileSync } from "../../../src/utils/path-security.ts";
+import {
+  safeReadDir,
+  safeReadTextFileSync,
+} from "../../../src/utils/path-security.ts";
 
 export interface ProjectAnalysis {
   rootPath: string;
@@ -298,7 +301,7 @@ export class ProjectAnalyzer {
     };
 
     const entries = [];
-    for await (const entry of Deno.readDir(projectPath)) {
+    for await (const entry of safeReadDir(".", projectPath)) {
       if (
         entry.name.startsWith(".") && entry.name !== ".github" &&
         entry.name !== ".claude"
@@ -622,7 +625,7 @@ export class ProjectAnalyzer {
     if (projectType.includes("go")) {
       const cmdDir = join(projectPath, "cmd");
       if (existsSync(cmdDir)) {
-        for await (const entry of Deno.readDir(cmdDir)) {
+        for await (const entry of safeReadDir(".", cmdDir)) {
           if (entry.isDirectory) {
             const mainPath = join(cmdDir, entry.name, "main.go");
             if (existsSync(mainPath)) {
@@ -880,7 +883,7 @@ export class ProjectAnalyzer {
           const dirPath = join(projectPath, ...parts.slice(0, -1));
 
           if (existsSync(dirPath)) {
-            for await (const entry of Deno.readDir(dirPath)) {
+            for await (const entry of safeReadDir(".", dirPath)) {
               if (entry.isFile) {
                 configFiles.push({
                   path: relative(projectPath, join(dirPath, entry.name)),
@@ -892,7 +895,7 @@ export class ProjectAnalyzer {
           }
         } else {
           // File pattern like .eslintrc*
-          for await (const entry of Deno.readDir(projectPath)) {
+          for await (const entry of safeReadDir(".", projectPath)) {
             if (entry.isFile && entry.name.startsWith(basePattern)) {
               configFiles.push({
                 path: entry.name,

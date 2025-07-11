@@ -205,3 +205,41 @@ export function safeStatSync(
   const validatedPath = validatePath(filePath, baseDir);
   return Deno.statSync(validatedPath);
 }
+
+/**
+ * Safely writes text to a file after validating the path
+ *
+ * @param filePath - The file path to write to
+ * @param data - The text data to write
+ * @param baseDir - The base directory that the file must be within
+ * @param options - Optional write options
+ * @throws Error if path traversal is attempted or file cannot be written
+ */
+export async function safeWriteTextFile(
+  filePath: string,
+  data: string,
+  baseDir: string,
+  options?: Deno.WriteFileOptions,
+): Promise<void> {
+  const validatedPath = validatePath(filePath, baseDir);
+  await Deno.writeTextFile(validatedPath, data, options);
+}
+
+/**
+ * Safely writes data to a file after validating the path
+ *
+ * @param filePath - The file path to write to
+ * @param data - The data to write
+ * @param baseDir - The base directory that the file must be within
+ * @param options - Optional write options
+ * @throws Error if path traversal is attempted or file cannot be written
+ */
+export async function safeWriteFile(
+  filePath: string,
+  data: Uint8Array,
+  baseDir: string,
+  options?: Deno.WriteFileOptions,
+): Promise<void> {
+  const validatedPath = validatePath(filePath, baseDir);
+  await Deno.writeFile(validatedPath, data, options);
+}
