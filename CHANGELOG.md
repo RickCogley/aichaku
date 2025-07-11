@@ -6,6 +6,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.20.0] - 2025-07-11
+
+### Added
+
+- reorganize to ~/.claude/aichaku/ folder structure (5a76eaf)
+- enhance MCP server with visibility logging and documentation patterns
+  (e23f2e7)
+- add docs-lint command for documentation quality checking (12aee2b)
+- add docs-standard command for documentation standards management (e266c70)
+- add standards system with bundled content (475a761)
+
+### Changed
+
+- reorganize user customization paths to logical structure (7b322e8)
+- update module exports and documentation integration guides (d13fdff)
+- migrate documentation system to Diátaxis framework (a69d287)
+- add comprehensive architecture documentation (5b3de44)
+- clean up CLAUDE.md and configure appropriate standards (43adec2)
+- configure project standards for Aichaku (b8ceaca)
+- use explicit permissions instead of -A in README (87fbe07)
+- Revert "fix: use -A permissions in init.ts installer" (405d379)
+
+### Fixed
+
+- resolve all lint, format, and type check errors for release (37bb367)
+- correct date format in integrate command output (38ac16a)
+- add --allow-run permission to init.ts installer (0d8da2c)
+- use -A permissions in init.ts installer (5a21d27)
+
 ## [0.19.0] - 2025-07-10
 
 ### Added
