@@ -6,6 +6,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.22.0] - 2025-07-11
+
+### Added
+
+- shape MCP project documentation manager concept (c9051f7)
+- implement unified MCP server enhancements with feedback and statistics
+  (b7492f0)
+
+### Changed
+
+- format code for release compliance (b26dc65)
+- add MCP server contributing and security documentation (746dd94)
+- migrate project docs and checkpoints to /docs/ for better discoverability
+  (cd3b651)
+- mark MCP enhancement work as completed (1aa6afd)
+- add MCP enhancement session documentation (7241c29)
+- update README with MCP server features and examples (180ed23)
+- add comprehensive MCP server and tools documentation (243dd04)
+- add Aichaku session documentation for MCP enhancements (deecef7)
+- upgrade aichaku project to v0.21.1 (82b63cf)
+
+### Fixed
+
+- resolve all TypeScript and lint errors for release (54fa56c)
+- correct path validation in build-binaries script (3b164b7)
+- additional path traversal security fixes for workflow compliance (de614a5)
+
 ## [0.21.1] - 2025-07-11
 
 ### Changed
