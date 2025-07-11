@@ -45,10 +45,17 @@ async function loadDocumentationConfig(
   projectPath: string,
 ): Promise<DocumentationStandardConfig | null> {
   // Check new path first, then legacy path
-  const newConfigPath = join(projectPath, ".claude", "aichaku", "docs-standards.json");
+  const newConfigPath = join(
+    projectPath,
+    ".claude",
+    "aichaku",
+    "docs-standards.json",
+  );
   const legacyConfigPath = join(projectPath, ".claude", "docs-standards.json");
-  
-  const configPath = (await exists(newConfigPath)) ? newConfigPath : legacyConfigPath;
+
+  const configPath = (await exists(newConfigPath))
+    ? newConfigPath
+    : legacyConfigPath;
 
   if (!await exists(configPath)) {
     return null;
@@ -163,8 +170,8 @@ async function findMarkdownFiles(paths: string[]): Promise<string[]> {
 /**
  * Main command function
  */
-export async function main() {
-  const args = parseArgs(Deno.args, {
+export async function main(cliArgs?: string[]) {
+  const args = parseArgs(cliArgs || Deno.args, {
     boolean: ["help", "quiet", "fix"],
     string: ["standards", "config"],
     default: {

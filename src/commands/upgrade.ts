@@ -41,10 +41,10 @@ export async function upgrade(
 ): Promise<UpgradeResult> {
   const isGlobal = options.global || false;
   const paths = getAichakuPaths();
-  
+
   // Use centralized path management
   const targetPath = isGlobal ? paths.global.root : paths.project.root;
-  const projectPath = resolve(options.projectPath || ".");
+  const _projectPath = resolve(options.projectPath || ".");
 
   // Check if Aichaku is installed (try both old and new marker files)
   const aichakuJsonPath = isGlobal ? paths.global.config : paths.project.config;
@@ -169,10 +169,14 @@ export async function upgrade(
     if (isJSR) {
       // Fetch from GitHub when running from JSR
       // First try to update in place (preserves any user modifications)
-      const fetchSuccess = await fetchMethodologies(paths.global.root, VERSION, {
-        silent: options.silent,
-        overwrite: true, // Always overwrite during upgrades to get latest content
-      });
+      const fetchSuccess = await fetchMethodologies(
+        paths.global.root,
+        VERSION,
+        {
+          silent: options.silent,
+          overwrite: true, // Always overwrite during upgrades to get latest content
+        },
+      );
 
       if (!fetchSuccess) {
         // If fetch fails completely, try removing and re-fetching
@@ -181,10 +185,14 @@ export async function upgrade(
           await Deno.remove(targetMethodologies, { recursive: true });
         }
 
-        const retrySuccess = await fetchMethodologies(paths.global.root, VERSION, {
-          silent: options.silent,
-          overwrite: true,
-        });
+        const retrySuccess = await fetchMethodologies(
+          paths.global.root,
+          VERSION,
+          {
+            silent: options.silent,
+            overwrite: true,
+          },
+        );
 
         if (!retrySuccess) {
           throw new Error(

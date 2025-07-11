@@ -1,10 +1,10 @@
 /**
  * Logger utility for consistent output formatting
- * 
+ *
  * @module
  */
 
-import { bold, green, red, yellow, blue, gray } from "../../deps.ts";
+import { blue, bold, gray, green, red, yellow } from "../../deps.ts";
 
 /**
  * Logger configuration options
@@ -127,10 +127,12 @@ export class Logger {
       const percentage = Math.round((current / total) * 100);
       const filled = Math.round((current / total) * 20);
       const bar = "█".repeat(filled) + "░".repeat(20 - filled);
-      
+
       const progressText = `${bar} ${percentage}%`;
-      const fullMessage = message ? `${progressText} - ${message}` : progressText;
-      
+      const fullMessage = message
+        ? `${progressText} - ${message}`
+        : progressText;
+
       // Use carriage return to update same line (fallback to console.log if process unavailable)
       try {
         // Fallback to console.log since we can't use process in Deno
@@ -138,7 +140,7 @@ export class Logger {
       } catch {
         console.log(this.formatMessage(fullMessage));
       }
-      
+
       // Add newline when complete
       if (current === total) {
         console.log();

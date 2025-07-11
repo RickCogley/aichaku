@@ -134,7 +134,8 @@ export class SecurityPatterns {
         name: "Direct parameter usage without visible authorization check",
         pattern: /req\.params\.[a-zA-Z]+(?!.*(?:auth|permission|role|access))/,
         severity: "high",
-        description: "Direct parameter usage without visible authorization check",
+        description:
+          "Direct parameter usage without visible authorization check",
         fix: "Add authorization middleware or checks",
         category: "security",
         owaspMapping: "A01",

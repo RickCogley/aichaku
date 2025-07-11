@@ -241,9 +241,9 @@ export async function resolveAichakuPath(
       if (name) {
         pathsToCheck.push(
           // Check user custom methodologies first
-          join(paths.global.user.methodologies, name.toLowerCase()),
+          getUserMethodologyPath(name),
           // Then built-in methodologies
-          join(paths.global.methodologies, name.toLowerCase()),
+          getMethodologyPath(name),
           // Legacy location
           join(paths.legacy.globalMethodologies, name.toLowerCase()),
         );
@@ -254,9 +254,9 @@ export async function resolveAichakuPath(
       if (name) {
         pathsToCheck.push(
           // Check user custom standards first
-          join(paths.global.user.standards, `${name.toUpperCase()}.md`),
+          getUserStandardPath(name),
           // Then built-in standards
-          join(paths.global.standards, `${name.toUpperCase()}.md`),
+          getStandardPath(name),
           // Legacy global standards
           join(paths.legacy.globalStandards, `${name.toUpperCase()}.md`),
           // Legacy custom standards

@@ -9,6 +9,7 @@
     "clean-arch",
     "google-style",
     "bdd",
-    "dora"
+    "dora",
+    "custom-security"
   ]
 }

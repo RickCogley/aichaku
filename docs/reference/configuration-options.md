@@ -2,11 +2,13 @@
 
 Complete reference for all Aichaku configuration options.
 
-## settings.local.json
+## Configuration Files
+
+### settings.local.json
 
 Project-specific configuration file located at `.claude/settings.local.json`.
 
-### Schema
+#### Schema
 
 ```typescript
 interface AichakuSettings {
@@ -52,6 +54,80 @@ interface AichakuSettings {
 }
 ```
 
+### standards.json
+
+Standards configuration file located at `.claude/aichaku/standards.json`. This file tracks both built-in and custom standards selected for the project.
+
+#### Schema
+
+```typescript
+interface StandardsConfig {
+  // Built-in standards from the library
+  selectedStandards?: string[];
+  
+  // Custom standards with metadata
+  customStandards?: {
+    [key: string]: {
+      name: string;
+      description: string;
+      path: string;
+      tags: string[];
+      createdAt?: string;
+      updatedAt?: string;
+    }
+  };
+}
+```
+
+#### Example standards.json
+
+```json
+{
+  "selectedStandards": [
+    "nist-csf",
+    "tdd",
+    "conventional-commits"
+  ],
+  "customStandards": {
+    "team-guidelines": {
+      "name": "Team Development Guidelines",
+      "description": "Our team's specific coding standards and practices",
+      "path": "/Users/user/.claude/aichaku/user/standards/team-guidelines.md",
+      "tags": ["custom", "team", "guidelines"],
+      "createdAt": "2025-07-11T10:00:00Z",
+      "updatedAt": "2025-07-11T10:00:00Z"
+    },
+    "api-design": {
+      "name": "API Design Standards",
+      "description": "REST API design patterns and conventions",
+      "path": "/Users/user/.claude/aichaku/user/standards/api-design.md",
+      "tags": ["custom", "api", "rest", "design"]
+    }
+  }
+}
+```
+
+### Migration Notes
+
+If you have an existing installation with the old configuration format:
+
+| Old Path | New Path |
+|----------|----------|
+| `.claude/.aichaku-standards.json` | `.claude/aichaku/standards.json` |
+| `~/.claude/standards/` | `~/.claude/aichaku/standards/` |
+
+Run the migration command to update:
+
+```bash
+aichaku migrate
+```
+
+This command will:
+1. Move standards configuration to the new location
+2. Update file paths in the configuration
+3. Create the new directory structure
+4. Preserve all existing settings
+
 ### Example configurations
 
 #### Minimal configuration
@@ -78,7 +154,7 @@ interface AichakuSettings {
 }
 ```
 
-#### Advanced configuration
+#### Advanced configuration with custom standards
 ```json
 {
   "selectedStandards": [
@@ -87,7 +163,9 @@ interface AichakuSettings {
     "tdd",
     "test-pyramid",
     "conventional-commits",
-    "google-style"
+    "google-style",
+    "custom:team-guidelines",
+    "custom:api-design"
   ],
   "methodology": "shape-up",
   "customPaths": {
@@ -184,6 +262,23 @@ aichaku standards [options]
 | `--selected` | With --list, show only selected | `aichaku standards --list --selected` |
 | `--categories` | Filter by categories | `aichaku standards --list --categories security,testing` |
 | `--search` | Search standards | `aichaku standards --search "test"` |
+| `--create-custom` | Create new custom standard | `aichaku standards --create-custom my-standard` |
+| `--delete-custom` | Remove custom standard | `aichaku standards --delete-custom my-standard` |
+| `--edit-custom` | Open custom standard in editor | `aichaku standards --edit-custom my-standard` |
+| `--copy-custom` | Duplicate custom standard | `aichaku standards --copy-custom source-std target-std` |
+
+#### Custom standards usage
+
+Add custom standards with the `custom:` prefix:
+
+```bash
+# Add a custom standard to the project
+aichaku standards --add custom:my-standard
+
+# Create and add in one command
+aichaku standards --create-custom team-guidelines
+aichaku standards --add custom:team-guidelines
+```
 
 ### help command
 
@@ -253,7 +348,8 @@ aichaku uninstall [options]
 |------|---------|
 | `~/.claude/` | Root directory |
 | `~/.claude/methodologies/` | All methodology files |
-| `~/.claude/standards/` | Standards library |
+| `~/.claude/aichaku/standards/` | Built-in standards library |
+| `~/.claude/aichaku/user/standards/` | Custom standards directory |
 | `~/.claude/output/` | Generated projects |
 | `~/.claude/CLAUDE.md` | Global Claude instructions |
 | `~/.claude/settings.json` | Global settings (future) |
@@ -265,6 +361,9 @@ aichaku uninstall [options]
 |------|---------|
 | `.claude/` | Project root |
 | `.claude/methodologies/` | Project methodologies |
+| `.claude/aichaku/standards/` | Built-in standards (symlinked) |
+| `.claude/aichaku/user/standards/` | Custom standards (symlinked) |
+| `.claude/aichaku/standards.json` | Standards configuration |
 | `.claude/output/` | Project work |
 | `.claude/output/active-*/` | Active projects |
 | `.claude/output/done-*/` | Completed projects |
@@ -336,22 +435,78 @@ aichaku uninstall [options]
 | Security | `/security/` | owasp-web, nist-csf |
 | Testing | `/testing/` | test-pyramid, bdd |
 | DevOps | `/devops/` | dora |
+| Custom | `~/.claude/aichaku/user/standards/` | User-created standards |
 
 ### Standard identifiers
 
-| Standard | ID | Category |
-|----------|-----|----------|
-| Clean Architecture | `clean-arch` | architecture |
-| 15-Factor App | `15-factor` | architecture |
-| SOLID Principles | `solid` | development |
-| Test-Driven Development | `tdd` | development |
-| Conventional Commits | `conventional-commits` | development |
-| Google Style Guide | `google-style` | development |
-| OWASP Top 10 | `owasp-web` | security |
-| NIST Cybersecurity | `nist-csf` | security |
-| Test Pyramid | `test-pyramid` | testing |
-| Behavior-Driven Dev | `bdd` | testing |
-| DORA Metrics | `dora` | devops |
+| Standard | ID | Category | Type |
+|----------|-----|----------|------|
+| Clean Architecture | `clean-arch` | architecture | built-in |
+| 15-Factor App | `15-factor` | architecture | built-in |
+| SOLID Principles | `solid` | development | built-in |
+| Test-Driven Development | `tdd` | development | built-in |
+| Conventional Commits | `conventional-commits` | development | built-in |
+| Google Style Guide | `google-style` | development | built-in |
+| OWASP Top 10 | `owasp-web` | security | built-in |
+| NIST Cybersecurity | `nist-csf` | security | built-in |
+| Test Pyramid | `test-pyramid` | testing | built-in |
+| Behavior-Driven Dev | `bdd` | testing | built-in |
+| DORA Metrics | `dora` | devops | built-in |
+| User Standards | `custom:<name>` | custom | custom |
+
+### Custom standards
+
+Custom standards are prefixed with `custom:` when referencing them:
+
+```bash
+# List all custom standards
+aichaku standards --list --categories custom
+
+# Add a custom standard
+aichaku standards --add custom:my-standard
+
+# Show custom standard content
+aichaku standards --show custom:my-standard
+```
+
+#### Custom standard file format
+
+Custom standards follow the same markdown format as built-in standards:
+
+```markdown
+## My Custom Standard
+
+### Quick Reference
+Brief overview of the standard...
+
+### Core Principles
+1. First principle
+2. Second principle
+3. Third principle
+
+### Implementation Guidelines
+Detailed implementation instructions...
+
+### Examples
+Code examples demonstrating the standard...
+```
+
+#### Custom standard metadata
+
+Each custom standard has associated metadata stored in `standards.json`:
+
+```json
+{
+  "my-standard": {
+    "name": "My Custom Standard",
+    "description": "Brief description of what this standard covers",
+    "path": "/Users/user/.claude/aichaku/user/standards/my-standard.md",
+    "tags": ["custom", "team", "api"],
+    "createdAt": "2025-07-11T10:00:00Z",
+    "updatedAt": "2025-07-11T10:00:00Z"
+  }
+}
+```
 
 ## CLAUDE.md markers
 

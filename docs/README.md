@@ -2,6 +2,14 @@
 
 Welcome to the Aichaku documentation! This guide is organized using the Diátaxis framework to help you find exactly what you need.
 
+## 🆕 Latest Updates
+
+**v0.20.0 - Custom Standards & New Structure**
+- Create and manage custom standards with new CLI commands
+- Improved folder organization under `~/.claude/aichaku/`
+- [Migration guide](tutorials/migrate-to-new-structure.md) for existing users
+- [Custom standards guide](how-to/manage-custom-standards.md) for teams
+
 ## 📚 Documentation Types
 
 ### 🎓 [Tutorials](tutorials/)
@@ -9,11 +17,13 @@ Welcome to the Aichaku documentation! This guide is organized using the Diátaxi
 
 - [Getting Started](tutorials/getting-started.md) - Install and set up Aichaku
 - [Your First Project](tutorials/first-project.md) - Build a real feature with Aichaku
+- [Migrate to New Structure](tutorials/migrate-to-new-structure.md) - Update from v0.19.x to v0.20.0+
 
 ### 🔧 [How-to Guides](how-to/)
 **Task-oriented** - Practical guides for specific tasks
 
-- [Configure Your Project](how-to/configure-project.md) - Customize Aichaku for your needs
+- [Configure Your Project](how-to/configure-project.md) - Customize Aichaku with standards and methodologies
+- [Manage Custom Standards](how-to/manage-custom-standards.md) - Create and share your own coding standards
 - [Using MCP with Multiple Projects](how-to/use-mcp-with-multiple-projects.md) - Share server across projects
 
 ### 📖 [Reference](reference/)
@@ -50,6 +60,8 @@ Welcome to the Aichaku documentation! This guide is organized using the Diátaxi
 ### Most Common Tasks
 - [Install Aichaku](tutorials/getting-started.md#step-1-install-aichaku)
 - [Add coding standards](how-to/configure-project.md#add-or-remove-coding-standards)
+- [Create custom standards](how-to/manage-custom-standards.md)
+- [Migrate to new structure](tutorials/migrate-to-new-structure.md)
 - [Customize templates](how-to/configure-project.md#customize-methodology-templates)
 - [Mix methodologies](explanation/core-concepts.md#methodology-inclusive)
 
@@ -75,6 +87,7 @@ Welcome to the Aichaku documentation! This guide is organized using the Diátaxi
 
 **Team Lead**
 - [Configure Your Project](how-to/configure-project.md)
+- [Create Custom Standards](how-to/manage-custom-standards.md)
 - [Team Configuration](how-to/configure-project.md#set-up-team-configurations)
 - [Design Philosophy](explanation/design-philosophy.md)
 

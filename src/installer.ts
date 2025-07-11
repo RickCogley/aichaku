@@ -1,7 +1,7 @@
 import { ensureDir, exists } from "jsr:@std/fs@1";
 import { join, resolve } from "jsr:@std/path@1";
 import type { InstallOptions, InstallResult } from "./types.ts";
-import { getAichakuPaths, ensureAichakuDirs } from "./paths.ts";
+import { ensureAichakuDirs, getAichakuPaths } from "./paths.ts";
 
 /**
  * Install a methodology to the specified location
@@ -23,7 +23,7 @@ export async function install(
   } = options;
 
   const paths = getAichakuPaths();
-  
+
   // Ensure directories exist
   await ensureAichakuDirs();
 

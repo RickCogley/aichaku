@@ -114,61 +114,63 @@ aichaku/
 
 ## Global installation structure
 
-Location: `~/.claude/`
+Location: `~/.claude/aichaku/`
 
 ```
 ~/.claude/
-├── methodologies/             # Complete packages
-│   ├── shape-up/             # Full methodology
-│   ├── scrum/                # Full methodology
-│   ├── kanban/               # Full methodology
-│   ├── lean/                 # Full methodology
-│   ├── xp/                   # Full methodology
-│   ├── scrumban/             # Full methodology
-│   └── core/                 # Always present
-│
-├── standards/                 # Standards library
-│   ├── architecture/         # Architecture patterns
-│   ├── development/          # Dev practices
-│   ├── security/            # Security standards
-│   ├── testing/             # Testing approaches
-│   └── devops/              # DevOps practices
-│
-├── output/                   # User's work
-│   ├── active-*/            # Current projects
-│   └── done-*/              # Completed projects
-│
-├── CLAUDE.md                # Global instructions
-├── settings.json            # Global settings
-└── commands.json            # Custom commands
+└── aichaku/                   # All Aichaku files
+    ├── methodologies/         # Core methodology files
+    │   ├── shape-up/         # Full methodology
+    │   ├── scrum/            # Full methodology
+    │   ├── kanban/           # Full methodology
+    │   ├── lean/             # Full methodology
+    │   ├── xp/               # Full methodology
+    │   ├── scrumban/         # Full methodology
+    │   └── core/             # Always present
+    │
+    ├── standards/             # Built-in standards library
+    │   ├── architecture/     # Architecture patterns
+    │   ├── development/      # Dev practices
+    │   ├── documentation/    # Documentation standards
+    │   ├── security/         # Security standards
+    │   └── testing/          # Testing approaches
+    │
+    ├── user/                  # User customizations
+    │   ├── standards/         # Custom standards go here
+    │   ├── methodologies/     # Custom methodologies (future)
+    │   ├── templates/         # Custom templates (future)
+    │   └── config/            # User configuration (future)
+    │
+    └── cache/                 # Performance cache
 ```
+
+Note: User-specific files remain in the root `~/.claude/` directory:
+- `CLAUDE.md` - Global AI instructions
+- `output/` - User's work outside of projects
+- `settings.json` - Global settings
+- `commands.json` - Custom commands
 
 ## Project installation structure
 
 Location: `project/.claude/`
 
 ```
-project/.claude/
-├── methodologies/            # Project methodologies
-│   ├── shape-up/            # If using Shape Up
-│   ├── core/                # Always present
-│   └── [selected]/          # Your chosen methodology
-│
-├── output/                  # Project work
-│   ├── active-2025-07-10-feature-auth/
-│   │   ├── STATUS.md       # Current status
-│   │   ├── pitch.md        # From template
-│   │   ├── cycle-plan.md   # From template
-│   │   └── notes.md        # User created
-│   │
-│   └── done-2025-07-09-bug-fix/
-│       └── [archived work]
-│
-├── .aichaku-project         # Project marker
-├── settings.local.json      # Project config
-├── CLAUDE.md               # Project instructions
-└── commands.json           # Project commands
+[project]/
+└── .claude/
+    ├── aichaku/                # Aichaku project files
+    │   ├── standards.json      # Selected standards (was .aichaku-standards.json)
+    │   ├── doc-standards.json  # Documentation standards
+    │   └── output/             # Generated documents
+    │       ├── active-*/       # Work in progress
+    │       └── done-*/         # Completed work
+    │
+    ├── output/                 # User work (stays here)
+    ├── user/                   # User customizations (stays here)
+    ├── CLAUDE.md              # AI instructions (stays here)
+    └── settings.local.json    # Claude Code settings (stays here)
 ```
+
+Note: The `.aichaku-project` marker file is no longer needed. Aichaku detects projects by the presence of `.claude/aichaku/` directory.
 
 ## Methodology package structure
 
@@ -256,6 +258,100 @@ standards/
 [What to avoid]
 ```
 
+## Custom standards structure
+
+Users can add their own standards to extend Aichaku's built-in library:
+
+### Location
+Custom standards must be placed in: `~/.claude/aichaku/user/standards/`
+
+### File naming
+- Use UPPERCASE-KEBAB-CASE: `MY-CUSTOM-STANDARD.md`
+- Must end with `.md` extension
+- Names should be descriptive and unique
+
+### Required frontmatter format
+```yaml
+---
+title: "My Custom Standard"
+description: "Brief description of what this standard covers"
+tags: ["category", "subcategory", "custom"]
+---
+```
+
+### Auto-discovery
+- Aichaku automatically discovers custom standards on startup
+- No registration required - just add the file
+- Standards appear in the selection list with "(Custom)" suffix
+
+### Example custom standard
+```markdown
+---
+title: "Company Code Style"
+description: "Our company's specific coding standards"
+tags: ["development", "style", "custom"]
+---
+
+# Company Code Style
+
+## Quick Reference
+Our company follows specific conventions...
+
+## Rules
+1. All functions must be documented
+2. Use 4-space indentation
+3. Maximum line length: 100 characters
+
+## Examples
+```typescript
+/**
+ * Calculates the sum of two numbers
+ * @param a First number
+ * @param b Second number
+ * @returns The sum of a and b
+ */
+function add(a: number, b: number): number {
+    return a + b;
+}
+```
+```
+
+## Legacy structure migration
+
+Aichaku v2.0+ uses a new organized structure to avoid cluttering `~/.claude/`:
+
+### Old structure (v1.x)
+```
+~/.claude/
+├── methodologies/          # Aichaku files mixed with user files
+├── standards/              # Aichaku files mixed with user files
+├── output/                 # User work
+├── CLAUDE.md              # User's global instructions
+├── settings.json          # User settings
+└── commands.json          # User commands
+```
+
+### New structure (v2.0+)
+```
+~/.claude/
+├── aichaku/               # All Aichaku files contained here
+│   ├── methodologies/     # Core methodology files
+│   ├── standards/         # Built-in standards
+│   ├── user/              # User customizations
+│   └── cache/             # Performance cache
+│
+├── output/                # User work (stays in original location)
+├── CLAUDE.md             # User instructions (stays in original location)
+├── settings.json         # User settings (stays in original location)
+└── commands.json         # User commands (stays in original location)
+```
+
+### Migration notes
+- The installer automatically migrates existing installations
+- User files in `~/.claude/` are preserved in their original locations
+- Only Aichaku-specific files are moved to `~/.claude/aichaku/`
+- Custom standards should be moved to `~/.claude/aichaku/user/standards/`
+
 ## Output directory structure
 
 Work organization:
@@ -292,6 +388,8 @@ output/
 | Guides | UPPERCASE-HYPHEN | `SHAPE-UP-AICHAKU-GUIDE.md` |
 | Templates | lowercase-hyphen | `sprint-planning.md` |
 | Core docs | UPPERCASE-HYPHEN | `PLANNING-MODE.md` |
+| Custom standards | UPPERCASE-HYPHEN | `MY-CODING-STANDARD.md` |
+| Change logs | DATE-Name-CHANGE-LOG | `2025-07-07-Fix-Auth-CHANGE-LOG.md` |
 | User docs | flexible | `notes.md`, `ToDo.md` |
 
 ### TypeScript files
@@ -314,9 +412,10 @@ output/
 ### Marker files
 | File | Purpose |
 |------|---------|
-| `.aichaku-project` | Identifies Aichaku project |
-| `.aichaku-standards.json` | Selected standards list |
-| `settings.local.json` | Project configuration |
+| `.claude/aichaku/` | Directory presence identifies Aichaku project |
+| `.claude/aichaku/standards.json` | Selected standards list (was `.aichaku-standards.json`) |
+| `.claude/aichaku/doc-standards.json` | Documentation standards configuration |
+| `.claude/settings.local.json` | Claude Code project configuration |
 
 ### Generated files
 | File | Generated by | Purpose |
@@ -348,30 +447,38 @@ Default permissions:
 ### Files to commit
 ```gitignore
 # Commit these
-.claude/.aichaku-project
+.claude/aichaku/standards.json
+.claude/aichaku/doc-standards.json
 .claude/settings.local.json
 .claude/CLAUDE.md
 .claude/commands.json
 
-# Optionally commit methodologies
-.claude/methodologies/
+# Always ignore output
+.claude/aichaku/output/
 
-# Ignore output
-.claude/output/
+# Ignore Aichaku core files (installed separately)
+.claude/aichaku/methodologies/
+.claude/aichaku/standards/
+.claude/aichaku/cache/
 ```
 
 ### Recommended .gitignore
 ```gitignore
-# Aichaku output
-.claude/output/
+# Aichaku generated output
+.claude/aichaku/output/
 
-# Optional: methodology files
-# .claude/methodologies/
+# Aichaku core files (don't commit)
+.claude/aichaku/methodologies/
+.claude/aichaku/standards/
+.claude/aichaku/cache/
 
 # Keep configuration
-!.claude/.aichaku-project
-!.claude/settings.local.json
-!.claude/CLAUDE.md
+!.claude/aichaku/standards.json
+!.claude/aichaku/doc-standards.json
+
+# User files (optional to commit)
+.claude/output/
+.claude/user/
 ```
 
 ## File size guidelines

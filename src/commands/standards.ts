@@ -8,7 +8,12 @@
 import { exists } from "jsr:@std/fs@1/exists";
 import { ensureDir } from "jsr:@std/fs@1/ensure-dir";
 import { join, normalize, resolve } from "jsr:@std/path@1";
-import { getAichakuPaths, isPathSafe } from "../paths.ts";
+import {
+  ensureAichakuDirs,
+  getAichakuPaths,
+  getUserStandardPath,
+  isPathSafe,
+} from "../paths.ts";
 
 // Type definitions for better type safety
 interface Standard {
@@ -33,6 +38,7 @@ interface CustomStandard {
   name: string;
   description: string;
   path: string;
+  tags: string[];
 }
 
 /**
@@ -110,17 +116,17 @@ export const STANDARD_CATEGORIES = {
         description: "Object-oriented design principles",
         tags: ["oop", "design", "principles"],
       },
+      "tdd": {
+        name: "Test-Driven Development",
+        description: "Red-green-refactor cycle",
+        tags: ["testing", "methodology", "quality"],
+      },
     },
   },
   testing: {
     name: "Testing Strategies",
     description: "Testing methodologies and practices",
     standards: {
-      "tdd": {
-        name: "Test-Driven Development",
-        description: "Red-green-refactor cycle",
-        tags: ["testing", "methodology", "quality"],
-      },
       "bdd": {
         name: "Behavior-Driven Development",
         description: "Given-when-then scenarios",
@@ -169,6 +175,10 @@ interface StandardsOptions {
   search?: string;
   projectPath?: string;
   dryRun?: boolean;
+  createCustom?: string;
+  deleteCustom?: string;
+  editCustom?: string;
+  copyCustom?: { source: string; target: string };
 }
 
 /**
@@ -178,13 +188,6 @@ interface ProjectStandards {
   version: string;
   selected: string[];
   customStandards?: Record<string, CustomStandard>;
-}
-
-interface CustomStandard {
-  name: string;
-  description: string;
-  path: string;
-  tags: string[];
 }
 
 /**
@@ -232,8 +235,35 @@ export async function standards(options: StandardsOptions = {}): Promise<void> {
       return;
     }
 
+    // Create custom standard
+    if (options.createCustom) {
+      await createCustomStandard(options.createCustom);
+      return;
+    }
+
+    // Delete custom standard
+    if (options.deleteCustom) {
+      await deleteCustomStandard(options.deleteCustom);
+      return;
+    }
+
+    // Edit custom standard
+    if (options.editCustom) {
+      await editCustomStandard(options.editCustom);
+      return;
+    }
+
+    // Copy custom standard
+    if (options.copyCustom) {
+      await copyCustomStandard(
+        options.copyCustom.source,
+        options.copyCustom.target,
+      );
+      return;
+    }
+
     // Default: show help
-    await showStandardsHelp();
+    showStandardsHelp();
   } catch (error) {
     // InfoSec: Avoid exposing detailed error messages
     console.error(`❌ Error: An error occurred while processing standards`);
@@ -247,9 +277,9 @@ export async function standards(options: StandardsOptions = {}): Promise<void> {
 }
 
 /**
- * List all available standards
+ * List all available standards (including custom standards)
  */
-function listStandards(byCategory: boolean = false): void {
+async function listStandards(byCategory: boolean = false): Promise<void> {
   console.log("\n🪴 Aichaku: Available Standards\n");
 
   if (byCategory) {
@@ -262,6 +292,21 @@ function listStandards(byCategory: boolean = false): void {
         console.log(`  • ${standardId}: ${standard.name}`);
         console.log(`    ${standard.description}`);
         console.log(`    Tags: ${standard.tags.join(", ")}`);
+      }
+      console.log();
+    }
+
+    // Add custom standards section
+    const customStandards = await loadAvailableCustomStandards();
+    if (customStandards.length > 0) {
+      console.log("Custom Standards");
+      console.log("  User-defined standards from your configuration\n");
+
+      for (const custom of customStandards) {
+        console.log(`  • custom:${custom.id}: ${custom.name}`);
+        console.log(`    ${custom.description}`);
+        console.log(`    Source: ${formatPathForDisplay(custom.path)}`);
+        console.log(`    Tags: ${custom.tags.join(", ")}`);
       }
       console.log();
     }
@@ -289,16 +334,39 @@ function listStandards(byCategory: boolean = false): void {
       console.log(`  Tags: ${standard.tags.join(", ")}`);
       console.log();
     }
+
+    // Add custom standards
+    const customStandards = await loadAvailableCustomStandards();
+    if (customStandards.length > 0) {
+      console.log("--- Custom Standards ---\n");
+
+      for (const custom of customStandards) {
+        console.log(`• custom:${custom.id}: ${custom.name}`);
+        console.log(`  ${custom.description}`);
+        console.log(`  Category: Custom`);
+        console.log(`  Source: ${formatPathForDisplay(custom.path)}`);
+        console.log(`  Tags: ${custom.tags.join(", ")}`);
+        console.log();
+      }
+    }
   }
 }
 
 /**
- * Search standards by keyword
+ * Search standards by keyword (including custom standards)
  */
-function searchStandards(query: string): void {
+async function searchStandards(query: string): Promise<void> {
   const lowerQuery = query.toLowerCase();
   const matches: Array<[string, Standard, string]> = [];
+  const customMatches: Array<{
+    id: string;
+    name: string;
+    description: string;
+    path: string;
+    tags: string[];
+  }> = [];
 
+  // Search built-in standards
   for (const [categoryId, category] of Object.entries(STANDARD_CATEGORIES)) {
     for (const [standardId, standard] of Object.entries(category.standards)) {
       // Search in ID, name, description, and tags
@@ -313,12 +381,27 @@ function searchStandards(query: string): void {
     }
   }
 
-  if (matches.length === 0) {
+  // Search custom standards
+  const customStandards = await loadAvailableCustomStandards();
+  for (const custom of customStandards) {
+    if (
+      custom.id.includes(lowerQuery) ||
+      custom.name.toLowerCase().includes(lowerQuery) ||
+      custom.description.toLowerCase().includes(lowerQuery) ||
+      custom.tags.some((tag: string) => tag.toLowerCase().includes(lowerQuery))
+    ) {
+      customMatches.push(custom);
+    }
+  }
+
+  if (matches.length === 0 && customMatches.length === 0) {
     console.log(`\n🪴 Aichaku: No standards found matching "${query}"`);
     return;
   }
 
   console.log(`\n🪴 Aichaku: Standards matching "${query}"\n`);
+
+  // Show built-in matches
   for (const [id, standard, category] of matches) {
     console.log(`• ${id}: ${standard.name}`);
     console.log(`  ${standard.description}`);
@@ -328,6 +411,21 @@ function searchStandards(query: string): void {
       }`,
     );
     console.log();
+  }
+
+  // Show custom matches
+  if (customMatches.length > 0) {
+    if (matches.length > 0) {
+      console.log("--- Custom Standards ---\n");
+    }
+
+    for (const custom of customMatches) {
+      console.log(`• custom:${custom.id}: ${custom.name}`);
+      console.log(`  ${custom.description}`);
+      console.log(`  Category: Custom`);
+      console.log(`  Source: ${formatPathForDisplay(custom.path)}`);
+      console.log();
+    }
   }
 }
 
@@ -363,12 +461,44 @@ async function showProjectStandards(projectPath?: string): Promise<void> {
   console.log(`Selected standards (${config.selected.length}):\n`);
 
   for (const standardId of config.selected) {
-    const standard = findStandard(standardId);
-    if (standard) {
-      console.log(`• ${standardId}: ${standard.name}`);
-      console.log(`  ${standard.description}`);
+    // Handle custom standards
+    if (standardId.startsWith("custom:")) {
+      const customId = standardId.replace("custom:", "");
+      const customStandard = config.customStandards?.[customId];
+
+      if (customStandard) {
+        console.log(`• ${standardId}: ${customStandard.name}`);
+        console.log(`  ${customStandard.description}`);
+        console.log(
+          `  📁 Source: ${formatPathForDisplay(customStandard.path)}`,
+        );
+
+        // Check if the custom standard file still exists
+        try {
+          if (!(await exists(customStandard.path))) {
+            console.log(
+              `  ⚠️  Warning: Custom standard file not found at source path`,
+            );
+          }
+        } catch {
+          console.log(
+            `  ⚠️  Warning: Cannot verify custom standard file existence`,
+          );
+        }
+      } else {
+        console.log(`• ${standardId} (custom - metadata missing)`);
+        console.log(`  ⚠️  Warning: Custom standard metadata not found`);
+      }
     } else {
-      console.log(`• ${standardId} (custom or unknown)`);
+      // Handle built-in standards
+      const standard = findStandard(standardId);
+      if (standard) {
+        console.log(`• ${standardId}: ${standard.name}`);
+        console.log(`  ${standard.description}`);
+      } else {
+        console.log(`• ${standardId} (unknown built-in standard)`);
+        console.log(`  ⚠️  Warning: Standard not found in available standards`);
+      }
     }
   }
 
@@ -433,9 +563,30 @@ async function addStandards(
       continue;
     }
 
+    // Check if it's a custom standard (prefixed with "custom:")
+    if (id.startsWith("custom:")) {
+      const customResult = await addCustomStandard(id, config);
+      if (customResult.success) {
+        config.selected.push(id);
+        console.log(`✅ Added custom standard ${id}: ${customResult.name}`);
+        console.log(`   📁 Source: ${customResult.source}`);
+        added++;
+      } else {
+        console.log(
+          `❌ Failed to add custom standard ${id}: ${customResult.error}`,
+        );
+      }
+      continue;
+    }
+
+    // Handle built-in standards
     const standard = findStandard(id);
     if (!standard) {
       console.log(`❌ Unknown standard: ${id}`);
+      console.log(
+        `   💡 Use 'aichaku standards --list' to see available standards`,
+      );
+      console.log(`   💡 Use 'custom:my-standard' for custom standards`);
       continue;
     }
 
@@ -501,8 +652,22 @@ async function removeStandards(
       continue;
     }
 
+    // Remove from selected array
     config.selected.splice(index, 1);
-    console.log(`✅ Removed ${id}`);
+
+    // If it's a custom standard, also remove from customStandards metadata
+    if (id.startsWith("custom:") && config.customStandards) {
+      const customId = id.replace("custom:", "");
+      if (config.customStandards[customId]) {
+        delete config.customStandards[customId];
+        console.log(`✅ Removed custom standard ${id} and its metadata`);
+      } else {
+        console.log(`✅ Removed ${id} (metadata already cleaned)`);
+      }
+    } else {
+      console.log(`✅ Removed ${id}`);
+    }
+
     removed++;
   }
 
@@ -546,6 +711,283 @@ function interactiveSelection(
 }
 
 /**
+ * Create a new custom standard
+ */
+async function createCustomStandard(name: string): Promise<void> {
+  console.log(`\n🪴 Aichaku: Creating custom standard "${name}"...\n`);
+
+  // Sanitize the name to prevent directory traversal
+  const sanitizedName = sanitizeStandardName(name);
+  if (!sanitizedName) {
+    console.error(`❌ Invalid standard name: "${name}"`);
+    console.error(
+      `Standard names must contain only letters, numbers, hyphens, and underscores`,
+    );
+    return;
+  }
+
+  // Ensure Aichaku directories exist
+  await ensureAichakuDirs();
+
+  const standardPath = getUserStandardPath(sanitizedName);
+
+  // Check if standard already exists
+  if (await exists(standardPath)) {
+    console.error(`❌ Custom standard "${sanitizedName}" already exists`);
+    console.log(`   Path: ${standardPath}`);
+    console.log(
+      `   Use --edit-custom to modify it or --copy-custom to duplicate it`,
+    );
+    return;
+  }
+
+  // Create the standard template
+  const template = createStandardTemplate(name, sanitizedName);
+
+  try {
+    await Deno.writeTextFile(standardPath, template, { mode: 0o644 });
+    console.log(`✅ Created custom standard: ${sanitizedName}`);
+    console.log(`   Path: ${standardPath}`);
+    console.log(`\n💡 Next steps:`);
+    console.log(
+      `   • Edit the standard: aichaku standards --edit-custom ${sanitizedName}`,
+    );
+    console.log(
+      `   • Add to project: aichaku standards --add ${sanitizedName}`,
+    );
+    console.log(`   • View all standards: aichaku standards --list`);
+  } catch (error) {
+    console.error(
+      `❌ Failed to create custom standard: ${
+        error instanceof Error ? error.message : "Unknown error"
+      }`,
+    );
+  }
+}
+
+/**
+ * Delete a custom standard
+ */
+async function deleteCustomStandard(name: string): Promise<void> {
+  console.log(`\n🪴 Aichaku: Deleting custom standard "${name}"...\n`);
+
+  const sanitizedName = sanitizeStandardName(name);
+  if (!sanitizedName) {
+    console.error(`❌ Invalid standard name: "${name}"`);
+    return;
+  }
+
+  const standardPath = getUserStandardPath(sanitizedName);
+
+  if (!(await exists(standardPath))) {
+    console.error(`❌ Custom standard "${sanitizedName}" does not exist`);
+    console.log(`   Use --list to see available standards`);
+    return;
+  }
+
+  try {
+    await Deno.remove(standardPath);
+    console.log(`✅ Deleted custom standard: ${sanitizedName}`);
+    console.log(`\n💡 The standard has been removed from your system`);
+    console.log(
+      `   If it was used in any projects, you may want to remove it:`,
+    );
+    console.log(`   aichaku standards --remove ${sanitizedName}`);
+  } catch (error) {
+    console.error(
+      `❌ Failed to delete custom standard: ${
+        error instanceof Error ? error.message : "Unknown error"
+      }`,
+    );
+  }
+}
+
+/**
+ * Edit a custom standard
+ */
+async function editCustomStandard(name: string): Promise<void> {
+  console.log(
+    `\n🪴 Aichaku: Opening custom standard "${name}" for editing...\n`,
+  );
+
+  const sanitizedName = sanitizeStandardName(name);
+  if (!sanitizedName) {
+    console.error(`❌ Invalid standard name: "${name}"`);
+    return;
+  }
+
+  const standardPath = getUserStandardPath(sanitizedName);
+
+  if (!(await exists(standardPath))) {
+    console.error(`❌ Custom standard "${sanitizedName}" does not exist`);
+    console.log(`   Use --create-custom to create it first`);
+    return;
+  }
+
+  // Try to open with the system's default editor
+  try {
+    const editor = Deno.env.get("EDITOR") || Deno.env.get("VISUAL") || "code";
+
+    const command = new Deno.Command(editor, {
+      args: [standardPath],
+      stdout: "inherit",
+      stderr: "inherit",
+    });
+
+    const process = command.spawn();
+    const result = await process.status;
+
+    if (result.success) {
+      console.log(`✅ Opened ${sanitizedName} in ${editor}`);
+      console.log(`   Path: ${standardPath}`);
+    } else {
+      console.error(
+        `❌ Failed to open editor. Try setting EDITOR environment variable.`,
+      );
+      console.log(`   Path: ${standardPath}`);
+    }
+  } catch (error) {
+    console.error(
+      `❌ Failed to open editor: ${
+        error instanceof Error ? error.message : "Unknown error"
+      }`,
+    );
+    console.log(`   You can manually edit: ${standardPath}`);
+  }
+}
+
+/**
+ * Copy a custom standard
+ */
+async function copyCustomStandard(
+  source: string,
+  target: string,
+): Promise<void> {
+  console.log(
+    `\n🪴 Aichaku: Copying custom standard "${source}" to "${target}"...\n`,
+  );
+
+  const sanitizedSource = sanitizeStandardName(source);
+  const sanitizedTarget = sanitizeStandardName(target);
+
+  if (!sanitizedSource || !sanitizedTarget) {
+    console.error(`❌ Invalid standard names`);
+    return;
+  }
+
+  const sourcePath = getUserStandardPath(sanitizedSource);
+  const targetPath = getUserStandardPath(sanitizedTarget);
+
+  if (!(await exists(sourcePath))) {
+    console.error(`❌ Source standard "${sanitizedSource}" does not exist`);
+    return;
+  }
+
+  if (await exists(targetPath)) {
+    console.error(`❌ Target standard "${sanitizedTarget}" already exists`);
+    return;
+  }
+
+  try {
+    // Read source content
+    const content = await Deno.readTextFile(sourcePath);
+
+    // Update frontmatter with new name
+    const updatedContent = content.replace(
+      /^---\s*\n([\s\S]*?)\n---/,
+      (_match, frontmatter) => {
+        const updatedFrontmatter = frontmatter
+          .replace(/^title: ".*"/m, `title: "${target}"`);
+        return `---\n${updatedFrontmatter}\n---`;
+      },
+    );
+
+    // Write to target
+    await Deno.writeTextFile(targetPath, updatedContent, { mode: 0o644 });
+
+    console.log(
+      `✅ Copied custom standard: ${sanitizedSource} → ${sanitizedTarget}`,
+    );
+    console.log(`   Source: ${sourcePath}`);
+    console.log(`   Target: ${targetPath}`);
+    console.log(`\n💡 Next steps:`);
+    console.log(
+      `   • Edit the copy: aichaku standards --edit-custom ${sanitizedTarget}`,
+    );
+    console.log(
+      `   • Add to project: aichaku standards --add ${sanitizedTarget}`,
+    );
+  } catch (error) {
+    console.error(
+      `❌ Failed to copy custom standard: ${
+        error instanceof Error ? error.message : "Unknown error"
+      }`,
+    );
+  }
+}
+
+/**
+ * Sanitize standard name to prevent directory traversal and ensure valid filename
+ */
+function sanitizeStandardName(name: string): string | null {
+  // Remove any path separators and invalid characters
+  const sanitized = name
+    .replace(/[/\\]/g, "")
+    .replace(/[<>:"|?*]/g, "")
+    .replace(/\s+/g, "-")
+    .toLowerCase();
+
+  // Check if it's a valid name (only letters, numbers, hyphens, underscores)
+  if (!/^[a-z0-9_-]+$/.test(sanitized) || sanitized.length === 0) {
+    return null;
+  }
+
+  return sanitized;
+}
+
+/**
+ * Create a standard template with proper frontmatter
+ */
+function createStandardTemplate(
+  originalName: string,
+  _sanitizedName: string,
+): string {
+  return `---
+title: "${originalName}"
+description: "Brief description of this standard"
+tags: ["custom", "organization"]
+---
+
+# ${originalName}
+
+## Overview
+[Description of the standard]
+
+## Implementation
+[How to implement this standard]
+
+## Examples
+[Code examples or guidelines]
+
+## Quick Reference
+[Key points for quick reference]
+
+## Best Practices
+[Recommended practices when using this standard]
+
+## Common Pitfalls
+[Things to avoid when implementing this standard]
+
+## Related Standards
+[Links to related or complementary standards]
+
+---
+
+*This is a custom standard created for your specific needs. Edit this file to add your organization's guidelines and requirements.*
+`;
+}
+
+/**
  * Show standards command help
  */
 function showStandardsHelp(): void {
@@ -564,6 +1006,12 @@ Options:
   --remove <ids>      Remove standards from project
   --select            Interactive selection (coming soon)
 
+  Custom Standard Management:
+  --create-custom <name>       Create a new custom standard
+  --delete-custom <name>       Delete a custom standard
+  --edit-custom <name>         Edit a custom standard
+  --copy-custom <src> <target> Copy a custom standard
+
 Examples:
   # See all available standards
   aichaku standards --list
@@ -571,14 +1019,37 @@ Examples:
   # Search for security standards
   aichaku standards --search security
 
-  # Add standards to your project
+  # Add built-in standards to your project
   aichaku standards --add owasp-web,15-factor,tdd
+
+  # Add custom standards to your project
+  aichaku standards --add custom:my-company-guidelines
+
+  # Mix built-in and custom standards
+  aichaku standards --add owasp-web,custom:internal-standards
 
   # See what's selected
   aichaku standards --show
 
-  # Remove a standard
-  aichaku standards --remove pci-dss
+  # Remove any standard (built-in or custom)
+  aichaku standards --remove pci-dss,custom:old-guidelines
+
+  # Create a custom standard
+  aichaku standards --create-custom "My Organization Style"
+
+  # Edit a custom standard
+  aichaku standards --edit-custom my-organization-style
+
+  # Copy a custom standard
+  aichaku standards --copy-custom my-style company-wide-style
+
+Custom Standards:
+  Custom standards are markdown files you create with your own
+  guidance. They should be placed in:
+  • ~/.claude/aichaku/user/standards/STANDARD-NAME.md
+  • ~/.claude/aichaku/standards/custom/STANDARD-NAME.md (legacy)
+  
+  Use the format: custom:standard-name (lowercase, hyphens allowed)
 
 Standards provide modular guidance that Claude Code will follow
 when working on your project. Choose standards that match your
@@ -591,9 +1062,9 @@ needs - security, architecture, testing, and more.
  * InfoSec: Prevents path traversal attacks by validating normalized paths
  */
 function getProjectConfigPath(projectPath?: string): string {
-  const paths = getAichakuPaths();
+  const _paths = getAichakuPaths();
   const base = resolve(projectPath || Deno.cwd());
-  
+
   // Use new path structure under .claude/aichaku/
   const configPath = join(base, ".claude", "aichaku", "aichaku-standards.json");
   const normalized = normalize(configPath);
@@ -652,7 +1123,7 @@ async function saveProjectConfig(
 ): Promise<void> {
   // Validate path to prevent directory traversal
   const normalized = normalize(path);
-  
+
   // Security check using paths module
   if (!isPathSafe(normalized)) {
     throw new Error("Invalid configuration path: security violation");
@@ -669,13 +1140,286 @@ async function saveProjectConfig(
 }
 
 /**
- * Helper: Find a standard by ID
+ * Helper: Find a standard by ID (handles both built-in and custom standards)
  */
 function findStandard(id: string): Standard | null {
+  // Handle custom standards
+  if (id.startsWith("custom:")) {
+    return null; // Custom standards are handled separately
+  }
+
+  // Handle built-in standards
   for (const category of Object.values(STANDARD_CATEGORIES)) {
     if (id in category.standards) {
       return category.standards[id as keyof typeof category.standards];
     }
   }
   return null;
+}
+
+/**
+ * Helper: Add a custom standard to project configuration
+ */
+async function addCustomStandard(
+  customId: string,
+  config: ProjectConfig,
+): Promise<
+  { success: boolean; name?: string; source?: string; error?: string }
+> {
+  // Validate custom ID format
+  if (!customId.startsWith("custom:")) {
+    return {
+      success: false,
+      error: "Custom standard ID must start with 'custom:'",
+    };
+  }
+
+  const standardName = customId.replace("custom:", "");
+
+  // Validate standard name (prevent path traversal)
+  if (!/^[a-zA-Z0-9_-]+$/.test(standardName)) {
+    return {
+      success: false,
+      error:
+        "Invalid custom standard name. Use only letters, numbers, hyphens, and underscores.",
+    };
+  }
+
+  try {
+    // Try to find the custom standard file
+    const customStandard = await loadCustomStandard(standardName);
+
+    if (!customStandard) {
+      return {
+        success: false,
+        error: `Custom standard '${standardName}' not found. Check ${
+          formatCustomStandardPaths(standardName)
+        }`,
+      };
+    }
+
+    // Initialize customStandards if it doesn't exist
+    if (!config.customStandards) {
+      config.customStandards = {};
+    }
+
+    // Add custom standard metadata
+    config.customStandards[standardName] = {
+      name: customStandard.name,
+      description: customStandard.description,
+      path: customStandard.path,
+      tags: customStandard.tags || [],
+    };
+
+    return {
+      success: true,
+      name: customStandard.name,
+      source: formatPathForDisplay(customStandard.path),
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: `Failed to load custom standard: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+    };
+  }
+}
+
+/**
+ * Helper: Load custom standard from file system
+ */
+async function loadCustomStandard(standardName: string): Promise<
+  {
+    name: string;
+    description: string;
+    path: string;
+    tags: string[];
+  } | null
+> {
+  // InfoSec: Validate standard name to prevent path traversal
+  if (!/^[a-zA-Z0-9_-]+$/.test(standardName)) {
+    return null;
+  }
+
+  const paths = getAichakuPaths();
+  const possiblePaths = [
+    // User standards directory
+    join(paths.global.user.standards, `${standardName.toUpperCase()}.md`),
+    // Legacy custom standards directory
+    join(paths.legacy.customStandards, `${standardName.toUpperCase()}.md`),
+  ];
+
+  for (const standardPath of possiblePaths) {
+    try {
+      // Security: Validate path is safe
+      if (!isPathSafe(standardPath)) {
+        continue;
+      }
+
+      if (await exists(standardPath)) {
+        const content = await Deno.readTextFile(standardPath);
+
+        // Extract metadata from markdown file
+        const metadata = extractStandardMetadata(content);
+
+        return {
+          name: metadata.name || standardName,
+          description: metadata.description || "Custom standard",
+          path: standardPath,
+          tags: metadata.tags || ["custom"],
+        };
+      }
+    } catch (error) {
+      // Continue to next path
+      console.warn(
+        `Failed to load custom standard from ${standardPath}: ${error}`,
+      );
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Helper: Extract metadata from standard markdown content
+ */
+function extractStandardMetadata(content: string): {
+  name?: string;
+  description?: string;
+  tags?: string[];
+} {
+  const metadata: { name?: string; description?: string; tags?: string[] } = {};
+
+  // Extract title from first heading
+  const titleMatch = content.match(/^#\s+(.+)$/m);
+  if (titleMatch) {
+    metadata.name = titleMatch[1].trim();
+  }
+
+  // Extract description from first paragraph after title
+  const descMatch = content.match(/^#\s+.+\n\n(.+)$/m);
+  if (descMatch) {
+    metadata.description = descMatch[1].trim();
+  }
+
+  // Extract tags from YAML frontmatter or special comment
+  const tagsMatch = content.match(/tags:\s*\[(.*?)\]/i);
+  if (tagsMatch) {
+    metadata.tags = tagsMatch[1].split(",").map((tag) =>
+      tag.trim().replace(/"/g, "")
+    );
+  }
+
+  return metadata;
+}
+
+/**
+ * Helper: Format custom standard paths for display
+ */
+function formatCustomStandardPaths(standardName: string): string {
+  const paths = getAichakuPaths();
+  return [
+    formatPathForDisplay(
+      join(paths.global.user.standards, `${standardName.toUpperCase()}.md`),
+    ),
+    formatPathForDisplay(
+      join(paths.legacy.customStandards, `${standardName.toUpperCase()}.md`),
+    ),
+  ].join(" or ");
+}
+
+/**
+ * Helper: Format path for display (imported from paths module)
+ */
+function formatPathForDisplay(path: string): string {
+  const home = Deno.env.get("HOME") || Deno.env.get("USERPROFILE");
+  if (home && path.startsWith(home)) {
+    return path.replace(home, "~");
+  }
+  return path;
+}
+
+/**
+ * Helper: Load all available custom standards from the file system
+ */
+async function loadAvailableCustomStandards(): Promise<
+  Array<{
+    id: string;
+    name: string;
+    description: string;
+    path: string;
+    tags: string[];
+  }>
+> {
+  const customStandards: Array<{
+    id: string;
+    name: string;
+    description: string;
+    path: string;
+    tags: string[];
+  }> = [];
+
+  const paths = getAichakuPaths();
+  const directories = [
+    paths.global.user.standards,
+    paths.legacy.customStandards,
+  ];
+
+  for (const directory of directories) {
+    try {
+      if (await exists(directory)) {
+        for await (const entry of Deno.readDir(directory)) {
+          if (entry.isFile && entry.name.endsWith(".md")) {
+            const standardPath = join(directory, entry.name);
+
+            // Security: Validate path is safe
+            if (!isPathSafe(standardPath)) {
+              continue;
+            }
+
+            try {
+              const content = await Deno.readTextFile(standardPath);
+              const metadata = extractStandardMetadata(content);
+
+              // Extract standard ID from filename (remove .md extension and convert to lowercase)
+              const standardId = entry.name.replace(".md", "").toLowerCase();
+
+              customStandards.push({
+                id: standardId,
+                name: metadata.name || standardId,
+                description: metadata.description || "Custom standard",
+                path: standardPath,
+                tags: metadata.tags || ["custom"],
+              });
+            } catch (error) {
+              console.warn(
+                `Failed to load custom standard from ${standardPath}: ${error}`,
+              );
+            }
+          }
+        }
+      }
+    } catch (error) {
+      // Directory doesn't exist or can't be read, skip
+      console.warn(
+        `Failed to read custom standards directory ${directory}: ${error}`,
+      );
+    }
+  }
+
+  // Remove duplicates (prefer user directory over legacy)
+  const uniqueStandards = new Map<string, typeof customStandards[0]>();
+  for (const standard of customStandards) {
+    if (
+      !uniqueStandards.has(standard.id) ||
+      standard.path.includes(paths.global.user.standards)
+    ) {
+      uniqueStandards.set(standard.id, standard);
+    }
+  }
+
+  return Array.from(uniqueStandards.values()).sort((a, b) =>
+    a.id.localeCompare(b.id)
+  );
 }

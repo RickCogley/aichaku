@@ -3,7 +3,7 @@ import { join, resolve } from "jsr:@std/path@1";
 import { copy } from "jsr:@std/fs@1/copy";
 import { VERSION } from "../../mod.ts";
 import { fetchMethodologies, fetchStandards } from "./content-fetcher.ts";
-import { getAichakuPaths, ensureAichakuDirs } from "../paths.ts";
+import { ensureAichakuDirs, getAichakuPaths } from "../paths.ts";
 
 interface InitOptions {
   global?: boolean;
@@ -34,10 +34,10 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
   const isGlobal = options.global || false;
   const paths = getAichakuPaths();
   const projectPath = resolve(options.projectPath || ".");
-  
+
   // Use centralized path management
   const targetPath = isGlobal ? paths.global.root : paths.project.root;
-  const globalPath = paths.global.root;
+  const _globalPath = paths.global.root;
 
   // Check for dry-run first, before any filesystem checks
   if (options.dryRun) {
@@ -80,7 +80,10 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
   const aichakuJsonPath = isGlobal ? paths.global.config : "";
   const projectMarkerPath = isGlobal ? "" : paths.project.config;
 
-  if (isGlobal && aichakuJsonPath && await exists(aichakuJsonPath) && !options.force) {
+  if (
+    isGlobal && aichakuJsonPath && await exists(aichakuJsonPath) &&
+    !options.force
+  ) {
     return {
       success: false,
       path: targetPath,
@@ -90,7 +93,10 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     };
   }
 
-  if (!isGlobal && projectMarkerPath && await exists(projectMarkerPath) && !options.force) {
+  if (
+    !isGlobal && projectMarkerPath && await exists(projectMarkerPath) &&
+    !options.force
+  ) {
     return {
       success: false,
       path: targetPath,
@@ -130,10 +136,14 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
       if (!methodologiesExist || options.force) {
         if (isJSR) {
           // Fetch from GitHub when running from JSR - use global root path
-          const fetchSuccess = await fetchMethodologies(paths.global.root, VERSION, {
-            silent: options.silent,
-            overwrite: options.force, // Only overwrite if user explicitly uses --force
-          });
+          const fetchSuccess = await fetchMethodologies(
+            paths.global.root,
+            VERSION,
+            {
+              silent: options.silent,
+              overwrite: options.force, // Only overwrite if user explicitly uses --force
+            },
+          );
 
           if (!fetchSuccess) {
             throw new Error(
@@ -171,10 +181,14 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
             console.log("\n🔄 Installing standards library...");
           }
 
-          const fetchSuccess = await fetchStandards(paths.global.root, VERSION, {
-            silent: options.silent,
-            overwrite: options.force,
-          });
+          const fetchSuccess = await fetchStandards(
+            paths.global.root,
+            VERSION,
+            {
+              silent: options.silent,
+              overwrite: options.force,
+            },
+          );
 
           if (!fetchSuccess) {
             throw new Error(
@@ -224,7 +238,9 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     }
 
     // Create output directory structure (for both global and project)
-    const outputDir = isGlobal ? join(targetPath, "output") : paths.project.output;
+    const outputDir = isGlobal
+      ? join(targetPath, "output")
+      : paths.project.output;
     await ensureDir(outputDir);
 
     // Create output README

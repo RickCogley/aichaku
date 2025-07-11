@@ -1,14 +1,19 @@
 # Aichaku Folder Migration Module
 
-This module handles the migration from the old `~/.claude/` structure to the new `~/.claude/aichaku/` structure, ensuring aichaku files are properly organized while preserving user data.
+This module handles the migration from the old `~/.claude/` structure to the new
+`~/.claude/aichaku/` structure, ensuring aichaku files are properly organized
+while preserving user data.
 
 ## Overview
 
-The migration module safely moves aichaku-specific files from the old location to the new structured location while preserving all user data and configurations.
+The migration module safely moves aichaku-specific files from the old location
+to the new structured location while preserving all user data and
+configurations.
 
 ### What Gets Migrated
 
 **Global Migration (`~/.claude/` → `~/.claude/aichaku/`)**:
+
 - `methodologies/` → `~/.claude/aichaku/methodologies/`
 - `standards/` → `~/.claude/aichaku/standards/`
 - `scripts/` → `~/.claude/aichaku/scripts/`
@@ -16,6 +21,7 @@ The migration module safely moves aichaku-specific files from the old location t
 - `.aichaku-project` → `~/.claude/aichaku/.aichaku-project`
 
 **Project Migration (`project/.claude/` → `project/.claude/aichaku/`)**:
+
 - `.aichaku-project` → `project/.claude/aichaku/.aichaku-project`
 - `methodologies/` → `project/.claude/aichaku/methodologies/` (if exists)
 - `standards/` → `project/.claude/aichaku/standards/` (if exists)
@@ -23,6 +29,7 @@ The migration module safely moves aichaku-specific files from the old location t
 ### What Stays in Place
 
 These files remain in their original locations:
+
 - `~/.claude/output/` - User work and documents
 - `~/.claude/user/` - User customizations
 - `~/.claude/CLAUDE.md` - User instructions
@@ -108,6 +115,7 @@ if (needed) {
 ## Error Handling
 
 The migration module handles various error conditions:
+
 - **Missing source files**: Skips optional files, errors on required ones
 - **Target exists**: Skips or overwrites based on force flag
 - **Permission errors**: Reports clear error messages
@@ -122,6 +130,7 @@ deno test src/migration/folder-migration.test.ts --allow-read --allow-write --al
 ```
 
 The tests cover:
+
 - Migration detection
 - Dry run mode
 - Actual file migration

@@ -20,6 +20,7 @@ NEW: ~/.claude/aichaku/
 ├── methodologies/
 ├── standards/
 ├── user/
+│   └── standards/
 ├── output/
 └── config/
 ```
@@ -91,9 +92,10 @@ NEW: .claude/aichaku/
 ### 5. Enhanced Features
 
 #### Custom Standards Support
-- Organized under `~/.claude/aichaku/standards/custom/`
+- Organized under `~/.claude/aichaku/user/standards/`
 - Proper namespace separation from built-in standards
 - Clear documentation for adding custom standards
+- Better separation between system and user content
 
 #### Project Configuration
 - Cleaner config files in `.claude/aichaku/`
@@ -120,6 +122,7 @@ NEW: .claude/aichaku/
 3. **Easier Uninstall**: Simply remove `~/.claude/aichaku/`
 4. **Future-Proof**: Room for growth without cluttering `~/.claude/`
 5. **Professional Structure**: Follows best practices for tool organization
+6. **System/User Separation**: Clear distinction between system content and user customizations
 
 ## Security Improvements
 

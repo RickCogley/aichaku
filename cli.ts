@@ -70,7 +70,18 @@ const args = parseArgs(Deno.args, {
     "yes",
     "no-global",
   ],
-  string: ["path", "install", "add", "remove", "search", "standards", "project"],
+  string: [
+    "path",
+    "install",
+    "add",
+    "remove",
+    "search",
+    "project",
+    "create-custom",
+    "delete-custom",
+    "edit-custom",
+    "copy-custom",
+  ],
   alias: {
     h: "help",
     v: "version",
@@ -403,6 +414,15 @@ ${
         search: args.search as string | undefined,
         projectPath: args.path as string | undefined,
         dryRun: args["dry-run"] as boolean | undefined,
+        createCustom: args["create-custom"] as string | undefined,
+        deleteCustom: args["delete-custom"] as string | undefined,
+        editCustom: args["edit-custom"] as string | undefined,
+        copyCustom: args["copy-custom"] && args._[1]
+          ? {
+            source: args["copy-custom"] as string,
+            target: args._[1] as string,
+          }
+          : undefined,
       };
 
       await standards(standardsOptions);
@@ -444,32 +464,41 @@ ${
       const { main: docsLint } = await import("./src/commands/docs-lint.ts");
 
       // Pass args through to the lint command
-      const subArgs = parseArgs(args._.slice(1), {
+      const subArgs = parseArgs(args._.slice(1).map(String), {
         boolean: ["help", "quiet", "fix"],
         string: ["standards", "config"],
       });
-      
-      Deno.args = subArgs._.map(String).concat(
+
+      const lintArgs = subArgs._.map(String).concat(
         subArgs.standards ? [`--standards=${subArgs.standards}`] : [],
         subArgs.quiet ? ["--quiet"] : [],
         subArgs.fix ? ["--fix"] : [],
         subArgs.help ? ["--help"] : [],
       );
 
-      await docsLint();
+      await docsLint(lintArgs);
       break;
     }
 
     case "migrate": {
       // Use Cliffy command for migration
       const migrateCommand = createMigrateCommand();
-      
+
       // Parse subargs first
-      const subArgs = parseArgs(args._.slice(1), {
-        boolean: ["dry-run", "force", "global", "no-global", "backup", "no-backup", "verbose", "yes"],
+      const subArgs = parseArgs(args._.slice(1).map(String), {
+        boolean: [
+          "dry-run",
+          "force",
+          "global",
+          "no-global",
+          "backup",
+          "no-backup",
+          "verbose",
+          "yes",
+        ],
         string: ["path", "project"],
       });
-      
+
       // Build args for Cliffy
       const migrateArgs: string[] = [];
       if (subArgs["dry-run"]) migrateArgs.push("--dry-run");
@@ -482,7 +511,7 @@ ${
       if (subArgs["no-backup"]) migrateArgs.push("--no-backup");
       if (subArgs.verbose) migrateArgs.push("--verbose");
       if (subArgs.yes) migrateArgs.push("--yes");
-      
+
       // Parse and execute
       await migrateCommand.parse(migrateArgs);
       break;

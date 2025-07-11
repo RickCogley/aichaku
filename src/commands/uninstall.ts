@@ -28,11 +28,9 @@ export async function uninstall(
 ): Promise<UninstallResult> {
   const isGlobal = options.global || false;
   const paths = getAichakuPaths();
-  
+
   // codeql[js/path-injection] Safe because paths are validated and constrained to .claude directory
-  const targetPath = isGlobal
-    ? paths.global.root
-    : paths.project.root;
+  const targetPath = isGlobal ? paths.global.root : paths.project.root;
 
   // Check if Aichaku is installed
   // codeql[js/path-injection] Safe because targetPath is validated and file name is hardcoded
@@ -107,7 +105,9 @@ export async function uninstall(
     }
 
     // Remove the entire .claude directory if it only contains Aichaku files
-    const methodologiesDir = isGlobal ? paths.global.methodologies : paths.project.root;
+    const methodologiesDir = isGlobal
+      ? paths.global.methodologies
+      : paths.project.root;
     const hasOnlyAichaku = await exists(methodologiesDir) &&
       await exists(aichakuJsonPath);
 

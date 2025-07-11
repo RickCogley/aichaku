@@ -8,7 +8,7 @@
  */
 
 import { parseArgs } from "jsr:@std/cli@1/parse-args";
-import { getAichakuPaths, formatPathForDisplay } from "./src/paths.ts";
+import { formatPathForDisplay, getAichakuPaths } from "./src/paths.ts";
 
 const PACKAGE_NAME = "aichaku";
 const SCOPE = "rick";

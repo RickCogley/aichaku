@@ -21,6 +21,7 @@ This creates several issues:
 2. **Unclear ownership** of directories
 3. **Difficult uninstall** - which files belong to Aichaku?
 4. **Poor organization** for users with multiple AI tools
+5. **Confusing separation** between system and user content
 
 ## Solution
 
@@ -37,8 +38,8 @@ Reorganize all Aichaku files under `~/.claude/aichaku/`:
     │   ├── documentation/
     │   ├── security/
     │   ├── testing/
-    │   └── custom/            # User's custom standards
     ├── user/                   # User customizations
+    │   └── standards/          # User's custom standards
     ├── output/                 # Global output directory
     └── config/                 # Global Aichaku config (future)
 ```
@@ -62,8 +63,9 @@ Reorganize all Aichaku files under `~/.claude/aichaku/`:
 1. **Clear Namespace**: No conflicts with other ~/.claude tools
 2. **Easy Discovery**: All Aichaku files in one place
 3. **Clean Uninstall**: Simply remove ~/.claude/aichaku
-4. **Better Organization**: Logical hierarchy
+4. **Better Organization**: Logical hierarchy with system/user separation
 5. **Future-Proof**: Room for growth without cluttering ~/.claude
+6. **Clear Ownership**: System content vs user customizations clearly separated
 
 ## Implementation Plan
 
@@ -78,7 +80,7 @@ export const AICHAKU_PATHS = {
   globalRoot: () => join(Deno.env.get("HOME") || "", ".claude", "aichaku"),
   methodologies: () => join(AICHAKU_PATHS.globalRoot(), "methodologies"),
   standards: () => join(AICHAKU_PATHS.globalRoot(), "standards"),
-  userCustom: () => join(AICHAKU_PATHS.globalRoot(), "user"),
+  userCustom: () => join(AICHAKU_PATHS.globalRoot(), "user", "standards"),
   globalOutput: () => join(AICHAKU_PATHS.globalRoot(), "output"),
   
   // Project paths

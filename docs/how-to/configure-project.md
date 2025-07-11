@@ -23,9 +23,10 @@ Edit your project's settings in `.claude/settings.local.json`:
 ```
 
 This file controls:
-- Which coding standards Claude follows
+- Which coding standards Claude follows (including custom standards)
 - Your primary methodology (for documentation)
 - Where files are created
+- Custom standards metadata (stored at `~/.claude/aichaku/standards.json`)
 
 ## Add or remove coding standards
 
@@ -57,6 +58,24 @@ aichaku standards --list --selected
 
 # Show all available standards
 aichaku standards --list
+```
+
+Example output with source paths:
+```
+Selected Standards:
+✅ owasp-web (OWASP Web Security) 📁 ~/.claude/aichaku/standards/security
+✅ solid (SOLID Principles) 📁 ~/.claude/aichaku/standards/architecture
+✅ custom:api-design 📁 ~/.claude/aichaku/custom-standards
+
+Available Standards:
+  Security:
+    - nist-csf (NIST Cybersecurity Framework)
+    - owasp-web (OWASP Web Security) ✅
+  Architecture:
+    - solid (SOLID Principles) ✅
+    - clean-architecture (Clean Architecture)
+  Custom:
+    - api-design (My Organization API Design) ✅
 ```
 
 ## Customize methodology templates
@@ -221,43 +240,61 @@ echo 'export AICHAKU_DEBUG="false"' >> ~/.zshrc
 source ~/.zshrc
 ```
 
-## Create custom standards
+## Working with custom standards
 
-### Add company-specific standards
+Custom standards allow you to define organization-specific coding guidelines that work alongside built-in standards.
+
+### Create a custom standard
 
 ```bash
-# Create custom category
-mkdir -p ~/.claude/standards/company
+# Create custom standard with template
+aichaku standards --create-custom "My Organization API Design"
 
-# Create coding standard
-cat > ~/.claude/standards/company/api-design.md << 'EOF'
-# Company API Design Standards
-
-## RESTful Endpoints
-- Use nouns for resources: `/users`, `/products`
-- Use HTTP verbs correctly: GET, POST, PUT, DELETE
-- Version APIs: `/api/v1/users`
-
-## Response Format
-```json
-{
-  "data": {},
-  "meta": {
-    "timestamp": "2025-07-10T10:00:00Z",
-    "version": "1.0"
-  }
-}
-```
-
-## Error Handling
-- Use proper HTTP status codes
-- Include error details in response body
-- Log all 5xx errors
-EOF
+# Edit the generated template
+aichaku standards --edit-custom my-organization-api-design
 
 # Add to your project
-aichaku standards --add company/api-design
+aichaku standards --add custom:my-organization-api-design
 ```
+
+### Example: Mixed standards configuration
+
+```bash
+# Add both built-in and custom standards
+aichaku standards --add owasp-web,solid,custom:my-organization-api-design
+
+# View current configuration
+aichaku standards --list --selected
+```
+
+Output shows both types:
+```
+✅ owasp-web (OWASP Web Security) 📁 ~/.claude/aichaku/standards/security
+✅ solid (SOLID Principles) 📁 ~/.claude/aichaku/standards/architecture  
+✅ custom:my-organization-api-design 📁 ~/.claude/aichaku/custom-standards
+```
+
+### Quick overview
+
+1. **Create** - Generate template with `--create-custom`
+2. **Edit** - Modify content with `--edit-custom`
+3. **Add** - Include in project with `--add custom:name`
+4. **Share** - Export and import across teams
+
+For detailed instructions, see [How to Manage Custom Standards](./manage-custom-standards.md).
+
+### Migration from old structure
+
+If you have custom standards in the old location (`~/.claude/standards/`), migrate them:
+
+```bash
+# Run migration command
+aichaku standards --migrate-custom
+
+# Old standards are automatically converted to new format
+```
+
+See [Migration Guide](../guides/migration-guide.md) for details.
 
 ## Set up team configurations
 
@@ -304,7 +341,7 @@ cd team-config-repo
 
 ```bash
 # Install MCP server
-cd ~/.claude
+cd ~/.claude/aichaku
 git clone https://github.com/RickCogley/aichaku.git
 cd aichaku/mcp-server
 deno cache src/server.ts
@@ -340,7 +377,28 @@ aichaku doctor
 
 # Show current settings
 cat .claude/settings.local.json
+```
 
+Example output with custom standards:
+```json
+{
+  "selectedStandards": [
+    "owasp-web",
+    "solid",
+    "custom:my-organization-api-design"
+  ],
+  "methodology": "shape-up",
+  "customStandards": {
+    "my-organization-api-design": {
+      "name": "My Organization API Design",
+      "path": "~/.claude/aichaku/custom-standards/my-organization-api-design.md",
+      "created": "2025-07-11T10:00:00Z"
+    }
+  }
+}
+```
+
+```bash
 # List all methodology files
 find .claude/methodologies -name "*.md" | head -20
 

@@ -13,7 +13,12 @@ export interface Finding {
   column?: number;
   suggestion?: string;
   tool: string;
-  category?: "security" | "methodology" | "standards" | "style" | "documentation";
+  category?:
+    | "security"
+    | "methodology"
+    | "standards"
+    | "style"
+    | "documentation";
 }
 
 export interface ReviewResult {

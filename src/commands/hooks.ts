@@ -8,7 +8,6 @@
 import { exists } from "jsr:@std/fs@1/exists";
 import { ensureDir } from "jsr:@std/fs@1/ensure-dir";
 import { normalize, resolve } from "jsr:@std/path@1";
-import { getAichakuPaths } from "../paths.ts";
 
 // Type definitions for better type safety
 interface HookConfig {

@@ -489,9 +489,11 @@ async function loadProjectDocConfig(path: string): Promise<ProjectDocConfig> {
   const base = dirname(dirname(path)); // Get project root from path
   const newConfigPath = join(base, ".claude", "aichaku", "doc-standards.json");
   const legacyConfigPath = join(base, ".claude", ".aichaku-doc-standards.json");
-  
-  const configPath = (await exists(newConfigPath)) ? newConfigPath : legacyConfigPath;
-  
+
+  const configPath = (await exists(newConfigPath))
+    ? newConfigPath
+    : legacyConfigPath;
+
   if (await exists(configPath)) {
     const content = await Deno.readTextFile(configPath);
     try {

@@ -4667,6 +4667,40 @@ team and organization.
 
 ---
 
+### CUSTOM-SECURITY
+
+_Custom Standard from: ~/.claude/aichaku/user/standards/CUSTOM-SECURITY.md_
+
+## Custom Security Standard
+
+This is a custom security standard for testing purposes.
+
+### Key Requirements
+
+1. **Custom Rule 1**: Always validate custom inputs
+2. **Custom Rule 2**: Use custom encryption methods
+3. **Custom Rule 3**: Follow custom authentication patterns
+
+### Custom Implementation
+
+```typescript
+// Custom security implementation
+class CustomSecurity {
+  static validate(input: string): boolean {
+    // Custom validation logic
+    return input.length > 0 && input.length < 100;
+  }
+}
+```
+
+### Custom Best Practices
+
+- Always follow custom security guidelines
+- Use custom security tools
+- Implement custom security patterns
+
+---
+
 <!-- AICHAKU:STANDARDS:END -->
 
 <!-- AICHAKU:END -->

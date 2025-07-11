@@ -27,9 +27,11 @@ export class StandardsManager {
       ".claude",
       ".aichaku-standards.json",
     );
-    
+
     // Check new path first, then legacy
-    const standardsPath = (await exists(newStandardsPath)) ? newStandardsPath : legacyStandardsPath;
+    const standardsPath = (await exists(newStandardsPath))
+      ? newStandardsPath
+      : legacyStandardsPath;
 
     if (await exists(standardsPath)) {
       try {

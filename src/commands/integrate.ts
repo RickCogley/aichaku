@@ -12,7 +12,7 @@ interface ProjectStandardsConfig {
  * Validate path to prevent directory traversal
  * InfoSec: Ensures paths stay within intended directories
  */
-function validatePath(basePath: string, ...segments: string[]): string {
+function _validatePath(basePath: string, ...segments: string[]): string {
   // Validate each segment
   for (const segment of segments) {
     if (segment.includes("..") || isAbsolute(segment)) {
@@ -39,8 +39,12 @@ async function loadProjectStandards(projectPath: string): Promise<string[]> {
   const aichakuPaths = paths.get();
   // Check new path first, then legacy path
   const newConfigPath = join(aichakuPaths.project.root, "standards.json");
-  const legacyConfigPath = join(projectPath, ".claude", ".aichaku-standards.json");
-  
+  const legacyConfigPath = join(
+    projectPath,
+    ".claude",
+    ".aichaku-standards.json",
+  );
+
   let configPath = newConfigPath;
   if (!(await exists(newConfigPath)) && (await exists(legacyConfigPath))) {
     configPath = legacyConfigPath;
@@ -73,7 +77,9 @@ async function loadProjectStandards(projectPath: string): Promise<string[]> {
  * Load content for a specific standard with security validation
  * InfoSec: Validates standard IDs to prevent path injection
  */
-async function loadStandardContent(standardId: string): Promise<string | null> {
+async function loadStandardContent(
+  standardId: string,
+): Promise<{ content: string; isCustom: boolean; sourcePath?: string } | null> {
   // Validate standardId to prevent path injection
   if (!/^[a-z0-9-]+$/.test(standardId)) {
     console.warn(`Invalid standard ID format: ${standardId}`);
@@ -100,6 +106,28 @@ async function loadStandardContent(standardId: string): Promise<string | null> {
     "dora": "devops",
   };
 
+  const aichakuPaths = paths.get();
+
+  // Check for custom standards first (user-defined)
+  const customStandardPath = join(
+    aichakuPaths.global.user.standards,
+    `${standardId.toUpperCase()}.md`,
+  );
+
+  if (await exists(customStandardPath)) {
+    try {
+      const content = await Deno.readTextFile(customStandardPath);
+      return {
+        content,
+        isCustom: true,
+        sourcePath: customStandardPath,
+      };
+    } catch (_error) {
+      console.warn(`Failed to load custom standard content for ${standardId}`);
+    }
+  }
+
+  // If not a custom standard, check built-in standards
   const category = categoryMappings[standardId];
   if (!category) {
     return null;
@@ -107,21 +135,35 @@ async function loadStandardContent(standardId: string): Promise<string | null> {
 
   // Use paths module to resolve standard path with backward compatibility
   try {
-    const aichakuPaths = paths.get();
-    const newStandardPath = join(aichakuPaths.global.standards, category, `${standardId}.md`);
-    const legacyStandardPath = join(aichakuPaths.legacy.globalStandards, category, `${standardId}.md`);
-    
+    const newStandardPath = join(
+      aichakuPaths.global.standards,
+      category,
+      `${standardId}.md`,
+    );
+    const legacyStandardPath = join(
+      aichakuPaths.legacy.globalStandards,
+      category,
+      `${standardId}.md`,
+    );
+
     // Check new path first, then legacy path
     let standardPath = newStandardPath;
-    if (!(await exists(newStandardPath)) && (await exists(legacyStandardPath))) {
+    if (
+      !(await exists(newStandardPath)) && (await exists(legacyStandardPath))
+    ) {
       standardPath = legacyStandardPath;
     }
-    
+
     if (!(await exists(standardPath))) {
       return null;
     }
 
-    return await Deno.readTextFile(standardPath);
+    const content = await Deno.readTextFile(standardPath);
+    return {
+      content,
+      isCustom: false,
+      sourcePath: standardPath,
+    };
   } catch (_error) {
     console.warn(`Failed to load standard content for ${standardId}`);
     return null;
@@ -145,10 +187,21 @@ async function generateStandardsSection(projectPath: string): Promise<string> {
 `;
 
   for (const standardId of selectedStandards) {
-    const content = await loadStandardContent(standardId);
-    if (content) {
+    const result = await loadStandardContent(standardId);
+    if (result) {
       standardsContent += `### ${standardId.toUpperCase()}\n\n`;
-      standardsContent += content;
+
+      // Add source attribution for custom standards
+      if (result.isCustom && result.sourcePath) {
+        const aichakuPaths = paths.get();
+        const displayPath = result.sourcePath.replace(
+          aichakuPaths.global.user.standards,
+          "~/.claude/aichaku/user/standards",
+        );
+        standardsContent += `*Custom Standard from: ${displayPath}*\n\n`;
+      }
+
+      standardsContent += result.content;
       standardsContent += "\n\n---\n\n";
     } else {
       standardsContent += `### ${standardId.toUpperCase()}\n\n`;
@@ -167,8 +220,12 @@ async function loadProjectDocStandards(projectPath: string): Promise<string[]> {
   const aichakuPaths = paths.get();
   // Check new path first, then legacy path
   const newConfigPath = join(aichakuPaths.project.root, "doc-standards.json");
-  const legacyConfigPath = join(projectPath, ".claude", ".aichaku-doc-standards.json");
-  
+  const legacyConfigPath = join(
+    projectPath,
+    ".claude",
+    ".aichaku-doc-standards.json",
+  );
+
   let configPath = newConfigPath;
   if (!(await exists(newConfigPath)) && (await exists(legacyConfigPath))) {
     configPath = legacyConfigPath;
@@ -207,30 +264,67 @@ async function loadProjectDocStandards(projectPath: string): Promise<string[]> {
  */
 async function loadDocStandardContent(
   standardId: string,
-): Promise<string | null> {
+): Promise<{ content: string; isCustom: boolean; sourcePath?: string } | null> {
   // Validate standardId to prevent path injection
   if (!/^[a-z0-9-]+$/.test(standardId)) {
     console.warn(`Invalid documentation standard ID format: ${standardId}`);
     return null;
   }
 
+  const aichakuPaths = paths.get();
+
+  // Check for custom documentation standards first (user-defined)
+  const customStandardPath = join(
+    aichakuPaths.global.user.standards,
+    `${standardId.toUpperCase()}.md`,
+  );
+
+  if (await exists(customStandardPath)) {
+    try {
+      const content = await Deno.readTextFile(customStandardPath);
+      return {
+        content,
+        isCustom: true,
+        sourcePath: customStandardPath,
+      };
+    } catch (_error) {
+      console.warn(
+        `Failed to load custom documentation standard content for ${standardId}`,
+      );
+    }
+  }
+
   // Documentation standards are all in the documentation directory
   try {
-    const aichakuPaths = paths.get();
-    const newStandardPath = join(aichakuPaths.global.standards, "documentation", `${standardId}.md`);
-    const legacyStandardPath = join(aichakuPaths.legacy.globalStandards, "documentation", `${standardId}.md`);
-    
+    const newStandardPath = join(
+      aichakuPaths.global.standards,
+      "documentation",
+      `${standardId}.md`,
+    );
+    const legacyStandardPath = join(
+      aichakuPaths.legacy.globalStandards,
+      "documentation",
+      `${standardId}.md`,
+    );
+
     // Check new path first, then legacy path
     let standardPath = newStandardPath;
-    if (!(await exists(newStandardPath)) && (await exists(legacyStandardPath))) {
+    if (
+      !(await exists(newStandardPath)) && (await exists(legacyStandardPath))
+    ) {
       standardPath = legacyStandardPath;
     }
-    
+
     if (!(await exists(standardPath))) {
       return null;
     }
 
-    return await Deno.readTextFile(standardPath);
+    const content = await Deno.readTextFile(standardPath);
+    return {
+      content,
+      isCustom: false,
+      sourcePath: standardPath,
+    };
   } catch (_error) {
     console.warn(
       `Failed to load documentation standard content for ${standardId}`,
@@ -258,10 +352,22 @@ async function generateDocStandardsSection(
 `;
 
   for (const standardId of selectedStandards) {
-    const content = await loadDocStandardContent(standardId);
-    if (content) {
+    const result = await loadDocStandardContent(standardId);
+    if (result) {
       standardsContent += `### ${standardId.toUpperCase()}\n\n`;
-      standardsContent += content;
+
+      // Add source attribution for custom standards
+      if (result.isCustom && result.sourcePath) {
+        const aichakuPaths = paths.get();
+        const displayPath = result.sourcePath.replace(
+          aichakuPaths.global.user.standards,
+          "~/.claude/aichaku/user/standards",
+        );
+        standardsContent +=
+          `*Custom Documentation Standard from: ${displayPath}*\n\n`;
+      }
+
+      standardsContent += result.content;
       standardsContent += "\n\n---\n\n";
     } else {
       standardsContent += `### ${standardId.toUpperCase()}\n\n`;

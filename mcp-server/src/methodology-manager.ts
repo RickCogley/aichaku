@@ -16,11 +16,22 @@ export class MethodologyManager {
     }
 
     // Look for .claude/aichaku/aichaku-standards.json (new path) or .claude/.aichaku-standards.json (legacy)
-    const newConfigPath = join(projectPath, ".claude", "aichaku", "aichaku-standards.json");
-    const legacyConfigPath = join(projectPath, ".claude", ".aichaku-standards.json");
-    
+    const newConfigPath = join(
+      projectPath,
+      ".claude",
+      "aichaku",
+      "aichaku-standards.json",
+    );
+    const legacyConfigPath = join(
+      projectPath,
+      ".claude",
+      ".aichaku-standards.json",
+    );
+
     // Check new path first, then legacy
-    const configPath = (await exists(newConfigPath)) ? newConfigPath : legacyConfigPath;
+    const configPath = (await exists(newConfigPath))
+      ? newConfigPath
+      : legacyConfigPath;
 
     if (await exists(configPath)) {
       try {
@@ -50,7 +61,14 @@ export class MethodologyManager {
     if (
       await exists(join(projectPath, "pitch.md")) ||
       await exists(
-        join(projectPath, ".claude", "aichaku", "output", "active-*", "pitch.md"),
+        join(
+          projectPath,
+          ".claude",
+          "aichaku",
+          "output",
+          "active-*",
+          "pitch.md",
+        ),
       ) ||
       await exists(
         join(projectPath, ".claude", "output", "active-*", "pitch.md"),
@@ -63,7 +81,14 @@ export class MethodologyManager {
     if (
       await exists(join(projectPath, "sprint-planning.md")) ||
       await exists(
-        join(projectPath, ".claude", "aichaku", "output", "active-*", "sprint-*.md"),
+        join(
+          projectPath,
+          ".claude",
+          "aichaku",
+          "output",
+          "active-*",
+          "sprint-*.md",
+        ),
       ) ||
       await exists(
         join(projectPath, ".claude", "output", "active-*", "sprint-*.md"),
@@ -121,7 +146,14 @@ export class MethodologyManager {
     // Check for pitch document
     const pitchExists = await exists(join(projectPath, "pitch.md")) ||
       await exists(
-        join(projectPath, ".claude", "aichaku", "output", "active-*", "pitch.md"),
+        join(
+          projectPath,
+          ".claude",
+          "aichaku",
+          "output",
+          "active-*",
+          "pitch.md",
+        ),
       ) ||
       await exists(
         join(projectPath, ".claude", "output", "active-*", "pitch.md"),
@@ -149,7 +181,14 @@ export class MethodologyManager {
 
     // Check for cool-down documentation
     const hasCooldown = await exists(
-      join(projectPath, ".claude", "aichaku", "output", "done-*", "*CHANGE-LOG.md"),
+      join(
+        projectPath,
+        ".claude",
+        "aichaku",
+        "output",
+        "done-*",
+        "*CHANGE-LOG.md",
+      ),
     ) || await exists(
       join(projectPath, ".claude", "output", "done-*", "*CHANGE-LOG.md"),
     );
@@ -176,7 +215,14 @@ export class MethodologyManager {
     const sprintPlanExists =
       await exists(join(projectPath, "sprint-planning.md")) ||
       await exists(
-        join(projectPath, ".claude", "aichaku", "output", "active-*", "sprint-*.md"),
+        join(
+          projectPath,
+          ".claude",
+          "aichaku",
+          "output",
+          "active-*",
+          "sprint-*.md",
+        ),
       ) ||
       await exists(
         join(projectPath, ".claude", "output", "active-*", "sprint-*.md"),
@@ -198,7 +244,14 @@ export class MethodologyManager {
     // Check for retrospective documentation
     const retroExists = await exists(join(projectPath, "retrospective.md")) ||
       await exists(
-        join(projectPath, ".claude", "aichaku", "output", "done-*", "retrospective.md"),
+        join(
+          projectPath,
+          ".claude",
+          "aichaku",
+          "output",
+          "done-*",
+          "retrospective.md",
+        ),
       ) ||
       await exists(
         join(projectPath, ".claude", "output", "done-*", "retrospective.md"),
@@ -264,7 +317,14 @@ export class MethodologyManager {
     // Check for MVP documentation
     const mvpExists = await exists(join(projectPath, "mvp.md")) ||
       await exists(
-        join(projectPath, ".claude", "aichaku", "output", "active-*", "experiment-*.md"),
+        join(
+          projectPath,
+          ".claude",
+          "aichaku",
+          "output",
+          "active-*",
+          "experiment-*.md",
+        ),
       ) ||
       await exists(
         join(projectPath, ".claude", "output", "active-*", "experiment-*.md"),
@@ -355,7 +415,7 @@ export class MethodologyManager {
           }
         }
       }
-      
+
       // Check legacy path
       const legacyOutputPath = join(projectPath, ".claude", "output");
       if (await exists(legacyOutputPath)) {
