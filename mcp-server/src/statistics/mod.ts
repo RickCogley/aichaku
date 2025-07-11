@@ -25,7 +25,11 @@ export {
 } from "./manager.ts";
 
 // Privacy utilities
-export { DataSanitizer, FilePathAnonymizer, UserIdentifierAnonymizer } from "./privacy.ts";
+export {
+  DataSanitizer,
+  FilePathAnonymizer,
+  UserIdentifierAnonymizer,
+} from "./privacy.ts";
 
 /**
  * Create a statistics manager with custom configuration

@@ -180,7 +180,9 @@ export class ProgressManager {
   }
 
   private showDetailedUpdate(state: ProgressState): void {
-    const message = state.details ? `${state.currentPhase} - ${state.details}` : state.currentPhase;
+    const message = state.details
+      ? `${state.currentPhase} - ${state.details}`
+      : state.currentPhase;
 
     console.error(
       `${AICHAKU_BRANDING.ICON} [${AICHAKU_BRANDING.NAME}] ${AICHAKU_BRANDING.PHASES.GROWING} ` +
@@ -204,7 +206,9 @@ export class ProgressManager {
     const icon = success
       ? AICHAKU_BRANDING.ACTIVITIES.SUCCESS
       : AICHAKU_BRANDING.ACTIVITIES.WARNING;
-    const phase = success ? AICHAKU_BRANDING.PHASES.HARVEST : AICHAKU_BRANDING.PHASES.HARVEST;
+    const phase = success
+      ? AICHAKU_BRANDING.PHASES.HARVEST
+      : AICHAKU_BRANDING.PHASES.HARVEST;
 
     // Always show completion
     console.error(
@@ -256,6 +260,8 @@ export class ProgressManager {
     const filled = Math.round(progress * length);
     const empty = length - filled;
 
-    return `${"█".repeat(filled)}${"░".repeat(empty)} ${Math.round(progress * 100)}%`;
+    return `${"█".repeat(filled)}${"░".repeat(empty)} ${
+      Math.round(progress * 100)
+    }%`;
   }
 }

@@ -70,10 +70,14 @@ async function simulateToolUsage(statsManager: StatisticsManager) {
 
   for (const sim of simulations) {
     const startTime = new Date();
-    const operationId = `sim-${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;
+    const operationId = `sim-${Date.now()}-${
+      Math.random().toString(36).substring(2, 8)
+    }`;
 
     // Add some realistic delay
-    await new Promise((resolve) => setTimeout(resolve, Math.random() * 1000 + 500));
+    await new Promise((resolve) =>
+      setTimeout(resolve, Math.random() * 1000 + 500)
+    );
 
     // Create mock result
     const result = sim.success
@@ -86,7 +90,12 @@ async function simulateToolUsage(statsManager: StatisticsManager) {
             "medium",
             "low",
             "info",
-          ][Math.floor(Math.random() * 5)] as "critical" | "high" | "medium" | "low" | "info",
+          ][Math.floor(Math.random() * 5)] as
+            | "critical"
+            | "high"
+            | "medium"
+            | "low"
+            | "info",
           rule: `rule-${i + 1}`,
           message: `Sample finding ${i + 1}`,
           file: sim.file || sim.project || "unknown",

@@ -5,7 +5,10 @@
 import { join } from "@std/path";
 import { exists } from "@std/fs";
 import type { ProjectConfig } from "./types.ts";
-import { safeReadTextFile, validatePath } from "../../src/utils/path-security.ts";
+import {
+  safeReadTextFile,
+  validatePath,
+} from "../../src/utils/path-security.ts";
 
 export class StandardsManager {
   private standardsCache = new Map<string, ProjectConfig>();
@@ -16,7 +19,11 @@ export class StandardsManager {
     try {
       validatedProjectPath = validatePath(projectPath, Deno.cwd());
     } catch (error) {
-      throw new Error(`Invalid project path: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `Invalid project path: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
     }
 
     // Check cache first
@@ -38,7 +45,9 @@ export class StandardsManager {
     );
 
     // Check new path first, then legacy
-    const standardsPath = (await exists(newStandardsPath)) ? newStandardsPath : legacyStandardsPath;
+    const standardsPath = (await exists(newStandardsPath))
+      ? newStandardsPath
+      : legacyStandardsPath;
 
     if (await exists(standardsPath)) {
       try {
@@ -197,32 +206,33 @@ export class StandardsManager {
   getStandardInfo(
     standardId: string,
   ): { name: string; description: string } | null {
-    const standardInfo: Record<string, { name: string; description: string }> = {
-      "owasp-web": {
-        name: "OWASP Top 10 Web",
-        description: "Web application security risks",
-      },
-      "15-factor": {
-        name: "15-Factor Apps",
-        description: "Modern cloud-native principles",
-      },
-      "tdd": {
-        name: "Test-Driven Development",
-        description: "Red-green-refactor cycle",
-      },
-      "nist-csf": {
-        name: "NIST Cybersecurity Framework",
-        description: "Governance and risk management",
-      },
-      "ddd": {
-        name: "Domain-Driven Design",
-        description: "Strategic and tactical patterns",
-      },
-      "solid": {
-        name: "SOLID Principles",
-        description: "Object-oriented design principles",
-      },
-    };
+    const standardInfo: Record<string, { name: string; description: string }> =
+      {
+        "owasp-web": {
+          name: "OWASP Top 10 Web",
+          description: "Web application security risks",
+        },
+        "15-factor": {
+          name: "15-Factor Apps",
+          description: "Modern cloud-native principles",
+        },
+        "tdd": {
+          name: "Test-Driven Development",
+          description: "Red-green-refactor cycle",
+        },
+        "nist-csf": {
+          name: "NIST Cybersecurity Framework",
+          description: "Governance and risk management",
+        },
+        "ddd": {
+          name: "Domain-Driven Design",
+          description: "Strategic and tactical patterns",
+        },
+        "solid": {
+          name: "SOLID Principles",
+          description: "Object-oriented design principles",
+        },
+      };
 
     return standardInfo[standardId] || null;
   }

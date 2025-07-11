@@ -1,6 +1,7 @@
 # Contributing to .
 
-Thank you for your interest in contributing to .! This document provides guidelines and instructions for contributing.
+Thank you for your interest in contributing to .! This document provides
+guidelines and instructions for contributing.
 
 ## Code of Conduct
 
@@ -203,6 +204,7 @@ git push origin feature/your-feature-name
 ## Recognition
 
 Contributors are recognized in:
+
 - README.md contributors section
 - Release notes
 - Project website

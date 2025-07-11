@@ -198,8 +198,12 @@ ${AICHAKU_BRAND.PHASES.BLOOMING} Your code meets all security and standards requ
       summary.info > 0 ? `${summary.info} info` : null,
     ].filter(Boolean);
 
-    return `${AICHAKU_BRAND.ACTIVITIES.WARNING} Summary: ${priorityItems.join(", ")}
-${AICHAKU_BRAND.PHASES.GROWING} Review Status: ${this.getOverallStatus(summary)}`;
+    return `${AICHAKU_BRAND.ACTIVITIES.WARNING} Summary: ${
+      priorityItems.join(", ")
+    }
+${AICHAKU_BRAND.PHASES.GROWING} Review Status: ${
+      this.getOverallStatus(summary)
+    }`;
   }
 
   private formatFindings(result: ReviewResult): string {
@@ -230,7 +234,9 @@ ${AICHAKU_BRAND.PHASES.GROWING} Review Status: ${this.getOverallStatus(summary)}
     const lines = [
       `${AICHAKU_BRAND.ACTIVITIES.SCANNING} Line ${finding.line}: ${finding.message}`,
       `  ${AICHAKU_BRAND.PHASES.SEED} Rule: ${finding.rule}`,
-      `  ${AICHAKU_BRAND.PHASES.GROWING} Category: ${finding.category || "General"}`,
+      `  ${AICHAKU_BRAND.PHASES.GROWING} Category: ${
+        finding.category || "General"
+      }`,
       `  ${AICHAKU_BRAND.PHASES.MATURE} Tool: ${finding.tool}`,
     ];
 

@@ -14,8 +14,10 @@ export class DocumentationPatterns {
         category: "documentation",
         severity: "medium",
         pattern: /^#\s+(?!Getting Started|Tutorial)/m,
-        description: "Tutorials should start with 'Getting Started' or 'Tutorial'",
-        fix: "Start tutorials with '# Getting Started with [Product]' or '# Tutorial: [Topic]'",
+        description:
+          "Tutorials should start with 'Getting Started' or 'Tutorial'",
+        fix:
+          "Start tutorials with '# Getting Started with [Product]' or '# Tutorial: [Topic]'",
         frameworks: ["diataxis"],
       },
       {
@@ -25,7 +27,8 @@ export class DocumentationPatterns {
         severity: "medium",
         pattern: /^#\s+Getting Started(?![\s\S]*## Prerequisites)/m,
         description: "Tutorials should include a Prerequisites section",
-        fix: "Add a '## Prerequisites' section listing what readers need before starting",
+        fix:
+          "Add a '## Prerequisites' section listing what readers need before starting",
         frameworks: ["diataxis"],
       },
       {
@@ -41,7 +44,8 @@ export class DocumentationPatterns {
           const findings: Array<{ message?: string; line?: number }> = [];
           if (!content.includes("## Before you begin")) {
             findings.push({
-              message: "How-to guides should include 'Before you begin' section",
+              message:
+                "How-to guides should include 'Before you begin' section",
               line: 1,
             });
           }
@@ -49,7 +53,8 @@ export class DocumentationPatterns {
             !content.includes("## Solution") && !content.includes("## Steps")
           ) {
             findings.push({
-              message: "How-to guides should include 'Solution' or 'Steps' section",
+              message:
+                "How-to guides should include 'Solution' or 'Steps' section",
               line: 1,
             });
           }
@@ -76,7 +81,8 @@ export class DocumentationPatterns {
               const wordCount = sentence.trim().split(/\s+/).length;
               if (wordCount > 25) {
                 findings.push({
-                  message: `Sentence has ${wordCount} words (Google style recommends < 25)`,
+                  message:
+                    `Sentence has ${wordCount} words (Google style recommends < 25)`,
                   line: index + 1,
                 });
               }
@@ -113,9 +119,11 @@ export class DocumentationPatterns {
         name: "Use Active Voice",
         category: "documentation",
         severity: "info",
-        pattern: /\b(is\s+\w+ed|are\s+\w+ed|was\s+\w+ed|were\s+\w+ed|been\s+\w+ed)\b/g,
+        pattern:
+          /\b(is\s+\w+ed|are\s+\w+ed|was\s+\w+ed|were\s+\w+ed|been\s+\w+ed)\b/g,
         description: "Prefer active voice over passive voice",
-        fix: "Change 'is configured by' to 'configure', 'are processed' to 'processes'",
+        fix:
+          "Change 'is configured by' to 'configure', 'are processed' to 'processes'",
         frameworks: ["google-style"],
       },
 
@@ -160,7 +168,8 @@ export class DocumentationPatterns {
         category: "documentation",
         severity: "medium",
         pattern: /^```\s*$/m,
-        description: "Code blocks should specify a language for syntax highlighting",
+        description:
+          "Code blocks should specify a language for syntax highlighting",
         fix: "Add language after ``` (e.g., ```bash, ```typescript, ```yaml)",
         frameworks: ["all"],
       },

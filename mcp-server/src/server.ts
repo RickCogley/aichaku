@@ -21,13 +21,22 @@ import { AichakuFormatter, ConsoleOutputManager } from "./feedback-system.ts";
 import { feedbackSystem } from "./feedback/feedback-system.ts";
 import type { ReviewRequest, ReviewResult } from "./types.ts";
 import { existsSync } from "@std/fs/exists";
-import { detectEnvironmentConfig, StatisticsManager } from "./statistics/mod.ts";
-import { type AnalyzeProjectArgs, analyzeProjectTool } from "./tools/analyze-project.ts";
+import {
+  detectEnvironmentConfig,
+  StatisticsManager,
+} from "./statistics/mod.ts";
+import {
+  type AnalyzeProjectArgs,
+  analyzeProjectTool,
+} from "./tools/analyze-project.ts";
 import {
   type GenerateDocumentationArgs,
   generateDocumentationTool,
 } from "./tools/generate-documentation.ts";
-import { type CreateDocTemplateArgs, createDocTemplateTool } from "./tools/create-doc-template.ts";
+import {
+  type CreateDocTemplateArgs,
+  createDocTemplateTool,
+} from "./tools/create-doc-template.ts";
 
 const PACKAGE_JSON = {
   name: "@aichaku/mcp-code-reviewer",
@@ -73,7 +82,8 @@ class MCPCodeReviewer {
         tools: [
           {
             name: "review_file",
-            description: "Review a file for security, standards, and methodology compliance",
+            description:
+              "Review a file for security, standards, and methodology compliance",
             inputSchema: {
               type: "object",
               properties: {
@@ -83,11 +93,13 @@ class MCPCodeReviewer {
                 },
                 content: {
                   type: "string",
-                  description: "File content (optional, will read from disk if not provided)",
+                  description:
+                    "File content (optional, will read from disk if not provided)",
                 },
                 includeExternal: {
                   type: "boolean",
-                  description: "Include external security scanners if available",
+                  description:
+                    "Include external security scanners if available",
                   default: true,
                 },
               },
@@ -96,7 +108,8 @@ class MCPCodeReviewer {
           },
           {
             name: "review_methodology",
-            description: "Check if project follows selected methodology patterns",
+            description:
+              "Check if project follows selected methodology patterns",
             inputSchema: {
               type: "object",
               properties: {
@@ -128,7 +141,8 @@ class MCPCodeReviewer {
           },
           {
             name: "get_statistics",
-            description: "Get usage statistics and analytics for MCP tool usage",
+            description:
+              "Get usage statistics and analytics for MCP tool usage",
             inputSchema: {
               type: "object",
               properties: {
@@ -262,7 +276,9 @@ class MCPCodeReviewer {
               if (!args) {
                 throw new Error("Arguments are required for analyze_project");
               }
-              const result = await analyzeProjectTool.execute(args as AnalyzeProjectArgs);
+              const result = await analyzeProjectTool.execute(
+                args as AnalyzeProjectArgs,
+              );
 
               // Record statistics
               await this.statisticsManager.recordInvocation(
@@ -342,7 +358,9 @@ class MCPCodeReviewer {
                   "Arguments are required for create_doc_template",
                 );
               }
-              const result = await createDocTemplateTool.execute(args as CreateDocTemplateArgs);
+              const result = await createDocTemplateTool.execute(
+                args as CreateDocTemplateArgs,
+              );
 
               // Record statistics
               await this.statisticsManager.recordInvocation(
@@ -453,7 +471,9 @@ class MCPCodeReviewer {
                 text: `${
                   AichakuFormatter.formatBrandedMessage(
                     "❌",
-                    `Error: ${error instanceof Error ? error.message : String(error)}`,
+                    `Error: ${
+                      error instanceof Error ? error.message : String(error)
+                    }`,
                   )
                 }`,
               },

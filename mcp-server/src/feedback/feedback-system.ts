@@ -21,7 +21,10 @@ export class FeedbackSystem {
   /**
    * Start a new operation with progressive feedback
    */
-  startOperation(operationType: string, context?: Record<string, unknown>): string {
+  startOperation(
+    operationType: string,
+    context?: Record<string, unknown>,
+  ): string {
     // Extract meaningful context
     const contextStr = this.extractContext(operationType, context);
 
@@ -113,13 +116,16 @@ export class FeedbackSystem {
 
     switch (operationType) {
       case "review_file":
-        return (context.file as string) || (context.path as string) || undefined;
+        return (context.file as string) || (context.path as string) ||
+          undefined;
       case "review_methodology":
-        return (context.methodology as string) || (context.projectPath as string) || undefined;
+        return (context.methodology as string) ||
+          (context.projectPath as string) || undefined;
       case "get_standards":
         return context.projectPath as string || undefined;
       default:
-        return (context.name as string) || (context.path as string) || (context.file as string) || undefined;
+        return (context.name as string) || (context.path as string) ||
+          (context.file as string) || undefined;
     }
   }
 

@@ -3,7 +3,14 @@
  * Coordinates collection, storage, and reporting
  */
 
-import type { DEFAULT_CONFIG, StatisticsConfig, SessionStatistics, ToolInvocation, OperationPerformance, StatisticsReport } from "./types.ts";
+import type {
+  DEFAULT_CONFIG,
+  OperationPerformance,
+  SessionStatistics,
+  StatisticsConfig,
+  StatisticsReport,
+  ToolInvocation,
+} from "./types.ts";
 import type { ReviewResult } from "../types.ts";
 import { StatisticsCollector } from "./collector.ts";
 import { StatisticsReporter } from "./reporter.ts";
@@ -309,7 +316,8 @@ export class StatisticsManager {
           (Date.now() - activity.timestamp.getTime()) / 1000,
         );
         const status = activity.success ? "✅" : "❌";
-        output += `• ${status} ${activity.toolName} (${timeAgo}s ago, ${activity.duration}ms)\n`;
+        output +=
+          `• ${status} ${activity.toolName} (${timeAgo}s ago, ${activity.duration}ms)\n`;
       });
       output += "\n";
     }
@@ -340,14 +348,19 @@ export class StatisticsManager {
     // Key metrics
     output += `${PHASES.HARVEST} Key Metrics:\n`;
     output += `• Total Operations: ${report.summary.totalOperations}\n`;
-    output += `• Success Rate: ${Math.round(report.summary.overallSuccessRate * 100)}%\n`;
+    output += `• Success Rate: ${
+      Math.round(report.summary.overallSuccessRate * 100)
+    }%\n`;
     output += `• Most Used Tool: ${report.summary.mostUsedTool}\n`;
-    output += `• Most Reviewed File Type: ${report.summary.mostReviewedFileType}\n\n`;
+    output +=
+      `• Most Reviewed File Type: ${report.summary.mostReviewedFileType}\n\n`;
 
     // Trends
     if (report.performanceTrends.length > 0) {
-      const recentTrend = report.performanceTrends[report.performanceTrends.length - 1];
-      const previousTrend = report.performanceTrends[report.performanceTrends.length - 2];
+      const recentTrend =
+        report.performanceTrends[report.performanceTrends.length - 1];
+      const previousTrend =
+        report.performanceTrends[report.performanceTrends.length - 2];
 
       output += `${PHASES.GROWING} Performance Trends:\n`;
       output += `• Recent Average Response Time: ${
@@ -358,10 +371,14 @@ export class StatisticsManager {
         const change = recentTrend.averageResponseTime -
           previousTrend.averageResponseTime;
         const direction = change > 0 ? "📈" : "📉";
-        output += `• Performance Change: ${direction} ${Math.round(Math.abs(change))}ms\n`;
+        output += `• Performance Change: ${direction} ${
+          Math.round(Math.abs(change))
+        }ms\n`;
       }
 
-      output += `• Recent Success Rate: ${Math.round(recentTrend.successRate * 100)}%\n\n`;
+      output += `• Recent Success Rate: ${
+        Math.round(recentTrend.successRate * 100)
+      }%\n\n`;
     }
 
     // Recommendations

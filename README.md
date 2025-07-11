@@ -268,12 +268,16 @@ await integrate({
 
 ## MCP Server Features
 
-Aichaku includes an enhanced Model Context Protocol (MCP) server that provides intelligent project analysis and documentation generation capabilities directly within Claude Desktop.
+Aichaku includes an enhanced Model Context Protocol (MCP) server that provides
+intelligent project analysis and documentation generation capabilities directly
+within Claude Desktop.
 
 ### Available MCP Tools
 
 #### 1. **Project Analysis** (`analyze_project`)
+
 Performs comprehensive analysis of your codebase:
+
 - Detects programming languages and frameworks
 - Analyzes project structure and patterns
 - Identifies architectural decisions
@@ -286,7 +290,9 @@ Performs comprehensive analysis of your codebase:
 ```
 
 #### 2. **Documentation Template Creation** (`create_doc_template`)
+
 Generates context-aware documentation templates:
+
 - README templates tailored to your project type
 - API documentation structures
 - Architecture decision records (ADRs)
@@ -300,7 +306,9 @@ Generates context-aware documentation templates:
 ```
 
 #### 3. **Automated Documentation Generation** (`generate_documentation`)
+
 Creates comprehensive documentation from your codebase:
+
 - Auto-generates API documentation from code comments
 - Creates architecture diagrams and descriptions
 - Produces setup and installation guides
@@ -315,7 +323,8 @@ Creates comprehensive documentation from your codebase:
 
 ### Statistics and Analytics
 
-The MCP server tracks usage statistics to help you understand how Aichaku is being used:
+The MCP server tracks usage statistics to help you understand how Aichaku is
+being used:
 
 - **Tool usage frequency**: Which tools are used most often
 - **Success rates**: How often operations complete successfully
@@ -323,6 +332,7 @@ The MCP server tracks usage statistics to help you understand how Aichaku is bei
 - **Error tracking**: Common issues and their resolutions
 
 Statistics are stored locally and can be viewed with:
+
 ```bash
 # View MCP server statistics
 aichaku stats
@@ -334,6 +344,7 @@ aichaku stats --reset
 ### Aichaku Branding and Feedback
 
 All MCP server responses include:
+
 - **🪴 Aichaku branding**: Visual indicator that the response comes from Aichaku
 - **Contextual feedback**: Progress updates during long operations
 - **Success confirmations**: Clear indication when tasks complete
@@ -342,20 +353,28 @@ All MCP server responses include:
 ### Setting Up MCP Server
 
 1. **Install the MCP server** (included with Aichaku):
+
 ```bash
 # The MCP server is automatically installed with Aichaku
 aichaku init --global
 ```
 
-2. **Configure Claude Desktop**:
-Add to your Claude Desktop configuration (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+2. **Configure Claude Desktop**: Add to your Claude Desktop configuration
+   (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
 
 ```json
 {
   "mcpServers": {
     "aichaku": {
       "command": "deno",
-      "args": ["run", "--allow-read", "--allow-write", "--allow-net", "--allow-env", "/path/to/aichaku/mcp-server.ts"],
+      "args": [
+        "run",
+        "--allow-read",
+        "--allow-write",
+        "--allow-net",
+        "--allow-env",
+        "/path/to/aichaku/mcp-server.ts"
+      ],
       "env": {
         "AICHAKU_HOME": "~/.claude/aichaku"
       }
@@ -364,12 +383,13 @@ Add to your Claude Desktop configuration (`~/Library/Application Support/Claude/
 }
 ```
 
-3. **Verify installation**:
-Restart Claude Desktop and look for Aichaku tools in the available MCP tools list.
+3. **Verify installation**: Restart Claude Desktop and look for Aichaku tools in
+   the available MCP tools list.
 
 ### Example Workflows
 
 #### Complete Project Documentation
+
 ```
 You: "Analyze this project and generate complete documentation"
 Claude: [Uses analyze_project] 🪴 Aichaku: Analyzing project structure...
@@ -383,6 +403,7 @@ Claude: [Uses analyze_project] 🪴 Aichaku: Analyzing project structure...
 ```
 
 #### Methodology-Aware Documentation
+
 ```
 You: "Create a Shape Up pitch document template for this feature"
 Claude: [Uses create_doc_template] 🪴 Aichaku: Creating Shape Up pitch template...
@@ -396,6 +417,7 @@ Claude: [Uses create_doc_template] 🪴 Aichaku: Creating Shape Up pitch templat
 ```
 
 #### Continuous Documentation Updates
+
 ```
 You: "Update the API docs after adding the new authentication endpoints"
 Claude: [Uses generate_documentation] 🪴 Aichaku: Updating API documentation...

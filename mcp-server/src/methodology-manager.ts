@@ -5,7 +5,11 @@
 import { join } from "@std/path";
 import { exists } from "@std/fs";
 import type { Finding } from "./types.ts";
-import { safeReadDir, safeReadTextFile, validatePath } from "../../src/utils/path-security.ts";
+import {
+  safeReadDir,
+  safeReadTextFile,
+  validatePath,
+} from "../../src/utils/path-security.ts";
 
 export class MethodologyManager {
   private methodologyCache = new Map<string, string[]>();
@@ -16,7 +20,11 @@ export class MethodologyManager {
     try {
       validatedProjectPath = validatePath(projectPath, Deno.cwd());
     } catch (error) {
-      throw new Error(`Invalid project path: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `Invalid project path: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
     }
 
     // Check cache first
@@ -38,7 +46,9 @@ export class MethodologyManager {
     );
 
     // Check new path first, then legacy
-    const configPath = (await exists(newConfigPath)) ? newConfigPath : legacyConfigPath;
+    const configPath = (await exists(newConfigPath))
+      ? newConfigPath
+      : legacyConfigPath;
 
     if (await exists(configPath)) {
       try {
@@ -129,7 +139,11 @@ export class MethodologyManager {
     try {
       validatedProjectPath = validatePath(projectPath, Deno.cwd());
     } catch (error) {
-      throw new Error(`Invalid project path: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `Invalid project path: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
     }
     const findings: Finding[] = [];
 
@@ -238,7 +252,8 @@ export class MethodologyManager {
     const findings: Finding[] = [];
 
     // Check for sprint planning
-    const sprintPlanExists = await exists(join(projectPath, "sprint-planning.md")) ||
+    const sprintPlanExists =
+      await exists(join(projectPath, "sprint-planning.md")) ||
       await exists(
         join(
           projectPath,

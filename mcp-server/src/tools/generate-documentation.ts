@@ -4,7 +4,10 @@
  * MCP tool for generating comprehensive project documentation
  */
 
-import { DocGenerator, type DocumentationStandard } from "../generation/doc-generator.ts";
+import {
+  DocGenerator,
+  type DocumentationStandard,
+} from "../generation/doc-generator.ts";
 import { ProjectAnalyzer } from "../analysis/project-analyzer.ts";
 import { feedbackSystem } from "../feedback/feedback-system.ts";
 import { StandardsManager } from "../standards-manager.ts";
@@ -43,7 +46,8 @@ export const generateDocumentationTool = {
       },
       outputPath: {
         type: "string",
-        description: "Output path for documentation (defaults to projectPath/docs)",
+        description:
+          "Output path for documentation (defaults to projectPath/docs)",
       },
       standard: {
         type: "string",
@@ -75,7 +79,8 @@ export const generateDocumentationTool = {
       },
       autoChain: {
         type: "boolean",
-        description: "Automatically run analyze_project first and review_file after",
+        description:
+          "Automatically run analyze_project first and review_file after",
         default: true,
       },
     },
@@ -96,7 +101,11 @@ export const generateDocumentationTool = {
       try {
         validatePath(resolvedProjectPath, Deno.cwd());
       } catch (error) {
-        throw new Error(`Invalid project path: ${error instanceof Error ? error.message : String(error)}`);
+        throw new Error(
+          `Invalid project path: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
+        );
       }
 
       if (!existsSync(resolvedProjectPath)) {
@@ -167,7 +176,9 @@ export const generateDocumentationTool = {
         feedbackSystem.updateProgress(
           operationId,
           "analyzed",
-          `Found ${projectAnalysis.languages[0]?.language || "unknown"} project with ${
+          `Found ${
+            projectAnalysis.languages[0]?.language || "unknown"
+          } project with ${
             projectAnalysis.structure.children?.length || 0
           } top-level items`,
         );
@@ -227,7 +238,7 @@ export const generateDocumentationTool = {
           high: 0,
           medium: 0,
           low: 0,
-          info: 0
+          info: 0,
         },
         generatedFiles,
         outputPath,
@@ -240,7 +251,9 @@ export const generateDocumentationTool = {
         nextSteps,
       };
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorMessage = error instanceof Error
+        ? error.message
+        : String(error);
       feedbackSystem.reportError(operationId, new Error(errorMessage));
 
       return {

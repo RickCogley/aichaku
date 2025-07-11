@@ -6,8 +6,15 @@
 
 import { ensureDir } from "@std/fs/ensure-dir";
 import { dirname, join, normalize } from "@std/path";
-import type { DirectoryStructure, ProjectAnalysis, ProjectType } from "../analysis/project-analyzer.ts";
-import { safeWriteTextFileSync, validatePath } from "../../../src/utils/path-security.ts";
+import type {
+  DirectoryStructure,
+  ProjectAnalysis,
+  ProjectType,
+} from "../analysis/project-analyzer.ts";
+import {
+  safeWriteTextFileSync,
+  validatePath,
+} from "../../../src/utils/path-security.ts";
 import process from "node:process";
 
 export interface GenerationOptions {
@@ -48,7 +55,11 @@ export class DocGenerator {
     try {
       validatePath(normalizedOutputPath, options.projectAnalysis.rootPath);
     } catch (error) {
-      throw new Error(`Invalid output path: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `Invalid output path: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
     }
 
     // Ensure output directory exists
@@ -59,7 +70,11 @@ export class DocGenerator {
     try {
       validatePath(readmePath, options.projectAnalysis.rootPath);
     } catch (error) {
-      throw new Error(`Invalid README path: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `Invalid README path: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
     }
 
     const readme = this.generateReadme(options.projectAnalysis);
@@ -103,13 +118,19 @@ export class DocGenerator {
         validatePath(fullPath, options.projectAnalysis.rootPath);
       } catch (error) {
         console.error(
-          `Skipping invalid path: ${fullPath} - ${error instanceof Error ? error.message : String(error)}`,
+          `Skipping invalid path: ${fullPath} - ${
+            error instanceof Error ? error.message : String(error)
+          }`,
         );
         continue;
       }
 
       await ensureDir(dirname(fullPath));
-      safeWriteTextFileSync(fullPath, doc.content, options.projectAnalysis.rootPath);
+      safeWriteTextFileSync(
+        fullPath,
+        doc.content,
+        options.projectAnalysis.rootPath,
+      );
     }
 
     return docs;
@@ -483,7 +504,8 @@ This is a ${type} project written primarily in ${mainLanguage}.
 `;
 
     if (architecture.pattern) {
-      readme += `The project follows the **${architecture.pattern}** architecture pattern.\n\n`;
+      readme +=
+        `The project follows the **${architecture.pattern}** architecture pattern.\n\n`;
     }
 
     readme += `## Getting Started
@@ -786,7 +808,11 @@ This documentation follows the **${
 **Task-oriented** - Guides for specific tasks
 
 - [Common Tasks](how-to/common-tasks.md)
-${analysis.apiEndpoints.length > 0 ? "- [Using the API](how-to/use-api.md)" : ""}
+${
+      analysis.apiEndpoints.length > 0
+        ? "- [Using the API](how-to/use-api.md)"
+        : ""
+    }
 ${analysis.testFiles.length > 0 ? "- [Running Tests](how-to/run-tests.md)" : ""}
 
 ### 📖 [Reference](reference/index.md)
@@ -825,7 +851,9 @@ ${
   private generateTutorialIndex(analysis: ProjectAnalysis): string {
     return `# Tutorials
 
-Learn how to use ${analysis.rootPath.split("/").pop()} with these step-by-step tutorials.
+Learn how to use ${
+      analysis.rootPath.split("/").pop()
+    } with these step-by-step tutorials.
 
 ## Getting Started
 
@@ -1034,7 +1062,9 @@ Each guide:
 
     return `# How to Use the API
 
-This guide shows you how to interact with the ${analysis.rootPath.split("/").pop()} API.
+This guide shows you how to interact with the ${
+      analysis.rootPath.split("/").pop()
+    } API.
 
 ## Prerequisites
 
@@ -1313,7 +1343,9 @@ Response includes:
   private generateExplanationIndex(analysis: ProjectAnalysis): string {
     return `# Concepts and Explanation
 
-Understanding the design and architecture of ${analysis.rootPath.split("/").pop()}.
+Understanding the design and architecture of ${
+      analysis.rootPath.split("/").pop()
+    }.
 
 ## Core Concepts
 
@@ -1417,7 +1449,9 @@ ${
 **Components**:
 ${
         layer.directories.map((dir) =>
-          `- \`${dir}\` - ${this.inferDirectoryPurpose(dir.split("/").pop() || "")}`
+          `- \`${dir}\` - ${
+            this.inferDirectoryPurpose(dir.split("/").pop() || "")
+          }`
         ).join("\n")
       }
 
@@ -1531,7 +1565,9 @@ yarn add ${analysis.rootPath.split("/").pop()}
 
 ### Using Deno
 \`\`\`typescript
-import { } from "https://deno.land/x/${analysis.rootPath.split("/").pop()}/mod.ts";
+import { } from "https://deno.land/x/${
+        analysis.rootPath.split("/").pop()
+      }/mod.ts";
 \`\`\``;
     }
 

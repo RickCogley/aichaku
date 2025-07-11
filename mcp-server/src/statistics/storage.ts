@@ -222,9 +222,15 @@ export class JSONFileStorage implements StorageBackend {
   private extractTimestamp(value: unknown): Date | null {
     if (value && typeof value === "object" && value !== null) {
       const obj = value as Record<string, unknown>;
-      if ('timestamp' in obj && obj.timestamp) return new Date(obj.timestamp as string | number);
-      if ('startTime' in obj && obj.startTime) return new Date(obj.startTime as string | number);
-      if ('generatedAt' in obj && obj.generatedAt) return new Date(obj.generatedAt as string | number);
+      if ("timestamp" in obj && obj.timestamp) {
+        return new Date(obj.timestamp as string | number);
+      }
+      if ("startTime" in obj && obj.startTime) {
+        return new Date(obj.startTime as string | number);
+      }
+      if ("generatedAt" in obj && obj.generatedAt) {
+        return new Date(obj.generatedAt as string | number);
+      }
     }
     return null;
   }
@@ -311,9 +317,15 @@ export class MemoryStorage implements StorageBackend {
   private extractTimestamp(value: unknown): Date | null {
     if (value && typeof value === "object" && value !== null) {
       const obj = value as Record<string, unknown>;
-      if ('timestamp' in obj && obj.timestamp) return new Date(obj.timestamp as string | number);
-      if ('startTime' in obj && obj.startTime) return new Date(obj.startTime as string | number);
-      if ('generatedAt' in obj && obj.generatedAt) return new Date(obj.generatedAt as string | number);
+      if ("timestamp" in obj && obj.timestamp) {
+        return new Date(obj.timestamp as string | number);
+      }
+      if ("startTime" in obj && obj.startTime) {
+        return new Date(obj.startTime as string | number);
+      }
+      if ("generatedAt" in obj && obj.generatedAt) {
+        return new Date(obj.generatedAt as string | number);
+      }
     }
     return null;
   }

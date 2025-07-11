@@ -9,7 +9,10 @@ export { generateDocumentationTool } from "./generate-documentation.ts";
 export { createDocTemplateTool } from "./create-doc-template.ts";
 
 // Re-export types
-export type { AnalyzeProjectArgs, AnalyzeProjectResult } from "./analyze-project.ts";
+export type {
+  AnalyzeProjectArgs,
+  AnalyzeProjectResult,
+} from "./analyze-project.ts";
 export type {
   GenerateDocumentationArgs,
   GenerateDocumentationResult,

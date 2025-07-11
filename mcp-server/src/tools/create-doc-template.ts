@@ -5,7 +5,10 @@
  */
 
 import { feedbackSystem } from "../feedback/feedback-system.ts";
-import { safeWriteTextFileSync, validatePath } from "../../../src/utils/path-security.ts";
+import {
+  safeWriteTextFileSync,
+  validatePath,
+} from "../../../src/utils/path-security.ts";
 import { existsSync } from "@std/fs/exists";
 import { ensureDir } from "@std/fs/ensure-dir";
 import { dirname, resolve } from "@std/path";
@@ -37,22 +40,24 @@ export interface CreateDocTemplateResult {
   error?: string;
 }
 
-const TEMPLATES: Record<TemplateType, (args: CreateDocTemplateArgs) => string> = {
-  tutorial: createTutorialTemplate,
-  "how-to": createHowToTemplate,
-  reference: createReferenceTemplate,
-  explanation: createExplanationTemplate,
-  api: createApiTemplate,
-  architecture: createArchitectureTemplate,
-  contributing: createContributingTemplate,
-  changelog: createChangelogTemplate,
-  security: createSecurityTemplate,
-  readme: createReadmeTemplate,
-};
+const TEMPLATES: Record<TemplateType, (args: CreateDocTemplateArgs) => string> =
+  {
+    tutorial: createTutorialTemplate,
+    "how-to": createHowToTemplate,
+    reference: createReferenceTemplate,
+    explanation: createExplanationTemplate,
+    api: createApiTemplate,
+    architecture: createArchitectureTemplate,
+    contributing: createContributingTemplate,
+    changelog: createChangelogTemplate,
+    security: createSecurityTemplate,
+    readme: createReadmeTemplate,
+  };
 
 export const createDocTemplateTool = {
   name: "create_doc_template",
-  description: "Create a documentation template file for tutorials, how-tos, references, etc.",
+  description:
+    "Create a documentation template file for tutorials, how-tos, references, etc.",
   inputSchema: {
     type: "object",
     properties: {
@@ -94,7 +99,11 @@ export const createDocTemplateTool = {
       try {
         validatePath(resolvedPath, Deno.cwd());
       } catch (error) {
-        throw new Error(`Invalid output path: ${error instanceof Error ? error.message : String(error)}`);
+        throw new Error(
+          `Invalid output path: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
+        );
       }
 
       // Ensure directory exists
@@ -140,7 +149,7 @@ export const createDocTemplateTool = {
           high: 0,
           medium: 0,
           low: 0,
-          info: 0
+          info: 0,
         },
         filePath: resolvedPath,
         templateType: args.templateType,
@@ -152,7 +161,9 @@ export const createDocTemplateTool = {
         content,
       };
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorMessage = error instanceof Error
+        ? error.message
+        : String(error);
       feedbackSystem.reportError(operationId, new Error(errorMessage));
 
       return {
