@@ -3,6 +3,8 @@
  * Supports multiple storage backends with privacy controls
  */
 
+/// <reference lib="deno.unstable" />
+
 import type {
   FileAnalysis as _FileAnalysis,
   OperationPerformance as _OperationPerformance,

@@ -3,13 +3,13 @@
  * Handles process management on Windows systems
  */
 
-import { ProcessHandler, ProcessInfo } from "../process-manager.ts";
+import type { ProcessHandler, ProcessInfo } from "../process-manager.ts";
 
 export class WindowsProcessHandler implements ProcessHandler {
   /**
    * Start a process in the background on Windows
    */
-  async start(command: string, args: string[]): Promise<number> {
+  start(command: string, args: string[]): Promise<number> {
     try {
       // Use Windows Start command to run detached
       const startCmd = new Deno.Command("cmd", {
@@ -19,7 +19,7 @@ export class WindowsProcessHandler implements ProcessHandler {
         stdin: "null",
       });
 
-      const process = startCmd.spawn();
+      startCmd.spawn();
 
       // On Windows, we need to get the PID differently
       // Start command doesn't directly return the child PID
@@ -39,7 +39,7 @@ export class WindowsProcessHandler implements ProcessHandler {
       // Detach the process
       child.unref();
 
-      return pid;
+      return Promise.resolve(pid);
     } catch (error) {
       throw new Error(`Failed to start process: ${error}`);
     }

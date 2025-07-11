@@ -178,10 +178,14 @@ class MCPCodeReviewer {
       async (request: CallToolRequest) => {
         const { name, arguments: args } = request.params;
 
+        // Declare these outside try block so they're available in catch
+        let operationId: string | undefined;
+        let startTime = new Date();
+
         try {
           // Enhanced feedback for tool invocations using new system
-          const operationId = feedbackSystem.startOperation(name, args);
-          const startTime = new Date();
+          operationId = feedbackSystem.startOperation(name, args);
+          startTime = new Date();
 
           switch (name) {
             case "review_file": {
@@ -287,7 +291,7 @@ class MCPCodeReviewer {
                 args as Record<string, unknown>,
                 startTime,
                 result.success,
-                result,
+                undefined, // AnalyzeProjectResult is not compatible with ReviewResult
               );
 
               return {
@@ -319,7 +323,7 @@ class MCPCodeReviewer {
                 args as Record<string, unknown>,
                 startTime,
                 result.success,
-                result,
+                undefined, // GenerateDocumentationResult is not compatible with ReviewResult
               );
 
               if (result.success) {
@@ -369,7 +373,7 @@ class MCPCodeReviewer {
                 args as Record<string, unknown>,
                 startTime,
                 result.success,
-                result,
+                undefined, // CreateDocTemplateResult is not compatible with ReviewResult
               );
 
               if (result.success) {
@@ -448,17 +452,20 @@ class MCPCodeReviewer {
               throw new Error(`Unknown tool: ${name}`);
           }
         } catch (error) {
+          const errorOperationId = operationId || `${name}-error`;
+          const errorStartTime = startTime || new Date();
+
           feedbackSystem.reportError(
-            operationId || `${name}-error`,
+            errorOperationId,
             error instanceof Error ? error : new Error(String(error)),
           );
 
           // Record failed operation statistics
           await this.statisticsManager.recordInvocation(
             name,
-            operationId || `${name}-error`,
+            errorOperationId,
             args as Record<string, unknown> || {},
-            startTime,
+            errorStartTime,
             false,
             undefined,
             error instanceof Error ? error : new Error(String(error)),
@@ -559,11 +566,12 @@ class MCPCodeReviewer {
       summary: this.summarizeFindings(findings),
       methodologyCompliance: {
         methodology: methodologies.join(", "),
-        status: findings.length === 0
-          ? "passed"
-          : findings.some((f) => f.severity === "critical")
-          ? "failed"
-          : "warnings",
+        status:
+          (findings.length === 0
+            ? "passed"
+            : findings.some((f) => f.severity === "critical")
+            ? "failed"
+            : "warnings") as "passed" | "warnings" | "failed",
         details: findings.map((f) => f.message),
       },
     };

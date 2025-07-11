@@ -3,13 +3,13 @@
  * Handles process management on Unix-like systems
  */
 
-import { ProcessHandler, ProcessInfo } from "../process-manager.ts";
+import type { ProcessHandler, ProcessInfo } from "../process-manager.ts";
 
 export class UnixProcessHandler implements ProcessHandler {
   /**
    * Start a process in the background
    */
-  async start(command: string, args: string[]): Promise<number> {
+  start(command: string, args: string[]): Promise<number> {
     try {
       // Start process detached from parent
       const process = new Deno.Command(command, {
@@ -28,7 +28,7 @@ export class UnixProcessHandler implements ProcessHandler {
       // Let it run in background
       child.unref();
 
-      return pid;
+      return Promise.resolve(pid);
     } catch (error) {
       throw new Error(`Failed to start process: ${error}`);
     }
@@ -69,13 +69,13 @@ export class UnixProcessHandler implements ProcessHandler {
   /**
    * Check if a process is running
    */
-  async isRunning(pid: number): Promise<boolean> {
+  isRunning(pid: number): Promise<boolean> {
     try {
       // Send signal 0 to check if process exists
       Deno.kill(pid, "SIGCONT");
-      return true;
+      return Promise.resolve(true);
     } catch {
-      return false;
+      return Promise.resolve(false);
     }
   }
 

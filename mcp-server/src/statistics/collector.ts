@@ -4,7 +4,6 @@
  */
 
 import type {
-  DEFAULT_CONFIG,
   FileAnalysis,
   OperationPerformance,
   SessionStatistics,
@@ -12,6 +11,7 @@ import type {
   StatisticsConfig,
   ToolInvocation,
 } from "./types.ts";
+import { DEFAULT_CONFIG } from "./types.ts";
 import type { StorageBackend } from "./storage.ts";
 import type { ReviewResult } from "../types.ts";
 import {

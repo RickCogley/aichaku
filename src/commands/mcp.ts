@@ -232,7 +232,7 @@ async function configureMCPServer(): Promise<void> {
   );
 }
 
-async function checkMCPStatus(): Promise<void> {
+async function _checkMCPStatus(): Promise<void> {
   console.log("🔍 Checking MCP Server Status...\n");
 
   const homeDir = Deno.env.get("HOME") || Deno.env.get("USERPROFILE");

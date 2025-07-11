@@ -35,7 +35,7 @@ export interface ReviewResult {
   claudeGuidance?: ClaudeGuidance;
   filePath?: string;
   generatedFiles?: string[];
-  analysis?: any;
+  analysis?: unknown;
   templateType?: string;
   outputPath?: string;
 }

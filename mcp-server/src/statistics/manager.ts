@@ -4,13 +4,13 @@
  */
 
 import type {
-  DEFAULT_CONFIG,
   OperationPerformance,
   SessionStatistics,
   StatisticsConfig,
   StatisticsReport,
   ToolInvocation,
 } from "./types.ts";
+import { DEFAULT_CONFIG } from "./types.ts";
 import type { ReviewResult } from "../types.ts";
 import { StatisticsCollector } from "./collector.ts";
 import { StatisticsReporter } from "./reporter.ts";
@@ -170,13 +170,13 @@ export class StatisticsManager {
   /**
    * Answer questions about usage
    */
-  answerQuestion(question: string): string {
+  async answerQuestion(question: string): Promise<string> {
     if (!this.isInitialized) {
       return `${AICHAKU_BRANDING.ACTIVITIES.WARNING} [Aichaku] Statistics tracking is not enabled`;
     }
 
     try {
-      return this.reporter.answerQuestion(question);
+      return await this.reporter.answerQuestion(question);
     } catch (error) {
       return `${AICHAKU_BRANDING.ACTIVITIES.ERROR} [Aichaku] Failed to answer question: ${error}`;
     }
