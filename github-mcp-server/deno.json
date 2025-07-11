@@ -1,0 +1,26 @@
+{
+  "name": "@rick/github-mcp-server",
+  "version": "0.1.0",
+  "description": "Comprehensive GitHub MCP server for Claude Code",
+  "exports": {
+    ".": "./src/server.ts"
+  },
+  "tasks": {
+    "dev": "deno run -A --watch src/server.ts",
+    "compile": "deno compile -A --output ./dist/github-mcp-server src/server.ts",
+    "test": "deno test -A",
+    "check": "deno check src/**/*.ts",
+    "lint": "deno lint",
+    "fmt": "deno fmt"
+  },
+  "imports": {
+    "@modelcontextprotocol/sdk": "npm:@modelcontextprotocol/sdk@1.0.4",
+    "@std/path": "jsr:@std/path@^1.0.0",
+    "@std/fs": "jsr:@std/fs@^1.0.0",
+    "@std/crypto": "jsr:@std/crypto@^1.0.0"
+  },
+  "exclude": [
+    "dist/",
+    "node_modules/"
+  ]
+}
