@@ -4,6 +4,8 @@ import { copy } from "jsr:@std/fs@1/copy";
 import { VERSION } from "../../mod.ts";
 import { fetchMethodologies, fetchStandards } from "./content-fetcher.ts";
 import { getAichakuPaths } from "../paths.ts";
+import { resolveProjectPath } from "../utils/project-paths.ts";
+import { safeRemove } from "../utils/path-security.ts";
 
 interface UpgradeOptions {
   global?: boolean;
@@ -44,7 +46,8 @@ export async function upgrade(
 
   // Use centralized path management
   const targetPath = isGlobal ? paths.global.root : paths.project.root;
-  const _projectPath = resolve(options.projectPath || ".");
+  // Security: Use safe project path resolution
+  const _projectPath = resolveProjectPath(options.projectPath);
 
   // Check if Aichaku is installed (try both old and new marker files)
   const aichakuJsonPath = isGlobal ? paths.global.config : paths.project.config;
@@ -182,7 +185,8 @@ export async function upgrade(
         // If fetch fails completely, try removing and re-fetching
         const targetMethodologies = paths.global.methodologies;
         if (await exists(targetMethodologies)) {
-          await Deno.remove(targetMethodologies, { recursive: true });
+          // Security: Use safe remove
+          await safeRemove(targetMethodologies, paths.global.root, { recursive: true });
         }
 
         const retrySuccess = await fetchMethodologies(
@@ -210,7 +214,8 @@ export async function upgrade(
 
       // Remove old methodologies for clean copy
       if (await exists(targetMethodologies)) {
-        await Deno.remove(targetMethodologies, { recursive: true });
+        // Security: Use safe remove
+        await safeRemove(targetMethodologies, targetPath, { recursive: true });
       }
 
       await copy(sourceMethodologies, targetMethodologies);
@@ -232,7 +237,8 @@ export async function upgrade(
         // If fetch fails completely, try removing and re-fetching
         const targetStandards = paths.global.standards;
         if (await exists(targetStandards)) {
-          await Deno.remove(targetStandards, { recursive: true });
+          // Security: Use safe remove
+          await safeRemove(targetStandards, paths.global.root, { recursive: true });
         }
 
         const retrySuccess = await fetchStandards(paths.global.root, VERSION, {
@@ -256,7 +262,8 @@ export async function upgrade(
 
       // Remove old standards for clean copy
       if (await exists(targetStandards)) {
-        await Deno.remove(targetStandards, { recursive: true });
+        // Security: Use safe remove
+        await safeRemove(targetStandards, targetPath, { recursive: true });
       }
 
       await copy(sourceStandards, targetStandards);

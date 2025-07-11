@@ -1,5 +1,6 @@
 import { ensureDir } from "jsr:@std/fs@1";
 import { join } from "jsr:@std/path@1";
+import { validatePath } from "../utils/path-security.ts";
 
 interface FetchOptions {
   silent?: boolean;
@@ -30,8 +31,13 @@ export async function fetchContent(
   const failedFiles: string[] = [];
 
   async function fetchFile(relativePath: string): Promise<void> {
+    // Security: Validate the relative path doesn't contain traversal sequences
+    if (relativePath.includes("..")) {
+      throw new Error(`Invalid path: ${relativePath} contains directory traversal`);
+    }
+    
     const url = `${baseUrl}/${relativePath}`;
-    const localPath = join(targetPath, relativePath);
+    const localPath = validatePath(relativePath, targetPath);
 
     // Check if file exists and skip if overwrite is false
     try {

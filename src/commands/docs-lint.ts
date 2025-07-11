@@ -9,12 +9,14 @@
 
 import { parseArgs } from "@std/cli/parse-args";
 import { walk } from "@std/fs/walk";
-import { join, relative, resolve } from "@std/path";
+import { join, relative } from "@std/path";
 import { exists } from "@std/fs/exists";
 import type { DocumentationStandardConfig } from "../types.ts";
 import type { LintIssue, LintResult } from "../linters/base-linter.ts";
 import { DiátaxisLinter } from "../linters/diataxis-linter.ts";
 import { GoogleStyleLinter } from "../linters/google-style-linter.ts";
+import { resolveProjectPath } from "../utils/project-paths.ts";
+import { safeReadTextFile } from "../utils/path-security.ts";
 
 /**
  * Colors for terminal output
@@ -62,7 +64,8 @@ async function loadDocumentationConfig(
   }
 
   try {
-    const content = await Deno.readTextFile(configPath);
+    // Security: Use safe file reading
+    const content = await safeReadTextFile(configPath, projectPath);
     return JSON.parse(content) as DocumentationStandardConfig;
   } catch (error) {
     console.error(colors.red(`Error loading documentation config: ${error}`));
@@ -129,7 +132,8 @@ async function lintFile(
   filePath: string,
   linters: Array<DiátaxisLinter | GoogleStyleLinter>,
 ): Promise<LintResult[]> {
-  const content = await Deno.readTextFile(filePath);
+  // Security: Use safe file reading - file should be within cwd
+  const content = await safeReadTextFile(filePath, Deno.cwd());
   const results: LintResult[] = [];
 
   for (const linter of linters) {
@@ -147,7 +151,8 @@ async function findMarkdownFiles(paths: string[]): Promise<string[]> {
   const files: string[] = [];
 
   for (const path of paths) {
-    const absPath = resolve(path);
+    // Security: Validate path to prevent traversal
+    const absPath = resolveProjectPath(path);
     const stat = await Deno.stat(absPath);
 
     if (stat.isFile && (path.endsWith(".md") || path.endsWith(".markdown"))) {

@@ -199,7 +199,7 @@ const content = await Deno.readTextFile(resolved);`,
       ],
 
       reflection:
-        "Did you consider what would happen if a user provided '../../../etc/passwd' as input?",
+        "Did you consider what would happen if a user provided a malicious path with directory traversal sequences?",
 
       reinforcement:
         "Always validate paths to ensure they stay within intended boundaries. This is an OWASP A01 vulnerability.",

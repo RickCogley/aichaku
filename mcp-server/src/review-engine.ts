@@ -12,6 +12,7 @@ import { ScannerController } from "./scanner-controller.ts";
 import { SecurityPatterns } from "./patterns/security-patterns.ts";
 import { TypeScriptPatterns } from "./patterns/typescript-patterns.ts";
 import { DocumentationPatterns } from "./patterns/documentation-patterns.ts";
+import { safeReadTextFile } from "../../src/utils/path-security.ts";
 
 export class ReviewEngine {
   private scannerController: ScannerController;
@@ -103,7 +104,9 @@ export class ReviewEngine {
 
   private async readFile(filePath: string): Promise<string> {
     try {
-      return await Deno.readTextFile(filePath);
+      // Security: Use safe file reading with path validation
+      // Only allow reading files within the current working directory
+      return await safeReadTextFile(filePath, Deno.cwd());
     } catch (error) {
       throw new Error(
         `Failed to read file ${filePath}: ${

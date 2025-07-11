@@ -1,6 +1,7 @@
 import { exists } from "jsr:@std/fs@1";
 import { isAbsolute, join, normalize, resolve } from "jsr:@std/path@1";
 import { paths } from "../paths.ts";
+import { resolveProjectPath } from "../utils/project-paths.ts";
 
 // Type definitions
 interface ProjectStandardsConfig {
@@ -609,8 +610,8 @@ Learn more: https://github.com/RickCogley/aichaku
 export async function integrate(
   options: IntegrateOptions = {},
 ): Promise<IntegrateResult> {
-  const projectPath = resolve(options.projectPath || ".");
-  // codeql[js/path-injection] Safe because projectPath is resolved and "CLAUDE.md" is hardcoded
+  // Security: Use safe project path resolution
+  const projectPath = resolveProjectPath(options.projectPath);
   const claudeMdPath = join(projectPath, "CLAUDE.md");
 
   // Generate standards section

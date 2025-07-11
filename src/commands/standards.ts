@@ -14,6 +14,8 @@ import {
   getUserStandardPath,
   isPathSafe,
 } from "../paths.ts";
+import { safeReadTextFile, safeRemove, safeReadDir } from "../utils/path-security.ts";
+import { resolveProjectPath } from "../utils/project-paths.ts";
 
 // Type definitions for better type safety
 interface Standard {
@@ -514,11 +516,12 @@ async function showProjectStandards(projectPath?: string): Promise<void> {
   }
 
   // Check integration status and provide options
-  const claudeMdPath = join(projectPath || Deno.cwd(), "CLAUDE.md");
+  const validatedProjectPath = projectPath ? resolveProjectPath(projectPath) : Deno.cwd();
+  const claudeMdPath = join(validatedProjectPath, "CLAUDE.md");
   const claudeExists = await exists(claudeMdPath);
   const needsIntegration = !claudeExists ||
     (claudeExists &&
-      !(await Deno.readTextFile(claudeMdPath)).includes("AICHAKU:STANDARDS"));
+      !(await safeReadTextFile(claudeMdPath, validatedProjectPath)).includes("AICHAKU:STANDARDS"));
 
   console.log(`\n💡 What you can do:`);
   if (needsIntegration) {
@@ -786,7 +789,9 @@ async function deleteCustomStandard(name: string): Promise<void> {
   }
 
   try {
-    await Deno.remove(standardPath);
+    // Security: Use safe remove with validation
+    const paths = getAichakuPaths();
+    await safeRemove(standardPath, paths.global.user.standards);
     console.log(`✅ Deleted custom standard: ${sanitizedName}`);
     console.log(`\n💡 The standard has been removed from your system`);
     console.log(
@@ -890,7 +895,9 @@ async function copyCustomStandard(
 
   try {
     // Read source content
-    const content = await Deno.readTextFile(sourcePath);
+    // Security: Use safe read with validation
+    const paths = getAichakuPaths();
+    const content = await safeReadTextFile(sourcePath, paths.global.standards);
 
     // Update frontmatter with new name
     const updatedContent = content.replace(
@@ -1082,7 +1089,12 @@ function getProjectConfigPath(projectPath?: string): string {
  */
 async function loadProjectConfig(path: string): Promise<ProjectConfig> {
   if (await exists(path)) {
-    const content = await Deno.readTextFile(path);
+    // Security: The path should already be validated by the caller,
+    // but we'll ensure it's within the project directory
+    const projectRoot = path.includes("aichaku") 
+      ? resolve(path, "..", "..", "..")  // Go up from .claude/aichaku/standards.json
+      : resolve(path, "..", "..");        // Go up from .claude/standards.json
+    const content = await safeReadTextFile(path, projectRoot);
     try {
       const parsed = JSON.parse(content);
 
@@ -1258,7 +1270,9 @@ async function loadCustomStandard(standardName: string): Promise<
       }
 
       if (await exists(standardPath)) {
-        const content = await Deno.readTextFile(standardPath);
+        // Security: Use safe read for custom standards
+        const paths = getAichakuPaths();
+        const content = await safeReadTextFile(standardPath, paths.global.user.standards);
 
         // Extract metadata from markdown file
         const metadata = extractStandardMetadata(content);
@@ -1369,7 +1383,8 @@ async function loadAvailableCustomStandards(): Promise<
   for (const directory of directories) {
     try {
       if (await exists(directory)) {
-        for await (const entry of Deno.readDir(directory)) {
+        // Security: Use safe directory reading
+        for await (const entry of safeReadDir(directory, paths.global.user.standards)) {
           if (entry.isFile && entry.name.endsWith(".md")) {
             const standardPath = join(directory, entry.name);
 
@@ -1379,7 +1394,8 @@ async function loadAvailableCustomStandards(): Promise<
             }
 
             try {
-              const content = await Deno.readTextFile(standardPath);
+              // Security: Use safe read for custom standards
+              const content = await safeReadTextFile(standardPath, directory);
               const metadata = extractStandardMetadata(content);
 
               // Extract standard ID from filename (remove .md extension and convert to lowercase)

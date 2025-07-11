@@ -13,6 +13,7 @@ import {
   type MigrationConfig,
 } from "../migration/folder-migration.ts";
 import { getAichakuPaths } from "../paths.ts";
+import { resolveProjectPath } from "../utils/project-paths.ts";
 
 // Command options interface
 interface MigrateCommandOptions {
@@ -361,11 +362,14 @@ async function checkProjectMigration(projectPath: string): Promise<boolean> {
   const { exists } = await import("../../deps.ts");
   const { join } = await import("@std/path");
 
+  // Security: Validate project path
+  const validatedPath = resolveProjectPath(projectPath);
+  
   // Use paths module to get consistent paths
   const paths = getAichakuPaths();
-  const oldProjectFile = join(projectPath, ".claude", ".aichaku-project");
+  const oldProjectFile = join(validatedPath, ".claude", ".aichaku-project");
   const oldStandardsFile = join(
-    projectPath,
+    validatedPath,
     ".claude",
     ".aichaku-standards.json",
   );

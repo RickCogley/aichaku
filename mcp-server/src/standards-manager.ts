@@ -5,25 +5,29 @@
 import { join } from "@std/path";
 import { exists } from "@std/fs";
 import type { ProjectConfig } from "./types.ts";
+import { safeReadTextFile, validatePath } from "../../src/utils/path-security.ts";
 
 export class StandardsManager {
   private standardsCache = new Map<string, ProjectConfig>();
 
   async getProjectStandards(projectPath: string): Promise<ProjectConfig> {
+    // Security: Validate the project path
+    const validatedProjectPath = validatePath(projectPath, Deno.cwd());
+    
     // Check cache first
-    if (this.standardsCache.has(projectPath)) {
-      return this.standardsCache.get(projectPath)!;
+    if (this.standardsCache.has(validatedProjectPath)) {
+      return this.standardsCache.get(validatedProjectPath)!;
     }
 
     // Look for .claude/aichaku/aichaku-standards.json (new path) or .claude/.aichaku-standards.json (legacy)
     const newStandardsPath = join(
-      projectPath,
+      validatedProjectPath,
       ".claude",
       "aichaku",
       "aichaku-standards.json",
     );
     const legacyStandardsPath = join(
-      projectPath,
+      validatedProjectPath,
       ".claude",
       ".aichaku-standards.json",
     );
@@ -35,9 +39,10 @@ export class StandardsManager {
 
     if (await exists(standardsPath)) {
       try {
-        const content = await Deno.readTextFile(standardsPath);
+        // Security: Use safe file reading
+        const content = await safeReadTextFile(standardsPath, validatedProjectPath);
         const config = JSON.parse(content) as ProjectConfig;
-        this.standardsCache.set(projectPath, config);
+        this.standardsCache.set(validatedProjectPath, config);
         return config;
       } catch (error) {
         console.error(
@@ -141,15 +146,17 @@ export class StandardsManager {
   async loadStandardContent(standardId: string): Promise<string | null> {
     // Try to load from Aichaku's standards directory
     const homedir = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
+    const cwd = Deno.cwd();
+    
     const possiblePaths = [
-      join(homedir, ".claude", "aichaku", "standards"), // New path
-      join(homedir, ".claude", "standards"), // Legacy path
-      join(Deno.cwd(), ".claude", "aichaku", "standards"), // Project new path
-      join(Deno.cwd(), ".claude", "standards"), // Project legacy path
-      join(Deno.cwd(), "node_modules", "@aichaku", "standards"), // npm package
+      { path: join(homedir, ".claude", "aichaku", "standards"), baseDir: homedir }, // New path
+      { path: join(homedir, ".claude", "standards"), baseDir: homedir }, // Legacy path
+      { path: join(cwd, ".claude", "aichaku", "standards"), baseDir: cwd }, // Project new path
+      { path: join(cwd, ".claude", "standards"), baseDir: cwd }, // Project legacy path
+      { path: join(cwd, "node_modules", "@aichaku", "standards"), baseDir: cwd }, // npm package
     ];
 
-    for (const basePath of possiblePaths) {
+    for (const { path: basePath, baseDir } of possiblePaths) {
       // Standards are organized by category
       const categories = [
         "security",
@@ -163,7 +170,8 @@ export class StandardsManager {
         const standardPath = join(basePath, category, `${standardId}.md`);
         if (await exists(standardPath)) {
           try {
-            return await Deno.readTextFile(standardPath);
+            // Security: Use safe file reading with appropriate base directory
+            return await safeReadTextFile(standardPath, baseDir);
           } catch {
             // Continue searching
           }

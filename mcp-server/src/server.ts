@@ -18,6 +18,7 @@ import { StandardsManager } from "./standards-manager.ts";
 import { MethodologyManager } from "./methodology-manager.ts";
 import { FeedbackBuilder } from "./feedback-builder.ts";
 import type { ReviewRequest, ReviewResult } from "./types.ts";
+import { validatePath } from "../../src/utils/path-security.ts";
 
 const PACKAGE_JSON = {
   name: "@aichaku/mcp-code-reviewer",
@@ -482,7 +483,9 @@ class MCPCodeReviewer {
 
   private detectDocumentType(filePath: string): string {
     try {
-      const content = Deno.readTextFileSync(filePath).toLowerCase();
+      // Security: Validate the file path first
+      const validatedPath = validatePath(filePath, Deno.cwd());
+      const content = Deno.readTextFileSync(validatedPath).toLowerCase();
       const fileName = filePath.toLowerCase();
 
       // Check file name patterns

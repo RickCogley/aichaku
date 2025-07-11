@@ -5,25 +5,29 @@
 import { join } from "@std/path";
 import { exists } from "@std/fs";
 import type { Finding } from "./types.ts";
+import { safeReadTextFile, validatePath, safeReadDir } from "../../src/utils/path-security.ts";
 
 export class MethodologyManager {
   private methodologyCache = new Map<string, string[]>();
 
   async getProjectMethodologies(projectPath: string): Promise<string[]> {
+    // Security: Validate the project path
+    const validatedProjectPath = validatePath(projectPath, Deno.cwd());
+    
     // Check cache first
-    if (this.methodologyCache.has(projectPath)) {
-      return this.methodologyCache.get(projectPath)!;
+    if (this.methodologyCache.has(validatedProjectPath)) {
+      return this.methodologyCache.get(validatedProjectPath)!;
     }
 
     // Look for .claude/aichaku/aichaku-standards.json (new path) or .claude/.aichaku-standards.json (legacy)
     const newConfigPath = join(
-      projectPath,
+      validatedProjectPath,
       ".claude",
       "aichaku",
       "aichaku-standards.json",
     );
     const legacyConfigPath = join(
-      projectPath,
+      validatedProjectPath,
       ".claude",
       ".aichaku-standards.json",
     );
@@ -35,10 +39,11 @@ export class MethodologyManager {
 
     if (await exists(configPath)) {
       try {
-        const content = await Deno.readTextFile(configPath);
+        // Security: Use safe file reading
+        const content = await safeReadTextFile(configPath, validatedProjectPath);
         const config = JSON.parse(content);
         const methodologies = config.methodologies || [];
-        this.methodologyCache.set(projectPath, methodologies);
+        this.methodologyCache.set(validatedProjectPath, methodologies);
         return methodologies;
       } catch (error) {
         console.error(
@@ -50,7 +55,7 @@ export class MethodologyManager {
     }
 
     // Try to detect from project structure
-    const detected = await this.detectMethodology(projectPath);
+    const detected = await this.detectMethodology(validatedProjectPath);
     return detected;
   }
 
@@ -113,24 +118,26 @@ export class MethodologyManager {
     projectPath: string,
     methodologies: string[],
   ): Promise<Finding[]> {
+    // Security: Validate project path
+    const validatedProjectPath = validatePath(projectPath, Deno.cwd());
     const findings: Finding[] = [];
 
     for (const methodology of methodologies) {
       switch (methodology) {
         case "shape-up":
-          findings.push(...await this.checkShapeUpCompliance(projectPath));
+          findings.push(...await this.checkShapeUpCompliance(validatedProjectPath));
           break;
         case "scrum":
-          findings.push(...await this.checkScrumCompliance(projectPath));
+          findings.push(...await this.checkScrumCompliance(validatedProjectPath));
           break;
         case "kanban":
-          findings.push(...await this.checkKanbanCompliance(projectPath));
+          findings.push(...await this.checkKanbanCompliance(validatedProjectPath));
           break;
         case "lean":
-          findings.push(...await this.checkLeanCompliance(projectPath));
+          findings.push(...await this.checkLeanCompliance(validatedProjectPath));
           break;
         case "xp":
-          findings.push(...await this.checkXPCompliance(projectPath));
+          findings.push(...await this.checkXPCompliance(validatedProjectPath));
           break;
       }
     }
@@ -409,7 +416,8 @@ export class MethodologyManager {
       // Check new path first
       const newOutputPath = join(projectPath, ".claude", "aichaku", "output");
       if (await exists(newOutputPath)) {
-        for await (const entry of Deno.readDir(newOutputPath)) {
+        // Security: Use safe directory reading
+        for await (const entry of safeReadDir(newOutputPath, projectPath)) {
           if (entry.isDirectory && entry.name.startsWith("active-")) {
             return true;
           }
@@ -419,7 +427,8 @@ export class MethodologyManager {
       // Check legacy path
       const legacyOutputPath = join(projectPath, ".claude", "output");
       if (await exists(legacyOutputPath)) {
-        for await (const entry of Deno.readDir(legacyOutputPath)) {
+        // Security: Use safe directory reading
+        for await (const entry of safeReadDir(legacyOutputPath, projectPath)) {
           if (entry.isDirectory && entry.name.startsWith("active-")) {
             return true;
           }
