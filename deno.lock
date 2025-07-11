@@ -2,7 +2,7 @@
   "version": "5",
   "specifiers": {
     "jsr:@davidbonnet/astring@1.8.6": "1.8.6",
-    "jsr:@rick/nagare@2.9.0": "2.9.0",
+    "jsr:@rick/nagare@2.9.1": "2.9.1",
     "jsr:@std/assert@1": "1.0.13",
     "jsr:@std/async@1": "1.0.13",
     "jsr:@std/cli@1": "1.0.20",
@@ -28,8 +28,8 @@
     "@davidbonnet/astring@1.8.6": {
       "integrity": "98b4914c8863cdf8c0ff83bb5c528caa67a8dca6020ad6234113499f00583e3a"
     },
-    "@rick/nagare@2.9.0": {
-      "integrity": "49bce45dd128acca40ee39771837cef3c9740b3f1ec7cf929cf5e7da63953cf5",
+    "@rick/nagare@2.9.1": {
+      "integrity": "a7fd87cd413b768d0e98268c7f9d3bcdbcbe1e3988da4b8b567095c25e9d06b0",
       "dependencies": [
         "jsr:@std/async",
         "jsr:@std/fmt",
@@ -247,7 +247,7 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@rick/nagare@2.9.0",
+      "jsr:@rick/nagare@2.9.1",
       "jsr:@std/assert@1",
       "jsr:@std/cli@1",
       "jsr:@std/fs@1",
