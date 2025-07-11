@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.23.0] - 2025-07-11
+
+### Added
+
+- add MCP tool names to aichaku mcp status output (3928264)
+
+### Changed
+
+- apply deno fmt formatting to MCP status output (7750677)
+
+### Fixed
+
+- add more exclusions to security workflow for legitimate paths (2181b2c)
+- update security workflow to exclude legitimate relative imports (5cfc046)
+- resolve path traversal security vulnerabilities (3d90194)
+
 ## [0.22.0] - 2025-07-11
 
 ### Added
