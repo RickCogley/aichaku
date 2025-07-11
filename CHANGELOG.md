@@ -16,6 +16,7 @@ and this project adheres to
 
 ### Changed
 
+- rename example TypeScript files to exclude from type check (ea396df)
 - format code for release compliance (b26dc65)
 - add MCP server contributing and security documentation (746dd94)
 - migrate project docs and checkpoints to /docs/ for better discoverability
