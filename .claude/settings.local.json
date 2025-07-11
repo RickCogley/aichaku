@@ -59,7 +59,13 @@
       "Bash(../cli.ts docs-standard --list)",
       "Bash(deno eval:*)",
       "Bash(gh release create:*)",
-      "Bash(git restore:*)"
+      "Bash(git restore:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(npx aichaku docs analyze-project:*)",
+      "Bash(./analyze-and-document.sh:*)",
+      "Bash(./advanced-workflow-test.sh:*)",
+      "mcp__aichaku-reviewer__get_standards",
+      "Bash(true)"
     ],
     "deny": []
   }
