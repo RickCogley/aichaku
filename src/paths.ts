@@ -17,8 +17,15 @@ export interface AichakuPaths {
     standards: string;
     config: string;
     cache: string;
+    user: {
+      root: string;
+      methodologies: string;
+      standards: string;
+      templates: string;
+      config: string;
+    };
   };
-  
+
   // Project paths (.claude/aichaku/)
   project: {
     root: string;
@@ -27,12 +34,13 @@ export interface AichakuPaths {
     active: string;
     done: string;
   };
-  
+
   // Legacy paths for migration
   legacy: {
-    globalMethodologies: string;  // ~/.claude/methodologies/
-    globalStandards: string;      // ~/.claude/standards/
-    projectOutput: string;        // .claude/output/
+    globalMethodologies: string; // ~/.claude/methodologies/
+    globalStandards: string; // ~/.claude/standards/
+    projectOutput: string; // .claude/output/
+    customStandards: string; // ~/.claude/aichaku/standards/custom/
   };
 }
 
@@ -60,7 +68,7 @@ function getCwd(): string {
 export function getAichakuPaths(): AichakuPaths {
   const home = getHomeDir();
   const cwd = getCwd();
-  
+
   return {
     // Global paths under ~/.claude/aichaku/
     global: {
@@ -69,8 +77,21 @@ export function getAichakuPaths(): AichakuPaths {
       standards: join(home, ".claude", "aichaku", "standards"),
       config: join(home, ".claude", "aichaku", "config.json"),
       cache: join(home, ".claude", "aichaku", "cache"),
+      user: {
+        root: join(home, ".claude", "aichaku", "user"),
+        methodologies: join(
+          home,
+          ".claude",
+          "aichaku",
+          "user",
+          "methodologies",
+        ),
+        standards: join(home, ".claude", "aichaku", "user", "standards"),
+        templates: join(home, ".claude", "aichaku", "user", "templates"),
+        config: join(home, ".claude", "aichaku", "user", "config"),
+      },
     },
-    
+
     // Project paths under .claude/aichaku/
     project: {
       root: join(cwd, ".claude", "aichaku"),
@@ -79,12 +100,13 @@ export function getAichakuPaths(): AichakuPaths {
       active: join(cwd, ".claude", "aichaku", "output", "active"),
       done: join(cwd, ".claude", "aichaku", "output", "done"),
     },
-    
+
     // Legacy paths for backward compatibility
     legacy: {
       globalMethodologies: join(home, ".claude", "methodologies"),
       globalStandards: join(home, ".claude", "standards"),
       projectOutput: join(cwd, ".claude", "output"),
+      customStandards: join(home, ".claude", "aichaku", "standards", "custom"),
     },
   };
 }
@@ -94,13 +116,20 @@ export function getAichakuPaths(): AichakuPaths {
  */
 export async function ensureAichakuDirs(): Promise<void> {
   const paths = getAichakuPaths();
-  
+
   // Ensure global directories
   await ensureDir(paths.global.root);
   await ensureDir(paths.global.methodologies);
   await ensureDir(paths.global.standards);
   await ensureDir(paths.global.cache);
-  
+
+  // Ensure user directories
+  await ensureDir(paths.global.user.root);
+  await ensureDir(paths.global.user.methodologies);
+  await ensureDir(paths.global.user.standards);
+  await ensureDir(paths.global.user.templates);
+  await ensureDir(paths.global.user.config);
+
   // Ensure project directories
   await ensureDir(paths.project.root);
   await ensureDir(paths.project.output);
@@ -125,9 +154,36 @@ export function getStandardPath(standard: string): string {
 }
 
 /**
+ * Get the path for a user custom standard
+ */
+export function getUserStandardPath(standard: string): string {
+  const paths = getAichakuPaths();
+  return join(paths.global.user.standards, `${standard.toUpperCase()}.md`);
+}
+
+/**
+ * Get the path for a user custom methodology
+ */
+export function getUserMethodologyPath(methodology: string): string {
+  const paths = getAichakuPaths();
+  return join(paths.global.user.methodologies, methodology.toLowerCase());
+}
+
+/**
+ * Get the path for a user template
+ */
+export function getUserTemplatePath(template: string): string {
+  const paths = getAichakuPaths();
+  return join(paths.global.user.templates, template);
+}
+
+/**
  * Get the path for a project output folder
  */
-export function getProjectOutputPath(projectName: string, isActive = true): string {
+export function getProjectOutputPath(
+  projectName: string,
+  isActive = true,
+): string {
   const paths = getAichakuPaths();
   const baseDir = isActive ? paths.project.active : paths.project.done;
   return join(baseDir, projectName);
@@ -141,14 +197,21 @@ export async function checkLegacyPaths(): Promise<{
   hasLegacyProject: boolean;
 }> {
   const paths = getAichakuPaths();
-  
+
   try {
-    const [globalMethodologies, globalStandards, projectOutput] = await Promise.all([
-      Deno.stat(paths.legacy.globalMethodologies).then(() => true).catch(() => false),
-      Deno.stat(paths.legacy.globalStandards).then(() => true).catch(() => false),
-      Deno.stat(paths.legacy.projectOutput).then(() => true).catch(() => false),
-    ]);
-    
+    const [globalMethodologies, globalStandards, projectOutput] = await Promise
+      .all([
+        Deno.stat(paths.legacy.globalMethodologies).then(() => true).catch(() =>
+          false
+        ),
+        Deno.stat(paths.legacy.globalStandards).then(() => true).catch(() =>
+          false
+        ),
+        Deno.stat(paths.legacy.projectOutput).then(() => true).catch(() =>
+          false
+        ),
+      ]);
+
     return {
       hasLegacyGlobal: globalMethodologies || globalStandards,
       hasLegacyProject: projectOutput,
@@ -166,40 +229,50 @@ export async function checkLegacyPaths(): Promise<{
  */
 export async function resolveAichakuPath(
   type: "methodology" | "standard" | "output",
-  name?: string
+  name?: string,
 ): Promise<string | null> {
   const paths = getAichakuPaths();
-  
+
   // Define potential paths for each type
   const pathsToCheck: string[] = [];
-  
+
   switch (type) {
     case "methodology":
       if (name) {
         pathsToCheck.push(
+          // Check user custom methodologies first
+          join(paths.global.user.methodologies, name.toLowerCase()),
+          // Then built-in methodologies
           join(paths.global.methodologies, name.toLowerCase()),
-          join(paths.legacy.globalMethodologies, name.toLowerCase())
+          // Legacy location
+          join(paths.legacy.globalMethodologies, name.toLowerCase()),
         );
       }
       break;
-      
+
     case "standard":
       if (name) {
         pathsToCheck.push(
+          // Check user custom standards first
+          join(paths.global.user.standards, `${name.toUpperCase()}.md`),
+          // Then built-in standards
           join(paths.global.standards, `${name.toUpperCase()}.md`),
-          join(paths.legacy.globalStandards, `${name.toUpperCase()}.md`)
+          // Legacy global standards
+          join(paths.legacy.globalStandards, `${name.toUpperCase()}.md`),
+          // Legacy custom standards
+          join(paths.legacy.customStandards, `${name.toUpperCase()}.md`),
         );
       }
       break;
-      
+
     case "output":
       pathsToCheck.push(
         paths.project.output,
-        paths.legacy.projectOutput
+        paths.legacy.projectOutput,
       );
       break;
   }
-  
+
   // Check each path and return the first one that exists
   for (const path of pathsToCheck) {
     try {
@@ -209,7 +282,7 @@ export async function resolveAichakuPath(
       // Path doesn't exist, continue
     }
   }
-  
+
   return null;
 }
 
@@ -230,7 +303,7 @@ export function formatPathForDisplay(path: string): string {
 export function isPathSafe(path: string): boolean {
   const paths = getAichakuPaths();
   const resolvedPath = join(path);
-  
+
   // Check if path is within allowed directories
   const allowedPaths = [
     paths.global.root,
@@ -238,9 +311,10 @@ export function isPathSafe(path: string): boolean {
     paths.legacy.globalMethodologies,
     paths.legacy.globalStandards,
     paths.legacy.projectOutput,
+    paths.legacy.customStandards,
   ];
-  
-  return allowedPaths.some(allowed => resolvedPath.startsWith(allowed));
+
+  return allowedPaths.some((allowed) => resolvedPath.startsWith(allowed));
 }
 
 /**
@@ -251,6 +325,9 @@ export const paths = {
   ensure: ensureAichakuDirs,
   methodology: getMethodologyPath,
   standard: getStandardPath,
+  userStandard: getUserStandardPath,
+  userMethodology: getUserMethodologyPath,
+  userTemplate: getUserTemplatePath,
   projectOutput: getProjectOutputPath,
   checkLegacy: checkLegacyPaths,
   resolve: resolveAichakuPath,
