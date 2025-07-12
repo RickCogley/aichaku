@@ -4,7 +4,8 @@
  * Package binaries and upload to GitHub release
  */
 
-const VERSION = "0.25.0";
+import { VERSION } from "../version.ts";
+
 const DIST_DIR = "./dist";
 
 // Create tar.gz for Unix-like systems
