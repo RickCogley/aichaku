@@ -26,7 +26,8 @@ and this project adheres to
 - resolve all lint errors for clean release (d9d2e79)
 - format nagare config (31d3634)
 - fix upgrade command to correctly read metadata from both old and new locations
-- fix version display in upgrade command (was showing old version from legacy config file)
+- fix version display in upgrade command (was showing old version from legacy
+  config file)
 
 ## [0.23.0] - 2025-07-11
 

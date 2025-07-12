@@ -85,4 +85,3 @@ export async function migrateMetadata(
   // Optionally remove old file (commented out for safety)
   // await Deno.remove(oldPath);
 }
-
