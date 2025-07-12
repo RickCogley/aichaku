@@ -58,7 +58,7 @@ integrated.
 
 ```bash
 # Install and initialize everything with one command:
-deno run -A https://rickcogley.github.io/aichaku/init.ts
+deno run -A https://rickcogley.github.io/aichaku/docs/init.ts
 ```
 
 This single command will:
@@ -174,11 +174,11 @@ aichaku init --dry-run
 #### Global CLI
 
 ```bash
-# Simplest upgrade (with feedback):
-deno run -A https://rickcogley.github.io/aichaku/init.ts --force
+# Recommended: Upgrade from JSR (matches Quick Start)
+deno install -A -n aichaku --force jsr:@rick/aichaku/cli
 
-# Or traditional upgrade:
-deno install -g --allow-read --allow-write --allow-env --allow-net --allow-run -n aichaku --force jsr:@rick/aichaku/cli
+# Alternative: Use the init script (with feedback)
+deno run -A https://rickcogley.github.io/aichaku/docs/init.ts --force
 
 # Verify what version you have
 aichaku --version
@@ -271,6 +271,17 @@ await integrate({
 Aichaku includes an enhanced Model Context Protocol (MCP) server that provides
 intelligent project analysis and documentation generation capabilities directly
 within Claude Desktop.
+
+### NEW: HTTP/SSE Server Mode
+
+Support for multiple Claude Code instances with a shared MCP server:
+
+```bash
+aichaku mcp --start-server   # Start shared server
+aichaku review file.ts       # Auto-uses server if running
+```
+
+See [MCP Server Documentation](docs/MCP-SERVER.md) for details.
 
 ### Available MCP Tools
 

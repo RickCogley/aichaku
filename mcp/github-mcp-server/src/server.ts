@@ -315,14 +315,15 @@ class GitHubMCPServer {
     // Handle tool calls
     this.server.setRequestHandler(
       CallToolRequestSchema,
-      async (request) => {
+      async (request: { params: { name: string; arguments?: unknown } }) => {
         const { name, arguments: args } = request.params;
 
         try {
           // Get repository context
+          const argsObj = args as Record<string, unknown> || {};
           const context = {
-            owner: args.owner || this.getDefaultOwner(),
-            repo: args.repo || this.getDefaultRepo(),
+            owner: (argsObj.owner as string) || this.getDefaultOwner(),
+            repo: (argsObj.repo as string) || this.getDefaultRepo(),
           };
 
           switch (name) {
@@ -330,54 +331,76 @@ class GitHubMCPServer {
               return await authTools.status(this.authManager, args);
 
             case "auth_login":
-              return await authTools.login(this.authManager, args);
+              return await authTools.login(
+                this.authManager,
+                args as { token: string },
+              );
 
             case "release_upload":
               return await releaseTools.upload(this.githubClient, {
                 ...context,
-                ...args,
+                ...(args || {}),
+              } as {
+                owner: string;
+                repo: string;
+                tag: string;
+                assets: string[];
+                overwrite?: boolean;
               });
 
             case "release_view":
               return await releaseTools.view(this.githubClient, {
                 ...context,
-                ...args,
-              });
+                ...(args || {}),
+              } as { owner: string; repo: string; tag: string });
 
             case "run_list":
               return await workflowTools.listRuns(this.githubClient, {
                 ...context,
-                ...args,
+                ...(args || {}),
+              } as {
+                owner: string;
+                repo: string;
+                workflow?: string;
+                status?: string;
+                limit?: number;
+                branch?: string;
               });
 
             case "run_view":
               return await workflowTools.viewRun(this.githubClient, {
                 ...context,
-                ...args,
-              });
+                ...(args || {}),
+              } as { owner: string; repo: string; runId: number });
 
             case "run_watch":
               return await workflowTools.watchRun(this.githubClient, {
                 ...context,
-                ...args,
+                ...(args || {}),
+              } as {
+                owner: string;
+                repo: string;
+                runId: number;
+                timeout?: number;
+                pollInterval?: number;
               });
 
             case "repo_view":
               return await repositoryTools.view(this.githubClient, {
                 ...context,
-                ...args,
-              });
+                ...(args || {}),
+              } as { owner: string; repo: string });
 
             case "repo_list":
-              return await repositoryTools.list(this.githubClient, args);
+              return await repositoryTools.list(this.githubClient, args || {});
 
             case "version_info":
-              return await versionTools.info(this.githubClient, args);
+              return await versionTools.info(this.githubClient, args || {});
 
             case "version_check":
               return await versionTools.checkCompatibility(
                 this.githubClient,
-                args,
+                args || {},
               );
 
             default:

@@ -23,12 +23,19 @@ The Aichaku MCP (Model Context Protocol) server provides security review and met
 
 ### System Architecture
 
+The MCP server supports two operational modes:
+
+1. **Process Mode** (Default): Each request spawns a new MCP server process
+2. **HTTP/SSE Server Mode**: A persistent HTTP server handles multiple clients via Server-Sent Events
+
+#### Process Mode Architecture
+
 ```
 ┌─────────────────────────────────────────────────┐
 │                  MCP Client                     │
 │            (Claude, VS Code, etc.)              │
 └─────────────────────┬───────────────────────────┘
-                      │ MCP Protocol
+                      │ MCP Protocol (stdio)
 ┌─────────────────────▼───────────────────────────┐
 │              Aichaku MCP Server                 │
 ├─────────────────────────────────────────────────┤
@@ -50,6 +57,88 @@ The Aichaku MCP (Model Context Protocol) server provides security review and met
 │  └──────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────┘
 ```
+
+#### HTTP/SSE Server Mode Architecture
+
+```
+┌─────────────────────┐  ┌─────────────────────┐
+│   Claude Code #1    │  │   Claude Code #2    │
+└──────────┬──────────┘  └──────────┬──────────┘
+           │                         │
+           │ POST /rpc (JSON-RPC)    │ POST /rpc (JSON-RPC)
+           │ GET /sse (EventStream)  │ GET /sse (EventStream)
+           ▼                         ▼
+┌─────────────────────────────────────────────────┐
+│          HTTP/SSE Server (Port 7182)           │
+├─────────────────────────────────────────────────┤
+│  ┌──────────────────────────────────────────┐  │
+│  │         HTTP Request Handler             │  │
+│  │  • POST /rpc    → JSON-RPC requests      │  │
+│  │  • GET  /sse    → SSE response stream    │  │
+│  │  • GET  /health → Server health check    │  │
+│  │  • DELETE /session → Close connection    │  │
+│  └──────────────────────────────────────────┘  │
+│                                                 │
+│  ┌──────────────────────────────────────────┐  │
+│  │      Session Manager (UUID-based)        │  │
+│  │  ┌─────────────┐    ┌─────────────┐      │  │
+│  │  │ Session #1  │    │ Session #2  │      │  │
+│  │  │ ┌─────────┐ │    │ ┌─────────┐ │      │  │
+│  │  │ │   MCP   │ │    │ │   MCP   │ │      │  │
+│  │  │ │ Process │ │    │ │ Process │ │      │  │
+│  │  │ │ (stdio) │ │    │ │ (stdio) │ │      │  │
+│  │  │ └─────────┘ │    │ └─────────┘ │      │  │
+│  │  └─────────────┘    └─────────────┘      │  │
+│  └──────────────────────────────────────────┘  │
+│                                                 │
+│  Data Flow:                                     │
+│  1. Client → POST /rpc with session ID          │
+│  2. Server → Forward to MCP process via stdio   │
+│  3. MCP → Process and return via stdout         │
+│  4. Server → Push via SSE to client             │
+└─────────────────────────────────────────────────┘
+```
+
+### Server Modes
+
+#### Process Mode (Default)
+
+In process mode, the MCP server is spawned as a new process for each request:
+
+- **Pros**: Simple, isolated, no persistent state
+- **Cons**: Higher overhead, slower for frequent requests
+- **Use When**: Running occasional reviews or in single-user environments
+
+#### HTTP/SSE Server Mode
+
+In HTTP/SSE mode, a persistent server handles multiple clients:
+
+- **Pros**: 
+  - Efficient resource usage
+  - Faster response times (no process startup)
+  - Supports multiple concurrent Claude Code instances
+  - Cross-platform (Windows, macOS, Linux)
+- **Cons**: Requires manual server management
+- **Use When**: Multiple Claude Code instances or frequent requests
+
+**Starting the HTTP/SSE Server:**
+
+```bash
+# Start the server
+aichaku mcp --start-server
+
+# Check server status
+aichaku mcp --server-status
+
+# Stop the server
+aichaku mcp --stop-server
+```
+
+The server runs on port 7182 (AICHAKU on phone keypad) and provides:
+- `POST /rpc` - JSON-RPC request endpoint
+- `GET /sse` - Server-Sent Events for responses
+- `GET /health` - Health check endpoint
+- `DELETE /session` - Close session endpoint
 
 ### Core Components
 
@@ -226,6 +315,25 @@ const result = await mcp.callTool('get_standards', {
   - Shell injection
 
 ## Usage Examples
+
+### Server Mode Selection
+
+The Aichaku CLI automatically detects and uses the HTTP/SSE server if it's running:
+
+```bash
+# Start the HTTP/SSE server (one time)
+aichaku mcp --start-server
+
+# Now all review commands will use the server automatically
+aichaku review src/auth/login.ts
+
+# Multiple terminals can use the same server
+# Terminal 1:
+aichaku review file1.ts
+
+# Terminal 2 (simultaneously):
+aichaku review file2.ts
+```
 
 ### Basic Security Review
 

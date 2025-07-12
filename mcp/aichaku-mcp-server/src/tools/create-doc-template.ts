@@ -5,10 +5,7 @@
  */
 
 import { feedbackSystem } from "../feedback/feedback-system.ts";
-import {
-  safeWriteTextFileSync,
-  validatePath,
-} from "../../../src/utils/path-security.ts";
+import { safeWriteTextFileSync, validatePath } from "../utils/path-security.ts";
 import { existsSync } from "@std/fs/exists";
 import { ensureDir } from "@std/fs/ensure-dir";
 import { dirname, resolve } from "@std/path";

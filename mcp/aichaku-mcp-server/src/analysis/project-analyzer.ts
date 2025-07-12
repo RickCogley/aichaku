@@ -7,10 +7,7 @@
 import { existsSync } from "@std/fs/exists";
 import { walk } from "@std/fs/walk";
 import { extname, join, relative } from "@std/path";
-import {
-  safeReadDir,
-  safeReadTextFileSync,
-} from "../../../src/utils/path-security.ts";
+import { safeReadDir, safeReadTextFileSync } from "../utils/path-security.ts";
 
 export interface ProjectAnalysis {
   rootPath: string;

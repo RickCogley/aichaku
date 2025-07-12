@@ -5,8 +5,7 @@
     "jsr:@std/internal@^1.0.9": "1.0.9",
     "jsr:@std/path@1": "1.1.1",
     "jsr:@std/path@^1.1.1": "1.1.1",
-    "npm:@modelcontextprotocol/sdk@0.5": "0.5.0",
-    "npm:@types/node@*": "22.15.15"
+    "npm:@modelcontextprotocol/sdk@1.0.4": "1.0.4"
   },
   "jsr": {
     "@std/fs@1.0.19": {
@@ -27,18 +26,12 @@
     }
   },
   "npm": {
-    "@modelcontextprotocol/sdk@0.5.0": {
-      "integrity": "sha512-RXgulUX6ewvxjAG0kOpLMEdXXWkzWgaoCGaA2CwNW7cQCIphjpJhjpHSiaPdVCnisjRF/0Cm9KWHUuIoeiAblQ==",
+    "@modelcontextprotocol/sdk@1.0.4": {
+      "integrity": "sha512-C+jw1lF6HSGzs7EZpzHbXfzz9rj9him4BaoumlTciW/IDDgIpweF/qiCWKlP02QKg5PPcgY6xY2WCt5y2tpYow==",
       "dependencies": [
         "content-type",
         "raw-body",
         "zod"
-      ]
-    },
-    "@types/node@22.15.15": {
-      "integrity": "sha512-R5muMcZob3/Jjchn5LcO8jdKwSCbzqmPB6ruBxMcf9kbxtniZHP327s6C37iOfuw8mbKK3cAQa7sEl7afLrQ8A==",
-      "dependencies": [
-        "undici-types"
       ]
     },
     "bytes@3.1.2": {
@@ -90,9 +83,6 @@
     "toidentifier@1.0.1": {
       "integrity": "sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA=="
     },
-    "undici-types@6.21.0": {
-      "integrity": "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="
-    },
     "unpipe@1.0.0": {
       "integrity": "sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ=="
     },
@@ -100,17 +90,12 @@
       "integrity": "sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ=="
     }
   },
-  "remote": {
-    "https://deno.land/std@0.220.0/async/delay.ts": "8e1d18fe8b28ff95885e2bc54eccec1713f57f756053576d8228e6ca110793ad",
-    "https://deno.land/std@0.220.0/http/server.ts": "cc8ae0de927c3afc855466b89bf9a7a3196223f47f2723e218912c6ca3eb166c"
-  },
   "workspace": {
     "dependencies": [
-      "jsr:@std/async@1",
+      "jsr:@std/crypto@1",
       "jsr:@std/fs@1",
-      "jsr:@std/json@1",
       "jsr:@std/path@1",
-      "npm:@modelcontextprotocol/sdk@0.5"
+      "npm:@modelcontextprotocol/sdk@1.0.4"
     ]
   }
 }

@@ -11,7 +11,7 @@ import {
 import { ProjectAnalyzer } from "../analysis/project-analyzer.ts";
 import { feedbackSystem } from "../feedback/feedback-system.ts";
 import { StandardsManager } from "../standards-manager.ts";
-import { validatePath } from "../../../src/utils/path-security.ts";
+import { validatePath } from "../utils/path-security.ts";
 import { existsSync } from "@std/fs/exists";
 import { join, resolve } from "@std/path";
 

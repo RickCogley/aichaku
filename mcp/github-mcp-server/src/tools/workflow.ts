@@ -3,7 +3,7 @@
  * MCP tools for GitHub Actions workflow management
  */
 
-import type { GitHubClient } from "../github/client.ts";
+import type { GitHubClient, GitHubWorkflowRun } from "../github/client.ts";
 
 export const workflowTools = {
   async listRuns(
@@ -266,27 +266,31 @@ ${
       }
 
       // Monitor the run
-      const monitorPromise = new Promise<void>((resolve, reject) => {
-        const interval = setInterval(async () => {
-          try {
-            const currentRun = await checkRun();
+      const monitorPromise = new Promise<GitHubWorkflowRun>(
+        (resolve, reject) => {
+          const interval = setInterval(async () => {
+            try {
+              const currentRun = await checkRun();
 
-            if (currentRun.status === "completed") {
-              clearInterval(interval);
-              resolve(currentRun);
-            }
+              if (currentRun.status === "completed") {
+                clearInterval(interval);
+                resolve(currentRun);
+              }
 
-            // Check timeout
-            if (Date.now() - startTime > timeout) {
+              // Check timeout
+              if (Date.now() - startTime > timeout) {
+                clearInterval(interval);
+                reject(
+                  new Error(`Monitoring timeout after ${timeout / 1000}s`),
+                );
+              }
+            } catch (error) {
               clearInterval(interval);
-              reject(new Error(`Monitoring timeout after ${timeout / 1000}s`));
+              reject(error);
             }
-          } catch (error) {
-            clearInterval(interval);
-            reject(error);
-          }
-        }, pollInterval);
-      });
+          }, pollInterval);
+        },
+      );
 
       // Wait for completion or timeout
       const finalRun = await monitorPromise;

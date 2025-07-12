@@ -61,6 +61,7 @@ async function compileCLI() {
         "--allow-write",
         "--allow-env",
         "--allow-net",
+        "--allow-run",
         "--target",
         platform.target,
         "--output",
@@ -96,11 +97,10 @@ async function compileMCPServers() {
     const cmd = new Deno.Command("deno", {
       args: [
         "compile",
-        "--no-check",
         "--allow-read",
         "--allow-write",
         "--allow-env",
-        "--allow-run",
+        "--allow-net",
         "--target",
         platform.target,
         "--output",
@@ -129,7 +129,6 @@ async function compileMCPServers() {
     const cmd = new Deno.Command("deno", {
       args: [
         "compile",
-        "--no-check",
         "--allow-read",
         "--allow-write",
         "--allow-env",
@@ -214,13 +213,86 @@ async function createChecksums() {
   console.log("✅ Checksums created");
 }
 
+async function runPreflightChecks(): Promise<void> {
+  console.log("🔍 Running preflight checks...");
+
+  // Check for formatting issues
+  console.log("  📝 Checking formatting...");
+  const fmtResult = await new Deno.Command("deno", {
+    args: ["fmt", "--check"],
+    stdout: "piped",
+    stderr: "piped",
+  }).output();
+
+  if (!fmtResult.success) {
+    console.error("❌ Code formatting issues found. Run 'deno fmt' to fix.");
+    throw new Error("Preflight check failed: formatting");
+  }
+
+  // Check TypeScript compilation
+  console.log("  🔍 Type checking...");
+  const checkResult = await new Deno.Command("deno", {
+    args: ["check", "cli.ts"],
+    stdout: "piped",
+    stderr: "piped",
+  }).output();
+
+  if (!checkResult.success) {
+    console.error("❌ TypeScript compilation errors found.");
+    console.error(new TextDecoder().decode(checkResult.stderr));
+    throw new Error("Preflight check failed: type checking");
+  }
+
+  // Check MCP servers
+  const mcpPaths = [
+    "mcp/aichaku-mcp-server/src/server.ts",
+    "mcp/github-mcp-server/src/server.ts",
+  ];
+
+  for (const mcpPath of mcpPaths) {
+    console.log(`  🔍 Type checking ${mcpPath}...`);
+    const mcpCheckResult = await new Deno.Command("deno", {
+      args: ["check", mcpPath],
+      stdout: "piped",
+      stderr: "piped",
+    }).output();
+
+    if (!mcpCheckResult.success) {
+      console.error(`❌ TypeScript compilation errors in ${mcpPath}`);
+      console.error(new TextDecoder().decode(mcpCheckResult.stderr));
+      throw new Error(`Preflight check failed: ${mcpPath} type checking`);
+    }
+  }
+
+  // Check linting
+  console.log("  🧹 Linting...");
+  const lintResult = await new Deno.Command("deno", {
+    args: ["lint"],
+    stdout: "piped",
+    stderr: "piped",
+  }).output();
+
+  if (!lintResult.success) {
+    console.error("❌ Linting issues found.");
+    console.error(new TextDecoder().decode(lintResult.stderr));
+    throw new Error("Preflight check failed: linting");
+  }
+
+  console.log("✅ All preflight checks passed!");
+}
+
 async function main() {
   const args = new Set(Deno.args);
   const shouldUpload = args.has("--upload");
   const cliOnly = args.has("--cli-only");
   const mcpOnly = args.has("--mcp-only");
+  const skipPreflight = args.has("--skip-preflight");
 
   try {
+    // Run preflight checks unless skipped
+    if (!skipPreflight) {
+      await runPreflightChecks();
+    }
     // Compile binaries
     if (!mcpOnly) {
       await compileCLI();

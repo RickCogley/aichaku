@@ -5,6 +5,11 @@
 
 import { exists } from "@std/fs";
 import { resolve } from "@std/path";
+import { callMCPTool, sendMCPRequests } from "../utils/mcp-client.ts";
+import {
+  getSharedMCPClient,
+  isMCPServerRunning,
+} from "../utils/mcp-http-client.ts";
 
 export interface ReviewOptions {
   help?: boolean;
@@ -35,125 +40,166 @@ export async function runReviewCommand(
     return;
   }
 
-  // Check if MCP server is running
-  const serverPath = Deno.env.get("HOME") +
-    "/.aichaku/mcp-servers/aichaku-code-reviewer";
+  // Check if HTTP server is running first
+  const useHttpServer = await isMCPServerRunning();
 
-  try {
-    // Try to check if server is responding
-    const checkRequest = {
-      jsonrpc: "2.0",
-      id: 1,
-      method: "initialize",
-      params: {
-        capabilities: {},
-      },
-    };
-
-    const process = new Deno.Command(serverPath, {
-      stdin: "piped",
-      stdout: "piped",
-      stderr: "piped",
-    });
-
-    const child = process.spawn();
-
-    const writer = child.stdin.getWriter();
-    await writer.write(
-      new TextEncoder().encode(JSON.stringify(checkRequest) + "\n"),
-    );
-    writer.releaseLock();
-
-    // Close stdin to signal we're done
-    await child.stdin.close();
-
-    const output = await child.output();
-    if (!output.success) {
-      console.error(
-        "⚠️  MCP server not responding. Please start it with: aichaku mcp --start",
-      );
-      return;
-    }
-  } catch (_error) {
-    console.error("⚠️  MCP server not found or not running");
-    console.error("Run: aichaku mcp --install && aichaku mcp --start");
-    return;
-  }
-
-  // Review each file
-  for (const filePath of filesToReview) {
-    const resolvedPath = resolve(filePath);
-
-    if (!await exists(resolvedPath)) {
-      console.error(`❌ File not found: ${filePath}`);
-      continue;
-    }
-
-    console.log(`🪴 Reviewing ${filePath}...`);
-
-    const reviewRequest = {
-      jsonrpc: "2.0",
-      id: 1,
-      method: "tools/call",
-      params: {
-        name: "review_file",
-        arguments: {
-          file: resolvedPath,
-        },
-      },
-    };
+  if (useHttpServer) {
+    console.log("🌐 Using shared MCP HTTP/SSE server...\n");
 
     try {
-      const process = new Deno.Command(serverPath, {
-        stdin: "piped",
-        stdout: "piped",
-        stderr: "piped",
-      });
+      const client = await getSharedMCPClient();
 
-      const child = process.spawn();
+      // Review each file
+      for (const filePath of filesToReview) {
+        const resolvedPath = resolve(filePath);
 
-      const writer = child.stdin.getWriter();
-      await writer.write(
-        new TextEncoder().encode(JSON.stringify(reviewRequest) + "\n"),
-      );
-      writer.releaseLock();
-
-      // Close stdin
-      await child.stdin.close();
-
-      const output = await child.output();
-      const response = new TextDecoder().decode(output.stdout);
-
-      // Parse and display the response
-      try {
-        const jsonResponse = JSON.parse(response);
-        if (jsonResponse.result?.content?.[0]?.text) {
-          console.log(jsonResponse.result.content[0].text);
-        } else {
-          console.log("No review feedback received");
+        if (!await exists(resolvedPath)) {
+          console.error(`❌ File not found: ${filePath}`);
+          continue;
         }
-      } catch (_parseError) {
-        console.error("Failed to parse review response");
+
+        console.log(`🪴 Reviewing ${filePath}...`);
+
+        try {
+          const result = await client.callTool("review_file", {
+            file: resolvedPath,
+          });
+
+          // Extract and display the review text
+          if (result && typeof result === "object" && "content" in result) {
+            const content = (result as any).content;
+            if (Array.isArray(content) && content[0]?.text) {
+              console.log(content[0].text);
+            } else {
+              console.error("Unexpected response format");
+            }
+          } else {
+            console.error("No review feedback received");
+          }
+        } catch (error) {
+          console.error(`Error reviewing ${filePath}:`, error);
+        }
       }
     } catch (error) {
-      console.error(`Error reviewing ${filePath}:`, error);
+      console.error(
+        "❌ Failed to connect to HTTP server:",
+        error instanceof Error ? error.message : String(error),
+      );
+      console.error("💡 Try: aichaku mcp --start-server");
+    }
+  } else {
+    // Fall back to spawning process
+    const serverPath = Deno.env.get("HOME") +
+      "/.aichaku/mcp-servers/aichaku-code-reviewer";
+
+    try {
+      // Check if file exists
+      await Deno.stat(serverPath);
+    } catch {
+      console.error("⚠️  MCP server not found");
+      console.error("Run: aichaku mcp --install");
+      return;
+    }
+
+    // Review each file
+    for (const filePath of filesToReview) {
+      const resolvedPath = resolve(filePath);
+
+      if (!await exists(resolvedPath)) {
+        console.error(`❌ File not found: ${filePath}`);
+        continue;
+      }
+
+      console.log(`🪴 Reviewing ${filePath}...`);
+
+      try {
+        const result = await callMCPTool(
+          serverPath,
+          "review_file",
+          { file: resolvedPath },
+          10000, // 10 second timeout
+        );
+
+        // Extract and display the review text
+        if (result && typeof result === "object" && "content" in result) {
+          const content = (result as any).content;
+          if (Array.isArray(content) && content[0]?.text) {
+            console.log(content[0].text);
+          } else {
+            console.error("Unexpected response format");
+          }
+        } else {
+          console.error("No review feedback received");
+        }
+      } catch (error) {
+        console.error(`Error reviewing ${filePath}:`, error);
+      }
     }
   }
 }
 
 async function showStatistics(): Promise<void> {
+  // Check if HTTP server is running first
+  const useHttpServer = await isMCPServerRunning();
+
+  if (useHttpServer) {
+    console.log("🌐 Using shared MCP HTTP/SSE server...\n");
+
+    try {
+      const client = await getSharedMCPClient();
+      const result = await client.callTool("get_statistics", {
+        type: "dashboard",
+      });
+
+      // Display statistics
+      if (result && typeof result === "object" && "content" in result) {
+        const content = (result as any).content;
+        if (Array.isArray(content) && content[0]?.text) {
+          console.log(content[0].text);
+        } else {
+          console.error("Unexpected response format");
+        }
+      } else {
+        console.error("No statistics received");
+      }
+    } catch (error) {
+      console.error(
+        "❌ Failed to get statistics:",
+        error instanceof Error ? error.message : String(error),
+      );
+    }
+    return;
+  }
+
+  // Fall back to spawning process
   const serverPath = Deno.env.get("HOME") +
     "/.aichaku/mcp-servers/aichaku-code-reviewer";
 
-  const statsRequest = {
-    jsonrpc: "2.0",
-    id: 1,
-    method: "tools/call",
-    params: {
-      name: "get_statistics",
-      arguments: {},
+  // Send initialize first, then statistics
+  const requests = [
+    {
+      jsonrpc: "2.0",
+      id: 1,
+      method: "initialize",
+      params: {
+        protocolVersion: "0.1.0",
+        capabilities: {},
+        clientInfo: {
+          name: "aichaku-cli",
+          version: "0.24.2",
+        },
+      },
     },
-  };
+    {
+      jsonrpc: "2.0",
+      id: 2,
+      method: "tools/call",
+      params: {
+        name: "get_statistics",
+        arguments: {},
+      },
+    },
+  ];
 
   try {
     const process = new Deno.Command(serverPath, {
@@ -165,9 +211,14 @@ async function showStatistics(): Promise<void> {
     const child = process.spawn();
 
     const writer = child.stdin.getWriter();
-    await writer.write(
-      new TextEncoder().encode(JSON.stringify(statsRequest) + "\n"),
-    );
+
+    // Send both requests
+    for (const request of requests) {
+      await writer.write(
+        new TextEncoder().encode(JSON.stringify(request) + "\n"),
+      );
+    }
+
     writer.releaseLock();
 
     await child.stdin.close();
@@ -175,13 +226,25 @@ async function showStatistics(): Promise<void> {
     const output = await child.output();
     const response = new TextDecoder().decode(output.stdout);
 
-    try {
-      const jsonResponse = JSON.parse(response);
-      if (jsonResponse.result?.content?.[0]?.text) {
-        console.log(jsonResponse.result.content[0].text);
+    // Parse multiple JSON responses
+    const lines = response.trim().split("\n").filter((line) => line.trim());
+    let statsResponse = null;
+
+    for (const line of lines) {
+      try {
+        const json = JSON.parse(line);
+        if (json.id === 2 && json.result?.content?.[0]?.text) {
+          statsResponse = json;
+        }
+      } catch {
+        // Skip non-JSON lines
       }
-    } catch (_parseError) {
-      console.error("Failed to parse statistics response");
+    }
+
+    if (statsResponse) {
+      console.log(statsResponse.result.content[0].text);
+    } else {
+      console.error("Failed to get statistics");
     }
   } catch (error) {
     console.error("Error fetching statistics:", error);

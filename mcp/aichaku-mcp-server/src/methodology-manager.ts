@@ -9,7 +9,7 @@ import {
   safeReadDir,
   safeReadTextFile,
   validatePath,
-} from "../../../src/utils/path-security.ts";
+} from "./utils/path-security.ts";
 
 export class MethodologyManager {
   private methodologyCache = new Map<string, string[]>();

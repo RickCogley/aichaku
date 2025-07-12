@@ -62,6 +62,9 @@ const args = parseArgs(Deno.args, {
     "stop",
     "restart",
     "upgrade",
+    "start-server",
+    "stop-server",
+    "server-status",
     "authStatus",
     "authLogin",
     "releaseUpload",
@@ -509,6 +512,9 @@ ${
           (args._[1] === "restart"),
         upgrade: args.upgrade as boolean | undefined ||
           (args._[1] === "upgrade"),
+        startServer: args["start-server"] as boolean | undefined,
+        stopServer: args["stop-server"] as boolean | undefined,
+        serverStatus: args["server-status"] as boolean | undefined,
         help: args.help as boolean | undefined,
       };
 

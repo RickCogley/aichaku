@@ -5,10 +5,7 @@
 import { join } from "@std/path";
 import { exists } from "@std/fs";
 import type { ProjectConfig } from "./types.ts";
-import {
-  safeReadTextFile,
-  validatePath,
-} from "../../../src/utils/path-security.ts";
+import { safeReadTextFile, validatePath } from "./utils/path-security.ts";
 
 export class StandardsManager {
   private standardsCache = new Map<string, ProjectConfig>();

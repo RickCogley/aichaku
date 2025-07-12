@@ -11,10 +11,7 @@ import type {
   ProjectAnalysis,
   ProjectType,
 } from "../analysis/project-analyzer.ts";
-import {
-  safeWriteTextFileSync,
-  validatePath,
-} from "../../../src/utils/path-security.ts";
+import { safeWriteTextFileSync, validatePath } from "../utils/path-security.ts";
 import process from "node:process";
 
 export interface GenerationOptions {

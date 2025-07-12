@@ -141,6 +141,138 @@ await mcp__aichaku-reviewer__get_standards({
 }
 ```
 
+### `get_statistics`
+
+Gets usage statistics and analytics for MCP tool usage.
+
+#### Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `type` | string | No | "dashboard" | Type of statistics: "dashboard", "realtime", "insights", "export" |
+| `question` | string | No | - | Specific question to answer about usage |
+| `format` | string | No | "json" | Export format (only for type="export"): "json", "csv" |
+
+#### Example Usage
+
+```typescript
+// Get dashboard statistics
+{
+  "tool": "get_statistics",
+  "arguments": {
+    "type": "dashboard"
+  }
+}
+
+// Ask specific question
+{
+  "tool": "get_statistics",
+  "arguments": {
+    "type": "insights",
+    "question": "What are the most common security issues?"
+  }
+}
+```
+
+#### Response Format
+
+```typescript
+{
+  success: boolean;
+  type: string;
+  data: {
+    // Varies by type
+    totalReviews?: number;
+    issuesFound?: number;
+    topIssues?: Array<{issue: string; count: number}>;
+    // ... other metrics
+  };
+}
+```
+
+### `analyze_project`
+
+Analyzes project structure, languages, architecture, and dependencies.
+
+#### Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `projectPath` | string | Yes | - | Path to the project directory to analyze |
+| `detailed` | boolean | No | true | Include detailed analysis of files and components |
+
+#### Example Usage
+
+```typescript
+// Analyze project structure
+{
+  "tool": "analyze_project",
+  "arguments": {
+    "projectPath": "/Users/you/projects/app",
+    "detailed": true
+  }
+}
+```
+
+### `generate_documentation`
+
+Generates comprehensive documentation following selected standards.
+
+#### Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `projectPath` | string | Yes | - | Path to the project directory |
+| `outputPath` | string | No | projectPath/docs | Output path for documentation |
+| `standard` | string | No | "diataxis" | Documentation standard: "diataxis", "google", "microsoft", etc. |
+| `includeExamples` | boolean | No | true | Include code examples |
+| `includeDiagrams` | boolean | No | true | Generate architecture diagrams |
+| `overwrite` | boolean | No | false | Overwrite existing documentation |
+| `autoChain` | boolean | No | true | Run analyze_project first and review_file after |
+
+#### Example Usage
+
+```typescript
+// Generate documentation with Diátaxis standard
+{
+  "tool": "generate_documentation",
+  "arguments": {
+    "projectPath": "/Users/you/projects/app",
+    "standard": "diataxis",
+    "includeDiagrams": true
+  }
+}
+```
+
+### `create_doc_template`
+
+Creates a documentation template file for tutorials, how-tos, references, etc.
+
+#### Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `outputPath` | string | Yes | - | Path where the template file should be created |
+| `templateType` | string | Yes | - | Type: "tutorial", "how-to", "reference", "explanation", etc. |
+| `title` | string | No | - | Title for the document |
+| `projectName` | string | No | - | Name of the project (used in templates) |
+| `customFields` | object | No | {} | Custom fields to replace in the template |
+
+#### Example Usage
+
+```typescript
+// Create a tutorial template
+{
+  "tool": "create_doc_template",
+  "arguments": {
+    "outputPath": "./docs/tutorials/getting-started.md",
+    "templateType": "tutorial",
+    "title": "Getting Started with MyApp",
+    "projectName": "MyApp"
+  }
+}
+```
+
 ## Configuration Files
 
 ### Project Configuration

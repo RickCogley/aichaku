@@ -1,15 +1,27 @@
 # MCP Tools Documentation
 
-This document describes the three Model Context Protocol (MCP) tools integrated into Aichaku for enhanced project analysis and documentation generation.
+> **Note**: This document describes planned future MCP tools for Aichaku. Currently, the MCP server provides security review capabilities. The tools described here (analyze_project, create_doc_template, generate_documentation) are on the roadmap for future implementation.
 
-## Overview
+This document describes the planned Model Context Protocol (MCP) tools for enhanced project analysis and documentation generation.
 
-The Aichaku MCP tools provide automated capabilities for:
+## Current Status
+
+**Currently Available:**
+- `review_file` - Security and standards review for individual files
+- `review_methodology` - Check project methodology compliance
+- `get_standards` - Retrieve project standards configuration
+- `get_statistics` - Get usage statistics and analytics
+
+See [MCP-SERVER.md](./MCP-SERVER.md) for documentation of currently available tools.
+
+## Planned Tools (Future Implementation)
+
+The following tools are planned for future releases to provide automated capabilities for:
 - Analyzing project structure and dependencies
 - Creating documentation templates based on project type
 - Generating comprehensive documentation automatically
 
-These tools work seamlessly with Aichaku's existing methodology support and can be accessed through the `mcp__aichaku__` prefix.
+These tools will work seamlessly with Aichaku's existing methodology support and will be accessed through the `mcp__aichaku__` prefix when implemented.
 
 ## Tools Reference
 

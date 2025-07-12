@@ -30,6 +30,7 @@ The Model Context Protocol (MCP) lets Claude Code use external tools. The Aichak
 - **Methodology validation** - Shape Up, Scrum, Kanban compliance
 - **Educational feedback** - Learning opportunities, not just errors
 - **Privacy-first** - All scanning happens locally on your machine
+- **HTTP/SSE Server Mode** - Optional shared server for multiple Claude Code instances
 
 ## Step 1: Install the MCP server
 
@@ -268,6 +269,31 @@ dotnet tool install -g Microsoft.CST.DevSkim.CLI
 3. Check Claude's developer console for errors
 4. Ensure the project has Aichaku initialized
 
+## Optional: HTTP/SSE Server Mode
+
+For users running multiple Claude Code instances or frequent reviews, you can use the HTTP/SSE server mode:
+
+### Start the shared server
+
+```bash
+# Start the HTTP/SSE server
+aichaku mcp --start-server
+
+# Check server status
+aichaku mcp --server-status
+
+# Stop the server when done
+aichaku mcp --stop-server
+```
+
+When the HTTP/SSE server is running:
+- The `aichaku review` command automatically uses it
+- Multiple Claude Code instances can share the same server
+- Faster response times (no process startup overhead)
+- Works on port 7182 (AICHAKU on phone keypad)
+
+The server mode is completely optional - the default process mode works perfectly for most users.
+
 ## What's next?
 
 You've successfully:
@@ -275,6 +301,7 @@ You've successfully:
 - ✅ Configured Claude Code to use it
 - ✅ Tested automated security scanning
 - ✅ Understood the educational feedback
+- ✅ Learned about the optional HTTP/SSE server mode
 
 Continue with:
 - [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md) - Share one server across projects

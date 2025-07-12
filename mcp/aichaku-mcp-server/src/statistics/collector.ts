@@ -19,7 +19,7 @@ import {
   FilePathAnonymizer,
   UserIdentifierAnonymizer,
 } from "./privacy.ts";
-import { safeStat } from "../../../src/utils/path-security.ts";
+import { safeStat } from "../utils/path-security.ts";
 
 export class StatisticsCollector {
   private storage: StorageBackend;

@@ -159,9 +159,9 @@ export class GitHubClient {
       `/repos/${owner}/${repo}/releases/${releaseId}`,
     );
     const release = await releaseResponse.json();
-    const existingAsset = release.assets.find((asset) =>
-      asset.name === fileName
-    );
+    const existingAsset = release.assets.find((
+      asset: { name: string; id: number },
+    ) => asset.name === fileName);
 
     if (existingAsset && !overwrite) {
       throw new Error(

@@ -10,7 +10,7 @@ The Aichaku MCP server is designed as a **global service**, not a per-project to
 - **Use everywhere** - All projects on your machine can use the same server
 - **Single configuration** - Configure Claude Code once for all projects
 - **Automatic detection** - Projects with Aichaku automatically benefit
-- **No port conflicts** - MCP uses stdio, not network ports
+- **No port conflicts** - MCP uses stdio by default (HTTP/SSE mode available on port 7182)
 
 ## Understanding the architecture
 
@@ -202,6 +202,29 @@ cd ~/projects/cli-tool
 
 # No restart needed - it just works!
 ```
+
+### Using HTTP/SSE mode for better performance
+
+For users frequently switching between projects or running multiple terminals:
+
+```bash
+# Start the shared HTTP/SSE server once
+aichaku mcp --start-server
+
+# Now in any project, reviews are faster:
+cd ~/projects/web-app
+aichaku review src/auth.ts  # Uses shared server automatically
+
+# In another terminal simultaneously
+cd ~/projects/cli-tool
+aichaku review src/parser.ts  # Also uses the same shared server
+```
+
+The HTTP/SSE server:
+- Eliminates process startup time
+- Handles multiple concurrent requests
+- Maintains project isolation
+- Runs on port 7182
 
 ## Updating the MCP server
 

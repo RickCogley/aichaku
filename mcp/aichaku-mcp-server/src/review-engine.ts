@@ -12,7 +12,7 @@ import { ScannerController } from "./scanner-controller.ts";
 import { SecurityPatterns } from "./patterns/security-patterns.ts";
 import { TypeScriptPatterns } from "./patterns/typescript-patterns.ts";
 import { DocumentationPatterns } from "./patterns/documentation-patterns.ts";
-import { safeReadTextFile } from "../../../src/utils/path-security.ts";
+import { safeReadTextFile } from "./utils/path-security.ts";
 
 export class ReviewEngine {
   private scannerController: ScannerController;

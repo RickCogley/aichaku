@@ -8,6 +8,11 @@
 
 import { exists } from "@std/fs";
 import { basename, resolve } from "@std/path";
+import {
+  helpSection,
+  printFormatted,
+  statusMessage,
+} from "../utils/terminal-formatter.ts";
 
 export interface GitHubOptions {
   help?: boolean;
@@ -96,8 +101,8 @@ export async function runGitHubCommand(
     "/.aichaku/mcp-servers/github-operations";
 
   if (!await exists(serverPath)) {
-    console.error("❌ GitHub MCP server not installed");
-    console.error("Run: aichaku mcp --install-github");
+    printFormatted("**❌ Error:** GitHub MCP server not installed");
+    printFormatted("**💡 Solution:** Run: `aichaku mcp --install-github`");
     return;
   }
 
@@ -149,18 +154,20 @@ export async function runGitHubCommand(
 
       default:
         if (category) {
-          console.error(`❌ Unknown command: ${category}`);
+          printFormatted(`**❌ Error:** Unknown command: \`${category}\``);
         } else {
-          console.error("❌ No command specified");
+          printFormatted("**❌ Error:** No command specified");
         }
         showGitHubHelp();
     }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    console.error(`❌ Error: ${errorMessage}`);
+    printFormatted(`**❌ Error:** ${errorMessage}`);
     if (errorMessage.includes("authentication")) {
-      console.error("\n💡 Tip: Set GITHUB_TOKEN environment variable or run:");
-      console.error("   aichaku github auth login <token>");
+      printFormatted(
+        "\n**💡 Tip:** Set GITHUB_TOKEN environment variable or run:",
+      );
+      printFormatted("   `aichaku github auth login <token>`");
     }
   }
 }
@@ -235,19 +242,21 @@ async function handleAuth(
     }
 
     default:
-      console.error(`❌ Unknown auth command: ${action}`);
-      console.log("Available: status, login");
+      printFormatted(`**❌ Error:** Unknown auth command: \`${action}\``);
+      printFormatted("**Available commands:** status, login");
   }
 }
 
 async function checkAuthStatus(_options: GitHubOptions): Promise<void> {
-  console.log("🔐 Checking GitHub authentication status...");
+  printFormatted(
+    statusMessage("🔐 Checking GitHub authentication status...", "info"),
+  );
   const result = await callGitHubMCP("auth_status", {});
   console.log(result);
 }
 
 async function authLogin(token: string): Promise<void> {
-  console.log("🔐 Logging in to GitHub...");
+  printFormatted(statusMessage("🔐 Logging in to GitHub...", "info"));
   const result = await callGitHubMCP("auth_login", { token });
   console.log(result);
 }
@@ -271,14 +280,18 @@ async function handleRelease(
       break;
 
     case "list":
-      console.log(`📦 Listing releases for ${owner}/${repo}...`);
+      printFormatted(
+        statusMessage(`📦 Listing releases for ${owner}/${repo}...`, "info"),
+      );
       // Note: The current MCP server doesn't have release_list, but we can add it
-      console.log("⚠️  Release listing not yet implemented in MCP server");
+      printFormatted(
+        "**⚠️ Note:** Release listing not yet implemented in MCP server",
+      );
       break;
 
     default:
-      console.error(`❌ Unknown release command: ${action}`);
-      console.log("Available: upload, view, list");
+      printFormatted(`**❌ Error:** Unknown release command: \`${action}\``);
+      printFormatted("**Available commands:** upload, view, list");
   }
 }
 
@@ -292,16 +305,23 @@ async function uploadReleaseAssets(
   const assets = options.assets || args;
 
   if (!tag) {
-    console.error("❌ No tag specified and couldn't determine latest tag");
+    printFormatted(
+      "**❌ Error:** No tag specified and couldn't determine latest tag",
+    );
     return;
   }
 
   if (assets.length === 0) {
-    console.error("❌ No assets specified for upload");
+    printFormatted("**❌ Error:** No assets specified for upload");
     return;
   }
 
-  console.log(`🚀 Uploading assets to ${owner}/${repo} release ${tag}...`);
+  printFormatted(
+    statusMessage(
+      `🚀 Uploading assets to ${owner}/${repo} release ${tag}...`,
+      "info",
+    ),
+  );
 
   // Validate all assets exist
   const validAssets: string[] = [];
@@ -310,12 +330,12 @@ async function uploadReleaseAssets(
     if (await exists(resolvedPath)) {
       validAssets.push(resolvedPath);
     } else {
-      console.error(`⚠️  Asset not found: ${asset}`);
+      printFormatted(`**⚠️ Warning:** Asset not found: \`${asset}\``);
     }
   }
 
   if (validAssets.length === 0) {
-    console.error("❌ No valid assets found");
+    printFormatted("**❌ Error:** No valid assets found");
     return;
   }
 
@@ -336,11 +356,15 @@ async function viewRelease(options: GitHubOptions): Promise<void> {
   const tag = options.tag || await getLatestTag();
 
   if (!tag) {
-    console.error("❌ No tag specified and couldn't determine latest tag");
+    printFormatted(
+      "**❌ Error:** No tag specified and couldn't determine latest tag",
+    );
     return;
   }
 
-  console.log(`📦 Viewing release ${tag} for ${owner}/${repo}...`);
+  printFormatted(
+    statusMessage(`📦 Viewing release ${tag} for ${owner}/${repo}...`, "info"),
+  );
 
   const result = await callGitHubMCP("release_view", {
     owner,
@@ -364,7 +388,7 @@ async function handleWorkflow(
 
     case "view":
       if (!options.runId) {
-        console.error("❌ Run ID required: --run-id <id>");
+        printFormatted("**❌ Error:** Run ID required: `--run-id <id>`");
         return;
       }
       await viewWorkflowRun(options);
@@ -372,15 +396,15 @@ async function handleWorkflow(
 
     case "watch":
       if (!options.runId) {
-        console.error("❌ Run ID required: --run-id <id>");
+        printFormatted("**❌ Error:** Run ID required: `--run-id <id>`");
         return;
       }
       await watchWorkflowRun(options);
       break;
 
     default:
-      console.error(`❌ Unknown workflow command: ${action}`);
-      console.log("Available: list, view, watch");
+      printFormatted(`**❌ Error:** Unknown workflow command: \`${action}\``);
+      printFormatted("**Available commands:** list, view, watch");
   }
 }
 
@@ -388,7 +412,9 @@ async function listWorkflowRuns(options: GitHubOptions): Promise<void> {
   const owner = options.owner || await getRepoOwner();
   const repo = options.repository || await getRepoName();
 
-  console.log(`🔄 Listing workflow runs for ${owner}/${repo}...`);
+  printFormatted(
+    statusMessage(`🔄 Listing workflow runs for ${owner}/${repo}...`, "info"),
+  );
 
   const result = await callGitHubMCP("run_list", {
     owner,
@@ -405,7 +431,9 @@ async function viewWorkflowRun(options: GitHubOptions): Promise<void> {
   const owner = options.owner || await getRepoOwner();
   const repo = options.repository || await getRepoName();
 
-  console.log(`🔍 Viewing workflow run ${options.runId}...`);
+  printFormatted(
+    statusMessage(`🔍 Viewing workflow run ${options.runId}...`, "info"),
+  );
 
   const result = await callGitHubMCP("run_view", {
     owner,
@@ -420,7 +448,9 @@ async function watchWorkflowRun(options: GitHubOptions): Promise<void> {
   const owner = options.owner || await getRepoOwner();
   const repo = options.repository || await getRepoName();
 
-  console.log(`👀 Watching workflow run ${options.runId}...`);
+  printFormatted(
+    statusMessage(`👀 Watching workflow run ${options.runId}...`, "info"),
+  );
 
   const result = await callGitHubMCP("run_watch", {
     owner,
@@ -449,8 +479,8 @@ async function handleRepository(
       break;
 
     default:
-      console.error(`❌ Unknown repository command: ${action}`);
-      console.log("Available: view, list");
+      printFormatted(`**❌ Error:** Unknown repository command: \`${action}\``);
+      printFormatted("**Available commands:** view, list");
   }
 }
 
@@ -458,7 +488,9 @@ async function viewRepository(options: GitHubOptions): Promise<void> {
   const owner = options.owner || await getRepoOwner();
   const repo = options.repository || await getRepoName();
 
-  console.log(`📚 Viewing repository ${owner}/${repo}...`);
+  printFormatted(
+    statusMessage(`📚 Viewing repository ${owner}/${repo}...`, "info"),
+  );
 
   const result = await callGitHubMCP("repo_view", {
     owner,
@@ -469,7 +501,7 @@ async function viewRepository(options: GitHubOptions): Promise<void> {
 }
 
 async function listRepositories(options: GitHubOptions): Promise<void> {
-  console.log(`📚 Listing repositories...`);
+  printFormatted(statusMessage(`📚 Listing repositories...`, "info"));
 
   const result = await callGitHubMCP("repo_list", {
     type: "owner",
@@ -487,7 +519,9 @@ function handleIssue(
   _options: GitHubOptions,
   _args: string[],
 ): void {
-  console.log("⚠️  Issue operations not yet implemented in MCP server");
+  printFormatted(
+    "**⚠️ Note:** Issue operations not yet implemented in MCP server",
+  );
 }
 
 function handlePullRequest(
@@ -495,7 +529,9 @@ function handlePullRequest(
   _options: GitHubOptions,
   _args: string[],
 ): void {
-  console.log("⚠️  Pull request operations not yet implemented in MCP server");
+  printFormatted(
+    "**⚠️ Note:** Pull request operations not yet implemented in MCP server",
+  );
 }
 
 // Helper functions to get repository information
@@ -565,164 +601,184 @@ function showGitHubHelp(topic?: string): void {
     return;
   }
 
-  console.log(`
-🪴 Aichaku GitHub - Comprehensive GitHub operations via MCP
+  printFormatted(`
+# 🪴 Aichaku GitHub - Comprehensive GitHub operations via MCP
 
 Provides deterministic GitHub operations for CI/CD pipelines without bash script approvals.
 
-Usage:
-  aichaku github <category> <action> [options]
-  aichaku github <shortcut> [args...]
+## Usage
+\`aichaku github <category> <action> [options]\`
+\`aichaku github <shortcut> [args...]\`
 
-Categories:
-  auth      Authentication management
-  release   Release operations (upload, view, list)
-  run       Workflow run operations (list, view, watch)
-  repo      Repository operations (view, list)
-  issue     Issue operations (future)
-  pr        Pull request operations (future)
+## Categories
+- **auth** - Authentication management
+- **release** - Release operations (upload, view, list)
+- **run** - Workflow run operations (list, view, watch)
+- **repo** - Repository operations (view, list)
+- **issue** - Issue operations (future)
+- **pr** - Pull request operations (future)
 
-Shortcuts:
-  upload    Upload assets to release (alias for 'release upload')
-  view      View release (alias for 'release view')
-  status    Check auth status (alias for 'auth status')
+## Shortcuts
+- **upload** - Upload assets to release (alias for 'release upload')
+- **view** - View release (alias for 'release view')
+- **status** - Check auth status (alias for 'auth status')
 
-Examples:
-  # Authentication
-  aichaku github auth status
-  aichaku github auth login <token>
+## Examples
 
-  # Release operations
-  aichaku github release upload dist/*.tar.gz
-  aichaku github release view --tag v1.2.3
-  aichaku github upload dist/*  # shortcut
+### Authentication
+\`aichaku github auth status\`
+\`aichaku github auth login <token>\`
 
-  # Workflow operations
-  aichaku github run list
-  aichaku github run view --run-id 123456
-  aichaku github run watch --run-id 123456
+### Release operations
+\`aichaku github release upload dist/*.tar.gz\`
+\`aichaku github release view --tag v1.2.3\`
+\`aichaku github upload dist/*\`  # shortcut
 
-  # Repository operations
-  aichaku github repo view
-  aichaku github repo list --limit 20
+### Workflow operations
+\`aichaku github run list\`
+\`aichaku github run view --run-id 123456\`
+\`aichaku github run watch --run-id 123456\`
 
-Common Options:
-  --owner <owner>      Repository owner (auto-detects from git)
-  --repository <repo>  Repository name (auto-detects from git)
-  --tag <tag>          Release tag (auto-detects latest if not specified)
-  --help               Show help for a specific command
+### Repository operations
+\`aichaku github repo view\`
+\`aichaku github repo list --limit 20\`
 
-For detailed help on a category:
-  aichaku github help <category>
+## Common Options
+- **--owner <owner>** - Repository owner (auto-detects from git)
+- **--repository <repo>** - Repository name (auto-detects from git)
+- **--tag <tag>** - Release tag (auto-detects latest if not specified)
+- **--help** - Show help for a specific command
 
-Note: The GitHub MCP server must be installed. Install with:
-  aichaku mcp --install-github
+## For detailed help on a category
+\`aichaku github help <category>\`
+
+## Note
+The GitHub MCP server must be installed: \`aichaku mcp --install-github\`
 `);
 }
 
 function showTopicHelp(topic: string): void {
   switch (topic) {
     case "auth":
-      console.log(`
-🔐 GitHub Authentication
+      printFormatted(helpSection(
+        "GitHub Authentication",
+        `
+**Commands:**
+- **auth status** - Check current authentication status
+- **auth login <token>** - Login with GitHub personal access token
 
-Commands:
-  aichaku github auth status       Check current authentication status
-  aichaku github auth login <token>  Login with GitHub personal access token
+**Environment Variable:**
+The token can also be set via \`GITHUB_TOKEN\` environment variable.
 
-The token can also be set via GITHUB_TOKEN environment variable.
-`);
+**Examples:**
+\`aichaku github auth status\`
+\`aichaku github auth login ghp_abcd1234...\`
+`,
+        "🔐",
+      ));
       break;
 
     case "release":
-      console.log(`
-📦 GitHub Releases
+      printFormatted(helpSection(
+        "GitHub Releases",
+        `
+**Commands:**
+- **release upload [files...]** - Upload assets to a release
+- **release view** - View release details
+- **release list** - List releases (not yet implemented)
 
-Commands:
-  aichaku github release upload [files...]  Upload assets to a release
-  aichaku github release view              View release details
-  aichaku github release list              List releases (not yet implemented)
+**Options:**
+- **--tag <tag>** - Release tag (auto-detects latest if not specified)
+- **--overwrite** - Overwrite existing assets (default: true)
 
-Options:
-  --tag <tag>         Release tag (auto-detects latest if not specified)
-  --overwrite         Overwrite existing assets (default: true)
+**Examples:**
+\`\`\`bash
+# Upload all binaries to latest release
+aichaku github release upload dist/*
 
-Examples:
-  # Upload all binaries to latest release
-  aichaku github release upload dist/*
+# Upload to specific release
+aichaku github release upload --tag v1.2.3 dist/*.tar.gz
 
-  # Upload to specific release
-  aichaku github release upload --tag v1.2.3 dist/*.tar.gz
+# View latest release
+aichaku github release view
 
-  # View latest release
-  aichaku github release view
-
-  # View specific release
-  aichaku github release view --tag v1.2.3
-`);
+# View specific release
+aichaku github release view --tag v1.2.3
+\`\`\`
+`,
+        "📦",
+      ));
       break;
 
     case "run":
     case "workflow":
-      console.log(`
-🔄 GitHub Workflow Runs
+      printFormatted(helpSection(
+        "GitHub Workflow Runs",
+        `
+**Commands:**
+- **run list** - List recent workflow runs
+- **run view** - View details of a specific run
+- **run watch** - Watch a run until completion
 
-Commands:
-  aichaku github run list    List recent workflow runs
-  aichaku github run view    View details of a specific run
-  aichaku github run watch   Watch a run until completion
+**Options:**
+- **--workflow <name>** - Filter by workflow file name
+- **--status <status>** - Filter by status (completed, in_progress, queued)
+- **--run-id <id>** - Workflow run ID (required for view/watch)
+- **--limit <n>** - Number of runs to list (default: 10)
+- **--timeout <ms>** - Timeout for watching (default: 600000)
+- **--poll-interval <ms>** - Poll interval for watching (default: 10000)
 
-Options:
-  --workflow <name>    Filter by workflow file name
-  --status <status>    Filter by status (completed, in_progress, queued)
-  --run-id <id>        Workflow run ID (required for view/watch)
-  --limit <n>          Number of runs to list (default: 10)
-  --timeout <ms>       Timeout for watching (default: 600000)
-  --poll-interval <ms> Poll interval for watching (default: 10000)
+**Examples:**
+\`\`\`bash
+# List recent runs
+aichaku github run list
 
-Examples:
-  # List recent runs
-  aichaku github run list
+# List runs for specific workflow
+aichaku github run list --workflow publish.yml
 
-  # List runs for specific workflow
-  aichaku github run list --workflow publish.yml
+# View specific run
+aichaku github run view --run-id 123456789
 
-  # View specific run
-  aichaku github run view --run-id 123456789
-
-  # Watch run until completion
-  aichaku github run watch --run-id 123456789
-`);
+# Watch run until completion
+aichaku github run watch --run-id 123456789
+\`\`\`
+`,
+        "🔄",
+      ));
       break;
 
     case "repo":
     case "repository":
-      console.log(`
-📚 GitHub Repositories
+      printFormatted(helpSection(
+        "GitHub Repositories",
+        `
+**Commands:**
+- **repo view** - View current repository details
+- **repo list** - List user repositories
 
-Commands:
-  aichaku github repo view   View current repository details
-  aichaku github repo list   List user repositories
+**Options:**
+- **--limit <n>** - Number of repositories to list (default: 10)
 
-Options:
-  --limit <n>  Number of repositories to list (default: 10)
+**Examples:**
+\`\`\`bash
+# View current repository
+aichaku github repo view
 
-Examples:
-  # View current repository
-  aichaku github repo view
+# View specific repository
+aichaku github repo view --owner microsoft --repository vscode
 
-  # View specific repository
-  aichaku github repo view --owner microsoft --repository vscode
-
-  # List your repositories
-  aichaku github repo list --limit 20
-`);
+# List your repositories
+aichaku github repo list --limit 20
+\`\`\`
+`,
+        "📚",
+      ));
       break;
 
     default:
-      console.log(`❌ Unknown help topic: ${topic}`);
-      console.log(
-        "Available topics: auth, release, run, workflow, repo, repository",
+      printFormatted(`**❌ Error:** Unknown help topic: \`${topic}\``);
+      printFormatted(
+        "**Available topics:** auth, release, run, workflow, repo, repository",
       );
   }
 }

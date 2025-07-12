@@ -75,7 +75,17 @@
       "Bash(./dist/aichaku-darwin-aarch64:*)",
       "Bash(for:*)",
       "Bash(do echo \"Uploading $file...\")",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(realpath:*)",
+      "Bash(./dist/aichaku-0.24.0-macos-arm64:*)",
+      "Bash(/Users/rcogley/.aichaku/mcp-servers/aichaku-code-reviewer:*)",
+      "Bash(./test-mcp-jsonrpc.ts)",
+      "Bash(./test-mcp-persistent.ts)",
+      "Bash(./test-mcp-simple.ts)",
+      "Bash(~/.aichaku/mcp-servers/aichaku-code-reviewer)",
+      "Bash(./test-mcp-batch.sh:*)",
+      "Bash(./test-review-direct.sh:*)",
+      "Bash(./test-cli-review.sh:*)"
     ],
     "deny": []
   }

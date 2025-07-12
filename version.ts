@@ -6,7 +6,7 @@
  * The |> safe filter is used to output raw values without escaping.
  */
 
-export const VERSION = "0.24.0";
+export const VERSION = "0.25.0";
 
 export const BUILD_INFO = {
   buildDate: "2025-07-11T22:51:05.729Z",
@@ -14,7 +14,7 @@ export const BUILD_INFO = {
   buildEnvironment: "production",
   versionComponents: {
     major: 0,
-    minor: 24,
+    minor: 25,
     patch: 0,
     prerelease: null,
   },
@@ -30,22 +30,23 @@ export const APP_INFO = {
 } as const;
 export const APP_METADATA = {} as const;
 export const RELEASE_NOTES = {
-  "version": "0.24.0",
-  "date": "2025-07-12",
+  "version": "0.25.0",
+  "date": "2025-01-12",
   "added": [
-    "GitHub MCP server with comprehensive GitHub operations support",
-    "Native aichaku review command for seamless hook integration",
-    "Native aichaku github command for CI/CD operations",
-    "Multi-MCP server support with isolated execution"
+    "HTTP/SSE server mode for MCP - supports multiple Claude Code instances",
+    "Server management commands: --start-server, --stop-server, --server-status",
+    "Automatic server detection in review command",
+    "Cross-platform TCP and HTTP server implementations"
   ],
   "changed": [
-    "Hooks now use native aichaku commands instead of bash scripts"
+    "Review command now automatically uses HTTP server if running",
+    "MCP documentation updated with server architecture diagrams"
   ],
   "deprecated": [],
   "removed": [],
   "fixed": [
-    "MCP review feedback not appearing in Claude Code console",
-    "Import paths in MCP server files"
+    "Path validation issues in MCP server",
+    "Session management for concurrent requests"
   ],
   "security": []
 } as const;

@@ -8,6 +8,7 @@ import { join } from "@std/path";
 import { VERSION } from "../../version.ts";
 import { MCPProcessManager } from "../utils/mcp/process-manager.ts";
 import { MultiServerMCPManager } from "../utils/mcp/multi-server-manager.ts";
+import { isMCPServerRunning } from "../utils/mcp-http-client.ts";
 
 export interface MCPOptions {
   install?: boolean;
@@ -23,6 +24,9 @@ export interface MCPOptions {
   startAll?: boolean;
   stopAll?: boolean;
   restartAll?: boolean;
+  startServer?: boolean;
+  stopServer?: boolean;
+  serverStatus?: boolean;
 }
 
 export async function runMCPCommand(options: MCPOptions): Promise<void> {
@@ -59,6 +63,12 @@ export async function runMCPCommand(options: MCPOptions): Promise<void> {
   } else if (options.restartAll) {
     console.log("🔄 Restarting all MCP servers...");
     // TODO: Implement multi-server restart
+  } else if (options.startServer) {
+    await startHTTPServer();
+  } else if (options.stopServer) {
+    await stopHTTPServer();
+  } else if (options.serverStatus) {
+    await checkHTTPServerStatus();
   } else if (options.status) {
     await multiManager.displayAllStatus();
   } else {
@@ -77,14 +87,19 @@ Usage:
   aichaku mcp [options]
 
 Options:
-  --install    Install the MCP server
-  --config     Configure Claude Code to use the MCP server
-  --status     Check MCP server status (default)
-  --start      Start the MCP server
-  --stop       Stop the MCP server
-  --restart    Restart the MCP server
-  --upgrade    Upgrade to the latest version
-  --help       Show this help message
+  --install       Install the MCP server
+  --config        Configure Claude Code to use the MCP server
+  --status        Check MCP server status (default)
+  --start         Start the MCP server
+  --stop          Stop the MCP server
+  --restart       Restart the MCP server
+  --upgrade       Upgrade to the latest version
+  --help          Show this help message
+
+Server Mode (for multiple Claude Code instances):
+  --start-server  Start HTTP/SSE server for shared MCP access
+  --stop-server   Stop the HTTP/SSE server
+  --server-status Check HTTP/SSE server status
 
 Features:
   • Security scanning (OWASP Top 10 vulnerabilities)
@@ -118,6 +133,16 @@ Example:
   
   # Stop the server
   aichaku mcp --stop
+
+Server Mode (for multiple Claude Code instances):
+  # Start shared HTTP/SSE server
+  aichaku mcp --start-server
+
+  # Check server status
+  aichaku mcp --server-status
+  
+  # Stop server
+  aichaku mcp --stop-server
 
 Learn more: https://github.com/RickCogley/aichaku/tree/main/mcp-server
 `);
@@ -353,5 +378,158 @@ async function checkCommand(command: string): Promise<boolean> {
     return result.success;
   } catch {
     return false;
+  }
+}
+
+/**
+ * Start the HTTP/SSE server for shared MCP access
+ */
+async function startHTTPServer(): Promise<void> {
+  console.log("🚀 Starting MCP HTTP/SSE Server...\n");
+
+  const homeDir = Deno.env.get("HOME") || Deno.env.get("USERPROFILE");
+  if (!homeDir) {
+    console.error("❌ Could not determine home directory");
+    return;
+  }
+
+  // Check if server is already running
+  if (await isMCPServerRunning()) {
+    console.log("✅ MCP HTTP/SSE server is already running on port 7182");
+    console.log("   Multiple Claude Code instances can connect to it");
+    return;
+  }
+
+  const httpServerPath = join(
+    homeDir,
+    ".aichaku",
+    "mcp-servers",
+    "http-server.ts",
+  );
+
+  // Copy HTTP server script to installation directory
+  const serverScript = `${
+    Deno.env.get("PWD")
+  }/mcp/aichaku-mcp-server/src/http-server.ts`;
+
+  try {
+    const serverCode = await Deno.readTextFile(serverScript);
+    await ensureDir(join(homeDir, ".aichaku", "mcp-servers"));
+    await Deno.writeTextFile(httpServerPath, serverCode);
+  } catch (error) {
+    console.error(
+      "❌ Failed to prepare HTTP server:",
+      error instanceof Error ? error.message : String(error),
+    );
+    return;
+  }
+
+  // Start the server in background using nohup to detach it
+  const cmd = new Deno.Command("sh", {
+    args: [
+      "-c",
+      `nohup deno run --allow-read --allow-write --allow-env --allow-run --allow-net "${httpServerPath}" > "${homeDir}/.aichaku/mcp-http-server.log" 2>&1 &`,
+    ],
+  });
+
+  const output = await cmd.output();
+  if (!output.success) {
+    console.error("❌ Failed to start server");
+    return;
+  }
+
+  // Give it a moment to start
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // Check if it started successfully
+  if (await isMCPServerRunning()) {
+    console.log("✅ MCP HTTP/SSE Server started successfully!");
+    console.log("   URL: http://127.0.0.1:7182");
+    console.log(
+      "\n💡 Multiple Claude Code instances can now connect to this server",
+    );
+    console.log(
+      "   The review command will automatically use this server when available",
+    );
+  } else {
+    console.error("❌ Failed to start HTTP/SSE server");
+    console.error("   Check if port 7182 is already in use");
+  }
+}
+
+/**
+ * Stop the HTTP/SSE server
+ */
+async function stopHTTPServer(): Promise<void> {
+  console.log("🛑 Stopping MCP HTTP/SSE Server...\n");
+
+  const homeDir = Deno.env.get("HOME") || Deno.env.get("USERPROFILE");
+  if (!homeDir) {
+    console.error("❌ Could not determine home directory");
+    return;
+  }
+
+  const pidFile = join(homeDir, ".aichaku", "mcp-http-server.pid");
+
+  try {
+    const pid = parseInt(await Deno.readTextFile(pidFile));
+
+    if (Deno.build.os === "windows") {
+      // On Windows, use taskkill
+      const cmd = new Deno.Command("taskkill", {
+        args: ["/F", "/PID", pid.toString()],
+        stdout: "null",
+        stderr: "null",
+      });
+      await cmd.output();
+    } else {
+      // On Unix, use kill
+      await Deno.kill(pid, "SIGTERM");
+    }
+
+    // Remove PID file
+    await Deno.remove(pidFile);
+
+    console.log("✅ MCP HTTP/SSE Server stopped");
+  } catch (error: unknown) {
+    if (
+      error && typeof error === "object" && "code" in error &&
+      error.code === "ENOENT"
+    ) {
+      console.log("⚠️  MCP HTTP/SSE Server is not running");
+    } else {
+      console.error(
+        "❌ Failed to stop server:",
+        error instanceof Error ? error.message : String(error),
+      );
+    }
+  }
+}
+
+/**
+ * Check HTTP/SSE server status
+ */
+async function checkHTTPServerStatus(): Promise<void> {
+  console.log("🔍 Checking MCP HTTP/SSE Server Status...\n");
+
+  const isRunning = await isMCPServerRunning();
+
+  if (isRunning) {
+    console.log("✅ MCP HTTP/SSE Server is running");
+    console.log("   URL: http://127.0.0.1:7182");
+    console.log("   Multiple Claude Code instances can connect to this server");
+
+    // Try to get server health info
+    try {
+      const response = await fetch("http://127.0.0.1:7182/health");
+      const health = await response.json();
+      console.log(`   Active sessions: ${health.sessions}`);
+      console.log(`   Process ID: ${health.pid}`);
+    } catch {
+      // Ignore if health check fails
+    }
+  } else {
+    console.log("❌ MCP HTTP/SSE Server is not running");
+    console.log("\n💡 Start it with: aichaku mcp --start-server");
   }
 }
