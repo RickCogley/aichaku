@@ -3,7 +3,7 @@
  * Works on Windows, macOS, and Linux
  */
 
-import { MCPRequest, MCPResponse } from "./mcp-client.ts";
+import type { MCPRequest, MCPResponse } from "./mcp-client.ts";
 
 export interface MCPClientConfig {
   host?: string;
@@ -92,7 +92,7 @@ export class MCPTcpClient {
   /**
    * Send a request and wait for response
    */
-  async sendRequest(request: MCPRequest): Promise<MCPResponse> {
+  sendRequest(request: MCPRequest): Promise<MCPResponse> {
     if (!this.socket) {
       throw new Error("Not connected to MCP server");
     }
@@ -210,7 +210,7 @@ export class MCPTcpClient {
    */
   close(): void {
     // Cancel all pending requests
-    for (const [id, handler] of this.responseHandlers) {
+    for (const [_id, handler] of this.responseHandlers) {
       clearTimeout(handler.timeout);
       handler.reject(new Error("Connection closed"));
     }

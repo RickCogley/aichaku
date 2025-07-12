@@ -68,7 +68,7 @@ async function testMCPServer() {
 
     // Test 1: Initialize
     console.log("\n1. Testing initialize...");
-    const initResponse = await sendRequest({
+    const _initResponse = await sendRequest({
       jsonrpc: "2.0",
       id: 1,
       method: "initialize",
@@ -93,7 +93,7 @@ async function testMCPServer() {
     });
     console.log(
       "✅ Got",
-      (listResponse as any).result?.tools?.length || 0,
+      (listResponse as { result?: { tools?: unknown[] } }).result?.tools?.length || 0,
       "tools",
     );
 
@@ -113,7 +113,7 @@ async function testMCPServer() {
       },
     });
 
-    const reviewResult = (reviewResponse as any).result;
+    const reviewResult = (reviewResponse as { result?: { content?: { text?: string }[] } }).result;
     if (reviewResult?.content?.[0]?.text) {
       console.log("\n📄 Review Result:");
       console.log(reviewResult.content[0].text);
@@ -121,7 +121,7 @@ async function testMCPServer() {
 
     // Test 4: Get statistics
     console.log("\n4. Testing get_statistics...");
-    const statsResponse = await sendRequest({
+    const _statsResponse = await sendRequest({
       jsonrpc: "2.0",
       id: 4,
       method: "tools/call",

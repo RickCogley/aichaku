@@ -20,8 +20,8 @@ async function handleClient(
 ) {
   console.log("[Socket Server] New client connected");
 
-  const encoder = new TextEncoder();
-  const decoder = new TextDecoder();
+  const _encoder = new TextEncoder();
+  const _decoder = new TextDecoder();
 
   try {
     // Set up bidirectional forwarding

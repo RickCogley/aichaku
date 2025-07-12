@@ -12,6 +12,14 @@ and this project adheres to
 
 - implement HTTP/SSE server mode for MCP with multi-client support (c13a1dc)
 
+### Changed
+
+- temp: skip lint check for release (minor test file warnings) (fcf0dde)
+
+### Fixed
+
+- format nagare config (31d3634)
+
 ## [0.23.0] - 2025-07-11
 
 ### Added

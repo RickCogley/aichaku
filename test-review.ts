@@ -1,5 +1,5 @@
 // Test file for review
-export function processUserInput(input: any) {
+export function processUserInput(input: unknown) {
   // No input validation
   eval(input);
 

@@ -91,7 +91,7 @@ async function testMCPReview() {
         } else {
           console.log("Response:", JSON.stringify(response, null, 2));
         }
-      } catch (e) {
+      } catch (_e) {
         console.log("Raw line:", line);
       }
     }

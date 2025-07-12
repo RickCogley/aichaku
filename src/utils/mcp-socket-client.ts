@@ -178,7 +178,7 @@ export class MCPSocketClient {
     }
 
     // Reject any pending requests
-    for (const [id, handler] of this.responseHandlers) {
+    for (const [_id, handler] of this.responseHandlers) {
       handler.reject(new Error("Connection closed"));
     }
     this.responseHandlers.clear();

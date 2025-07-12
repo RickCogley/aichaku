@@ -236,7 +236,7 @@ class MCPTcpServer {
 
   private shutdown(): void {
     // Close all client connections
-    for (const [clientId, client] of this.clients) {
+    for (const [clientId, _client] of this.clients) {
       this.cleanupClient(clientId);
     }
 

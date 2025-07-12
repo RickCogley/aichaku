@@ -3,7 +3,7 @@
  * Cross-platform client that works everywhere
  */
 
-import { MCPRequest, MCPResponse } from "./mcp-client.ts";
+import type { MCPRequest, MCPResponse } from "./mcp-client.ts";
 
 export interface MCPHttpClientConfig {
   baseUrl?: string;
@@ -188,12 +188,12 @@ export class MCPHttpClient {
   /**
    * Send a request via HTTP POST
    */
-  async sendRequest(request: MCPRequest): Promise<MCPResponse> {
+  sendRequest(request: MCPRequest): Promise<MCPResponse> {
     if (!this.sessionId) {
       throw new Error("Not connected to MCP server");
     }
 
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const requestId = request.id;
 
       // Set up timeout
@@ -211,31 +211,28 @@ export class MCPHttpClient {
         timeout: timeoutId,
       });
 
-      try {
-        // Send request via HTTP POST
-        const response = await fetch(`${this.config.baseUrl}/rpc`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Session-ID": this.sessionId!,
-          },
-          body: JSON.stringify(request),
-        });
-
+      // Send request via HTTP POST (async operation)
+      fetch(`${this.config.baseUrl}/rpc`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Session-ID": this.sessionId!,
+        },
+        body: JSON.stringify(request),
+      }).then(async (response) => {
         if (!response.ok) {
           const error = await response.text();
           throw new Error(`HTTP error ${response.status}: ${error}`);
         }
-
         // Response will come via polling
-      } catch (error) {
+      }).catch((error) => {
         const handler = this.responseHandlers.get(requestId);
         if (handler) {
           clearTimeout(handler.timeout);
           this.responseHandlers.delete(requestId);
         }
         reject(error);
-      }
+      });
     });
   }
 
@@ -276,7 +273,7 @@ export class MCPHttpClient {
     this.pollController?.abort();
 
     // Cancel all pending requests
-    for (const [id, handler] of this.responseHandlers) {
+    for (const [_id, handler] of this.responseHandlers) {
       clearTimeout(handler.timeout);
       handler.reject(new Error("Client closing"));
     }

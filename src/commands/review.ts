@@ -5,7 +5,7 @@
 
 import { exists } from "@std/fs";
 import { resolve } from "@std/path";
-import { callMCPTool, sendMCPRequests } from "../utils/mcp-client.ts";
+import { callMCPTool } from "../utils/mcp-client.ts";
 import {
   getSharedMCPClient,
   isMCPServerRunning,
@@ -67,7 +67,7 @@ export async function runReviewCommand(
 
           // Extract and display the review text
           if (result && typeof result === "object" && "content" in result) {
-            const content = (result as any).content;
+            const content = (result as { content?: { text?: string }[] }).content;
             if (Array.isArray(content) && content[0]?.text) {
               console.log(content[0].text);
             } else {
@@ -122,7 +122,7 @@ export async function runReviewCommand(
 
         // Extract and display the review text
         if (result && typeof result === "object" && "content" in result) {
-          const content = (result as any).content;
+          const content = (result as { content?: { text?: string }[] }).content;
           if (Array.isArray(content) && content[0]?.text) {
             console.log(content[0].text);
           } else {
@@ -153,7 +153,7 @@ async function showStatistics(): Promise<void> {
 
       // Display statistics
       if (result && typeof result === "object" && "content" in result) {
-        const content = (result as any).content;
+        const content = (result as { content?: { text?: string }[] }).content;
         if (Array.isArray(content) && content[0]?.text) {
           console.log(content[0].text);
         } else {

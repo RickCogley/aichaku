@@ -138,7 +138,7 @@ async function testMCPServer() {
       reviewResponse && typeof reviewResponse === "object" &&
       "result" in reviewResponse
     ) {
-      const result = (reviewResponse as any).result;
+      const result = (reviewResponse as { result?: { content?: { text?: string }[] } }).result;
       if (result?.content?.[0]?.text) {
         console.log("\n📄 Formatted Review Result:");
         console.log(result.content[0].text);

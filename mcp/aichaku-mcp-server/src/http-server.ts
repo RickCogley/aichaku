@@ -302,7 +302,7 @@ class MCPHttpServer {
     }
   }
 
-  private async getOrCreateSession(sessionId: string): Promise<MCPSession> {
+  private getOrCreateSession(sessionId: string): MCPSession {
     let session = this.sessions.get(sessionId);
 
     if (!session) {
