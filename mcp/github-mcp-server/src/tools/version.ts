@@ -3,10 +3,10 @@
  * MCP tools for version compatibility and GitHub CLI monitoring
  */
 
-import { GitHubClient } from "../github/client.ts";
+import type { GitHubClient } from "../github/client.ts";
 
 export const versionTools = {
-  async info(client: GitHubClient, args: any) {
+  async info(client: GitHubClient, _args: unknown) {
     try {
       // Get GitHub API version info
       const githubVersion = await client.checkVersion();
@@ -108,7 +108,10 @@ ${
     }
   },
 
-  async checkCompatibility(client: GitHubClient, args: { ghVersion?: string }) {
+  async checkCompatibility(
+    _client: GitHubClient,
+    args: { ghVersion?: string },
+  ) {
     const { ghVersion } = args;
 
     try {

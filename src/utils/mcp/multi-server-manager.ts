@@ -6,7 +6,6 @@
 import { isAbsolute, join, normalize } from "@std/path";
 import { ensureDir, exists } from "@std/fs";
 import { colors } from "../../utils/ui.ts";
-import { displayFeedback } from "../../utils/feedback.ts";
 
 export interface MCPServerConfig {
   id: string;
@@ -148,7 +147,7 @@ export class MultiServerMCPManager {
           if (pid && !isNaN(pid)) {
             try {
               // On Unix systems, signal 0 checks if process exists
-              Deno.kill(pid, "SIGTERM" as any);
+              Deno.kill(pid, "SIGTERM" as Deno.Signal);
               running = true;
 
               // Calculate uptime from PID file modification time

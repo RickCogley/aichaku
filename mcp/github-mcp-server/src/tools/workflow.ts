@@ -3,7 +3,7 @@
  * MCP tools for GitHub Actions workflow management
  */
 
-import { GitHubClient } from "../github/client.ts";
+import type { GitHubClient } from "../github/client.ts";
 
 export const workflowTools = {
   async listRuns(
@@ -234,7 +234,7 @@ ${
       };
 
       // Initial check
-      let run = await checkRun();
+      const run = await checkRun();
 
       // If already completed, return immediately
       if (run.status === "completed") {
@@ -266,7 +266,7 @@ ${
       }
 
       // Monitor the run
-      const monitorPromise = new Promise<any>((resolve, reject) => {
+      const monitorPromise = new Promise<void>((resolve, reject) => {
         const interval = setInterval(async () => {
           try {
             const currentRun = await checkRun();

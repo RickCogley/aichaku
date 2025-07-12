@@ -26,6 +26,39 @@ export interface GitHubAsset {
   browser_download_url: string;
 }
 
+export interface GitHubUser {
+  login: string;
+  id: number;
+  name?: string;
+  email?: string;
+  avatar_url: string;
+  type: string;
+  site_admin: boolean;
+}
+
+export interface GitHubRateLimit {
+  resources: {
+    core: {
+      limit: number;
+      remaining: number;
+      reset: number;
+      used: number;
+    };
+    search: {
+      limit: number;
+      remaining: number;
+      reset: number;
+      used: number;
+    };
+  };
+  rate: {
+    limit: number;
+    remaining: number;
+    reset: number;
+    used: number;
+  };
+}
+
 export interface GitHubWorkflowRun {
   id: number;
   name: string;
@@ -126,7 +159,7 @@ export class GitHubClient {
       `/repos/${owner}/${repo}/releases/${releaseId}`,
     );
     const release = await releaseResponse.json();
-    const existingAsset = release.assets.find((asset: any) =>
+    const existingAsset = release.assets.find((asset) =>
       asset.name === fileName
     );
 
@@ -254,18 +287,18 @@ export class GitHubClient {
   }
 
   // User operations
-  async getCurrentUser(): Promise<any> {
+  async getCurrentUser(): Promise<GitHubUser> {
     const response = await this.makeRequest("/user");
     return await response.json();
   }
 
-  async getUser(username: string): Promise<any> {
+  async getUser(username: string): Promise<GitHubUser> {
     const response = await this.makeRequest(`/users/${username}`);
     return await response.json();
   }
 
   // Rate limit information
-  async getRateLimit(): Promise<any> {
+  async getRateLimit(): Promise<GitHubRateLimit> {
     const response = await this.makeRequest("/rate_limit");
     return await response.json();
   }
@@ -281,7 +314,7 @@ export class GitHubClient {
         version: data.current_user_url ? "v3" : "unknown",
         compatible: true,
       };
-    } catch (error) {
+    } catch (_error) {
       return {
         version: "unknown",
         compatible: false,

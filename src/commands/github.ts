@@ -168,8 +168,8 @@ export async function runGitHubCommand(
 // Helper function to call GitHub MCP server
 async function callGitHubMCP(
   toolName: string,
-  args: Record<string, any>,
-): Promise<any> {
+  args: Record<string, unknown>,
+): Promise<unknown> {
   const serverPath = Deno.env.get("HOME") +
     "/.aichaku/mcp-servers/github-operations";
 
@@ -224,7 +224,7 @@ async function handleAuth(
       await checkAuthStatus(options);
       break;
 
-    case "login":
+    case "login": {
       const token = args[0] || options.authLogin;
       if (!token) {
         console.error("❌ Token required: aichaku github auth login <token>");
@@ -232,6 +232,7 @@ async function handleAuth(
       }
       await authLogin(token);
       break;
+    }
 
     default:
       console.error(`❌ Unknown auth command: ${action}`);

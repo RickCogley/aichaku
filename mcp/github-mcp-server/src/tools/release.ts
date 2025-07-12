@@ -3,7 +3,7 @@
  * MCP tools for GitHub release management
  */
 
-import { GitHubClient } from "../github/client.ts";
+import type { GitHubClient } from "../github/client.ts";
 import { exists } from "@std/fs";
 
 export const releaseTools = {
@@ -47,7 +47,7 @@ export const releaseTools = {
           }
 
           // Get file info
-          const fileInfo = await Deno.stat(assetPath);
+          await Deno.stat(assetPath); // Verify file exists
           const fileName = assetPath.split("/").pop() || assetPath;
 
           // Upload asset
