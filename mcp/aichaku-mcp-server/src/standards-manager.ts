@@ -8,7 +8,7 @@ import type { ProjectConfig } from "./types.ts";
 import {
   safeReadTextFile,
   validatePath,
-} from "../../src/utils/path-security.ts";
+} from "../../../src/utils/path-security.ts";
 
 export class StandardsManager {
   private standardsCache = new Map<string, ProjectConfig>();

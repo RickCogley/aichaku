@@ -68,7 +68,10 @@
       "Bash(true)",
       "Bash(/Users/rcogley/.aichaku/mcp-server/mcp-code-reviewer --version)",
       "Bash(deno compile:*)",
-      "Bash(gh:*)"
+      "Bash(gh:*)",
+      "Bash(./cli.ts review --help)",
+      "Bash(nagare release:*)",
+      "Bash(./scripts/bootstrap-release.ts)"
     ],
     "deny": []
   }

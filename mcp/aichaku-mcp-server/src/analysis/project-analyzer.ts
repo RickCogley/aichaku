@@ -464,7 +464,7 @@ export class ProjectAnalyzer {
       if (existsSync(requirementsPath)) {
         try {
           const content = safeReadTextFileSync(requirementsPath, projectPath);
-          const lines = content.split("\n").filter((line) =>
+          const lines = content.split("\n").filter((line: string) =>
             line.trim() && !line.startsWith("#")
           );
 
@@ -495,12 +495,12 @@ export class ProjectAnalyzer {
           );
           if (depMatch) {
             const depSection = depMatch[1];
-            const depLines = depSection.split("\n").filter((line) =>
+            const depLines = depSection.split("\n").filter((line: string) =>
               line.includes("=")
             );
 
             for (const line of depLines) {
-              const [name, version] = line.split("=").map((s) =>
+              const [name, version] = line.split("=").map((s: string) =>
                 s.trim().replace(/['"]/g, "")
               );
               if (name && !name.startsWith("python")) {

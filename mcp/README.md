@@ -1,6 +1,7 @@
 # Aichaku MCP Servers
 
-This directory contains the Model Context Protocol (MCP) servers that provide Claude Code with enhanced capabilities.
+This directory contains the Model Context Protocol (MCP) servers that provide
+Claude Code with enhanced capabilities.
 
 ## Directory Structure
 
@@ -17,7 +18,9 @@ mcp/
 **Purpose**: Code review, security scanning, and methodology compliance
 
 **Tools Provided**:
-- `mcp__aichaku-reviewer__review_file` - Review individual files for security and standards
+
+- `mcp__aichaku-reviewer__review_file` - Review individual files for security
+  and standards
 - `mcp__aichaku-reviewer__review_methodology` - Check methodology compliance
 - `mcp__aichaku-reviewer__get_standards` - Get project standards configuration
 - `mcp__aichaku-reviewer__analyze_project` - Analyze project structure
@@ -32,6 +35,7 @@ mcp/
 **Purpose**: Comprehensive GitHub CLI replacement with deterministic operations
 
 **Tools Provided**:
+
 - `mcp__github__release_upload` - Upload assets to releases
 - `mcp__github__release_view` - View release details
 - `mcp__github__run_list` - List workflow runs
@@ -45,6 +49,7 @@ mcp/
 ## Installation
 
 ### Quick Setup
+
 ```bash
 # Install both MCP servers
 aichaku mcp --install
@@ -55,6 +60,7 @@ aichaku mcp --install-github    # Just GitHub operations
 ```
 
 ### Manual Setup
+
 Each MCP server can be configured independently in Claude Code:
 
 ```json
@@ -78,6 +84,7 @@ Each MCP server can be configured independently in Claude Code:
 ## Development
 
 ### Building
+
 ```bash
 # Build aichaku MCP server
 cd mcp/aichaku-mcp-server
@@ -89,6 +96,7 @@ deno task compile
 ```
 
 ### Testing
+
 ```bash
 # Test aichaku MCP server
 cd mcp/aichaku-mcp-server
@@ -102,14 +110,17 @@ deno test -A
 ## Architecture Benefits
 
 **Separation of Concerns**: Each MCP server has a focused responsibility
+
 - **Aichaku MCP**: Code quality, security, methodology
 - **GitHub MCP**: GitHub API operations, release management
 
 **Independent Lifecycle**: Updates and changes don't interfere
+
 - GitHub API changes only affect GitHub MCP
 - Security pattern updates only affect Aichaku MCP
 
 **Flexible Deployment**: Install only what you need
+
 - Code review without GitHub operations
 - GitHub operations without methodology compliance
 - Or both together for complete functionality

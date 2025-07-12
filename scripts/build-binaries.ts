@@ -80,20 +80,23 @@ async function compileCLI() {
   console.log("✅ All CLI binaries compiled successfully!");
 }
 
-async function compileMCPServer() {
-  console.log(`🔨 Building MCP Server v${VERSION} binaries...`);
+async function compileMCPServers() {
+  console.log(`🔨 Building MCP Servers v${VERSION} binaries...`);
 
   await ensureDir("./dist");
 
+  // Build Aichaku MCP Server
   for (const platform of PLATFORMS) {
     const ext = platform.os === "windows" ? ".exe" : "";
-    const output = `./dist/mcp-code-reviewer-${VERSION}-${platform.name}${ext}`;
+    const output =
+      `./dist/aichaku-code-reviewer-${VERSION}-${platform.name}${ext}`;
 
-    console.log(`  📦 Building MCP server for ${platform.name}...`);
+    console.log(`  📦 Building Aichaku MCP server for ${platform.name}...`);
 
     const cmd = new Deno.Command("deno", {
       args: [
         "compile",
+        "--no-check",
         "--allow-read",
         "--allow-write",
         "--allow-env",
@@ -110,7 +113,42 @@ async function compileMCPServer() {
 
     const result = await cmd.output();
     if (!result.success) {
-      throw new Error(`Failed to compile MCP server for ${platform.target}`);
+      throw new Error(
+        `Failed to compile Aichaku MCP server for ${platform.target}`,
+      );
+    }
+  }
+
+  // Build GitHub MCP Server
+  for (const platform of PLATFORMS) {
+    const ext = platform.os === "windows" ? ".exe" : "";
+    const output = `./dist/github-operations-${VERSION}-${platform.name}${ext}`;
+
+    console.log(`  📦 Building GitHub MCP server for ${platform.name}...`);
+
+    const cmd = new Deno.Command("deno", {
+      args: [
+        "compile",
+        "--no-check",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env",
+        "--allow-net",
+        "--target",
+        platform.target,
+        "--output",
+        output,
+        "./mcp/github-mcp-server/src/server.ts",
+      ],
+      stdout: "inherit",
+      stderr: "inherit",
+    });
+
+    const result = await cmd.output();
+    if (!result.success) {
+      throw new Error(
+        `Failed to compile GitHub MCP server for ${platform.target}`,
+      );
     }
   }
 
@@ -188,7 +226,7 @@ async function main() {
       await compileCLI();
     }
     if (!cliOnly) {
-      await compileMCPServer();
+      await compileMCPServers();
     }
 
     // Create checksums

@@ -24,7 +24,7 @@
  * ```
  */
 
-import { parseArgs } from "jsr:@std/cli@1/parse-args";
+import { parseArgs } from "@std/cli/parse-args";
 import { init } from "./src/commands/init.ts";
 import { upgrade } from "./src/commands/upgrade.ts";
 import { uninstall } from "./src/commands/uninstall.ts";
@@ -35,6 +35,8 @@ import { standards } from "./src/commands/standards.ts";
 import { docsStandard } from "./src/commands/docs-standard.ts";
 import { runMCPCommand } from "./src/commands/mcp.ts";
 import { createMigrateCommand } from "./src/commands/migrate.ts";
+import { runReviewCommand } from "./src/commands/review.ts";
+import { runGitHubCommand } from "./src/commands/github.ts";
 import { VERSION } from "./mod.ts";
 
 const args = parseArgs(Deno.args, {
@@ -48,10 +50,30 @@ const args = parseArgs(Deno.args, {
     "check",
     "list",
     "compare",
+    "stats",
     "validate",
     "categories",
     "select",
     "show",
+    "install",
+    "config",
+    "status",
+    "start",
+    "stop",
+    "restart",
+    "upgrade",
+    "authStatus",
+    "authLogin",
+    "releaseUpload",
+    "releaseView",
+    "runList",
+    "runView",
+    "runWatch",
+    "repoView",
+    "repoList",
+    "draft",
+    "prerelease",
+    "overwrite",
     "standards",
     "all",
     "security",
@@ -72,6 +94,7 @@ const args = parseArgs(Deno.args, {
   ],
   string: [
     "path",
+    "file",
     "install",
     "add",
     "remove",
@@ -81,6 +104,16 @@ const args = parseArgs(Deno.args, {
     "delete-custom",
     "edit-custom",
     "copy-custom",
+    "tag",
+    "owner",
+    "repository",
+    "workflow",
+    "title",
+    "body",
+    "runId",
+    "limit",
+    "timeout",
+    "pollInterval",
   ],
   alias: {
     h: "help",
@@ -96,6 +129,14 @@ const args = parseArgs(Deno.args, {
     q: "quiet",
     b: "backup",
     y: "yes",
+  },
+  default: {
+    help: false,
+    version: false,
+    global: false,
+    force: false,
+    silent: false,
+    check: false,
   },
 });
 
@@ -133,6 +174,8 @@ Commands:
   docs-standard Choose documentation writing style guides for your project
   docs:lint   Lint documentation against selected standards
   mcp         Manage MCP (Model Context Protocol) server for code review
+  review      Review files using MCP server (seamless hook integration)
+  github      GitHub operations via MCP (releases, workflows, repos)
   migrate     Migrate from old ~/.claude/ to new ~/.claude/aichaku/ structure
 
 Options:
@@ -192,6 +235,14 @@ Examples:
   aichaku docs:lint
   aichaku docs:lint README.md docs/
   aichaku docs:lint --standards diataxis,google-style
+
+  # Review code files with MCP
+  aichaku review src/main.ts
+  aichaku review --stats
+
+  # GitHub operations
+  aichaku github release upload dist/*
+  aichaku github run list
 
   # Migrate to new folder structure
   aichaku migrate
@@ -448,10 +499,16 @@ ${
 
     case "mcp": {
       const mcpOptions = {
-        install: args["install-mcp"] as boolean | undefined ||
+        install: args.install as boolean | undefined ||
           (args._[1] === "install"),
         config: args.config as boolean | undefined || (args._[1] === "config"),
         status: args.status as boolean | undefined || (args._[1] === "status"),
+        start: args.start as boolean | undefined || (args._[1] === "start"),
+        stop: args.stop as boolean | undefined || (args._[1] === "stop"),
+        restart: args.restart as boolean | undefined ||
+          (args._[1] === "restart"),
+        upgrade: args.upgrade as boolean | undefined ||
+          (args._[1] === "upgrade"),
         help: args.help as boolean | undefined,
       };
 
@@ -477,6 +534,58 @@ ${
       );
 
       await docsLint(lintArgs);
+      break;
+    }
+
+    case "review": {
+      const reviewOptions = {
+        help: args.help as boolean | undefined,
+        file: args.file as string | undefined,
+        stats: args.stats as boolean | undefined,
+      };
+
+      // Get files from remaining arguments
+      const files = args._.slice(1).map(String);
+
+      await runReviewCommand(reviewOptions, files);
+      break;
+    }
+
+    case "github": {
+      const githubOptions = {
+        help: args.help as boolean | undefined,
+        // Auth
+        authStatus: args.authStatus as boolean | undefined,
+        authLogin: args.authLogin as string | undefined,
+        // Release
+        releaseUpload: args.releaseUpload as boolean | undefined,
+        releaseView: args.releaseView as boolean | undefined,
+        // Workflow
+        runList: args.runList as boolean | undefined,
+        runView: args.runView as boolean | undefined,
+        runWatch: args.runWatch as boolean | undefined,
+        // Repository
+        repoView: args.repoView as boolean | undefined,
+        repoList: args.repoList as boolean | undefined,
+        // Common
+        tag: args.tag as string | undefined,
+        owner: args.owner as string | undefined,
+        repository: args.repository as string | undefined,
+        runId: args.runId ? Number(args.runId) : undefined,
+        workflow: args.workflow as string | undefined,
+        status: args.status as string | undefined,
+        limit: args.limit ? Number(args.limit) : undefined,
+        timeout: args.timeout ? Number(args.timeout) : undefined,
+        pollInterval: args.pollInterval ? Number(args.pollInterval) : undefined,
+        overwrite: args.overwrite as boolean | undefined,
+        draft: args.draft as boolean | undefined,
+        prerelease: args.prerelease as boolean | undefined,
+      };
+
+      // Get remaining arguments
+      const githubArgs = args._.slice(1).map(String);
+
+      await runGitHubCommand(githubOptions, githubArgs);
       break;
     }
 

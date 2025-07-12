@@ -7,9 +7,12 @@ import { ensureDir, exists } from "@std/fs";
 import { join } from "@std/path";
 import { VERSION } from "../../version.ts";
 import { MCPProcessManager } from "../utils/mcp/process-manager.ts";
+import { MultiServerMCPManager } from "../utils/mcp/multi-server-manager.ts";
 
 export interface MCPOptions {
   install?: boolean;
+  installReviewer?: boolean;
+  installGithub?: boolean;
   config?: boolean;
   status?: boolean;
   help?: boolean;
@@ -17,6 +20,9 @@ export interface MCPOptions {
   stop?: boolean;
   restart?: boolean;
   upgrade?: boolean;
+  startAll?: boolean;
+  stopAll?: boolean;
+  restartAll?: boolean;
 }
 
 export async function runMCPCommand(options: MCPOptions): Promise<void> {
@@ -25,10 +31,15 @@ export async function runMCPCommand(options: MCPOptions): Promise<void> {
     return;
   }
 
-  const processManager = new MCPProcessManager();
+  const multiManager = new MultiServerMCPManager();
+  const processManager = new MCPProcessManager(); // Keep for backward compatibility
 
   if (options.install) {
-    await installMCPServer();
+    await installAllMCPServers();
+  } else if (options.installReviewer) {
+    await installMCPServer("aichaku-reviewer");
+  } else if (options.installGithub) {
+    await installMCPServer("github-operations");
   } else if (options.config) {
     await configureMCPServer();
   } else if (options.start) {
@@ -39,11 +50,20 @@ export async function runMCPCommand(options: MCPOptions): Promise<void> {
     await processManager.restart();
   } else if (options.upgrade) {
     await processManager.upgrade();
+  } else if (options.startAll) {
+    console.log("🚀 Starting all MCP servers...");
+    // TODO: Implement multi-server start
+  } else if (options.stopAll) {
+    console.log("🛑 Stopping all MCP servers...");
+    // TODO: Implement multi-server stop
+  } else if (options.restartAll) {
+    console.log("🔄 Restarting all MCP servers...");
+    // TODO: Implement multi-server restart
   } else if (options.status) {
-    await processManager.displayStatus();
+    await multiManager.displayAllStatus();
   } else {
     // Default: show status
-    await processManager.displayStatus();
+    await multiManager.displayAllStatus();
   }
 }
 
@@ -103,8 +123,20 @@ Learn more: https://github.com/RickCogley/aichaku/tree/main/mcp-server
 `);
 }
 
-export async function installMCPServer(): Promise<void> {
-  console.log("📦 Installing Aichaku MCP Server...\n");
+export async function installAllMCPServers(): Promise<void> {
+  console.log("🚀 Installing all MCP servers...");
+  await installMCPServer("aichaku-reviewer");
+  await installMCPServer("github-operations");
+  console.log("✅ All MCP servers installed successfully!");
+}
+
+export async function installMCPServer(serverId?: string): Promise<void> {
+  const serverType = serverId || "aichaku-reviewer";
+  const serverName = serverType === "aichaku-reviewer"
+    ? "Aichaku MCP Server"
+    : "GitHub MCP Server";
+
+  console.log(`📦 Installing ${serverName}...\n`);
 
   const homeDir = Deno.env.get("HOME") || Deno.env.get("USERPROFILE");
   if (!homeDir) {
@@ -135,13 +167,20 @@ export async function installMCPServer(): Promise<void> {
     }
 
     const ext = platform === "windows" ? ".exe" : "";
-    const binaryName = `mcp-code-reviewer-${VERSION}-${platformName}${ext}`;
+
+    let binaryName: string;
+    let targetPath: string;
+
+    if (serverType === "aichaku-reviewer") {
+      binaryName = `aichaku-code-reviewer-${VERSION}-${platformName}${ext}`;
+      targetPath = join(mcpDir, `aichaku-code-reviewer${ext}`);
+    } else {
+      binaryName = `github-operations-${VERSION}-${platformName}${ext}`;
+      targetPath = join(mcpDir, `github-operations${ext}`);
+    }
+
     const downloadUrl =
       `https://github.com/RickCogley/aichaku/releases/download/v${VERSION}/${binaryName}`;
-    const targetPath = join(
-      mcpDir,
-      platform === "windows" ? "aichaku-code-reviewer.exe" : "aichaku-code-reviewer",
-    );
 
     console.log(
       `📥 Downloading MCP server v${VERSION} for ${platform}-${arch}...`,

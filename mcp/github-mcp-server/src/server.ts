@@ -5,9 +5,12 @@
  * Comprehensive GitHub operations for Claude Code
  */
 
-import { Server } from "@modelcontextprotocol/sdk";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/stdio";
-import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types";
+import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import {
+  CallToolRequestSchema,
+  ListToolsRequestSchema,
+} from "@modelcontextprotocol/sdk/types.js";
 import { GitHubClient } from "./github/client.ts";
 import { GitHubAuthManager } from "./auth/manager.ts";
 
@@ -16,6 +19,7 @@ import { releaseTools } from "./tools/release.ts";
 import { workflowTools } from "./tools/workflow.ts";
 import { authTools } from "./tools/auth.ts";
 import { repositoryTools } from "./tools/repository.ts";
+import { versionTools } from "./tools/version.ts";
 
 class GitHubMCPServer {
   private server: Server;
@@ -32,7 +36,7 @@ class GitHubMCPServer {
         capabilities: {
           tools: {},
         },
-      }
+      },
     );
 
     this.authManager = new GitHubAuthManager();
@@ -43,7 +47,7 @@ class GitHubMCPServer {
 
   private setupHandlers() {
     // List available tools
-    this.server.setRequestHandler(ListToolsRequestSchema, async () => {
+    this.server.setRequestHandler(ListToolsRequestSchema, () => {
       return {
         tools: [
           // Authentication tools
@@ -84,7 +88,7 @@ class GitHubMCPServer {
                   description: "Repository owner",
                 },
                 repo: {
-                  type: "string", 
+                  type: "string",
                   description: "Repository name",
                 },
                 tag: {
@@ -118,7 +122,7 @@ class GitHubMCPServer {
                 },
                 repo: {
                   type: "string",
-                  description: "Repository name", 
+                  description: "Repository name",
                 },
                 tag: {
                   type: "string",
@@ -151,7 +155,13 @@ class GitHubMCPServer {
                 },
                 status: {
                   type: "string",
-                  enum: ["completed", "in_progress", "queued", "requested", "waiting"],
+                  enum: [
+                    "completed",
+                    "in_progress",
+                    "queued",
+                    "requested",
+                    "waiting",
+                  ],
                   description: "Filter by run status",
                 },
                 limit: {
@@ -210,7 +220,7 @@ class GitHubMCPServer {
                   default: 600000,
                 },
                 pollInterval: {
-                  type: "number", 
+                  type: "number",
                   description: "Poll interval in milliseconds",
                   default: 10000,
                 },
@@ -219,58 +229,175 @@ class GitHubMCPServer {
               additionalProperties: false,
             },
           },
+
+          // Repository tools
+          {
+            name: "repo_view",
+            description: "View repository information",
+            inputSchema: {
+              type: "object",
+              properties: {
+                owner: {
+                  type: "string",
+                  description: "Repository owner",
+                },
+                repo: {
+                  type: "string",
+                  description: "Repository name",
+                },
+              },
+              additionalProperties: false,
+            },
+          },
+          {
+            name: "repo_list",
+            description: "List user repositories",
+            inputSchema: {
+              type: "object",
+              properties: {
+                type: {
+                  type: "string",
+                  enum: ["all", "owner", "member"],
+                  description: "Type of repositories to list",
+                  default: "owner",
+                },
+                sort: {
+                  type: "string",
+                  enum: ["created", "updated", "pushed", "full_name"],
+                  description: "Sort order",
+                  default: "updated",
+                },
+                direction: {
+                  type: "string",
+                  enum: ["asc", "desc"],
+                  description: "Sort direction",
+                  default: "desc",
+                },
+                limit: {
+                  type: "number",
+                  description: "Maximum number of repositories",
+                  default: 10,
+                },
+              },
+              additionalProperties: false,
+            },
+          },
+
+          // Version tools
+          {
+            name: "version_info",
+            description: "Get version compatibility information",
+            inputSchema: {
+              type: "object",
+              properties: {},
+              additionalProperties: false,
+            },
+          },
+          {
+            name: "version_check",
+            description: "Check GitHub CLI version compatibility",
+            inputSchema: {
+              type: "object",
+              properties: {
+                ghVersion: {
+                  type: "string",
+                  description:
+                    "GitHub CLI version to check (auto-detect if not provided)",
+                },
+              },
+              additionalProperties: false,
+            },
+          },
         ],
       };
     });
 
     // Handle tool calls
-    this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
-      const { name, arguments: args } = request.params;
+    this.server.setRequestHandler(
+      CallToolRequestSchema,
+      async (request) => {
+        const { name, arguments: args } = request.params;
 
-      try {
-        // Get repository context
-        const context = {
-          owner: args.owner || this.getDefaultOwner(),
-          repo: args.repo || this.getDefaultRepo(),
-        };
+        try {
+          // Get repository context
+          const context = {
+            owner: args.owner || this.getDefaultOwner(),
+            repo: args.repo || this.getDefaultRepo(),
+          };
 
-        switch (name) {
-          case "auth_status":
-            return await authTools.status(this.authManager, args);
+          switch (name) {
+            case "auth_status":
+              return await authTools.status(this.authManager, args);
 
-          case "auth_login": 
-            return await authTools.login(this.authManager, args);
+            case "auth_login":
+              return await authTools.login(this.authManager, args);
 
-          case "release_upload":
-            return await releaseTools.upload(this.githubClient, { ...args, ...context });
+            case "release_upload":
+              return await releaseTools.upload(this.githubClient, {
+                ...context,
+                ...args,
+              });
 
-          case "release_view":
-            return await releaseTools.view(this.githubClient, { ...args, ...context });
+            case "release_view":
+              return await releaseTools.view(this.githubClient, {
+                ...context,
+                ...args,
+              });
 
-          case "run_list":
-            return await workflowTools.listRuns(this.githubClient, { ...args, ...context });
+            case "run_list":
+              return await workflowTools.listRuns(this.githubClient, {
+                ...context,
+                ...args,
+              });
 
-          case "run_view":
-            return await workflowTools.viewRun(this.githubClient, { ...args, ...context });
+            case "run_view":
+              return await workflowTools.viewRun(this.githubClient, {
+                ...context,
+                ...args,
+              });
 
-          case "run_watch":
-            return await workflowTools.watchRun(this.githubClient, { ...args, ...context });
+            case "run_watch":
+              return await workflowTools.watchRun(this.githubClient, {
+                ...context,
+                ...args,
+              });
 
-          default:
-            throw new Error(`Unknown tool: ${name}`);
+            case "repo_view":
+              return await repositoryTools.view(this.githubClient, {
+                ...context,
+                ...args,
+              });
+
+            case "repo_list":
+              return await repositoryTools.list(this.githubClient, args);
+
+            case "version_info":
+              return await versionTools.info(this.githubClient, args);
+
+            case "version_check":
+              return await versionTools.checkCompatibility(
+                this.githubClient,
+                args,
+              );
+
+            default:
+              throw new Error(`Unknown tool: ${name}`);
+          }
+        } catch (error) {
+          return {
+            content: [
+              {
+                type: "text",
+                text: `Error executing ${name}: ${
+                  error instanceof Error ? error.message : String(error)
+                }`,
+              },
+            ],
+            isError: true,
+          };
         }
-      } catch (error) {
-        return {
-          content: [
-            {
-              type: "text",
-              text: `Error executing ${name}: ${error instanceof Error ? error.message : String(error)}`,
-            },
-          ],
-          isError: true,
-        };
-      }
-    });
+      },
+    );
   }
 
   private getDefaultOwner(): string {
