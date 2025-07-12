@@ -93,7 +93,8 @@ async function testMCPServer() {
     });
     console.log(
       "✅ Got",
-      (listResponse as { result?: { tools?: unknown[] } }).result?.tools?.length || 0,
+      (listResponse as { result?: { tools?: unknown[] } }).result?.tools
+        ?.length || 0,
       "tools",
     );
 
@@ -113,7 +114,8 @@ async function testMCPServer() {
       },
     });
 
-    const reviewResult = (reviewResponse as { result?: { content?: { text?: string }[] } }).result;
+    const reviewResult =
+      (reviewResponse as { result?: { content?: { text?: string }[] } }).result;
     if (reviewResult?.content?.[0]?.text) {
       console.log("\n📄 Review Result:");
       console.log(reviewResult.content[0].text);
