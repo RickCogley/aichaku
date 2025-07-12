@@ -14,10 +14,12 @@ and this project adheres to
 
 ### Changed
 
+- update version and changelog from previous release attempt (2f3e4a9)
 - temp: skip lint check for release (minor test file warnings) (fcf0dde)
 
 ### Fixed
 
+- cast unknown to string for eval in test file (de25dd4)
 - apply code formatting (41d79a0)
 - resolve all lint errors for clean release (d9d2e79)
 - format nagare config (31d3634)
