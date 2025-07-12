@@ -356,7 +356,6 @@ async function handleWorkflow(
   options: GitHubOptions,
   _args: string[],
 ): Promise<void> {
-
   switch (action) {
     case "list":
       await listWorkflowRuns(options);
