@@ -130,7 +130,9 @@ export default {
 
         console.log("🔍 Running linter...");
         // Skip lint check for this release due to minor test file issues
-        console.warn("⚠️  Skipping lint check for this release (test files have minor warnings)");
+        console.warn(
+          "⚠️  Skipping lint check for this release (test files have minor warnings)",
+        );
 
         console.log("🔍 Running type check...");
         const checkCmd = new Deno.Command("deno", {
