@@ -218,6 +218,18 @@ aichaku uninstall
 aichaku uninstall --global
 ```
 
+### Cleanup Legacy Files
+
+```bash
+# Remove old Aichaku files from legacy locations
+aichaku cleanup
+
+# Preview what would be removed
+aichaku cleanup --dry-run
+```
+
+This removes old files from `~/.claude/` after upgrading to the new structure.
+
 ### Integrate
 
 ```bash
@@ -272,14 +284,29 @@ Aichaku includes an enhanced Model Context Protocol (MCP) server that provides
 intelligent project analysis and documentation generation capabilities directly
 within Claude Desktop.
 
-### NEW: HTTP/SSE Server Mode
+### NEW: HTTP/SSE Server Mode (v0.25.0+)
 
-Support for multiple Claude Code instances with a shared MCP server:
+Run a shared MCP server that multiple Claude Code instances can connect to:
 
 ```bash
-aichaku mcp --start-server   # Start shared server
-aichaku review file.ts       # Auto-uses server if running
+# Start the HTTP/SSE server
+aichaku mcp --start-server
+
+# Check server status
+aichaku mcp --server-status
+
+# Review files (automatically uses HTTP server if running)
+aichaku review file.ts
+
+# Stop the server
+aichaku mcp --stop-server
 ```
+
+**Benefits:**
+- More efficient resource usage
+- Faster response times (no startup overhead)
+- Shared state across multiple Claude Code instances
+- Real-time streaming of results
 
 See [MCP Server Documentation](docs/MCP-SERVER.md) for details.
 
