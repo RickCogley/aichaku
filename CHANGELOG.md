@@ -18,6 +18,8 @@ and this project adheres to
 
 ### Fixed
 
+- apply code formatting (41d79a0)
+- resolve all lint errors for clean release (d9d2e79)
 - format nagare config (31d3634)
 
 ## [0.23.0] - 2025-07-11
