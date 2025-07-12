@@ -575,7 +575,7 @@ This is a ${type} project written primarily in ${mainLanguage}.
       if (type.includes("typescript")) {
         readme += `npm run dev
 # or
-deno run --allow-all ${mainEntry}`;
+deno run --allow-read --allow-write --allow-env --allow-net ${mainEntry}`;
       } else if (type.includes("javascript")) {
         readme += `node ${mainEntry}`;
       } else if (type.includes("python")) {

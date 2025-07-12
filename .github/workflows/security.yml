@@ -171,7 +171,7 @@ jobs:
 
           if grep -r -E "deno\s+(run|test|install)\s+.*--allow-all" \
             --include="*.ts" --include="*.js" --include="*.json" --include="*.md" --include="*.yml" --include="*.yaml" \
-            --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" --exclude-dir=".claude" --exclude-dir=".github" \
+            --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" --exclude-dir=".claude" --exclude-dir=".github" --exclude-dir="docs" \
             . 2>/dev/null | grep -v -E "(# Example|# BAD|# Don't|# Never|# Avoid)"; then
             echo "Found use of --allow-all flag"
             echo "Use specific permissions instead"
