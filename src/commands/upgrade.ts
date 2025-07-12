@@ -6,6 +6,7 @@ import { fetchMethodologies, fetchStandards } from "./content-fetcher.ts";
 import { getAichakuPaths } from "../paths.ts";
 import { resolveProjectPath } from "../utils/project-paths.ts";
 import { safeRemove } from "../utils/path-security.ts";
+import { findMetadataPath, migrateMetadata } from "./upgrade-fix.ts";
 
 interface UpgradeOptions {
   global?: boolean;
@@ -49,18 +50,10 @@ export async function upgrade(
   // Security: Use safe project path resolution
   const _projectPath = resolveProjectPath(options.projectPath);
 
-  // Check if Aichaku is installed (try both old and new marker files)
-  const aichakuJsonPath = isGlobal ? paths.global.config : paths.project.config;
-  const aichakuProjectPath = join(targetPath, ".aichaku-project");
+  // Find metadata in any of the possible locations
+  const metadataInfo = await findMetadataPath(targetPath, isGlobal);
 
-  let metadataPath: string | null = null;
-  if (await exists(aichakuJsonPath)) {
-    metadataPath = aichakuJsonPath;
-  } else if (!isGlobal && await exists(aichakuProjectPath)) {
-    metadataPath = aichakuProjectPath;
-  }
-
-  if (!metadataPath) {
+  if (!metadataInfo.path) {
     return {
       success: false,
       path: targetPath,
@@ -68,6 +61,8 @@ export async function upgrade(
         `No Aichaku installation found at ${targetPath}. Run 'aichaku init' first.`,
     };
   }
+
+  const metadataPath = metadataInfo.path;
 
   // Read current metadata
   let metadata: AichakuMetadata;
@@ -78,7 +73,7 @@ export async function upgrade(
 
     // Handle both old and new metadata formats
     metadata = {
-      version: rawMetadata.version || VERSION,
+      version: rawMetadata.version || metadataInfo.version || VERSION,
       installedAt: rawMetadata.installedAt || rawMetadata.createdAt ||
         new Date().toISOString(),
       installationType: rawMetadata.installationType ||
@@ -319,10 +314,21 @@ export async function upgrade(
     // Update metadata
     metadata.version = VERSION;
     metadata.lastUpgrade = new Date().toISOString();
-    await Deno.writeTextFile(
-      metadataPath,
-      JSON.stringify(metadata, null, 2),
-    );
+
+    // Migrate metadata to new location if needed
+    if (isGlobal && metadataInfo.needsMigration) {
+      const newPath = paths.global.config;
+      await migrateMetadata(metadataPath, newPath, metadata);
+      if (!options.silent) {
+        console.log("✓ Migrated configuration to new location");
+      }
+    } else {
+      // Update existing metadata file
+      await Deno.writeTextFile(
+        metadataPath,
+        JSON.stringify(metadata, null, 2),
+      );
+    }
 
     // NEW: If upgrading a project (not global), also update CLAUDE.md
     if (!isGlobal && !options.dryRun) {

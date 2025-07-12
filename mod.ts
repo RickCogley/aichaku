@@ -110,6 +110,7 @@ export { integrate } from "./src/commands/integrate.ts";
 export { help } from "./src/commands/help.ts";
 export { standards } from "./src/commands/standards.ts";
 export { docsStandard } from "./src/commands/docs-standard.ts";
+export { cleanup } from "./src/commands/cleanup.ts";
 
 // Keep legacy exports for backward compatibility
 export { install } from "./src/installer.ts";

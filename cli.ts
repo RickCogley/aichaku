@@ -37,6 +37,7 @@ import { runMCPCommand } from "./src/commands/mcp.ts";
 import { createMigrateCommand } from "./src/commands/migrate.ts";
 import { runReviewCommand } from "./src/commands/review.ts";
 import { runGitHubCommand } from "./src/commands/github.ts";
+import { cleanup } from "./src/commands/cleanup.ts";
 import { VERSION } from "./mod.ts";
 
 const args = parseArgs(Deno.args, {
@@ -219,6 +220,9 @@ Examples:
   # Remove Aichaku
   aichaku uninstall
 
+  # Clean up legacy files
+  aichaku cleanup
+
   # Add Aichaku to project's CLAUDE.md
   aichaku integrate
 
@@ -348,6 +352,22 @@ Your project now has:
         } else {
           // Already up to date
           console.log(`\nℹ️  ${result.message}`);
+        }
+      }
+      break;
+    }
+
+    case "cleanup": {
+      const result = await cleanup(options);
+      if (!result.success) {
+        console.error(`❌ ${result.message}`);
+        Deno.exit(1);
+      }
+      if (!args.silent) {
+        console.log(`\n✅ ${result.message}`);
+        if (result.filesRemoved && result.filesRemoved.length > 0) {
+          console.log("\nFiles removed:");
+          result.filesRemoved.forEach((file) => console.log(`  - ${file}`));
         }
       }
       break;
