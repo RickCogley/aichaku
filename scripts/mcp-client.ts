@@ -245,7 +245,9 @@ Examples:
         Deno.exit(1);
     }
   } catch (error) {
-    console.error(`Error: ${error instanceof Error ? error.message : String(error)}`);
+    console.error(
+      `Error: ${error instanceof Error ? error.message : String(error)}`,
+    );
     Deno.exit(1);
   } finally {
     await client.disconnect();
