@@ -71,7 +71,11 @@
       "Bash(gh:*)",
       "Bash(./cli.ts review --help)",
       "Bash(nagare release:*)",
-      "Bash(./scripts/bootstrap-release.ts)"
+      "Bash(./scripts/bootstrap-release.ts)",
+      "Bash(./dist/aichaku-darwin-aarch64:*)",
+      "Bash(for:*)",
+      "Bash(do echo \"Uploading $file...\")",
+      "Bash(done)"
     ],
     "deny": []
   }
