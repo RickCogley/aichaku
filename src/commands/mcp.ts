@@ -407,15 +407,37 @@ async function startHTTPServer(): Promise<void> {
     "http-server.ts",
   );
 
-  // Copy HTTP server script to installation directory
-  const serverScript = `${
-    Deno.env.get("PWD")
-  }/mcp/aichaku-mcp-server/src/http-server.ts`;
-
+  // Check if HTTP server script already exists, if not try to copy it
   try {
-    const serverCode = await Deno.readTextFile(serverScript);
-    await ensureDir(join(homeDir, ".aichaku", "mcp-servers"));
-    await Deno.writeTextFile(httpServerPath, serverCode);
+    // First check if the file already exists
+    const fileExists = await exists(httpServerPath);
+
+    if (!fileExists) {
+      // Try to copy from development directory if running locally
+      const serverScript = `${
+        Deno.env.get("PWD")
+      }/mcp/aichaku-mcp-server/src/http-server.ts`;
+
+      try {
+        const serverCode = await Deno.readTextFile(serverScript);
+        await ensureDir(join(homeDir, ".aichaku", "mcp-servers"));
+        await Deno.writeTextFile(httpServerPath, serverCode);
+      } catch {
+        // If we can't find it locally, fetch from GitHub
+        console.log("📥 Downloading HTTP server from GitHub...");
+        const response = await fetch(
+          "https://raw.githubusercontent.com/RickCogley/aichaku/main/mcp/aichaku-mcp-server/src/http-server.ts",
+        );
+        if (!response.ok) {
+          throw new Error(
+            `Failed to download HTTP server: ${response.statusText}`,
+          );
+        }
+        const serverCode = await response.text();
+        await ensureDir(join(homeDir, ".aichaku", "mcp-servers"));
+        await Deno.writeTextFile(httpServerPath, serverCode);
+      }
+    }
   } catch (error) {
     console.error(
       "❌ Failed to prepare HTTP server:",
