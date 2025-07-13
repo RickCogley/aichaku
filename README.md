@@ -13,7 +13,7 @@ Don't want to read the docs? Just run this:
 
 ```bash
 # Install Aichaku globally from JSR
-deno install -A -n aichaku jsr:@rick/aichaku/cli.ts
+deno install -g -A -n aichaku jsr:@rick/aichaku/cli
 
 # Set up everything
 aichaku init --global    # One-time global setup
@@ -175,7 +175,7 @@ aichaku init --dry-run
 
 ```bash
 # Recommended: Upgrade from JSR (matches Quick Start)
-deno install -A -n aichaku --force jsr:@rick/aichaku/cli
+deno install -g -A -n aichaku --force jsr:@rick/aichaku/cli
 
 # Alternative: Use the init script (with feedback)
 deno run -A https://rickcogley.github.io/aichaku/docs/init.ts --force
@@ -607,7 +607,7 @@ If you're upgrading from v0.4.x, the architecture has significantly improved:
 1. **Update the CLI tool:**
 
 ```bash
-deno install -g --allow-read --allow-write --allow-env --allow-net --allow-run -n aichaku --force jsr:@rick/aichaku@0.5.0/cli
+deno install -g --allow-read --allow-write --allow-env --allow-net --allow-run -n aichaku --force jsr:@rick/aichaku/cli
 ```
 
 2. **Keep your global installation** (if you have one):
