@@ -171,42 +171,76 @@ aichaku init --dry-run
 
 ### Upgrading
 
-#### Global CLI
+**⚠️ Important**: Aichaku has TWO components that need separate upgrades:
+
+1. **The CLI tool** (`aichaku` command) - The executable in your PATH
+2. **The global files** (`~/.claude/aichaku/`) - Methodologies and configuration
+
+#### Complete Upgrade Process
 
 ```bash
-# Recommended: Clear cache and upgrade from JSR (matches Quick Start)
+# Step 1: Upgrade the CLI tool
 deno cache --reload jsr:@rick/aichaku/cli && deno install -g -A -n aichaku --force jsr:@rick/aichaku/cli
 
-# Alternative: Use the init script (with feedback)
-deno run -A https://rickcogley.github.io/aichaku/docs/init.ts --force
-
-# Verify what version you have
+# Step 2: Verify CLI version
 aichaku --version
-```
 
-#### Update Projects
-
-After upgrading the global CLI:
-
-```bash
-# In each project, run upgrade to get latest methodologies and update CLAUDE.md
-aichaku upgrade
-
-# This automatically:
-# - Downloads all updated methodology files
-# - Updates CLAUDE.md with latest integration
-# - Preserves your user customizations
-```
-
-#### Global Methodologies
-
-```bash
-# Update global methodology files to latest version
+# Step 3: Upgrade global files to match CLI version
 aichaku upgrade --global
 
-# This automatically downloads all new and updated methodology files
-# Your user customizations in ~/.claude/user/ are always preserved
+# Step 4: Upgrade each project
+cd your-project
+aichaku upgrade
 ```
+
+#### Understanding Version Mismatches
+
+You might see different versions in different places:
+
+```bash
+# CLI version (the tool itself)
+aichaku --version  # e.g., v0.27.0
+
+# Global installation version (methodologies & config)
+cat ~/.claude/aichaku/config.json  # might show v0.25.0
+
+# Project version (what the project expects)
+cat .claude/aichaku/aichaku.config.json  # might show different versions
+```
+
+This happens because:
+
+- The CLI tool can be upgraded independently
+- Global files need a separate upgrade command
+- Projects track which versions they were created with
+
+#### Quick Upgrade (Everything)
+
+```bash
+# One-liner to upgrade both CLI and global files
+deno cache --reload jsr:@rick/aichaku/cli && deno install -g -A -n aichaku --force jsr:@rick/aichaku/cli && aichaku upgrade --global
+```
+
+#### Upgrade Details
+
+**CLI Tool Upgrade:**
+
+- Updates the `aichaku` command itself
+- Gets new features and bug fixes
+- Required before upgrading global files
+
+**Global Files Upgrade (`aichaku upgrade --global`):**
+
+- Updates methodologies in `~/.claude/aichaku/`
+- Updates global configuration
+- Downloads new methodology content
+- Preserves your customizations
+
+**Project Upgrade (`aichaku upgrade`):**
+
+- Updates project's CLAUDE.md
+- Syncs with latest methodology references
+- Updates project configuration
 
 ### Uninstall
 
