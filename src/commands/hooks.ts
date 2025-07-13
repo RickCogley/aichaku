@@ -305,19 +305,22 @@ function listHooks(): void {
  * Ensure conversation summary script is installed
  */
 async function ensureConversationSummaryScript(): Promise<void> {
-  const scriptPath = expandTilde("~/.claude/aichaku/hooks/summarize-conversation.ts");
+  const scriptPath = expandTilde(
+    "~/.claude/aichaku/hooks/summarize-conversation.ts",
+  );
   const scriptDir = expandTilde("~/.claude/aichaku/hooks");
-  
+
   // Create directory if it doesn't exist
   await ensureDir(scriptDir);
-  
+
   // Check if script already exists
   if (await exists(scriptPath)) {
     return;
   }
-  
+
   // Create the script
-  const scriptContent = `#!/usr/bin/env -S deno run --allow-read --allow-run --allow-write
+  const scriptContent =
+    `#!/usr/bin/env -S deno run --allow-read --allow-run --allow-write
 
 interface HookInput {
   session_id: string;
@@ -365,10 +368,10 @@ const content = \`# \${eventPrefix} Summary
 await Deno.writeTextFile(filename, content);
 console.log(\`🪴 Aichaku: \${eventPrefix} saved to \${filename}\`);
 `;
-  
+
   await Deno.writeTextFile(scriptPath, scriptContent);
   await Deno.chmod(scriptPath, 0o755);
-  
+
   console.log("📝 Installed conversation summary script");
 }
 
@@ -478,19 +481,19 @@ async function installHooks(
       if (!dryRun) {
         await ensureConversationSummaryScript();
       }
-      
+
       // Install both Stop and PreCompact hooks
       const stopHook = HOOK_TEMPLATES["conversation-summary"];
       const preCompactHook = HOOK_TEMPLATES["conversation-summary-precompact"];
-      
+
       let summaryInstalled = 0;
-      
+
       // Install Stop hook
       settings.hooks["Stop"] = settings.hooks["Stop"] || [];
       const stopExists = settings.hooks["Stop"].some(
         (h: HookConfig) => h.name === stopHook.name,
       );
-      
+
       if (!stopExists) {
         settings.hooks["Stop"].push({
           name: stopHook.name,
@@ -499,13 +502,13 @@ async function installHooks(
         });
         summaryInstalled++;
       }
-      
-      // Install PreCompact hook  
+
+      // Install PreCompact hook
       settings.hooks["PreCompact"] = settings.hooks["PreCompact"] || [];
       const preCompactExists = settings.hooks["PreCompact"].some(
         (h: HookConfig) => h.name === preCompactHook.name,
       );
-      
+
       if (!preCompactExists) {
         settings.hooks["PreCompact"].push({
           name: preCompactHook.name,
@@ -514,7 +517,7 @@ async function installHooks(
         });
         summaryInstalled++;
       }
-      
+
       if (summaryInstalled > 0) {
         console.log(`✅ Conversation Summary installed (Stop & PreCompact)`);
         installed += summaryInstalled;
@@ -523,7 +526,7 @@ async function installHooks(
       }
       continue;
     }
-    
+
     // Regular hook installation
     const hook = HOOK_TEMPLATES[hookId as keyof typeof HOOK_TEMPLATES];
     if (!hook) {

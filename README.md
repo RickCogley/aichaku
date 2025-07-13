@@ -266,11 +266,13 @@ aichaku hooks --remove --global
 ```
 
 **Available Hook Sets:**
+
 - **Essential** (4 hooks): Must-haves for Claude+Aichaku workflow
 - **Productivity** (4 hooks): Workflow enhancers
 - **Security** (2 hooks): Compliance and safety checks
 
-**Important:** Restart Claude Code after installing/removing hooks for changes to take effect.
+**Important:** Restart Claude Code after installing/removing hooks for changes
+to take effect.
 
 ### Help Examples
 
