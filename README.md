@@ -174,8 +174,8 @@ aichaku init --dry-run
 #### Global CLI
 
 ```bash
-# Recommended: Upgrade from JSR (matches Quick Start)
-deno install -g -A -n aichaku --force jsr:@rick/aichaku/cli
+# Recommended: Clear cache and upgrade from JSR (matches Quick Start)
+deno cache --reload jsr:@rick/aichaku/cli && deno install -g -A -n aichaku --force jsr:@rick/aichaku/cli
 
 # Alternative: Use the init script (with feedback)
 deno run -A https://rickcogley.github.io/aichaku/docs/init.ts --force
