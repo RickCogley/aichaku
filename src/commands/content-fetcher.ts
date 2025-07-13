@@ -126,6 +126,10 @@ export async function fetchContent(
       console.warn(
         `\n⚠️  Partial success: ${successCount} files ready, ${failureCount} failed`,
       );
+      if (failedFiles.length > 0) {
+        console.warn("   Failed files:");
+        failedFiles.forEach((file) => console.warn(`     - ${file}`));
+      }
       return true; // Partial success is still considered success
     } else if (successCount > 0) {
       const capitalizedContent = contentType.charAt(0).toUpperCase() +
@@ -145,12 +149,19 @@ export async function fetchContent(
 function getMethodologyStructure(): Record<string, unknown> {
   return {
     "BLENDING-GUIDE.md": "",
+    "COMMANDS.md": "",
+    "README.md": "",
     "core": {
       "PLANNING-MODE.md": "",
       "PLANNING-MODE-ADAPTIVE.md": "",
       "EXECUTION-MODE.md": "",
       "IMPROVEMENT-MODE.md": "",
       "STATUS-TEMPLATE.md": "",
+      "AICHAKU-DIAGRAM-INTEGRATION.md": "",
+      "DIAGRAM-AUTOMATION-GUIDE.md": "",
+      "MERMAID-DIAGRAM-PATTERNS.md": "",
+      "MERMAID-REFERENCE-GUIDE.md": "",
+      "TECHNICAL-DOCUMENTATION-SUMMARY.md": "",
     },
     "shape-up": {
       "SHAPE-UP-AICHAKU-GUIDE.md": "",
@@ -175,7 +186,7 @@ function getMethodologyStructure(): Record<string, unknown> {
       "KANBAN-AICHAKU-GUIDE.md": "",
       "templates": {
         "kanban-board.md": "",
-        "wip-limits.md": "",
+        "flow-metrics.md": "",
       },
     },
     "lean": {
@@ -187,8 +198,7 @@ function getMethodologyStructure(): Record<string, unknown> {
     "scrumban": {
       "SCRUMBAN-AICHAKU-GUIDE.md": "",
       "templates": {
-        "board-setup.md": "",
-        "flow-metrics.md": "",
+        "planning-trigger.md": "",
       },
     },
   };
