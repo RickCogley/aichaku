@@ -243,6 +243,35 @@ aichaku integrate --dry-run
 aichaku integrate --force
 ```
 
+### Hooks - Automate Your Workflow
+
+```bash
+# See what hooks are available
+aichaku hooks --list
+
+# Show currently installed hooks
+aichaku hooks --show
+
+# Install essential hooks (recommended)
+aichaku hooks --install essential --global
+
+# Install to current project only
+aichaku hooks --install essential --local
+
+# Install specific hooks
+aichaku hooks --install conversation-summary,code-review --local
+
+# Remove all Aichaku hooks
+aichaku hooks --remove --global
+```
+
+**Available Hook Sets:**
+- **Essential** (4 hooks): Must-haves for Claude+Aichaku workflow
+- **Productivity** (4 hooks): Workflow enhancers
+- **Security** (2 hooks): Compliance and safety checks
+
+**Important:** Restart Claude Code after installing/removing hooks for changes to take effect.
+
 ### Help Examples
 
 ```bash
@@ -303,6 +332,7 @@ aichaku mcp --stop-server
 ```
 
 **Benefits:**
+
 - More efficient resource usage
 - Faster response times (no startup overhead)
 - Shared state across multiple Claude Code instances

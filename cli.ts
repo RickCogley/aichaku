@@ -56,7 +56,6 @@ const args = parseArgs(Deno.args, {
     "categories",
     "select",
     "show",
-    "install",
     "config",
     "status",
     "start",
@@ -95,6 +94,8 @@ const args = parseArgs(Deno.args, {
     "verbose",
     "yes",
     "no-global",
+    "local",
+    "remove",
   ],
   string: [
     "path",
@@ -432,8 +433,11 @@ ${
         list: args.list as boolean | undefined,
         install: args.install as string | undefined,
         validate: args.validate as boolean | undefined,
-        remove: args.remove as boolean | undefined,
+        remove: args.remove === true ? true : undefined,
         dryRun: args["dry-run"] as boolean | undefined,
+        show: args.show as boolean | undefined,
+        global: args.global as boolean | undefined,
+        local: args.local as boolean | undefined,
       };
 
       await hooks(hooksOptions);
