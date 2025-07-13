@@ -6,6 +6,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.28.0] - 2025-07-13
+
+### Added
+
+- add Shape Up pitch for automatic version checking (a4eecf1)
+
+### Changed
+
+- upgrade local (335f793)
+- apply code formatting to nagare.config.ts (34d7eb0)
+- clarify upgrade process for CLI vs global files (f2b16f7)
+- add cache clearing to upgrade instructions (ff57464)
+- fix installation commands in README (f765dc7)
+
+### Fixed
+
+- update core methodology files for new project structure (072643f)
+- update CLAUDE.md integration content for new paths (f732d31)
+- update init command for new project structure (d1fb325)
+- update CLI messages to show docs/projects path (9f7ea9c)
+- update project paths from .claude/output to docs/projects (3d66270)
+- use package-and-upload script in nagare postRelease hook (1a07ace)
+
 ## [0.27.0] - 2025-07-13
 
 ### Added
