@@ -295,7 +295,7 @@ try {
 🎯 Next: Run 'aichaku init' (new) or 'aichaku upgrade' (existing) in your Claude Code projects
 
 💡 Claude Code will now automatically:
-   • Create documents in .claude/output/
+   • Create documents in docs/projects/
    • Follow methodology patterns
    • Respond to "shape", "sprint", "kanban", etc.
    
@@ -321,7 +321,7 @@ Your project now has:
    • "Plan our next sprint"
    • "Show me our kanban board"
    
-   Documents will automatically appear in .claude/output/
+   Documents will automatically appear in docs/projects/
 `);
         }
       }
