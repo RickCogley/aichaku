@@ -9,7 +9,7 @@ When you hear any of these:
 - "Fix..." / "Improve..." / "Change..."
 - "Plan..." / "Shape..." / "Define..."
 
-IMMEDIATELY create: 📁 `.claude/output/active-{YYYY-MM-DD}-{descriptive-name}/`
+IMMEDIATELY create: 📁 `docs/projects/active/{YYYY-MM-DD}-{descriptive-name}/`
 └── STATUS.md
 
 This is automatic - users shouldn't need to ask!
@@ -46,7 +46,7 @@ DETECT context → APPLY methodology rules → OUTPUT actionable plan
 
 3. **OUTPUT STRUCTURED PLAN**
    ```
-   SAVE TO: .claude/output/active-YYYY-MM-DD-[descriptive-name]/
+   SAVE TO: docs/projects/active/YYYY-MM-DD-[descriptive-name]/
    FORMAT: Methodology-specific template
    TRACK: Progress in STATUS.md
    ```

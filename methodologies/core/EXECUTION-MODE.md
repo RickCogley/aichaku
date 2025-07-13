@@ -10,7 +10,7 @@ When you hear any of these:
 - "Start working on..." / "Let's do this..."
 
 IMMEDIATELY create (if not exists): 📁
-`.claude/output/active-{YYYY-MM-DD}-{descriptive-name}/` └── STATUS.md
+`docs/projects/active/{YYYY-MM-DD}-{descriptive-name}/` └── STATUS.md
 
 This is automatic - users shouldn't need to ask!
 

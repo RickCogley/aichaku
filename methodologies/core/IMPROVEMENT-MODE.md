@@ -10,8 +10,8 @@ When you hear any of these:
 - "Measure..." / "Metrics..." / "Performance..."
 
 CONTINUE in existing folder OR create new: 📁
-`.claude/output/active-{YYYY-MM-DD}-{descriptive-name}/` └── STATUS.md (update
-to IMPROVEMENT mode)
+`docs/projects/active/{YYYY-MM-DD}-{descriptive-name}/` └── STATUS.md (update to
+IMPROVEMENT mode)
 
 This is automatic - users shouldn't need to ask!
 
