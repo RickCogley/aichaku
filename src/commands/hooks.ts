@@ -273,7 +273,9 @@ function listHooks(): void {
       console.log(`  ${hookId}`);
       console.log(`    ${hook.description}`);
       console.log(
-        `    Event: ${hook.type}${"matcher" in hook && hook.matcher ? ` (${hook.matcher})` : ""}`,
+        `    Event: ${hook.type}${
+          "matcher" in hook && hook.matcher ? ` (${hook.matcher})` : ""
+        }`,
       );
       console.log();
     }
