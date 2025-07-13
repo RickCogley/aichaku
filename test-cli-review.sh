@@ -4,7 +4,7 @@ echo "Testing aichaku review command..."
 
 # Run the review command with a short timeout
 (
-    deno run -A cli.ts review test-review.ts &
+    deno run -A cli.ts review test-review_test.ts &
     PID=$!
     sleep 5
     kill $PID 2>/dev/null

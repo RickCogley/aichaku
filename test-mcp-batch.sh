@@ -6,7 +6,7 @@ echo "Testing Aichaku MCP Server..."
 # Create temporary file with JSON-RPC requests
 cat > /tmp/mcp-test-requests.jsonl << 'EOF'
 {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"0.1.0","capabilities":{},"clientInfo":{"name":"test","version":"1.0.0"}}}
-{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"review_file","arguments":{"file":"/Users/rcogley/dev/aichaku/test-review.ts","includeExternal":false}}}
+{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"review_file","arguments":{"file":"/Users/rcogley/dev/aichaku/test-review_test.ts","includeExternal":false}}}
 EOF
 
 # Send requests to server and capture output

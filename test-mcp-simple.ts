@@ -12,7 +12,7 @@ async function testMCPReview() {
 
   const serverPath = Deno.env.get("HOME") +
     "/.aichaku/mcp-servers/aichaku-code-reviewer";
-  const testFilePath = resolve("test-review.ts");
+  const testFilePath = resolve("test-review_test.ts");
 
   console.log("Testing review of:", testFilePath);
   console.log("Server path:", serverPath);

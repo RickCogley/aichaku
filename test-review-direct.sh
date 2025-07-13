@@ -6,7 +6,7 @@ echo "Testing Aichaku review command..."
 # Create test input
 cat > /tmp/test-mcp-input.jsonl << 'EOF'
 {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"capabilities":{}}}
-{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"review_file","arguments":{"file":"/Users/rcogley/dev/aichaku/test-review.ts"}}}
+{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"review_file","arguments":{"file":"/Users/rcogley/dev/aichaku/test-review_test.ts"}}}
 EOF
 
 # Run the MCP server (it will exit after processing)

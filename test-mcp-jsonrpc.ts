@@ -114,7 +114,7 @@ async function testMCPServer() {
   // Test 3: Review file
   console.log("\n3. Testing review_file tool...");
   try {
-    const testFilePath = resolve("test-review.ts");
+    const testFilePath = resolve("test-review_test.ts");
 
     const reviewRequest = {
       jsonrpc: "2.0",
