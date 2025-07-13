@@ -170,68 +170,21 @@ export default {
     ],
     postRelease: [
       async () => {
-        console.log("🔨 Building binaries...");
+        console.log("🔨 Building and uploading binaries...");
 
-        // First build the binaries
-        const buildCmd = new Deno.Command("deno", {
-          args: ["run", "-A", "./scripts/build-binaries.ts"],
+        // Run package-and-upload script which handles everything
+        const packageCmd = new Deno.Command("deno", {
+          args: ["run", "-A", "./scripts/package-and-upload.ts"],
           stdout: "inherit",
           stderr: "inherit",
         });
 
-        const buildResult = await buildCmd.output();
-        if (!buildResult.success) {
-          console.error("⚠️  Binary build failed - continuing anyway");
-          return; // Don't throw - this is post-release
-        }
-
-        console.log("✅ Binaries built successfully");
-        console.log("🚀 Uploading binaries to GitHub release...");
-
-        // Find all the binary files to upload
-        const files: string[] = [];
-        for await (const entry of Deno.readDir("./dist")) {
-          if (
-            entry.isFile &&
-            (entry.name.endsWith(".tar.gz") || entry.name.endsWith(".zip"))
-          ) {
-            files.push(`dist/${entry.name}`);
-          }
-        }
-
-        if (files.length === 0) {
-          console.error("⚠️  No binary files found in dist/ - skipping upload");
-          return;
-        }
-
-        console.log(`📦 Found ${files.length} files to upload`);
-
-        // Use the deterministic GitHub command to upload assets
-        // Run the CLI directly with Deno to ensure it's available
-        const uploadCmd = new Deno.Command("deno", {
-          args: [
-            "run",
-            "--allow-read",
-            "--allow-write",
-            "--allow-env",
-            "--allow-net",
-            "--allow-run",
-            "./cli.ts",
-            "github",
-            "release",
-            "upload",
-            ...files,
-          ],
-          stdout: "inherit",
-          stderr: "inherit",
-        });
-
-        const uploadResult = await uploadCmd.output();
-        if (!uploadResult.success) {
-          console.error("⚠️  Binary upload failed - continuing anyway");
+        const packageResult = await packageCmd.output();
+        if (!packageResult.success) {
+          console.error("⚠️  Binary packaging/upload failed - continuing anyway");
           // Don't throw - this is post-release, so the release already succeeded
         } else {
-          console.log("✅ Binaries uploaded to GitHub release");
+          console.log("✅ Binaries packaged and uploaded to GitHub release");
         }
       },
     ],
