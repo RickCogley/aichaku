@@ -239,15 +239,15 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
       console.log("✓ Created user customization directory");
     }
 
-    // Create output directory structure (for both global and project)
-    const outputDir = isGlobal
-      ? join(targetPath, "output")
-      : paths.project.output;
-    await ensureDir(outputDir);
+    // Create output directory structure (only for projects)
+    if (!isGlobal) {
+      const outputDir = paths.project.output;
+      await ensureDir(outputDir);
 
-    // Create output README
-    const outputReadmePath = join(outputDir, "README.md");
-    await Deno.writeTextFile(outputReadmePath, getOutputReadmeContent());
+      // Create output README
+      const outputReadmePath = join(outputDir, "README.md");
+      await Deno.writeTextFile(outputReadmePath, getOutputReadmeContent());
+    }
 
     // Create behavioral reinforcement files
     const aichakuBehaviorPath = join(targetPath, ".aichaku-behavior");
@@ -257,7 +257,11 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     await Deno.writeTextFile(rulesReminderPath, getRulesReminderContent());
 
     if (!options.silent) {
-      console.log("✓ Created output directory and behavioral guides");
+      if (!isGlobal) {
+        console.log("✓ Created output directory and behavioral guides");
+      } else {
+        console.log("✓ Created behavioral guides");
+      }
     }
 
     // Create metadata file
@@ -460,25 +464,23 @@ Remember: These customizations make Aichaku work better for YOUR team.
 }
 
 function getOutputReadmeContent(): string {
-  return `# Aichaku Output Directory
+  return `# Aichaku Project Documentation
 
 This directory contains all project documentation organized by status and date.
 
 ## Structure
 
-- \`active-*\` - Currently ongoing work
-- \`complete-*\` - Successfully completed projects
-- \`cancelled-*\` - Cancelled projects
-- \`paused-*\` - Projects on hold
+- \`active/\` - Currently ongoing work
+- \`done/\` - Completed projects
 
 ## Naming Convention
 
-\`[status]-YYYY-MM-DD-[descriptive-kebab-case-name]\`
+\`YYYY-MM-DD-[descriptive-kebab-case-name]\`
 
 Examples:
-- active-2025-01-07-user-authentication
-- active-2025-01-07-fix-performance-issues
-- complete-2025-01-06-global-project-redesign
+- active/2025-01-07-user-authentication
+- active/2025-01-07-fix-performance-issues
+- done/2025-01-06-global-project-redesign
 
 ## What Goes Here
 
@@ -505,27 +507,25 @@ function getBehaviorContent(): string {
   return `# 🎯 Quick Reference for Claude Code
 
 ## Before ANY work:
-1. Check .claude/aichaku/output/ for existing active-* directories
-2. Create new active-YYYY-MM-DD-{name} for new work
+1. Check docs/projects/active/ for existing project directories
+2. Create new YYYY-MM-DD-{name} directory for new work
 3. ALWAYS create STATUS.md first
 4. Read methodology guides from ~/.claude/aichaku/methodologies/
 
 ## Key Behaviors:
-✅ Documents ALWAYS go in .claude/aichaku/output/active-*/
+✅ Documents ALWAYS go in docs/projects/active/*/
 ✅ Update STATUS.md after each work session
 ✅ Create documents without asking permission
-✅ Rename to complete-* when done
+✅ Move to docs/projects/done/ when complete
 
 ❌ NEVER create documents in project root
 ❌ NEVER use .claude/user/ for output
 ❌ NEVER wait for permission to create standard docs
 ❌ NEVER proceed with implementation without approval
 
-## Status Transitions:
-- active-* → Work in progress
-- complete-* → Successfully finished
-- cancelled-* → Work stopped
-- paused-* → Temporarily on hold
+## Project Structure:
+- docs/projects/active/ → Work in progress
+- docs/projects/done/ → Completed work
 
 IMPORTANT: Creating proper structure is AUTOMATIC, not optional.
 `;
@@ -536,7 +536,7 @@ function getRulesReminderContent(): string {
 
 ## Before creating ANY file, check:
 
-1. ✅ Is it going in \`.claude/aichaku/output/active-*/\`?
+1. ✅ Is it going in \`docs/projects/active/*/\`?
 2. ✅ Does STATUS.md exist there?
 3. ✅ Have I updated STATUS.md recently?
 
@@ -546,14 +546,14 @@ If any answer is NO → FIX IT FIRST!
 
 ### Wrong location?
 \`\`\`bash
-mv [file] .claude/aichaku/output/active-[current-project]/
+mv [file] docs/projects/active/[current-project]/
 \`\`\`
 
 ### No STATUS.md?
 Create it immediately with project info.
 
 ### Not sure where to put files?
-ALWAYS: \`.claude/aichaku/output/active-YYYY-MM-DD-{project-name}/\`
+ALWAYS: \`docs/projects/active/YYYY-MM-DD-{project-name}/\`
 
 ## Remember:
 - This is AUTOMATIC behavior
