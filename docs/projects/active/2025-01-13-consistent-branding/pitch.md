@@ -88,6 +88,54 @@ This approach ensures:
 - **Tone**: Friendly, adaptive, growing with you
 - **Consistency**: Same format across all commands
 
+### CLI Messaging Standards
+
+Following established CLI UX principles and Google's documentation approach:
+
+#### 1. **Clarity** (Google Style)
+```typescript
+// ❌ Bad: Vague
+Brand.log("Processing...");
+
+// ✅ Good: Specific
+Brand.log("Fetching methodologies from GitHub...");
+```
+
+#### 2. **User-Focused** (Google Style)
+```typescript
+// ❌ Bad: Technical
+Brand.error("ENOENT: stat() failed on path");
+
+// ✅ Good: Helpful
+Brand.error("Can't find that file. Did you mean 'init' instead of 'upgrade'?");
+```
+
+#### 3. **Progressive Disclosure** (CLI Best Practice)
+```typescript
+// Default: Essential info only
+Brand.log("Upgraded to v0.29.0");
+
+// Verbose: Additional context
+Brand.log("Upgraded to v0.29.0 (31 files updated, 2.3s)");
+
+// Debug: Full details
+Brand.debug("Upgraded to v0.29.0\n  Files: 31 updated, 0 failed\n  Time: 2.3s\n  From: v0.28.0");
+```
+
+#### 4. **Actionable Errors** (12-Factor CLI Apps)
+```typescript
+// ❌ Bad: Dead end
+Brand.error("Permission denied");
+
+// ✅ Good: Next steps
+Brand.error("Permission denied. Try:\n  sudo aichaku init --global\n  or check file ownership");
+```
+
+#### 5. **Consistent Voice** (Content Strategy)
+- **Active voice**: "Creating project..." not "Project is being created..."
+- **Present tense**: "Create" not "Created" for ongoing actions
+- **You/Your**: "Your project is ready" not "The project is ready"
+
 ### Examples
 
 ```typescript
@@ -131,12 +179,76 @@ console.error("🪴 Aichaku: Oops! Let me help you fix this...");
 - **Clear source** - Always know messages are from Aichaku
 - **Professional feel** - Polished, thoughtful interface
 
+## Standards References
+
+### Established CLI Guidelines We'll Follow
+
+1. **Command Line Interface Guidelines** (by Aanand Prasad & contributors)
+   - Be human-friendly
+   - Make errors helpful
+   - Use color purposefully
+   - Support --quiet and --verbose
+
+2. **12-Factor CLI Apps** (Heroku)
+   - Explicit error codes
+   - Machine-parseable output options
+   - Respect environment variables
+   - Clean separation of concerns
+
+3. **Google Developer Documentation Style Guide**
+   - Write for the user, not the system
+   - Use present tense
+   - Be concise but complete
+   - Include examples
+
+4. **Microsoft's Command-Line Syntax Standards**
+   - Consistent parameter naming
+   - Clear help text
+   - Predictable behavior
+
+### Message Categories and Standards
+
+```typescript
+interface MessageStandards {
+  // Informational - What's happening
+  info: {
+    tone: "neutral, present tense",
+    example: "Checking requirements..."
+  },
+  
+  // Success - Task completed
+  success: {
+    tone: "positive, past tense", 
+    example: "✅ Project initialized!"
+  },
+  
+  // Warning - Attention needed
+  warning: {
+    tone: "cautious, actionable",
+    example: "⚠️  Old version detected. Run 'upgrade' to update."
+  },
+  
+  // Error - Task failed
+  error: {
+    tone: "helpful, solution-oriented",
+    example: "❌ Can't write to directory. Check permissions or use sudo."
+  },
+  
+  // Progress - Ongoing work
+  progress: {
+    tone: "active, specific",
+    example: "📦 Downloading methodology files... (22/31)"
+  }
+}
+```
+
 ## Migration Strategy
 
-1. Create the branded-messages module
-2. Add a lint rule to flag direct console.log usage
-3. Gradually migrate existing commands
-4. Update contributor guidelines
+1. Create the branded-messages module with standards built-in
+2. Create a style guide document for contributors
+3. Add a lint rule to flag direct console.log usage
+4. Gradually migrate existing commands
+5. Set up automated testing for message standards
 
 ## Nice-to-haves
 

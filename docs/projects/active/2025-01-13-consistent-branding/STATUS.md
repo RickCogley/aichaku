@@ -35,3 +35,14 @@ Key files to update:
 ## Quick Wins
 
 This is a high-impact, low-effort improvement that will make every interaction feel more cohesive and memorable.
+
+## Additional Insights
+
+User pointed out the connection to Google's documentation style guide - CLI messages ARE documentation. This led to incorporating established CLI messaging standards:
+
+- Command Line Interface Guidelines (human-friendly errors)
+- 12-Factor CLI Apps (machine-parseable output)
+- Google's documentation principles (user-focused, clear, concise)
+- Microsoft's CLI standards (predictable behavior)
+
+This could potentially become a reusable module for other CLI projects - "Standards-based CLI messaging as a service".
