@@ -6,6 +6,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.27.0] - 2025-07-13
+
+### Added
+
+- implement enhanced hooks command with installation options (9059c14)
+
+### Changed
+
+- apply code formatting (cab0607)
+- add hooks release summary and security workflow simplification project
+  (ba1578d)
+- apply code formatting (a9bf086)
+- track CLI polish issues in standards integration project (c5fc4f7)
+- organize completed projects and archive to done (cbd5995)
+- update README with cleanup command and HTTP/SSE server details (d90d3af)
+
+### Fixed
+
+- resolve type errors in hooks command (5aacca1)
+- disable overly broad path traversal pattern in security workflow (dee96ba)
+- update security workflow to exclude legitimate file operations (ac0a19a)
+- rename test-review.ts to follow test naming convention (a4dda94)
+- implement proper script-based conversation summary hooks (c9a7756)
+- use dynamic VERSION import in packaging script (6fe8915)
+
 ## [0.26.0] - 2025-07-12
 
 ### Changed
