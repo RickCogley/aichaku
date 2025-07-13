@@ -124,7 +124,9 @@ jobs:
             # String concatenation in file paths
             "(readFile|writeFile|open|stat)\s*\([^)]*\+[^)]*\[(req|request|params|query|body|input|userInput|args)"
             # Direct usage of user input in file operations
-            "(Deno\.(readFile|readTextFile|open|stat|lstat|readDir|remove|rename|mkdir)|fs\.(readFile|writeFile|readdir|stat|unlink|rename|mkdir))\s*\(\s*[a-zA-Z_$][a-zA-Z0-9_$]*\s*[,)]"
+            # NOTE: This pattern is too broad and causes too many false positives
+            # It matches ANY Deno file operation with a variable, which is normal usage
+            # "(Deno\.(readFile|readTextFile|open|stat|lstat|readDir|remove|rename|mkdir)|fs\.(readFile|writeFile|readdir|stat|unlink|rename|mkdir))\s*\(\s*[a-zA-Z_$][a-zA-Z0-9_$]*\s*[,)]"
             # Path traversal sequences in strings
             "\.\./\.\./|\\.\\.\\\\\\.\.\\\\"
           )
