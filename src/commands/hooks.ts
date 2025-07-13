@@ -273,7 +273,7 @@ function listHooks(): void {
       console.log(`  ${hookId}`);
       console.log(`    ${hook.description}`);
       console.log(
-        `    Event: ${hook.type}${hook.matcher ? ` (${hook.matcher})` : ""}`,
+        `    Event: ${hook.type}${"matcher" in hook && hook.matcher ? ` (${hook.matcher})` : ""}`,
       );
       console.log();
     }
@@ -456,7 +456,7 @@ async function installHooks(
   // Check if it's a category
   const categoryDef = HOOK_CATEGORIES[input as keyof typeof HOOK_CATEGORIES];
   if (categoryDef) {
-    hooksToInstall = categoryDef.hooks;
+    hooksToInstall = [...categoryDef.hooks];
     categoryName = categoryDef.name;
     if (input === "custom") {
       console.log("Custom selection not yet implemented");
