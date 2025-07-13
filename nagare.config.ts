@@ -181,7 +181,9 @@ export default {
 
         const packageResult = await packageCmd.output();
         if (!packageResult.success) {
-          console.error("⚠️  Binary packaging/upload failed - continuing anyway");
+          console.error(
+            "⚠️  Binary packaging/upload failed - continuing anyway",
+          );
           // Don't throw - this is post-release, so the release already succeeded
         } else {
           console.log("✅ Binaries packaged and uploaded to GitHub release");
