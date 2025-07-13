@@ -115,14 +115,14 @@ const HOOK_TEMPLATES = {
     description: "Auto-save summaries before context loss",
     type: "Stop",
     command:
-      `echo "🪴 Aichaku: Consider creating a checkpoint with /checkpoint command before stopping."`,
+      `deno run --allow-read --allow-run ~/.claude/aichaku/hooks/summarize-conversation.ts`,
   },
   "conversation-summary-precompact": {
     name: "Pre-Compact Summary",
     description: "Auto-save summaries before context compaction",
     type: "PreCompact",
     command:
-      `echo "⚠️  Aichaku: Context will be compacted. Use /checkpoint to save important context."`,
+      `deno run --allow-read --allow-run ~/.claude/aichaku/hooks/summarize-conversation.ts`,
   },
   "code-review": {
     name: "Code Review",
@@ -302,6 +302,77 @@ function listHooks(): void {
 }
 
 /**
+ * Ensure conversation summary script is installed
+ */
+async function ensureConversationSummaryScript(): Promise<void> {
+  const scriptPath = expandTilde("~/.claude/aichaku/hooks/summarize-conversation.ts");
+  const scriptDir = expandTilde("~/.claude/aichaku/hooks");
+  
+  // Create directory if it doesn't exist
+  await ensureDir(scriptDir);
+  
+  // Check if script already exists
+  if (await exists(scriptPath)) {
+    return;
+  }
+  
+  // Create the script
+  const scriptContent = `#!/usr/bin/env -S deno run --allow-read --allow-run --allow-write
+
+interface HookInput {
+  session_id: string;
+  transcript_path: string;
+  hook_event_name: string;
+  stop_hook_active?: boolean;
+}
+
+const decoder = new TextDecoder();
+const buffer = await Deno.stdin.readable.getReader().read();
+const input = decoder.decode(buffer.value);
+const hookInput: HookInput = JSON.parse(input);
+
+// Read the conversation transcript
+const transcriptContent = await Deno.readTextFile(hookInput.transcript_path);
+
+// Generate summary based on hook event
+const eventPrefix = hookInput.hook_event_name === "preCompact" ? "Pre-Compact" : "Checkpoint";
+
+// Create checkpoint directory if it doesn't exist
+const checkpointDir = "docs/checkpoints";
+try {
+  await Deno.mkdir(checkpointDir, { recursive: true });
+} catch {
+  // Directory might already exist
+}
+
+// Generate filename with timestamp
+const now = new Date();
+const dateStr = now.toISOString().split('T')[0];
+const filename = \`\${checkpointDir}/\${eventPrefix.toLowerCase()}-\${dateStr}-\${hookInput.session_id.slice(0, 8)}.md\`;
+
+// For now, just save the transcript with a header
+const content = \`# \${eventPrefix} Summary
+
+**Date**: \${now.toISOString()}
+**Session**: \${hookInput.session_id}
+**Event**: \${hookInput.hook_event_name}
+
+## Conversation Transcript
+
+\${transcriptContent}
+\`;
+
+await Deno.writeTextFile(filename, content);
+console.log(\`🪴 Aichaku: \${eventPrefix} saved to \${filename}\`);
+`;
+  
+  await Deno.writeTextFile(scriptPath, scriptContent);
+  await Deno.chmod(scriptPath, 0o755);
+  
+  console.log("📝 Installed conversation summary script");
+}
+
+/**
  * Install hook templates
  */
 async function installHooks(
@@ -401,6 +472,59 @@ async function installHooks(
   let notFound = 0;
 
   for (const hookId of hooksToInstall) {
+    // Special handling for conversation-summary (installs both Stop and PreCompact)
+    if (hookId === "conversation-summary") {
+      // Ensure script is installed
+      if (!dryRun) {
+        await ensureConversationSummaryScript();
+      }
+      
+      // Install both Stop and PreCompact hooks
+      const stopHook = HOOK_TEMPLATES["conversation-summary"];
+      const preCompactHook = HOOK_TEMPLATES["conversation-summary-precompact"];
+      
+      let summaryInstalled = 0;
+      
+      // Install Stop hook
+      settings.hooks["Stop"] = settings.hooks["Stop"] || [];
+      const stopExists = settings.hooks["Stop"].some(
+        (h: HookConfig) => h.name === stopHook.name,
+      );
+      
+      if (!stopExists) {
+        settings.hooks["Stop"].push({
+          name: stopHook.name,
+          command: stopHook.command,
+          description: stopHook.description,
+        });
+        summaryInstalled++;
+      }
+      
+      // Install PreCompact hook  
+      settings.hooks["PreCompact"] = settings.hooks["PreCompact"] || [];
+      const preCompactExists = settings.hooks["PreCompact"].some(
+        (h: HookConfig) => h.name === preCompactHook.name,
+      );
+      
+      if (!preCompactExists) {
+        settings.hooks["PreCompact"].push({
+          name: preCompactHook.name,
+          command: preCompactHook.command,
+          description: preCompactHook.description,
+        });
+        summaryInstalled++;
+      }
+      
+      if (summaryInstalled > 0) {
+        console.log(`✅ Conversation Summary installed (Stop & PreCompact)`);
+        installed += summaryInstalled;
+      } else {
+        console.log(`⚠️ Conversation Summary already installed`);
+      }
+      continue;
+    }
+    
+    // Regular hook installation
     const hook = HOOK_TEMPLATES[hookId as keyof typeof HOOK_TEMPLATES];
     if (!hook) {
       console.log(`❌ Unknown hook: ${hookId}`);

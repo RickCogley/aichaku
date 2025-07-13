@@ -7,8 +7,9 @@ interface HookInput {
   stop_hook_active?: boolean;
 }
 
-const decoder = new TextDecoder();
-const input = decoder.decode(await Deno.readAll(Deno.stdin));
+const decoder = new TextDecoder();  
+const buffer = await Deno.stdin.readable.getReader().read();
+const input = decoder.decode(buffer.value);
 const hookInput: HookInput = JSON.parse(input);
 
 // Read the conversation transcript
