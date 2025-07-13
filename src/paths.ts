@@ -92,13 +92,13 @@ export function getAichakuPaths(): AichakuPaths {
       },
     },
 
-    // Project paths under .claude/aichaku/
+    // Project paths - config in .claude/aichaku/, docs in docs/projects/
     project: {
       root: join(cwd, ".claude", "aichaku"),
-      output: join(cwd, ".claude", "aichaku", "output"),
+      output: join(cwd, "docs", "projects"),
       config: join(cwd, ".claude", "aichaku", "aichaku.config.json"),
-      active: join(cwd, ".claude", "aichaku", "output", "active"),
-      done: join(cwd, ".claude", "aichaku", "output", "done"),
+      active: join(cwd, "docs", "projects", "active"),
+      done: join(cwd, "docs", "projects", "done"),
     },
 
     // Legacy paths for backward compatibility
