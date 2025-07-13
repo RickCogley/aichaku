@@ -27,6 +27,8 @@ graph LR
 ### In Progress
 - 🔄 Testing integration workflow
 - 🔄 Documentation updates
+- 🔄 Fix `help --all` to show documentation standards
+- 🔄 Polish CLI help output consistency (`--help` vs `help`)
 
 ### Upcoming
 - 📋 Role-based prompting system
@@ -49,4 +51,4 @@ graph LR
 
 ---
 
-*Last Updated: 2025-01-10*
+*Last Updated: 2025-01-13*
