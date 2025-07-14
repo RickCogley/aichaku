@@ -1,0 +1,2 @@
+Testing if hooks execute
+After restart - this should trigger the test hook

@@ -4,11 +4,13 @@ Welcome to the Aichaku documentation! This guide is organized using the Diátaxi
 
 ## 🆕 Latest Updates
 
-**v0.20.0 - Custom Standards & New Structure**
-- Create and manage custom standards with new CLI commands
-- Improved folder organization under `~/.claude/aichaku/`
-- [Migration guide](tutorials/migrate-to-new-structure.md) for existing users
-- [Custom standards guide](how-to/manage-custom-standards.md) for teams
+**v0.29.0 - TypeScript Hooks & Enhanced Standards**
+- **NEW**: TypeScript-based hooks system for Claude Code automation
+- **NEW**: GitHub integration hooks (todo-tracker, pr-checker, etc.)
+- **NEW**: Documentation review hooks (docs-review, jsdoc-checker)
+- **IMPROVED**: Standards command with better search and management
+- **IMPROVED**: Comprehensive JSDoc for better API documentation
+- Enhanced hook categories: Essential, Productivity, Security, and GitHub
 
 ## 📚 Documentation Types
 

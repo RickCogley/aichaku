@@ -4,6 +4,8 @@
  * @module
  */
 
+// Test comment for hook testing - edited to trigger hooks
+
 /**
  * Represents a project methodology that can be installed by aichaku
  *
@@ -119,4 +121,55 @@ export interface DocumentationStandardConfig {
     path: string;
     tags: string[];
   }>;
+}
+
+/**
+ * Represents a Claude Code hook configuration
+ *
+ * @public
+ */
+export interface HookConfig {
+  /** Optional matcher pattern for tool-specific hooks */
+  matcher?: string;
+  /** Array of hook commands to execute */
+  hooks: Array<{
+    /** Hook type (always "command" for now) */
+    type: string;
+    /** Command to execute */
+    command: string;
+  }>;
+}
+
+/**
+ * Claude Code settings structure with hooks
+ *
+ * @public
+ */
+export interface ClaudeSettings {
+  /** Hook configurations by event type */
+  hooks?: {
+    [eventType: string]: HookConfig[];
+  };
+  /** Other Claude Code settings */
+  [key: string]: unknown;
+}
+
+/**
+ * Hook template definition for Aichaku hooks
+ *
+ * @public
+ */
+export interface HookTemplate {
+  /** Display name of the hook */
+  name: string;
+  /** Description of what the hook does */
+  description: string;
+  /** Event type when the hook runs */
+  type: string;
+  /** Optional tool matcher pattern */
+  matcher?: string;
+  /** Source of the hook (always "aichaku" for our hooks) */
+  source: string;
+  /** Command to execute */
+  command: string;
 }

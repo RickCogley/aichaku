@@ -1,0 +1,1 @@
+This should trigger PostToolUse hooks with Write matcher

@@ -1,0 +1,4 @@
+This is a test file to trigger hooks
+Now with an edit to trigger PostToolUse hooks
+Testing again with MCP server running on port 7182
+After restart with correct hook structure!

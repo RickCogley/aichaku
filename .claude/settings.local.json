@@ -85,7 +85,17 @@
       "Bash(~/.aichaku/mcp-servers/aichaku-code-reviewer)",
       "Bash(./test-mcp-batch.sh:*)",
       "Bash(./test-review-direct.sh:*)",
-      "Bash(./test-cli-review.sh:*)"
+      "Bash(./test-cli-review.sh:*)",
+      "Bash(git -C /Users/rcogley/dev/salty.esolia.pro-dd status)",
+      "Bash(git -C /Users/rcogley/dev/salty.esolia.pro-dd add -A)",
+      "Bash(git -C /Users/rcogley/dev/salty.esolia.pro-dd status --short)",
+      "Bash(git -C /Users/rcogley/dev/salty.esolia.pro-dd commit -m \"chore: upgrade aichaku to v0.28.0 and migrate to new structure\n\n- Install Aichaku v0.28.0 configuration\n- Migrate all projects from .claude/output/ to docs/projects/\n- Move 4 active projects and 8 completed projects\n- Add behavioral guidelines and rules reminder\n- Set up user customization directory\n- Remove old output directory structure\")",
+      "Bash(git -C /Users/rcogley/dev/salty.esolia.pro-dd push origin main)",
+      "Bash(jq:*)",
+      "Bash(python3:*)",
+      "Bash(deno bundle:*)",
+      "Bash(timeout 30s deno compile:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }

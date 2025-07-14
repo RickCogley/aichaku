@@ -1,0 +1,2 @@
+Testing hooks with --debug mode enabled
+This should show hook execution in the transcript (Ctrl-R)

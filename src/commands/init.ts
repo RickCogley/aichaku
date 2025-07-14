@@ -6,30 +6,77 @@ import { fetchMethodologies, fetchStandards } from "./content-fetcher.ts";
 import { ensureAichakuDirs, getAichakuPaths } from "../paths.ts";
 import { resolveProjectPath } from "../utils/project-paths.ts";
 
+/**
+ * Options for initializing Aichaku
+ * @public
+ */
 interface InitOptions {
+  /** Initialize globally in ~/.claude instead of current project */
   global?: boolean;
+  /** Project path for local initialization (defaults to current directory) */
   projectPath?: string;
+  /** Force overwrite existing initialization */
   force?: boolean;
+  /** Suppress output messages */
   silent?: boolean;
+  /** Preview what would be done without making changes */
   dryRun?: boolean;
 }
 
+/**
+ * Result of initialization operation
+ * @public
+ */
 interface InitResult {
+  /** Whether initialization succeeded */
   success: boolean;
+  /** Path where Aichaku was initialized */
   path: string;
+  /** Optional message describing the result */
   message?: string;
+  /** Whether global installation was detected */
   globalDetected?: boolean;
+  /** Action that was taken */
   action?: "created" | "exists" | "error";
 }
 
 /**
- * Initialize Aichaku - globally or in a project
+ * Initialize Aichaku globally or in a project
  *
- * Global: Installs all methodologies to ~/.claude/
- * Project: Creates minimal structure and references global
+ * This command sets up Aichaku for use with Claude. Global installation is required
+ * before project-specific initialization can be done.
  *
- * @param options - Initialization options
- * @returns Promise with initialization result
+ * **Global initialization** (`--global`):
+ * - Installs all methodologies to ~/.claude/
+ * - Downloads standards library
+ * - Creates user customization directory
+ * - Required before any project initialization
+ *
+ * **Project initialization** (default):
+ * - Creates minimal .claude/ structure in project
+ * - References global methodologies
+ * - Creates project-specific customization area
+ * - Requires global installation first
+ *
+ * @param {InitOptions} options - Initialization options
+ * @returns {Promise<InitResult>} Result indicating success and what was done
+ *
+ * @example
+ * ```ts
+ * // First time setup - install globally
+ * await init({ global: true });
+ *
+ * // Initialize in a project
+ * await init({ projectPath: "/path/to/project" });
+ *
+ * // Preview what would be done
+ * await init({ dryRun: true });
+ *
+ * // Force reinstall
+ * await init({ global: true, force: true });
+ * ```
+ *
+ * @public
  */
 export async function init(options: InitOptions = {}): Promise<InitResult> {
   const isGlobal = options.global || false;

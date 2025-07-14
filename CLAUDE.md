@@ -6,68 +6,68 @@ the Aichaku methodology library.
 <!-- AICHAKU:START -->
 
 <!-- AICHAKU:METHODOLOGY:START -->
+
 ## 🎯 MANDATORY: Aichaku Integration Rules
 
 YOU ARE REQUIRED TO FOLLOW THESE RULES WITHOUT EXCEPTION:
 
 ### 1. Discussion-First Document Creation
 
-**Phase 1: DISCUSSION MODE (Default when methodology keywords detected)**
-✅ Acknowledge the methodology context: "🪴 Aichaku: I see you're thinking about [topic]"
-✅ Ask clarifying questions to understand the goal
-✅ Help shape and refine the idea
-❌ DO NOT create any project folders yet
-❌ DO NOT create any documents yet
+**Phase 1: DISCUSSION MODE (Default when methodology keywords detected)** ✅
+Acknowledge the methodology context: "🪴 Aichaku: I see you're thinking about
+[topic]" ✅ Ask clarifying questions to understand the goal ✅ Help shape and
+refine the idea ❌ DO NOT create any project folders yet ❌ DO NOT create any
+documents yet
 
-**Phase 2: WAIT FOR EXPLICIT READINESS**
-Only create documents when user says:
+**Phase 2: WAIT FOR EXPLICIT READINESS** Only create documents when user says:
+
 - "Let's create a project for this"
 - "I'm ready to start"
 - "Set up the project"
 - "Create the documentation"
 - Any direct request for project creation
 
-**Phase 3: CREATE NAMED PROJECT (After user signals readiness)**
-✅ Confirm name: "🪴 Aichaku: Based on our discussion, creating project: [descriptive-name]"
-✅ Create ALL documents in: `docs/projects/active/YYYY-MM-DD-{descriptive-name}/`
-✅ Create STATUS.md FIRST
-✅ Create methodology-specific documents
-✅ Read guides from `~/.claude/methodologies/`
+**Phase 3: CREATE NAMED PROJECT (After user signals readiness)** ✅ Confirm
+name: "🪴 Aichaku: Based on our discussion, creating project:
+[descriptive-name]" ✅ Create ALL documents in:
+`docs/projects/active/YYYY-MM-DD-{descriptive-name}/` ✅ Create STATUS.md FIRST
+✅ Create methodology-specific documents ✅ Read guides from
+`~/.claude/methodologies/`
 
-**YOU MUST NEVER:**
-❌ Create documents in the project root directory
-❌ Create documents in .claude/user/ (that's for customizations)
-❌ Ask where to put files (always use docs/projects/)
-❌ Create folders before user is ready to formalize
+**YOU MUST NEVER:** ❌ Create documents in the project root directory ❌ Create
+documents in .claude/user/ (that's for customizations) ❌ Ask where to put files
+(always use docs/projects/) ❌ Create folders before user is ready to formalize
 
 ### 2. CRITICAL: DISCUSSION FIRST, THEN CREATE WITHOUT ASKING
 
-**During Discussion Phase:**
-✅ DO say: "🪴 Aichaku: I understand you're exploring [topic]. Let me help you think through this..."
-✅ DO say: "What specific challenges are you looking to address?"
-❌ NEVER say: "Would you like me to create documents for this?"
+**During Discussion Phase:** ✅ DO say: "🪴 Aichaku: I understand you're
+exploring [topic]. Let me help you think through this..." ✅ DO say: "What
+specific challenges are you looking to address?" ❌ NEVER say: "Would you like
+me to create documents for this?"
 
-**Once User Signals Readiness:**
-❌ NEVER say: "Would you like me to..."
-❌ NEVER say: "Shall I create..."
-❌ NEVER say: "Should I go ahead and..."
-✅ IMMEDIATELY say: "🪴 Aichaku: Creating project: [descriptive-name]"
-✅ IMMEDIATELY say: "Setting up Shape Up documentation..."
-✅ IMMEDIATELY say: "Generating sprint planning templates..."
+**Once User Signals Readiness:** ❌ NEVER say: "Would you like me to..." ❌
+NEVER say: "Shall I create..." ❌ NEVER say: "Should I go ahead and..." ✅
+IMMEDIATELY say: "🪴 Aichaku: Creating project: [descriptive-name]" ✅
+IMMEDIATELY say: "Setting up Shape Up documentation..." ✅ IMMEDIATELY say:
+"Generating sprint planning templates..."
 
-**THE RULE:** Discuss and refine FIRST. Once user signals readiness, CREATE IMMEDIATELY without asking. This provides thoughtful structure while respecting user autonomy.
+**THE RULE:** Discuss and refine FIRST. Once user signals readiness, CREATE
+IMMEDIATELY without asking. This provides thoughtful structure while respecting
+user autonomy.
 
 ### 3. Methodology Detection & Discussion
 
 When you hear these keywords, ENTER DISCUSSION MODE:
 
 **Planning Keywords** → Will create in `docs/projects/active/*/` (when ready):
+
 - "shape"/"pitch" → Discuss Shape Up approach → Later: pitch.md
 - "sprint"/"scrum" → Discuss Scrum planning → Later: sprint-planning.md
 - "kanban"/"board" → Discuss Kanban flow → Later: kanban-board.md
 - "mvp"/"lean" → Discuss Lean experiments → Later: experiment-plan.md
 
 **Discussion Mode Actions:**
+
 1. Acknowledge: "🪴 Aichaku: I see you're interested in [methodology]"
 2. Read the appropriate guide SILENTLY:
    - `~/.claude/methodologies/[methodology]/[METHODOLOGY]-AICHAKU-GUIDE.md`
@@ -78,13 +78,13 @@ When you hear these keywords, ENTER DISCUSSION MODE:
 
 ### 4. Visual Identity & Progress Indicators
 
-**MANDATORY Visual Identity:**
-✅ ALWAYS prefix Aichaku messages with: 🪴 Aichaku:
-✅ Use growth phase indicators: 🌱 (new) → 🌿 (active) → 🌳 (mature) → 🍃 (complete)
-✅ Show current phase in status updates with **bold** text and arrow: [Planning] → [**Executing**] → [Complete]
-                                                                                    ▲
+**MANDATORY Visual Identity:** ✅ ALWAYS prefix Aichaku messages with: 🪴
+Aichaku: ✅ Use growth phase indicators: 🌱 (new) → 🌿 (active) → 🌳 (mature) →
+🍃 (complete) ✅ Show current phase in status updates with **bold** text and
+arrow: [Planning] → [**Executing**] → [Complete] ▲
 
 **Example Status Display:**
+
 ```
 🪴 Aichaku: Shape Up Progress
 [Shaping] → [**Betting**] → [Building] → [Cool-down]
@@ -93,26 +93,26 @@ Week 2/6 ████████░░░░░░░░░░░░ 33% 🌿
 ```
 
 **Methodology Icons:**
+
 - Shape Up: Use 🎯 for betting, 🔨 for building
 - Scrum: Use 🏃 for sprints, 📋 for backlog
 - Kanban: Use 📍 for cards, 🌊 for flow
 - Lean: Use 🧪 for experiments, 📊 for metrics
 
-**NEVER:**
-❌ Use garden metaphors in text (no "planting", "growing", "harvesting")
-❌ Mix visual indicators (keep consistent within a project)
-❌ Overuse emojis (maximum one per concept)
+**NEVER:** ❌ Use garden metaphors in text (no "planting", "growing",
+"harvesting") ❌ Mix visual indicators (keep consistent within a project) ❌
+Overuse emojis (maximum one per concept)
 
 ### 5. Mermaid Diagram Integration
 
-**MANDATORY Diagram Creation:**
-✅ Include Mermaid diagrams in EVERY project documentation
-✅ Add methodology-specific workflow diagrams
-✅ Use diagrams to visualize project status
+**MANDATORY Diagram Creation:** ✅ Include Mermaid diagrams in EVERY project
+documentation ✅ Add methodology-specific workflow diagrams ✅ Use diagrams to
+visualize project status
 
 **Required Diagrams by Document:**
 
 **In STATUS.md:**
+
 ```mermaid
 graph LR
     A[🌱 Started] --> B[🌿 Active]
@@ -122,6 +122,7 @@ graph LR
 ```
 
 **In Shape Up pitch.md:**
+
 ```mermaid
 graph TD
     A[Problem] --> B[Appetite: 6 weeks]
@@ -131,6 +132,7 @@ graph TD
 ```
 
 **In Scrum sprint-planning.md:**
+
 ```mermaid
 gantt
     title Sprint 15 Timeline
@@ -141,14 +143,13 @@ gantt
     Review & Retro    :2025-07-16, 2d
 ```
 
-**NEVER:**
-❌ Create diagrams without labels
-❌ Use complex diagrams when simple ones work
-❌ Forget to update diagrams with status changes
+**NEVER:** ❌ Create diagrams without labels ❌ Use complex diagrams when simple
+ones work ❌ Forget to update diagrams with status changes
 
 ### 6. Project Lifecycle Management
 
 **Starting Work:**
+
 1. ⚠️ **CHECK TODAY'S DATE**: Look for "Today's date:" in the environment info
 2. Create: `docs/projects/active/YYYY-MM-DD-{descriptive-name}/`
    - YYYY-MM-DD must be TODAY'S actual date from environment
@@ -160,16 +161,19 @@ gantt
 6. WAIT for human approval before coding
 
 **During Work:**
+
 - Update STATUS.md regularly (including diagram state)
 - Create supporting documents freely
 - Start responses with: "🪴 Aichaku: Currently in [mode] working on [task]"
 
 **Completing Work:**
+
 1. Create YYYY-MM-DD-{Project-Name}-CHANGE-LOG.md summarizing all changes
    - ⚠️ Use TODAY'S date from environment info (not example dates!)
    - Example format: 2025-07-10-Fix-Security-Tests-CHANGE-LOG.md
    - Example format: 2025-07-10-Update-Authentication-CHANGE-LOG.md
-   - NEVER just "CHANGE-LOG.md" - always include TODAY'S date and descriptive project name
+   - NEVER just "CHANGE-LOG.md" - always include TODAY'S date and descriptive
+     project name
 2. Update final diagram states
 3. Rename folder: active-* → done-*
 4. Ask: "Work appears complete. Shall I commit and push?"
@@ -178,6 +182,7 @@ gantt
 ### 7. Git Automation
 
 When work is confirmed complete:
+
 ```bash
 git add docs/projects/active/[current-project]/
 git commit -m "[type]: [description]
@@ -190,104 +195,118 @@ git push origin [current-branch]
 ### 8. Error Recovery
 
 If you accidentally create a file in the wrong location:
+
 1. Move it immediately: `mv [file] docs/projects/active/*/`
 2. Update STATUS.md noting the correction
 3. Continue without asking
 
-REMEMBER: This is AUTOMATIC behavior. Users expect documents to appear in the right place without asking.
+REMEMBER: This is AUTOMATIC behavior. Users expect documents to appear in the
+right place without asking.
 
-Methodologies: Shape Up, Scrum, Kanban, Lean, XP, Scrumban
-Learn more: https://github.com/RickCogley/aichaku
+Methodologies: Shape Up, Scrum, Kanban, Lean, XP, Scrumban Learn more:
+https://github.com/RickCogley/aichaku
 
 <!-- AICHAKU:METHODOLOGY:END -->
 
 <!-- AICHAKU:STANDARDS:START -->
+
 ## 📚 Selected Standards & Guidelines
 
-🪴 Aichaku: Based on your project configuration, follow these standards when generating code:
+🪴 Aichaku: Based on your project configuration, follow these standards when
+generating code:
 
 ### NIST-CSF
 
 ## NIST Cybersecurity Framework (CSF 2.0)
 
 ### Quick Reference
+
 The NIST CSF organizes cybersecurity activities into six core functions:
 
-1. **🎯 Govern** - Establish cybersecurity governance and enterprise risk management
-2. **🔍 Identify** - Understand cybersecurity risks to systems, people, assets, data, and capabilities
-3. **🛡️ Protect** - Implement appropriate safeguards to ensure delivery of critical services
-4. **🔍 Detect** - Implement activities to identify the occurrence of cybersecurity events
-5. **🚨 Respond** - Implement activities to take action regarding detected cybersecurity incidents
-6. **🔄 Recover** - Implement activities to restore capabilities impaired by cybersecurity incidents
+1. **🎯 Govern** - Establish cybersecurity governance and enterprise risk
+   management
+2. **🔍 Identify** - Understand cybersecurity risks to systems, people, assets,
+   data, and capabilities
+3. **🛡️ Protect** - Implement appropriate safeguards to ensure delivery of
+   critical services
+4. **🔍 Detect** - Implement activities to identify the occurrence of
+   cybersecurity events
+5. **🚨 Respond** - Implement activities to take action regarding detected
+   cybersecurity incidents
+6. **🔄 Recover** - Implement activities to restore capabilities impaired by
+   cybersecurity incidents
 
 ### Implementation for Software Development
 
 #### Govern (GV)
+
 ```typescript
 // ✅ Good: Governance through code
 const securityPolicy = {
-  dataRetention: '7 years',
-  encryptionStandard: 'AES-256-GCM',
+  dataRetention: "7 years",
+  encryptionStandard: "AES-256-GCM",
   passwordPolicy: {
     minLength: 12,
     requireUppercase: true,
     requireNumbers: true,
-    requireSymbols: true
+    requireSymbols: true,
   },
-  accessReview: 'quarterly'
+  accessReview: "quarterly",
 };
 
 // Document security decisions
 class SecurityDecisionLog {
   static logDecision(decision: string, rationale: string, approver: string) {
-    logger.info('Security decision logged', {
+    logger.info("Security decision logged", {
       decision,
       rationale,
       approver,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   }
 }
 ```
 
 #### Identify (ID)
+
 ```typescript
 // ✅ Good: Asset inventory and risk assessment
 interface AssetInventory {
   id: string;
-  type: 'database' | 'api' | 'service' | 'data_store';
-  classification: 'public' | 'internal' | 'confidential' | 'restricted';
+  type: "database" | "api" | "service" | "data_store";
+  classification: "public" | "internal" | "confidential" | "restricted";
   dependencies: string[];
-  riskLevel: 'low' | 'medium' | 'high' | 'critical';
+  riskLevel: "low" | "medium" | "high" | "critical";
 }
 
 class RiskAssessment {
   static assessDataFlow(data: DataFlow): RiskLevel {
     if (data.containsPII && !data.encrypted) {
-      return 'critical';
+      return "critical";
     }
-    if (data.classification === 'restricted' && data.networkExposed) {
-      return 'high';
+    if (data.classification === "restricted" && data.networkExposed) {
+      return "high";
     }
-    return 'medium';
+    return "medium";
   }
 }
 ```
 
 #### Protect (PR)
+
 ```typescript
 // ✅ Good: Implement protection measures
 class DataProtection {
   static encryptSensitiveData(data: string): string {
     return crypto.encrypt(data, {
-      algorithm: 'AES-256-GCM',
-      key: process.env.ENCRYPTION_KEY
+      algorithm: "AES-256-GCM",
+      key: process.env.ENCRYPTION_KEY,
     });
   }
-  
+
   static enforceAccessControl(user: User, resource: Resource): boolean {
     return user.permissions.includes(resource.requiredPermission) &&
-           user.clearanceLevel >= resource.clearanceLevel;
+      user.clearanceLevel >= resource.clearanceLevel;
   }
 }
 
@@ -297,90 +316,94 @@ const secureDefaults = {
   maxLoginAttempts: 5,
   passwordExpiry: 90 * 24 * 60 * 60 * 1000, // 90 days
   httpsOnly: true,
-  secureCookies: true
+  secureCookies: true,
 };
 ```
 
 #### Detect (DE)
+
 ```typescript
 // ✅ Good: Security monitoring and alerting
 class SecurityMonitoring {
   static monitorFailedLogins(attempts: LoginAttempt[]) {
     const recentFailures = attempts.filter(
-      attempt => !attempt.successful && 
-      attempt.timestamp > Date.now() - (5 * 60 * 1000)
+      (attempt) =>
+        !attempt.successful &&
+        attempt.timestamp > Date.now() - (5 * 60 * 1000),
     );
-    
+
     if (recentFailures.length > 5) {
-      this.alertSecurityTeam('Potential brute force attack', {
+      this.alertSecurityTeam("Potential brute force attack", {
         ip: recentFailures[0].ip,
         username: recentFailures[0].username,
-        attemptCount: recentFailures.length
+        attemptCount: recentFailures.length,
       });
     }
   }
-  
+
   static detectAnomalousActivity(userActivity: UserActivity) {
     if (userActivity.dataAccessVolume > userActivity.normalBaseline * 10) {
-      this.flagSuspiciousActivity('Unusual data access pattern', userActivity);
+      this.flagSuspiciousActivity("Unusual data access pattern", userActivity);
     }
   }
 }
 ```
 
 #### Respond (RS)
+
 ```typescript
 // ✅ Good: Incident response procedures
 class IncidentResponse {
   static async containThreat(incident: SecurityIncident) {
     // Immediate containment
-    if (incident.severity === 'critical') {
+    if (incident.severity === "critical") {
       await this.disableAffectedAccounts(incident.affectedUsers);
       await this.isolateAffectedSystems(incident.affectedSystems);
     }
-    
+
     // Notification
     await this.notifySecurityTeam(incident);
-    
+
     // Documentation
     await this.logIncident(incident);
   }
-  
+
   static async investigateIncident(incident: SecurityIncident) {
     const evidence = await this.collectEvidence(incident);
     const analysis = await this.analyzeEvidence(evidence);
-    
+
     return {
       rootCause: analysis.rootCause,
       impact: analysis.impact,
-      recommendations: analysis.recommendations
+      recommendations: analysis.recommendations,
     };
   }
 }
 ```
 
 #### Recover (RC)
+
 ```typescript
 // ✅ Good: Recovery and restoration procedures
 class RecoveryManager {
   static async restoreFromBackup(system: string, pointInTime: Date) {
     // Validate backup integrity
     const backup = await this.validateBackup(system, pointInTime);
-    
+
     if (!backup.isValid) {
-      throw new Error('Backup integrity check failed');
+      throw new Error("Backup integrity check failed");
     }
-    
+
     // Restore system
     await this.restoreSystem(system, backup);
-    
+
     // Verify restoration
     await this.verifySystemIntegrity(system);
-    
+
     // Update recovery metrics
     this.updateRecoveryMetrics(system, {
       recoveryTime: Date.now() - incident.detectionTime,
-      dataLoss: backup.dataLoss
+      dataLoss: backup.dataLoss,
     });
   }
 }
@@ -389,51 +412,56 @@ class RecoveryManager {
 ### CSF Implementation Tiers
 
 #### Tier 1: Partial
+
 ```typescript
 // Basic security measures
 const basicSecurity = {
-  authentication: 'username/password',
-  logging: 'error logs only',
-  updates: 'manual, irregular'
+  authentication: "username/password",
+  logging: "error logs only",
+  updates: "manual, irregular",
 };
 ```
 
 #### Tier 2: Risk Informed
+
 ```typescript
 // Risk-based security decisions
 const riskInformedSecurity = {
-  authentication: 'multi-factor authentication',
-  logging: 'comprehensive audit logging',
-  updates: 'regular, risk-prioritized patches',
-  riskAssessment: 'annual assessments'
+  authentication: "multi-factor authentication",
+  logging: "comprehensive audit logging",
+  updates: "regular, risk-prioritized patches",
+  riskAssessment: "annual assessments",
 };
 ```
 
 #### Tier 3: Repeatable
+
 ```typescript
 // Formal policies and procedures
 const repeatableSecurity = {
-  policies: 'documented and approved',
-  procedures: 'standardized and tested',
-  training: 'regular security awareness',
-  metrics: 'security KPIs tracked'
+  policies: "documented and approved",
+  procedures: "standardized and tested",
+  training: "regular security awareness",
+  metrics: "security KPIs tracked",
 };
 ```
 
 #### Tier 4: Adaptive
+
 ```typescript
 // Continuous improvement
 const adaptiveSecurity = {
-  threatIntelligence: 'real-time threat feeds',
-  automation: 'automated response to known threats',
-  learning: 'lessons learned incorporated',
-  innovation: 'proactive security measures'
+  threatIntelligence: "real-time threat feeds",
+  automation: "automated response to known threats",
+  learning: "lessons learned incorporated",
+  innovation: "proactive security measures",
 };
 ```
 
 ### Development Integration
 
 #### Secure Development Lifecycle
+
 ```typescript
 // Integrate security into development workflow
 class SecureSDLC {
@@ -442,12 +470,12 @@ class SecureSDLC {
       this.scanForSecrets(code),
       this.performStaticAnalysis(code),
       this.checkDependencyVulnerabilities(),
-      this.validateSecurityRequirements(code)
+      this.validateSecurityRequirements(code),
     ]);
-    
+
     return this.consolidateResults(results);
   }
-  
+
   static async deploymentChecks(artifact: DeploymentArtifact): Promise<void> {
     await this.verifySignature(artifact);
     await this.scanForVulnerabilities(artifact);
@@ -457,6 +485,7 @@ class SecureSDLC {
 ```
 
 #### Security Metrics
+
 ```typescript
 // Track security metrics
 interface SecurityMetrics {
@@ -474,7 +503,7 @@ class SecurityMetricsCollector {
       patchingTime: this.calculateAveragePatchTime(),
       incidentResponseTime: this.calculateResponseTime(),
       securityTrainingCompletion: this.getTrainingCompletionRate(),
-      complianceScore: this.calculateComplianceScore()
+      complianceScore: this.calculateComplianceScore(),
     };
   }
 }
@@ -483,6 +512,7 @@ class SecurityMetricsCollector {
 ### CSF Profile for Software Development
 
 #### Core Requirements
+
 - **Data Protection**: Encrypt sensitive data at rest and in transit
 - **Access Control**: Implement role-based access with least privilege
 - **Vulnerability Management**: Regular scanning and patching
@@ -490,6 +520,7 @@ class SecurityMetricsCollector {
 - **Security Testing**: Integrate security testing into CI/CD pipeline
 
 #### Risk-Based Priorities
+
 1. **High Priority**: Authentication, encryption, input validation
 2. **Medium Priority**: Logging, monitoring, backup procedures
 3. **Low Priority**: Advanced threat detection, security automation
@@ -497,6 +528,7 @@ class SecurityMetricsCollector {
 ### Compliance Considerations
 
 #### Documentation Requirements
+
 ```typescript
 // Maintain compliance documentation
 class ComplianceDocumentation {
@@ -506,13 +538,14 @@ class ComplianceDocumentation {
       scope: this.getSystemScope(),
       findings: this.getSecurityFindings(),
       riskLevel: this.calculateOverallRisk(),
-      remediationPlan: this.generateRemediationPlan()
+      remediationPlan: this.generateRemediationPlan(),
     };
   }
 }
 ```
 
 #### Audit Trail
+
 ```typescript
 // Maintain comprehensive audit logs
 class AuditLogger {
@@ -524,15 +557,17 @@ class AuditLogger {
       resource: event.resource,
       outcome: event.outcome,
       ipAddress: event.ipAddress,
-      userAgent: event.userAgent
+      userAgent: event.userAgent,
     };
-    
+
     this.writeToAuditLog(auditEntry);
   }
 }
 ```
 
-Remember: The NIST CSF is a risk-based approach to cybersecurity. Focus on implementing controls that address your specific risks and business requirements, starting with the most critical assets and highest-risk scenarios.
+Remember: The NIST CSF is a risk-based approach to cybersecurity. Focus on
+implementing controls that address your specific risks and business
+requirements, starting with the most critical assets and highest-risk scenarios.
 
 ---
 
@@ -541,6 +576,7 @@ Remember: The NIST CSF is a risk-based approach to cybersecurity. Focus on imple
 ## Test-Driven Development (TDD)
 
 ### Quick Reference
+
 TDD follows a simple three-step cycle:
 
 1. **🔴 Red** - Write a failing test
@@ -550,16 +586,17 @@ TDD follows a simple three-step cycle:
 ### Core Principles
 
 #### Write Tests First
+
 ```typescript
 // ✅ Good: Test first approach
-describe('UserService', () => {
-  it('should create a user with valid data', async () => {
-    const userData = { email: 'test@example.com', name: 'Test User' };
+describe("UserService", () => {
+  it("should create a user with valid data", async () => {
+    const userData = { email: "test@example.com", name: "Test User" };
     const user = await userService.createUser(userData);
-    
+
     expect(user.id).toBeDefined();
-    expect(user.email).toBe('test@example.com');
-    expect(user.name).toBe('Test User');
+    expect(user.email).toBe("test@example.com");
+    expect(user.name).toBe("Test User");
     expect(user.createdAt).toBeInstanceOf(Date);
   });
 });
@@ -571,31 +608,32 @@ class UserService {
       id: generateId(),
       email: userData.email,
       name: userData.name,
-      createdAt: new Date()
+      createdAt: new Date(),
     };
   }
 }
 ```
 
 #### Test Behavior, Not Implementation
+
 ```typescript
 // ✅ Good: Testing behavior
-describe('Calculator', () => {
-  it('should add two numbers correctly', () => {
+describe("Calculator", () => {
+  it("should add two numbers correctly", () => {
     const result = calculator.add(2, 3);
     expect(result).toBe(5);
   });
-  
-  it('should handle decimal numbers', () => {
+
+  it("should handle decimal numbers", () => {
     const result = calculator.add(0.1, 0.2);
     expect(result).toBeCloseTo(0.3);
   });
 });
 
 // ❌ Bad: Testing implementation details
-describe('Calculator', () => {
-  it('should call the internal sum method', () => {
-    const spy = jest.spyOn(calculator, 'sum');
+describe("Calculator", () => {
+  it("should call the internal sum method", () => {
+    const spy = jest.spyOn(calculator, "sum");
     calculator.add(2, 3);
     expect(spy).toHaveBeenCalled();
   });
@@ -605,15 +643,16 @@ describe('Calculator', () => {
 ### The TDD Cycle in Practice
 
 #### 1. Red Phase - Write a Failing Test
+
 ```typescript
 // Start with a failing test
-describe('Order', () => {
-  it('should calculate total with tax', () => {
+describe("Order", () => {
+  it("should calculate total with tax", () => {
     const order = new Order([
       { price: 100, quantity: 2 },
-      { price: 50, quantity: 1 }
+      { price: 50, quantity: 1 },
     ]);
-    
+
     const total = order.calculateTotal(0.1); // 10% tax
     expect(total).toBe(275); // (200 + 50) * 1.1
   });
@@ -623,15 +662,16 @@ describe('Order', () => {
 ```
 
 #### 2. Green Phase - Make It Pass
+
 ```typescript
 // Write minimal code to make the test pass
 class Order {
   constructor(private items: OrderItem[]) {}
-  
+
   calculateTotal(taxRate: number): number {
     const subtotal = this.items.reduce(
-      (sum, item) => sum + (item.price * item.quantity), 
-      0
+      (sum, item) => sum + (item.price * item.quantity),
+      0,
     );
     return subtotal * (1 + taxRate);
   }
@@ -639,23 +679,24 @@ class Order {
 ```
 
 #### 3. Refactor Phase - Improve the Code
+
 ```typescript
 // Refactor while keeping tests green
 class Order {
   constructor(private items: OrderItem[]) {}
-  
+
   calculateTotal(taxRate: number): number {
     const subtotal = this.calculateSubtotal();
     return this.applyTax(subtotal, taxRate);
   }
-  
+
   private calculateSubtotal(): number {
     return this.items.reduce(
-      (sum, item) => sum + (item.price * item.quantity), 
-      0
+      (sum, item) => sum + (item.price * item.quantity),
+      0,
     );
   }
-  
+
   private applyTax(amount: number, rate: number): number {
     return amount * (1 + rate);
   }
@@ -665,53 +706,56 @@ class Order {
 ### TDD Best Practices
 
 #### Test Structure (AAA Pattern)
+
 ```typescript
-describe('UserValidator', () => {
-  it('should reject invalid email addresses', () => {
+describe("UserValidator", () => {
+  it("should reject invalid email addresses", () => {
     // Arrange
     const validator = new UserValidator();
-    const invalidEmail = 'not-an-email';
-    
+    const invalidEmail = "not-an-email";
+
     // Act
     const result = validator.validateEmail(invalidEmail);
-    
+
     // Assert
     expect(result.isValid).toBe(false);
-    expect(result.error).toBe('Invalid email format');
+    expect(result.error).toBe("Invalid email format");
   });
 });
 ```
 
 #### One Assert Per Test
+
 ```typescript
 // ✅ Good: Single assertion
-it('should create user with correct email', () => {
-  const user = userService.createUser({ email: 'test@example.com' });
-  expect(user.email).toBe('test@example.com');
+it("should create user with correct email", () => {
+  const user = userService.createUser({ email: "test@example.com" });
+  expect(user.email).toBe("test@example.com");
 });
 
-it('should create user with generated ID', () => {
-  const user = userService.createUser({ email: 'test@example.com' });
+it("should create user with generated ID", () => {
+  const user = userService.createUser({ email: "test@example.com" });
   expect(user.id).toBeDefined();
 });
 
 // ❌ Bad: Multiple assertions
-it('should create user correctly', () => {
-  const user = userService.createUser({ email: 'test@example.com' });
-  expect(user.email).toBe('test@example.com');
+it("should create user correctly", () => {
+  const user = userService.createUser({ email: "test@example.com" });
+  expect(user.email).toBe("test@example.com");
   expect(user.id).toBeDefined();
   expect(user.createdAt).toBeInstanceOf(Date);
 });
 ```
 
 #### Test Naming Convention
+
 ```typescript
 // ✅ Good: Descriptive test names
-describe('EmailService', () => {
-  describe('sendEmail', () => {
-    it('should send email successfully with valid data', () => {});
-    it('should throw error when recipient is invalid', () => {});
-    it('should retry sending on temporary failure', () => {});
+describe("EmailService", () => {
+  describe("sendEmail", () => {
+    it("should send email successfully with valid data", () => {});
+    it("should throw error when recipient is invalid", () => {});
+    it("should retry sending on temporary failure", () => {});
   });
 });
 ```
@@ -719,78 +763,84 @@ describe('EmailService', () => {
 ### Testing Different Scenarios
 
 #### Happy Path Testing
+
 ```typescript
-it('should successfully process valid order', async () => {
+it("should successfully process valid order", async () => {
   const order = createValidOrder();
   const result = await orderService.processOrder(order);
-  
-  expect(result.status).toBe('processed');
+
+  expect(result.status).toBe("processed");
   expect(result.orderId).toBeDefined();
 });
 ```
 
 #### Edge Cases
+
 ```typescript
-it('should handle empty order', async () => {
+it("should handle empty order", async () => {
   const emptyOrder = new Order([]);
   const result = await orderService.processOrder(emptyOrder);
-  
-  expect(result.status).toBe('error');
-  expect(result.error).toBe('Order cannot be empty');
+
+  expect(result.status).toBe("error");
+  expect(result.error).toBe("Order cannot be empty");
 });
 
-it('should handle extremely large orders', async () => {
+it("should handle extremely large orders", async () => {
   const largeOrder = createOrderWithItems(10000);
   const result = await orderService.processOrder(largeOrder);
-  
-  expect(result.status).toBe('processed');
+
+  expect(result.status).toBe("processed");
 });
 ```
 
 #### Error Conditions
+
 ```typescript
-it('should handle payment failure gracefully', async () => {
+it("should handle payment failure gracefully", async () => {
   const order = createValidOrder();
-  mockPaymentService.processPayment.mockRejectedValue(new PaymentError('Card declined'));
-  
+  mockPaymentService.processPayment.mockRejectedValue(
+    new PaymentError("Card declined"),
+  );
+
   const result = await orderService.processOrder(order);
-  
-  expect(result.status).toBe('payment_failed');
-  expect(result.error).toBe('Payment processing failed');
+
+  expect(result.status).toBe("payment_failed");
+  expect(result.error).toBe("Payment processing failed");
 });
 ```
 
 ### Mocking and Test Doubles
 
 #### Dependency Injection for Testability
+
 ```typescript
 // ✅ Good: Injectable dependencies
 class OrderService {
   constructor(
     private paymentService: PaymentService,
     private inventoryService: InventoryService,
-    private emailService: EmailService
+    private emailService: EmailService,
   ) {}
-  
+
   async processOrder(order: Order): Promise<OrderResult> {
     // Implementation
   }
 }
 
 // Test with mocks
-describe('OrderService', () => {
+describe("OrderService", () => {
   let orderService: OrderService;
   let mockPaymentService: jest.Mocked<PaymentService>;
-  
+
   beforeEach(() => {
     mockPaymentService = {
-      processPayment: jest.fn()
+      processPayment: jest.fn(),
     };
-    
+
     orderService = new OrderService(
       mockPaymentService,
       mockInventoryService,
-      mockEmailService
+      mockEmailService,
     );
   });
 });
@@ -808,16 +858,18 @@ describe('OrderService', () => {
 ### Common TDD Antipatterns
 
 #### Testing Implementation Details
+
 ```typescript
 // ❌ Bad: Testing private methods
-it('should call private validation method', () => {
-  const spy = jest.spyOn(service, 'validateInternal');
+it("should call private validation method", () => {
+  const spy = jest.spyOn(service, "validateInternal");
   service.process(data);
   expect(spy).toHaveBeenCalled();
 });
 ```
 
 #### Writing Tests After Code
+
 ```typescript
 // ❌ Bad: Tests written after implementation
 // This often results in tests that just confirm what the code does,
@@ -825,14 +877,15 @@ it('should call private validation method', () => {
 ```
 
 #### Over-Mocking
+
 ```typescript
 // ❌ Bad: Mocking everything
-it('should process order', () => {
+it("should process order", () => {
   const mockOrder = { id: 1 };
-  const mockResult = { status: 'success' };
-  
-  jest.spyOn(orderService, 'processOrder').mockResolvedValue(mockResult);
-  
+  const mockResult = { status: "success" };
+
+  jest.spyOn(orderService, "processOrder").mockResolvedValue(mockResult);
+
   const result = orderService.processOrder(mockOrder);
   expect(result).resolves.toBe(mockResult);
   // This test doesn't verify any real behavior
@@ -853,7 +906,8 @@ it('should process order', () => {
 }
 ```
 
-Remember: TDD is not just about testing - it's a design methodology that leads to better, more maintainable code through the discipline of writing tests first.
+Remember: TDD is not just about testing - it's a design methodology that leads
+to better, more maintainable code through the discipline of writing tests first.
 
 ---
 
@@ -862,6 +916,7 @@ Remember: TDD is not just about testing - it's a design methodology that leads t
 ## Test Pyramid
 
 ### Quick Reference
+
 The Test Pyramid is a testing strategy that emphasizes:
 
 1. **🔺 Unit Tests** (Base) - Fast, isolated, numerous
@@ -871,28 +926,30 @@ The Test Pyramid is a testing strategy that emphasizes:
 ### Core Principles
 
 #### Layer Distribution
+
 ```
-     /\     ← E2E Tests (Few)
-    /  \    
-   /    \   ← Integration Tests (Some)
-  /      \  
- /________\ ← Unit Tests (Many)
+    /\     ← E2E Tests (Few)
+   /  \    
+  /    \   ← Integration Tests (Some)
+ /      \  
+/________\ ← Unit Tests (Many)
 ```
 
 #### Unit Tests (Foundation)
+
 ```typescript
 // ✅ Good: Fast, isolated unit tests
-describe('EmailValidator', () => {
-  it('should validate correct email format', () => {
+describe("EmailValidator", () => {
+  it("should validate correct email format", () => {
     const validator = new EmailValidator();
-    expect(validator.isValid('test@example.com')).toBe(true);
-    expect(validator.isValid('invalid-email')).toBe(false);
+    expect(validator.isValid("test@example.com")).toBe(true);
+    expect(validator.isValid("invalid-email")).toBe(false);
   });
 });
 
 // ✅ Good: Testing pure functions
-describe('calculateDiscount', () => {
-  it('should apply percentage discount correctly', () => {
+describe("calculateDiscount", () => {
+  it("should apply percentage discount correctly", () => {
     expect(calculateDiscount(100, 0.1)).toBe(90);
     expect(calculateDiscount(50, 0.2)).toBe(40);
   });
@@ -900,58 +957,60 @@ describe('calculateDiscount', () => {
 ```
 
 #### Integration Tests (Middle Layer)
+
 ```typescript
 // ✅ Good: Testing component interactions
-describe('UserService Integration', () => {
-  it('should create user and save to database', async () => {
+describe("UserService Integration", () => {
+  it("should create user and save to database", async () => {
     const userService = new UserService(testDatabase);
     const user = await userService.createUser({
-      email: 'test@example.com',
-      name: 'Test User'
+      email: "test@example.com",
+      name: "Test User",
     });
-    
+
     const savedUser = await testDatabase.findById(user.id);
-    expect(savedUser.email).toBe('test@example.com');
+    expect(savedUser.email).toBe("test@example.com");
   });
 });
 
 // ✅ Good: API endpoint testing
-describe('POST /api/users', () => {
-  it('should create user via API', async () => {
+describe("POST /api/users", () => {
+  it("should create user via API", async () => {
     const response = await request(app)
-      .post('/api/users')
-      .send({ email: 'test@example.com', name: 'Test User' })
+      .post("/api/users")
+      .send({ email: "test@example.com", name: "Test User" })
       .expect(201);
-    
+
     expect(response.body.id).toBeDefined();
-    expect(response.body.email).toBe('test@example.com');
+    expect(response.body.email).toBe("test@example.com");
   });
 });
 ```
 
 #### End-to-End Tests (Peak)
+
 ```typescript
 // ✅ Good: Critical user journey testing
-describe('User Registration Flow', () => {
-  it('should complete full registration process', async () => {
+describe("User Registration Flow", () => {
+  it("should complete full registration process", async () => {
     // Navigate to registration
-    await page.goto('/register');
-    
+    await page.goto("/register");
+
     // Fill form
-    await page.fill('[data-testid="email"]', 'test@example.com');
-    await page.fill('[data-testid="password"]', 'SecurePass123');
+    await page.fill('[data-testid="email"]', "test@example.com");
+    await page.fill('[data-testid="password"]', "SecurePass123");
     await page.click('[data-testid="submit"]');
-    
+
     // Verify success
     await expect(page.locator('[data-testid="welcome"]')).toBeVisible();
-    
+
     // Verify email sent
     const emails = await getTestEmails();
     expect(emails).toContainEqual(
       expect.objectContaining({
-        to: 'test@example.com',
-        subject: 'Welcome to our platform'
-      })
+        to: "test@example.com",
+        subject: "Welcome to our platform",
+      }),
     );
   });
 });
@@ -960,11 +1019,13 @@ describe('User Registration Flow', () => {
 ### Test Distribution Guidelines
 
 #### Recommended Ratios
+
 - **Unit Tests**: 70-80% of total tests
 - **Integration Tests**: 15-25% of total tests
 - **E2E Tests**: 5-10% of total tests
 
 #### Speed Targets
+
 - **Unit Tests**: < 10ms per test
 - **Integration Tests**: < 1 second per test
 - **E2E Tests**: < 30 seconds per test
@@ -972,20 +1033,22 @@ describe('User Registration Flow', () => {
 ### Anti-Patterns to Avoid
 
 #### Ice Cream Cone (Inverted Pyramid)
+
 ```typescript
 // ❌ Bad: Too many slow E2E tests
-describe('Every possible user interaction', () => {
-  it('should test button click via browser', async () => {
+describe("Every possible user interaction", () => {
+  it("should test button click via browser", async () => {
     // This should be a unit test
   });
-  
-  it('should test form validation via browser', async () => {
+
+  it("should test form validation via browser", async () => {
     // This should be a unit test
   });
 });
 ```
 
 #### Testing Trophy (No Strategy)
+
 ```typescript
 // ❌ Bad: Random test distribution without strategy
 // No clear boundaries between test types
@@ -995,6 +1058,7 @@ describe('Every possible user interaction', () => {
 ### Implementation Strategy
 
 #### Start with Unit Tests
+
 ```typescript
 // 1. Test business logic first
 class PriceCalculator {
@@ -1005,7 +1069,7 @@ class PriceCalculator {
 }
 
 // Unit test
-it('should calculate total with tax', () => {
+it("should calculate total with tax", () => {
   const calculator = new PriceCalculator();
   const items = [{ price: 100 }, { price: 50 }];
   expect(calculator.calculateTotal(items, 0.1)).toBe(165);
@@ -1013,26 +1077,28 @@ it('should calculate total with tax', () => {
 ```
 
 #### Add Integration Tests
+
 ```typescript
 // 2. Test component interactions
-describe('Order Processing', () => {
-  it('should process order end-to-end', async () => {
+describe("Order Processing", () => {
+  it("should process order end-to-end", async () => {
     const order = await orderService.createOrder(orderData);
     const payment = await paymentService.processPayment(order.total);
     const shipment = await shippingService.scheduleShipment(order.id);
-    
-    expect(order.status).toBe('confirmed');
-    expect(payment.status).toBe('completed');
+
+    expect(order.status).toBe("confirmed");
+    expect(payment.status).toBe("completed");
     expect(shipment.estimatedDelivery).toBeDefined();
   });
 });
 ```
 
 #### Minimal E2E Tests
+
 ```typescript
 // 3. Test critical user journeys only
-describe('Critical Business Flows', () => {
-  it('should complete purchase journey', async () => {
+describe("Critical Business Flows", () => {
+  it("should complete purchase journey", async () => {
     // Only test the most important paths
     await completePurchaseFlow();
     await verifyOrderConfirmation();
@@ -1044,17 +1110,20 @@ describe('Critical Business Flows', () => {
 ### Tool Recommendations
 
 #### Unit Testing
+
 - **JavaScript/TypeScript**: Jest, Vitest, Deno Test
 - **Python**: pytest, unittest
 - **Java**: JUnit 5, TestNG
 - **C#**: xUnit, NUnit
 
 #### Integration Testing
+
 - **API Testing**: Supertest, Postman, Insomnia
 - **Database Testing**: TestContainers, in-memory databases
 - **Service Testing**: Docker Compose test environments
 
 #### E2E Testing
+
 - **Browser Testing**: Playwright, Cypress, Selenium
 - **Mobile Testing**: Appium, Detox
 - **API E2E**: Postman Collections, Newman
@@ -1062,38 +1131,43 @@ describe('Critical Business Flows', () => {
 ### Metrics and Monitoring
 
 #### Test Coverage
+
 ```typescript
 // Aim for high unit test coverage
 const coverageTargets = {
-  unitTests: '90%+',
-  integrationTests: '80%+',
-  e2eTests: 'Critical paths only'
+  unitTests: "90%+",
+  integrationTests: "80%+",
+  e2eTests: "Critical paths only",
 };
 ```
 
 #### Test Performance
+
 ```typescript
 // Monitor test execution times
 const performanceTargets = {
-  unitTestSuite: '< 30 seconds',
-  integrationTestSuite: '< 5 minutes',
-  e2eTestSuite: '< 30 minutes'
+  unitTestSuite: "< 30 seconds",
+  integrationTestSuite: "< 5 minutes",
+  e2eTestSuite: "< 30 minutes",
 };
 ```
 
 ### CI/CD Integration
 
 #### Pipeline Strategy
+
 ```yaml
 # Run in order of speed and reliability
 stages:
-  - unit-tests      # Fast feedback
-  - integration     # Moderate feedback
-  - e2e-critical    # Slow but comprehensive
-  - e2e-full       # Complete coverage (scheduled)
+  - unit-tests # Fast feedback
+  - integration # Moderate feedback
+  - e2e-critical # Slow but comprehensive
+  - e2e-full # Complete coverage (scheduled)
 ```
 
-Remember: The Test Pyramid ensures fast feedback while maintaining confidence in your system. Focus on a solid foundation of unit tests, supported by targeted integration tests, topped with minimal but comprehensive E2E tests.
+Remember: The Test Pyramid ensures fast feedback while maintaining confidence in
+your system. Focus on a solid foundation of unit tests, supported by targeted
+integration tests, topped with minimal but comprehensive E2E tests.
 
 ---
 
@@ -1102,6 +1176,7 @@ Remember: The Test Pyramid ensures fast feedback while maintaining confidence in
 ## Conventional Commits
 
 ### Quick Reference
+
 Conventional Commits provide a standardized format for commit messages:
 
 ```
@@ -1113,6 +1188,7 @@ Conventional Commits provide a standardized format for commit messages:
 ```
 
 **Examples:**
+
 - `feat: add user authentication`
 - `fix(auth): resolve login validation issue`
 - `docs: update installation guide`
@@ -1121,6 +1197,7 @@ Conventional Commits provide a standardized format for commit messages:
 ### Commit Types
 
 #### Primary Types
+
 - **feat**: A new feature for the user
 - **fix**: A bug fix for the user
 - **docs**: Documentation changes
@@ -1130,6 +1207,7 @@ Conventional Commits provide a standardized format for commit messages:
 - **chore**: Build process or auxiliary tool changes
 
 #### Additional Types
+
 - **perf**: Performance improvements
 - **ci**: CI/CD configuration changes
 - **build**: Build system or dependency changes
@@ -1138,6 +1216,7 @@ Conventional Commits provide a standardized format for commit messages:
 ### Examples by Type
 
 #### Feature Commits
+
 ```bash
 # ✅ Good: Clear feature addition
 feat: add password reset functionality
@@ -1152,6 +1231,7 @@ BREAKING CHANGE: API now returns data in 'result' field instead of root level
 ```
 
 #### Bug Fix Commits
+
 ```bash
 # ✅ Good: Clear bug fix
 fix: resolve memory leak in file upload
@@ -1168,6 +1248,7 @@ InfoSec: Sanitize user input to prevent database attacks
 ```
 
 #### Documentation Commits
+
 ```bash
 # ✅ Good: Documentation updates
 docs: add API authentication examples
@@ -1180,6 +1261,7 @@ docs: add JSDoc comments to utility functions
 ```
 
 #### Refactoring Commits
+
 ```bash
 # ✅ Good: Code restructuring
 refactor: extract user validation logic into separate module
@@ -1196,12 +1278,14 @@ BREAKING CHANGE: Method name changed from getUserData to fetchUserProfile
 ### Scope Guidelines
 
 #### Common Scopes
+
 - **Component names**: `feat(header): add navigation menu`
 - **Feature areas**: `fix(auth): resolve login issues`
 - **File/Module names**: `refactor(utils): simplify date formatting`
 - **Technology**: `ci(docker): update base image`
 
 #### Scope Examples
+
 ```bash
 # Frontend scopes
 feat(header): add user avatar dropdown
@@ -1222,6 +1306,7 @@ chore(deps): update dependencies to latest versions
 ### Breaking Changes
 
 #### Indicating Breaking Changes
+
 ```bash
 # Method 1: Exclamation mark
 feat!: change user API response format
@@ -1233,6 +1318,7 @@ BREAKING CHANGE: Authentication now requires API key in header
 ```
 
 #### Breaking Change Examples
+
 ```bash
 # ✅ Good: API change
 feat!: change REST API response structure
@@ -1255,6 +1341,7 @@ BREAKING CHANGE: React 18 requires Node.js 16 or higher
 ### Body and Footer Guidelines
 
 #### Commit Body
+
 ```bash
 feat: add user notification preferences
 
@@ -1274,6 +1361,7 @@ and requires updating import statements in affected files.
 ```
 
 #### Footer Examples
+
 ```bash
 # Issue references
 fix: resolve login timeout issue
@@ -1297,6 +1385,7 @@ CVE-2023-12345
 ### Integration with Tools
 
 #### Semantic Release
+
 ```json
 {
   "release": {
@@ -1312,31 +1401,37 @@ CVE-2023-12345
 ```
 
 #### Version Bumping Rules
+
 - **fix**: Patch version (1.0.0 → 1.0.1)
 - **feat**: Minor version (1.0.0 → 1.1.0)
 - **BREAKING CHANGE**: Major version (1.0.0 → 2.0.0)
 
 #### Changelog Generation
+
 ```markdown
 # Changelog
 
 ## [2.1.0] - 2023-07-10
 
 ### Features
+
 - **auth**: implement two-factor authentication (#123)
 - **dashboard**: add user analytics widget (#124)
 
 ### Bug Fixes
+
 - **payment**: handle timeout errors properly (#125)
 - resolve memory leak in file upload (#126)
 
 ### BREAKING CHANGES
+
 - **api**: change response format for user endpoints
 ```
 
 ### Git Hooks Integration
 
 #### Pre-commit Hook
+
 ```bash
 #!/bin/sh
 # .git/hooks/prepare-commit-msg
@@ -1355,6 +1450,7 @@ fi
 ```
 
 #### Commitizen Integration
+
 ```bash
 # Install commitizen
 npm install -g commitizen cz-conventional-changelog
@@ -1369,16 +1465,19 @@ git cz
 ### Team Guidelines
 
 #### Commit Message Length
+
 - **Subject line**: 50 characters or less
 - **Body lines**: 72 characters or less
 - **Clear and concise**: Focus on what and why, not how
 
 #### Language Standards
+
 - **Use imperative mood**: "Add feature" not "Added feature"
 - **No trailing punctuation**: Don't end subject with period
 - **Capitalize first letter**: "Add feature" not "add feature"
 
 #### Review Checklist
+
 ```markdown
 ## Commit Message Review
 
@@ -1394,6 +1493,7 @@ git cz
 ### Advanced Features
 
 #### Multi-line Subjects for Complex Changes
+
 ```bash
 feat: implement user authentication system
 
@@ -1406,6 +1506,7 @@ Closes #100, #101, #102
 ```
 
 #### Revert Commits
+
 ```bash
 revert: "feat: add user preferences"
 
@@ -1415,6 +1516,7 @@ Reason: Feature causing performance issues in production
 ```
 
 #### Merge Commits
+
 ```bash
 # Squash and merge with conventional format
 feat: complete user management feature (#123)
@@ -1436,6 +1538,7 @@ feat: complete user management feature (#123)
 ### Common Mistakes
 
 #### Vague Descriptions
+
 ```bash
 # ❌ Bad: Too vague
 fix: bug fix
@@ -1449,6 +1552,7 @@ docs: add authentication examples to API guide
 ```
 
 #### Wrong Types
+
 ```bash
 # ❌ Bad: Wrong type usage
 feat: fix typo in README
@@ -1459,7 +1563,8 @@ docs: fix typo in README
 feat: add new user registration form
 ```
 
-Remember: Conventional Commits create a shared language for your team and enable powerful automation tools that can streamline your development workflow.
+Remember: Conventional Commits create a shared language for your team and enable
+powerful automation tools that can streamline your development workflow.
 
 ---
 
@@ -1468,6 +1573,7 @@ Remember: Conventional Commits create a shared language for your team and enable
 ## 15-Factor App Methodology
 
 ### Quick Reference
+
 Modern cloud-native applications should follow these principles:
 
 1. **Codebase** - One codebase tracked in revision control
@@ -1478,8 +1584,10 @@ Modern cloud-native applications should follow these principles:
 6. **Processes** - Execute the app as one or more stateless processes
 7. **Port binding** - Export services via port binding
 8. **Concurrency** - Scale out via the process model
-9. **Disposability** - Maximize robustness with fast startup and graceful shutdown
-10. **Dev/prod parity** - Keep development, staging, and production as similar as possible
+9. **Disposability** - Maximize robustness with fast startup and graceful
+   shutdown
+10. **Dev/prod parity** - Keep development, staging, and production as similar
+    as possible
 11. **Logs** - Treat logs as event streams
 12. **Admin processes** - Run admin/management tasks as one-off processes
 13. **API first** - Design APIs before implementation
@@ -1489,24 +1597,26 @@ Modern cloud-native applications should follow these principles:
 ### Implementation Guidelines
 
 #### Configuration Management
+
 ```typescript
 // ✅ Good: Environment variables
 const config = {
   port: process.env.PORT || 3000,
-  dbUrl: process.env.DATABASE_URL || 'postgres://localhost/myapp',
-  redisUrl: process.env.REDIS_URL || 'redis://localhost:6379',
-  jwtSecret: process.env.JWT_SECRET
+  dbUrl: process.env.DATABASE_URL || "postgres://localhost/myapp",
+  redisUrl: process.env.REDIS_URL || "redis://localhost:6379",
+  jwtSecret: process.env.JWT_SECRET,
 };
 
 // ❌ Bad: Hardcoded config
 const config = {
   port: 3000,
-  dbUrl: 'postgres://prod-db:5432/myapp',
-  redisUrl: 'redis://prod-cache:6379'
+  dbUrl: "postgres://prod-db:5432/myapp",
+  redisUrl: "redis://prod-cache:6379",
 };
 ```
 
 #### Stateless Processes
+
 ```typescript
 // ✅ Good: Stateless request handling
 export async function handleRequest(req: Request): Promise<Response> {
@@ -1520,11 +1630,11 @@ const userCache = new Map();
 
 export async function handleRequest(req: Request): Promise<Response> {
   const userId = extractUserId(req);
-  
+
   if (userCache.has(userId)) {
     return new Response(JSON.stringify(userCache.get(userId)));
   }
-  
+
   const userData = await userService.getUser(userId);
   userCache.set(userId, userData);
   return new Response(JSON.stringify(userData));
@@ -1532,11 +1642,12 @@ export async function handleRequest(req: Request): Promise<Response> {
 ```
 
 #### Backing Services
+
 ```typescript
 // ✅ Good: Configurable backing services
 class DatabaseService {
   constructor(private connectionString: string) {}
-  
+
   async connect() {
     this.connection = await postgres.connect(this.connectionString);
   }
@@ -1547,58 +1658,65 @@ const db = new DatabaseService(process.env.DATABASE_URL);
 // ❌ Bad: Hardcoded service locations
 class DatabaseService {
   async connect() {
-    this.connection = await postgres.connect('postgres://prod-db:5432/myapp');
+    this.connection = await postgres.connect("postgres://prod-db:5432/myapp");
   }
 }
 ```
 
 #### Graceful Shutdown
+
 ```typescript
 // ✅ Good: Graceful shutdown handling
-process.on('SIGTERM', async () => {
-  console.log('Received SIGTERM, shutting down gracefully...');
-  
+process.on("SIGTERM", async () => {
+  console.log("Received SIGTERM, shutting down gracefully...");
+
   // Stop accepting new requests
   server.close(() => {
-    console.log('HTTP server closed');
-    
+    console.log("HTTP server closed");
+
     // Close database connections
     db.close();
-    
+
     // Exit process
     process.exit(0);
   });
-  
+
   // Force shutdown after 10 seconds
   setTimeout(() => {
-    console.log('Forced shutdown');
+    console.log("Forced shutdown");
     process.exit(1);
   }, 10000);
 });
 ```
 
 #### Telemetry Implementation
+
 ```typescript
 // ✅ Good: Structured logging and metrics
-import { logger } from './logger';
-import { metrics } from './metrics';
+import { logger } from "./logger";
+import { metrics } from "./metrics";
 
 export async function processOrder(order: Order) {
-  const timer = metrics.startTimer('order_processing_duration');
-  
+  const timer = metrics.startTimer("order_processing_duration");
+
   try {
-    logger.info('Processing order', { orderId: order.id, userId: order.userId });
-    
+    logger.info("Processing order", {
+      orderId: order.id,
+      userId: order.userId,
+    });
+
     await validateOrder(order);
     await chargePayment(order);
     await fulfillOrder(order);
-    
-    metrics.incrementCounter('orders_processed', { status: 'success' });
-    logger.info('Order processed successfully', { orderId: order.id });
-    
+
+    metrics.incrementCounter("orders_processed", { status: "success" });
+    logger.info("Order processed successfully", { orderId: order.id });
   } catch (error) {
-    metrics.incrementCounter('orders_processed', { status: 'error' });
-    logger.error('Order processing failed', { orderId: order.id, error: error.message });
+    metrics.incrementCounter("orders_processed", { status: "error" });
+    logger.error("Order processing failed", {
+      orderId: order.id,
+      error: error.message,
+    });
     throw error;
   } finally {
     timer.end();
@@ -1609,30 +1727,32 @@ export async function processOrder(order: Order) {
 ### Cloud-Native Patterns
 
 #### Health Checks
+
 ```typescript
 // Liveness probe - is the app running?
-app.get('/health/live', (req, res) => {
-  res.status(200).json({ status: 'alive' });
+app.get("/health/live", (req, res) => {
+  res.status(200).json({ status: "alive" });
 });
 
 // Readiness probe - is the app ready to serve traffic?
-app.get('/health/ready', async (req, res) => {
+app.get("/health/ready", async (req, res) => {
   try {
     await db.ping();
     await redis.ping();
-    res.status(200).json({ status: 'ready' });
+    res.status(200).json({ status: "ready" });
   } catch (error) {
-    res.status(503).json({ status: 'not ready', error: error.message });
+    res.status(503).json({ status: "not ready", error: error.message });
   }
 });
 ```
 
 #### Feature Flags
+
 ```typescript
 // ✅ Good: Feature flag implementation
 const featureFlags = {
-  newCheckoutFlow: process.env.FEATURE_NEW_CHECKOUT === 'true',
-  enhancedLogging: process.env.FEATURE_ENHANCED_LOGGING === 'true'
+  newCheckoutFlow: process.env.FEATURE_NEW_CHECKOUT === "true",
+  enhancedLogging: process.env.FEATURE_ENHANCED_LOGGING === "true",
 };
 
 export function processCheckout(order: Order) {
@@ -1646,6 +1766,7 @@ export function processCheckout(order: Order) {
 ### Container Considerations
 
 #### Dockerfile Best Practices
+
 ```dockerfile
 # Multi-stage build for smaller images
 FROM node:18-alpine AS builder
@@ -1663,13 +1784,15 @@ CMD ["node", "server.js"]
 ```
 
 ### Key Benefits
+
 - **Scalability**: Apps can scale horizontally
 - **Maintainability**: Clear separation of concerns
 - **Portability**: Runs consistently across environments
 - **Resilience**: Graceful handling of failures
 - **Observability**: Built-in monitoring and logging
 
-Remember: 15-factor apps are designed for modern cloud platforms. Each factor addresses specific challenges in distributed, containerized environments.
+Remember: 15-factor apps are designed for modern cloud platforms. Each factor
+addresses specific challenges in distributed, containerized environments.
 
 ---
 
@@ -1679,15 +1802,22 @@ Remember: 15-factor apps are designed for modern cloud platforms. Each factor ad
 
 ## Overview
 
-Clean Architecture, introduced by Robert C. Martin (Uncle Bob), is an architectural pattern that emphasizes the separation of concerns and the independence of business logic from external frameworks, databases, and UI.
+Clean Architecture, introduced by Robert C. Martin (Uncle Bob), is an
+architectural pattern that emphasizes the separation of concerns and the
+independence of business logic from external frameworks, databases, and UI.
 
 ### Core Principles
 
-1. **Independence of Frameworks**: The architecture doesn't depend on the existence of some library of feature-laden software
-2. **Testability**: Business rules can be tested without the UI, database, web server, or any external element
-3. **Independence of UI**: The UI can change easily without changing the rest of the system
-4. **Independence of Database**: You can swap out Oracle or SQL Server for MongoDB, BigTable, CouchDB, or something else
-5. **Independence of External Agency**: Business rules don't know anything about the outside world
+1. **Independence of Frameworks**: The architecture doesn't depend on the
+   existence of some library of feature-laden software
+2. **Testability**: Business rules can be tested without the UI, database, web
+   server, or any external element
+3. **Independence of UI**: The UI can change easily without changing the rest of
+   the system
+4. **Independence of Database**: You can swap out Oracle or SQL Server for
+   MongoDB, BigTable, CouchDB, or something else
+5. **Independence of External Agency**: Business rules don't know anything about
+   the outside world
 
 ## The Dependency Rule
 
@@ -1714,27 +1844,27 @@ export class User {
     public readonly id: string,
     public readonly email: string,
     public readonly name: string,
-    private readonly hashedPassword: string
+    private readonly hashedPassword: string,
   ) {}
 
   // Business rule: email must be valid
   static create(email: string, name: string, password: string): User {
     if (!this.isValidEmail(email)) {
-      throw new Error('Invalid email format');
+      throw new Error("Invalid email format");
     }
-    
+
     if (password.length < 8) {
-      throw new Error('Password must be at least 8 characters');
+      throw new Error("Password must be at least 8 characters");
     }
-    
+
     return new User(
       this.generateId(),
       email,
       name,
-      this.hashPassword(password)
+      this.hashPassword(password),
     );
   }
-  
+
   private static isValidEmail(email: string): boolean {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
@@ -1754,29 +1884,29 @@ export interface EmailService {
 export class CreateUserUseCase {
   constructor(
     private userRepository: UserRepository,
-    private emailService: EmailService
+    private emailService: EmailService,
   ) {}
-  
+
   async execute(request: CreateUserRequest): Promise<CreateUserResponse> {
     // Check if user already exists
     const existingUser = await this.userRepository.findByEmail(request.email);
     if (existingUser) {
-      throw new Error('User with this email already exists');
+      throw new Error("User with this email already exists");
     }
-    
+
     // Create user entity
     const user = User.create(request.email, request.name, request.password);
-    
+
     // Save user
     await this.userRepository.save(user);
-    
+
     // Send welcome email
     await this.emailService.sendWelcomeEmail(user);
-    
+
     return {
       id: user.id,
       email: user.email,
-      name: user.name
+      name: user.name,
     };
   }
 }
@@ -1785,15 +1915,15 @@ export class CreateUserUseCase {
 // controllers/UserController.ts
 export class UserController {
   constructor(private createUserUseCase: CreateUserUseCase) {}
-  
+
   async createUser(req: Request, res: Response): Promise<void> {
     try {
       const result = await this.createUserUseCase.execute({
         email: req.body.email,
         name: req.body.name,
-        password: req.body.password
+        password: req.body.password,
       });
-      
+
       res.status(201).json(result);
     } catch (error) {
       res.status(400).json({ error: error.message });
@@ -1805,22 +1935,22 @@ export class UserController {
 // repositories/PostgresUserRepository.ts
 export class PostgresUserRepository implements UserRepository {
   constructor(private db: Database) {}
-  
+
   async save(user: User): Promise<void> {
     await this.db.query(
-      'INSERT INTO users (id, email, name, password) VALUES ($1, $2, $3, $4)',
-      [user.id, user.email, user.name, user.hashedPassword]
+      "INSERT INTO users (id, email, name, password) VALUES ($1, $2, $3, $4)",
+      [user.id, user.email, user.name, user.hashedPassword],
     );
   }
-  
+
   async findByEmail(email: string): Promise<User | null> {
     const result = await this.db.query(
-      'SELECT * FROM users WHERE email = $1',
-      [email]
+      "SELECT * FROM users WHERE email = $1",
+      [email],
     );
-    
+
     if (result.rows.length === 0) return null;
-    
+
     const row = result.rows[0];
     return new User(row.id, row.email, row.name, row.password);
   }
@@ -2141,64 +2271,69 @@ func (r *PostgresProductRepository) Save(product *entity.Product) error {
 
 ```typescript
 // Test domain entities without any dependencies
-describe('User Entity', () => {
-  it('should create user with valid data', () => {
-    const user = User.create('test@example.com', 'Test User', 'password123');
-    
-    expect(user.email).toBe('test@example.com');
-    expect(user.name).toBe('Test User');
+describe("User Entity", () => {
+  it("should create user with valid data", () => {
+    const user = User.create("test@example.com", "Test User", "password123");
+
+    expect(user.email).toBe("test@example.com");
+    expect(user.name).toBe("Test User");
     expect(user.id).toBeDefined();
   });
-  
-  it('should reject invalid email', () => {
+
+  it("should reject invalid email", () => {
     expect(() => {
-      User.create('invalid-email', 'Test User', 'password123');
-    }).toThrow('Invalid email format');
+      User.create("invalid-email", "Test User", "password123");
+    }).toThrow("Invalid email format");
   });
 });
 
 // Test use cases with mocked dependencies
-describe('CreateUserUseCase', () => {
+describe("CreateUserUseCase", () => {
   let useCase: CreateUserUseCase;
   let mockUserRepository: jest.Mocked<UserRepository>;
   let mockEmailService: jest.Mocked<EmailService>;
-  
+
   beforeEach(() => {
     mockUserRepository = {
       save: jest.fn(),
-      findByEmail: jest.fn()
+      findByEmail: jest.fn(),
     };
-    
+
     mockEmailService = {
-      sendWelcomeEmail: jest.fn()
+      sendWelcomeEmail: jest.fn(),
     };
-    
+
     useCase = new CreateUserUseCase(mockUserRepository, mockEmailService);
   });
-  
-  it('should create user successfully', async () => {
+
+  it("should create user successfully", async () => {
     mockUserRepository.findByEmail.mockResolvedValue(null);
-    
+
     const result = await useCase.execute({
-      email: 'new@example.com',
-      name: 'New User',
-      password: 'password123'
+      email: "new@example.com",
+      name: "New User",
+      password: "password123",
     });
-    
+
     expect(mockUserRepository.save).toHaveBeenCalled();
     expect(mockEmailService.sendWelcomeEmail).toHaveBeenCalled();
-    expect(result.email).toBe('new@example.com');
+    expect(result.email).toBe("new@example.com");
   });
 });
 ```
 
 ## Clean Architecture Benefits
 
-1. **Independent of Frameworks**: Can change frameworks without changing business logic
-2. **Testable**: Business rules can be tested without UI, database, or external elements
-3. **Independent of UI**: Can change from web to console to mobile without changing business rules
-4. **Independent of Database**: Can switch from SQL to NoSQL without changing business rules
-5. **Independent of External Agency**: Business rules don't know about the outside world
+1. **Independent of Frameworks**: Can change frameworks without changing
+   business logic
+2. **Testable**: Business rules can be tested without UI, database, or external
+   elements
+3. **Independent of UI**: Can change from web to console to mobile without
+   changing business rules
+4. **Independent of Database**: Can switch from SQL to NoSQL without changing
+   business rules
+5. **Independent of External Agency**: Business rules don't know about the
+   outside world
 
 ## Common Pitfalls
 
@@ -2209,8 +2344,8 @@ describe('CreateUserUseCase', () => {
 class UserController {
   createUser(req, res) {
     // Domain validation in controller
-    if (!req.body.email.includes('@')) {
-      return res.status(400).json({ error: 'Invalid email' });
+    if (!req.body.email.includes("@")) {
+      return res.status(400).json({ error: "Invalid email" });
     }
   }
 }
@@ -2219,7 +2354,7 @@ class UserController {
 class User {
   static create(email: string) {
     if (!this.isValidEmail(email)) {
-      throw new Error('Invalid email format');
+      throw new Error("Invalid email format");
     }
   }
 }
@@ -2229,7 +2364,7 @@ class User {
 
 ```typescript
 // ❌ Bad: Framework dependency in entity
-import { Entity, Column } from 'typeorm'; // Framework dependency
+import { Column, Entity } from "typeorm"; // Framework dependency
 
 @Entity()
 class User {
@@ -2247,7 +2382,7 @@ class User {
 
 ```typescript
 // ❌ Bad: Use case depends on infrastructure
-import { PostgresUserRepository } from '../infrastructure/PostgresUserRepository';
+import { PostgresUserRepository } from "../infrastructure/PostgresUserRepository";
 
 class CreateUserUseCase {
   private repo = new PostgresUserRepository(); // Direct dependency
@@ -2262,18 +2397,21 @@ class CreateUserUseCase {
 ## Applying Clean Architecture to Different Project Types
 
 ### Web Applications
+
 - Controllers handle HTTP requests/responses
 - Use cases contain application logic
 - Entities contain business rules
 - Repositories handle data persistence
 
 ### CLI Applications
+
 - Commands replace controllers
 - Use cases remain the same
 - Entities remain the same
 - File system or database for persistence
 
 ### Microservices
+
 - Each service follows clean architecture
 - Shared domain concepts in separate packages
 - Inter-service communication through interfaces
@@ -2301,7 +2439,9 @@ class CreateUserUseCase {
 - [ ] Can change UI without changing business rules
 - [ ] Clear separation between layers
 
-Remember: The goal is to make the business rules the most important part of your application, with everything else being a detail that can be changed without affecting the core business logic.
+Remember: The goal is to make the business rules the most important part of your
+application, with everything else being a detail that can be changed without
+affecting the core business logic.
 
 ---
 
@@ -2311,14 +2451,18 @@ Remember: The goal is to make the business rules the most important part of your
 
 ## Overview
 
-Google's style guides are comprehensive coding standards used across Google's engineering teams. They emphasize readability, consistency, and maintainability while providing specific guidance for multiple programming languages.
+Google's style guides are comprehensive coding standards used across Google's
+engineering teams. They emphasize readability, consistency, and maintainability
+while providing specific guidance for multiple programming languages.
 
 ### Core Philosophy
 
-1. **Optimize for the reader, not the writer**: Code is read far more often than it's written
+1. **Optimize for the reader, not the writer**: Code is read far more often than
+   it's written
 2. **Be consistent**: When in doubt, be consistent with existing code
 3. **Use common sense**: Rules can be broken if there's a good reason
-4. **Clarity over cleverness**: Avoid clever tricks that make code harder to understand
+4. **Clarity over cleverness**: Avoid clever tricks that make code harder to
+   understand
 
 ## Language-Specific Guidelines
 
@@ -2332,12 +2476,12 @@ class UserAccount {}
 interface DatabaseConnection {}
 
 // Variables and functions: camelCase
-const userName = 'John';
+const userName = "John";
 function calculateTotal() {}
 
 // Constants: UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
-const API_ENDPOINT = 'https://api.example.com';
+const API_ENDPOINT = "https://api.example.com";
 
 // Private properties: leading underscore discouraged
 // ❌ Bad
@@ -2360,7 +2504,7 @@ class User {
 // Always use type annotations for function parameters and return types
 function calculatePrice(
   basePrice: number,
-  taxRate: number
+  taxRate: number,
 ): number {
   return basePrice * (1 + taxRate);
 }
@@ -2380,7 +2524,7 @@ interface Point {
 }
 
 // Use type for unions, intersections, and aliases
-type Status = 'pending' | 'active' | 'completed';
+type Status = "pending" | "active" | "completed";
 type ID = string | number;
 ```
 
@@ -2395,7 +2539,7 @@ type ID = string | number;
  */
 function calculateTotalPrice(
   basePrice: number,
-  taxRate: number
+  taxRate: number,
 ): number {
   // Apply tax to base price
   return basePrice * (1 + taxRate);
@@ -2417,44 +2561,44 @@ let retryCount = 0; // Reset counter for exponential backoff
 ```typescript
 // Import order
 // 1. Node built-ins
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from "fs";
+import * as path from "path";
 
 // 2. External modules
-import express from 'express';
-import { Request, Response } from 'express';
+import express from "express";
+import { Request, Response } from "express";
 
 // 3. Internal modules
-import { UserService } from './services/user-service';
-import { Logger } from './utils/logger';
+import { UserService } from "./services/user-service";
+import { Logger } from "./utils/logger";
 
 // 4. Types
-import type { User, UserRole } from './types';
+import type { User, UserRole } from "./types";
 
 // Class organization
 class UserManager {
   // 1. Static properties
-  static readonly DEFAULT_ROLE = 'user';
-  
+  static readonly DEFAULT_ROLE = "user";
+
   // 2. Instance properties
   private users: Map<string, User>;
-  
+
   // 3. Constructor
   constructor(private logger: Logger) {
     this.users = new Map();
   }
-  
+
   // 4. Static methods
   static createDefaultUser(): User {
     // ...
   }
-  
+
   // 5. Instance methods (public first, then private)
   public addUser(user: User): void {
     this.validateUser(user);
     this.users.set(user.id, user);
   }
-  
+
   private validateUser(user: User): void {
     // ...
   }
@@ -2886,11 +3030,13 @@ public class UserService {
 ## Common Best Practices Across Languages
 
 ### Line Length
+
 - Maximum 80-100 characters (language-dependent)
 - Break long lines at logical points
 - Indent continuation lines appropriately
 
 ### Indentation
+
 - **Spaces preferred**: 2 spaces (JavaScript/TypeScript), 4 spaces (Python)
 - **Tabs**: Avoid in most Google style guides
 - **Consistency**: Never mix tabs and spaces
@@ -2934,6 +3080,7 @@ if (condition) {
 ```
 
 ### Function Length
+
 - Keep functions short and focused (typically < 40 lines)
 - Extract complex logic into helper functions
 - One function should do one thing well
@@ -2956,7 +3103,7 @@ try {
   const user = await fetchUser(userId);
   return processUser(user);
 } catch (error) {
-  logger.error('Failed to process user', { userId, error });
+  logger.error("Failed to process user", { userId, error });
   throw new UserProcessingError(`Failed to process user ${userId}`, error);
 }
 ```
@@ -2990,11 +3137,11 @@ try {
 
 ```typescript
 // Descriptive test names
-describe('UserService', () => {
-  describe('createUser', () => {
-    it('should create user with valid data', () => {});
-    it('should throw error for invalid email', () => {});
-    it('should prevent duplicate emails', () => {});
+describe("UserService", () => {
+  describe("createUser", () => {
+    it("should create user with valid data", () => {});
+    it("should throw error for invalid email", () => {});
+    it("should prevent duplicate emails", () => {});
   });
 });
 ```
@@ -3033,7 +3180,7 @@ def test_user_creation_with_valid_data(self):
 {
   "extends": ["google"],
   "rules": {
-    "max-len": ["error", {"code": 100}],
+    "max-len": ["error", { "code": 100 }],
     "indent": ["error", 2],
     "quotes": ["error", "single"]
   }
@@ -3052,7 +3199,9 @@ class-naming-style=PascalCase
 const-naming-style=UPPER_CASE
 ```
 
-Remember: The goal of style guides is to improve code readability and maintainability. When in doubt, optimize for clarity and consistency with your team's existing code.
+Remember: The goal of style guides is to improve code readability and
+maintainability. When in doubt, optimize for clarity and consistency with your
+team's existing code.
 
 ---
 
@@ -3062,11 +3211,15 @@ Remember: The goal of style guides is to improve code readability and maintainab
 
 ## Overview
 
-Behavior-Driven Development (BDD) is an agile software development practice that encourages collaboration between developers, QA, and non-technical stakeholders. BDD focuses on defining the behavior of software through examples written in a shared language that everyone can understand.
+Behavior-Driven Development (BDD) is an agile software development practice that
+encourages collaboration between developers, QA, and non-technical stakeholders.
+BDD focuses on defining the behavior of software through examples written in a
+shared language that everyone can understand.
 
 ### Core Principles
 
-1. **Shared Understanding**: Create a common language between technical and non-technical team members
+1. **Shared Understanding**: Create a common language between technical and
+   non-technical team members
 2. **Living Documentation**: Tests serve as documentation that stays up-to-date
 3. **Outside-In Development**: Start from user behavior and work inward
 4. **Examples Drive Design**: Concrete examples guide implementation
@@ -3512,13 +3665,13 @@ Scenario: Place an order
 
 ```typescript
 // ❌ Bad: Too specific
-When('I click the blue submit button in the top right', function() {
-  const button = this.page.findElement(By.css('.submit-btn.blue.top-right'));
+When("I click the blue submit button in the top right", function () {
+  const button = this.page.findElement(By.css(".submit-btn.blue.top-right"));
   button.click();
 });
 
 // ✅ Good: Reusable
-When('I submit the form', function() {
+When("I submit the form", function () {
   this.currentPage.submitForm();
 });
 ```
@@ -3542,10 +3695,10 @@ def step_submit_application(context):
 ```typescript
 // Page Object
 export class LoginPage {
-  private emailInput = '#email';
-  private passwordInput = '#password';
-  private submitButton = '#login-btn';
-  
+  private emailInput = "#email";
+  private passwordInput = "#password";
+  private submitButton = "#login-btn";
+
   async login(email: string, password: string): Promise<void> {
     await page.fill(this.emailInput, email);
     await page.fill(this.passwordInput, password);
@@ -3554,9 +3707,9 @@ export class LoginPage {
 }
 
 // Step Definition
-When('I log in as {string}', async function(email: string) {
+When("I log in as {string}", async function (email: string) {
   const loginPage = new LoginPage();
-  await loginPage.login(email, 'password123');
+  await loginPage.login(email, "password123");
 });
 ```
 
@@ -3701,29 +3854,34 @@ Scenario: Save customer information
 ## Getting Started with BDD
 
 ### 1. Start Small
+
 - Choose one feature or user story
 - Write 3-5 scenarios
 - Implement step definitions
 - Run and refine
 
 ### 2. Three Amigos Sessions
+
 - Include business, development, and testing perspectives
 - Use example mapping to explore scenarios
 - Focus on edge cases and unhappy paths
 
 ### 3. Build Gradually
+
 - Add scenarios for new features
 - Refactor existing tests to BDD
 - Create reusable step libraries
 - Generate living documentation
 
 ### 4. Integration
+
 - Add to CI/CD pipeline
 - Generate reports for stakeholders
 - Use for acceptance criteria
 - Include in definition of done
 
-Remember: BDD is about collaboration and communication. The tools and syntax are just means to achieve better understanding between all team members.
+Remember: BDD is about collaboration and communication. The tools and syntax are
+just means to achieve better understanding between all team members.
 
 ---
 
@@ -3733,31 +3891,38 @@ Remember: BDD is about collaboration and communication. The tools and syntax are
 
 ## Overview
 
-DORA (DevOps Research and Assessment) metrics are four key metrics identified by the DORA team at Google that indicate the performance of software development teams. These metrics are strongly correlated with organizational performance and are used to measure the effectiveness of DevOps practices.
+DORA (DevOps Research and Assessment) metrics are four key metrics identified by
+the DORA team at Google that indicate the performance of software development
+teams. These metrics are strongly correlated with organizational performance and
+are used to measure the effectiveness of DevOps practices.
 
 ### The Four Key Metrics
 
-1. **Deployment Frequency** - How often an organization successfully releases to production
-2. **Lead Time for Changes** - Time from code commit to code running in production
+1. **Deployment Frequency** - How often an organization successfully releases to
+   production
+2. **Lead Time for Changes** - Time from code commit to code running in
+   production
 3. **Mean Time to Recovery (MTTR)** - Time to restore service after an incident
-4. **Change Failure Rate** - Percentage of deployments causing a failure in production
+4. **Change Failure Rate** - Percentage of deployments causing a failure in
+   production
 
 ## Performance Levels
 
 DORA categorizes teams into four performance levels:
 
-| Metric | Elite | High | Medium | Low |
-|--------|-------|------|---------|-----|
-| Deployment Frequency | Multiple times per day | Weekly to monthly | Monthly to every 6 months | Less than every 6 months |
-| Lead Time for Changes | Less than 1 hour | 1 day to 1 week | 1 week to 1 month | 1 to 6 months |
-| MTTR | Less than 1 hour | Less than 1 day | 1 day to 1 week | More than 1 week |
-| Change Failure Rate | 0-15% | 16-30% | 16-30% | 16-30% |
+| Metric                | Elite                  | High              | Medium                    | Low                      |
+| --------------------- | ---------------------- | ----------------- | ------------------------- | ------------------------ |
+| Deployment Frequency  | Multiple times per day | Weekly to monthly | Monthly to every 6 months | Less than every 6 months |
+| Lead Time for Changes | Less than 1 hour       | 1 day to 1 week   | 1 week to 1 month         | 1 to 6 months            |
+| MTTR                  | Less than 1 hour       | Less than 1 day   | 1 day to 1 week           | More than 1 week         |
+| Change Failure Rate   | 0-15%                  | 16-30%            | 16-30%                    | 16-30%                   |
 
 ## Implementing DORA Metrics
 
 ### 1. Deployment Frequency
 
-**Definition**: How often code is deployed to production or released to end users.
+**Definition**: How often code is deployed to production or released to end
+users.
 
 #### Measurement Implementation
 
@@ -3766,37 +3931,37 @@ DORA categorizes teams into four performance levels:
 interface Deployment {
   id: string;
   timestamp: Date;
-  environment: 'production' | 'staging' | 'development';
+  environment: "production" | "staging" | "development";
   version: string;
-  status: 'success' | 'failed' | 'rollback';
+  status: "success" | "failed" | "rollback";
 }
 
 class DeploymentTracker {
   private deployments: Deployment[] = [];
-  
+
   recordDeployment(deployment: Deployment): void {
     this.deployments.push(deployment);
     this.sendMetrics(deployment);
   }
-  
+
   getDeploymentFrequency(days: number = 30): number {
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - days);
-    
-    const productionDeployments = this.deployments.filter(d => 
-      d.environment === 'production' &&
-      d.status === 'success' &&
+
+    const productionDeployments = this.deployments.filter((d) =>
+      d.environment === "production" &&
+      d.status === "success" &&
       d.timestamp >= startDate
     );
-    
+
     return productionDeployments.length / days;
   }
-  
+
   private sendMetrics(deployment: Deployment): void {
     // Send to monitoring system
-    metrics.increment('deployments.total', {
+    metrics.increment("deployments.total", {
       environment: deployment.environment,
-      status: deployment.status
+      status: deployment.status,
     });
   }
 }
@@ -3817,11 +3982,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Deploy to Production
         run: |
           ./deploy.sh production
-          
+
       - name: Record Deployment Metric
         if: success()
         run: |
@@ -3837,7 +4002,8 @@ jobs:
 
 ### 2. Lead Time for Changes
 
-**Definition**: Time from code commit to code successfully running in production.
+**Definition**: Time from code commit to code successfully running in
+production.
 
 #### Measurement Implementation
 
@@ -4037,7 +4203,7 @@ groups:
         annotations:
           summary: "High error rate detected"
           description: "Error rate is {{ $value }} errors per second"
-          
+
       - alert: ServiceDown
         expr: up{job="production"} == 0
         for: 1m
@@ -4159,45 +4325,51 @@ class DORAMetricsCollector {
   private deploymentFrequency: number = 0;
   private leadTimes: number[] = [];
   private incidentRecoveryTimes: number[] = [];
-  private deploymentOutcomes: { total: number; failed: number } = { total: 0, failed: 0 };
-  
+  private deploymentOutcomes: { total: number; failed: number } = {
+    total: 0,
+    failed: 0,
+  };
+
   async collectMetrics(): Promise<DORAMetrics> {
     const metrics = await Promise.all([
       this.getDeploymentFrequency(),
       this.getAverageLeadTime(),
       this.getMTTR(),
-      this.getChangeFailureRate()
+      this.getChangeFailureRate(),
     ]);
-    
+
     return {
       deploymentFrequency: metrics[0],
       leadTimeForChanges: metrics[1],
       mttr: metrics[2],
       changeFailureRate: metrics[3],
-      timestamp: new Date()
+      timestamp: new Date(),
     };
   }
-  
+
   // Webhook endpoints for CI/CD integration
   async handleDeploymentWebhook(data: DeploymentData): Promise<void> {
     this.deploymentFrequency++;
-    
+
     if (data.commitHash) {
-      const leadTime = await this.calculateLeadTime(data.commitHash, data.timestamp);
+      const leadTime = await this.calculateLeadTime(
+        data.commitHash,
+        data.timestamp,
+      );
       this.leadTimes.push(leadTime);
     }
-    
+
     this.deploymentOutcomes.total++;
-    
+
     // Monitor deployment for failures
     this.monitorDeployment(data.deploymentId);
   }
-  
+
   async handleIncidentWebhook(data: IncidentData): Promise<void> {
-    if (data.status === 'resolved') {
+    if (data.status === "resolved") {
       const recoveryTime = data.resolvedAt.getTime() - data.startedAt.getTime();
       this.incidentRecoveryTimes.push(recoveryTime);
-      
+
       // Check if incident was caused by recent deployment
       if (data.relatedDeploymentId) {
         this.deploymentOutcomes.failed++;
@@ -4279,7 +4451,7 @@ name: DORA Metrics Review
 
 on:
   schedule:
-    - cron: '0 9 * * 1'  # Every Monday at 9 AM
+    - cron: "0 9 * * 1" # Every Monday at 9 AM
 
 jobs:
   analyze-metrics:
@@ -4290,44 +4462,44 @@ jobs:
         run: |
           METRICS=$(curl -s https://metrics.example.com/api/dora/weekly)
           echo "::set-output name=metrics::$METRICS"
-      
+
       - name: Analyze Trends
         run: |
           python analyze_dora_trends.py --metrics '${{ steps.metrics.outputs.metrics }}'
-      
+
       - name: Generate Improvement Suggestions
         id: suggestions
         run: |
           SUGGESTIONS=$(python generate_improvements.py --metrics '${{ steps.metrics.outputs.metrics }}')
           echo "::set-output name=suggestions::$SUGGESTIONS"
-      
+
       - name: Create Issue for Team Review
         uses: actions/github-script@v6
         with:
           script: |
             const metrics = ${{ steps.metrics.outputs.metrics }};
             const suggestions = ${{ steps.suggestions.outputs.suggestions }};
-            
+
             const issueBody = `
             ## Weekly DORA Metrics Review
-            
+
             ### Current Metrics
             - **Deployment Frequency**: ${metrics.deployment_frequency.label}
             - **Lead Time**: ${metrics.lead_time.value} hours
             - **MTTR**: ${metrics.mttr.value} minutes
             - **Change Failure Rate**: ${metrics.change_failure_rate.value}%
-            
+
             ### Performance Level: ${metrics.performance_level}
-            
+
             ### Improvement Suggestions
             ${suggestions}
-            
+
             ### Action Items
             - [ ] Review metrics with team
             - [ ] Identify bottlenecks
             - [ ] Create improvement tasks
             `;
-            
+
             github.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -4394,26 +4566,31 @@ volumes:
 ## Best Practices
 
 ### 1. Start Small
+
 - Begin with deployment frequency
 - Add other metrics gradually
 - Focus on trends, not absolute numbers
 
 ### 2. Automate Everything
+
 - Automated deployment tracking
 - Automated incident detection
 - Automated metric calculation
 
 ### 3. Make Metrics Visible
+
 - Team dashboards
 - Regular reviews
 - Celebrate improvements
 
 ### 4. Use Metrics for Improvement
+
 - Identify bottlenecks
 - Run experiments
 - Measure impact
 
 ### 5. Avoid Gaming
+
 - Focus on outcomes, not metrics
 - Balance all four metrics
 - Consider additional context
@@ -4421,24 +4598,28 @@ volumes:
 ## Common Pitfalls
 
 ### 1. Focusing on Single Metrics
+
 ```
 ❌ Optimizing deployment frequency while ignoring failure rate
 ✅ Balancing all four metrics together
 ```
 
 ### 2. Manual Data Collection
+
 ```
 ❌ Manually tracking deployments in spreadsheets
 ✅ Automated collection from CI/CD pipelines
 ```
 
 ### 3. Comparing Teams Directly
+
 ```
 ❌ Team A is better because they deploy more
 ✅ Each team improves their own metrics over time
 ```
 
 ### 4. Ignoring Context
+
 ```
 ❌ All teams must achieve elite performance
 ✅ Consider team maturity, technology, and constraints
@@ -4447,21 +4628,25 @@ volumes:
 ## DORA Metrics Maturity Model
 
 ### Level 1: Baseline
+
 - Manual tracking
 - Monthly reviews
 - Basic dashboards
 
 ### Level 2: Automated
+
 - Automated collection
 - Weekly reviews
 - Real-time dashboards
 
 ### Level 3: Integrated
+
 - Metrics drive decisions
 - Daily visibility
 - Automated alerts
 
 ### Level 4: Optimized
+
 - Predictive analytics
 - Continuous improvement
 - Cultural integration
@@ -4476,13 +4661,15 @@ Recent additions to DORA metrics include:
 4. **Documentation** - Coverage and accuracy metrics
 5. **Technical Debt** - Code quality trends
 
-Remember: DORA metrics are indicators, not goals. Use them to identify areas for improvement and track progress, but always consider the broader context of your team and organization.
+Remember: DORA metrics are indicators, not goals. Use them to identify areas for
+improvement and track progress, but always consider the broader context of your
+team and organization.
 
 ---
 
 ### CUSTOM-SECURITY
 
-*Custom Standard from: ~/.claude/aichaku/user/standards/CUSTOM-SECURITY.md*
+_Custom Standard from: ~/.claude/aichaku/user/standards/CUSTOM-SECURITY.md_
 
 ## Custom Security Standard
 
@@ -4513,7 +4700,6 @@ class CustomSecurity {
 - Implement custom security patterns
 
 ---
-
 
 <!-- AICHAKU:STANDARDS:END -->
 

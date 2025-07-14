@@ -1,18 +1,1 @@
-{
-  "hooks": {
-    "Stop": [
-      {
-        "name": "Conversation Summary",
-        "command": "deno run --allow-read --allow-run ~/.claude/aichaku/hooks/summarize-conversation.ts",
-        "description": "Auto-save summaries before context loss"
-      }
-    ],
-    "PreCompact": [
-      {
-        "name": "Pre-Compact Summary",
-        "command": "deno run --allow-read --allow-run ~/.claude/aichaku/hooks/summarize-conversation.ts",
-        "description": "Auto-save summaries before context compaction"
-      }
-    ]
-  }
-}
+{}

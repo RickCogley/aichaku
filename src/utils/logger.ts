@@ -19,7 +19,26 @@ export interface LoggerOptions {
 }
 
 /**
- * Simple logger for consistent output
+ * Simple logger for consistent output formatting
+ *
+ * Provides methods for different log levels (info, success, warn, error, debug)
+ * with consistent formatting and color coding. Supports silent mode, verbose mode,
+ * and message prefixing.
+ *
+ * @example
+ * ```ts
+ * const logger = new Logger({ prefix: "🪴 Aichaku" });
+ * logger.info("Initializing...");
+ * logger.success("Installation complete!");
+ * logger.warn("This will overwrite existing files");
+ * logger.error("Failed to connect");
+ *
+ * // Create child logger with additional prefix
+ * const childLogger = logger.child("[hooks]");
+ * childLogger.info("Installing hooks..."); // Output: "🪴 Aichaku [hooks] Installing hooks..."
+ * ```
+ *
+ * @public
  */
 export class Logger {
   private options: LoggerOptions;
@@ -30,6 +49,7 @@ export class Logger {
 
   /**
    * Log an info message
+   * @param {string} message - The message to log
    */
   info(message: string): void {
     if (!this.options.silent) {
@@ -38,7 +58,8 @@ export class Logger {
   }
 
   /**
-   * Log a success message
+   * Log a success message in green
+   * @param {string} message - The success message to log
    */
   success(message: string): void {
     if (!this.options.silent) {
@@ -47,7 +68,8 @@ export class Logger {
   }
 
   /**
-   * Log a warning message
+   * Log a warning message in yellow
+   * @param {string} message - The warning message to log
    */
   warn(message: string): void {
     if (!this.options.silent) {
@@ -56,7 +78,8 @@ export class Logger {
   }
 
   /**
-   * Log an error message
+   * Log an error message in red
+   * @param {string} message - The error message to log
    */
   error(message: string): void {
     if (!this.options.silent) {
@@ -65,7 +88,8 @@ export class Logger {
   }
 
   /**
-   * Log a debug message (only if verbose)
+   * Log a debug message (only if verbose mode is enabled)
+   * @param {string} message - The debug message to log
    */
   debug(message: string): void {
     if (!this.options.silent && this.options.verbose) {
@@ -74,7 +98,9 @@ export class Logger {
   }
 
   /**
-   * Log with custom formatting
+   * Log a message with optional custom color formatting
+   * @param {string} message - The message to log
+   * @param {Function} color - Optional color function to apply
    */
   log(message: string, color?: (str: string) => string): void {
     if (!this.options.silent) {
@@ -84,7 +110,10 @@ export class Logger {
   }
 
   /**
-   * Format message with prefix
+   * Format message with optional prefix
+   * @param {string} message - The message to format
+   * @returns {string} The formatted message
+   * @private
    */
   private formatMessage(message: string): string {
     return this.options.prefix ? `${this.options.prefix} ${message}` : message;
@@ -92,6 +121,8 @@ export class Logger {
 
   /**
    * Create a child logger with additional prefix
+   * @param {string} prefix - Additional prefix for child logger
+   * @returns {Logger} New logger instance with combined prefix
    */
   child(prefix: string): Logger {
     return new Logger({
@@ -101,7 +132,8 @@ export class Logger {
   }
 
   /**
-   * Log a section header
+   * Log a section header with underline
+   * @param {string} title - The section title to display
    */
   section(title: string): void {
     if (!this.options.silent) {
@@ -111,7 +143,9 @@ export class Logger {
   }
 
   /**
-   * Log a list item
+   * Log a bulleted list item
+   * @param {string} message - The list item text
+   * @param {number} indent - Number of spaces to indent (default: 2)
    */
   item(message: string, indent = 2): void {
     if (!this.options.silent) {
@@ -120,7 +154,10 @@ export class Logger {
   }
 
   /**
-   * Log a progress indicator
+   * Log a progress bar indicator
+   * @param {number} current - Current progress value
+   * @param {number} total - Total value for 100% progress
+   * @param {string} message - Optional message to display with progress
    */
   progress(current: number, total: number, message?: string): void {
     if (!this.options.silent) {

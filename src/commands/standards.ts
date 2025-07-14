@@ -21,29 +21,57 @@ import {
 } from "../utils/path-security.ts";
 import { resolveProjectPath } from "../utils/project-paths.ts";
 
-// Type definitions for better type safety
+/**
+ * Represents a development standard or guideline
+ * @public
+ */
 interface Standard {
+  /** Display name of the standard */
   name: string;
+  /** Brief description of what the standard covers */
   description: string;
+  /** Categorization tags for search and filtering */
   tags: string[];
 }
 
+/**
+ * Category grouping for related standards
+ * @public
+ */
 interface StandardCategory {
+  /** Category display name */
   name: string;
+  /** Description of what standards in this category cover */
   description: string;
+  /** Map of standard IDs to their definitions */
   standards: Record<string, Standard>;
 }
 
+/**
+ * Project-specific standards configuration
+ * @internal
+ */
 interface ProjectConfig {
+  /** Configuration schema version */
   version: string;
+  /** List of selected standard IDs */
   selected: string[];
+  /** User-defined custom standards */
   customStandards?: Record<string, CustomStandard>;
 }
 
+/**
+ * User-defined custom standard
+ * @public
+ */
 interface CustomStandard {
+  /** Display name of the custom standard */
   name: string;
+  /** Description of the custom standard */
   description: string;
+  /** File path to the custom standard content */
   path: string;
+  /** Categorization tags */
   tags: string[];
 }
 
@@ -198,6 +226,50 @@ interface ProjectStandards {
 
 /**
  * Main standards command implementation
+ */
+/**
+ * Browse and manage development standards and guidelines
+ *
+ * Provides access to a curated collection of industry standards including
+ * security frameworks (OWASP, NIST-CSF), architecture patterns (Clean Architecture, DDD),
+ * development practices (TDD, BDD), and coding standards (Google Style Guides).
+ * Standards can be added to your project's CLAUDE.md for AI guidance.
+ *
+ * @param {StandardsOptions} options - Options for browsing and managing standards
+ * @param {boolean} options.list - List all available standards
+ * @param {string[]} options.categories - Filter by specific categories
+ * @param {boolean} options.show - Show currently selected standards
+ * @param {string[]} options.add - Standards to add to project configuration
+ * @param {string[]} options.remove - Standards to remove from configuration
+ * @param {string} options.search - Search standards by name or tags
+ * @param {string} options.view - View a specific standard's content
+ * @param {string} options.copy - Copy a standard to clipboard
+ * @param {boolean} options.global - Apply operations globally
+ * @param {string} options.projectPath - Project path for local operations
+ * @returns {Promise<void>}
+ *
+ * @example
+ * ```ts
+ * // List all available standards
+ * await standards({ list: true });
+ *
+ * // List security standards only
+ * await standards({ list: true, categories: ["security"] });
+ *
+ * // Search for TDD-related standards
+ * await standards({ search: "tdd" });
+ *
+ * // Add standards to project
+ * await standards({ add: ["NIST-CSF", "TDD", "CLEAN-ARCH"] });
+ *
+ * // View a specific standard
+ * await standards({ view: "OWASP-WEB" });
+ *
+ * // Copy standard content to clipboard
+ * await standards({ copy: "GOOGLE-STYLE" });
+ * ```
+ *
+ * @public
  */
 export async function standards(options: StandardsOptions = {}): Promise<void> {
   try {

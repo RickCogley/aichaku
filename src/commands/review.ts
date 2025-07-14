@@ -11,12 +11,45 @@ import {
   isMCPServerRunning,
 } from "../utils/mcp-http-client.ts";
 
+/**
+ * Options for the review command
+ * @public
+ */
 export interface ReviewOptions {
+  /** Show help message */
   help?: boolean;
+  /** Specific file to review */
   file?: string;
+  /** Show review statistics */
   stats?: boolean;
 }
 
+/**
+ * Trigger automated code review using MCP server
+ *
+ * Uses the Aichaku MCP (Model Context Protocol) server to perform
+ * security and standards reviews on specified files. The MCP server
+ * analyzes code for OWASP vulnerabilities, best practices, and
+ * project-specific standards.
+ *
+ * @param {ReviewOptions} options - Review command options
+ * @param {string[]} files - List of files to review
+ * @returns {Promise<void>}
+ *
+ * @example
+ * ```ts
+ * // Review a single file
+ * await review({ file: "src/main.ts" }, []);
+ *
+ * // Review multiple files
+ * await review({}, ["src/main.ts", "src/utils.ts"]);
+ *
+ * // Show review statistics
+ * await review({ stats: true }, []);
+ * ```
+ *
+ * @public
+ */
 export async function runReviewCommand(
   options: ReviewOptions,
   files: string[],
@@ -286,3 +319,6 @@ Note: The MCP server must be running. Start it with:
   aichaku mcp --start
 `);
 }
+
+// Export with simpler name for public API
+export { runReviewCommand as review };

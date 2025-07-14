@@ -279,6 +279,10 @@ aichaku integrate --force
 
 ### Hooks - Automate Your Workflow
 
+Claude Code hooks allow you to run scripts at various points in Claude's
+lifecycle, such as before/after tool use, at conversation end, or during
+compaction.
+
 ```bash
 # See what hooks are available
 aichaku hooks --list
@@ -295,18 +299,74 @@ aichaku hooks --install essential --local
 # Install specific hooks
 aichaku hooks --install conversation-summary,code-review --local
 
-# Remove all Aichaku hooks
-aichaku hooks --remove --global
+# Uninstall specific hooks
+aichaku hooks --uninstall path-validator --global
+
+# Validate installed hooks are working
+aichaku hooks --validate
 ```
 
-**Available Hook Sets:**
+**Available Hook Categories:**
 
 - **Essential** (4 hooks): Must-haves for Claude+Aichaku workflow
+  - `conversation-summary`: Saves session summaries
+  - `path-validator`: Ensures Aichaku project structure
+  - `status-updater`: Updates STATUS.md automatically
+  - `code-review`: Reviews code changes
+
 - **Productivity** (4 hooks): Workflow enhancers
+  - `template-validator`: Checks document templates
+  - `diagram-generator`: Creates Mermaid diagrams
+  - `progress-tracker`: Tracks project progress
+  - `commit-validator`: Enforces conventional commits
+
 - **Security** (2 hooks): Compliance and safety checks
+  - `owasp-checker`: OWASP security validation
+  - `sensitive-file-guard`: Prevents accidental secrets
+
+- **GitHub** (5 hooks): GitHub integration and automation
+  - `todo-tracker`: Scans TODOs and suggests issues
+  - `pr-checker`: Validates PR readiness
+  - `issue-linker`: Links commits to issues
+  - `workflow-monitor`: Monitors GitHub Actions
+  - `release-helper`: Assists with releases
 
 **Important:** Restart Claude Code after installing/removing hooks for changes
 to take effect.
+
+### Standards - Development Guidelines
+
+Browse and manage development standards that guide Claude's responses:
+
+```bash
+# List all available standards
+aichaku standards --list
+
+# Search for specific standards
+aichaku standards --search "security"
+
+# Add standards to your project
+aichaku standards --add NIST-CSF,TDD,CLEAN-ARCH
+
+# View a specific standard
+aichaku standards --view OWASP-WEB
+
+# Show currently selected standards
+aichaku standards --show
+
+# Copy standard content to clipboard
+aichaku standards --copy GOOGLE-STYLE
+```
+
+**Available Standard Categories:**
+
+- **Security**: OWASP, NIST-CSF, GDPR, PCI-DSS
+- **Architecture**: 15-Factor, DDD, Clean Architecture, Microservices
+- **Development**: TDD, BDD, Test Pyramid, Conventional Commits
+- **Style**: Google Style Guides, API Design, Documentation
+- **Metrics**: DORA, Code Quality, Performance
+
+Standards are automatically included in your CLAUDE.md when selected.
 
 ### Help Examples
 

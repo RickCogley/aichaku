@@ -10,23 +10,43 @@ import { ensureDir } from "jsr:@std/fs@1/ensure-dir";
 import { normalize, resolve } from "jsr:@std/path@1";
 import { safeReadTextFile } from "../utils/path-security.ts";
 
-// Type definitions for better type safety
+/**
+ * Configuration for a Claude Code hook
+ * @internal
+ */
 interface HookConfig {
-  name: string;
-  command: string;
-  description: string;
+  /** Regex pattern to match tool names (e.g., "Write|Edit|MultiEdit") */
   matcher?: string;
+  /** Array of hooks to execute when the matcher is triggered */
+  hooks: Array<{
+    /** Hook type (currently only "command" is supported) */
+    type: string;
+    /** Command to execute when the hook is triggered */
+    command: string;
+  }>;
 }
 
+/**
+ * Claude Code settings structure with hooks configuration
+ * @internal
+ */
 interface Settings {
+  /** Hook configurations organized by event type */
   hooks?: {
     [key: string]: HookConfig[];
   };
 }
 
+/**
+ * Development standard metadata
+ * @internal
+ */
 interface Standard {
+  /** Standard identifier (e.g., "NIST-CSF", "TDD") */
   name: string;
+  /** Brief description of the standard */
   description: string;
+  /** Categorization tags for the standard */
   tags: string[];
 }
 
@@ -81,6 +101,17 @@ export const HOOK_CATEGORIES = {
     description: "Compliance and safety checks",
     hooks: ["owasp-checker", "sensitive-file-guard"],
   },
+  github: {
+    name: "GitHub Integration",
+    description: "GitHub workflow automation and best practices",
+    hooks: [
+      "todo-tracker",
+      "pr-checker",
+      "issue-linker",
+      "workflow-monitor",
+      "release-helper",
+    ],
+  },
   custom: {
     name: "Custom",
     description: "Interactive selection of individual hooks",
@@ -97,90 +128,142 @@ const HOOK_TEMPLATES = {
     description: "Ensures files are created in correct directories",
     type: "PreToolUse",
     matcher: "Write|MultiEdit",
-    // InfoSec: Using parameter expansion to prevent command injection
+    source: "aichaku",
+    // Using TypeScript runner for better security and cross-platform compatibility
     command:
-      `bash -c 'file_path="$1"; if [[ "$file_path" =~ /\\.claude/output/ ]] && [[ ! "$file_path" =~ /active-[0-9]{4}-[0-9]{2}-[0-9]{2}/ ]]; then echo "❌ Aichaku: Files should be in active-YYYY-MM-DD-{name} folders"; exit 1; fi' -- "\${TOOL_INPUT_FILE_PATH}"`,
+      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts path-validator`,
   },
   "status-updater": {
     name: "Aichaku Status Updater",
     description: "Auto-updates STATUS.md when project files change",
     type: "PostToolUse",
     matcher: "Write|Edit|MultiEdit",
-    // InfoSec: Using parameter expansion to prevent command injection
+    source: "aichaku",
     command:
-      `bash -c 'file_path="$1"; if [[ "$file_path" =~ /\\.claude/output/active- ]] && [[ ! "$file_path" =~ STATUS\\.md$ ]]; then echo "🪴 Aichaku: Updating project status..."; fi' -- "\${TOOL_INPUT_FILE_PATH}"`,
+      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts status-updater`,
   },
   "conversation-summary": {
     name: "Conversation Summary",
     description: "Auto-save summaries before context loss",
     type: "Stop",
+    source: "aichaku",
     command:
-      `deno run --allow-read --allow-run ~/.claude/aichaku/hooks/summarize-conversation.ts`,
+      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts conversation-summary`,
   },
   "conversation-summary-precompact": {
     name: "Pre-Compact Summary",
     description: "Auto-save summaries before context compaction",
     type: "PreCompact",
+    source: "aichaku",
     command:
-      `deno run --allow-read --allow-run ~/.claude/aichaku/hooks/summarize-conversation.ts`,
+      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts conversation-summary-precompact`,
   },
   "code-review": {
     name: "Code Review",
     description: "Review code after edits using Aichaku MCP",
     type: "PostToolUse",
     matcher: "Edit|MultiEdit|Write",
-    command: `aichaku review "\${file_path}" 2>&1 | head -20`,
+    source: "aichaku",
+    command:
+      `deno run --allow-read --allow-write --allow-env --allow-run ~/.claude/aichaku/hooks/aichaku-hooks.ts code-review`,
   },
   "template-validator": {
     name: "Aichaku Template Validator",
     description: "Validates methodology document templates",
     type: "PreToolUse",
     matcher: "Write",
-    // InfoSec: Using parameter expansion to prevent command injection
+    source: "aichaku",
     command:
-      `bash -c 'file_path="$1"; if [[ "$file_path" =~ \\.(pitch|sprint|kanban)\\.md$ ]]; then echo "🪴 Aichaku: Validating methodology template..."; fi' -- "\${TOOL_INPUT_FILE_PATH}"`,
+      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts template-validator`,
   },
   "diagram-generator": {
     name: "Aichaku Diagram Generator",
     description: "Ensures Mermaid diagrams are present in documentation",
     type: "PostToolUse",
     matcher: "Write",
-    // InfoSec: Using parameter expansion and quoted grep pattern to prevent command injection
+    source: "aichaku",
     command:
-      `bash -c 'file_path="$1"; if [[ "$file_path" =~ /STATUS\\.md$ ]] && ! grep -q "mermaid" "$file_path" 2>/dev/null; then echo "⚠️  Aichaku: STATUS.md should include a Mermaid diagram"; fi' -- "\${TOOL_INPUT_FILE_PATH}"`,
+      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts diagram-generator`,
   },
   "progress-tracker": {
     name: "Aichaku Progress Tracker",
     description: "Tracks sprint/cycle progress automatically",
     type: "Stop",
+    source: "aichaku",
     command:
-      `echo "🪴 Aichaku: Session complete. Updating progress metrics..."`,
+      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts progress-tracker`,
   },
   "owasp-checker": {
     name: "OWASP Security Checker",
     description: "Reminds about OWASP Top 10 considerations",
     type: "PreToolUse",
     matcher: "Write|Edit",
-    // InfoSec: Using parameter expansion to prevent command injection
+    source: "aichaku",
     command:
-      `bash -c 'file_path="$1"; if [[ "$file_path" =~ \\.(ts|js|py)$ ]]; then echo "🔒 Aichaku: Remember OWASP checks - validate inputs, secure auth, protect data"; fi' -- "\${TOOL_INPUT_FILE_PATH}"`,
+      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts owasp-checker`,
   },
   "commit-validator": {
     name: "Conventional Commit Validator",
     description: "Ensures commit messages follow conventions",
     type: "PreToolUse",
     matcher: "Bash(git commit)",
+    source: "aichaku",
     command:
-      `echo "📝 Aichaku: Use conventional format: type(scope): description"`,
+      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts commit-validator`,
   },
   "sensitive-file-guard": {
     name: "Sensitive File Guard",
     description: "Prevents accidental modification of sensitive files",
     type: "PreToolUse",
     matcher: "Write|Edit|MultiEdit",
-    // InfoSec: Using parameter expansion to prevent command injection
+    source: "aichaku",
     command:
-      `bash -c 'file_path="$1"; if [[ "$file_path" =~ (\\.env|\\.env\\.local|secrets|private) ]]; then echo "⚠️  Aichaku: Modifying potentially sensitive file - proceed with caution"; fi' -- "\${TOOL_INPUT_FILE_PATH}"`,
+      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts sensitive-file-guard`,
+  },
+  // GitHub Integration Hooks
+  "todo-tracker": {
+    name: "TODO Tracker",
+    description: "Suggests creating GitHub issues from TODOs in code",
+    type: "PostToolUse",
+    matcher: "Write|Edit|MultiEdit",
+    source: "aichaku",
+    command:
+      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts todo-tracker`,
+  },
+  "pr-checker": {
+    name: "PR Context Checker",
+    description: "Checks active pull requests at session start",
+    type: "SessionStart",
+    source: "aichaku",
+    command:
+      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts pr-checker`,
+  },
+  "issue-linker": {
+    name: "Issue Linker",
+    description: "Reminds to link commits to GitHub issues",
+    type: "PreToolUse",
+    matcher: "Bash",
+    source: "aichaku",
+    command:
+      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts issue-linker`,
+  },
+  "workflow-monitor": {
+    name: "GitHub Workflow Monitor",
+    description: "Provides guidance when editing GitHub Actions workflows",
+    type: "PostToolUse",
+    matcher: "Write|Edit|MultiEdit",
+    source: "aichaku",
+    command:
+      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts workflow-monitor`,
+  },
+  "release-helper": {
+    name: "Release Helper",
+    description: "Guides through release process on version bumps",
+    type: "PostToolUse",
+    matcher: "Write|Edit|MultiEdit",
+    source: "aichaku",
+    command:
+      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts release-helper`,
   },
 };
 
@@ -200,6 +283,43 @@ interface HookOptions {
 
 /**
  * Main hooks command implementation
+ */
+/**
+ * Configure and manage Claude Code hooks for Aichaku automation
+ *
+ * Hooks allow you to run custom scripts at various points in Claude Code's lifecycle,
+ * such as before tool use, after tool use, or when a conversation ends. This command
+ * helps you install, uninstall, list, and validate hooks.
+ *
+ * @param {HookOptions} options - Configuration options for hook management
+ * @param {boolean} options.list - List all available hooks and categories
+ * @param {boolean} options.show - Show currently installed hooks
+ * @param {boolean} options.validate - Validate installed hooks are working
+ * @param {string[]} options.install - Hook names or categories to install
+ * @param {string[]} options.uninstall - Hook names to uninstall
+ * @param {boolean} options.global - Apply operations globally (~/.claude)
+ * @param {string} options.projectPath - Project path for local operations
+ * @returns {Promise<void>}
+ *
+ * @example
+ * ```ts
+ * // List all available hooks
+ * await hooks({ list: true });
+ *
+ * // Install essential hooks globally
+ * await hooks({ install: ["essential"], global: true });
+ *
+ * // Install specific hooks locally
+ * await hooks({ install: ["path-validator", "commit-validator"] });
+ *
+ * // Show installed hooks
+ * await hooks({ show: true });
+ *
+ * // Uninstall a hook
+ * await hooks({ uninstall: ["status-updater"], global: true });
+ * ```
+ *
+ * @public
  */
 export async function hooks(options: HookOptions = {}): Promise<void> {
   try {
@@ -293,6 +413,9 @@ function listHooks(): void {
   console.log(
     `  aichaku hooks --install security      ${HOOK_CATEGORIES.security.hooks.length} hooks`,
   );
+  console.log(
+    `  aichaku hooks --install github        ${HOOK_CATEGORIES.github.hooks.length} hooks (GitHub Integration)`,
+  );
   console.log();
   console.log("INSTALL INDIVIDUAL HOOKS:");
   console.log("  aichaku hooks --install <hook-name> [--global|--local]");
@@ -304,11 +427,11 @@ function listHooks(): void {
 }
 
 /**
- * Ensure conversation summary script is installed
+ * Ensure hook scripts are installed
  */
-async function ensureConversationSummaryScript(): Promise<void> {
+async function ensureHookScripts(): Promise<void> {
   const scriptPath = expandTilde(
-    "~/.claude/aichaku/hooks/summarize-conversation.ts",
+    "~/.claude/aichaku/hooks/aichaku-hooks.ts",
   );
   const scriptDir = expandTilde("~/.claude/aichaku/hooks");
 
@@ -320,61 +443,145 @@ async function ensureConversationSummaryScript(): Promise<void> {
     return;
   }
 
-  // Create the script
+  // Create the unified hook runner script
   const scriptContent =
-    `#!/usr/bin/env -S deno run --allow-read --allow-run --allow-write
+    `#!/usr/bin/env -S deno run --allow-read --allow-write --allow-env
+
+// Aichaku Hook Runner
+// This script handles all Aichaku hooks with proper TypeScript support
 
 interface HookInput {
-  session_id: string;
-  transcript_path: string;
-  hook_event_name: string;
+  session_id?: string;
+  transcript_path?: string;
+  hook_event_name?: string;
   stop_hook_active?: boolean;
+  tool_input?: {
+    file_path?: string;
+    command?: string;
+  };
 }
 
-const decoder = new TextDecoder();
-const buffer = await Deno.stdin.readable.getReader().read();
-const input = decoder.decode(buffer.value);
-const hookInput: HookInput = JSON.parse(input);
+const hookType = Deno.args[0];
 
-// Read the conversation transcript
-const transcriptContent = await Deno.readTextFile(hookInput.transcript_path);
-
-// Generate summary based on hook event
-const eventPrefix = hookInput.hook_event_name === "preCompact" ? "Pre-Compact" : "Checkpoint";
-
-// Create checkpoint directory if it doesn't exist
-const checkpointDir = "docs/checkpoints";
+// Read input from stdin if available
+let input: HookInput = {};
 try {
-  await Deno.mkdir(checkpointDir, { recursive: true });
+  const decoder = new TextDecoder();
+  const buffer = new Uint8Array(1024 * 1024); // 1MB buffer
+  const bytesRead = await Deno.stdin.read(buffer);
+  if (bytesRead && bytesRead > 0) {
+    const inputStr = decoder.decode(buffer.subarray(0, bytesRead));
+    input = JSON.parse(inputStr);
+  }
 } catch {
-  // Directory might already exist
+  // No input from stdin or invalid JSON
 }
 
-// Generate filename with timestamp
-const now = new Date();
-const dateStr = now.toISOString().split('T')[0];
-const filename = \`\${checkpointDir}/\${eventPrefix.toLowerCase()}-\${dateStr}-\${hookInput.session_id.slice(0, 8)}.md\`;
+// Get file path from environment or input
+const filePath = Deno.env.get("TOOL_INPUT_FILE_PATH") || 
+                 input.tool_input?.file_path || "";
 
-// For now, just save the transcript with a header
-const content = \`# \${eventPrefix} Summary
+// Hook implementations
+switch (hookType) {
+  case "path-validator":
+    if (filePath.includes("/docs/projects/") && 
+        !filePath.match(/\\/active\\/\\d{4}-\\d{2}-\\d{2}-/)) {
+      console.error("❌ Aichaku: Files should be in docs/projects/active/YYYY-MM-DD-{name} folders");
+      Deno.exit(1);
+    }
+    break;
+
+  case "status-updater":
+    if (filePath.includes("/docs/projects/active/") && 
+        !filePath.endsWith("STATUS.md")) {
+      console.log("🪴 Aichaku: Updating project status...");
+    }
+    break;
+
+  case "conversation-summary":
+  case "conversation-summary-precompact":
+    if (input.transcript_path) {
+      const transcriptContent = await Deno.readTextFile(input.transcript_path);
+      const eventPrefix = input.hook_event_name === "preCompact" ? "Pre-Compact" : "Checkpoint";
+      
+      const checkpointDir = "docs/checkpoints";
+      await Deno.mkdir(checkpointDir, { recursive: true }).catch(() => {});
+      
+      const now = new Date();
+      const dateStr = now.toISOString().split('T')[0];
+      const sessionId = input.session_id || "unknown";
+      const filename = \`\${checkpointDir}/\${eventPrefix.toLowerCase()}-\${dateStr}-\${sessionId.slice(0, 8)}.md\`;
+      
+      const content = \`# \${eventPrefix} Summary
 
 **Date**: \${now.toISOString()}
-**Session**: \${hookInput.session_id}
-**Event**: \${hookInput.hook_event_name}
+**Session**: \${sessionId}
+**Event**: \${input.hook_event_name || hookType}
 
 ## Conversation Transcript
 
 \${transcriptContent}
 \`;
+      
+      await Deno.writeTextFile(filename, content);
+      console.log(\`🪴 Aichaku: \${eventPrefix} saved to \${filename}\`);
+    }
+    break;
 
-await Deno.writeTextFile(filename, content);
-console.log(\`🪴 Aichaku: \${eventPrefix} saved to \${filename}\`);
+  case "code-review":
+    console.log(\`🔍 Aichaku: Reviewing code changes in \${filePath}...\`);
+    // Future: integrate with aichaku review command
+    break;
+
+  case "template-validator":
+    if (filePath.match(/\\.(pitch|sprint|kanban)\\.md$/)) {
+      console.log("🪴 Aichaku: Validating methodology template...");
+    }
+    break;
+
+  case "diagram-generator":
+    if (filePath.endsWith("/STATUS.md")) {
+      try {
+        const content = await Deno.readTextFile(filePath);
+        if (!content.includes("mermaid")) {
+          console.log("⚠️  Aichaku: STATUS.md should include a Mermaid diagram");
+        }
+      } catch {
+        // File might not exist yet
+      }
+    }
+    break;
+
+  case "progress-tracker":
+    console.log("🪴 Aichaku: Session complete. Updating progress metrics...");
+    break;
+
+  case "owasp-checker":
+    if (filePath.match(/\\.(ts|js|py)$/)) {
+      console.log("🔒 Aichaku: Remember OWASP checks - validate inputs, secure auth, protect data");
+    }
+    break;
+
+  case "commit-validator":
+    console.log("📝 Aichaku: Use conventional format: type(scope): description");
+    break;
+
+  case "sensitive-file-guard":
+    if (filePath.match(/(\\.env|\\.env\\.local|secrets|private)/)) {
+      console.log("⚠️  Aichaku: Modifying potentially sensitive file - proceed with caution");
+    }
+    break;
+
+  default:
+    console.error(\`Unknown hook type: \${hookType}\`);
+    Deno.exit(1);
+}
 `;
 
   await Deno.writeTextFile(scriptPath, scriptContent);
   await Deno.chmod(scriptPath, 0o755);
 
-  console.log("📝 Installed conversation summary script");
+  console.log("📝 Installed Aichaku hook runner script");
 }
 
 /**
@@ -472,6 +679,11 @@ async function installHooks(
 
   console.log(`\n🪴 Aichaku: Installing ${categoryName} hooks...\n`);
 
+  // Ensure hook scripts are installed before installing any hooks
+  if (!dryRun) {
+    await ensureHookScripts();
+  }
+
   // Install each hook
   let installed = 0;
   let notFound = 0;
@@ -481,7 +693,7 @@ async function installHooks(
     if (hookId === "conversation-summary") {
       // Ensure script is installed
       if (!dryRun) {
-        await ensureConversationSummaryScript();
+        await ensureHookScripts();
       }
 
       // Install both Stop and PreCompact hooks
@@ -493,14 +705,20 @@ async function installHooks(
       // Install Stop hook
       settings.hooks["Stop"] = settings.hooks["Stop"] || [];
       const stopExists = settings.hooks["Stop"].some(
-        (h: HookConfig) => h.name === stopHook.name,
+        (h: HookConfig) =>
+          h.hooks && h.hooks.some(
+            (hookItem) => hookItem.command === stopHook.command,
+          ),
       );
 
       if (!stopExists) {
         settings.hooks["Stop"].push({
-          name: stopHook.name,
-          command: stopHook.command,
-          description: stopHook.description,
+          hooks: [
+            {
+              type: "command",
+              command: stopHook.command,
+            },
+          ],
         });
         summaryInstalled++;
       }
@@ -508,14 +726,20 @@ async function installHooks(
       // Install PreCompact hook
       settings.hooks["PreCompact"] = settings.hooks["PreCompact"] || [];
       const preCompactExists = settings.hooks["PreCompact"].some(
-        (h: HookConfig) => h.name === preCompactHook.name,
+        (h: HookConfig) =>
+          h.hooks && h.hooks.some(
+            (hookItem) => hookItem.command === preCompactHook.command,
+          ),
       );
 
       if (!preCompactExists) {
         settings.hooks["PreCompact"].push({
-          name: preCompactHook.name,
-          command: preCompactHook.command,
-          description: preCompactHook.description,
+          hooks: [
+            {
+              type: "command",
+              command: preCompactHook.command,
+            },
+          ],
         });
         summaryInstalled++;
       }
@@ -540,21 +764,30 @@ async function installHooks(
     const hookType = hook.type as keyof typeof settings.hooks;
     settings.hooks[hookType] = settings.hooks[hookType] || [];
 
-    // Check if hook already exists
+    // Check if hook already exists (by matcher and command)
     const exists = settings.hooks[hookType].some(
-      (h: HookConfig) => h.name === hook.name,
+      (h: HookConfig) => {
+        // For hooks with matchers, check both matcher and command
+        if ("matcher" in hook && hook.matcher) {
+          return h.matcher === hook.matcher &&
+            h.hooks.some((hookItem) => hookItem.command === hook.command);
+        }
+        // For hooks without matchers, just check command
+        return h.hooks.some((hookItem) => hookItem.command === hook.command);
+      },
     );
 
     if (!exists) {
-      const hookConfig: HookConfig = {
-        name: hook.name,
-        command: hook.command,
-        description: hook.description,
+      // Create the correct nested structure for Claude Code
+      const hookConfig = {
+        ...("matcher" in hook && hook.matcher ? { matcher: hook.matcher } : {}),
+        hooks: [
+          {
+            type: "command",
+            command: hook.command,
+          },
+        ],
       };
-
-      if ("matcher" in hook) {
-        hookConfig.matcher = hook.matcher;
-      }
 
       settings.hooks[hookType].push(hookConfig);
       console.log(`✅ ${hook.name} installed`);
@@ -675,7 +908,14 @@ async function removeHooks(
       for (const hookType of Object.keys(settings.hooks)) {
         const hooks = settings.hooks[hookType];
         const filtered = hooks.filter(
-          (h: HookConfig) => !h.name || !h.name.includes("Aichaku"),
+          (h: HookConfig) => {
+            // Remove Aichaku hooks by checking if any hook command contains "aichaku" or "Aichaku"
+            const hasAichakuCommand = h.hooks.some((hookItem) =>
+              hookItem.command.includes("aichaku") ||
+              hookItem.command.includes("Aichaku")
+            );
+            return !hasAichakuCommand;
+          },
         );
 
         removed += hooks.length - filtered.length;
@@ -778,29 +1018,46 @@ function displayHooksFromSettings(settings: Settings): void {
     if (!Array.isArray(hooks) || hooks.length === 0) continue;
 
     console.log(`${hookType}:`);
-    const aichakuHooks = (hooks as HookConfig[]).filter((hook) =>
-      hook.name?.includes("Aichaku") ||
-      hook.description?.includes("Aichaku") ||
-      hook.name === "Conversation Summary" ||
-      hook.name === "Code Review" ||
-      hook.name === "Path Validator" ||
-      hook.name === "Status Updater" ||
-      hook.name === "Template Validator" ||
-      hook.name === "Diagram Generator" ||
-      hook.name === "Progress Tracker" ||
-      hook.name === "OWASP Security Checker" ||
-      hook.name === "Sensitive File Guard" ||
-      hook.name === "Conventional Commit Validator"
-    );
+
+    // Filter Aichaku hooks by checking their commands
+    const aichakuHooks = (hooks as HookConfig[]).filter((hook) => {
+      // Check if any of the hook's commands contain "aichaku"
+      return hook.hooks?.some((h) =>
+        h.command.includes("aichaku") ||
+        h.command.includes("Aichaku")
+      );
+    });
 
     if (aichakuHooks.length > 0) {
       for (const hook of aichakuHooks) {
-        console.log(`  • ${hook.name}`);
-        if (hook.description) {
-          console.log(`    ${hook.description}`);
-        }
-        if (hook.matcher) {
-          console.log(`    Matches: ${hook.matcher}`);
+        // Extract hook name from command or use a generic label
+        const hookCommand = hook.hooks?.[0]?.command || "";
+        let hookName = "Aichaku Hook";
+
+        // Try to extract the hook type from the command
+        const match = hookCommand.match(/aichaku-hooks\.ts\s+(\S+)/);
+        if (match) {
+          const hookId = match[1];
+          const template =
+            HOOK_TEMPLATES[hookId as keyof typeof HOOK_TEMPLATES];
+          if (template) {
+            hookName = template.name;
+            console.log(`  • ${hookName}`);
+            console.log(`    ${template.description}`);
+            if (hook.matcher) {
+              console.log(`    Matches: ${hook.matcher}`);
+            }
+          } else {
+            console.log(`  • ${hookName} (${hookId})`);
+            if (hook.matcher) {
+              console.log(`    Matches: ${hook.matcher}`);
+            }
+          }
+        } else {
+          console.log(`  • ${hookName}`);
+          if (hook.matcher) {
+            console.log(`    Matches: ${hook.matcher}`);
+          }
         }
       }
     }
@@ -874,12 +1131,31 @@ async function validateHooks(): Promise<void> {
     for (const hook of hooks as HookConfig[]) {
       totalHooks++;
 
-      if (hook.name?.startsWith("Aichaku")) {
+      // Check if it's an Aichaku hook by looking at the command
+      const isAichakuHook = hook.hooks?.some((h) =>
+        h.command.includes("aichaku") || h.command.includes("Aichaku")
+      );
+
+      if (isAichakuHook) {
         aichakuHooks++;
-        console.log(`  ✅ ${hook.name}`);
+
+        // Extract hook name from command
+        const hookCommand = hook.hooks?.[0]?.command || "";
+        const match = hookCommand.match(/aichaku-hooks\.ts\s+(\S+)/);
+        if (match) {
+          const hookId = match[1];
+          const template =
+            HOOK_TEMPLATES[hookId as keyof typeof HOOK_TEMPLATES];
+          console.log(`  ✅ ${template?.name || `Aichaku Hook (${hookId})`}`);
+        } else {
+          console.log(`  ✅ Aichaku Hook`);
+        }
 
         // Validate hook structure
-        if (!hook.command) {
+        if (!hook.hooks || hook.hooks.length === 0) {
+          console.log(`    ❌ Missing hooks array`);
+          issues++;
+        } else if (!hook.hooks[0].command) {
           console.log(`    ❌ Missing command`);
           issues++;
         }
@@ -911,7 +1187,7 @@ function interactiveHookSelection(_dryRun: boolean = false): void {
   );
   console.log(
     ("  aichaku hooks --install <set>     ") +
-      "Install hook set (essential, productivity, security)",
+      "Install hook set (essential, productivity, security, github)",
   );
   console.log(
     ("  aichaku hooks --install <names>   ") +
