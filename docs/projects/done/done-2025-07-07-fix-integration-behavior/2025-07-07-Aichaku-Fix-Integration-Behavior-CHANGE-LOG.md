@@ -1,4 +1,4 @@
-# Aichaku v0.6.0 - Fix Integration Behavior
+# Change Log: Aichaku v0.6.0 - Fix Integration Behavior
 **Date**: 2025-07-07
 
 ## Summary
@@ -40,7 +40,7 @@ Major enhancement to Aichaku that transforms it from passive documentation into 
 
 ## Expected Impact
 
-Users will experience:
+You experience:
 - Automatic document creation in correct locations
 - Natural language triggers working immediately
 - No manual directory creation needed
@@ -51,7 +51,7 @@ Users will experience:
 This is a minor version bump (not a patch) because:
 - **Fundamental behavior change**: From passive to active system
 - **New features**: Pre-created directories, behavioral files, enhanced integration
-- **User experience transformation**: Completely changes how users interact with Aichaku
+- **User experience transformation**: Completely changes how you interact with Aichaku
 - **Backward compatible**: Existing installations continue to work
 
 ## Files Modified

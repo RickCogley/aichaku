@@ -1,4 +1,15 @@
-# Implementation Plan: Fix Aichaku Integration
+# Implementation Guide: Fix Aichaku Integration
+
+## Prerequisites
+
+- TypeScript/Deno development environment
+- Access to Aichaku codebase
+- Understanding of CLI tools and file system operations
+- Basic knowledge of Markdown and Git workflows
+
+## Overview
+
+This guide provides step-by-step instructions to transform Aichaku from a passive methodology library into an active behavioral modification system.
 
 ## Phase 1: Update CLAUDE.md Integration (Critical)
 
@@ -14,7 +25,7 @@ This project uses Aichaku. When working on this project, you MUST:
 **ALWAYS create documents in**: \`.claude/output/active-YYYY-MM-DD-{descriptive-name}/\`
 
 **NEVER create documents in**:
-- Project root (/)  
+- Project root (/)
 - .claude/user/ (that's for user customizations)
 - Random locations
 
@@ -22,7 +33,7 @@ This project uses Aichaku. When working on this project, you MUST:
 
 When you hear these words, IMMEDIATELY create the project structure:
 - "let's plan" / "shape this" / "create a pitch"
-- "implement" / "build" / "start coding"  
+- "implement" / "build" / "start coding"
 - "review" / "retrospective" / "how are we doing"
 
 Don't wait to be asked - creating the structure is automatic.
@@ -45,7 +56,7 @@ Read the appropriate guide from \`~/.claude/methodologies/\`:
 5. Generate documents using templates
 6. Update STATUS.md as you work
 
-REMINDER: This is automatic behavior. Users expect documents to appear in the right place without asking.`;
+REMINDER: This is automatic behavior. You expect documents to appear in the right place without asking.`;
 ```
 
 ## Phase 2: Pre-create Directory Structure
@@ -100,8 +111,8 @@ Each project directory should contain:
 
 ## For Claude Code
 
-When users discuss new work, IMMEDIATELY create a new active-* directory here.
-Don't wait to be asked. This is expected behavior.`;
+When you discuss new work with users, immediately create a new active-* directory here.
+Don't wait to be asked. This creates expected behavior.`;
 }
 
 function getBehaviorContent(): string {
@@ -113,7 +124,7 @@ Before ANY work:
 3. Always create STATUS.md first
 4. Read methodology guides from ~/.claude/methodologies/
 
-IMPORTANT: Creating proper structure is AUTOMATIC, not optional.`;
+IMPORTANT: You create proper structure AUTOMATICALLY, not optionally.`;
 }
 ```
 
@@ -129,10 +140,10 @@ console.log(`
 📚 Methodologies: Shape Up, Scrum, Kanban, Lean, XP, Scrumban
 🎯 Next: Run 'aichaku init' in any project
 
-💡 Claude Code will now automatically:
-   • Create documents in .claude/output/
-   • Follow methodology patterns  
-   • Respond to "shape", "sprint", "kanban", etc.
+💡 Claude Code now automatically:
+   • Creates documents in .claude/output/
+   • Follows methodology patterns
+   • Responds to "shape", "sprint", "kanban", etc.
 `);
 ```
 
@@ -153,7 +164,7 @@ Your project now has:
    • "Plan our next sprint"
    • "Show me our kanban board"
    
-   Documents will automatically appear in .claude/output/
+   Documents automatically appear in .claude/output/
 `);
 ```
 
@@ -196,7 +207,7 @@ Add section:
 ```markdown
 ## How It Works
 
-After installation, Claude Code will automatically:
+After installation, Claude Code automatically:
 
 1. **Detect your intent** - Just speak naturally
 2. **Create proper structure** - Documents go in `.claude/output/`
@@ -226,7 +237,7 @@ No manual setup needed - it just works!
 
 ## Success Criteria
 
-✅ Users report "it just works"
+✅ You report "it just works"
 ✅ No manual directory creation
 ✅ Documents always in right place
 ✅ Natural language triggers work

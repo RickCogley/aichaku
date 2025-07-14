@@ -1,6 +1,17 @@
 # How to Configure Your Aichaku Project
 
+## Before you begin
+
+Ensure you have Aichaku installed and initialized in your project. You need:
+- Basic understanding of JSON configuration files
+- Access to your project's `.claude` directory
+- Text editor or command-line access
+
 This guide shows you how to configure Aichaku for your specific needs. Each section addresses a specific configuration task.
+
+## Solution
+
+Follow these sections to configure different aspects of your Aichaku project. Each provides step-by-step instructions for specific configuration tasks.
 
 ## Configure project settings
 
@@ -25,12 +36,12 @@ Edit your project's settings in `.claude/settings.local.json`:
 This file controls:
 - Which coding standards Claude follows (including custom standards)
 - Your primary methodology (for documentation)
-- Where files are created
-- Custom standards metadata (stored at `~/.claude/aichaku/standards.json`)
+- Where you create files
+- Custom standards metadata that you configure at `~/.claude/aichaku/standards.json`
 
 ## Add or remove coding standards
 
-### Add standards to your project
+## Add standards to your project
 
 ```bash
 # Add security and testing standards
@@ -40,7 +51,7 @@ aichaku standards --add owasp-web,tdd,test-pyramid
 aichaku standards --add solid,conventional-commits
 ```
 
-### Remove standards you don't need
+## Remove standards you don't need
 
 ```bash
 # Remove a single standard
@@ -50,7 +61,7 @@ aichaku standards --remove test-pyramid
 aichaku standards --remove solid,bdd
 ```
 
-### View your active standards
+## View your active standards
 
 ```bash
 # List only selected standards
@@ -61,7 +72,7 @@ aichaku standards --list
 ```
 
 Example output with source paths:
-```
+```text
 Selected Standards:
 ✅ owasp-web (OWASP Web Security) 📁 ~/.claude/aichaku/standards/security
 ✅ solid (SOLID Principles) 📁 ~/.claude/aichaku/standards/architecture
@@ -80,7 +91,7 @@ Available Standards:
 
 ## Customize methodology templates
 
-### Edit existing templates
+## Edit existing templates
 
 Navigate to your methodology's template directory:
 
@@ -104,7 +115,7 @@ Team Velocity: **45 points** <!-- Your team's actual velocity -->
 [Your custom backlog format]
 ```
 
-### Add custom templates
+## Add custom templates
 
 Create new templates for your team:
 
@@ -116,30 +127,30 @@ cat > .claude/methodologies/scrum/templates/daily-standup.md << 'EOF'
 ## Team Updates
 
 ### ${TEAM_MEMBER}
-- Yesterday: 
-- Today: 
-- Blockers: 
+- Yesterday:
+- Today:
+- Blockers:
 
 ## Action Items
-- [ ] 
+- [ ]
 
 ## Parking Lot
-- 
+-
 EOF
 ```
 
-### Use templates from multiple methodologies
+## Use templates from multiple methodologies
 
 Copy templates from other methodologies:
 
 ```bash
 # Use Shape Up's pitch template in a Scrum project
-cp ~/.claude/methodologies/shape-up/templates/pitch.md \
-   .claude/methodologies/scrum/templates/
+cp "$HOME/.claude/methodologies/shape-up/templates/pitch.md" \
+   ".claude/methodologies/scrum/templates/"
 
 # Use Kanban's flow metrics in Shape Up
-cp ~/.claude/methodologies/kanban/templates/flow-metrics.md \
-   .claude/methodologies/shape-up/templates/
+cp "$HOME/.claude/methodologies/kanban/templates/flow-metrics.md" \
+   ".claude/methodologies/shape-up/templates/"
 ```
 
 ## Set up custom commands
@@ -159,14 +170,14 @@ Create quick-access commands in `.claude/commands.json`:
 ```
 
 Use these in Claude:
-```
+```text
 "Run the deploy command"
 "Show me the test coverage"
 ```
 
 ## Configure git hooks
 
-### Install pre-commit hooks
+## Install pre-commit hooks
 
 Enable automatic formatting and validation:
 
@@ -200,7 +211,7 @@ chmod +x .githooks/pre-commit
 git config core.hooksPath .githooks
 ```
 
-### Add to your project documentation
+## Add to your project documentation
 
 Update your README.md:
 
@@ -208,6 +219,7 @@ Update your README.md:
 ## Setup
 
 Enable git hooks for automatic formatting:
+
 ```bash
 git config core.hooksPath .githooks
 ```
@@ -215,7 +227,7 @@ git config core.hooksPath .githooks
 
 ## Use environment variables
 
-### Set Aichaku environment variables
+## Set Aichaku environment variables
 
 ```bash
 # Override home directory location
@@ -231,7 +243,7 @@ export AICHAKU_DEBUG="true"
 export AICHAKU_TEMPLATES="/path/to/custom/templates"
 ```
 
-### Add to your shell configuration
+## Add to your shell configuration
 
 ```bash
 # Add to ~/.zshrc or ~/.bashrc
@@ -244,7 +256,7 @@ source ~/.zshrc
 
 Custom standards allow you to define organization-specific coding guidelines that work alongside built-in standards.
 
-### Create a custom standard
+## Create a custom standard
 
 ```bash
 # Create custom standard with template
@@ -257,7 +269,7 @@ aichaku standards --edit-custom my-organization-api-design
 aichaku standards --add custom:my-organization-api-design
 ```
 
-### Example: Mixed standards configuration
+## Example: Mixed standards configuration
 
 ```bash
 # Add both built-in and custom standards
@@ -268,13 +280,13 @@ aichaku standards --list --selected
 ```
 
 Output shows both types:
-```
+```text
 ✅ owasp-web (OWASP Web Security) 📁 ~/.claude/aichaku/standards/security
-✅ solid (SOLID Principles) 📁 ~/.claude/aichaku/standards/architecture  
+✅ solid (SOLID Principles) 📁 ~/.claude/aichaku/standards/architecture
 ✅ custom:my-organization-api-design 📁 ~/.claude/aichaku/custom-standards
 ```
 
-### Quick overview
+## Quick overview
 
 1. **Create** - Generate template with `--create-custom`
 2. **Edit** - Modify content with `--edit-custom`
@@ -283,7 +295,7 @@ Output shows both types:
 
 For detailed instructions, see [How to Manage Custom Standards](./manage-custom-standards.md).
 
-### Migration from old structure
+## Migration from old structure
 
 If you have custom standards in the old location (`~/.claude/standards/`), migrate them:
 
@@ -298,7 +310,7 @@ See [Migration Guide](../guides/migration-guide.md) for details.
 
 ## Set up team configurations
 
-### Share configurations across team
+## Share configurations across team
 
 Create a team configuration repository:
 
@@ -309,19 +321,19 @@ cd team-aichaku-config
 
 # Add team standards
 mkdir -p standards/team
-cp ~/.claude/standards/company/* standards/team/
+cp "$HOME/.claude/standards/company/"* standards/team/
 
 # Add team templates
 mkdir -p methodologies/team-scrum
-cp -r ~/.claude/methodologies/scrum/* methodologies/team-scrum/
+cp -r "$HOME/.claude/methodologies/scrum/"* methodologies/team-scrum/
 # Customize templates for your team
 
 # Create setup script
 cat > setup.sh << 'EOF'
 #!/bin/bash
 echo "Setting up team Aichaku configuration..."
-cp -r standards/* ~/.claude/standards/
-cp -r methodologies/* ~/.claude/methodologies/
+cp -r standards/* "$HOME/.claude/standards/"
+cp -r methodologies/* "$HOME/.claude/methodologies/"
 echo "✅ Team configuration installed"
 EOF
 
@@ -337,7 +349,7 @@ cd team-config-repo
 
 ## Configure MCP server
 
-### Install MCP server for real-time analysis
+## Install MCP server for real-time analysis
 
 ```bash
 # Install MCP server
@@ -347,7 +359,7 @@ cd aichaku/mcp-server
 deno cache src/server.ts
 ```
 
-### Add to Claude Desktop settings
+## Add to Claude Desktop settings
 
 Edit Claude Desktop's configuration:
 
@@ -360,7 +372,7 @@ Edit Claude Desktop's configuration:
         "run",
         "--allow-read",
         "--allow-net",
-        "~/.claude/aichaku/mcp-server/src/server.ts"
+        "${HOME}/.claude/aichaku/mcp-server/src/server.ts"
       ]
     }
   }
@@ -369,7 +381,7 @@ Edit Claude Desktop's configuration:
 
 ## Debug configuration issues
 
-### Check current configuration
+## Check current configuration
 
 ```bash
 # Validate installation
@@ -402,11 +414,11 @@ Example output with custom standards:
 # List all methodology files
 find .claude/methodologies -name "*.md" | head -20
 
-# Check which standards are injected
+# Check which standards you have configured
 grep -A 5 "Selected Standards" .claude/CLAUDE.md
 ```
 
-### Reset configuration
+## Reset configuration
 
 If something goes wrong:
 
@@ -423,7 +435,7 @@ aichaku init --global
 
 ## Common configuration patterns
 
-### For enterprise teams
+## For enterprise teams
 
 ```bash
 # Initialize with security focus
@@ -435,7 +447,7 @@ mkdir -p .claude/methodologies/security-review/templates
 # Add threat modeling templates
 ```
 
-### For startups
+## For startups
 
 ```bash
 # Initialize with speed focus
@@ -446,7 +458,7 @@ aichaku standards --add conventional-commits,tdd
 echo '{"methodology": "lean"}' > .claude/settings.local.json
 ```
 
-### For open source projects
+## For open source projects
 
 ```bash
 # Initialize with collaboration focus

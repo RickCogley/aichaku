@@ -5,6 +5,7 @@
 
 import type { GitHubClient } from "../github/client.ts";
 import { exists } from "@std/fs";
+import { format } from "../formatting-system.ts";
 
 export const releaseTools = {
   async upload(
@@ -24,7 +25,7 @@ export const releaseTools = {
         content: [
           {
             type: "text",
-            text: "❌ No assets specified for upload",
+            text: format.error("No assets specified for upload"),
           },
         ],
         isError: true,
@@ -77,28 +78,30 @@ export const releaseTools = {
       const successCount = results.length;
       const errorCount = errors.length;
 
-      let responseText = `🚀 GitHub Release Asset Upload Results
-
-**Release:** ${release.name} (${tag})
-**Repository:** ${owner}/${repo}
-**Success:** ${successCount} assets uploaded
-**Errors:** ${errorCount} failures
-
-`;
+      let responseText =
+        format.header("GitHub Release Asset Upload Results", "🚀") + "\n";
+      responseText += format.separator() + "\n\n";
+      responseText += format.field("Release", `${release.name} (${tag})`) +
+        "\n";
+      responseText += format.field("Repository", `${owner}/${repo}`) + "\n";
+      responseText +=
+        format.field("Success", `${successCount} assets uploaded`) + "\n";
+      responseText += format.field("Errors", `${errorCount} failures`) + "\n";
 
       if (results.length > 0) {
-        responseText += "## ✅ Successfully Uploaded:\n";
+        responseText += "\n" + format.section("Successfully Uploaded");
         for (const result of results) {
           const sizeMB = (result.size / 1024 / 1024).toFixed(1);
-          responseText += `- **${result.name}** (${sizeMB} MB)\n`;
-          responseText += `  📥 [Download](${result.url})\n\n`;
+          responseText += format.listItem(`${result.name} (${sizeMB} MB)`) +
+            "\n";
+          responseText += format.link("Download", result.url) + "\n";
         }
       }
 
       if (errors.length > 0) {
-        responseText += "## ❌ Failed Uploads:\n";
+        responseText += "\n" + format.section("Failed Uploads");
         for (const error of errors) {
-          responseText += `- ${error}\n`;
+          responseText += format.listItem(error) + "\n";
         }
       }
 
@@ -116,15 +119,17 @@ export const releaseTools = {
         content: [
           {
             type: "text",
-            text: `❌ Release upload failed: ${
-              error instanceof Error ? error.message : String(error)
-            }
-
-**Common issues:**
-- Release ${tag} does not exist
-- Insufficient permissions (needs 'repo' scope)
-- Network connectivity issues
-- Invalid repository path ${owner}/${repo}`,
+            text: format.error("Release upload failed") + "\n" +
+              format.field(
+                "Error",
+                error instanceof Error ? error.message : String(error),
+              ) + "\n\n" +
+              format.section("Common Issues") +
+              format.listItem(`Release ${tag} does not exist`) + "\n" +
+              format.listItem("Insufficient permissions (needs 'repo' scope)") +
+              "\n" +
+              format.listItem("Network connectivity issues") + "\n" +
+              format.listItem(`Invalid repository path ${owner}/${repo}`),
           },
         ],
         isError: true,
@@ -152,45 +157,53 @@ export const releaseTools = {
       );
       const totalSizeMB = (totalSize / 1024 / 1024).toFixed(1);
 
-      let responseText = `📋 GitHub Release Details
-
-**Release:** ${release.name}
-**Tag:** ${release.tag_name}
-**Repository:** ${owner}/${repo}
-**Status:** ${
+      let responseText = format.header("GitHub Release Details", "📋") + "\n";
+      responseText += format.separator() + "\n\n";
+      responseText += format.field("Release", release.name) + "\n";
+      responseText += format.field("Tag", release.tag_name) + "\n";
+      responseText += format.field("Repository", `${owner}/${repo}`) + "\n";
+      responseText += format.field(
+        "Status",
         release.draft
           ? "Draft"
           : release.prerelease
           ? "Pre-release"
-          : "Published"
-      }
-**Created:** ${new Date(release.created_at).toLocaleDateString()}
-**Published:** ${
+          : "Published",
+      ) + "\n";
+      responseText += format.field(
+        "Created",
+        new Date(release.created_at).toLocaleDateString(),
+      ) + "\n";
+      responseText += format.field(
+        "Published",
         release.published_at
           ? new Date(release.published_at).toLocaleDateString()
-          : "Not published"
-      }
+          : "Not published",
+      ) + "\n";
 
-## 📖 Description
-${release.body || "No description provided"}
+      responseText += "\n" + format.section("Description");
+      responseText += (release.body || "No description provided") + "\n";
 
-## 📦 Assets (${assetCount} files, ${totalSizeMB} MB total)
-
-`;
+      responseText += "\n" +
+        format.section(`Assets (${assetCount} files, ${totalSizeMB} MB total)`);
 
       if (release.assets.length > 0) {
         for (const asset of release.assets) {
           const sizeMB = (asset.size / 1024 / 1024).toFixed(1);
           const downloads = asset.download_count;
-          responseText +=
-            `- **${asset.name}** (${sizeMB} MB, ${downloads} downloads)\n`;
-          responseText += `  📥 [Download](${asset.browser_download_url})\n`;
-          responseText += `  📅 Uploaded: ${
-            new Date(asset.created_at).toLocaleDateString()
-          }\n\n`;
+          responseText += format.listItem(
+            `${asset.name} (${sizeMB} MB, ${downloads} downloads)`,
+          ) + "\n";
+          responseText += "  " +
+            format.link("Download", asset.browser_download_url) + "\n";
+          responseText += format.field(
+            "  Uploaded",
+            new Date(asset.created_at).toLocaleDateString(),
+          ) + "\n";
         }
       } else {
-        responseText += "_No assets attached to this release_\n";
+        responseText += format.info("No assets attached to this release") +
+          "\n";
       }
 
       return {
@@ -206,14 +219,17 @@ ${release.body || "No description provided"}
         content: [
           {
             type: "text",
-            text: `❌ Failed to view release: ${
-              error instanceof Error ? error.message : String(error)
-            }
-
-**Common issues:**
-- Release ${tag} does not exist
-- Repository ${owner}/${repo} is private or not accessible
-- Network connectivity issues`,
+            text: format.error("Failed to view release") + "\n" +
+              format.field(
+                "Error",
+                error instanceof Error ? error.message : String(error),
+              ) + "\n\n" +
+              format.section("Common Issues") +
+              format.listItem(`Release ${tag} does not exist`) + "\n" +
+              format.listItem(
+                `Repository ${owner}/${repo} is private or not accessible`,
+              ) + "\n" +
+              format.listItem("Network connectivity issues"),
           },
         ],
         isError: true,
@@ -239,17 +255,17 @@ ${release.body || "No description provided"}
           content: [
             {
               type: "text",
-              text: `📋 No releases found for ${owner}/${repo}`,
+              text: format.info(`No releases found for ${owner}/${repo}`),
             },
           ],
         };
       }
 
-      let responseText = `📋 GitHub Releases for ${owner}/${repo}
-
-Found ${releases.length} releases:
-
-`;
+      let responseText =
+        format.header(`GitHub Releases for ${owner}/${repo}`, "📋") + "\n";
+      responseText += format.separator() + "\n\n";
+      responseText += format.field("Found", `${releases.length} releases`) +
+        "\n\n";
 
       for (const release of releases) {
         const assetCount = release.assets.length;
@@ -261,15 +277,16 @@ Found ${releases.length} releases:
         const date = new Date(release.published_at || release.created_at)
           .toLocaleDateString();
 
-        responseText += `## ${release.name} (${release.tag_name})
-**Status:** ${status}
-**Date:** ${date}
-**Assets:** ${assetCount} files
-**Description:** ${release.body?.substring(0, 100) || "No description"}${
-          release.body && release.body.length > 100 ? "..." : ""
-        }
-
-`;
+        responseText += format.section(`${release.name} (${release.tag_name})`);
+        responseText += format.field("Status", status) + "\n";
+        responseText += format.field("Date", date) + "\n";
+        responseText += format.field("Assets", `${assetCount} files`) + "\n";
+        responseText += format.field(
+          "Description",
+          `${release.body?.substring(0, 100) || "No description"}${
+            release.body && release.body.length > 100 ? "..." : ""
+          }`,
+        ) + "\n\n";
       }
 
       return {

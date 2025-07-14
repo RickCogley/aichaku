@@ -16,11 +16,11 @@
     "compile:windows": "deno compile --target x86_64-pc-windows-msvc --allow-read --allow-write --allow-env --allow-run --output ../dist/mcp-code-reviewer.exe src/server.ts"
   },
   "imports": {
-    "@std/fs": "jsr:@std/fs@^1",
-    "@std/path": "jsr:@std/path@^1",
-    "@std/async": "jsr:@std/async@^1",
-    "@std/json": "jsr:@std/json@^1",
-    "@modelcontextprotocol/sdk": "npm:@modelcontextprotocol/sdk@^0.5.0"
+    "@std/fs": "jsr:@std/fs@^1.0.0",
+    "@std/path": "jsr:@std/path@^1.0.0",
+    "@std/async": "jsr:@std/async@^1.0.0",
+    "@std/json": "jsr:@std/json@^1.0.0",
+    "@modelcontextprotocol/sdk": "npm:@modelcontextprotocol/sdk@1.15.1"
   },
   "fmt": {
     "include": ["src/", "tests/"],

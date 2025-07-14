@@ -809,6 +809,240 @@ if (stats.criticalIssues > baseline.maxCriticalIssues) {
 }
 ```
 
+## Upgrading MCP Servers
+
+### Overview
+
+Aichaku MCP servers are automatically updated when you upgrade the main Aichaku package. However, you may need to manually upgrade or reinstall MCP servers in some cases.
+
+### Automatic Upgrade (Recommended)
+
+The easiest way to upgrade MCP servers is to upgrade Aichaku itself:
+
+```bash
+# Upgrade Aichaku (includes all MCP servers)
+npm update -g @aichaku/cli
+
+# Verify MCP servers are updated
+aichaku mcp --tools
+```
+
+### Manual MCP Server Management
+
+#### Check Current MCP Status
+
+```bash
+# View all MCP servers and their status
+aichaku mcp
+
+# View available MCP tools
+aichaku mcp --tools
+```
+
+#### Reinstall Specific MCP Server
+
+If an MCP server is having issues or you need to force a reinstall:
+
+```bash
+# Stop any running HTTP/SSE server first
+aichaku mcp --stop-server
+
+# Remove and reinstall the problematic MCP server
+rm -rf ~/.claude/mcp/aichaku-reviewer/
+aichaku mcp --install-reviewer
+
+# Or remove and reinstall GitHub MCP server
+rm -rf ~/.claude/mcp/github-operations/
+aichaku mcp --install-github
+```
+
+#### Complete MCP Reset
+
+If you need to completely reset all MCP servers:
+
+```bash
+# Stop HTTP/SSE server
+aichaku mcp --stop-server
+
+# Remove all MCP servers
+rm -rf ~/.claude/mcp/
+
+# Reinstall all MCP servers
+aichaku setup --force
+```
+
+### Upgrade Process After Aichaku Release
+
+After a new Aichaku release, follow these steps:
+
+#### 1. Stop Running Services
+
+```bash
+# Stop the HTTP/SSE server if running
+aichaku mcp --stop-server
+```
+
+#### 2. Upgrade Aichaku
+
+```bash
+# Update to latest version
+npm update -g @aichaku/cli
+
+# Verify new version
+aichaku --version
+```
+
+#### 3. Verify MCP Installation
+
+```bash
+# Check MCP server status
+aichaku mcp
+
+# Verify tools are available
+aichaku mcp --tools
+```
+
+#### 4. Restart Services (Optional)
+
+```bash
+# Restart HTTP/SSE server if you were using it
+aichaku mcp --start-server
+
+# Verify server is running
+aichaku mcp --server-status
+```
+
+### Troubleshooting Upgrades
+
+#### MCP Server Not Found
+
+**Problem**: `aichaku mcp` shows servers as "Not Installed"
+
+**Solution**:
+```bash
+# Force reinstall all MCP servers
+aichaku setup --force
+
+# Or install specific server
+aichaku mcp --install-reviewer
+aichaku mcp --install-github
+```
+
+#### Permission Issues
+
+**Problem**: Permission denied when upgrading
+
+**Solution**:
+```bash
+# Use sudo for global npm packages (if needed)
+sudo npm update -g @aichaku/cli
+
+# Or use npx for one-time execution
+npx @aichaku/cli@latest mcp
+```
+
+#### HTTP/SSE Server Issues
+
+**Problem**: Server won't start after upgrade
+
+**Solution**:
+```bash
+# Check if old server is still running
+ps aux | grep aichaku
+
+# Kill any old processes
+pkill -f aichaku
+
+# Start fresh server
+aichaku mcp --start-server
+```
+
+#### Claude Code Integration Issues
+
+**Problem**: Claude Code can't find MCP servers after upgrade
+
+**Solution**:
+```bash
+# Verify MCP configuration
+cat ~/.claude/settings.json
+
+# Check MCP servers are properly installed
+aichaku mcp
+
+# Restart Claude Code completely
+# (Close all Claude Code instances and reopen)
+```
+
+### Version Compatibility
+
+#### Checking Compatibility
+
+```bash
+# Check Aichaku version
+aichaku --version
+
+# Check MCP server versions
+aichaku mcp --tools | grep -i version
+```
+
+#### Supported Versions
+
+- **Aichaku CLI**: Latest version recommended
+- **Claude Code**: v0.8.0 or higher
+- **Node.js**: v18.0.0 or higher
+- **MCP Protocol**: v0.3.0 or higher
+
+### Backup and Recovery
+
+#### Backup MCP Configuration
+
+Before major upgrades, backup your MCP configuration:
+
+```bash
+# Backup MCP settings
+cp ~/.claude/settings.json ~/.claude/settings.json.backup
+
+# Backup custom standards (if any)
+cp -r ~/.claude/aichaku/user/ ~/.claude/aichaku/user.backup/
+```
+
+#### Recovery
+
+If upgrade fails, restore from backup:
+
+```bash
+# Restore settings
+cp ~/.claude/settings.json.backup ~/.claude/settings.json
+
+# Restore custom standards
+cp -r ~/.claude/aichaku/user.backup/ ~/.claude/aichaku/user/
+
+# Reinstall MCP servers
+aichaku setup --force
+```
+
+### Best Practices for Upgrades
+
+1. **Always stop MCP services before upgrading**
+2. **Test in development environment first**
+3. **Backup configuration before major upgrades**
+4. **Verify functionality after upgrade**
+5. **Update documentation if custom standards changed**
+6. **Check release notes for breaking changes**
+
+### Getting Help
+
+If you encounter issues during upgrade:
+
+1. **Check the troubleshooting section above**
+2. **Review GitHub issues**: [Aichaku Issues](https://github.com/RickCogley/aichaku/issues)
+3. **Check Claude Code documentation**: [Claude Code Docs](https://docs.anthropic.com/en/docs/claude-code)
+4. **File a bug report** with:
+   - Aichaku version (`aichaku --version`)
+   - Operating system
+   - Error messages
+   - Steps to reproduce
+
 ## Conclusion
 
 The Aichaku MCP server provides a powerful, extensible platform for security review and methodology compliance. By following this documentation, you can effectively integrate security scanning into your development workflow and maintain high code quality standards.

@@ -14,7 +14,7 @@ In this tutorial, you'll:
 ## Before you begin
 
 You need:
-- **Deno runtime** (version 1.37.0 or higher)
+- **Deno runtime** (version 2.4.0 or higher)
 - **Write access** to your home directory
 - **5 minutes** to complete this tutorial
 

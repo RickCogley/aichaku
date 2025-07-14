@@ -1,6 +1,15 @@
-# Aichaku API Reference
+# Getting Started with Aichaku API
 
-Complete API reference for the Aichaku methodology library and MCP (Model Context Protocol) server, including all available tools, CLI commands, and configuration options.
+This comprehensive tutorial teaches you how to use the Aichaku methodology library and MCP (Model Context Protocol) server. You learn how to use all available tools, CLI commands, and configuration options to enhance your development workflow.
+
+## Prerequisites
+
+Before you begin this tutorial, ensure you have:
+
+- **Deno 2.4.0+** or **Node.js 18+** installed
+- **Claude Code** or another MCP-compatible client
+- Basic familiarity with command-line interfaces
+- A development project where you want to apply methodologies
 
 ## Table of Contents
 
@@ -20,7 +29,7 @@ Complete API reference for the Aichaku methodology library and MCP (Model Contex
 ### Core Commands
 
 #### `aichaku init`
-Initialize a new Aichaku project in the current directory.
+Initialize a new Aichaku project in your current directory.
 
 ```bash
 aichaku init [options]
@@ -33,7 +42,7 @@ Options:
 ```
 
 #### `aichaku install`
-Install a methodology in the current project or globally.
+Install a methodology in your current project or globally.
 
 ```bash
 aichaku install <methodology> [options]
@@ -46,7 +55,7 @@ Options:
 ```
 
 #### `aichaku list`
-List available and installed methodologies.
+View available and installed methodologies.
 
 ```bash
 aichaku list [options]
@@ -58,7 +67,7 @@ Options:
 ```
 
 #### `aichaku standards`
-Manage documentation standards for the project.
+Manage documentation standards for your project.
 
 ```bash
 aichaku standards [action] [options]
@@ -87,19 +96,19 @@ Options:
 
 ## MCP Tools
 
-The Aichaku MCP server provides tools accessible through Claude Code using the `mcp__aichaku-reviewer__` prefix for review tools and `mcp__aichaku__` prefix for documentation tools.
+You can access Aichaku MCP server tools through Claude Code using the `mcp__aichaku-reviewer__` prefix for review tools and `mcp__aichaku__` prefix for documentation tools.
 
 ### Code Review Tools
 
 #### `review_file`
 
-Reviews a single file for security vulnerabilities, standards compliance, and code quality issues.
+Review a single file for security vulnerabilities, standards compliance, and code quality issues.
 
 ##### Parameters
 
 | Parameter | Type | Required | Default | Description |
 |-----------|------|----------|---------|-------------|
-| `file` | string | Yes | - | Path to the file to review |
+| `file` | string | Yes | - | Path to the file you want to review |
 | `content` | string | No | - | File content (if not provided, reads from disk) |
 | `includeExternal` | boolean | No | true | Include external security scanners if available |
 
@@ -114,7 +123,7 @@ await mcp__aichaku-reviewer__review_file({
 // Review with content (useful for unsaved files)
 await mcp__aichaku-reviewer__review_file({
   file: "untitled.js",
-  content: "const password = 'hardcoded123';",
+  content: "const password = process.env.DB_PASSWORD; // Use environment variables for secrets",
   includeExternal: false
 });
 ```
@@ -171,13 +180,13 @@ await mcp__aichaku-reviewer__review_file({
 
 #### `review_methodology`
 
-Checks if a project follows the specified methodology patterns and practices.
+Check if your project follows the specified methodology patterns and practices.
 
 ##### Parameters
 
 | Parameter | Type | Required | Default | Description |
 |-----------|------|----------|---------|-------------|
-| `projectPath` | string | Yes | - | Path to the project root directory |
+| `projectPath` | string | Yes | - | Path to your project root directory |
 | `methodology` | string | No | - | Methodology to check against (auto-detects if not specified) |
 
 ##### Supported Methodologies
@@ -209,13 +218,13 @@ Checks if a project follows the specified methodology patterns and practices.
 
 #### `get_standards`
 
-Retrieves the currently selected standards for a project.
+Retrieve the currently selected standards for your project.
 
 ##### Parameters
 
 | Parameter | Type | Required | Default | Description |
 |-----------|------|----------|---------|-------------|
-| `projectPath` | string | Yes | - | Path to the project root directory |
+| `projectPath` | string | Yes | - | Path to your project root directory |
 
 ##### Response Format
 
@@ -235,13 +244,13 @@ Retrieves the currently selected standards for a project.
 
 #### `analyze_project`
 
-Analyzes a project directory to understand its structure, technologies, and patterns.
+Analyze your project directory to understand its structure, technologies, and patterns.
 
 ##### Parameters
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `projectPath` | string | Yes | Absolute or relative path to the project directory |
+| `projectPath` | string | Yes | Absolute or relative path to your project directory |
 | `depth` | number | No | How deep to analyze (1-5, default: 3) |
 | `includeTests` | boolean | No | Whether to analyze test files (default: true) |
 | `includeDocs` | boolean | No | Whether to analyze documentation (default: true) |
@@ -305,13 +314,13 @@ const deepAnalysis = await mcp__aichaku__analyze_project({
 
 #### `create_doc_template`
 
-Generates documentation templates based on project type and detected patterns.
+Generate documentation templates based on your project type and detected patterns.
 
 ##### Parameters
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `projectPath` | string | Yes | Path to the project |
+| `projectPath` | string | Yes | Path to your project |
 | `templateType` | string | Yes | Type of template: 'readme', 'api', 'architecture', 'contributing', 'testing' |
 | `format` | string | No | Output format: 'markdown', 'asciidoc', 'rst' (default: 'markdown') |
 | `analysis` | object | No | Pre-computed project analysis (to avoid re-analysis) |
@@ -359,13 +368,13 @@ const apiDocs = await mcp__aichaku__create_doc_template({
 
 #### `generate_documentation`
 
-Automatically generates complete documentation by analyzing code and existing docs.
+Automatically generate complete documentation by analyzing your code and existing docs.
 
 ##### Parameters
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `projectPath` | string | Yes | Path to the project |
+| `projectPath` | string | Yes | Path to your project |
 | `outputPath` | string | No | Where to save documentation (default: './docs') |
 | `types` | string[] | No | Documentation types to generate: ['api', 'readme', 'guides', 'all'] |
 | `format` | string | No | Output format (default: 'markdown') |
@@ -430,7 +439,7 @@ const shapeUpDocs = await mcp__aichaku__generate_documentation({
 
 #### `get_statistics`
 
-Retrieve usage statistics and analytics for MCP tool usage.
+Retrieve usage statistics and analytics for your MCP tool usage.
 
 ##### Parameters
 
@@ -438,7 +447,7 @@ Retrieve usage statistics and analytics for MCP tool usage.
 |-----------|------|----------|-------------|
 | `type` | string | No | Type of statistics: 'dashboard', 'realtime', 'insights', 'export' |
 | `format` | string | No | Export format (for type=export): 'json', 'csv' |
-| `question` | string | No | Specific question to answer about usage |
+| `question` | string | No | Specific question to answer about your usage |
 
 ##### Response Types
 
@@ -559,14 +568,14 @@ const answer = await mcp__aichaku-reviewer__get_statistics({
 
 ### Project Configuration
 
-Located at `.claude/.aichaku-standards.json`:
+You can configure project-specific settings in `.claude/.aichaku-standards.json`:
 
 ```json
 {
   "version": "1.0.0",
   "selected": [
     "nist-csf",
-    "owasp-web", 
+    "owasp-web",
     "tdd",
     "conventional-commits"
   ],
@@ -580,7 +589,7 @@ Located at `.claude/.aichaku-standards.json`:
 
 ### Global Configuration
 
-Located at `~/.aichaku/mcp-config.json`:
+You can set up global defaults in `~/.aichaku/mcp-config.json`:
 
 ```json
 {
@@ -695,11 +704,11 @@ The MCP server includes built-in patterns for detecting security vulnerabilities
 ### Language-Specific Patterns
 
 #### TypeScript/JavaScript
-- `eval()` and `Function()` usage
-- Unvalidated user input in `exec()`
-- DOM XSS vulnerabilities
-- Prototype pollution
-- Insecure randomness
+- Dynamic code execution with user input (use JSON.parse() instead)
+- Unvalidated user input in child processes
+- DOM-based cross-site scripting vulnerabilities
+- Prototype pollution attacks
+- Cryptographically weak random values
 
 #### Python
 - `pickle` deserialization
@@ -773,7 +782,7 @@ semgrep --config=auto --json
 
 ### File Size Limits
 - Default: 5MB per file
-- Configurable in `mcp-config.json`
+- You can configure this in `mcp-config.json`
 - Large files may timeout
 
 ### Caching
@@ -805,7 +814,7 @@ semgrep --config=auto --json
 | 1.0.x | 1.0.x | 0.9.x+ |
 | 1.1.x | 1.1.x | 1.0.x+ |
 
-Always use matching Aichaku and MCP server versions for best results.
+You should always use matching Aichaku and MCP server versions for best results.
 
 ## See Also
 

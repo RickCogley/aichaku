@@ -1,4 +1,15 @@
-# Implementation Plan: PDF Generation Integration
+# Implementation Guide: PDF Generation Integration
+
+## Prerequisites
+
+- TypeScript/Deno development environment
+- Understanding of PDF generation tools (pandoc, LaTeX)
+- Knowledge of CLI command development
+- Familiarity with file system operations
+
+## Overview
+
+This guide provides step-by-step instructions to integrate PDF generation capabilities into Aichaku.
 
 ## Phase 1: Core PDF Module (2 hours)
 
@@ -13,22 +24,20 @@ export class PDFGenerator {
     if (!deps.ready) {
       return { success: false, error: deps.message };
     }
-    
+
     // Determine output path
     const output = outputPath || inputPath.replace('.md', '.pdf');
-    
     // Run pandoc with appropriate engine
     const result = await this.runPandoc(inputPath, output, deps.engine);
-    
     return result;
   }
-  
+
   private async checkDependencies(): Promise<DependencyCheck> {
     // Check for pandoc
     // Check for latex engines
     // Return best available option
   }
-  
+
   private async runPandoc(input: string, output: string, engine: string): Promise<PDFResult> {
     // Execute pandoc with proper flags
     // Handle Unicode based on engine
@@ -50,7 +59,7 @@ export class PDFSetup {
       ready: false // true if all pass
     };
   }
-  
+
   async showSetupGuide(): Promise<void> {
     const status = await this.check();
     // Show platform-specific installation instructions
@@ -145,15 +154,12 @@ pdfCommand
 async function completeWork(workDir: string) {
   // Create final summary (existing)
   const summaryPath = join(workDir, "FINAL-SUMMARY.md");
-  
-  // Check if PDF generation is enabled
+  // Check PDF generation settings
   const settings = await loadSettings();
   if (settings.pdf?.enabled && settings.pdf.autoGenerate.includes("final-summary")) {
     console.log("📄 Generating PDF...");
-    
     const generator = new PDFGenerator();
     const result = await generator.generate(summaryPath);
-    
     if (result.success) {
       console.log(`✅ PDF generated: ${result.path}`);
     } else {
@@ -184,9 +190,9 @@ async function completeWork(workDir: string) {
 <!-- templates/cover-page.md -->
 # {{title}}
 
-**Project**: {{project}}  
-**Date**: {{date}}  
-**Version**: {{version}}  
+**Project**: {{project}}
+**Date**: {{date}}
+**Version**: {{version}}
 **Status**: {{status}}
 
 ---
@@ -211,6 +217,6 @@ Generated with Aichaku
 ## Success Metrics
 
 - PDF generation works on 3 major platforms
-- Clear error messages for missing dependencies  
+- Clear error messages for missing dependencies
 - < 5 seconds for typical document
 - Business-ready output quality

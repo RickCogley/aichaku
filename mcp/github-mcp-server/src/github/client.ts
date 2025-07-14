@@ -67,6 +67,7 @@ export interface GitHubWorkflowRun {
   status: string;
   conclusion: string | null;
   workflow_id: number;
+  run_number: number;
   created_at: string;
   updated_at: string;
   run_started_at: string;
@@ -83,6 +84,8 @@ export interface GitHubRepository {
   clone_url: string;
   ssh_url: string;
   default_branch: string;
+  language?: string;
+  topics?: string[];
 }
 
 export class GitHubClient {

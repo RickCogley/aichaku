@@ -1,8 +1,19 @@
-# MCP Tools Documentation
+# MCP Tools Reference
 
 > **Note**: This document describes planned future MCP tools for Aichaku. Currently, the MCP server provides security review capabilities. The tools described here (analyze_project, create_doc_template, generate_documentation) are on the roadmap for future implementation.
 
-This document describes the planned Model Context Protocol (MCP) tools for enhanced project analysis and documentation generation.
+This reference describes the planned Model Context Protocol (MCP) tools for enhanced project analysis and documentation generation.
+
+## Prerequisites
+
+Before using the MCP tools described in this guide, you need:
+
+- **Aichaku installed**: The MCP server must be running and configured
+- **Project access**: Read/write permissions to your project directory
+- **Basic command line knowledge**: Familiarity with terminal/command prompt
+- **Understanding of your project structure**: Knowledge of your codebase organization
+
+For setup instructions, see the main [Aichaku documentation](../README.md).
 
 ## Current Status
 
@@ -17,20 +28,20 @@ See [MCP-SERVER.md](./MCP-SERVER.md) for documentation of currently available to
 
 ## Planned Tools (Future Implementation)
 
-The following tools are planned for future releases to provide automated capabilities for:
+Future releases include the following tools to provide automated capabilities for:
 - Analyzing project structure and dependencies
 - Creating documentation templates based on project type
 - Generating comprehensive documentation automatically
 
-These tools will work seamlessly with Aichaku's existing methodology support and will be accessed through the `mcp__aichaku__` prefix when implemented.
+These tools work seamlessly with Aichaku's existing methodology support and you access them through the `mcp__aichaku__` prefix when implemented.
 
 ## Tools Reference
 
-### 1. analyze_project
+## analyze_project
 
 Analyzes a project directory to understand its structure, technologies, and patterns.
 
-#### Description
+### Description
 This tool performs deep analysis of a codebase to identify:
 - Programming languages and frameworks used
 - Project structure and organization
@@ -40,7 +51,7 @@ This tool performs deep analysis of a codebase to identify:
 - Documentation patterns
 - Potential methodology alignment
 
-#### Parameters
+### Parameters
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -49,7 +60,7 @@ This tool performs deep analysis of a codebase to identify:
 | `includeTests` | boolean | No | Whether to analyze test files (default: true) |
 | `includeDocs` | boolean | No | Whether to analyze documentation (default: true) |
 
-#### Return Schema
+### Return Schema
 
 ```typescript
 interface ProjectAnalysis {
@@ -88,7 +99,7 @@ interface ProjectAnalysis {
 }
 ```
 
-#### Usage Examples
+### Usage Examples
 
 **Basic Project Analysis:**
 ```bash
@@ -130,18 +141,18 @@ if (analysis.methodology.detected.includes('shape-up')) {
 }
 ```
 
-### 2. create_doc_template
+## create_doc_template
 
 Generates documentation templates based on project type and detected patterns.
 
-#### Description
+### Description
 Creates customized documentation templates that match your project's:
 - Technology stack
 - Project structure
 - Detected methodology
 - Documentation standards (from Aichaku configuration)
 
-#### Parameters
+### Parameters
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -151,7 +162,7 @@ Creates customized documentation templates that match your project's:
 | `analysis` | object | No | Pre-computed project analysis (to avoid re-analysis) |
 | `standards` | string[] | No | Documentation standards to follow |
 
-#### Return Schema
+### Return Schema
 
 ```typescript
 interface DocTemplate {
@@ -173,7 +184,7 @@ interface DocTemplate {
 }
 ```
 
-#### Usage Examples
+### Usage Examples
 
 **Generate README Template:**
 ```bash
@@ -198,7 +209,7 @@ const apiTemplate = await mcp__aichaku__create_doc_template({
   format: 'markdown'
 });
 
-// Template will include sections for:
+// Template includes sections for:
 // - API Overview
 // - Authentication
 // - Endpoints
@@ -228,11 +239,11 @@ const archTemplate = await mcp__aichaku__create_doc_template({
 // - ADR template references
 ```
 
-### 3. generate_documentation
+## generate_documentation
 
 Automatically generates complete documentation by analyzing code and existing docs.
 
-#### Description
+### Description
 This tool goes beyond templates to generate actual documentation content by:
 - Extracting information from code comments
 - Analyzing function signatures and types
@@ -240,7 +251,7 @@ This tool goes beyond templates to generate actual documentation content by:
 - Incorporating existing documentation
 - Following specified standards
 
-#### Parameters
+### Parameters
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -253,7 +264,7 @@ This tool goes beyond templates to generate actual documentation content by:
 | `standards` | string[] | No | Documentation standards to follow |
 | `methodology` | string | No | Specific methodology to align with |
 
-#### Return Schema
+### Return Schema
 
 ```typescript
 interface GeneratedDocs {
@@ -279,7 +290,7 @@ interface GeneratedDocs {
 }
 ```
 
-#### Usage Examples
+### Usage Examples
 
 **Generate Complete Documentation:**
 ```bash
@@ -385,9 +396,9 @@ const docs = await mcp__aichaku__generate_documentation({
 
 ### Output Structure
 
-Documentation is generated following Aichaku's directory structure:
+The tools generate documentation following Aichaku's directory structure:
 
-```
+```text
 project/
 ├── .claude/
 │   ├── output/
@@ -496,8 +507,8 @@ const customDocs = await mcp__aichaku__generate_documentation({
   types: ['all']
 });
 
-// Template will include security sections
-// and follow company style guidelines
+// Template includes security sections
+// and follows company style guidelines
 ```
 
 ## Tips and Tricks
@@ -549,23 +560,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Setup Aichaku
         run: npm install -g aichaku
-      
+
       - name: Analyze Project
         run: |
           aichaku mcp analyze_project \
             --projectPath . \
             --depth 3 > analysis.json
-      
+
       - name: Generate Documentation
         run: |
           aichaku mcp generate_documentation \
             --projectPath . \
             --types '["all"]' \
             --analysis analysis.json
-      
+
       - name: Commit Documentation
         run: |
           git add docs/
@@ -596,7 +607,7 @@ if (docs.summary.coverage.functions < 80) {
 
 // Check for missing sections
 const requiredSections = ['installation', 'usage', 'api', 'contributing'];
-const missingSections = requiredSections.filter(section => 
+const missingSections = requiredSections.filter(section =>
   !docs.files.some(f => f.type === section)
 );
 
@@ -623,7 +634,7 @@ try {
   } else if (error.code === 'PERMISSION_DENIED') {
     console.error("Cannot write to output directory");
   }
-  
+
   // All errors include:
   // - error.code: Machine-readable error code
   // - error.message: Human-readable description

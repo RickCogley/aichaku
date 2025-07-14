@@ -1,6 +1,15 @@
-# Aichaku Documentation
+# Getting Started with Aichaku Documentation
 
-Welcome to the Aichaku documentation! This guide is organized using the Diátaxis framework to help you find exactly what you need.
+Welcome to the Aichaku documentation! This guide uses the Diátaxis framework to help you find exactly what you need.
+
+## Prerequisites
+
+Before you start using Aichaku:
+
+- **Claude Code** - You need access to [Claude Code](https://claude.ai/code) to use Aichaku
+- **Git repository** - A project with git initialized
+- **Basic familiarity** with development methodologies (Shape Up, Scrum, Kanban, or Lean)
+- **Text editor** - Any editor that supports markdown files
 
 ## 🆕 Latest Updates
 
@@ -109,15 +118,15 @@ Welcome to the Aichaku documentation! This guide is organized using the Diátaxi
 
 ### By Methodology
 
-**Shape Up Users**
+**Shape Up**
 - [Configure Your Project](how-to/configure-project.md)
 - [File Structure Reference](reference/file-structure.md)
 
-**Scrum Users**
+**Scrum**
 - [Configure Your Project](how-to/configure-project.md)
 - [File Structure Reference](reference/file-structure.md)
 
-**Kanban Users**
+**Kanban**
 - [Configure Your Project](how-to/configure-project.md)
 - [File Structure Reference](reference/file-structure.md)
 
@@ -135,9 +144,9 @@ This documentation follows these principles:
 
 Found an issue or want to improve the docs?
 - File an issue on [GitHub](https://github.com/RickCogley/aichaku/issues)
-- Read our [Contributing Guide](../CONTRIBUTING.md)
+- Read our [Contributing Guide](CONTRIBUTING.md)
 - Submit a pull request
 
 ## 📄 License
 
-Aichaku is MIT licensed. See [LICENSE](../LICENSE) for details.
+Aichaku is MIT licensed. See [LICENSE](LICENSE) for details.

@@ -1,10 +1,18 @@
-# Using MCP with Multiple Projects
+# How to Use MCP with Multiple Projects
 
-Learn how to use a single Aichaku MCP server installation across all your projects. This guide explains the global installation model and how to manage MCP for multiple projects efficiently.
+This guide shows you how to use a single Aichaku MCP server installation across all your projects. You'll learn the global installation model and how to manage MCP for multiple projects efficiently.
+
+## Before you begin
+
+Ensure you have:
+- Aichaku installed on your system
+- Claude Code configured and working
+- Access to multiple projects that need code review
+- Basic understanding of command-line operations
 
 ## Overview
 
-The Aichaku MCP server is designed as a **global service**, not a per-project tool. This means:
+The Aichaku MCP server works as a **global service**, not a per-project tool. This means:
 
 - **Install once** - The MCP server lives in `~/.aichaku/mcp-server/`
 - **Use everywhere** - All projects on your machine can use the same server
@@ -18,18 +26,18 @@ The Aichaku MCP server is designed as a **global service**, not a per-project to
 graph TB
     subgraph "Your Machine"
         MCP[MCP Server<br/>~/.aichaku/mcp-server/]
-        
+
         subgraph "Claude Code"
             CC[Claude Client]
         end
-        
+
         subgraph "Projects"
             P1[Project A<br/>.claude/]
             P2[Project B<br/>.claude/]
             P3[Project C<br/>.claude/]
         end
     end
-    
+
     CC -->|stdio| MCP
     MCP -->|reads| P1
     MCP -->|reads| P2
@@ -62,7 +70,7 @@ Add the MCP configuration to Claude Code:
 aichaku mcp --config
 ```
 
-This configuration in Claude's settings file works for ALL projects:
+This configuration in Claude's settings file works for all projects:
 
 ```json
 {
@@ -88,7 +96,7 @@ aichaku standards --add nist-csf,tdd
 
 cd /path/to/project-b
 aichaku init
-aichaku integrate  
+aichaku integrate
 aichaku standards --add owasp-web,solid
 ```
 
@@ -107,7 +115,7 @@ When Claude asks the MCP server to review a file, the server:
 4. **Applies the correct rules** for that specific project
 
 Example project detection:
-```
+```text
 /Users/yourname/projects/web-app/src/auth.ts
                          ↑
             Finds .claude/ here
@@ -161,7 +169,7 @@ The MCP server automatically applies the right standards for each project.
 For monorepos with multiple sub-projects:
 
 ### Option 1: Root-level configuration
-```
+```text
 monorepo/
 ├── .claude/                  # Shared configuration
 │   └── .aichaku-standards.json
@@ -174,7 +182,7 @@ monorepo/
 All packages share the same standards.
 
 ### Option 2: Per-package configuration
-```
+```text
 monorepo/
 ├── packages/
 │   ├── frontend/
@@ -197,15 +205,15 @@ cd ~/projects/web-app
 # Ask Claude to review auth.ts - uses web-app standards
 
 # Switch to project B
-cd ~/projects/cli-tool  
+cd ~/projects/cli-tool
 # Ask Claude to review parser.ts - uses cli-tool standards
 
 # No restart needed - it just works!
 ```
 
-### Using HTTP/SSE mode for better performance
+## Using HTTP/SSE mode for better performance
 
-For users frequently switching between projects or running multiple terminals:
+When you frequently switch between projects or run multiple terminals:
 
 ```bash
 # Start the shared HTTP/SSE server once
@@ -250,7 +258,7 @@ All projects automatically use the updated server.
 **Problem:** MCP server doesn't find project configuration
 
 **Solution:** Ensure each project has:
-```bash
+```text
 project-root/
 ├── .claude/                     # Required
 │   ├── .aichaku-standards.json  # Required for standards
@@ -296,7 +304,7 @@ In each project's README:
 
 This project uses Aichaku with:
 - NIST CSF - Security framework
-- TDD - Test-driven development  
+- TDD - Test-driven development
 - Conventional Commits - Standardized commit messages
 
 Run `aichaku standards --list --selected` to see current standards.
@@ -352,8 +360,8 @@ Each project is isolated:
 Track MCP usage across projects:
 ```bash
 # See all projects with Aichaku
-find ~ -name ".aichaku-standards.json" -type f 2>/dev/null | 
-  xargs -I {} dirname {} | 
+find ~ -maxdepth 10 -name ".aichaku-standards.json" -type f 2>/dev/null | \
+  xargs -I {} dirname {} | \
   xargs -I {} dirname {}
 ```
 
@@ -361,16 +369,16 @@ find ~ -name ".aichaku-standards.json" -type f 2>/dev/null |
 
 The Aichaku MCP server's global installation model provides:
 
-✅ **Simplicity** - Install once, use everywhere  
-✅ **Flexibility** - Different standards per project  
-✅ **Performance** - No overhead or background services  
-✅ **Security** - Isolated, read-only operation  
-✅ **Maintainability** - Single binary to update  
+✅ **Simplicity** - Install once, use everywhere
+✅ **Flexibility** - Different standards per project
+✅ **Performance** - No overhead or background services
+✅ **Security** - Isolated, read-only operation
+✅ **Maintainability** - Single binary to update
 
 Remember: Think of the MCP server as a tool like `git` or `npm` - installed globally but aware of project context.
 
 ## Related guides
 
 - [Setup MCP Server](../tutorials/setup-mcp-server.md) - Initial installation
-- [MCP API Reference](../reference/mcp-api.md) - Available tools
+- [MCP API Reference](../reference/mcp-api.md) - Available tools  
 - [Configure Your Project](configure-project.md) - Project setup

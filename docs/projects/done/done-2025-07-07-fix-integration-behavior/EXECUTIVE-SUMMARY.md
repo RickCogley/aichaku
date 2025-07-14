@@ -1,5 +1,16 @@
 # Executive Summary: Making Aichaku Truly Magical
 
+## Prerequisites
+
+- Understanding of behavioral psychology in software design
+- Knowledge of LLM instruction design
+- Familiarity with CLI tool development
+- Experience with automated workflows
+
+## Overview
+
+This executive summary outlines the transformation strategy for Aichaku.
+
 ## The Vision
 
 Transform Aichaku from a passive methodology library into an active behavioral modification system that makes Claude Code automatically follow best practices without user intervention.
@@ -9,7 +20,7 @@ Transform Aichaku from a passive methodology library into an active behavioral m
 Current Aichaku (v0.5.0) provides documentation but doesn't change behavior:
 - Claude Code ignores methodology keywords
 - Documents created in wrong locations
-- Users must manually enforce conventions
+- You must manually enforce conventions
 - No automatic corrections or guidance
 
 ## The Solution: 5-Layer Behavioral System
@@ -21,7 +32,7 @@ Current Aichaku (v0.5.0) provides documentation but doesn't change behavior:
 - Visual indicators (✅ ❌) for clarity
 
 ### 2. **Pre-Created Structure** (Guide Rails)
-```
+```text
 .claude/
 ├── AICHAKU-RULES.md         # Behavioral enforcement
 ├── .aichaku-active          # Current project tracker
@@ -40,7 +51,7 @@ Current Aichaku (v0.5.0) provides documentation but doesn't change behavior:
 
 ### 4. **Self-Correcting Behaviors** (Auto-Magic)
 - Wrong location? Automatically moved
-- Missing STATUS.md? Created instantly  
+- Missing STATUS.md? Created instantly
 - Forgot to commit? Done for you
 - Project complete? Transitioned automatically
 
@@ -55,7 +66,7 @@ Current Aichaku (v0.5.0) provides documentation but doesn't change behavior:
 
 ### 1. Rewrite CLAUDE.md Integration Section
 ```markdown
-# 🎯 MANDATORY: Aichaku Integration Rules
+## 🎯 MANDATORY: Aichaku Integration Rules
 
 YOU MUST FOLLOW THESE RULES WITHOUT EXCEPTION:
 
@@ -110,7 +121,7 @@ When user says → You MUST create:
 ## Success Metrics
 
 ### Immediate (After v0.5.1)
-✅ Users report "it just works"
+✅ You report "it just works"
 ✅ No manual directory creation
 ✅ Documents always in correct location
 ✅ Natural language triggers work
@@ -123,7 +134,7 @@ When user says → You MUST create:
 
 ## The Magic Formula
 
-```
+```text
 Imperative Instructions +
 Pre-Created Structure +
 Natural Language Detection +
@@ -148,7 +159,7 @@ Truly Magical Developer Experience
 ## Expected User Experience
 
 ### Before (Current v0.5.0)
-```
+```text
 User: "Let's shape up a search feature"
 Claude: "I'll help you with that" *creates file in project root*
 User: "No, it should go in .claude/output/..."
@@ -156,7 +167,7 @@ Claude: "Let me move that..."
 ```
 
 ### After (Magical v0.5.1)
-```
+```text
 User: "Let's shape up a search feature"
 Claude: *automatically creates .claude/output/active-2025-01-07-search-feature/pitch.md*
 Claude: "Created Shape Up pitch in the correct location. STATUS.md updated."

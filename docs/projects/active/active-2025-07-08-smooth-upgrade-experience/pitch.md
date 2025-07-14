@@ -1,20 +1,24 @@
-# Smooth Upgrade Experience
+# Shape Up Pitch: Smooth Upgrade Experience
 
 ## Problem
 
 The current Aichaku upgrade process is clunky and confusing:
 
-1. **Version Requirement Hell** - Users must specify exact version: `jsr:@rick/aichaku@0.7.0/cli`
+1. **Version Requirement Hell** - You must specify exact version: `jsr:@rick/aichaku@0.7.0/cli`
 2. **Silent Upgrades** - No feedback about what version was installed
-3. **Unclear Next Steps** - After global upgrade, users don't know how to upgrade local installs
-4. **Manual Version Tracking** - Users must check JSR or GitHub to find latest version
+3. **Unclear Next Steps** - After global upgrade, you don't know how to upgrade local installs
+4. **Manual Version Tracking** - You must check JSR or GitHub to find latest version
 5. **Inconsistent Commands** - Global uses `deno install`, local uses `aichaku upgrade`
+
+## Appetite
+
+**1 week** - Simple wrapper script and CLI improvements without major architecture changes.
 
 ## Solution
 
 ### 1. Ultra-Simple Installation (Achieved!)
 
-Following Lume's pattern, users can now install with:
+Following Lume's pattern, you can now install with:
 ```bash
 deno run -A https://raw.githubusercontent.com/RickCogley/aichaku/main/init.ts
 ```
@@ -29,7 +33,7 @@ This single command:
 ### 2. Verbose Installation Feedback
 
 When installing/upgrading globally:
-```
+```text
 🪴 Aichaku Global Installation
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📦 Previous: v0.6.0
@@ -44,7 +48,7 @@ Next steps for your projects:
 ### 3. Enhanced Upgrade Command
 
 Improve `aichaku upgrade` to show:
-```
+```text
 🪴 Aichaku Project Upgrade
 ━━━━━━━━━━━━━━━━━━━━━━━━━
 📍 Project: /path/to/project
@@ -84,6 +88,20 @@ aichaku upgrade
 aichaku integrate --force
 ```
 ```
+
+## Rabbit Holes
+
+1. **Complex version detection**: Keep simple - just check JSR API
+2. **Cross-platform compatibility**: Focus on Deno environments only
+3. **Rollback mechanisms**: Don't build complex version management
+4. **Custom install locations**: Use standard Deno patterns only
+
+## No-gos
+
+1. **Package managers**: No npm, brew, or other installation methods
+2. **Auto-updates**: No background or scheduled updates
+3. **Version conflicts**: Don't manage multiple Aichaku versions
+4. **Complex configuration**: Keep upgrade process simple
 
 ## Implementation Details
 
@@ -147,7 +165,7 @@ if (current) {
 
 ## Success Criteria
 
-- Users can upgrade with @latest tag
+- You can upgrade with @latest tag
 - Installation shows version feedback
 - Clear instructions for updating projects
 - README has simple upgrade section

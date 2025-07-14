@@ -95,6 +95,7 @@ export const HOOK_CATEGORIES = {
       "diagram-generator",
       "progress-tracker",
       "commit-validator",
+      "markdown-review",
     ],
   },
   security: {
@@ -286,6 +287,16 @@ const HOOK_TEMPLATES = {
     source: "aichaku",
     command:
       `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts aichaku-feedback`,
+  },
+  "markdown-review": {
+    name: "Markdown Review",
+    description:
+      "Automatically reviews markdown files using MCP Aichaku Reviewer",
+    type: "PostToolUse",
+    matcher: "Write|Edit|MultiEdit",
+    source: "aichaku",
+    command:
+      `deno run --allow-read --allow-write --allow-env --allow-run ~/.claude/aichaku/hooks/aichaku-hooks.ts markdown-review`,
   },
 };
 

@@ -1,25 +1,31 @@
-# Aichaku Visual UX Enhancements
+# Shape Up Pitch: Aichaku Visual UX Enhancements
 
 ## Problem
 
 Currently, Aichaku operates invisibly, leading to:
-1. **Unclear attribution** - Users don't know when Aichaku is helping vs Claude Code
+1. **Unclear attribution** - You don't know when Aichaku helps vs Claude Code
 2. **Lost context** - No visual progress indicators for project phases
-3. **Forgotten presence** - Users forget Aichaku is installed and available
+3. **Forgotten presence** - You forget Aichaku exists and remains available
 
-## Solution: Three Visual Enhancements
+## Appetite
+
+**1 week** - This focuses on visual enhancements without changing core functionality.
+
+## Solution
+
+We'll implement three visual enhancements that make Aichaku's presence clear and helpful:
 
 ### 1. Aichaku Visual Identity
 
 **Icon Options:**
 - 🪴 **Potted Plant** - Nurturing methodologies that grow with you
-- 🫶 **Hands Holding Heart** - Cherishing your workflows  
+- 🫶 **Hands Holding Heart** - Cherishing your workflows
 - 🍵 **Teacup** - Daily ritual and comfort
 - 🌱 **Seedling** - Growth from small beginnings
 - 🏮 **Paper Lantern** - Warm, guiding light
 
 **Chosen Identity:**
-```
+```text
 🪴 Aichaku: [message]
 ```
 
@@ -41,20 +47,20 @@ Examples:
 - "🪴 Aichaku: Creating Shape Up project: user-authentication-redesign"
 - "🪴 Aichaku: Documents created in .claude/output/"
 
-Note: Keep language clear and technical. Use growth icons (🌱🌿🌳🍃) as subtle 
+Note: Keep language clear and technical. Use growth icons (🌱🌿🌳🍃) as subtle
 visual indicators for project phases, but avoid garden metaphors in text.
 ```
 
 ### 2. Project Phase Indicators
 
 **ASCII Progress Bar Approach:**
-```
+```text
 🪴 Aichaku Progress: [Planning] ━━━○━━━━━━ [Executing] ━━━━━━━━━━ [Complete]
-                     ████████████              
+                     ████████████
 ```
 
 **Subtle Phase Indicators:**
-```
+```text
 🪴 Aichaku: Project Phase
 Planning → Executing → Reviewing → Complete
 Icons: 🌱     🌿         🌳         🍃
@@ -65,7 +71,7 @@ Current: Executing 🌿
 **For Different Methodologies:**
 
 **Shape Up:**
-```
+```text
 🪴 Aichaku Shape Up: 
 [Shaping] → [**Betting**] → [Building] → [Cool-down]
                 ▲
@@ -73,7 +79,7 @@ Visual: 🌱→🌿→🌳→🍃 (subtle indicators)
 ```
 
 **Scrum:**
-```
+```text
 🪴 Aichaku Sprint 15:
 Day 6/10 ████████░░░░░░ 60% 🌿
 Ceremonies: ✅ Planning | 🔄 Daily (ongoing) | ⏳ Review | ⏳ Retro
@@ -91,7 +97,7 @@ import chalk from 'chalk';
 const phases = ['Discussion', 'Shaping', 'Ready', 'Created'];
 const current = 1;
 
-console.log(chalk.blue('🧭 Aichaku:'), 
+console.log(chalk.blue('🪴 Aichaku:'), 
   phases.map((p, i) => 
     i === current ? chalk.bgBlue.white(` ${p} `) : chalk.gray(p)
   ).join(' → ')
@@ -102,7 +108,7 @@ console.log(chalk.blue('🧭 Aichaku:'),
 
 **Option A: Automatic Reminder in CLAUDE.md**
 ```markdown
-## 🧭 Aichaku Active
+## 🪴 Aichaku Active
 
 This project has Aichaku installed. I will:
 - Recognize methodology keywords (sprint, shape, kanban, MVP)
@@ -118,7 +124,7 @@ Update CLAUDE.md to include:
 ### Session Start Behavior
 
 On first methodology keyword detection each session:
-"🧭 Aichaku: I noticed you mentioned [keyword]. I'm here to help structure your [methodology] workflow. Currently in discussion mode - let me know when you're ready to create project documentation."
+"🪴 Aichaku: I noticed you mentioned [keyword]. I'm here to help structure your [methodology] workflow. Currently in discussion mode - let me know when you're ready to create project documentation."
 ```
 
 **Option C: Status Command**
@@ -127,7 +133,7 @@ Add to Aichaku CLI:
 aichaku status --startup-reminder
 
 # Output:
-🧭 Aichaku v0.6.0 Active
+🪴 Aichaku v0.6.0 Active
 ━━━━━━━━━━━━━━━━━━━━━
 ✓ Global installation: ~/.claude
 ✓ Methodologies: Shape Up, Scrum, Kanban, Lean, XP
@@ -136,6 +142,20 @@ aichaku status --startup-reminder
 Trigger words: sprint, shape, kanban, MVP
 Documentation: .claude/output/
 ```
+
+## Rabbit Holes
+
+1. **Complex animations**: Keep progress indicators simple - ASCII and emoji only
+2. **Over-branding**: Don't make Aichaku too prominent vs helpful
+3. **Platform differences**: Visual elements must work everywhere Claude Code works
+4. **Customization**: Avoid making icons/colors configurable
+
+## No-gos
+
+1. **Rich UI components**: No HTML, CSS, or interactive elements
+2. **External dependencies**: Must work without additional libraries
+3. **Breaking changes**: Existing projects continue working unchanged
+4. **Mandatory adoption**: Visual elements remain optional enhancements
 
 ## Implementation Plan
 
@@ -156,7 +176,7 @@ Documentation: .claude/output/
 
 ## Benefits
 
-1. **Clear Attribution** - Users know when Aichaku is helping
+1. **Clear Attribution** - You know when Aichaku helps
 2. **Visual Progress** - See project phase at a glance
 3. **Better Engagement** - Reminders increase usage
 4. **Professional Feel** - Consistent visual identity
@@ -172,7 +192,7 @@ Documentation: .claude/output/
 ## Success Criteria
 
 - Every Aichaku message has clear visual identity
-- Users can see project phase instantly
+- You can see project phase instantly
 - Startup reminder appears appropriately
 - No confusion about what's Aichaku vs Claude Code
 - Visual elements enhance, not distract

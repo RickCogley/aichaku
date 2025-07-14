@@ -104,7 +104,18 @@
       "Bash(timeout:*)",
       "Bash(./cli.ts mcp --help)",
       "mcp__github-operations__run_list",
-      "mcp__github-operations__run_view"
+      "mcp__github-operations__run_view",
+      "mcp__github-operations__run_watch",
+      "Bash(npm view:*)",
+      "Bash(/Users/rcogley/dev/aichaku/test-formatting-server)",
+      "mcp__test-formatting__test_markdown",
+      "mcp__test-formatting__test_plain",
+      "mcp__test-formatting__test_ansi",
+      "mcp__test-formatting__test_unicode",
+      "mcp__test-formatting__test_structured",
+      "mcp__test-formatting__test_json",
+      "Bash(./aichaku mcp:*)",
+      "Bash(awk:*)"
     ],
     "deny": []
   }

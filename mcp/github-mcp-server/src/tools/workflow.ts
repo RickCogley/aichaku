@@ -4,6 +4,7 @@
  */
 
 import type { GitHubClient, GitHubWorkflowRun } from "../github/client.ts";
+import { format, ICONS } from "../formatting-system.ts";
 
 export const workflowTools = {
   async listRuns(
@@ -31,47 +32,30 @@ export const workflowTools = {
           content: [
             {
               type: "text",
-              text: `📋 No workflow runs found for ${owner}/${repo}${
-                workflow ? ` (${workflow})` : ""
-              }`,
+              text: format.info(
+                `No workflow runs found for ${owner}/${repo}${
+                  workflow ? ` (${workflow})` : ""
+                }`,
+              ),
             },
           ],
         };
       }
 
-      let responseText = `📋 GitHub Actions Workflow Runs
-
-**Repository:** ${owner}/${repo}
-${workflow ? `**Workflow:** ${workflow}\n` : ""}${
-        status ? `**Status:** ${status}\n` : ""
-      }${branch ? `**Branch:** ${branch}\n` : ""}
-**Found:** ${runs.length} runs
-
-`;
+      let responseText = format.header("GitHub Actions Workflow Runs") + "\n";
+      responseText += format.separator() + "\n\n";
+      responseText += format.field("Repository", `${owner}/${repo}`) + "\n";
+      if (workflow) responseText += format.field("Workflow", workflow) + "\n";
+      if (status) responseText += format.field("Status", status) + "\n";
+      if (branch) {
+        responseText += format.field("Branch", `${ICONS.BRANCH} ${branch}`) +
+          "\n";
+      }
+      responseText += format.field("Found", `${runs.length} runs`) + "\n";
+      responseText += format.separator() + "\n";
 
       for (const run of runs) {
-        const duration = run.run_started_at
-          ? Math.round(
-            (new Date(run.updated_at).getTime() -
-              new Date(run.run_started_at).getTime()) / 1000,
-          )
-          : 0;
-
-        const statusIcon = run.status === "completed"
-          ? (run.conclusion === "success" ? "✅" : "❌")
-          : run.status === "in_progress"
-          ? "🔄"
-          : "⏳";
-
-        responseText += `## ${statusIcon} ${run.name} (#${run.id})
-**Branch:** ${run.head_branch}
-**Status:** ${run.status}${run.conclusion ? ` (${run.conclusion})` : ""}
-**Duration:** ${duration > 0 ? `${duration}s` : "N/A"}
-**Started:** ${new Date(run.run_started_at || run.created_at).toLocaleString()}
-**SHA:** ${run.head_sha.substring(0, 7)}
-🔗 [View Run](${run.html_url})
-
-`;
+        responseText += "\n" + format.workflowRun(run, false) + "\n";
       }
 
       return {
@@ -110,57 +94,46 @@ ${workflow ? `**Workflow:** ${workflow}\n` : ""}${
     try {
       const run = await client.getWorkflowRun(owner, repo, runId);
 
-      const duration = run.run_started_at
-        ? Math.round(
-          (new Date(run.updated_at).getTime() -
-            new Date(run.run_started_at).getTime()) / 1000,
-        )
-        : 0;
+      let responseText = format.header("GitHub Actions Workflow Run Details") +
+        "\n";
+      responseText += format.separator() + "\n\n";
 
-      const statusIcon = run.status === "completed"
-        ? (run.conclusion === "success" ? "✅" : "❌")
-        : run.status === "in_progress"
-        ? "🔄"
-        : "⏳";
+      // Use the detailed view from our formatting system
+      responseText += format.workflowRun(run, true) + "\n";
 
-      const responseText = `📋 GitHub Actions Workflow Run Details
+      responseText += "\n" + format.section("Details");
+      responseText += format.field("Repository", `${owner}/${repo}`) + "\n";
+      responseText += format.field("Workflow ID", run.workflow_id.toString()) +
+        "\n";
+      responseText += format.field("Run Number", run.run_number.toString()) +
+        "\n";
 
-${statusIcon} **${run.name}** (#${run.id})
+      responseText += "\n" + format.section("Timeline");
+      responseText += format.listItem(
+        `Created: ${new Date(run.created_at).toLocaleString()}`,
+      ) + "\n";
+      responseText += format.listItem(
+        `Started: ${
+          new Date(run.run_started_at || run.created_at).toLocaleString()
+        }`,
+      ) + "\n";
+      responseText += format.listItem(
+        `Updated: ${new Date(run.updated_at).toLocaleString()}`,
+      ) + "\n";
 
-**Repository:** ${owner}/${repo}
-**Branch:** ${run.head_branch}
-**Commit:** ${run.head_sha.substring(0, 7)}
-**Status:** ${run.status}
-**Conclusion:** ${run.conclusion || "N/A"}
-**Duration:** ${duration > 0 ? `${duration}s` : "N/A"}
-
-**Timeline:**
-- **Created:** ${new Date(run.created_at).toLocaleString()}
-- **Started:** ${
-        new Date(run.run_started_at || run.created_at).toLocaleString()
+      // Add status-specific messages
+      if (run.status === "in_progress") {
+        responseText += "\n" +
+          format.info(
+            "This run is still in progress. Use run_watch to monitor it.",
+          );
+      } else if (run.status === "completed" && run.conclusion === "failure") {
+        responseText += "\n" +
+          format.error("This run failed. Check the logs for details.");
+      } else if (run.status === "completed" && run.conclusion === "success") {
+        responseText += "\n" +
+          format.success("This run completed successfully.");
       }
-- **Updated:** ${new Date(run.updated_at).toLocaleString()}
-
-🔗 [View on GitHub](${run.html_url})
-
-**Workflow ID:** ${run.workflow_id}
-**Run ID:** ${run.id}
-
-${
-        run.status === "in_progress"
-          ? "🔄 This run is still in progress. Use `run_watch` to monitor it."
-          : ""
-      }
-${
-        run.status === "completed" && run.conclusion === "failure"
-          ? "❌ This run failed. Check the logs for details."
-          : ""
-      }
-${
-        run.status === "completed" && run.conclusion === "success"
-          ? "✅ This run completed successfully."
-          : ""
-      }`;
 
       return {
         content: [
@@ -238,28 +211,22 @@ ${
 
       // If already completed, return immediately
       if (run.status === "completed") {
-        const duration = run.run_started_at
+        const _duration = run.run_started_at
           ? Math.round(
             (new Date(run.updated_at).getTime() -
               new Date(run.run_started_at).getTime()) / 1000,
           )
           : 0;
 
-        const statusIcon = run.conclusion === "success" ? "✅" : "❌";
+        const _statusIcon = run.conclusion === "success" ? "✅" : "❌";
 
         return {
           content: [
             {
               type: "text",
-              text: `${statusIcon} Workflow Run Completed
-
-**Run:** ${run.name} (#${run.id})
-**Status:** ${run.status}
-**Conclusion:** ${run.conclusion}
-**Duration:** ${duration}s
-**Branch:** ${run.head_branch}
-
-🔗 [View on GitHub](${run.html_url})`,
+              text: format.header("Workflow Run Already Completed") + "\n" +
+                format.separator() + "\n\n" +
+                format.workflowRun(run, true),
             },
           ],
         };
@@ -303,28 +270,23 @@ ${
         : 0;
 
       const totalElapsed = Math.round((Date.now() - startTime) / 1000);
-      const statusIcon = finalRun.conclusion === "success" ? "✅" : "❌";
+      const _statusIcon = finalRun.conclusion === "success" ? "✅" : "❌";
 
       return {
         content: [
           {
             type: "text",
-            text: `${statusIcon} Workflow Run Monitoring Complete
-
-**Run:** ${finalRun.name} (#${finalRun.id})
-**Status:** ${finalRun.status}
-**Conclusion:** ${finalRun.conclusion}
-**Duration:** ${duration}s
-**Monitor Time:** ${totalElapsed}s
-**Branch:** ${finalRun.head_branch}
-
-🔗 [View on GitHub](${finalRun.html_url})
-
-${
-              finalRun.conclusion === "success"
-                ? "✅ Run completed successfully!"
-                : "❌ Run failed - check logs for details."
-            }`,
+            text: format.header("Workflow Run Monitoring Complete") + "\n" +
+              format.separator() + "\n\n" +
+              format.workflowRun(finalRun, true) + "\n\n" +
+              format.section("Monitoring Summary") +
+              format.field("Monitor Time", format.duration(totalElapsed)) +
+              "\n" +
+              format.field("Total Duration", format.duration(duration)) +
+              "\n\n" +
+              (finalRun.conclusion === "success"
+                ? format.success("Run completed successfully!")
+                : format.error("Run failed - check logs for details.")),
           },
         ],
       };

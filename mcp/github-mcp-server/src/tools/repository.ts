@@ -4,6 +4,7 @@
  */
 
 import type { GitHubClient } from "../github/client.ts";
+import { format } from "./formatting.ts";
 
 export const repositoryTools = {
   async view(
@@ -18,19 +19,24 @@ export const repositoryTools = {
     try {
       const repository = await client.getRepository(owner, repo);
 
-      const responseText = `📋 GitHub Repository Details
+      let responseText = `📋 GitHub Repository Details\n`;
+      responseText += `${format.separator(40)}\n\n`;
 
-**Repository:** ${repository.full_name}
-**Description:** ${repository.description || "No description"}
-**Visibility:** ${repository.private ? "Private" : "Public"}
-**Default Branch:** ${repository.default_branch}
+      responseText += `Repository: ${repository.full_name}\n`;
+      responseText += `Description: ${
+        repository.description || "No description"
+      }\n`;
+      responseText += `Visibility: ${
+        repository.private ? "Private" : "Public"
+      }\n`;
+      responseText += `Default Branch: ${repository.default_branch}\n`;
 
-🔗 **Links:**
-- [Repository](${repository.html_url})
-- [Clone HTTPS](${repository.clone_url})
-- [Clone SSH](${repository.ssh_url})
+      responseText += `\n🔗 Links:\n`;
+      responseText += `  • Repository: ${repository.html_url}\n`;
+      responseText += `  • Clone HTTPS: ${repository.clone_url}\n`;
+      responseText += `  • Clone SSH: ${repository.ssh_url}\n`;
 
-**Repository ID:** ${repository.id}`;
+      responseText += `\nRepository ID: ${repository.id}`;
 
       return {
         content: [
@@ -86,24 +92,25 @@ export const repositoryTools = {
         };
       }
 
-      let responseText = `📋 GitHub Repositories
+      let responseText = `📋 GitHub Repositories\n`;
+      responseText += `${format.separator(40)}\n\n`;
 
-**Type:** ${type}
-**Sort:** ${sort} (${direction})
-**Found:** ${repositories.length} repositories
-
-`;
+      responseText += `Type: ${type}\n`;
+      responseText += `Sort: ${sort} (${direction})\n`;
+      responseText += `Found: ${repositories.length} repositories\n`;
+      responseText += `${format.separator(40)}\n`;
 
       for (const repo of repositories) {
         const visibility = repo.private ? "Private" : "Public";
 
-        responseText += `## ${repo.full_name}
-**Description:** ${repo.description || "No description"}
-**Visibility:** ${visibility}
-**Default Branch:** ${repo.default_branch}
-🔗 [View Repository](${repo.html_url})
-
-`;
+        responseText += `\n${repo.full_name}\n`;
+        responseText += `${"─".repeat(repo.full_name.length)}\n`;
+        responseText += `  Description: ${
+          repo.description || "No description"
+        }\n`;
+        responseText += `  Visibility: ${visibility}\n`;
+        responseText += `  Default Branch: ${repo.default_branch}\n`;
+        responseText += `  🔗 ${repo.html_url}\n`;
       }
 
       return {

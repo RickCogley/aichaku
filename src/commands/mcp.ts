@@ -27,6 +27,7 @@ export interface MCPOptions {
   startServer?: boolean;
   stopServer?: boolean;
   serverStatus?: boolean;
+  tools?: boolean;
 }
 
 export async function runMCPCommand(options: MCPOptions): Promise<void> {
@@ -69,6 +70,8 @@ export async function runMCPCommand(options: MCPOptions): Promise<void> {
     await stopHTTPServer();
   } else if (options.serverStatus) {
     await checkHTTPServerStatus();
+  } else if (options.tools) {
+    await multiManager.displayTools();
   } else if (options.status) {
     await multiManager.displayAllStatus();
   } else {
@@ -87,27 +90,29 @@ Usage:
   aichaku mcp [options]
 
 Options:
-  --install       Install the MCP server
-  --config        Configure Claude Code to use the MCP server
+  --install       Install all MCP servers
+  --install-aichaku-reviewer  Install Aichaku Code Reviewer
+  --install-github-operations Install GitHub Operations
+  --config        Show Claude Code configuration
   --status        Check MCP server status (default)
-  --start         Start the MCP server
-  --stop          Stop the MCP server
-  --restart       Restart the MCP server
-  --upgrade       Upgrade to the latest version
+  --tools         List available MCP tools
   --help          Show this help message
 
-Server Mode (for multiple Claude Code instances):
-  --start-server  Start HTTP/SSE server for shared MCP access
+HTTP Bridge Server (for 'aichaku review' command):
+  --start-server  Start HTTP bridge server
+  --stop-server   Stop HTTP bridge server
+  --server-status Check bridge server status
 
 ⚠️  IMPORTANT: Installing MCP servers does NOT make them available to Claude Code!
    You must configure them in Claude Code's MCP system separately.
    See: https://docs.anthropic.com/en/docs/claude-code/mcp
 
 Examples:
-  aichaku mcp                   # Check status of all servers
+  aichaku mcp                   # Show status (default)
   aichaku mcp --install         # Install all MCP servers
-  aichaku mcp --start-server    # Start bridge for 'aichaku review'
-  aichaku mcp --server-status   # Check if review bridge is running
+  aichaku mcp --config          # Show Claude Code configuration
+  aichaku mcp --tools           # List available MCP tools
+  aichaku mcp --start-server    # Start HTTP bridge for 'aichaku review'
 
 Learn more: https://github.com/RickCogley/aichaku/tree/main/mcp-server
 `);

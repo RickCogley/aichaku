@@ -1,6 +1,14 @@
-# Managing Custom Standards
+# How to Manage Custom Standards
 
 Custom standards allow you to define organization-specific or project-specific guidelines that complement Aichaku's built-in standards. They integrate seamlessly with the standard selection system and appear in your CLAUDE.md alongside official standards.
+
+## Before you begin
+
+Ensure you have:
+- Aichaku installed and configured
+- Access to your `~/.claude/aichaku/user/standards/` directory
+- A text editor for creating standard files
+- Basic understanding of Markdown syntax
 
 ## Quick Start
 
@@ -32,7 +40,7 @@ Custom standards are user-defined development guidelines that:
 | Location | `~/.claude/aichaku/methodologies/standards/` | `~/.claude/aichaku/user/standards/` |
 | Prefix | None (e.g., `tdd`) | `custom:` (e.g., `custom:team-guidelines`) |
 | Icon | 📚 | 🛠️ |
-| Updates | Updated with Aichaku | User-maintained |
+| Updates | Aichaku updates them | You maintain them |
 | Scope | Universal best practices | Organization/project specific |
 
 ### Storage and Discovery
@@ -84,7 +92,7 @@ You can also create standards manually:
 
 ### Template Structure
 
-When you use `--create-custom`, this template is generated:
+When you use `--create-custom`, Aichaku generates this template:
 
 ```markdown
 ---
@@ -149,7 +157,7 @@ Structure your guidelines in logical categories...
 
 ## Managing Custom Standards
 
-### Listing Custom Standards
+### List Custom Standards
 
 View all standards including custom ones:
 
@@ -165,7 +173,7 @@ aichaku standards --list --detailed
 ```
 
 Output example:
-```
+```text
 Available Standards:
 
 Built-in Standards:
@@ -178,9 +186,9 @@ Custom Standards:
 🛠️ custom:security-hardening - Additional security measures
 ```
 
-### Editing Custom Standards
+### Edit Custom Standards
 
-Edit existing custom standards:
+Edit your existing custom standards:
 
 ```bash
 # Open in default editor
@@ -193,9 +201,9 @@ vim ~/.claude/aichaku/user/standards/SECURITY-HARDENING.md
 open ~/.claude/aichaku/user/standards/SECURITY-HARDENING.md
 ```
 
-### Copying Custom Standards
+### Copy Custom Standards
 
-Create variants of existing standards:
+Create variants of your existing standards:
 
 ```bash
 # Copy to create a specialized version
@@ -206,9 +214,9 @@ aichaku standards --copy-custom security-hardening security-production
 aichaku standards --edit-custom security-production
 ```
 
-### Deleting Custom Standards
+### Delete Custom Standards
 
-Remove custom standards when no longer needed:
+Remove your custom standards when you no longer need them:
 
 ```bash
 # Remove the standard file
@@ -224,9 +232,9 @@ aichaku standards --delete-custom old-guidelines --force
 
 ## Using Custom Standards in Projects
 
-### Adding to Project
+### Add to Project
 
-Add custom standards to your project:
+Add your custom standards to your project:
 
 ```bash
 # Add a single custom standard
@@ -239,7 +247,7 @@ aichaku standards --add tdd,custom:security-hardening,clean-arch
 aichaku standards --add-category security
 ```
 
-### Viewing Project Standards
+### View Project Standards
 
 Check which standards are active:
 
@@ -252,7 +260,7 @@ aichaku standards --show --detailed
 ```
 
 Output example:
-```
+```text
 Current Project Standards:
 - 📚 tdd (Built-in)
 - 🛠️ custom:team-guidelines (Custom)
@@ -260,7 +268,7 @@ Current Project Standards:
 - 🛠️ custom:security-hardening (Custom)
 ```
 
-### Integration with CLAUDE.md
+## Integration with CLAUDE.md
 
 When you run `aichaku integrate`, custom standards appear in CLAUDE.md with clear attribution:
 
@@ -284,22 +292,22 @@ When you run `aichaku integrate`, custom standards appear in CLAUDE.md with clea
 
 ---
 <!-- AICHAKU:STANDARDS:END -->
-```
+```markdown
 
 ## Best Practices
 
-### 1. Naming Conventions
+### Use Clear Naming Conventions
 
 - **Use descriptive names**: `api-design-patterns` not `api`
 - **Include scope**: `mobile-security` vs generic `security`
 - **Avoid conflicts**: Don't use names similar to built-in standards
 - **Be consistent**: Establish team naming patterns
 
-### 2. Content Guidelines
+### Follow Content Guidelines
 
 Write effective custom standards:
 
-```markdown
+```text
 ## DO:
 ✅ Provide clear, actionable rules
 ✅ Include both good and bad examples
@@ -314,11 +322,11 @@ Write effective custom standards:
 ❌ Mix unrelated concerns
 ```
 
-### 3. Organization
+### Organize Your Standards
 
 Structure your custom standards library:
 
-```
+```text
 ~/.claude/aichaku/user/standards/
 ├── API-DESIGN.md              # REST API conventions
 ├── DATABASE-PATTERNS.md       # Data layer guidelines
@@ -350,7 +358,7 @@ git add .team/standards
 git commit -m "Add team development standards"
 ```
 
-### Distribution Methods
+### Choose Distribution Methods
 
 1. **Git Repository**
    ```bash
@@ -370,7 +378,7 @@ git commit -m "Add team development standards"
    # install-standards.sh
    STANDARDS_DIR="$HOME/.claude/aichaku/user/standards"
    mkdir -p "$STANDARDS_DIR"
-   
+
    curl -o "$STANDARDS_DIR/API-DESIGN.md" \
      https://standards.company.com/API-DESIGN.md
    ```
@@ -379,9 +387,9 @@ git commit -m "Add team development standards"
 
 ### Common Issues
 
-#### 1. Standard Not Showing Up
+#### Standard Not Showing Up
 
-**Problem**: Created standard doesn't appear in `--list`
+**Problem**: Your created standard doesn't appear in `--list`
 
 **Solutions**:
 - Check filename uses UPPER-KEBAB-CASE.md
@@ -389,9 +397,9 @@ git commit -m "Add team development standards"
 - Ensure valid frontmatter (YAML format)
 - Look for parsing errors in the file
 
-#### 2. Integration Not Including Custom Standard
+#### Integration Not Including Custom Standard
 
-**Problem**: `aichaku integrate` doesn't add custom standard
+**Problem**: `aichaku integrate` doesn't add your custom standard
 
 **Solutions**:
 - Confirm standard is added to project: `aichaku standards --show`
@@ -399,9 +407,9 @@ git commit -m "Add team development standards"
 - Use full prefix: `custom:standard-name`
 - Run with debug: `AICHAKU_DEBUG=1 aichaku integrate`
 
-#### 3. File Naming Issues
+#### File Naming Issues
 
-**Problem**: Standard has wrong name or format
+**Problem**: Your standard has wrong name or format
 
 **Solutions**:
 ```bash
@@ -412,9 +420,9 @@ mv wrong-name.md CORRECT-NAME.md
 mv "My Standard.md" MY-STANDARD.md
 ```
 
-#### 4. Migration from Old Structure
+#### Migration from Old Structure
 
-**Problem**: Standards in old location not recognized
+**Problem**: Your standards in old location aren't recognized
 
 **Solution**: Run migration
 ```bash
@@ -425,7 +433,7 @@ aichaku migrate --custom-standards-only
 mv ~/.claude/standards/custom/* ~/.claude/aichaku/user/standards/
 ```
 
-### Debug Commands
+### Use Debug Commands
 
 Troubleshoot issues with these commands:
 
@@ -450,7 +458,7 @@ aichaku standards --list --show-paths
 
 If you have custom standards from older Aichaku versions:
 
-### Automatic Migration
+### Use Automatic Migration
 
 ```bash
 # Migrate only custom standards
@@ -460,7 +468,7 @@ aichaku migrate --custom-standards-only
 aichaku migrate
 ```
 
-### Manual Migration
+### Use Manual Migration
 
 1. **Locate old standards**:
    ```bash
@@ -497,7 +505,7 @@ aichaku migrate
    aichaku integrate
    ```
 
-### Post-Migration Verification
+### Verify After Migration
 
 ```bash
 # Verify all standards are available

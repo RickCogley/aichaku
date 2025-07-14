@@ -2,14 +2,14 @@
 
 ## Problem
 
-Aichaku currently provides excellent methodology support but lacks several modern capabilities that would significantly improve the developer experience:
+Aichaku currently provides excellent methodology support but lacks several modern capabilities that significantly improve your developer experience:
 
-1. **No Claude Code Hooks Integration**: The new hooks feature in Claude Code could automate many Aichaku workflows, but we're not leveraging it
+1. **No Claude Code Hooks Integration**: The new hooks feature in Claude Code could automate many Aichaku workflows, but we don't leverage it
 2. **Limited Prompt Engineering**: Documentation generation could be improved with role-based perspectives
 3. **Single-Purpose Guidance**: Only methodologies are supported; teams need OWASP, 12-factor, ISO 27001, and custom standards
 4. **Hidden Security Workflows**: Valuable security documentation exists but isn't discoverable or integrated
 
-Users are manually enforcing methodology rules, missing opportunities for automation, and not benefiting from role-based documentation improvements.
+You manually enforce methodology rules, miss opportunities for automation, and don't benefit from role-based documentation improvements.
 
 ## Appetite
 
@@ -17,7 +17,7 @@ Users are manually enforcing methodology rules, missing opportunities for automa
 
 ## Solution
 
-We'll create four interconnected features that work together to enhance Aichaku:
+We create four interconnected features that work together to enhance Aichaku:
 
 ### 1. Claude Code Hooks Integration
 
@@ -86,7 +86,7 @@ graph TD
 ```
 
 **New Architecture**:
-```
+```text
 .claude/
 ├── methodologies/     # Existing
 ├── standards/         # New
@@ -141,14 +141,14 @@ If time permits:
 ## User Experience
 
 ### Before (Current State)
-```
+```text
 You: Let's create a sprint plan
 Claude: [Creates files wherever]
 You: [Manually moves files, updates status, checks guidelines]
 ```
 
 ### After (With Enhancements)
-```
+```text
 You: Let's create a sprint plan
 Claude: 🪴 Aichaku: Creating project: sprint-planning
 [Hooks validate path, enforce structure]
@@ -159,10 +159,10 @@ Claude: 🪴 Aichaku: Creating project: sprint-planning
 
 ## Success Metrics
 
-1. **Adoption**: 80% of users install at least basic hooks
+1. **Adoption**: 80% of you install at least basic hooks
 2. **Automation**: 90% reduction in manual status updates
 3. **Quality**: Measurable improvement in documentation consistency
-4. **Discoverability**: Users find and use security/standards guidance
+4. **Discoverability**: You find and use security/standards guidance
 5. **Satisfaction**: Positive feedback on reduced friction
 
 ## Implementation Order

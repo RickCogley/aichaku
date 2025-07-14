@@ -1,6 +1,16 @@
-# 15-Factor App Implementation Guide for Claude Code
+# Getting Started with 15-Factor App Implementation for Claude Code
 
 This guide provides practical implementation patterns for building cloud-native applications following the expanded 15-factor methodology. Use these principles to shape codebases that are portable, scalable, and maintainable across modern cloud platforms.
+
+## Prerequisites
+
+Before implementing these patterns, ensure you have:
+
+- **Basic understanding** of cloud-native concepts and containerization
+- **Development environment** with Docker and your chosen programming language
+- **Access to cloud platform** (AWS, GCP, Azure) or local Kubernetes cluster
+- **CI/CD pipeline** setup (GitHub Actions, GitLab CI, or similar)
+- **Monitoring tools** for observability (Prometheus, Grafana, or cloud equivalents)
 
 ## Quick Reference Checklist
 
@@ -38,6 +48,8 @@ This guide provides practical implementation patterns for building cloud-native 
 │   └── configmap.yaml
 └── .github/workflows/
 ```
+
+## Implementation Guidelines
 
 ### Key Practices
 - Single repository per deployable service
@@ -86,6 +98,8 @@ require (
 )
 ```
 
+## Container Strategy
+
 ### Container Pattern
 ```dockerfile
 FROM node:18-alpine AS base
@@ -112,14 +126,14 @@ CMD ["node", "server.js"]
 module.exports = {
   port: process.env.PORT || 3000,
   database: {
-    host: process.env.DB_HOST || 'localhost',
+    host: process.env.DB_HOST, // Required: set via environment
     port: process.env.DB_PORT || 5432,
     name: process.env.DB_NAME || 'myapp',
     user: process.env.DB_USER || 'postgres',
     password: process.env.DB_PASSWORD // No default for secrets
   },
   redis: {
-    url: process.env.REDIS_URL || 'redis://localhost:6379'
+    url: process.env.REDIS_URL // Required: set via environment
   },
   features: {
     newDashboard: process.env.FEATURE_NEW_DASHBOARD === 'true'
@@ -144,7 +158,7 @@ metadata:
   name: app-secrets
 type: Opaque
 stringData:
-  DB_PASSWORD: "secure-password"
+  DB_PASSWORD: ${DB_PASSWORD} # Use environment variable from secret store
 ```
 
 ## Factor IV: Backing Services
@@ -209,7 +223,7 @@ jobs:
         run: |
           docker build -t myapp:${{ github.sha }} .
           docker tag myapp:${{ github.sha }} myapp:latest
-      
+
   release:
     needs: build
     runs-on: ubuntu-latest
@@ -218,7 +232,7 @@ jobs:
         run: |
           docker push myregistry/myapp:${{ github.sha }}
           docker push myregistry/myapp:latest
-      
+
   deploy:
     needs: release
     runs-on: ubuntu-latest
@@ -310,6 +324,8 @@ spec:
         averageUtilization: 70
 ```
 
+## Process Management
+
 ### Process Types Pattern
 ```yaml
 # docker-compose.yml for local development
@@ -321,12 +337,12 @@ services:
     ports:
       - "3000:3000"
     scale: 3
-  
+
   worker:
     build: .
     command: node worker.js
     scale: 2
-  
+
   scheduler:
     build: .
     command: node scheduler.js
@@ -342,22 +358,22 @@ const server = app.listen(PORT);
 // Handle shutdown signals
 const shutdown = async () => {
   console.log('Received shutdown signal');
-  
+
   // Stop accepting new connections
   server.close(() => {
     console.log('HTTP server closed');
   });
-  
+
   // Wait for existing connections to close (with timeout)
   await Promise.race([
     waitForConnections(),
     new Promise(resolve => setTimeout(resolve, 30000))
   ]);
-  
+
   // Close database connections
   await db.disconnect();
   await redis.quit();
-  
+
   process.exit(0);
 };
 
@@ -381,13 +397,13 @@ services:
     depends_on:
       - postgres
       - redis
-  
+
   postgres:
     image: postgres:15-alpine
     environment:
       POSTGRES_DB: myapp
       POSTGRES_PASSWORD: devpassword
-  
+
   redis:
     image: redis:7-alpine
 ```
@@ -497,6 +513,8 @@ paths:
                       $ref: '#/components/schemas/User'
 ```
 
+## API Design
+
 ### API Versioning Pattern
 ```javascript
 const router = express.Router();
@@ -539,6 +557,8 @@ logger.info('Order processed', {
 });
 ```
 
+## Observability Implementation
+
 ### Health Check Pattern
 ```javascript
 app.get('/health', (req, res) => {
@@ -571,11 +591,11 @@ const jwt = require('jsonwebtoken');
 // Middleware for authentication
 const authenticate = async (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
-  
+
   if (!token) {
     return res.status(401).json({ error: 'No token provided' });
   }
-  
+
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     req.user = await User.findById(payload.userId);
@@ -665,6 +685,8 @@ spec:
             memory: "512Mi"
             cpu: "500m"
 ```
+
+## Cloud Platform Adaptations
 
 ### Serverless Adaptations
 - **Port Binding**: Not applicable - focus on event-driven handlers
