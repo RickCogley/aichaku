@@ -101,7 +101,8 @@
       "Bash(claude config --help)",
       "Bash(claude config list --global)",
       "Bash(./dist/aichaku-0.28.0-macos-arm64 hooks:*)",
-      "Bash(timeout:*)"
+      "Bash(timeout:*)",
+      "Bash(./cli.ts mcp --help)"
     ],
     "deny": []
   }
