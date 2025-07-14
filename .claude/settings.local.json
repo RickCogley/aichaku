@@ -102,7 +102,9 @@
       "Bash(claude config list --global)",
       "Bash(./dist/aichaku-0.28.0-macos-arm64 hooks:*)",
       "Bash(timeout:*)",
-      "Bash(./cli.ts mcp --help)"
+      "Bash(./cli.ts mcp --help)",
+      "mcp__github-operations__run_list",
+      "mcp__github-operations__run_view"
     ],
     "deny": []
   }

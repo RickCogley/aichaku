@@ -562,6 +562,7 @@ claude mcp list
 ```
 
 **Scope Options:**
+
 - `-s user` (recommended): Available across all your projects
 - `-s local`: Private to you in current project only
 - `-s project`: Shared with everyone in the project
