@@ -417,34 +417,48 @@ await integrate({
 
 ## MCP Server Features
 
+**⚠️ CRITICAL CONFIGURATION NOTE**: Installing MCP servers via Aichaku does NOT
+automatically make them available to Claude Code. You MUST configure them in
+Claude Code's MCP system separately. See
+[MCP Configuration Guide](docs/how-to/configure-mcp-servers.md) for details.
+
 Aichaku includes an enhanced Model Context Protocol (MCP) server that provides
 intelligent project analysis and documentation generation capabilities directly
 within Claude Desktop.
 
-### NEW: HTTP/SSE Server Mode (v0.25.0+)
+### HTTP/SSE Server for Code Review (v0.25.0+)
 
-Run a shared MCP server that multiple Claude Code instances can connect to:
+The HTTP/SSE server provides a bridge between the `aichaku review` command and
+the Aichaku Code Reviewer MCP server. This allows multiple Claude Code instances
+to share a single MCP server for code review operations:
 
 ```bash
-# Start the HTTP/SSE server
+# Start the HTTP/SSE bridge server
 aichaku mcp --start-server
 
 # Check server status
 aichaku mcp --server-status
 
-# Review files (automatically uses HTTP server if running)
+# Now use the review command - it will use the HTTP server automatically
 aichaku review file.ts
 
-# Stop the server
+# Stop the server when done
 aichaku mcp --stop-server
 ```
 
+**What it does:**
+
+- Bridges between CLI review commands and the MCP Code Reviewer
+- Allows multiple users/instances to share one MCP server
+- Provides real-time streaming of review results
+- Runs on port 7182 (AICHAKU on phone keypad)
+
 **Benefits:**
 
-- More efficient resource usage
+- More efficient resource usage (one server for all)
 - Faster response times (no startup overhead)
-- Shared state across multiple Claude Code instances
-- Real-time streaming of results
+- Works across network (not just local)
+- Firewall-friendly HTTP protocol
 
 See [MCP Server Documentation](docs/MCP-SERVER.md) for details.
 

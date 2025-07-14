@@ -6,6 +6,7 @@
 import { isAbsolute, join, normalize } from "@std/path";
 import { ensureDir, exists } from "@std/fs";
 import { colors } from "../../utils/ui.ts";
+import { Brand } from "../../utils/branded-messages.ts";
 
 export interface MCPServerConfig {
   id: string;
@@ -193,7 +194,15 @@ export class MultiServerMCPManager {
   async displayAllStatus(): Promise<void> {
     const statuses = await this.getAllServerStatus();
 
-    console.log(`\\n${colors.bold("🔍 MCP Servers Status")}\\n`);
+    Brand.log("MCP Servers Status");
+    console.log("");
+    console.log(
+      colors.yellow(
+        "⚠️  Note: These servers require Claude Code configuration to work!",
+      ),
+    );
+    console.log(colors.yellow("   See: aichaku mcp --help for details"));
+    console.log("");
 
     for (const status of statuses) {
       console.log(`## ${colors.bold(status.name)} (${status.id})`);
@@ -229,7 +238,11 @@ export class MultiServerMCPManager {
         `   ${colors.dim("Tools:")} ${status.tools.length} available`,
       );
       if (status.running) {
-        console.log(`   ${colors.green("🔗")} Ready for Claude Code`);
+        console.log(
+          `   ${
+            colors.green("🔗")
+          } Available (but requires Claude Code configuration!)`,
+        );
       } else {
         console.log(`   ${colors.dim("🔗")} Unavailable (server not running)`);
       }
@@ -238,10 +251,11 @@ export class MultiServerMCPManager {
     }
 
     // MCP Tools for Claude Code
-    console.log(`🪴 ${colors.bold("MCP Tools for Claude Code:")}`);
+    Brand.log("MCP Tools for Claude Code:");
     for (const status of statuses) {
       if (status.installed) {
-        console.log(`\\n   ${colors.cyan(status.name)} tools:`);
+        console.log("");
+        console.log(`   ${colors.cyan(status.name)} tools:`);
         for (const tool of status.tools.slice(0, 5)) {
           console.log(`   ${colors.cyan(tool)}`);
         }
@@ -253,7 +267,8 @@ export class MultiServerMCPManager {
       }
     }
 
-    console.log(`\\n📋 ${colors.bold("Management Commands:")}`);
+    console.log("");
+    console.log(`📋 Management Commands:`);
     console.log(
       `   ${colors.dim("aichaku mcp --install")}     Install all servers`,
     );
@@ -266,7 +281,39 @@ export class MultiServerMCPManager {
     console.log(
       `   ${colors.dim("aichaku mcp --status")}      Show this status`,
     );
+
+    // Check and display HTTP/SSE bridge server status
     console.log("");
+    console.log(`🌉 Code Review Bridge Server:`);
+    const isHttpServerRunning = await this.checkHttpServerStatus();
+    if (isHttpServerRunning) {
+      console.log(`   ${colors.green("✓")} Running on http://127.0.0.1:7182`);
+      console.log(
+        `   ${
+          colors.dim("Purpose:")
+        } Bridges 'aichaku review' to MCP Code Reviewer`,
+      );
+      console.log(`   ${colors.dim("Status:")} aichaku mcp --server-status`);
+    } else {
+      console.log(`   ${colors.yellow("○")} Not running`);
+      console.log(
+        `   ${colors.dim("Purpose:")} Required for 'aichaku review' command`,
+      );
+      console.log(`   ${colors.dim("Start:")} aichaku mcp --start-server`);
+    }
+
+    console.log("");
+  }
+
+  private async checkHttpServerStatus(): Promise<boolean> {
+    try {
+      const response = await fetch("http://127.0.0.1:7182/health", {
+        signal: AbortSignal.timeout(1000), // 1 second timeout
+      });
+      return response.ok;
+    } catch {
+      return false;
+    }
   }
 
   private formatUptime(ms: number): string {

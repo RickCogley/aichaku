@@ -25,6 +25,7 @@ Welcome to the Aichaku documentation! This guide is organized using the Diátaxi
 ### 🔧 [How-to Guides](how-to/)
 **Task-oriented** - Practical guides for specific tasks
 
+- [**Configure MCP Servers**](how-to/configure-mcp-servers.md) - **CRITICAL: Set up MCP for Claude Code** ⚠️
 - [Configure Your Project](how-to/configure-project.md) - Customize Aichaku with standards and methodologies
 - [Manage Custom Standards](how-to/manage-custom-standards.md) - Create and share your own coding standards
 - [Using MCP with Multiple Projects](how-to/use-mcp-with-multiple-projects.md) - Share server across projects

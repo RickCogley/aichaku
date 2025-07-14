@@ -98,51 +98,16 @@ Options:
 
 Server Mode (for multiple Claude Code instances):
   --start-server  Start HTTP/SSE server for shared MCP access
-  --stop-server   Stop the HTTP/SSE server
-  --server-status Check HTTP/SSE server status
 
-Features:
-  • Security scanning (OWASP Top 10 vulnerabilities)
-  • Standards compliance (15-Factor, TDD, etc.)
-  • Methodology validation (Shape Up, Scrum, Kanban)
-  • TypeScript best practices
-  • Educational feedback
-  • External tool integration (CodeQL, DevSkim, Semgrep)
+⚠️  IMPORTANT: Installing MCP servers does NOT make them available to Claude Code!
+   You must configure them in Claude Code's MCP system separately.
+   See: https://docs.anthropic.com/en/docs/claude-code/mcp
 
-MCP Tools for Claude Code:
-  • mcp__aichaku-reviewer__review_file        - Review individual files
-  • mcp__aichaku-reviewer__review_methodology - Check methodology compliance
-  • mcp__aichaku-reviewer__get_standards      - Get project standards
-  • mcp__aichaku-reviewer__analyze_project    - Analyze project structure
-  • mcp__aichaku-reviewer__generate_documentation - Generate docs
-  • mcp__aichaku-reviewer__get_statistics     - View usage statistics
-  • mcp__aichaku-reviewer__create_doc_template - Create doc templates
-
-Example:
-  # Install MCP server
-  aichaku mcp --install
-
-  # Start the server
-  aichaku mcp --start
-
-  # Configure Claude Code
-  aichaku mcp --config
-
-  # Check status
-  aichaku mcp --status
-  
-  # Stop the server
-  aichaku mcp --stop
-
-Server Mode (for multiple Claude Code instances):
-  # Start shared HTTP/SSE server
-  aichaku mcp --start-server
-
-  # Check server status
-  aichaku mcp --server-status
-  
-  # Stop server
-  aichaku mcp --stop-server
+Examples:
+  aichaku mcp                   # Check status of all servers
+  aichaku mcp --install         # Install all MCP servers
+  aichaku mcp --start-server    # Start bridge for 'aichaku review'
+  aichaku mcp --server-status   # Check if review bridge is running
 
 Learn more: https://github.com/RickCogley/aichaku/tree/main/mcp-server
 `);
@@ -532,26 +497,36 @@ async function stopHTTPServer(): Promise<void> {
  * Check HTTP/SSE server status
  */
 async function checkHTTPServerStatus(): Promise<void> {
-  console.log("🔍 Checking MCP HTTP/SSE Server Status...\n");
+  console.log("🔍 Checking Code Review Bridge Server Status...");
+  console.log("");
 
   const isRunning = await isMCPServerRunning();
 
   if (isRunning) {
-    console.log("✅ MCP HTTP/SSE Server is running");
+    console.log("✅ Code Review Bridge Server is running");
+    console.log(
+      "   Purpose: Bridges 'aichaku review' commands to MCP Code Reviewer",
+    );
     console.log("   URL: http://127.0.0.1:7182");
-    console.log("   Multiple Claude Code instances can connect to this server");
+    console.log("   Protocol: HTTP/SSE (Server-Sent Events)");
 
     // Try to get server health info
     try {
       const response = await fetch("http://127.0.0.1:7182/health");
       const health = await response.json();
-      console.log(`   Active sessions: ${health.sessions}`);
+      console.log(`   Active review sessions: ${health.sessions}`);
       console.log(`   Process ID: ${health.pid}`);
     } catch {
       // Ignore if health check fails
     }
+
+    console.log("");
+    console.log("   Use: aichaku review <file> to analyze code");
+    console.log("   The review command will automatically use this bridge");
   } else {
-    console.log("❌ MCP HTTP/SSE Server is not running");
-    console.log("\n💡 Start it with: aichaku mcp --start-server");
+    console.log("❌ Code Review Bridge Server is not running");
+    console.log("   Purpose: Required for 'aichaku review' command to work");
+    console.log("");
+    console.log("💡 Start it with: aichaku mcp --start-server");
   }
 }
