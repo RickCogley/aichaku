@@ -51,7 +51,7 @@ async function demonstrateFeedback() {
     console.log("All feedback messages sent!");
     
   } catch (error) {
-    console.error("Error:", error.message);
+    console.error("Error:", error instanceof Error ? error.message : String(error));
   } finally {
     await client.disconnect();
   }
@@ -86,7 +86,7 @@ async function simulateCodeReviewHook(filePath: string) {
     await client.sendFeedback("📋 Code review completed - ready for commit", "success");
     
   } catch (error) {
-    await client.sendFeedback(`❌ Code review failed: ${error.message}`, "error");
+    await client.sendFeedback(`❌ Code review failed: ${error instanceof Error ? error.message : String(error)}`, "error");
   } finally {
     await client.disconnect();
   }
@@ -140,7 +140,7 @@ Examples:
         await client.sendFeedback(args[1], level);
         console.log("Message sent!");
       } catch (error) {
-        console.error("Error:", error.message);
+        console.error("Error:", error instanceof Error ? error.message : String(error));
       } finally {
         await client.disconnect();
       }

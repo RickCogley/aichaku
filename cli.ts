@@ -39,6 +39,7 @@ import { runReviewCommand } from "./src/commands/review.ts";
 import { runGitHubCommand } from "./src/commands/github.ts";
 import { cleanup } from "./src/commands/cleanup.ts";
 import { VERSION } from "./mod.ts";
+import { displayVersionWarning } from "./src/utils/version-checker.ts";
 
 const args = parseArgs(Deno.args, {
   boolean: [
@@ -153,6 +154,12 @@ if (args.version) {
 
 // Get command
 const command = args._[0]?.toString().toLowerCase();
+
+// Check version compatibility (non-blocking)
+// Skip for version, help, and certain commands to avoid noise
+if (command && !["version", "help", "init"].includes(command)) {
+  await displayVersionWarning();
+}
 
 // Show help only if no command or general help requested
 if (!command || (args.help && !command)) {
