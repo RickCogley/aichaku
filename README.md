@@ -542,39 +542,31 @@ All MCP server responses include:
 
 ### Setting Up MCP Server
 
-1. **Install the MCP server** (included with Aichaku):
+1. **Install the MCP servers** (included with Aichaku):
 
 ```bash
-# The MCP server is automatically installed with Aichaku
+# The MCP servers are automatically installed with Aichaku
 aichaku init --global
+aichaku mcp --install
 ```
 
-2. **Configure Claude Desktop**: Add to your Claude Desktop configuration
-   (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+2. **Configure Claude Code**: Use the `claude mcp` command to add the servers:
 
-```json
-{
-  "mcpServers": {
-    "aichaku": {
-      "command": "deno",
-      "args": [
-        "run",
-        "--allow-read",
-        "--allow-write",
-        "--allow-net",
-        "--allow-env",
-        "/path/to/aichaku/mcp/aichaku-mcp-server/src/server.ts"
-      ],
-      "env": {
-        "AICHAKU_HOME": "~/.claude/aichaku"
-      }
-    }
-  }
-}
+```bash
+# Add servers with user scope (recommended - available across all projects)
+claude mcp add -s user aichaku-reviewer ~/.aichaku/mcp-servers/aichaku-code-reviewer
+claude mcp add -s user github-operations ~/.aichaku/mcp-servers/github-operations
+
+# Verify they're configured
+claude mcp list
 ```
 
-3. **Verify installation**: Restart Claude Desktop and look for Aichaku tools in
-   the available MCP tools list.
+**Scope Options:**
+- `-s user` (recommended): Available across all your projects
+- `-s local`: Private to you in current project only
+- `-s project`: Shared with everyone in the project
+
+3. **Restart Claude Code**: The MCP tools will be available with `mcp__` prefix.
 
 ### Example Workflows
 

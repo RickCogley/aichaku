@@ -41,19 +41,25 @@ aichaku mcp --start-all
 
 ### Step 3: Configure Claude Code
 
-1. In Claude Code, use the `/mcp` command to check current configuration
-2. If it shows "No MCP servers configured", you need to add them
-3. Visit https://docs.anthropic.com/en/docs/claude-code/mcp for configuration instructions
+Use the `claude mcp` command from your terminal to add the MCP servers to Claude Code:
 
-### Step 4: Add Server Configuration
+```bash
+# Add servers with user scope (recommended - available across all projects)
+claude mcp add -s user aichaku-reviewer ~/.aichaku/mcp-servers/aichaku-code-reviewer
+claude mcp add -s user github-operations ~/.aichaku/mcp-servers/github-operations
 
-Claude Code needs to know about the running MCP servers. The configuration typically involves:
+# Verify they're configured
+claude mcp list
+```
 
-1. Server name and connection details
-2. Authentication if required
-3. Available tools mapping
+**Scope Options:**
+- `user` (recommended): Available to you across all projects
+- `local`: Private to you in current project only
+- `project`: Shared with everyone working on this project
 
-**Note**: The exact configuration format depends on Claude Code's current MCP implementation.
+### Step 4: Restart Claude Code
+
+After adding the servers, you must restart Claude Code for the changes to take effect.
 
 ### Step 5: Verify Configuration
 

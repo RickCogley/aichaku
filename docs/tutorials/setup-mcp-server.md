@@ -79,37 +79,25 @@ The external scanners are optional but provide enhanced security checking.
 
 ## Step 2: Configure Claude Code
 
-Get the configuration for Claude Code:
+Configure Claude Code to use the MCP servers with the `claude mcp` command:
 
 ```bash
-aichaku mcp --config
+# Add servers with user scope (recommended - available across all projects)
+claude mcp add -s user aichaku-reviewer ~/.aichaku/mcp-servers/aichaku-code-reviewer
+claude mcp add -s user github-operations ~/.aichaku/mcp-servers/github-operations
+
+# Verify they're configured
+claude mcp list
 ```
 
-This shows you the exact configuration to add to Claude Code's settings.
+**Scope Options:**
+- `-s user` (recommended): Available to you across all projects
+- `-s local`: Private to you in current project only  
+- `-s project`: Shared with everyone working on this project
 
-### Add to Claude Code settings
+### Restart Claude Code
 
-1. **Find your Claude Code settings file:**
-   - macOS: `~/Library/Application Support/Claude/claude_desktop_settings.json`
-   - Windows: `%APPDATA%\Claude\claude_desktop_settings.json`
-   - Linux: `~/.config/Claude/claude_desktop_settings.json`
-
-2. **Open the settings file** in your text editor
-
-3. **Add the MCP server configuration:**
-   ```json
-   {
-     "mcpServers": {
-       "aichaku-reviewer": {
-         "command": "/Users/yourname/.aichaku/mcp-server/mcp-code-reviewer",
-         "args": [],
-         "env": {}
-       }
-     }
-   }
-   ```
-
-4. **Save the file** and restart Claude Code
+After adding the servers, you must restart Claude Code for the changes to take effect.
 
 ### Verify Claude Code configuration
 
