@@ -6,6 +6,7 @@ Welcome to the Aichaku documentation! This guide is organized using the Diátaxi
 
 **v0.29.0 - TypeScript Hooks & Enhanced Standards**
 - **NEW**: TypeScript-based hooks system for Claude Code automation
+- **NEW**: **Automatic session summaries** - Never lose context with automatic checkpoint creation
 - **NEW**: GitHub integration hooks (todo-tracker, pr-checker, etc.)
 - **NEW**: Documentation review hooks (docs-review, jsdoc-checker)
 - **IMPROVED**: Standards command with better search and management
@@ -34,6 +35,12 @@ Welcome to the Aichaku documentation! This guide is organized using the Diátaxi
 - [Configuration Options](reference/configuration-options.md) - All settings and options
 - [File Structure](reference/file-structure.md) - Complete file organization reference
 - [MCP API Reference](reference/mcp-api.md) - All available tools and commands
+
+### 🔗 [Hooks](hooks/)
+**Automation-oriented** - Claude Code integration hooks
+
+- [**Conversation Summary**](hooks/conversation-summary.md) - **AUTOMATIC session checkpoints** ⭐
+- [Aichaku Feedback](hooks/aichaku-feedback.md) - Visual confirmation system
 
 ### 💡 [Explanation](explanation/)
 **Understanding-oriented** - The "why" behind Aichaku
@@ -72,6 +79,7 @@ Welcome to the Aichaku documentation! This guide is organized using the Diátaxi
 - [Configuration options](reference/configuration-options.md)
 - [Visual indicators](reference/configuration-options.md#visual-indicators)
 - [File structure](reference/file-structure.md)
+- [**Automatic session summaries**](hooks/conversation-summary.md) - Never lose context! ⭐
 
 ### Key Concepts
 - [Methodologies vs Standards](explanation/core-concepts.md#the-fundamental-design-principle)

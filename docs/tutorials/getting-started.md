@@ -138,6 +138,7 @@ Claude will:
 2. Ask clarifying questions
 3. Help you shape the idea
 4. Create project documents when you're ready
+5. **Automatically save session summaries** when you finish working
 
 When you're ready to create documents, say:
 
@@ -145,7 +146,17 @@ When you're ready to create documents, say:
 "Let's create a project for this"
 ```
 
-Claude creates organized documents in `.claude/output/active-*/`.
+Claude creates organized documents in `docs/projects/active/YYYY-MM-DD-*/`.
+
+### ⭐ Automatic Session Summaries
+
+Aichaku automatically creates structured summaries of your work:
+- 📄 **Saved automatically** when conversations end or are compacted
+- 📋 **Organized** in `docs/checkpoints/` directory
+- 📅 **Timestamped** for easy reference
+- 📝 **Structured** with session overview, decisions, files modified, and next steps
+
+No more losing context between sessions!
 
 ## What happens behind the scenes
 
@@ -207,6 +218,7 @@ You've successfully:
 - ✅ Set up a project
 - ✅ Added coding standards
 - ✅ Learned the basic workflow
+- ✅ **Enabled automatic session summaries** ⭐
 
 Continue learning:
 - Read [First Project Tutorial](first-project.md) to build something real

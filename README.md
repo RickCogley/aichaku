@@ -45,6 +45,8 @@ integrated.
 **✨ Key Features:**
 
 - 🌍 **Global install, works everywhere** - One-time setup, all projects benefit
+- 📝 **Automatic session summaries** - Never lose context with automatic
+  checkpoint creation
 - 🎯 **Adaptive blending** - Methodologies adapt to your language
 - 🔄 **All methodologies included** - Shape Up, Scrum, Kanban, XP, Lean,
   Scrumban
@@ -279,6 +281,16 @@ aichaku integrate --force
 
 ### Hooks - Automate Your Workflow
 
+**⭐ Featured: Automatic Session Summaries**
+
+Aichaku automatically creates structured summaries of your Claude Code sessions!
+Never lose context when conversations are compacted or ended.
+
+- ✅ **Automatic** - Runs on conversation end and compaction
+- 📄 **Structured** - Consistent markdown format with key sections
+- 📅 **Timestamped** - Easy to find and reference later
+- 📋 **Organized** - Saved to `docs/checkpoints/` directory
+
 Claude Code hooks allow you to run scripts at various points in Claude's
 lifecycle, such as before/after tool use, at conversation end, or during
 compaction.
@@ -309,7 +321,7 @@ aichaku hooks --validate
 **Available Hook Categories:**
 
 - **Essential** (4 hooks): Must-haves for Claude+Aichaku workflow
-  - `conversation-summary`: Saves session summaries
+  - `conversation-summary`: **Saves session summaries automatically** ⭐
   - `path-validator`: Ensures Aichaku project structure
   - `status-updater`: Updates STATUS.md automatically
   - `code-review`: Reviews code changes
