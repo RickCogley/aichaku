@@ -6,6 +6,46 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.29.0] - 2025-07-14
+
+### Added
+
+- prepare v0.29.0 release with enhanced hooks and documentation (f1a1a1e)
+- implement consistent CLI branding system (7fb65ad)
+- implement auto version check and complete project cleanup (b207459)
+- add MCP feedback system for visible hook output (7201062)
+- add visible feedback hook for developer confidence (456c32e)
+- add comprehensive hooks system with TypeScript implementation (83fc0cc)
+
+### Changed
+
+- add version consistency and preflight completion summary (6ee34f4)
+- update MCP configuration to use user scope by default (195b97f)
+- complete permanent reference docs project with superior implementation
+  (486cab0)
+- update MCP server improvements status - 90% complete (faa3db3)
+- update unified MCP enhancement status with today's progress (c0be53b)
+- audit and clean up active projects based on implementation status (1be1a89)
+- fix project date organization (aa33696)
+- fix project organization and cleanup (8b7b52d)
+- add hooks visibility improvements documentation (546ce97)
+- remove test file (4f2ad5b)
+- complete TypeScript hooks implementation project (f6cdaec)
+- test commit (ced1b97)
+- document Salty aichaku upgrade process (151f5f6)
+- document nagare aichaku upgrade process (bfe1a67)
+- enhance branding pitch with CLI messaging standards (e0c134b)
+- add Shape Up pitches for content fetcher and branding improvements (5318ceb)
+
+### Fixed
+
+- replace overly broad --allow-all with specific Deno permissions (9276270)
+- standardize MCP SDK versions and enforce Deno 2.4.0+ requirement (7704ed5)
+- format README.md to pass CI checks (2dc0fea)
+- improve MCP server output clarity and documentation (2f1e9cd)
+- remove erroneous .claude directory from docs/projects (d2d8571)
+- update methodology file structure and improve error reporting (dadcbd6)
+
 ## [0.28.0] - 2025-07-13
 
 ### Added
