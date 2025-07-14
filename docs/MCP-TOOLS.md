@@ -11,6 +11,7 @@ This document describes the planned Model Context Protocol (MCP) tools for enhan
 - `review_methodology` - Check project methodology compliance
 - `get_standards` - Retrieve project standards configuration
 - `get_statistics` - Get usage statistics and analytics
+- `send_feedback` - Send visible feedback messages to Claude Code console
 
 See [MCP-SERVER.md](./MCP-SERVER.md) for documentation of currently available tools.
 

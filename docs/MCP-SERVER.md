@@ -256,6 +256,64 @@ const result = await mcp.callTool('review_methodology', {
 
 Gets currently selected standards for the project.
 
+#### 4. `send_feedback` - Feedback Display Tool
+
+Sends a feedback message that appears visibly in the Claude Code console. This tool is designed for use by hooks and automation scripts to provide real-time feedback to users.
+
+**Parameters:**
+- `message` (string, required): The feedback message to display
+- `level` (string, optional): The feedback level/type ("info", "success", "warning", "error", default: "info")
+
+**Returns:**
+```typescript
+{
+  content: [{
+    type: "text",
+    text: string; // Formatted feedback message with emoji/icon
+  }];
+}
+```
+
+**Example Usage:**
+```typescript
+// Send informational feedback
+const result = await mcp.callTool('send_feedback', {
+  message: "Code review started for login.ts",
+  level: "info"
+});
+
+// Send success feedback
+const result = await mcp.callTool('send_feedback', {
+  message: "All security checks passed",
+  level: "success"
+});
+
+// Send warning feedback
+const result = await mcp.callTool('send_feedback', {
+  message: "Potential security issue detected",
+  level: "warning"
+});
+
+// Send error feedback
+const result = await mcp.callTool('send_feedback', {
+  message: "Critical vulnerability found - immediate action required",
+  level: "error"
+});
+```
+
+**Hook Integration Example:**
+```bash
+#!/bin/bash
+# Example hook that uses send_feedback tool
+
+# Connect to MCP server and send feedback
+deno run -A examples/send-feedback-example.ts message \
+  "🔍 Hook triggered: Starting security review" \
+  "info"
+```
+
+#### 5. `get_standards` - Standards Retrieval Tool (Continued)
+
 **Parameters:**
 - `projectPath` (string, required): Path to the project root
 

@@ -168,6 +168,26 @@ class MCPCodeReviewer {
           analyzeProjectTool,
           generateDocumentationTool,
           createDocTemplateTool,
+          {
+            name: "send_feedback",
+            description: "Send feedback message that appears visibly in Claude Code console",
+            inputSchema: {
+              type: "object",
+              properties: {
+                message: {
+                  type: "string",
+                  description: "The feedback message to display",
+                },
+                level: {
+                  type: "string",
+                  enum: ["info", "success", "warning", "error"],
+                  description: "The feedback level/type",
+                  default: "info",
+                },
+              },
+              required: ["message"],
+            },
+          },
         ] as Tool[],
       };
     });
@@ -443,6 +463,60 @@ class MCPCodeReviewer {
                   {
                     type: "text",
                     text: result,
+                  },
+                ],
+              };
+            }
+
+            case "send_feedback": {
+              if (!args) {
+                throw new Error("Arguments are required for send_feedback");
+              }
+
+              const message = args.message as string;
+              const level = (args.level as string) || "info";
+
+              // Validate level
+              const validLevels = ["info", "success", "warning", "error"];
+              if (!validLevels.includes(level)) {
+                throw new Error(`Invalid feedback level: ${level}. Must be one of: ${validLevels.join(", ")}`);
+              }
+
+              // Format the feedback message with appropriate emoji/icon
+              let icon = "ℹ️";
+              switch (level) {
+                case "success":
+                  icon = "✅";
+                  break;
+                case "warning":
+                  icon = "⚠️";
+                  break;
+                case "error":
+                  icon = "❌";
+                  break;
+                case "info":
+                default:
+                  icon = "ℹ️";
+                  break;
+              }
+
+              const formattedMessage = `${icon} [${level.toUpperCase()}] ${message}`;
+
+              // Record statistics
+              await this.statisticsManager.recordInvocation(
+                name,
+                operationId,
+                args as Record<string, unknown>,
+                startTime,
+                true,
+              );
+
+              // Return the message as visible content that will appear in Claude Code
+              return {
+                content: [
+                  {
+                    type: "text",
+                    text: formattedMessage,
                   },
                 ],
               };
