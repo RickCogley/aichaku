@@ -111,7 +111,7 @@ export default {
   },
 
   docs: {
-    enabled: true,
+    enabled: false, // Temporarily disabled due to Nagare dependency issue
     outputDir: "./docs/api",
     includePrivate: false,
   },
