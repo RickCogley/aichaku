@@ -14,7 +14,7 @@ Deno.test("checkVersionMatch - handles version comparison", async () => {
 
   // Version match depends on whether global installation exists and versions match
   assertEquals(typeof result.isVersionMatch, "boolean");
-  
+
   // If global installation exists, should have global version
   if (result.hasGlobalInstallation && result.globalVersion) {
     assertEquals(typeof result.globalVersion, "string");
