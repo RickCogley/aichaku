@@ -80,6 +80,7 @@ export const HOOK_CATEGORIES = {
     name: "Essential",
     description: "Must-have hooks for Claude+Aichaku workflow",
     hooks: [
+      "aichaku-feedback",
       "conversation-summary",
       "path-validator",
       "status-updater",
@@ -268,12 +269,23 @@ const HOOK_TEMPLATES = {
   },
   "push-monitor": {
     name: "Push Monitor",
-    description: "Alerts when git push is detected and provides GitHub Actions monitoring tips",
+    description:
+      "Alerts when git push is detected and provides GitHub Actions monitoring tips",
     type: "PreToolUse",
     matcher: "Bash",
     source: "aichaku",
     command:
       `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts push-monitor`,
+  },
+  "aichaku-feedback": {
+    name: "Aichaku Feedback",
+    description:
+      "Shows brief feedback about what Aichaku will do - confirms hooks are active",
+    type: "PreToolUse",
+    matcher: ".*",
+    source: "aichaku",
+    command:
+      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts aichaku-feedback`,
   },
 };
 

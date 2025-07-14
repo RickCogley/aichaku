@@ -95,7 +95,12 @@
       "Bash(python3:*)",
       "Bash(deno bundle:*)",
       "Bash(timeout 30s deno compile:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(claude config hooks:*)",
+      "Bash(claude hooks:*)",
+      "Bash(claude config --help)",
+      "Bash(claude config list --global)",
+      "Bash(./dist/aichaku-0.28.0-macos-arm64 hooks:*)"
     ],
     "deny": []
   }
