@@ -109,6 +109,7 @@ export const HOOK_CATEGORIES = {
       "pr-checker",
       "issue-linker",
       "workflow-monitor",
+      "push-monitor",
       "release-helper",
     ],
   },
@@ -264,6 +265,15 @@ const HOOK_TEMPLATES = {
     source: "aichaku",
     command:
       `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts release-helper`,
+  },
+  "push-monitor": {
+    name: "Push Monitor",
+    description: "Alerts when git push is detected and provides GitHub Actions monitoring tips",
+    type: "PreToolUse",
+    matcher: "Bash",
+    source: "aichaku",
+    command:
+      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts push-monitor`,
   },
 };
 
