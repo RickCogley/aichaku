@@ -2,7 +2,7 @@
 
 /**
  * Example of using the send_feedback MCP tool
- * 
+ *
  * This demonstrates how hooks can send visible feedback messages
  * to Claude Code using the Aichaku MCP server.
  */
@@ -18,7 +18,10 @@ class AichakuMCPClient extends MCPClient {
   /**
    * Send a feedback message that will appear in Claude Code console
    */
-  async sendFeedback(message: string, level: "info" | "success" | "warning" | "error" = "info") {
+  async sendFeedback(
+    message: string,
+    level: "info" | "success" | "warning" | "error" = "info",
+  ) {
     return await this.callTool("send_feedback", {
       message,
       level,
@@ -29,29 +32,37 @@ class AichakuMCPClient extends MCPClient {
 // Example usage
 async function demonstrateFeedback() {
   const client = new AichakuMCPClient();
-  
+
   try {
     console.log("Connecting to Aichaku MCP server...");
     await client.connect();
-    
+
     // Send different types of feedback messages
     console.log("Sending feedback messages...");
-    
+
     await client.sendFeedback("Hook execution started", "info");
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
     await client.sendFeedback("Code review completed successfully", "success");
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    await client.sendFeedback("Potential security issue detected in login.ts", "warning");
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    await client.sendFeedback("Critical OWASP violation found - immediate attention required", "error");
-    
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    await client.sendFeedback(
+      "Potential security issue detected in login.ts",
+      "warning",
+    );
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    await client.sendFeedback(
+      "Critical OWASP violation found - immediate attention required",
+      "error",
+    );
+
     console.log("All feedback messages sent!");
-    
   } catch (error) {
-    console.error("Error:", error instanceof Error ? error.message : String(error));
+    console.error(
+      "Error:",
+      error instanceof Error ? error.message : String(error),
+    );
   } finally {
     await client.disconnect();
   }
@@ -60,33 +71,49 @@ async function demonstrateFeedback() {
 // Hook simulation function
 async function simulateCodeReviewHook(filePath: string) {
   const client = new AichakuMCPClient();
-  
+
   try {
     await client.connect();
-    
+
     // Simulate hook feedback
-    await client.sendFeedback(`🔍 Starting code review for ${filePath}`, "info");
-    
+    await client.sendFeedback(
+      `🔍 Starting code review for ${filePath}`,
+      "info",
+    );
+
     // Simulate security check
     if (filePath.includes("auth") || filePath.includes("login")) {
-      await client.sendFeedback("🔒 Performing enhanced security checks for authentication code", "info");
-      
+      await client.sendFeedback(
+        "🔒 Performing enhanced security checks for authentication code",
+        "info",
+      );
+
       // Simulate finding an issue
       if (Math.random() > 0.7) {
-        await client.sendFeedback("⚠️ Hardcoded credential detected - please use environment variables", "warning");
+        await client.sendFeedback(
+          "⚠️ Hardcoded credential detected - please use environment variables",
+          "warning",
+        );
       } else {
         await client.sendFeedback("✅ Security checks passed", "success");
       }
     }
-    
+
     // Simulate OWASP check
     await client.sendFeedback("🛡️ OWASP Top 10 compliance verified", "success");
-    
+
     // Simulate completion
-    await client.sendFeedback("📋 Code review completed - ready for commit", "success");
-    
+    await client.sendFeedback(
+      "📋 Code review completed - ready for commit",
+      "success",
+    );
   } catch (error) {
-    await client.sendFeedback(`❌ Code review failed: ${error instanceof Error ? error.message : String(error)}`, "error");
+    await client.sendFeedback(
+      `❌ Code review failed: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+      "error",
+    );
   } finally {
     await client.disconnect();
   }
@@ -95,7 +122,7 @@ async function simulateCodeReviewHook(filePath: string) {
 // CLI interface
 if (import.meta.main) {
   const args = Deno.args;
-  
+
   if (args.length === 0) {
     console.log(`
 Send Feedback Example Tool
@@ -112,14 +139,14 @@ Examples:
 `);
     Deno.exit(0);
   }
-  
+
   const command = args[0];
-  
+
   switch (command) {
     case "demo":
       await demonstrateFeedback();
       break;
-      
+
     case "hook":
       if (args.length < 2) {
         console.error("Usage: hook <file-path>");
@@ -127,8 +154,8 @@ Examples:
       }
       await simulateCodeReviewHook(args[1]);
       break;
-      
-    case "message":
+
+    case "message": {
       if (args.length < 2) {
         console.error("Usage: message <text> [level]");
         Deno.exit(1);
@@ -136,16 +163,21 @@ Examples:
       const client = new AichakuMCPClient();
       try {
         await client.connect();
-        const level = args[2] as "info" | "success" | "warning" | "error" || "info";
+        const level = args[2] as "info" | "success" | "warning" | "error" ||
+          "info";
         await client.sendFeedback(args[1], level);
         console.log("Message sent!");
       } catch (error) {
-        console.error("Error:", error instanceof Error ? error.message : String(error));
+        console.error(
+          "Error:",
+          error instanceof Error ? error.message : String(error),
+        );
       } finally {
         await client.disconnect();
       }
       break;
-      
+    }
+
     default:
       console.error(`Unknown command: ${command}`);
       Deno.exit(1);

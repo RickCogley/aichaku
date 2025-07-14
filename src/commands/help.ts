@@ -3,6 +3,7 @@
  */
 
 import { STANDARD_CATEGORIES } from "./standards.ts";
+import { Brand } from "../utils/branded-messages.ts";
 
 interface HelpOptions {
   methodology?: string;
@@ -1157,7 +1158,8 @@ export function help(options: HelpOptions = {}): HelpResult {
     // Default help about the help command
     return {
       success: true,
-      content: `🪴 Aichaku Knowledge Base
+      content: `${Brand.helpIntro()}
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Learn methodologies and development standards to improve your
@@ -1213,7 +1215,7 @@ function listStandards(options: HelpOptions): HelpResult {
     return listByCategory(options);
   }
 
-  let content = "🪴 Aichaku: Available Standards\n\n";
+  let content = `${Brand.PREFIX} Available Standards\n\n`;
 
   // Group standards by category
   for (const [_categoryId, category] of Object.entries(STANDARD_CATEGORIES)) {
@@ -1243,7 +1245,7 @@ function listStandards(options: HelpOptions): HelpResult {
  * List standards by category
  */
 function listByCategory(options: HelpOptions): HelpResult {
-  let content = "🪴 Aichaku: Standards by Category\n\n";
+  let content = `${Brand.PREFIX} Standards by Category\n\n`;
 
   const showCategories = [];
   if (options.security) showCategories.push("security");
@@ -1282,7 +1284,7 @@ function listByCategory(options: HelpOptions): HelpResult {
  * List all resources (methodologies + standards)
  */
 function listAllResources(): HelpResult {
-  let content = `🪴 Aichaku: Complete Knowledge Base
+  let content = `${Brand.PREFIX} Complete Knowledge Base
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📚 Development Methodologies (${Object.keys(METHODOLOGIES).length})

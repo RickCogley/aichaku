@@ -5,6 +5,7 @@ import { VERSION } from "../../mod.ts";
 import { fetchMethodologies, fetchStandards } from "./content-fetcher.ts";
 import { ensureAichakuDirs, getAichakuPaths } from "../paths.ts";
 import { resolveProjectPath } from "../utils/project-paths.ts";
+import { Brand } from "../utils/branded-messages.ts";
 
 /**
  * Options for initializing Aichaku
@@ -119,7 +120,8 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
       return {
         success: false,
         path: targetPath,
-        message: "Please install Aichaku globally first: aichaku init --global",
+        message:
+          "🪴 Aichaku: Please install Aichaku globally first: aichaku init --global",
         action: "error",
       };
     }
@@ -137,7 +139,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
       success: false,
       path: targetPath,
       message:
-        `Global Aichaku already initialized. Use --force to reinstall or 'aichaku upgrade' to update.`,
+        `🪴 Aichaku: Already initialized globally. Use --force to reinstall or 'aichaku upgrade' to update.`,
       action: "exists",
     };
   }
@@ -149,7 +151,8 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     return {
       success: false,
       path: targetPath,
-      message: `Project already initialized. Use --force to reinitialize.`,
+      message:
+        `🪴 Aichaku: Project already initialized. Use --force to reinitialize.`,
       action: "exists",
     };
   }
@@ -157,14 +160,14 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
   try {
     if (!options.silent) {
       if (isGlobal) {
-        console.log("\n🌍 Installing Aichaku globally...");
+        console.log(Brand.welcome(VERSION));
       } else {
-        console.log("\n🔍 Checking requirements...");
+        console.log(Brand.checkingRequirements());
         const globalMetadata = JSON.parse(
           await Deno.readTextFile(paths.global.config),
         );
-        console.log(`✓ Global Aichaku found (v${globalMetadata.version})`);
-        console.log("\n📁 Creating project structure...");
+        Brand.success(`Global installation found (v${globalMetadata.version})`);
+        Brand.progress("Creating project structure...", "new");
       }
     }
 
@@ -209,7 +212,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
           const targetMethodologies = paths.global.methodologies;
 
           if (!options.silent) {
-            console.log("\n🔄 Installing adaptive methodologies...");
+            Brand.progress("Installing adaptive methodologies...", "active");
           }
 
           await copy(sourceMethodologies, targetMethodologies, {
@@ -227,7 +230,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
         if (isJSR) {
           // Fetch from GitHub when running from JSR - use global root path
           if (!options.silent) {
-            console.log("\n🔄 Installing standards library...");
+            Brand.progress("Installing standards library...", "active");
           }
 
           const fetchSuccess = await fetchStandards(
@@ -253,7 +256,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
           const targetStandards = paths.global.standards;
 
           if (!options.silent) {
-            console.log("\n🔄 Installing standards library...");
+            Brand.progress("Installing standards library...", "active");
           }
 
           await copy(sourceStandards, targetStandards, {
@@ -262,7 +265,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
         }
 
         if (!options.silent) {
-          console.log("✓ Standards library installed");
+          Brand.success("Standards library installed");
         }
       }
     }
@@ -283,7 +286,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     await Deno.writeTextFile(join(userDir, "methods", ".gitkeep"), "");
 
     if (!options.silent) {
-      console.log("✓ Created user customization directory");
+      Brand.success("Created user customization directory");
     }
 
     // Create output directory structure (only for projects)
@@ -305,9 +308,9 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
 
     if (!options.silent) {
       if (!isGlobal) {
-        console.log("✓ Created output directory and behavioral guides");
+        Brand.success("Created output directory and behavioral guides");
       } else {
-        console.log("✓ Created behavioral guides");
+        Brand.success("Created behavioral guides");
       }
     }
 
@@ -357,7 +360,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
         .toLowerCase();
 
       if (answer === "" || answer === "y" || answer === "yes") {
-        console.log("\n✏️  Updating CLAUDE.md...");
+        Brand.progress("Updating CLAUDE.md...", "active");
 
         // Import integrate function and run it
         const { integrate } = await import("./integrate.ts");
@@ -367,7 +370,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
         });
 
         if (integrateResult.success) {
-          console.log("✓ CLAUDE.md updated with Aichaku reference");
+          Brand.success("CLAUDE.md updated with Aichaku reference");
         }
       }
     }
@@ -376,8 +379,8 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
       success: true,
       path: targetPath,
       message: isGlobal
-        ? `Global installation complete at ${targetPath}`
-        : `Project initialized`,
+        ? Brand.completed("Global installation")
+        : Brand.completed("Project initialization"),
       globalDetected: !isGlobal,
       action: "created",
     };
@@ -385,9 +388,10 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     return {
       success: false,
       path: targetPath,
-      message: `${
-        isGlobal ? "Global installation" : "Project initialization"
-      } failed: ${error instanceof Error ? error.message : String(error)}`,
+      message: Brand.errorWithSolution(
+        `${isGlobal ? "Global installation" : "Project initialization"} failed`,
+        `${error instanceof Error ? error.message : String(error)}`,
+      ),
       action: "error",
     };
   }

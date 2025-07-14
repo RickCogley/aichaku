@@ -170,7 +170,8 @@ class MCPCodeReviewer {
           createDocTemplateTool,
           {
             name: "send_feedback",
-            description: "Send feedback message that appears visibly in Claude Code console",
+            description:
+              "Send feedback message that appears visibly in Claude Code console",
             inputSchema: {
               type: "object",
               properties: {
@@ -479,7 +480,11 @@ class MCPCodeReviewer {
               // Validate level
               const validLevels = ["info", "success", "warning", "error"];
               if (!validLevels.includes(level)) {
-                throw new Error(`Invalid feedback level: ${level}. Must be one of: ${validLevels.join(", ")}`);
+                throw new Error(
+                  `Invalid feedback level: ${level}. Must be one of: ${
+                    validLevels.join(", ")
+                  }`,
+                );
               }
 
               // Format the feedback message with appropriate emoji/icon
@@ -500,7 +505,8 @@ class MCPCodeReviewer {
                   break;
               }
 
-              const formattedMessage = `${icon} [${level.toUpperCase()}] ${message}`;
+              const formattedMessage =
+                `${icon} [${level.toUpperCase()}] ${message}`;
 
               // Record statistics
               await this.statisticsManager.recordInvocation(

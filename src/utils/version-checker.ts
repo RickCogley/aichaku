@@ -95,7 +95,7 @@ export async function checkVersionMatch(): Promise<VersionCheckResult> {
 export async function displayVersionWarning(): Promise<void> {
   try {
     const result = await checkVersionMatch();
-    
+
     if (result.warningMessage) {
       console.warn(result.warningMessage);
       console.warn(""); // Empty line for readability

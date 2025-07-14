@@ -40,6 +40,7 @@ import { runGitHubCommand } from "./src/commands/github.ts";
 import { cleanup } from "./src/commands/cleanup.ts";
 import { VERSION } from "./mod.ts";
 import { displayVersionWarning } from "./src/utils/version-checker.ts";
+import { Brand } from "./src/utils/branded-messages.ts";
 
 const args = parseArgs(Deno.args, {
   boolean: [
@@ -148,7 +149,7 @@ const args = parseArgs(Deno.args, {
 
 // Show version
 if (args.version) {
-  console.log(`aichaku v${VERSION}`);
+  console.log(`${Brand.PREFIX} v${VERSION}`);
   Deno.exit(0);
 }
 
@@ -164,7 +165,7 @@ if (command && !["version", "help", "init"].includes(command)) {
 // Show help only if no command or general help requested
 if (!command || (args.help && !command)) {
   console.log(`
-🪴 aichaku (愛着) - Adaptive Methodology Support for Claude Code
+${Brand.PREFIX} (愛着) - Adaptive Methodology Support for Claude Code
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Version ${VERSION} | MIT License | github.com/RickCogley/aichaku
 

@@ -7,6 +7,7 @@ import { getAichakuPaths } from "../paths.ts";
 import { resolveProjectPath } from "../utils/project-paths.ts";
 import { safeRemove } from "../utils/path-security.ts";
 import { findMetadataPath, migrateMetadata } from "./upgrade-fix.ts";
+import { Brand } from "../utils/branded-messages.ts";
 
 interface UpgradeOptions {
   global?: boolean;
@@ -58,7 +59,7 @@ export async function upgrade(
       success: false,
       path: targetPath,
       message:
-        `No Aichaku installation found at ${targetPath}. Run 'aichaku init' first.`,
+        `🪴 Aichaku: No installation found at ${targetPath}. Run 'aichaku init' first.`,
     };
   }
 
@@ -121,7 +122,7 @@ export async function upgrade(
       success: true,
       path: targetPath,
       message:
-        `Already on latest version (v${VERSION}). Use --force to reinstall.`,
+        `🪴 Aichaku: Already on latest version (v${VERSION}). Use --force to reinstall.`,
       action: "current",
     };
   }
@@ -144,16 +145,14 @@ export async function upgrade(
 
   try {
     if (!options.silent) {
-      console.log(
-        `📦 Upgrading Aichaku from v${metadata.version} to v${VERSION}...`,
-      );
+      console.log(Brand.upgrading(metadata.version, VERSION));
     }
 
     // Check for user customizations
     const userDir = join(targetPath, "user");
     const hasCustomizations = await exists(userDir);
     if (hasCustomizations && !options.silent) {
-      console.log("✓ User customizations detected - will be preserved");
+      Brand.success("User customizations detected - will be preserved");
     }
 
     // Update methodologies
@@ -161,7 +160,7 @@ export async function upgrade(
     const isJSR = import.meta.url.startsWith("https://jsr.io");
 
     if (!options.silent) {
-      console.log("📚 Updating methodology files...");
+      Brand.progress("Updating methodology files...", "active");
     }
 
     if (isJSR) {
@@ -220,7 +219,7 @@ export async function upgrade(
 
     // Update standards
     if (!options.silent) {
-      console.log("📚 Updating standards library...");
+      Brand.progress("Updating standards library...", "active");
     }
 
     if (isJSR) {
@@ -269,7 +268,7 @@ export async function upgrade(
     }
 
     if (!options.silent) {
-      console.log("✓ Standards library updated");
+      Brand.success("Standards library updated");
     }
 
     // Show what's new in this version
@@ -320,7 +319,7 @@ export async function upgrade(
       const newPath = paths.global.config;
       await migrateMetadata(metadataPath, newPath, metadata);
       if (!options.silent) {
-        console.log("✓ Migrated configuration to new location");
+        Brand.success("Migrated configuration to new location");
       }
     } else {
       // Update existing metadata file
@@ -337,7 +336,10 @@ export async function upgrade(
 
       if (await exists(claudeMdPath)) {
         if (!options.silent) {
-          console.log("\n📄 Updating CLAUDE.md with latest directives...");
+          Brand.progress(
+            "Updating CLAUDE.md with latest directives...",
+            "active",
+          );
         }
 
         // Import integrate function
@@ -350,7 +352,7 @@ export async function upgrade(
         });
 
         if (integrateResult.success && !options.silent) {
-          console.log("✅ CLAUDE.md updated successfully");
+          Brand.success("CLAUDE.md updated successfully");
         }
       }
     }
@@ -358,8 +360,8 @@ export async function upgrade(
     return {
       success: true,
       path: targetPath,
-      message:
-        `Upgraded to v${VERSION}!\n\n💡 All your projects now have the latest methodologies!`,
+      message: Brand.completed(`Upgrade to v${VERSION}`) +
+        "\n\n💡 All your projects now have the latest methodologies!",
       action: "upgraded",
       version: VERSION,
     };
@@ -367,9 +369,10 @@ export async function upgrade(
     return {
       success: false,
       path: targetPath,
-      message: `Upgrade failed: ${
-        error instanceof Error ? error.message : String(error)
-      }`,
+      message: Brand.errorWithSolution(
+        "Upgrade failed",
+        error instanceof Error ? error.message : String(error),
+      ),
       action: "error",
     };
   }
