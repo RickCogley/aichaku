@@ -39,6 +39,8 @@ and this project adheres to
 
 ### Fixed
 
+- format version-checker test for release (bb71a35)
+- resolve test failures for successful release (c00dd29)
 - replace overly broad --allow-all with specific Deno permissions (9276270)
 - standardize MCP SDK versions and enforce Deno 2.4.0+ requirement (7704ed5)
 - format README.md to pass CI checks (2dc0fea)
