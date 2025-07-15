@@ -494,7 +494,7 @@ When you hear these keywords, ENTER DISCUSSION MODE:
 **Discussion Mode Actions:**
 1. Acknowledge: "🪴 Aichaku: I see you're interested in [methodology]"
 2. Read the appropriate guide SILENTLY:
-   - \`~/.claude/methodologies/[methodology]/[METHODOLOGY]-AICHAKU-GUIDE.md\`
+   - \`~/.claude/methodologies/[methodology]/[methodology].md\`
    - \`~/.claude/methodologies/core/[MODE].md\`
 3. Ask clarifying questions based on the methodology
 4. Help refine the approach

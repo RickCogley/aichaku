@@ -41,7 +41,7 @@ export async function list(): Promise<ListResult> {
         commands: await exists(join(methodologyPath, "COMMANDS.md")),
         methods: await exists(join(methodologyPath, "methods")) ||
           await exists(
-            join(methodologyPath, `${name.toUpperCase()}-AICHAKU-GUIDE.md`),
+            join(methodologyPath, `${name}.md`),
           ),
         personas: false, // Personas are deprecated in the new structure
         templates: await exists(join(methodologyPath, "templates")),

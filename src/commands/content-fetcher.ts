@@ -23,19 +23,20 @@ export async function fetchContent(
     `https://raw.githubusercontent.com/RickCogley/aichaku/v${version}/${contentType}`;
 
   // Get the appropriate structure based on content type
-  // First try to discover content dynamically from the repository
+  // Try to fetch structure dynamically from a manifest file on GitHub
   let structure: Record<string, unknown>;
   try {
-    // For GitHub fetching, we'll use the fallback to hardcoded for now
-    // In the future, we could fetch a manifest file from the repo
-    structure = contentType === "methodologies"
-      ? getMethodologyStructure()
-      : getStandardsStructure();
+    structure = await fetchGitHubContentStructure(baseUrl, contentType);
   } catch {
-    // Fallback to hardcoded structure
-    structure = contentType === "methodologies"
-      ? getMethodologyStructure()
-      : getStandardsStructure();
+    // Fallback to local structure generation or hardcoded
+    try {
+      structure = contentType === "methodologies"
+        ? getMethodologyStructure()
+        : getStandardsStructure();
+    } catch {
+      // Ultimate fallback - empty structure
+      structure = {};
+    }
   }
 
   let successCount = 0;
@@ -176,7 +177,7 @@ function getMethodologyStructure(): Record<string, unknown> {
       "TECHNICAL-DOCUMENTATION-SUMMARY.md": "",
     },
     "shape-up": {
-      "SHAPE-UP-AICHAKU-GUIDE.md": "",
+      "shape-up.md": "",
       "SHAPE-UP-ADAPTIVE.md": "",
       "templates": {
         "pitch.md": "",
@@ -187,7 +188,7 @@ function getMethodologyStructure(): Record<string, unknown> {
       },
     },
     "scrum": {
-      "SCRUM-AICHAKU-GUIDE.md": "",
+      "scrum.md": "",
       "templates": {
         "sprint-planning.md": "",
         "sprint-retrospective.md": "",
@@ -195,20 +196,20 @@ function getMethodologyStructure(): Record<string, unknown> {
       },
     },
     "kanban": {
-      "KANBAN-AICHAKU-GUIDE.md": "",
+      "kanban.md": "",
       "templates": {
         "kanban-board.md": "",
         "flow-metrics.md": "",
       },
     },
     "lean": {
-      "LEAN-AICHAKU-GUIDE.md": "",
+      "lean.md": "",
     },
     "xp": {
-      "XP-AICHAKU-GUIDE.md": "",
+      "xp.md": "",
     },
     "scrumban": {
-      "SCRUMBAN-AICHAKU-GUIDE.md": "",
+      "scrumban.md": "",
       "templates": {
         "planning-trigger.md": "",
       },
@@ -249,6 +250,35 @@ function getStandardsStructure(): Record<string, unknown> {
  * Fetches content from local filesystem with dynamic discovery
  * Used when content is available locally (e.g., development mode)
  */
+/**
+ * Fetch content structure from GitHub using a manifest file
+ * @param baseUrl - The base URL for the GitHub repository
+ * @param contentType - Type of content to fetch
+ * @returns Promise resolving to content structure
+ */
+async function fetchGitHubContentStructure(
+  baseUrl: string,
+  contentType: ContentType,
+): Promise<Record<string, unknown>> {
+  // Try to fetch a manifest.json file from the repository
+  const manifestUrl = `${baseUrl}/manifest.json`;
+  
+  try {
+    const response = await fetch(manifestUrl);
+    if (response.ok) {
+      const manifest = await response.json();
+      return manifest.structure || {};
+    }
+  } catch {
+    // Manifest doesn't exist or couldn't be fetched
+  }
+  
+  // Fallback to hardcoded structure
+  return contentType === "methodologies"
+    ? getMethodologyStructure()
+    : getStandardsStructure();
+}
+
 export async function fetchLocalContent(
   contentType: ContentType,
   sourcePath: string,
