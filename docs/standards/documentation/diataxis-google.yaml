@@ -1,0 +1,183 @@
+standard: diataxis-google
+name: "Diátaxis + Google Developer Documentation Style"
+
+summary:
+  critical: |
+    - Four documentation modes: Tutorial, How-to, Reference, Explanation
+    - Tutorial: Learning-oriented, step-by-step lessons
+    - How-to: Task-oriented, problem-solving recipes
+    - Reference: Information-oriented, complete specification
+    - Explanation: Understanding-oriented, concept clarification
+  google_style: "Second person, present tense, active voice, clear outcomes"
+  user_centered: "Different modes serve different user needs and contexts"
+  separation: "Keep modes separate - don't mix tutorial and reference"
+
+display:
+  description: "Systematic approach to documentation combining Diátaxis framework with Google's style guidelines for clear, user-focused content"
+  principles:
+    - "🎓 Tutorial - Learning through guided practice"
+    - "🔧 How-to Guide - Task-oriented problem solving"
+    - "📖 Reference - Complete information specification"
+    - "💡 Explanation - Understanding-oriented discussion"
+    - "User-centered design approach"
+    - "Clear separation between modes"
+    - "Consistent Google style guidelines"
+    - "Action-oriented language"
+  settings:
+    voice: "second person"
+    tense: "present"
+    style: "active voice"
+    audience_assumption: "varied skill levels"
+    code_examples: "working and realistic"
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/standards/documentation/diataxis-google"
+    local: "/docs/standards/documentation/diataxis-google.md"
+
+rules:
+  tutorial_mode:
+    description: "Learning-oriented documentation for beginners"
+    purpose: "Teaching someone to do something through guided practice"
+    characteristics:
+      - "Step-by-step instructions"
+      - "Learning-oriented"
+      - "Concrete working example"
+      - "Minimal explanation"
+      - "Encourages experimentation"
+    structure:
+      introduction: "Clear learning outcome statement"
+      prerequisites: "Required knowledge and setup"
+      learning_objectives: "What user will learn"
+      steps: "Numbered sequential instructions"
+      verification: "How to check success"
+      summary: "What was accomplished"
+      next_steps: "Where to go next"
+    style_guidelines:
+      - "Use second person ('you will')"
+      - "Present tense ('the command creates')"
+      - "Active voice ('configure the server')"
+      - "Imperative mood for instructions"
+      - "Encouraging and supportive tone"
+  howto_mode:
+    description: "Task-oriented documentation for solving specific problems"
+    purpose: "Showing how to solve a particular problem"
+    characteristics:
+      - "Problem-focused"
+      - "Assumes some knowledge"
+      - "Results-oriented"
+      - "Practical and actionable"
+      - "No unnecessary explanation"
+    structure:
+      title: "How to [specific task]"
+      context: "When to use this approach"
+      prerequisites: "Required setup and knowledge"
+      procedure: "Steps to complete the task"
+      verification: "How to confirm success"
+      troubleshooting: "Common issues and solutions"
+    style_guidelines:
+      - "Start with the goal"
+      - "Use conditional language ('if you need to')"
+      - "Focus on the task, not learning"
+      - "Provide alternatives when relevant"
+  reference_mode:
+    description: "Information-oriented documentation providing complete details"
+    purpose: "Describing the machinery - complete, accurate information"
+    characteristics:
+      - "Comprehensive coverage"
+      - "Authoritative and accurate"
+      - "Well-organized and structured"
+      - "Easy to scan and search"
+      - "Consistent formatting"
+    structure:
+      overview: "Brief description of the subject"
+      parameters: "All options, arguments, and settings"
+      examples: "Illustrative usage examples"
+      return_values: "What is returned or output"
+      errors: "Possible error conditions"
+      see_also: "Related reference materials"
+    style_guidelines:
+      - "Use declarative statements"
+      - "Be comprehensive and precise"
+      - "Use consistent formatting"
+      - "Include all parameters and options"
+      - "Provide brief examples"
+  explanation_mode:
+    description: "Understanding-oriented documentation for deeper comprehension"
+    purpose: "Clarifying and discussing concepts, design decisions, and context"
+    characteristics:
+      - "Understanding-oriented"
+      - "Provides context and background"
+      - "Discusses alternatives"
+      - "Explains the 'why'"
+      - "Connects to broader concepts"
+    structure:
+      introduction: "Introduce the concept or topic"
+      context: "Why this matters"
+      detailed_discussion: "Deep dive into the concept"
+      examples: "Illustrative scenarios"
+      implications: "Consequences and considerations"
+      conclusion: "Summary and key takeaways"
+    style_guidelines:
+      - "Use explanatory tone"
+      - "Provide context and background"
+      - "Discuss trade-offs and alternatives"
+      - "Connect to related concepts"
+  google_style_integration:
+    description: "Google Developer Documentation Style Guide integration"
+    voice_and_tone:
+      - "Conversational but professional"
+      - "Helpful and encouraging"
+      - "Respectful of user's time"
+      - "Honest about complexity"
+    grammar_and_style:
+      - "Second person for user actions"
+      - "Present tense for current state"
+      - "Active voice preferred"
+      - "Parallel structure in lists"
+      - "Sentence case for headings"
+    formatting:
+      - "Use code blocks for commands"
+      - "Highlight UI elements with bold"
+      - "Use numbered lists for procedures"
+      - "Use bullet lists for related items"
+    accessibility:
+      - "Descriptive link text"
+      - "Alt text for images"
+      - "Logical heading hierarchy"
+      - "Color-independent information"
+  content_organization:
+    description: "How to structure and organize documentation"
+    navigation:
+      - "Clear information architecture"
+      - "Logical progression from basic to advanced"
+      - "Cross-references between modes"
+      - "Search-friendly structure"
+    mode_separation:
+      - "Don't mix tutorial and reference content"
+      - "Link between related content in different modes"
+      - "Use consistent templates within each mode"
+      - "Clear mode identification"
+  code_examples:
+    description: "Guidelines for code and examples"
+    quality_standards:
+      - "Working, tested examples"
+      - "Realistic use cases"
+      - "Clear comments and explanations"
+      - "Error handling included"
+      - "Consistent style and formatting"
+    presentation:
+      - "Syntax highlighting"
+      - "Copy-paste friendly"
+      - "Show expected output"
+      - "Explain non-obvious parts"
+  user_testing:
+    description: "Validating documentation effectiveness"
+    methods:
+      - "User testing with real users"
+      - "Analytics on documentation usage"
+      - "Feedback collection mechanisms"
+      - "Regular content audits"
+    metrics:
+      - "Task completion rates"
+      - "Time to complete tasks"
+      - "User satisfaction scores"
+      - "Support ticket reduction"

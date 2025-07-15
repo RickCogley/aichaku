@@ -1,0 +1,167 @@
+standard: writethedocs
+name: "Write the Docs Principles"
+
+summary:
+  critical: |
+    - Community-Driven: Documentation is a community effort
+    - Docs as Code: Treat documentation like source code
+    - Iterative: Documentation is never "done"
+    - User-Focused: Write for your reader's success
+    - Inclusive: Welcome all contributors and readers
+  approach: "Open source, collaborative documentation practices"
+  tooling: "Version control, pull requests, automated publishing"
+  maintenance: "Living documentation that evolves with the product"
+
+display:
+  description: "Community-driven approach to creating helpful, accessible, and maintainable documentation"
+  principles:
+    - "👥 Community-Driven - Documentation as collaborative effort"
+    - "📝 Docs as Code - Version control and code review practices"
+    - "🔄 Iterative - Continuous improvement mindset"
+    - "🎯 User-Focused - Reader success is the primary goal"
+    - "🌈 Inclusive - Welcoming to all contributors and readers"
+    - "Open source methodology"
+    - "Sustainable documentation practices"
+    - "Community feedback integration"
+  settings:
+    version_control: true
+    community_contribution: true
+    iterative_improvement: true
+    accessibility_focus: true
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/standards/documentation/writethedocs"
+    local: "/docs/standards/documentation/writethedocs.md"
+
+rules:
+  community_driven:
+    description: "Documentation as a collaborative community effort"
+    principles:
+      - "Encourage contributions from all skill levels"
+      - "Provide clear contribution guidelines"
+      - "Recognize and celebrate contributors"
+      - "Foster inclusive participation"
+    implementation:
+      - "Use pull request workflows for changes"
+      - "Create templates for common contributions"
+      - "Provide feedback on contributions"
+      - "Maintain contributor documentation"
+  docs_as_code:
+    description: "Apply software development practices to documentation"
+    practices:
+      - "Store docs in version control with code"
+      - "Use pull requests for doc changes"
+      - "Apply code review to documentation"
+      - "Automate publishing and deployment"
+    benefits:
+      - "Documentation stays in sync with code"
+      - "Easier to track changes and blame"
+      - "Developers can contribute more easily"
+      - "Consistent development workflow"
+    tooling:
+      - "Git for version control"
+      - "Markdown for content creation"
+      - "Static site generators"
+      - "CI/CD for automated publishing"
+  iterative_improvement:
+    description: "Continuous refinement based on user feedback"
+    mindset:
+      - "Documentation is never 'complete'"
+      - "Regular updates based on user needs"
+      - "Measure and improve documentation effectiveness"
+      - "Embrace feedback and criticism"
+    methods:
+      - "User feedback collection"
+      - "Analytics on documentation usage"
+      - "Regular content audits"
+      - "A/B testing for documentation approaches"
+  user_focused_writing:
+    description: "Write for reader success and understanding"
+    reader_first:
+      - "Start with user goals and tasks"
+      - "Use language familiar to your audience"
+      - "Provide context and examples"
+      - "Test with real users"
+    structure:
+      - "Logical information architecture"
+      - "Progressive disclosure of complexity"
+      - "Clear navigation and wayfinding"
+      - "Search-friendly organization"
+  inclusive_practices:
+    description: "Creating welcoming documentation for all users"
+    language:
+      - "Use inclusive, bias-free language"
+      - "Avoid assumptions about user background"
+      - "Explain technical terms and jargon"
+      - "Provide multiple entry points"
+    accessibility:
+      - "Follow web accessibility guidelines"
+      - "Use semantic HTML structure"
+      - "Provide alt text for images"
+      - "Ensure keyboard navigation"
+    global_audience:
+      - "Use simple, clear language"
+      - "Avoid cultural references"
+      - "Consider translation needs"
+      - "Use universal examples"
+  content_types:
+    description: "Different types of documentation for different needs"
+    tutorial:
+      purpose: "Learning-oriented first experience"
+      characteristics: "Step-by-step, encouraging, complete example"
+    how_to:
+      purpose: "Problem-solving oriented"
+      characteristics: "Goal-oriented, practical, assumes some knowledge"
+    reference:
+      purpose: "Information-oriented"
+      characteristics: "Comprehensive, accurate, scannable"
+    explanation:
+      purpose: "Understanding-oriented"
+      characteristics: "Context, background, discussion"
+  contribution_workflow:
+    description: "How community members can contribute to documentation"
+    getting_started:
+      - "Clear README with contribution instructions"
+      - "Good first issue labels for newcomers"
+      - "Documentation about documentation"
+      - "Style guide and templates"
+    review_process:
+      - "Constructive feedback on pull requests"
+      - "Technical and editorial review"
+      - "Collaborative improvement"
+      - "Recognition of contributions"
+  maintenance_practices:
+    description: "Keeping documentation current and useful"
+    regular_audits:
+      - "Review for accuracy with each release"
+      - "Check for broken links and outdated screenshots"
+      - "Update examples and code samples"
+      - "Remove or update deprecated information"
+    feedback_integration:
+      - "Monitor user feedback channels"
+      - "Track documentation analytics"
+      - "Conduct user research"
+      - "Implement improvements based on data"
+  tooling_recommendations:
+    description: "Tools and practices for effective documentation"
+    content_creation:
+      - "Markdown for easy writing and collaboration"
+      - "Git for version control and collaboration"
+      - "Static site generators for publishing"
+      - "Automated screenshot tools"
+    automation:
+      - "Automated builds and deployments"
+      - "Link checking and validation"
+      - "Style and grammar checking"
+      - "Accessibility testing"
+  measuring_success:
+    description: "How to evaluate documentation effectiveness"
+    metrics:
+      - "User task completion rates"
+      - "Time to find information"
+      - "Support ticket reduction"
+      - "Community contribution levels"
+    feedback_methods:
+      - "User surveys and interviews"
+      - "Analytics on page usage"
+      - "A/B testing of content approaches"
+      - "Community feedback channels"

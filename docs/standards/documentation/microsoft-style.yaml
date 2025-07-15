@@ -1,0 +1,174 @@
+standard: microsoft-style
+name: "Microsoft Writing Style Guide"
+
+summary:
+  critical: |
+    - Global-ready: Write for international audiences
+    - Accessible: Design for all abilities and contexts
+    - Inclusive: Welcome everyone with bias-free language
+    - Clear: Prioritize clarity over cleverness
+    - Empowering: Help users succeed and feel confident
+  tone: "Warm, approachable, and encouraging"
+  structure: "Step-by-step with clear outcomes and verification"
+  formatting: "Use bold for UI elements, tips and warnings in callouts"
+
+display:
+  description: "Microsoft's approach to clear, inclusive, and accessible technical documentation with a warm, empowering tone"
+  principles:
+    - "🌍 Global-ready - Accessible to international audiences"
+    - "♿ Accessible - Inclusive design for all abilities"
+    - "🤝 Inclusive - Bias-free, welcoming language"
+    - "💡 Clear - Clarity and simplicity over complexity"
+    - "🚀 Empowering - Build user confidence and success"
+    - "User-focused outcomes"
+    - "Conversational yet professional tone"
+    - "Step-by-step guidance with verification"
+  settings:
+    tone: "conversational and encouraging"
+    ui_formatting: "bold for interface elements"
+    code_formatting: "triple backticks with language"
+    callouts: "tips, warnings, and notes in callout boxes"
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/standards/documentation/microsoft-style"
+    local: "/docs/standards/documentation/microsoft-style.md"
+
+rules:
+  global_readiness:
+    description: "Writing for international audiences"
+    principles:
+      - "Use simple, clear sentence structure"
+      - "Avoid idioms and cultural references"
+      - "Define acronyms and technical terms"
+      - "Use active voice and present tense"
+      - "Be consistent with terminology"
+    implementation:
+      - "Write in plain language"
+      - "Use shorter sentences"
+      - "Provide context for cultural references"
+      - "Include phonetic pronunciations for complex terms"
+  accessibility:
+    description: "Making content accessible to all users"
+    visual_design:
+      - "Use sufficient color contrast"
+      - "Don't rely solely on color for meaning"
+      - "Provide alt text for images"
+      - "Use descriptive link text"
+    content_structure:
+      - "Use logical heading hierarchy"
+      - "Provide clear navigation"
+      - "Include table of contents for long documents"
+      - "Use descriptive section titles"
+    language:
+      - "Write at appropriate reading level"
+      - "Define technical terms"
+      - "Use consistent terminology"
+      - "Provide examples and context"
+  inclusive_language:
+    description: "Creating welcoming, bias-free content"
+    guidelines:
+      - "Use gender-neutral language"
+      - "Avoid assumptions about user knowledge"
+      - "Use person-first language for disabilities"
+      - "Avoid cultural bias and stereotypes"
+    examples:
+      avoid: "guys, blacklist, master/slave, sanity check"
+      prefer: "everyone, blocklist, primary/secondary, quality check"
+  tone_and_voice:
+    description: "Microsoft's warm, empowering communication style"
+    characteristics:
+      - "Conversational but professional"
+      - "Encouraging and supportive"
+      - "Confident without being condescending"
+      - "Helpful and solution-focused"
+    implementation:
+      - "Use contractions naturally (you'll, we'll)"
+      - "Address the user directly with 'you'"
+      - "Acknowledge challenges users might face"
+      - "Celebrate user achievements"
+  tutorial_structure:
+    description: "Step-by-step learning-focused content"
+    opening:
+      - "Clear learning objectives"
+      - "Time estimate for completion"
+      - "Prerequisites and requirements"
+      - "Audience description"
+    body:
+      - "Numbered steps with specific actions"
+      - "Screenshots and visual aids"
+      - "Expected results after each step"
+      - "Tips and troubleshooting"
+    closing:
+      - "Summary of achievements"
+      - "Next steps and related content"
+      - "Links to deeper learning"
+  ui_formatting:
+    description: "How to format interface elements and code"
+    interface_elements:
+      buttons: "**Button Name**"
+      menus: "**File** > **New** > **Project**"
+      fields: "In the **Name** box, enter..."
+      tabs: "Select the **Settings** tab"
+    code_formatting:
+      inline: "`code snippet`"
+      blocks: "```language\ncode here\n```"
+      placeholders: "Replace [placeholder] with actual values"
+    callouts:
+      tips: "> [!TIP]\n> Helpful additional information"
+      warnings: "> [!WARNING]\n> Important caution"
+      notes: "> [!NOTE]\n> Additional context"
+  how_to_structure:
+    description: "Task-oriented problem-solving content"
+    title: "How to [accomplish specific task]"
+    introduction:
+      - "Brief description of task purpose"
+      - "When to use this approach"
+      - "Prerequisites if needed"
+    procedure:
+      - "Clear, actionable steps"
+      - "One action per step"
+      - "Expected outcomes"
+      - "Verification methods"
+    conclusion:
+      - "Summary of what was accomplished"
+      - "Related tasks or next steps"
+  reference_structure:
+    description: "Comprehensive information documentation"
+    organization:
+      - "Logical grouping of information"
+      - "Consistent formatting patterns"
+      - "Clear hierarchical structure"
+      - "Cross-references to related content"
+    content:
+      - "Complete parameter descriptions"
+      - "Return value specifications"
+      - "Error condition documentation"
+      - "Working code examples"
+  error_messaging:
+    description: "Clear, helpful error communication"
+    principles:
+      - "Explain what happened"
+      - "Provide specific next steps"
+      - "Avoid technical jargon"
+      - "Include relevant context"
+    structure:
+      - "What went wrong (briefly)"
+      - "Why it happened (if helpful)"
+      - "How to fix it (specific steps)"
+      - "How to prevent it (if applicable)"
+  content_review:
+    description: "Quality assurance for documentation"
+    clarity_check:
+      - "Can a new user follow the instructions?"
+      - "Are all terms defined appropriately?"
+      - "Is the purpose clear from the beginning?"
+      - "Are steps in logical order?"
+    accessibility_review:
+      - "Alt text provided for images"
+      - "Heading structure is logical"
+      - "Color is not the only indicator"
+      - "Links have descriptive text"
+    inclusivity_audit:
+      - "Language is bias-free"
+      - "Examples represent diverse users"
+      - "Assumptions about user context are avoided"
+      - "Cultural references are explained"

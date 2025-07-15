@@ -1,0 +1,180 @@
+standard: clean-arch
+name: "Clean Architecture"
+
+summary:
+  critical: |
+    - Dependency Rule: Dependencies point inward toward higher-level policies
+    - Four layers: Entities, Use Cases, Interface Adapters, Frameworks/Drivers
+    - Business logic independent of frameworks, UI, and databases
+    - Testable without external dependencies
+    - Enables flexible technology choices
+  independence: "Framework, UI, Database, and External agency independence"
+  testability: "Business rules testable in isolation"
+  dependency_direction: "Always inward toward business logic"
+
+display:
+  description: "Architectural pattern emphasizing separation of concerns and independence of business logic from external frameworks"
+  principles:
+    - "🔄 Dependency Rule - Dependencies point inward only"
+    - "🏛️ Entity Layer - Enterprise business rules"
+    - "⚙️ Use Case Layer - Application business rules"
+    - "🔌 Interface Adapters - Controllers, presenters, gateways"
+    - "📱 Frameworks & Drivers - External frameworks and tools"
+    - "Independence from frameworks and databases"
+    - "Testability of business logic"
+    - "Flexibility in technology choices"
+  settings:
+    dependency_direction: "inward"
+    layer_count: 4
+    business_logic_isolation: true
+    framework_independence: true
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/standards/architecture/clean-arch"
+    local: "/docs/standards/architecture/clean-arch.md"
+
+rules:
+  dependency_rule:
+    description: "The fundamental rule governing all dependencies"
+    principle: "Source code dependencies must point only inward, toward higher-level policies"
+    implementation:
+      - "Outer layers depend on inner layers"
+      - "Inner layers know nothing about outer layers"
+      - "Use dependency inversion for external dependencies"
+      - "Interfaces defined in inner layers, implemented in outer layers"
+    validation:
+      - "No imports from outer layers in inner layers"
+      - "Business logic has no framework dependencies"
+      - "Entities have no use case dependencies"
+  layer_structure:
+    description: "Four concentric layers of the architecture"
+    entities:
+      position: "innermost"
+      description: "Enterprise business rules and critical business data"
+      characteristics:
+        - "Pure business logic"
+        - "No dependencies on other layers"
+        - "Most stable code"
+        - "Can be shared across applications"
+      examples:
+        - "User entity with validation rules"
+        - "Order entity with business constraints"
+        - "Domain value objects"
+    use_cases:
+      position: "second layer"
+      description: "Application business rules and orchestration"
+      characteristics:
+        - "Application-specific business rules"
+        - "Orchestrates entities"
+        - "Defines interfaces for outer layers"
+        - "Contains application workflow"
+      examples:
+        - "CreateUserUseCase"
+        - "ProcessOrderUseCase"
+        - "AuthenticateUserUseCase"
+    interface_adapters:
+      position: "third layer"
+      description: "Controllers, presenters, and gateways"
+      characteristics:
+        - "Converts data between use cases and external systems"
+        - "Implements interfaces defined by use cases"
+        - "Contains controllers and presenters"
+        - "Database and external service adapters"
+      examples:
+        - "UserController"
+        - "DatabaseUserRepository"
+        - "EmailServiceAdapter"
+    frameworks_drivers:
+      position: "outermost"
+      description: "External frameworks, tools, and devices"
+      characteristics:
+        - "Database drivers"
+        - "Web frameworks"
+        - "External libraries"
+        - "UI frameworks"
+      examples:
+        - "Express.js framework"
+        - "PostgreSQL driver"
+        - "React components"
+  implementation_patterns:
+    description: "Common patterns for implementing Clean Architecture"
+    dependency_inversion:
+      description: "Use interfaces to invert dependencies"
+      implementation:
+        - "Define interfaces in inner layers"
+        - "Implement interfaces in outer layers"
+        - "Inject dependencies at runtime"
+        - "Use IoC containers for dependency injection"
+    repository_pattern:
+      description: "Abstract data access"
+      implementation:
+        - "Define repository interface in use case layer"
+        - "Implement repository in interface adapter layer"
+        - "Use dependency injection to provide implementation"
+    use_case_interactor:
+      description: "Encapsulate application business rules"
+      implementation:
+        - "One use case per business operation"
+        - "Input and output data structures"
+        - "Error handling and validation"
+        - "Transaction management"
+  testing_strategy:
+    description: "How to test each layer effectively"
+    entity_testing:
+      approach: "Unit tests with no mocks"
+      focus: "Business rule validation"
+      characteristics: "Fast, deterministic, isolated"
+    use_case_testing:
+      approach: "Unit tests with mocked dependencies"
+      focus: "Application logic and orchestration"
+      characteristics: "Mock external interfaces"
+    adapter_testing:
+      approach: "Integration tests with real external systems"
+      focus: "Data conversion and external integration"
+      characteristics: "Test database, API calls"
+    system_testing:
+      approach: "End-to-end tests"
+      focus: "Complete user workflows"
+      characteristics: "Slow but comprehensive"
+  benefits:
+    description: "Advantages of Clean Architecture"
+    independence:
+      frameworks: "Can change frameworks without affecting business logic"
+      database: "Can swap databases with minimal impact"
+      ui: "Can change UI without affecting business rules"
+      external_services: "Can change external services easily"
+    testability:
+      business_rules: "Test business logic without external dependencies"
+      use_cases: "Test application logic with mocked dependencies"
+      integration: "Test adapters with real external systems"
+    maintainability:
+      separation: "Clear separation of concerns"
+      flexibility: "Easy to modify and extend"
+      understanding: "Easier to understand system structure"
+  common_mistakes:
+    description: "Pitfalls to avoid when implementing Clean Architecture"
+    dependency_violations:
+      - "Inner layers importing from outer layers"
+      - "Entities depending on use cases"
+      - "Use cases depending on frameworks"
+    anemic_domain:
+      - "Entities with only getters and setters"
+      - "Business logic in use cases instead of entities"
+      - "Missing domain behavior"
+    over_engineering:
+      - "Too many layers for simple applications"
+      - "Unnecessary abstractions"
+      - "Premature optimization"
+  implementation_guidelines:
+    description: "Best practices for implementing Clean Architecture"
+    starting_small:
+      - "Begin with core entities"
+      - "Add use cases gradually"
+      - "Implement adapters as needed"
+    refactoring_approach:
+      - "Extract business logic first"
+      - "Create interfaces for external dependencies"
+      - "Move framework code to outer layers"
+    team_adoption:
+      - "Train team on dependency rule"
+      - "Use code reviews to enforce patterns"
+      - "Create architectural guidelines"

@@ -1,0 +1,155 @@
+standard: bdd
+name: "Behavior-Driven Development"
+
+summary:
+  critical: |
+    - Collaboration between Business, Development, and Testing
+    - Gherkin language for shared understanding
+    - Given-When-Then scenario structure
+    - Living documentation that stays current
+    - Outside-in development approach
+  three_amigos: "Business (what), Development (how), Testing (what could go wrong)"
+  gherkin_keywords: "Feature, Scenario, Given, When, Then, And, But"
+  automation: "Executable specifications that verify behavior"
+
+display:
+  description: "Agile development practice focusing on collaboration and shared understanding through executable specifications"
+  principles:
+    - "Shared understanding through common language"
+    - "Living documentation that stays current"
+    - "Outside-in development approach"
+    - "Examples drive design decisions"
+    - "Continuous communication about requirements"
+    - "Three Amigos collaboration"
+    - "Executable specifications"
+    - "Behavior over implementation focus"
+  settings:
+    scenario_language: "gherkin"
+    automation_framework: "cucumber|specflow|behave"
+    collaboration_required: true
+    documentation_style: "executable_specifications"
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/standards/testing/bdd"
+    local: "/docs/standards/testing/bdd.md"
+
+rules:
+  three_amigos:
+    description: "Collaboration between three key perspectives"
+    roles:
+      business:
+        responsibility: "What problem are we solving?"
+        participants: ["Product Owner", "Business Analyst", "Domain Expert"]
+        contribution: "Requirements, acceptance criteria, business rules"
+      development:
+        responsibility: "How might we solve this?"
+        participants: ["Developer", "Architect", "Technical Lead"]
+        contribution: "Technical feasibility, implementation approach"
+      testing:
+        responsibility: "What could go wrong?"
+        participants: ["QA Engineer", "Tester", "Test Analyst"]
+        contribution: "Edge cases, error scenarios, quality risks"
+  gherkin_structure:
+    description: "Standard structure for BDD scenarios"
+    keywords:
+      feature:
+        purpose: "High-level description of functionality"
+        format: "As a [user], I want [goal] so that [benefit]"
+      scenario:
+        purpose: "Specific example of behavior"
+        structure: "Given-When-Then"
+      given:
+        purpose: "Preconditions and context"
+        guidelines: "Set up the initial state"
+      when:
+        purpose: "Action or event"
+        guidelines: "Single action that triggers behavior"
+      then:
+        purpose: "Expected outcome"
+        guidelines: "Observable result or side effect"
+      and_but:
+        purpose: "Additional steps"
+        guidelines: "Chain multiple conditions or outcomes"
+  scenario_writing:
+    description: "Guidelines for writing effective scenarios"
+    best_practices:
+      - "Use domain language, not technical jargon"
+      - "Focus on behavior, not implementation"
+      - "Keep scenarios independent"
+      - "Use specific examples, not abstract concepts"
+      - "Write from user perspective"
+      - "One scenario per behavior"
+    structure:
+      title: "Clear, descriptive scenario name"
+      given: "Context and preconditions"
+      when: "Single action or event"
+      then: "Expected outcome"
+    anti_patterns:
+      - "Implementation details in scenarios"
+      - "Multiple actions in When step"
+      - "Testing internal state instead of behavior"
+      - "Scenarios that depend on other scenarios"
+  automation:
+    description: "Connecting Gherkin scenarios to code"
+    frameworks:
+      javascript: "Cucumber.js"
+      python: "Behave, pytest-bdd"
+      java: "Cucumber-Java"
+      csharp: "SpecFlow"
+      ruby: "Cucumber"
+    step_definitions:
+      purpose: "Code that implements Gherkin steps"
+      guidelines:
+        - "Reusable across scenarios"
+        - "Parameter extraction from steps"
+        - "Page Object pattern for UI tests"
+        - "Data table handling"
+  collaboration_practices:
+    description: "How to implement effective BDD collaboration"
+    discovery_workshops:
+      purpose: "Explore and understand requirements"
+      participants: "Three Amigos + stakeholders"
+      output: "Example scenarios and acceptance criteria"
+    refinement_sessions:
+      purpose: "Detail scenarios before implementation"
+      timing: "Sprint planning or before development"
+      output: "Refined scenarios ready for automation"
+    review_sessions:
+      purpose: "Validate scenarios match expectations"
+      timing: "After implementation, before release"
+      output: "Verified behavior and updated documentation"
+  living_documentation:
+    description: "Keeping documentation current and useful"
+    characteristics:
+      - "Executable and automated"
+      - "Always up-to-date with code"
+      - "Readable by non-technical stakeholders"
+      - "Serves as regression test suite"
+    maintenance:
+      - "Update scenarios when behavior changes"
+      - "Remove obsolete scenarios"
+      - "Refactor common steps"
+      - "Generate reports from test results"
+  implementation_levels:
+    description: "Different levels of BDD implementation"
+    unit_level:
+      description: "Spec by example for individual components"
+      tools: "Jest, RSpec, NUnit with BDD style"
+    integration_level:
+      description: "Service behavior verification"
+      tools: "Cucumber with API testing"
+    acceptance_level:
+      description: "End-to-end user behavior"
+      tools: "Cucumber with browser automation"
+  quality_guidelines:
+    description: "Ensuring high-quality BDD scenarios"
+    characteristics:
+      readable: "Clear to all stakeholders"
+      maintainable: "Easy to update as requirements change"
+      reliable: "Consistent results"
+      focused: "Single behavior per scenario"
+      independent: "No dependencies between scenarios"
+    review_criteria:
+      - "Scenarios read like documentation"
+      - "Technical implementation hidden"
+      - "Examples cover happy path and edge cases"
+      - "Business value is clear"

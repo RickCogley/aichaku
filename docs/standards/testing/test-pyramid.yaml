@@ -1,0 +1,177 @@
+standard: test-pyramid
+name: "Test Pyramid"
+
+summary:
+  critical: |
+    - Unit Tests (Base): Many, fast, isolated tests of individual components
+    - Integration Tests (Middle): Some, moderate speed, test component interactions
+    - E2E Tests (Top): Few, slow, comprehensive user journey tests
+    - Pyramid shape: More unit tests, fewer integration, minimal E2E
+    - Fast feedback from unit tests, confidence from E2E tests
+  distribution: "70% unit, 20% integration, 10% E2E"
+  speed: "Unit tests <1s, Integration <10s, E2E <60s"
+  maintenance: "Lower levels easier to maintain and debug"
+
+display:
+  description: "Testing strategy emphasizing a pyramid-shaped distribution of automated tests for optimal feedback and confidence"
+  principles:
+    - "🔺 Unit Tests (Base) - Many, fast, isolated"
+    - "🔧 Integration Tests (Middle) - Some, moderate speed"
+    - "🌐 E2E Tests (Top) - Few, slow, comprehensive"
+    - "Fast feedback from lower levels"
+    - "High confidence from upper levels"
+    - "Cost increases up the pyramid"
+    - "Maintenance difficulty increases up the pyramid"
+    - "Test independence at all levels"
+  settings:
+    unit_percentage: 70
+    integration_percentage: 20
+    e2e_percentage: 10
+    unit_max_time: "1 second"
+    integration_max_time: "10 seconds"
+    e2e_max_time: "60 seconds"
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/standards/testing/test-pyramid"
+    local: "/docs/standards/testing/test-pyramid.md"
+
+rules:
+  unit_tests:
+    description: "Foundation layer - individual component testing"
+    characteristics:
+      - "Test single units in isolation"
+      - "Fast execution (milliseconds)"
+      - "No external dependencies"
+      - "Deterministic results"
+      - "Easy to write and maintain"
+    scope:
+      - "Pure functions"
+      - "Class methods"
+      - "Business logic"
+      - "Validation rules"
+      - "Calculations"
+    implementation:
+      mocking: "Mock all external dependencies"
+      isolation: "No database, network, or file system"
+      speed: "Entire suite runs in seconds"
+      parallelization: "Can run in parallel safely"
+    best_practices:
+      - "One assertion per test"
+      - "Descriptive test names"
+      - "AAA pattern (Arrange, Act, Assert)"
+      - "Test edge cases and error conditions"
+      - "Use meaningful test data"
+  integration_tests:
+    description: "Middle layer - component interaction testing"
+    characteristics:
+      - "Test multiple components together"
+      - "Moderate execution time"
+      - "Limited external dependencies"
+      - "Test integration points"
+      - "Verify data flow"
+    scope:
+      - "Database operations"
+      - "API endpoints"
+      - "Service interactions"
+      - "Message queues"
+      - "Configuration loading"
+    implementation:
+      dependencies: "Real databases, test services"
+      isolation: "Use test databases and services"
+      cleanup: "Reset state between tests"
+      containers: "Docker for consistent environments"
+    types:
+      component: "Test a single service with real dependencies"
+      contract: "Test service contracts and interfaces"
+      api: "Test REST/GraphQL endpoints"
+      database: "Test data layer operations"
+  e2e_tests:
+    description: "Top layer - complete user journey testing"
+    characteristics:
+      - "Test complete workflows"
+      - "Slow execution time"
+      - "Full system integration"
+      - "User perspective"
+      - "High maintenance cost"
+    scope:
+      - "Critical user journeys"
+      - "Key business workflows"
+      - "Cross-browser compatibility"
+      - "Performance validation"
+      - "Security verification"
+    implementation:
+      environment: "Production-like test environment"
+      automation: "Browser automation (Playwright, Selenium)"
+      data: "Test data management strategy"
+      parallelization: "Limited due to shared resources"
+    best_practices:
+      - "Test critical paths only"
+      - "Use page object pattern"
+      - "Stable selectors (data-testid)"
+      - "Wait strategies for async operations"
+      - "Screenshot/video on failures"
+  distribution_guidelines:
+    description: "Recommended test distribution across layers"
+    ratios:
+      unit: "60-70% of total tests"
+      integration: "20-30% of total tests"
+      e2e: "5-10% of total tests"
+    reasoning:
+      unit: "Fast feedback, easy debugging, low cost"
+      integration: "Catch integration issues, moderate cost"
+      e2e: "User confidence, high cost, slow feedback"
+  anti_patterns:
+    description: "Common violations of test pyramid principles"
+    ice_cream_cone:
+      problem: "Too many E2E tests, few unit tests"
+      symptoms: "Slow test suite, flaky tests, hard to debug"
+      solution: "Increase unit test coverage, reduce E2E tests"
+    hourglass:
+      problem: "Many unit and E2E tests, few integration tests"
+      symptoms: "Integration bugs slip through"
+      solution: "Add integration tests for service boundaries"
+    testing_trophy:
+      description: "Alternative emphasizing integration tests"
+      ratio: "Unit 40%, Integration 50%, E2E 10%"
+      use_case: "Frontend applications with many integrations"
+  implementation_strategy:
+    description: "How to implement test pyramid in practice"
+    starting_point:
+      - "Begin with unit tests for new code"
+      - "Add integration tests for critical paths"
+      - "Create minimal E2E tests for key journeys"
+    existing_codebase:
+      - "Measure current test distribution"
+      - "Identify gaps in unit test coverage"
+      - "Refactor E2E tests to lower levels where possible"
+    tools_selection:
+      unit: "Jest, Mocha, PyTest, JUnit, XUnit"
+      integration: "Supertest, TestContainers, Postman"
+      e2e: "Playwright, Cypress, Selenium, Puppeteer"
+  feedback_loops:
+    description: "Optimize feedback speed at each level"
+    unit_tests:
+      frequency: "On every save (watch mode)"
+      feedback_time: "Seconds"
+      purpose: "Immediate validation"
+    integration_tests:
+      frequency: "On commit/push"
+      feedback_time: "Minutes"
+      purpose: "Integration validation"
+    e2e_tests:
+      frequency: "Before deployment"
+      feedback_time: "10-30 minutes"
+      purpose: "Release confidence"
+  maintenance_considerations:
+    description: "Managing test maintenance burden"
+    unit_tests:
+      maintenance: "Low - change only when behavior changes"
+      debugging: "Easy - isolated failures"
+      reliability: "High - deterministic"
+    integration_tests:
+      maintenance: "Medium - affected by dependency changes"
+      debugging: "Moderate - limited scope"
+      reliability: "Good - controlled environment"
+    e2e_tests:
+      maintenance: "High - UI and system changes affect tests"
+      debugging: "Difficult - many potential failure points"
+      reliability: "Lower - timing and environment issues"

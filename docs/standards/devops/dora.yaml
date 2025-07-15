@@ -1,0 +1,184 @@
+standard: dora
+name: "DORA Metrics"
+
+summary:
+  critical: |
+    - Deployment Frequency: How often you deploy to production
+    - Lead Time for Changes: Time from commit to production
+    - Mean Time to Recovery (MTTR): Time to restore service after incident
+    - Change Failure Rate: Percentage of deployments causing failures
+  performance_levels: "Elite, High, Medium, Low performance categories"
+  correlation: "Strong correlation with organizational performance"
+  automation: "Automated measurement through CI/CD and monitoring"
+
+display:
+  description: "Four key metrics that measure software development team performance and DevOps effectiveness"
+  principles:
+    - "📊 Deployment Frequency - Release velocity measurement"
+    - "⚡ Lead Time for Changes - Development speed indicator"
+    - "🔧 MTTR - Recovery capability assessment"
+    - "❌ Change Failure Rate - Quality and stability metric"
+    - "Evidence-based improvement decisions"
+    - "Correlation with business outcomes"
+    - "Continuous measurement and monitoring"
+    - "Team performance categorization"
+  settings:
+    measurement_period: "30 days rolling"
+    automation_required: true
+    business_hours_only: false
+    exclude_weekends: false
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/standards/devops/dora"
+    local: "/docs/standards/devops/dora.md"
+
+rules:
+  deployment_frequency:
+    description: "How often an organization successfully releases to production"
+    measurement:
+      definition: "Number of production deployments per unit time"
+      calculation: "deployments_count / time_period"
+      excludes: "Failed deployments, rollbacks"
+    performance_levels:
+      elite: "Multiple times per day"
+      high: "Weekly to monthly"
+      medium: "Monthly to every 6 months"
+      low: "Less than every 6 months"
+    implementation:
+      - "Automate deployment pipeline"
+      - "Use feature flags for safe releases"
+      - "Implement blue-green deployments"
+      - "Track deployment events automatically"
+      - "Measure only successful production deployments"
+  lead_time_for_changes:
+    description: "Time from code commit to code running in production"
+    measurement:
+      definition: "Time between commit and successful production deployment"
+      start_point: "Code commit timestamp"
+      end_point: "Production deployment completion"
+      calculation: "median time across all changes"
+    performance_levels:
+      elite: "Less than 1 hour"
+      high: "1 day to 1 week"
+      medium: "1 week to 1 month"
+      low: "1 to 6 months"
+    implementation:
+      - "Automate CI/CD pipeline completely"
+      - "Minimize code review bottlenecks"
+      - "Reduce batch sizes"
+      - "Eliminate manual approval gates"
+      - "Optimize build and test times"
+  mean_time_to_recovery:
+    description: "Time to restore service after a production incident"
+    measurement:
+      definition: "Time from incident detection to service restoration"
+      start_point: "Incident detection or user impact"
+      end_point: "Service fully restored"
+      calculation: "median recovery time across incidents"
+    performance_levels:
+      elite: "Less than 1 hour"
+      high: "Less than 1 day"
+      medium: "1 day to 1 week"
+      low: "More than 1 week"
+    implementation:
+      - "Implement comprehensive monitoring"
+      - "Create automated alerting"
+      - "Practice incident response procedures"
+      - "Prepare rollback mechanisms"
+      - "Maintain incident response playbooks"
+  change_failure_rate:
+    description: "Percentage of deployments causing a failure in production"
+    measurement:
+      definition: "Deployments causing incidents / total deployments"
+      failure_criteria: "Requires hotfix, rollback, or patch"
+      time_window: "Link incidents to specific deployments"
+      calculation: "(failed_deployments / total_deployments) * 100"
+    performance_levels:
+      elite: "0-15%"
+      high: "16-30%"
+      medium: "16-30%"
+      low: "16-30%"
+    implementation:
+      - "Implement comprehensive testing"
+      - "Use canary deployments"
+      - "Practice test-driven development"
+      - "Implement automated quality gates"
+      - "Monitor post-deployment health"
+  measurement_automation:
+    description: "Automated collection and reporting of DORA metrics"
+    data_sources:
+      deployment_frequency:
+        - "CI/CD pipeline logs"
+        - "Deployment automation tools"
+        - "Container orchestration platforms"
+      lead_time:
+        - "Version control systems"
+        - "CI/CD pipeline timestamps"
+        - "Issue tracking systems"
+      mttr:
+        - "Incident management systems"
+        - "Monitoring and alerting tools"
+        - "Service status pages"
+      change_failure_rate:
+        - "Deployment logs"
+        - "Incident tracking systems"
+        - "Error monitoring tools"
+    tools:
+      - "Prometheus + Grafana for metrics"
+      - "DataDog or New Relic for monitoring"
+      - "GitHub/GitLab for source control data"
+      - "Jira/Linear for incident tracking"
+  improvement_strategies:
+    description: "How to improve DORA metrics systematically"
+    deployment_frequency:
+      - "Reduce deployment friction"
+      - "Automate deployment pipeline"
+      - "Implement feature flags"
+      - "Use trunk-based development"
+      - "Minimize deployment size"
+    lead_time:
+      - "Optimize CI/CD pipeline"
+      - "Reduce code review cycle time"
+      - "Automate testing"
+      - "Eliminate manual gates"
+      - "Parallelize build processes"
+    mttr:
+      - "Improve monitoring and alerting"
+      - "Practice incident response"
+      - "Automate rollback procedures"
+      - "Implement chaos engineering"
+      - "Create detailed runbooks"
+    change_failure_rate:
+      - "Increase test coverage"
+      - "Implement progressive delivery"
+      - "Use automated quality gates"
+      - "Practice TDD/BDD"
+      - "Implement canary releases"
+  reporting_and_visualization:
+    description: "How to present and use DORA metrics"
+    dashboards:
+      - "Real-time metric displays"
+      - "Trend analysis over time"
+      - "Team and organization comparisons"
+      - "Performance level indicators"
+    reporting_frequency:
+      - "Daily monitoring for teams"
+      - "Weekly reports for management"
+      - "Monthly trend analysis"
+      - "Quarterly performance reviews"
+    actionable_insights:
+      - "Identify improvement opportunities"
+      - "Track progress against goals"
+      - "Benchmark against industry standards"
+      - "Correlate with business outcomes"
+  cultural_considerations:
+    description: "Cultural aspects of implementing DORA metrics"
+    principles:
+      - "Focus on system improvement, not individual blame"
+      - "Use metrics for learning and improvement"
+      - "Encourage experimentation and risk-taking"
+      - "Celebrate improvements and learning from failures"
+    anti_patterns:
+      - "Using metrics for performance reviews"
+      - "Gaming metrics instead of improving outcomes"
+      - "Focusing on individual rather than team performance"
+      - "Optimizing one metric at the expense of others"
