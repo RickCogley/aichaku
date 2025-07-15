@@ -188,12 +188,12 @@ async function completeWork(workDir: string) {
 
 ```markdown
 <!-- templates/cover-page.md -->
-# {{title}}
+# &#123;&#123;title&#125;&#125;
 
-**Project**: {{project}}
-**Date**: {{date}}
-**Version**: {{version}}
-**Status**: {{status}}
+**Project**: &#123;&#123;project&#125;&#125;
+**Date**: &#123;&#123;date&#125;&#125;
+**Version**: &#123;&#123;version&#125;&#125;
+**Status**: &#123;&#123;status&#125;&#125;
 
 ---
 

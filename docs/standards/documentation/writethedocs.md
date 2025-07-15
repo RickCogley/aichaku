@@ -23,11 +23,11 @@ Guide newcomers through their first successful experience with your project.
 ### Structure
 
 ````markdown
-# Getting Started with [Project Name]
+# Getting Started with {{Project Name}}
 
-Welcome! This tutorial walks you through using [Project] for the first time. By
-the end, you'll have [specific achievement] and understand the basics of [key
-concepts].
+Welcome! This tutorial walks you through using {{Project}} for the first time. By
+the end, you'll have {{specific achievement}} and understand the basics of {{key
+concepts}}.
 
 ## Before You Begin
 

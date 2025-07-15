@@ -106,7 +106,7 @@ jobs:
             -d '{
               "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'",
               "environment": "production",
-              "version": "${{ github.sha }}",
+              "version": "&#36;&#123;&#123; github.sha &#125;&#125;",
               "status": "success"
             }'
 ```
@@ -301,6 +301,7 @@ func (m *MTTRTracker) startAutomatedResponse(incidentID string) {
 
 #### Monitoring and Alerting Setup
 
+{% raw %}
 ```yaml
 # Prometheus alert rules for incident detection
 groups:
@@ -324,6 +325,7 @@ groups:
           summary: "Service is down"
           description: "{{ $labels.instance }} is down"
 ```
+{% endraw %}
 
 ### 4. Change Failure Rate
 
@@ -556,6 +558,7 @@ def show_dashboard():
 
 ### 3. Continuous Improvement Process
 
+{% raw %}
 ```yaml
 # DORA improvement workflow
 name: DORA Metrics Review
@@ -619,6 +622,7 @@ jobs:
               labels: ['dora-metrics', 'process-improvement']
             });
 ```
+{% endraw %}
 
 ## Tools and Technologies
 
@@ -631,6 +635,7 @@ jobs:
 
 ### Implementation Stack Example
 
+{% raw %}
 ```docker
 # docker-compose.yml for DORA metrics stack
 version: '3.8'
@@ -673,6 +678,7 @@ volumes:
   prometheus_data:
   grafana_data:
 ```
+{% endraw %}
 
 ## Best Practices
 

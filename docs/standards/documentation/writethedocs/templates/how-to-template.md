@@ -176,10 +176,10 @@ jobs:
 
       - name: Run [task]
         env:
-          PROJECT_ENV: ${{ secrets.PROJECT_ENV }}
-          API_KEY: ${{ secrets.API_KEY }}
+          PROJECT_ENV: &#36;&#123;&#123; secrets.PROJECT_ENV &#125;&#125;
+          API_KEY: &#36;&#123;&#123; secrets.API_KEY &#125;&#125;
         run: |
-          project command --option ${{ github.event.inputs.value }}
+          project command --option &#36;&#123;&#123; github.event.inputs.value &#125;&#125;
 ```
 
 #### GitLab CI

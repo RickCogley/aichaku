@@ -103,7 +103,7 @@ Edit any template to match your team's needs:
 
 ```markdown
 <!-- In sprint-planning.md -->
-# Sprint Planning - ${TEAM_NAME}
+# Sprint Planning - $\{TEAM_NAME\}
 
 Sprint Duration: **3 weeks** <!-- Changed from 2 weeks -->
 Team Velocity: **45 points** <!-- Your team's actual velocity -->
