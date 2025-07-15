@@ -1218,16 +1218,9 @@ function listStandards(options: HelpOptions): HelpResult {
   let content = `${Brand.PREFIX} Available Standards\n\n`;
 
   // Group standards by category
-  for (const [_categoryId, category] of Object.entries(STANDARD_CATEGORIES)) {
-    content += `${category.name}\n`;
-    content += `${"-".repeat(category.name.length)}\n`;
-
-    for (const [standardId, standard] of Object.entries(category.standards)) {
-      content += `  • ${standardId}: ${standard.name}\n`;
-      content += `    ${standard.description}\n`;
-    }
-    content += "\n";
-  }
+  // STANDARD_CATEGORIES is empty in the current implementation
+  // This section will be populated when standards are properly implemented
+  content += `No standard categories currently available.\n\n`;
 
   content += `\n📝 Get help using:\n`;
   content += `  • aichaku help owasp-web\n`;
@@ -1259,19 +1252,8 @@ function listByCategory(options: HelpOptions): HelpResult {
   }
 
   for (const categoryId of showCategories) {
-    const category =
-      STANDARD_CATEGORIES[categoryId as keyof typeof STANDARD_CATEGORIES];
-    if (!category) continue;
-
-    content += `${category.name}\n`;
-    content += `${"-".repeat(category.name.length)}\n`;
-    content += `${category.description}\n\n`;
-
-    for (const [standardId, standard] of Object.entries(category.standards)) {
-      content += `  • ${standardId}: ${standard.name}\n`;
-      content += `    ${standard.description}\n`;
-      content += `    Tags: ${standard.tags.join(", ")}\n\n`;
-    }
+    // Category display will be implemented when STANDARD_CATEGORIES is populated
+    content += `Category "${categoryId}" is not yet implemented.\n\n`;
   }
 
   return {
@@ -1297,18 +1279,10 @@ function listAllResources(): HelpResult {
     } - ${meta.summary}\n`;
   });
 
-  content += `\n🛡️ Standards & Best Practices (${
-    Object.values(STANDARD_CATEGORIES).reduce((sum, cat) =>
-      sum + Object.keys(cat.standards).length, 0)
-  })\n`;
+  content += `\n🛡️ Standards & Best Practices (0)\n`;
 
-  // List standards by category
-  for (const [_categoryId, category] of Object.entries(STANDARD_CATEGORIES)) {
-    content += `\n${category.name}:\n`;
-    for (const [standardId, standard] of Object.entries(category.standards)) {
-      content += `  • ${standardId.padEnd(20)} - ${standard.name}\n`;
-    }
-  }
+  // Standards will be listed here when implemented
+  content += `\nNo standards currently available.\n`;
 
   content += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   

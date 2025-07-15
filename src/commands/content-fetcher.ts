@@ -279,6 +279,93 @@ async function fetchGitHubContentStructure(
     : getStandardsStructure();
 }
 
+// Helper function to copy a file from source to target
+async function copyLocalFile(
+  relativePath: string,
+  sourcePath: string,
+  targetPath: string,
+  contentType: ContentType,
+  options: FetchOptions,
+  stats: { successCount: number; failureCount: number; failedFiles: string[] },
+): Promise<void> {
+  // Security: Validate the relative path doesn't contain traversal sequences
+  if (relativePath.includes("..")) {
+    throw new Error(
+      `Invalid path: ${relativePath} contains directory traversal`,
+    );
+  }
+
+  const sourceFile = join(sourcePath, contentType, relativePath);
+  const localPath = validatePath(relativePath, targetPath);
+
+  // Check if file exists and skip if overwrite is false
+  try {
+    const fileInfo = await Deno.stat(localPath);
+    if (fileInfo.isFile && !options.overwrite) {
+      stats.successCount++;
+      return; // Skip existing files unless overwrite is requested
+    }
+  } catch {
+    // File doesn't exist, proceed with copy
+  }
+
+  try {
+    const content = await Deno.readTextFile(sourceFile);
+    await ensureDir(join(localPath, ".."));
+    await Deno.writeTextFile(localPath, content);
+    stats.successCount++;
+  } catch (error) {
+    stats.failureCount++;
+    stats.failedFiles.push(relativePath);
+
+    if (!options.silent) {
+      console.warn(
+        `⚠️  Failed to copy ${relativePath}: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
+    }
+  }
+}
+
+// Helper function to process content structure recursively
+async function processLocalStructure(
+  obj: Record<string, unknown>,
+  currentPath: string,
+  sourcePath: string,
+  targetPath: string,
+  contentType: ContentType,
+  options: FetchOptions,
+  stats: { successCount: number; failureCount: number; failedFiles: string[] },
+): Promise<void> {
+  for (const [key, value] of Object.entries(obj)) {
+    const path = currentPath ? `${currentPath}/${key}` : key;
+
+    if (typeof value === "object" && value !== null) {
+      // It's a directory
+      await processLocalStructure(
+        value as Record<string, unknown>,
+        path,
+        sourcePath,
+        targetPath,
+        contentType,
+        options,
+        stats,
+      );
+    } else {
+      // It's a file
+      await copyLocalFile(
+        path,
+        sourcePath,
+        targetPath,
+        contentType,
+        options,
+        stats,
+      );
+    }
+  }
+}
+
 export async function fetchLocalContent(
   contentType: ContentType,
   sourcePath: string,
@@ -289,69 +376,21 @@ export async function fetchLocalContent(
     // Dynamically discover content structure
     const structure = await getContentStructure(contentType, sourcePath, false);
 
-    let successCount = 0;
-    let failureCount = 0;
-    const failedFiles: string[] = [];
+    const stats = {
+      successCount: 0,
+      failureCount: 0,
+      failedFiles: [] as string[],
+    };
 
-    async function copyFile(relativePath: string): Promise<void> {
-      // Security: Validate the relative path doesn't contain traversal sequences
-      if (relativePath.includes("..")) {
-        throw new Error(
-          `Invalid path: ${relativePath} contains directory traversal`,
-        );
-      }
-
-      const sourceFile = join(sourcePath, contentType, relativePath);
-      const localPath = validatePath(relativePath, targetPath);
-
-      // Check if file exists and skip if overwrite is false
-      try {
-        const fileInfo = await Deno.stat(localPath);
-        if (fileInfo.isFile && !options.overwrite) {
-          successCount++;
-          return; // Skip existing files unless overwrite is requested
-        }
-      } catch {
-        // File doesn't exist, proceed with copy
-      }
-
-      try {
-        const content = await Deno.readTextFile(sourceFile);
-        await ensureDir(join(localPath, ".."));
-        await Deno.writeTextFile(localPath, content);
-        successCount++;
-      } catch (error) {
-        failureCount++;
-        failedFiles.push(relativePath);
-
-        if (!options.silent) {
-          console.warn(
-            `⚠️  Failed to copy ${relativePath}: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
-          );
-        }
-      }
-    }
-
-    async function processStructure(
-      obj: Record<string, unknown>,
-      currentPath: string = "",
-    ): Promise<void> {
-      for (const [key, value] of Object.entries(obj)) {
-        const path = currentPath ? `${currentPath}/${key}` : key;
-
-        if (typeof value === "object" && value !== null) {
-          // It's a directory
-          await processStructure(value as Record<string, unknown>, path);
-        } else {
-          // It's a file
-          await copyFile(path);
-        }
-      }
-    }
-
-    await processStructure(structure);
+    await processLocalStructure(
+      structure,
+      "",
+      sourcePath,
+      targetPath,
+      contentType,
+      options,
+      stats,
+    );
 
     // Report results
     if (!options.silent) {
@@ -359,24 +398,24 @@ export async function fetchLocalContent(
         ? "methodology"
         : contentType;
 
-      if (successCount === 0 && failureCount > 0) {
+      if (stats.successCount === 0 && stats.failureCount > 0) {
         console.error(`\n❌ Failed to copy any ${contentName} files!`);
         return false;
-      } else if (failureCount > 0) {
+      } else if (stats.failureCount > 0) {
         console.warn(
-          `\n⚠️  Partial success: ${successCount} files ready, ${failureCount} failed`,
+          `\n⚠️  Partial success: ${stats.successCount} files ready, ${stats.failureCount} failed`,
         );
         return true; // Partial success is still considered success
-      } else if (successCount > 0) {
+      } else if (stats.successCount > 0) {
         const capitalizedContent = contentType.charAt(0).toUpperCase() +
           contentType.slice(1);
         console.log(
-          `✨ ${capitalizedContent} ready (${successCount} files copied)\n`,
+          `✨ ${capitalizedContent} ready (${stats.successCount} files copied)\n`,
         );
       }
     }
 
-    return successCount > 0;
+    return stats.successCount > 0;
   } catch (error) {
     if (!options.silent) {
       console.error(

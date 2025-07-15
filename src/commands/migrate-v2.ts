@@ -9,12 +9,10 @@ import { AichakuBrand as Brand } from "../utils/branded-messages.ts";
 import {
   checkMigrationStatus,
   generateMigrationReport,
-  migrateAll,
-  migrateInstallation,
-  scanForMigrations,
-  verifyMigration,
+  performMigration,
+  validateConfiguration,
 } from "../utils/migration-helper.ts";
-import { getAichakuPaths } from "../paths.ts";
+import { join } from "jsr:@std/path@1";
 
 interface MigrateOptions {
   /** Preview what would be migrated without making changes */
@@ -61,13 +59,15 @@ export async function migrate(
   options: MigrateOptions = {},
 ): Promise<MigrateResult> {
   try {
+    const projectRoot = Deno.cwd();
+
     // Handle report generation
     if (options.report) {
       if (!options.silent) {
-        Brand.header("Migration Report");
+        Brand.log("Migration Report");
       }
 
-      const report = await generateMigrationReport();
+      const report = await generateMigrationReport(projectRoot);
       console.log(report);
 
       return {
@@ -80,98 +80,41 @@ export async function migrate(
     // Handle verification
     if (options.verify) {
       if (!options.silent) {
-        Brand.header("Verifying Migration");
+        Brand.log("Verifying Migration");
       }
 
-      const paths = getAichakuPaths();
-      const results = [];
-
-      // Verify global installation
-      const globalVerification = await verifyMigration(paths.global.root, true);
-      results.push({
-        type: "global",
-        path: paths.global.root,
-        ...globalVerification,
-      });
+      const configPath = join(
+        projectRoot,
+        ".claude",
+        "aichaku",
+        "aichaku.json",
+      );
+      const validation = await validateConfiguration(configPath);
 
       if (!options.silent) {
         console.log(
-          `Global installation: ${
-            globalVerification.success ? "✅ Valid" : "❌ Issues found"
-          }`,
+          `Configuration: ${validation.valid ? "✅ Valid" : "❌ Invalid"}`,
         );
-        if (globalVerification.error) {
-          console.log(`  Error: ${globalVerification.error}`);
-        }
-        if (!globalVerification.newFormatExists) {
-          console.log("  - New format file (aichaku.json) not found");
-        }
-        if (!globalVerification.configValid) {
-          console.log("  - Configuration is invalid");
-        }
-        if (globalVerification.legacyFilesRemain) {
-          console.log("  - Legacy files still present");
+        if (!validation.valid) {
+          validation.errors.forEach((error) => console.log(`  - ${error}`));
         }
       }
-
-      // Verify current project if it has Aichaku
-      const projectVerification = await verifyMigration(Deno.cwd(), false);
-      if (
-        projectVerification.newFormatExists ||
-        projectVerification.legacyFilesRemain
-      ) {
-        results.push({
-          type: "project",
-          path: Deno.cwd(),
-          ...projectVerification,
-        });
-
-        if (!options.silent) {
-          console.log(
-            `\nCurrent project: ${
-              projectVerification.success ? "✅ Valid" : "❌ Issues found"
-            }`,
-          );
-          if (projectVerification.error) {
-            console.log(`  Error: ${projectVerification.error}`);
-          }
-          if (!projectVerification.newFormatExists) {
-            console.log("  - New format file (aichaku.json) not found");
-          }
-          if (!projectVerification.configValid) {
-            console.log("  - Configuration is invalid");
-          }
-          if (projectVerification.legacyFilesRemain) {
-            console.log("  - Legacy files still present");
-          }
-        }
-      } else if (!options.silent) {
-        console.log("\nCurrent project: No Aichaku installation found");
-      }
-
-      const allValid = results.every((r) => r.success);
 
       return {
-        success: allValid,
+        success: validation.valid,
         action: "verified",
-        message: allValid
-          ? "All installations verified successfully"
-          : "Some installations have issues",
+        message: validation.valid
+          ? "Configuration verified successfully"
+          : "Configuration has issues",
       };
     }
 
-    // Scan for installations that need migration
-    const installations = await scanForMigrations();
-    const needsGlobalMigration = installations.global.needsMigration;
-    const needsProjectMigration = installations.projects.some((p: any) =>
-      p.needsMigration
-    );
+    // Check migration status
+    const status = await checkMigrationStatus(projectRoot);
 
-    if (!needsGlobalMigration && !needsProjectMigration) {
+    if (!status.needsMigration) {
       if (!options.silent) {
-        Brand.success(
-          "All installations are already using the consolidated format!",
-        );
+        Brand.success("Already using the consolidated format!");
       }
 
       return {
@@ -184,177 +127,77 @@ export async function migrate(
     // Show what will be migrated
     if (!options.silent && !options.dryRun) {
       Brand.log("\n=== Metadata Migration ===");
-
-      if (needsGlobalMigration && (!options.project)) {
-        console.log("🌍 Global installation needs migration");
-        console.log(`   Path: ${installations.global.path}`);
-        console.log(
-          `   Legacy files: ${installations.global.legacyFiles.length}`,
-        );
-      }
-
-      if (needsProjectMigration && (!options.global)) {
-        for (
-          const project of installations.projects.filter((p: any) =>
-            p.needsMigration
-          )
-        ) {
-          console.log("📁 Project installation needs migration");
-          console.log(`   Path: ${project.path}`);
-          console.log(`   Legacy files: ${project.legacyFiles.length}`);
-        }
-      }
-
+      console.log(`📁 Legacy files found: ${status.legacyFilesFound.length}`);
+      status.legacyFilesFound.forEach((file) => console.log(`   - ${file}`));
       console.log();
     }
 
-    // Determine migration scope
-    let includeProjects = options.includeProjects ?? !options.global;
-    if (options.project) {
-      includeProjects = true;
-    }
-
     // Perform migration
-    if (options.global && !options.project) {
-      // Only migrate global
-      const result = await migrateInstallation(
-        installations.global.path,
-        true,
-        {
-          dryRun: options.dryRun,
-          silent: options.silent,
-          cleanupLegacy: options.cleanup,
-        },
-      );
+    const result = await performMigration(projectRoot, {
+      createBackup: true,
+      cleanupLegacy: options.cleanup ?? false,
+      dryRun: options.dryRun ?? false,
+    });
 
-      if (!result.success && result.error) {
-        return {
-          success: false,
-          action: "error",
-          message: result.error,
-        };
-      }
-
+    if (!result.success) {
       return {
-        success: true,
-        action: options.dryRun ? "report" : "migrated",
-        message: options.dryRun
-          ? "Dry run completed for global installation"
-          : "Global installation migrated successfully",
-        details: {
-          globalMigrated: true,
-          filesCleanedUp: result.cleanedFiles.length,
-        },
-      };
-    } else if (options.project && !options.global) {
-      // Only migrate current project
-      const project = installations.projects.find((p: any) =>
-        p.path === Deno.cwd()
-      );
-      if (!project?.needsMigration) {
-        return {
-          success: true,
-          action: "nothing",
-          message: "Current project doesn't need migration",
-        };
-      }
-
-      const result = await migrateInstallation(
-        project.path,
-        false,
-        {
-          dryRun: options.dryRun,
-          silent: options.silent,
-          cleanupLegacy: options.cleanup,
-        },
-      );
-
-      if (!result.success && result.error) {
-        return {
-          success: false,
-          action: "error",
-          message: result.error,
-        };
-      }
-
-      return {
-        success: true,
-        action: options.dryRun ? "report" : "migrated",
-        message: options.dryRun
-          ? "Dry run completed for current project"
-          : "Current project migrated successfully",
-        details: {
-          projectsMigrated: 1,
-          filesCleanedUp: result.cleanedFiles.length,
-        },
-      };
-    } else {
-      // Migrate all
-      const results = await migrateAll({
-        dryRun: options.dryRun,
-        silent: options.silent,
-        cleanupLegacy: options.cleanup,
-        includeProjects,
-      });
-
-      if (!options.silent) {
-        if (options.dryRun) {
-          Brand.log("\n=== Migration Summary (Dry Run) ===");
-        } else {
-          Brand.log("\n=== Migration Summary ===");
-        }
-
-        console.log(
-          `Global installation: ${
-            results.global.success ? "✅ Migrated" : "❌ Failed"
-          }`,
-        );
-        console.log(
-          `Project installations: ${results.projects.length} processed`,
-        );
-        console.log(`Total files migrated: ${results.summary.totalMigrated}`);
-
-        if (options.cleanup) {
-          console.log(
-            `Legacy files cleaned up: ${results.summary.totalCleaned}`,
-          );
-        }
-
-        if (results.summary.errors.length > 0) {
-          console.log("\n❌ Errors:");
-          for (const error of results.summary.errors) {
-            console.log(`   ${error}`);
-          }
-        }
-      }
-
-      const success = results.summary.errors.length === 0;
-
-      return {
-        success,
-        action: options.dryRun ? "report" : "migrated",
-        message: success
-          ? `Successfully ${
-            options.dryRun ? "analyzed" : "migrated"
-          } all installations`
-          : "Migration completed with some errors",
-        details: {
-          globalMigrated: results.global.success,
-          projectsMigrated: results.projects.filter((p: any) =>
-            p.success
-          ).length,
-          filesCleanedUp: results.summary.totalCleaned,
-        },
+        success: false,
+        action: "error",
+        message: result.errors.join("; "),
       };
     }
+
+    if (!options.silent) {
+      if (options.dryRun) {
+        Brand.success("Dry run completed successfully!");
+      } else {
+        Brand.success("Migration completed successfully!");
+        console.log(`✅ Migrated ${result.migratedFiles.length} files`);
+        if (options.cleanup) {
+          console.log(`🧹 Cleaned up legacy files`);
+        }
+      }
+    }
+
+    return {
+      success: true,
+      action: options.dryRun ? "report" : "migrated",
+      message: options.dryRun
+        ? "Dry run completed"
+        : "Migration completed successfully",
+      details: {
+        filesCleanedUp: result.migratedFiles.length,
+      },
+    };
   } catch (error) {
     return {
       success: false,
       action: "error",
-      message: Brand.errorWithSolution(
-        "Migration failed",
-        error instanceof Error ? error.message : String(error),
-      ),
+      message: `Migration failed: ${(error as Error).message}`,
     };
+  }
+}
+
+/**
+ * CLI entry point for the migrate command
+ */
+export async function migrateCommand(args: string[]): Promise<void> {
+  // Parse command line arguments
+  const options: MigrateOptions = {
+    dryRun: args.includes("--dry-run") || args.includes("-d"),
+    cleanup: args.includes("--cleanup") || args.includes("-c"),
+    silent: args.includes("--silent") || args.includes("-s"),
+    report: args.includes("--report") || args.includes("-r"),
+    verify: args.includes("--verify") || args.includes("-v"),
+    force: args.includes("--force") || args.includes("-f"),
+    global: args.includes("--global") || args.includes("-g"),
+    project: args.includes("--project") || args.includes("-p"),
+  };
+
+  const result = await migrate(options);
+
+  if (!result.success) {
+    console.error(`❌ ${result.message}`);
+    Deno.exit(1);
   }
 }

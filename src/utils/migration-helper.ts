@@ -313,50 +313,74 @@ function compareObjects(
   path: string,
   differences: string[],
 ): void {
-  const keys1 = Object.keys(obj1 || {});
-  const keys2 = Object.keys(obj2 || {});
+  if (!obj1 || typeof obj1 !== "object" || !obj2 || typeof obj2 !== "object") {
+    differences.push(
+      `Type mismatch at ${path}: ${typeof obj1} vs ${typeof obj2}`,
+    );
+    return;
+  }
+
+  const obj1Record = obj1 as Record<string, unknown>;
+  const obj2Record = obj2 as Record<string, unknown>;
+
+  const keys1 = Object.keys(obj1Record);
+  const keys2 = Object.keys(obj2Record);
   const allKeys = new Set([...keys1, ...keys2]);
 
   for (const key of allKeys) {
     const currentPath = path ? `${path}.${key}` : key;
 
-    if (!(key in obj1)) {
+    if (!(key in obj1Record)) {
       differences.push(
-        `Missing in first: ${currentPath} = ${JSON.stringify(obj2[key])}`,
+        `Missing in first: ${currentPath} = ${JSON.stringify(obj2Record[key])}`,
       );
-    } else if (!(key in obj2)) {
+    } else if (!(key in obj2Record)) {
       differences.push(
-        `Missing in second: ${currentPath} = ${JSON.stringify(obj1[key])}`,
+        `Missing in second: ${currentPath} = ${
+          JSON.stringify(obj1Record[key])
+        }`,
       );
-    } else if (typeof obj1[key] !== typeof obj2[key]) {
+    } else if (typeof obj1Record[key] !== typeof obj2Record[key]) {
       differences.push(
-        `Type mismatch at ${currentPath}: ${typeof obj1[key]} vs ${typeof obj2[
+        `Type mismatch at ${currentPath}: ${typeof obj1Record[
+          key
+        ]} vs ${typeof obj2Record[
           key
         ]}`,
       );
     } else if (
-      typeof obj1[key] === "object" && obj1[key] !== null && obj2[key] !== null
+      typeof obj1Record[key] === "object" && obj1Record[key] !== null &&
+      obj2Record[key] !== null
     ) {
-      if (Array.isArray(obj1[key]) && Array.isArray(obj2[key])) {
-        if (JSON.stringify(obj1[key]) !== JSON.stringify(obj2[key])) {
+      if (Array.isArray(obj1Record[key]) && Array.isArray(obj2Record[key])) {
+        if (
+          JSON.stringify(obj1Record[key]) !== JSON.stringify(obj2Record[key])
+        ) {
           differences.push(
             `Array difference at ${currentPath}: ${
-              JSON.stringify(obj1[key])
-            } vs ${JSON.stringify(obj2[key])}`,
+              JSON.stringify(obj1Record[key])
+            } vs ${JSON.stringify(obj2Record[key])}`,
           );
         }
-      } else if (!Array.isArray(obj1[key]) && !Array.isArray(obj2[key])) {
-        compareObjects(obj1[key], obj2[key], currentPath, differences);
+      } else if (
+        !Array.isArray(obj1Record[key]) && !Array.isArray(obj2Record[key])
+      ) {
+        compareObjects(
+          obj1Record[key],
+          obj2Record[key],
+          currentPath,
+          differences,
+        );
       } else {
         differences.push(
           `Structure mismatch at ${currentPath}: array vs object`,
         );
       }
-    } else if (obj1[key] !== obj2[key]) {
+    } else if (obj1Record[key] !== obj2Record[key]) {
       differences.push(
-        `Value difference at ${currentPath}: ${JSON.stringify(obj1[key])} vs ${
-          JSON.stringify(obj2[key])
-        }`,
+        `Value difference at ${currentPath}: ${
+          JSON.stringify(obj1Record[key])
+        } vs ${JSON.stringify(obj2Record[key])}`,
       );
     }
   }
