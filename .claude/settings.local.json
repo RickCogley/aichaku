@@ -115,7 +115,12 @@
       "mcp__test-formatting__test_structured",
       "mcp__test-formatting__test_json",
       "Bash(./aichaku mcp:*)",
-      "Bash(awk:*)"
+      "Bash(awk:*)",
+      "Bash(git mv:*)",
+      "Bash(./scripts/migrate-standards.sh:*)",
+      "Bash(./scripts/update-standards-references.sh:*)",
+      "Bash(./cleanup-duplicate-standards.sh:*)",
+      "Bash(/Users/rcogley/dev/aichaku/fix-yaml-paths.sh:*)"
     ],
     "deny": []
   }
