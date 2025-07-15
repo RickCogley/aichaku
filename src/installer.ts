@@ -36,6 +36,7 @@ export async function install(
   // codeql[js/path-injection] Safe because path is derived from import.meta.url and methodologyName is validated
   const methodologyPath = resolve(
     new URL("..", import.meta.url).pathname,
+    "docs",
     "methodologies",
     methodologyName,
   );

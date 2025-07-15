@@ -1,0 +1,158 @@
+standard: 15-factor
+name: "15-Factor App Methodology"
+
+summary:
+  critical: |
+    - Store ALL config in environment variables
+    - Execute as stateless processes (no in-memory state)
+    - Treat backing services as attached resources
+    - Export services via port binding
+    - Maximize robustness with fast startup and graceful shutdown
+  additional_factors: "API first design, comprehensive telemetry, centralized auth"
+  container_ready: "Designed for Kubernetes and cloud platforms"
+  dev_prod_parity: "Keep all environments as similar as possible"
+
+display:
+  description: "Modern cloud-native application development methodology extending the original 12-factor principles"
+  principles:
+    - "1. Codebase - One codebase tracked in revision control"
+    - "2. Dependencies - Explicitly declare and isolate"
+    - "3. Config - Store in the environment"
+    - "4. Backing services - Treat as attached resources"
+    - "5. Build, release, run - Strictly separate stages"
+    - "6. Processes - Execute as stateless processes"
+    - "7. Port binding - Export services via port binding"
+    - "8. Concurrency - Scale out via the process model"
+    - "9. Disposability - Fast startup and graceful shutdown"
+    - "10. Dev/prod parity - Keep environments similar"
+    - "11. Logs - Treat as event streams"
+    - "12. Admin processes - Run as one-off processes"
+    - "13. API first - Design APIs before implementation"
+    - "14. Telemetry - Collect metrics, logs, and traces"
+    - "15. Authentication - Centralized auth for all services"
+  settings:
+    config_source: "environment"
+    process_model: "stateless"
+    scaling_method: "horizontal"
+    container_runtime: "docker|kubernetes"
+    health_checks: true
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/standards/architecture/15-factor"
+    local: "/docs/standards/architecture/15-factor.md"
+
+rules:
+  codebase:
+    description: "One codebase tracked in revision control, many deploys"
+    validation:
+      - "Single git repository per application"
+      - "No code duplication across services"
+      - "Shared code extracted to libraries"
+  dependencies:
+    description: "Explicitly declare and isolate dependencies"
+    requirements:
+      - "All dependencies in manifest (package.json, requirements.txt, etc.)"
+      - "No reliance on system packages"
+      - "Dependency isolation (virtualenv, containers)"
+      - "Exact versions specified"
+  configuration:
+    description: "Store config in the environment"
+    validation:
+      - "No config in code"
+      - "Environment variables for all settings"
+      - "No config files checked into repository"
+      - "Separate config per deploy environment"
+  backing_services:
+    description: "Treat backing services as attached resources"
+    implementation:
+      - "Services attached via URL/credentials in env"
+      - "No distinction between local and third-party services"
+      - "Services can be swapped without code changes"
+      - "Connection strings in environment variables"
+  build_release_run:
+    description: "Strictly separate build and run stages"
+    stages:
+      - "Build: Convert code to executable bundle"
+      - "Release: Combine build with config"
+      - "Run: Execute in the execution environment"
+    validation:
+      - "Builds are immutable"
+      - "Releases have unique IDs"
+      - "Can't change code at runtime"
+  processes:
+    description: "Execute the app as stateless processes"
+    requirements:
+      - "No sticky sessions"
+      - "Session state in backing service (Redis, DB)"
+      - "No file system state between requests"
+      - "Processes can be started/stopped anytime"
+  port_binding:
+    description: "Export services via port binding"
+    implementation:
+      - "App is self-contained"
+      - "Binds to port via PORT env variable"
+      - "No runtime injection (e.g., Apache modules)"
+      - "HTTP server included in app"
+  concurrency:
+    description: "Scale out via the process model"
+    validation:
+      - "Horizontal scaling preferred"
+      - "Different process types for different workloads"
+      - "No daemonization or PID files"
+      - "Process manager handles scaling"
+  disposability:
+    description: "Maximize robustness with fast startup and graceful shutdown"
+    requirements:
+      - "Processes start in seconds"
+      - "Graceful shutdown on SIGTERM"
+      - "Robust against sudden death"
+      - "Return jobs to queue on shutdown"
+  dev_prod_parity:
+    description: "Keep development, staging, and production similar"
+    gaps_to_minimize:
+      - "Time gap: Deploy hours/minutes after writing"
+      - "Personnel gap: Developers deploy their code"
+      - "Tools gap: Same backing services everywhere"
+  logs:
+    description: "Treat logs as event streams"
+    implementation:
+      - "App never manages log files"
+      - "Write to stdout/stderr"
+      - "Execution environment handles routing"
+      - "Structured logging (JSON) preferred"
+  admin_processes:
+    description: "Run admin/management tasks as one-off processes"
+    validation:
+      - "Same environment as regular processes"
+      - "Run against same release"
+      - "Admin code ships with app code"
+      - "Use same dependency isolation"
+  api_first:
+    description: "Design and document APIs before implementation"
+    requirements:
+      - "OpenAPI/Swagger specification"
+      - "API versioning strategy"
+      - "Contract-first development"
+      - "API documentation auto-generated"
+  telemetry:
+    description: "Comprehensive observability built-in"
+    components:
+      - "Metrics: Application and business metrics"
+      - "Logs: Structured event logging"
+      - "Traces: Distributed tracing"
+      - "Health checks: Liveness and readiness probes"
+  authentication:
+    description: "Centralized authentication and authorization"
+    implementation:
+      - "OAuth2/OIDC for service auth"
+      - "JWT tokens for stateless auth"
+      - "Service-to-service authentication"
+      - "API gateway handles auth concerns"
+  container_requirements:
+    description: "Container and orchestration readiness"
+    checklist:
+      - "Dockerfile follows best practices"
+      - "Multi-stage builds for smaller images"
+      - "Non-root user in container"
+      - "Health check endpoints implemented"
+      - "Graceful shutdown handling"
+      - "Resource limits defined"

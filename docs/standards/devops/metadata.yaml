@@ -1,0 +1,9 @@
+name: "DevOps Standards"
+description: "Operational excellence and automation practices"
+category: "devops"
+tags: ["devops", "operations", "automation"]
+standards:
+  - id: "dora"
+    name: "DORA Metrics"
+    description: "Deployment frequency and MTTR"
+    tags: ["metrics", "performance", "devops"]

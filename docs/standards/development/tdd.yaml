@@ -1,0 +1,95 @@
+standard: tdd
+name: "Test-Driven Development"
+
+summary:
+  critical: |
+    - Write failing tests FIRST before any implementation
+    - Follow Red-Green-Refactor cycle strictly
+    - Test behavior, not implementation details
+    - One assertion per test for clarity
+    - Use dependency injection for testability
+  test_structure: AAA (Arrange-Act-Assert) pattern
+  naming: Descriptive test names that explain the behavior
+  coverage: Aim for 80%+ coverage with meaningful tests
+  mocking: Mock external dependencies, not internal implementation
+
+display:
+  description: "A software development methodology where tests are written before the actual code implementation"
+  principles:
+    - "🔴 Red: Write a failing test first"
+    - "🟢 Green: Write minimal code to pass"
+    - "🔵 Refactor: Improve code while keeping tests green"
+    - "Test behavior, not implementation"
+    - "One assertion per test"
+    - "Descriptive test names"
+    - "Mock external dependencies only"
+  settings:
+    test_framework: "jest|mocha|pytest|xunit|gotest"
+    coverage_threshold: 80
+    watch_mode: true
+    test_isolation: true
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/docs/standards/development/tdd"
+    local: "/docs/standards/development/tdd.md"
+
+rules:
+  test_first:
+    description: "Tests must be written before implementation code"
+    validation:
+      - "Check git history for test commits before implementation"
+      - "Verify test files exist for all production code"
+  red_green_refactor:
+    description: "Follow the TDD cycle strictly"
+    validation:
+      - "Tests should fail initially"
+      - "Implementation should be minimal to pass tests"
+      - "Refactoring should not break existing tests"
+  behavior_testing:
+    description: "Test public behavior, not private implementation"
+    validation:
+      - "No testing of private methods directly"
+      - "No mocking of internal class methods"
+      - "Focus on input/output and side effects"
+  test_structure:
+    description: "Use AAA pattern for test organization"
+    validation:
+      - "Clear separation of Arrange, Act, Assert phases"
+      - "Setup code in beforeEach/setUp methods"
+      - "Teardown in afterEach/tearDown methods"
+  test_naming:
+    description: "Test names should describe the behavior being tested"
+    patterns:
+      - "should [expected behavior] when [condition]"
+      - "returns [expected] for [input scenario]"
+      - "throws [error type] when [error condition]"
+  single_assertion:
+    description: "Each test should verify one behavior"
+    validation:
+      - "One expect/assert statement per test"
+      - "Multiple related assertions grouped in separate tests"
+  mocking_strategy:
+    description: "Mock external dependencies, not internals"
+    validation:
+      - "Database connections should be mocked"
+      - "External API calls should be mocked"
+      - "File system operations should be mocked"
+      - "Internal class methods should not be mocked"
+  test_isolation:
+    description: "Tests should not depend on each other"
+    validation:
+      - "Each test can run independently"
+      - "No shared state between tests"
+      - "Order of test execution doesn't matter"
+  coverage_requirements:
+    description: "Maintain high test coverage"
+    thresholds:
+      statements: 80
+      branches: 75
+      functions: 80
+      lines: 80
+  ci_integration:
+    description: "Tests must run in CI/CD pipeline"
+    requirements:
+      - "All tests pass before merge"
+      - "Coverage reports generated"
+      - "Test results visible in PR"

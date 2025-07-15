@@ -1,0 +1,21 @@
+name: "Development Standards"
+description: "Coding standards and best practices"
+category: "development"
+tags: ["development", "coding", "practices"]
+standards:
+  - id: "google-style"
+    name: "Google Style Guides"
+    description: "Language-specific style guides"
+    tags: ["style", "formatting", "best-practices"]
+  - id: "conventional-commits"
+    name: "Conventional Commits"
+    description: "Structured commit messages"
+    tags: ["git", "commits", "automation"]
+  - id: "solid"
+    name: "SOLID Principles"
+    description: "Object-oriented design principles"
+    tags: ["oop", "design", "principles"]
+  - id: "tdd"
+    name: "Test-Driven Development"
+    description: "Red-green-refactor cycle"
+    tags: ["testing", "methodology", "quality"]

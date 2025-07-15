@@ -6,8 +6,12 @@ import { fetchMethodologies, fetchStandards } from "./content-fetcher.ts";
 import { getAichakuPaths } from "../paths.ts";
 import { resolveProjectPath } from "../utils/project-paths.ts";
 import { safeRemove } from "../utils/path-security.ts";
-import { findMetadataPath, migrateMetadata } from "./upgrade-fix.ts";
 import { Brand } from "../utils/branded-messages.ts";
+import {
+  ConfigManager,
+  getProjectConfig,
+  globalConfig,
+} from "../utils/config-manager.ts";
 
 interface UpgradeOptions {
   global?: boolean;
@@ -27,15 +31,8 @@ interface UpgradeResult {
   latestVersion?: string;
 }
 
-interface AichakuMetadata {
-  version: string;
-  installedAt: string;
-  installationType: "global" | "local";
-  lastUpgrade: string | null;
-}
-
 /**
- * Upgrade Aichaku to the latest version
+ * Upgrade Aichaku to the latest version (v2 with ConfigManager)
  *
  * @param options - Upgrade options
  * @returns Promise with upgrade result
@@ -51,56 +48,81 @@ export async function upgrade(
   // Security: Use safe project path resolution
   const _projectPath = resolveProjectPath(options.projectPath);
 
-  // Find metadata in any of the possible locations
-  const metadataInfo = await findMetadataPath(targetPath, isGlobal);
+  // Use ConfigManager instead of direct metadata reading
+  const configManager = isGlobal ? globalConfig : getProjectConfig(targetPath);
 
-  if (!metadataInfo.path) {
-    return {
-      success: false,
-      path: targetPath,
-      message:
-        `🪴 Aichaku: No installation found at ${targetPath}. Run 'aichaku init' first.`,
-    };
-  }
+  // Try to load configuration
+  let hasConfig = false;
+  let needsMigration = false;
 
-  const metadataPath = metadataInfo.path;
-
-  // Read current metadata
-  let metadata: AichakuMetadata;
   try {
-    // Security: metadataPath is safe - validated to be either .aichaku.json or .aichaku-project in .claude directory
-    const content = await Deno.readTextFile(metadataPath);
-    const rawMetadata = JSON.parse(content);
+    await configManager.load();
+    hasConfig = true;
+  } catch {
+    // Check if legacy files exist
+    const legacyFiles = [
+      join(targetPath, ".aichaku.json"),
+      join(targetPath, ".aichaku-project"),
+      join(targetPath, "aichaku-standards.json"),
+      join(targetPath, "aichaku.config.json"),
+    ];
 
-    // Handle both old and new metadata formats
-    metadata = {
-      version: rawMetadata.version || metadataInfo.version || VERSION,
-      installedAt: rawMetadata.installedAt || rawMetadata.createdAt ||
-        new Date().toISOString(),
-      installationType: rawMetadata.installationType ||
-        (isGlobal ? "global" : "local"),
-      lastUpgrade: rawMetadata.lastUpgrade || null,
-    };
-  } catch (error) {
-    return {
-      success: false,
-      path: targetPath,
-      message: `Failed to read installation metadata: ${
-        error instanceof Error ? error.message : String(error)
-      }`,
-    };
+    for (const file of legacyFiles) {
+      if (await exists(file)) {
+        needsMigration = true;
+        break;
+      }
+    }
+
+    if (!needsMigration) {
+      return {
+        success: false,
+        path: targetPath,
+        message:
+          `🪴 Aichaku: No installation found at ${targetPath}. Run 'aichaku init' first.`,
+      };
+    }
   }
+
+  // Migrate if needed
+  if (needsMigration && !hasConfig) {
+    if (!options.silent) {
+      Brand.progress(
+        "Migrating to consolidated configuration format...",
+        "active",
+      );
+    }
+
+    const migrated = await configManager.migrate();
+    if (migrated) {
+      await configManager.load();
+      hasConfig = true;
+
+      if (!options.silent) {
+        Brand.success("Configuration migrated to aichaku.json");
+      }
+    } else {
+      return {
+        success: false,
+        path: targetPath,
+        message: "Failed to migrate configuration",
+      };
+    }
+  }
+
+  const config = configManager.get();
+  const currentVersion = config.project.installedVersion || VERSION;
 
   // Check version
   if (options.check) {
-    if (metadata.version === VERSION) {
+    if (currentVersion === VERSION) {
       return {
         success: true,
         path: targetPath,
         message:
           `ℹ️  Current version: v${VERSION}\n    Latest version:  v${VERSION}\n    \n✓ You're up to date!`,
         action: "check",
-        version: metadata.version,
+        version: currentVersion,
         latestVersion: VERSION,
       };
     } else {
@@ -108,16 +130,16 @@ export async function upgrade(
         success: true,
         path: targetPath,
         message:
-          `📦 Update available: v${metadata.version} → v${VERSION}\n\nRun 'aichaku upgrade' to install the latest version.`,
+          `📦 Update available: v${currentVersion} → v${VERSION}\n\nRun 'aichaku upgrade' to install the latest version.`,
         action: "check",
-        version: metadata.version,
+        version: currentVersion,
         latestVersion: VERSION,
       };
     }
   }
 
   // Check if already on latest version
-  if (metadata.version === VERSION && !options.force) {
+  if (currentVersion === VERSION && !options.force) {
     return {
       success: true,
       path: targetPath,
@@ -129,13 +151,16 @@ export async function upgrade(
 
   if (options.dryRun) {
     console.log(`[DRY RUN] Would upgrade Aichaku at: ${targetPath}`);
-    console.log(`[DRY RUN] Current version: v${metadata.version}`);
+    console.log(`[DRY RUN] Current version: v${currentVersion}`);
     console.log(`[DRY RUN] New version: v${VERSION}`);
     console.log("[DRY RUN] Would update:");
     console.log("  - methodologies/ (latest methodology files)");
+    console.log("  - standards/ (latest standards library)");
     console.log("[DRY RUN] Would preserve:");
     console.log("  - user/ (all customizations)");
-    console.log("  - .aichaku.json (with updated version)");
+    console.log("  - aichaku.json (with updated version)");
+    console.log("[DRY RUN] Would migrate:");
+    console.log("  - Legacy metadata files to consolidated aichaku.json");
     return {
       success: true,
       path: targetPath,
@@ -145,7 +170,7 @@ export async function upgrade(
 
   try {
     if (!options.silent) {
-      console.log(Brand.upgrading(metadata.version, VERSION));
+      console.log(Brand.upgrading(currentVersion, VERSION));
     }
 
     // Check for user customizations
@@ -272,61 +297,29 @@ export async function upgrade(
     }
 
     // Show what's new in this version
-    if (!options.silent && metadata.version !== VERSION) {
-      // Type assertion to handle const literal type
-      const currentVersion = VERSION as string;
-
-      if (currentVersion === "0.11.0") {
-        console.log("\n✨ What's new in v0.11.0:");
-        console.log("   • 🔄 Automatic methodology updates during upgrade");
-        console.log("   • 📁 Downloads new files added in releases");
-        console.log("   • ✨ Overwrites existing files with latest content");
-        console.log("   • 🚫 No more confusing network permission warnings");
-      } else if (currentVersion === "0.9.1") {
-        console.log("\n✨ What's new in v0.9.1:");
-        console.log("   • 🔧 Fixed installer upgrade verification");
-        console.log("   • 📁 Support for new project marker format");
-        console.log("   • 🚀 Better error handling during upgrades");
-      } else if (currentVersion === "0.9.0") {
-        console.log("\n✨ What's new in v0.9.0:");
-        console.log(
-          "   • 🎯 Unified upgrade command (no more integrate --force!)",
-        );
-        console.log("   • ✂️  Surgical CLAUDE.md updates with markers");
-        console.log("   • 🔄 Automatic project updates during upgrade");
-      } else if (currentVersion === "0.8.0") {
-        console.log("\n✨ What's new in v0.8.0:");
-        console.log("   • 🚀 Ultra-simple installation: deno run -A init.ts");
-        console.log("   • 📦 Enhanced install script with version feedback");
-        console.log("   • 🔄 Improved upgrade experience");
-        console.log("   • 💡 Clear next steps after installation");
-      } else if (currentVersion === "0.7.0") {
-        console.log("\n✨ What's new in v0.7.0:");
-        console.log("   • 🪴 Visual identity with progress indicators");
-        console.log("   • 💬 Discussion-first document creation");
-        console.log("   • 📊 Mermaid diagram integration");
-        // codeql[js/todo-comment] - This is a changelog message, not a TODO comment
-        console.log("   • ✅ Fixed TODO lists and formatting"); // DevSkim: ignore DS176209 - This is a changelog message, not a TODO comment
-      }
+    if (!options.silent && currentVersion !== VERSION) {
+      showWhatsNew(VERSION, currentVersion);
     }
 
-    // Update metadata
-    metadata.version = VERSION;
-    metadata.lastUpgrade = new Date().toISOString();
+    // Update configuration with new version
+    await configManager.update({
+      project: {
+        installedVersion: VERSION,
+        lastUpdated: new Date().toISOString(),
+      },
+    });
 
-    // Migrate metadata to new location if needed
-    if (isGlobal && metadataInfo.needsMigration) {
-      const newPath = paths.global.config;
-      await migrateMetadata(metadataPath, newPath, metadata);
+    // Clean up legacy files if this was a migration
+    if (needsMigration && !options.dryRun) {
       if (!options.silent) {
-        Brand.success("Migrated configuration to new location");
+        Brand.progress("Cleaning up legacy metadata files...", "active");
       }
-    } else {
-      // Update existing metadata file
-      await Deno.writeTextFile(
-        metadataPath,
-        JSON.stringify(metadata, null, 2),
-      );
+
+      await configManager.cleanupLegacyFiles();
+
+      if (!options.silent) {
+        Brand.success("Legacy files cleaned up");
+      }
     }
 
     // NEW: If upgrading a project (not global), also update CLAUDE.md
@@ -361,7 +354,10 @@ export async function upgrade(
       success: true,
       path: targetPath,
       message: Brand.completed(`Upgrade to v${VERSION}`) +
-        "\n\n💡 All your projects now have the latest methodologies!",
+        "\n\n💡 All your projects now have the latest methodologies!" +
+        (needsMigration
+          ? "\n✨ Configuration migrated to consolidated format!"
+          : ""),
       action: "upgraded",
       version: VERSION,
     };
@@ -376,4 +372,76 @@ export async function upgrade(
       action: "error",
     };
   }
+}
+
+/**
+ * Show what's new in the current version
+ */
+function showWhatsNew(version: string, previousVersion: string) {
+  // Type assertion to handle const literal type
+  const currentVersion = version as string;
+
+  console.log(`\n✨ What's new in v${currentVersion}:`);
+
+  // Add version-specific changelogs here
+  if (currentVersion === "0.30.0") {
+    console.log("   • 📦 Consolidated metadata into single aichaku.json");
+    console.log("   • 🔄 Automatic migration from legacy file formats");
+    console.log("   • 🧹 Cleaner .claude/aichaku directory structure");
+    console.log("   • ⚡ Improved configuration management");
+  } else if (currentVersion === "0.11.0") {
+    console.log("   • 🔄 Automatic methodology updates during upgrade");
+    console.log("   • 📁 Downloads new files added in releases");
+    console.log("   • ✨ Overwrites existing files with latest content");
+    console.log("   • 🚫 No more confusing network permission warnings");
+  } else if (currentVersion === "0.9.1") {
+    console.log("   • 🔧 Fixed installer upgrade verification");
+    console.log("   • 📁 Support for new project marker format");
+    console.log("   • 🚀 Better error handling during upgrades");
+  } else if (currentVersion === "0.9.0") {
+    console.log(
+      "   • 🎯 Unified upgrade command (no more integrate --force!)",
+    );
+    console.log("   • ✂️  Surgical CLAUDE.md updates with markers");
+    console.log("   • 🔄 Automatic project updates during upgrade");
+  } else if (currentVersion === "0.8.0") {
+    console.log("   • 🚀 Ultra-simple installation: deno run -A init.ts");
+    console.log("   • 📦 Enhanced install script with version feedback");
+    console.log("   • 🔄 Improved upgrade experience");
+    console.log("   • 💡 Clear next steps after installation");
+  } else if (currentVersion === "0.7.0") {
+    console.log("   • 🪴 Visual identity with progress indicators");
+    console.log("   • 💬 Discussion-first document creation");
+    console.log("   • 📊 Mermaid diagram integration");
+    // codeql[js/todo-comment] - This is a changelog message, not a TODO comment
+    console.log("   • ✅ Fixed TODO lists and formatting"); // DevSkim: ignore DS176209 - This is a changelog message, not a TODO comment
+  }
+
+  // Show migration notice if upgrading from pre-consolidation version
+  const preConsolidationVersion = "0.29.0";
+  if (compareVersions(previousVersion, preConsolidationVersion) <= 0) {
+    console.log("\n🔄 Migration Notice:");
+    console.log(
+      "   Your metadata files have been consolidated into a single aichaku.json",
+    );
+    console.log("   Legacy files have been cleaned up automatically");
+  }
+}
+
+/**
+ * Compare two semantic versions
+ * Returns: -1 if v1 < v2, 0 if equal, 1 if v1 > v2
+ */
+function compareVersions(v1: string, v2: string): number {
+  const parts1 = v1.split(".").map(Number);
+  const parts2 = v2.split(".").map(Number);
+
+  for (let i = 0; i < 3; i++) {
+    const p1 = parts1[i] || 0;
+    const p2 = parts2[i] || 0;
+    if (p1 < p2) return -1;
+    if (p1 > p2) return 1;
+  }
+
+  return 0;
 }

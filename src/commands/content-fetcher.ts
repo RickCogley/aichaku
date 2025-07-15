@@ -1,6 +1,7 @@
 import { ensureDir } from "jsr:@std/fs@1";
 import { join } from "jsr:@std/path@1";
 import { validatePath } from "../utils/path-security.ts";
+import { getContentStructure } from "../utils/dynamic-content-discovery.ts";
 
 interface FetchOptions {
   silent?: boolean;
@@ -22,9 +23,20 @@ export async function fetchContent(
     `https://raw.githubusercontent.com/RickCogley/aichaku/v${version}/${contentType}`;
 
   // Get the appropriate structure based on content type
-  const structure = contentType === "methodologies"
-    ? getMethodologyStructure()
-    : getStandardsStructure();
+  // First try to discover content dynamically from the repository
+  let structure: Record<string, unknown>;
+  try {
+    // For GitHub fetching, we'll use the fallback to hardcoded for now
+    // In the future, we could fetch a manifest file from the repo
+    structure = contentType === "methodologies"
+      ? getMethodologyStructure()
+      : getStandardsStructure();
+  } catch {
+    // Fallback to hardcoded structure
+    structure = contentType === "methodologies"
+      ? getMethodologyStructure()
+      : getStandardsStructure();
+  }
 
   let successCount = 0;
   let failureCount = 0;
@@ -231,6 +243,120 @@ function getStandardsStructure(): Record<string, unknown> {
       "test-pyramid.md": "",
     },
   };
+}
+
+/**
+ * Fetches content from local filesystem with dynamic discovery
+ * Used when content is available locally (e.g., development mode)
+ */
+export async function fetchLocalContent(
+  contentType: ContentType,
+  sourcePath: string,
+  targetPath: string,
+  options: FetchOptions = {},
+): Promise<boolean> {
+  try {
+    // Dynamically discover content structure
+    const structure = await getContentStructure(contentType, sourcePath, false);
+
+    let successCount = 0;
+    let failureCount = 0;
+    const failedFiles: string[] = [];
+
+    async function copyFile(relativePath: string): Promise<void> {
+      // Security: Validate the relative path doesn't contain traversal sequences
+      if (relativePath.includes("..")) {
+        throw new Error(
+          `Invalid path: ${relativePath} contains directory traversal`,
+        );
+      }
+
+      const sourceFile = join(sourcePath, contentType, relativePath);
+      const localPath = validatePath(relativePath, targetPath);
+
+      // Check if file exists and skip if overwrite is false
+      try {
+        const fileInfo = await Deno.stat(localPath);
+        if (fileInfo.isFile && !options.overwrite) {
+          successCount++;
+          return; // Skip existing files unless overwrite is requested
+        }
+      } catch {
+        // File doesn't exist, proceed with copy
+      }
+
+      try {
+        const content = await Deno.readTextFile(sourceFile);
+        await ensureDir(join(localPath, ".."));
+        await Deno.writeTextFile(localPath, content);
+        successCount++;
+      } catch (error) {
+        failureCount++;
+        failedFiles.push(relativePath);
+
+        if (!options.silent) {
+          console.warn(
+            `⚠️  Failed to copy ${relativePath}: ${
+              error instanceof Error ? error.message : String(error)
+            }`,
+          );
+        }
+      }
+    }
+
+    async function processStructure(
+      obj: Record<string, unknown>,
+      currentPath: string = "",
+    ): Promise<void> {
+      for (const [key, value] of Object.entries(obj)) {
+        const path = currentPath ? `${currentPath}/${key}` : key;
+
+        if (typeof value === "object" && value !== null) {
+          // It's a directory
+          await processStructure(value as Record<string, unknown>, path);
+        } else {
+          // It's a file
+          await copyFile(path);
+        }
+      }
+    }
+
+    await processStructure(structure);
+
+    // Report results
+    if (!options.silent) {
+      const contentName = contentType === "methodologies"
+        ? "methodology"
+        : contentType;
+
+      if (successCount === 0 && failureCount > 0) {
+        console.error(`\n❌ Failed to copy any ${contentName} files!`);
+        return false;
+      } else if (failureCount > 0) {
+        console.warn(
+          `\n⚠️  Partial success: ${successCount} files ready, ${failureCount} failed`,
+        );
+        return true; // Partial success is still considered success
+      } else if (successCount > 0) {
+        const capitalizedContent = contentType.charAt(0).toUpperCase() +
+          contentType.slice(1);
+        console.log(
+          `✨ ${capitalizedContent} ready (${successCount} files copied)\n`,
+        );
+      }
+    }
+
+    return successCount > 0;
+  } catch (error) {
+    if (!options.silent) {
+      console.error(
+        `❌ Failed to fetch local content: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
+    }
+    return false;
+  }
 }
 
 // Export legacy functions for backward compatibility

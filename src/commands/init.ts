@@ -207,7 +207,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
           // codeql[js/path-injection] Safe because path is derived from import.meta.url and uses relative hardcoded path
           const sourceMethodologies = join(
             new URL(".", import.meta.url).pathname,
-            "../../../methodologies",
+            "../../../docs/methodologies",
           );
           const targetMethodologies = paths.global.methodologies;
 
@@ -251,7 +251,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
           // Local development - copy from source
           const sourceStandards = join(
             new URL(".", import.meta.url).pathname,
-            "../../../standards",
+            "../../../docs/standards",
           );
           const targetStandards = paths.global.standards;
 

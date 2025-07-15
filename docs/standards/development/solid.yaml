@@ -1,0 +1,145 @@
+standard: solid
+name: "SOLID Principles"
+
+summary:
+  critical: |
+    - S: Single Responsibility - One reason to change per class
+    - O: Open/Closed - Open for extension, closed for modification
+    - L: Liskov Substitution - Subtypes must be substitutable
+    - I: Interface Segregation - Many specific interfaces > one general
+    - D: Dependency Inversion - Depend on abstractions, not concretions
+  object_oriented: "Core principles for maintainable OOP design"
+  flexibility: "Enables code extension without modification"
+  testability: "Promotes dependency injection and mocking"
+
+display:
+  description: "Five fundamental principles of object-oriented design that promote maintainable, flexible, and testable code"
+  principles:
+    - "🔒 Single Responsibility - Each class has one job"
+    - "🔓 Open/Closed - Open for extension, closed for modification"
+    - "🔄 Liskov Substitution - Subtypes must be substitutable"
+    - "🎯 Interface Segregation - Small, focused interfaces"
+    - "🔀 Dependency Inversion - Depend on abstractions"
+  settings:
+    apply_to: "classes|interfaces|modules"
+    design_pattern_friendly: true
+    dependency_injection: true
+    interface_first: true
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/standards/development/solid"
+    local: "/docs/standards/development/solid.md"
+
+rules:
+  single_responsibility:
+    description: "S - A class should have only one reason to change"
+    principle: "Each class should have only one responsibility or job"
+    validation:
+      - "Can you describe the class responsibility in one sentence?"
+      - "If you change one aspect, do other aspects need to change?"
+      - "Are there multiple actors that would request changes?"
+    violations:
+      - "Class handles both business logic and persistence"
+      - "Class manages both data and presentation"
+      - "Class performs validation and logging"
+    benefits:
+      - "Easier to understand and maintain"
+      - "Lower coupling between concerns"
+      - "Changes are isolated"
+  open_closed:
+    description: "O - Open for extension, closed for modification"
+    principle: "Software entities should be open for extension but closed for modification"
+    implementation:
+      - "Use inheritance and polymorphism"
+      - "Abstract base classes and interfaces"
+      - "Strategy pattern for behavior variations"
+      - "Plugin architectures"
+    validation:
+      - "Can you add new functionality without changing existing code?"
+      - "Are variations handled through polymorphism?"
+      - "Do you use abstract classes or interfaces?"
+    violations:
+      - "Adding new types requires modifying existing switch statements"
+      - "New features require changes to multiple existing classes"
+      - "Conditional logic scattered throughout codebase"
+  liskov_substitution:
+    description: "L - Objects of a superclass should be replaceable with objects of a subclass"
+    principle: "Subtypes must be substitutable for their base types"
+    requirements:
+      - "Subclasses must honor the contract of the superclass"
+      - "No strengthening of preconditions"
+      - "No weakening of postconditions"
+      - "Behavioral compatibility maintained"
+    validation:
+      - "Can you replace parent with child without breaking code?"
+      - "Does the subclass honor all parent contracts?"
+      - "Are exceptions and return types compatible?"
+    violations:
+      - "Subclass throws new exceptions not in parent"
+      - "Subclass requires more restrictive input"
+      - "Subclass provides less functionality than expected"
+  interface_segregation:
+    description: "I - Clients should not be forced to depend on interfaces they don't use"
+    principle: "Many client-specific interfaces are better than one general-purpose interface"
+    implementation:
+      - "Split large interfaces into smaller, focused ones"
+      - "Compose interfaces when multiple are needed"
+      - "Role-based interface design"
+    validation:
+      - "Does each interface serve a specific client need?"
+      - "Are there methods that some implementers don't need?"
+      - "Can interfaces be split by cohesive behavior?"
+    violations:
+      - "Interface with many unrelated methods"
+      - "Classes implementing empty methods to satisfy interface"
+      - "Clients depending on methods they don't use"
+  dependency_inversion:
+    description: "D - Depend on abstractions, not concretions"
+    principle: "High-level modules should not depend on low-level modules. Both should depend on abstractions"
+    implementation:
+      - "Dependency injection"
+      - "Abstract base classes or interfaces"
+      - "Inversion of Control containers"
+      - "Factory patterns"
+    validation:
+      - "Do high-level classes depend on abstractions?"
+      - "Are dependencies injected rather than created?"
+      - "Can you swap implementations easily?"
+    violations:
+      - "Direct instantiation of concrete classes"
+      - "Tight coupling to specific implementations"
+      - "Hard-coded dependencies"
+  design_patterns:
+    description: "SOLID-compliant design patterns"
+    patterns:
+      strategy:
+        principle: "Open/Closed, Dependency Inversion"
+        description: "Encapsulate algorithms and make them interchangeable"
+      factory:
+        principle: "Dependency Inversion, Open/Closed"
+        description: "Create objects without specifying exact classes"
+      decorator:
+        principle: "Open/Closed, Single Responsibility"
+        description: "Add behavior without modifying existing code"
+      adapter:
+        principle: "Open/Closed, Interface Segregation"
+        description: "Make incompatible interfaces work together"
+      observer:
+        principle: "Open/Closed, Dependency Inversion"
+        description: "Notify multiple objects of state changes"
+  refactoring_guidelines:
+    description: "How to refactor towards SOLID compliance"
+    steps:
+      - "Identify classes with multiple responsibilities"
+      - "Extract separate concerns into new classes"
+      - "Define interfaces for external dependencies"
+      - "Inject dependencies rather than creating them"
+      - "Use composition over inheritance"
+      - "Create focused, cohesive interfaces"
+  testing_benefits:
+    description: "How SOLID principles improve testability"
+    advantages:
+      - "Dependency injection enables mocking"
+      - "Single responsibility makes tests focused"
+      - "Interface segregation reduces test complexity"
+      - "Liskov substitution enables test doubles"
+      - "Open/closed enables testing new features in isolation"

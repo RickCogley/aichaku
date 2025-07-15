@@ -20,6 +20,11 @@ import {
   safeRemove,
 } from "../utils/path-security.ts";
 import { resolveProjectPath } from "../utils/project-paths.ts";
+import {
+  type ContentMetadata,
+  discoverContent,
+  type DiscoveredContent,
+} from "../utils/dynamic-content-discovery.ts";
 
 /**
  * Represents a development standard or guideline
@@ -76,7 +81,69 @@ interface CustomStandard {
 }
 
 /**
+ * Get discovered standards from the filesystem
+ * Caches the result for performance
+ */
+let cachedStandards: DiscoveredContent | null = null;
+let cacheTimestamp: number = 0;
+const CACHE_DURATION = 60000; // 1 minute cache
+
+async function getDiscoveredStandards(
+  basePath?: string,
+): Promise<DiscoveredContent> {
+  const now = Date.now();
+
+  // Return cached result if still valid
+  if (cachedStandards && (now - cacheTimestamp) < CACHE_DURATION) {
+    return cachedStandards;
+  }
+
+  // Discover standards from filesystem
+  const standardsPath = basePath || Deno.cwd();
+  cachedStandards = await discoverContent("standards", standardsPath, false);
+  cacheTimestamp = now;
+
+  return cachedStandards;
+}
+
+/**
+ * Convert discovered standards to the legacy format for backward compatibility
+ */
+function discoveredToLegacyFormat(
+  discovered: DiscoveredContent,
+): typeof STANDARD_CATEGORIES {
+  const categories: any = {};
+
+  for (const [categoryKey, items] of Object.entries(discovered.categories)) {
+    const categoryName = categoryKey.replace(/-/g, " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase()) + " Standards";
+
+    const standards: Record<string, Standard> = {};
+
+    for (const item of items) {
+      // Extract standard ID from path (remove .md extension)
+      const id = item.path.split("/").pop()?.replace(".md", "") || "";
+
+      standards[id] = {
+        name: item.name,
+        description: item.description,
+        tags: item.tags,
+      };
+    }
+
+    categories[categoryKey] = {
+      name: categoryName,
+      description: `${categoryName} and best practices`,
+      standards,
+    };
+  }
+
+  return categories as typeof STANDARD_CATEGORIES;
+}
+
+/**
  * Standard categories with their modules
+ * This is now dynamically populated from the filesystem
  */
 export const STANDARD_CATEGORIES = {
   security: {
@@ -360,16 +427,23 @@ export async function standards(options: StandardsOptions = {}): Promise<void> {
 async function listStandards(byCategory: boolean = false): Promise<void> {
   console.log("\n🪴 Aichaku: Available Standards\n");
 
+  // Get dynamically discovered standards
+  const discovered = await getDiscoveredStandards();
+
   if (byCategory) {
     // List by category
-    for (const [_categoryId, category] of Object.entries(STANDARD_CATEGORIES)) {
-      console.log(`${category.name}`);
-      console.log(`  ${category.description}\n`);
+    for (const [categoryId, items] of Object.entries(discovered.categories)) {
+      const categoryName = categoryId.replace(/-/g, " ")
+        .replace(/\b\w/g, (c) => c.toUpperCase()) + " Standards";
 
-      for (const [standardId, standard] of Object.entries(category.standards)) {
-        console.log(`  • ${standardId}: ${standard.name}`);
-        console.log(`    ${standard.description}`);
-        console.log(`    Tags: ${standard.tags.join(", ")}`);
+      console.log(`${categoryName}`);
+      console.log(`  ${categoryName} and best practices\n`);
+
+      for (const item of items) {
+        const standardId = item.path.split("/").pop()?.replace(".md", "") || "";
+        console.log(`  • ${standardId}: ${item.name}`);
+        console.log(`    ${item.description}`);
+        console.log(`    Tags: ${item.tags.join(", ")}`);
       }
       console.log();
     }
@@ -390,26 +464,28 @@ async function listStandards(byCategory: boolean = false): Promise<void> {
     }
   } else {
     // List all standards flat
-    const allStandards: Array<[string, Standard, string]> = [];
+    const allStandards: Array<
+      { id: string; item: ContentMetadata; category: string }
+    > = [];
 
-    for (const [categoryId, category] of Object.entries(STANDARD_CATEGORIES)) {
-      for (const [standardId, standard] of Object.entries(category.standards)) {
-        allStandards.push([standardId, standard, categoryId]);
+    for (const [categoryId, items] of Object.entries(discovered.categories)) {
+      for (const item of items) {
+        const id = item.path.split("/").pop()?.replace(".md", "") || "";
+        allStandards.push({ id, item, category: categoryId });
       }
     }
 
-    // Sort alphabetically
-    allStandards.sort((a, b) => a[0].localeCompare(b[0]));
+    // Sort alphabetically by ID
+    allStandards.sort((a, b) => a.id.localeCompare(b.id));
 
-    for (const [id, standard, category] of allStandards) {
-      console.log(`• ${id}: ${standard.name}`);
-      console.log(`  ${standard.description}`);
-      console.log(
-        `  Category: ${
-          STANDARD_CATEGORIES[category as keyof typeof STANDARD_CATEGORIES].name
-        }`,
-      );
-      console.log(`  Tags: ${standard.tags.join(", ")}`);
+    for (const { id, item, category } of allStandards) {
+      const categoryName = category.replace(/-/g, " ")
+        .replace(/\b\w/g, (c) => c.toUpperCase()) + " Standards";
+
+      console.log(`• ${id}: ${item.name}`);
+      console.log(`  ${item.description}`);
+      console.log(`  Category: ${categoryName}`);
+      console.log(`  Tags: ${item.tags.join(", ")}`);
       console.log();
     }
 
@@ -435,7 +511,9 @@ async function listStandards(byCategory: boolean = false): Promise<void> {
  */
 async function searchStandards(query: string): Promise<void> {
   const lowerQuery = query.toLowerCase();
-  const matches: Array<[string, Standard, string]> = [];
+  const matches: Array<
+    { id: string; item: ContentMetadata; category: string }
+  > = [];
   const customMatches: Array<{
     id: string;
     name: string;
@@ -444,17 +522,22 @@ async function searchStandards(query: string): Promise<void> {
     tags: string[];
   }> = [];
 
+  // Get dynamically discovered standards
+  const discovered = await getDiscoveredStandards();
+
   // Search built-in standards
-  for (const [categoryId, category] of Object.entries(STANDARD_CATEGORIES)) {
-    for (const [standardId, standard] of Object.entries(category.standards)) {
+  for (const [categoryId, items] of Object.entries(discovered.categories)) {
+    for (const item of items) {
+      const standardId = item.path.split("/").pop()?.replace(".md", "") || "";
+
       // Search in ID, name, description, and tags
       if (
-        standardId.includes(lowerQuery) ||
-        standard.name.toLowerCase().includes(lowerQuery) ||
-        standard.description.toLowerCase().includes(lowerQuery) ||
-        standard.tags.some((tag: string) => tag.includes(lowerQuery))
+        standardId.toLowerCase().includes(lowerQuery) ||
+        item.name.toLowerCase().includes(lowerQuery) ||
+        item.description.toLowerCase().includes(lowerQuery) ||
+        item.tags.some((tag: string) => tag.toLowerCase().includes(lowerQuery))
       ) {
-        matches.push([standardId, standard, categoryId]);
+        matches.push({ id: standardId, item, category: categoryId });
       }
     }
   }
@@ -480,14 +563,13 @@ async function searchStandards(query: string): Promise<void> {
   console.log(`\n🪴 Aichaku: Standards matching "${query}"\n`);
 
   // Show built-in matches
-  for (const [id, standard, category] of matches) {
-    console.log(`• ${id}: ${standard.name}`);
-    console.log(`  ${standard.description}`);
-    console.log(
-      `  Category: ${
-        STANDARD_CATEGORIES[category as keyof typeof STANDARD_CATEGORIES].name
-      }`,
-    );
+  for (const { id, item, category } of matches) {
+    const categoryName = category.replace(/-/g, " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase()) + " Standards";
+
+    console.log(`• ${id}: ${item.name}`);
+    console.log(`  ${item.description}`);
+    console.log(`  Category: ${categoryName}`);
     console.log();
   }
 
@@ -569,7 +651,7 @@ async function showProjectStandards(projectPath?: string): Promise<void> {
       }
     } else {
       // Handle built-in standards
-      const standard = findStandard(standardId);
+      const standard = await findStandard(standardId);
       if (standard) {
         console.log(`• ${standardId}: ${standard.name}`);
         console.log(`  ${standard.description}`);
@@ -663,7 +745,7 @@ async function addStandards(
     }
 
     // Handle built-in standards
-    const standard = findStandard(id);
+    const standard = await findStandard(id);
     if (!standard) {
       console.log(`❌ Unknown standard: ${id}`);
       console.log(
@@ -1234,16 +1316,26 @@ async function saveProjectConfig(
 /**
  * Helper: Find a standard by ID (handles both built-in and custom standards)
  */
-function findStandard(id: string): Standard | null {
+async function findStandard(id: string): Promise<Standard | null> {
   // Handle custom standards
   if (id.startsWith("custom:")) {
     return null; // Custom standards are handled separately
   }
 
+  // Get dynamically discovered standards
+  const discovered = await getDiscoveredStandards();
+
   // Handle built-in standards
-  for (const category of Object.values(STANDARD_CATEGORIES)) {
-    if (id in category.standards) {
-      return category.standards[id as keyof typeof category.standards];
+  for (const items of Object.values(discovered.categories)) {
+    for (const item of items) {
+      const standardId = item.path.split("/").pop()?.replace(".md", "") || "";
+      if (standardId === id) {
+        return {
+          name: item.name,
+          description: item.description,
+          tags: item.tags,
+        };
+      }
     }
   }
   return null;

@@ -1,0 +1,170 @@
+standard: google-style
+name: "Google Style Guides"
+
+summary:
+  critical: |
+    - Optimize for the reader, not the writer
+    - Be consistent with existing code
+    - Clarity over cleverness
+    - Comprehensive documentation with examples
+    - Language-specific naming conventions
+  philosophy: "Code is read far more often than it's written"
+  languages: "TypeScript, JavaScript, Python, Java, Go, C++"
+  documentation: "JSDoc/docstrings with Args, Returns, Raises"
+
+display:
+  description: "Comprehensive coding standards emphasizing readability, consistency, and maintainability"
+  principles:
+    - "Optimize for readability - code is read more than written"
+    - "Consistency is key - follow existing patterns"
+    - "Clarity over cleverness - avoid tricks"
+    - "Comprehensive documentation required"
+    - "Language-specific conventions"
+    - "Meaningful naming throughout"
+    - "Proper code organization"
+    - "Type safety when available"
+  settings:
+    line_length: 80
+    indent_size: 2
+    use_spaces: true
+    require_type_annotations: true
+    documentation_style: "jsdoc|docstring"
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/standards/development/google-style"
+    local: "/docs/standards/development/google-style.md"
+
+rules:
+  naming_conventions:
+    description: "Language-specific naming rules"
+    typescript_javascript:
+      classes: "PascalCase"
+      interfaces: "PascalCase"
+      functions: "camelCase"
+      variables: "camelCase"
+      constants: "UPPER_SNAKE_CASE"
+      files: "lowercase-with-hyphens.ts"
+      private_members: "no leading underscore"
+    python:
+      modules: "lowercase_with_underscores.py"
+      classes: "PascalCase"
+      functions: "lowercase_with_underscores"
+      variables: "lowercase_with_underscores"
+      constants: "UPPER_SNAKE_CASE"
+      protected: "_single_underscore_prefix"
+      private: "__double_underscore_prefix"
+  type_safety:
+    description: "Type annotation requirements"
+    typescript:
+      - "Always annotate function parameters"
+      - "Always annotate return types"
+      - "Prefer interfaces for object shapes"
+      - "Use type for unions and aliases"
+      - "Avoid any type"
+    python:
+      - "Use type hints for all public APIs"
+      - "Include return type annotations"
+      - "Use Optional for nullable types"
+      - "Prefer dataclasses for data structures"
+  documentation:
+    description: "Documentation standards"
+    requirements:
+      - "All public APIs must be documented"
+      - "Include parameter descriptions"
+      - "Document return values"
+      - "List possible exceptions"
+      - "Provide usage examples for complex APIs"
+    typescript_format:
+      style: "JSDoc"
+      example: |
+        /**
+         * Calculates the total price including tax.
+         * @param basePrice - The base price before tax
+         * @param taxRate - The tax rate as a decimal
+         * @returns The total price including tax
+         */
+    python_format:
+      style: "Google docstrings"
+      example: |
+        """Calculate the total price including tax.
+        
+        Args:
+            base_price: The base price before tax.
+            tax_rate: The tax rate as a decimal.
+            
+        Returns:
+            The total price including tax.
+            
+        Raises:
+            ValueError: If base_price is negative.
+        """
+  code_organization:
+    description: "How to structure code files"
+    import_order:
+      - "Standard library imports"
+      - "Third-party imports"
+      - "Local application imports"
+      - "Type imports (TypeScript)"
+    class_member_order:
+      - "Static properties"
+      - "Instance properties"
+      - "Constructor"
+      - "Static methods"
+      - "Public methods"
+      - "Protected methods"
+      - "Private methods"
+  formatting:
+    description: "Code formatting rules"
+    general:
+      - "2 spaces for indentation (4 for Python)"
+      - "80 character line limit (100 for code, 80 for comments)"
+      - "Spaces around operators"
+      - "No trailing whitespace"
+      - "Single blank line between methods"
+    typescript_specific:
+      - "Semicolons required"
+      - "Single quotes for strings"
+      - "Trailing commas in multiline"
+    python_specific:
+      - "No semicolons"
+      - "Double quotes for docstrings"
+      - "Single quotes for strings"
+  comments:
+    description: "Commenting guidelines"
+    principles:
+      - "Explain why, not what"
+      - "Avoid obvious comments"
+      - "Keep comments up to date"
+      - "Use TODO(username) format"
+    requirements:
+      - "Comment complex algorithms"
+      - "Document workarounds"
+      - "Explain business logic"
+      - "Note performance considerations"
+  error_handling:
+    description: "Error handling patterns"
+    guidelines:
+      - "Fail fast and explicitly"
+      - "Provide context in errors"
+      - "Don't ignore exceptions"
+      - "Use custom error types"
+      - "Document exceptions in API"
+  testing:
+    description: "Testing conventions"
+    requirements:
+      - "Test file naming: *_test.ts or test_*.py"
+      - "One test class per production class"
+      - "Descriptive test method names"
+      - "AAA pattern (Arrange, Act, Assert)"
+      - "Mock external dependencies"
+  language_specific:
+    description: "Additional language-specific rules"
+    typescript:
+      - "Prefer const over let"
+      - "Use strict mode"
+      - "Avoid var keyword"
+      - "Use async/await over promises"
+    python:
+      - "Follow PEP 8 as baseline"
+      - "Use f-strings for formatting"
+      - "Prefer list comprehensions"
+      - "Use context managers"

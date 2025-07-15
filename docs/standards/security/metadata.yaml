@@ -1,0 +1,13 @@
+name: "Security Standards"
+description: "Security frameworks and compliance standards"
+category: "security"
+tags: ["security", "compliance", "governance"]
+standards:
+  - id: "owasp-web"
+    name: "OWASP Top 10 Web"
+    description: "Web application security risks"
+    tags: ["security", "web", "api"]
+  - id: "nist-csf"
+    name: "NIST Cybersecurity Framework"
+    description: "Governance and risk management"
+    tags: ["security", "governance", "compliance"]

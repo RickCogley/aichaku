@@ -1,0 +1,13 @@
+name: "Testing Standards"
+description: "Testing methodologies and practices"
+category: "testing"
+tags: ["testing", "quality", "methodology"]
+standards:
+  - id: "bdd"
+    name: "Behavior-Driven Development"
+    description: "Given-when-then scenarios"
+    tags: ["testing", "behavior", "collaboration"]
+  - id: "test-pyramid"
+    name: "Test Pyramid"
+    description: "Balanced testing strategy"
+    tags: ["testing", "strategy", "quality"]

@@ -1,0 +1,135 @@
+standard: owasp-web
+name: "OWASP Top 10 Web Application Security"
+
+summary:
+  critical: |
+    - A01: Broken Access Control - Validate authorization on EVERY request
+    - A02: Cryptographic Failures - Use strong encryption, secure key management
+    - A03: Injection - Parameterized queries, input validation, output encoding
+    - A07: Authentication Failures - Strong auth, proper session management
+    - A09: Logging Failures - Log security events WITHOUT sensitive data
+  security_headers: "X-Content-Type-Options, X-Frame-Options, HSTS, CSP"
+  input_validation: "Never trust user input - validate, sanitize, escape"
+  error_handling: "Generic error messages, log details server-side only"
+
+display:
+  description: "Security standard for web applications addressing the top 10 most critical security risks"
+  principles:
+    - "A01: Broken Access Control - Enforce proper authorization"
+    - "A02: Cryptographic Failures - Protect data in transit and at rest"
+    - "A03: Injection - Prevent code/command injection attacks"
+    - "A04: Insecure Design - Build security in from the start"
+    - "A05: Security Misconfiguration - Secure defaults, minimal attack surface"
+    - "A06: Vulnerable Components - Keep dependencies updated"
+    - "A07: Authentication Failures - Strong auth and session management"
+    - "A08: Software Integrity - Verify code and data integrity"
+    - "A09: Logging Failures - Log appropriately without exposing sensitive data"
+    - "A10: SSRF - Validate all server-side requests"
+  settings:
+    password_min_length: 12
+    session_timeout: 30
+    max_login_attempts: 5
+    https_required: true
+    security_headers: true
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/standards/security/owasp-web"
+    local: "/docs/standards/security/owasp-web.md"
+
+rules:
+  access_control:
+    description: "A01: Broken Access Control Prevention"
+    validation:
+      - "Authorization checks on every endpoint"
+      - "Principle of least privilege enforced"
+      - "No direct object references without validation"
+      - "File access permissions validated"
+  cryptographic_security:
+    description: "A02: Cryptographic Failures Prevention"
+    requirements:
+      - "Use AES-GCM-256 or better for encryption"
+      - "PBKDF2-SHA512 or better for password hashing"
+      - "TLS 1.2+ for all communications"
+      - "No hardcoded secrets or keys"
+      - "Secure random number generation"
+  injection_prevention:
+    description: "A03: Injection Prevention"
+    validation:
+      - "Parameterized queries for all database operations"
+      - "Input validation on all user inputs"
+      - "Output encoding for all dynamic content"
+      - "No eval() or dynamic code execution"
+      - "Command parameterization for system calls"
+  secure_design:
+    description: "A04: Insecure Design Prevention"
+    requirements:
+      - "Threat modeling for new features"
+      - "Security requirements documented"
+      - "Secure design patterns used"
+      - "Defense in depth approach"
+  security_configuration:
+    description: "A05: Security Misconfiguration Prevention"
+    checklist:
+      - "Default passwords changed"
+      - "Unnecessary features disabled"
+      - "Error messages don't expose system info"
+      - "Security headers configured"
+      - "Directory listing disabled"
+  component_security:
+    description: "A06: Vulnerable Components Prevention"
+    requirements:
+      - "Dependency scanning in CI/CD"
+      - "Regular security updates"
+      - "Component inventory maintained"
+      - "License compliance checked"
+  authentication_security:
+    description: "A07: Authentication Failures Prevention"
+    implementation:
+      - "Multi-factor authentication available"
+      - "Password complexity requirements"
+      - "Account lockout after failed attempts"
+      - "Session timeout implementation"
+      - "Secure password reset flow"
+  data_integrity:
+    description: "A08: Software and Data Integrity Failures Prevention"
+    validation:
+      - "Code signing for deployments"
+      - "Integrity checks for critical data"
+      - "Secure CI/CD pipeline"
+      - "Dependency verification"
+  logging_monitoring:
+    description: "A09: Security Logging and Monitoring Failures Prevention"
+    requirements:
+      - "Log authentication events"
+      - "Log authorization failures"
+      - "Log input validation failures"
+      - "No sensitive data in logs"
+      - "Centralized log management"
+      - "Real-time alerting for security events"
+  ssrf_prevention:
+    description: "A10: Server-Side Request Forgery Prevention"
+    validation:
+      - "URL allowlist for external requests"
+      - "Input validation for URLs"
+      - "No user-controlled URLs in requests"
+      - "Network segmentation enforced"
+  security_headers:
+    description: "Required security headers for all responses"
+    headers:
+      - name: "X-Content-Type-Options"
+        value: "nosniff"
+      - name: "X-Frame-Options"
+        value: "DENY"
+      - name: "X-XSS-Protection"
+        value: "1; mode=block"
+      - name: "Strict-Transport-Security"
+        value: "max-age=31536000; includeSubDomains"
+      - name: "Content-Security-Policy"
+        value: "default-src 'self'"
+  input_validation:
+    description: "Comprehensive input validation requirements"
+    validation:
+      - "Length limits enforced"
+      - "Type validation (numeric, email, etc.)"
+      - "Character allowlists used"
+      - "Dangerous characters escaped"
+      - "File upload restrictions"

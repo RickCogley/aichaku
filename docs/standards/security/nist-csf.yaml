@@ -1,0 +1,240 @@
+standard: nist-csf
+name: "NIST Cybersecurity Framework (CSF 2.0)"
+
+summary:
+  critical: |
+    - Govern: Establish cybersecurity governance and risk management
+    - Identify: Understand risks to systems, people, assets, data
+    - Protect: Implement safeguards for critical services
+    - Detect: Identify occurrence of cybersecurity events
+    - Respond: Take action on detected incidents
+    - Recover: Restore capabilities after incidents
+  risk_based: "Focuses on risk management over compliance"
+  scalable: "Applicable to organizations of all sizes"
+  implementation: "Code-based policies and automated controls"
+
+display:
+  description: "A comprehensive framework for managing and reducing cybersecurity risk through governance, identification, protection, detection, response, and recovery"
+  principles:
+    - "🎯 Govern - Cybersecurity governance and risk management"
+    - "🔍 Identify - Understand cybersecurity risks comprehensively"
+    - "🛡️ Protect - Implement appropriate safeguards"
+    - "🔍 Detect - Identify cybersecurity events promptly"
+    - "🚨 Respond - Take action on detected incidents"
+    - "🔄 Recover - Restore capabilities after incidents"
+  settings:
+    risk_assessment_frequency: "quarterly"
+    incident_response_time: "4 hours"
+    backup_frequency: "daily"
+    access_review_frequency: "quarterly"
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/standards/security/nist-csf"
+    local: "/docs/standards/security/nist-csf.md"
+
+rules:
+  govern:
+    description: "GV - Cybersecurity governance and enterprise risk management"
+    subcategories:
+      organizational_context:
+        - "Define organizational mission and priorities"
+        - "Establish cybersecurity strategy aligned with business"
+        - "Document roles and responsibilities"
+      risk_management_strategy:
+        - "Establish enterprise risk management strategy"
+        - "Define risk tolerance and appetite"
+        - "Integrate cybersecurity into enterprise risk"
+      roles_responsibilities:
+        - "Define cybersecurity roles and responsibilities"
+        - "Establish accountability structures"
+        - "Ensure adequate resources"
+      policy:
+        - "Establish cybersecurity policies"
+        - "Communicate policies to stakeholders"
+        - "Regular policy review and updates"
+      oversight:
+        - "Establish cybersecurity oversight function"
+        - "Monitor cybersecurity performance"
+        - "Regular reporting to leadership"
+  identify:
+    description: "ID - Understand cybersecurity risks to systems, assets, data, and capabilities"
+    subcategories:
+      asset_management:
+        requirements:
+          - "Maintain inventory of hardware assets"
+          - "Maintain inventory of software assets"
+          - "Maintain inventory of data assets"
+          - "Classify assets by criticality"
+        implementation:
+          - "Automated asset discovery tools"
+          - "Configuration management databases"
+          - "Data classification policies"
+      business_environment:
+        requirements:
+          - "Understand organizational mission"
+          - "Map critical business processes"
+          - "Identify dependencies and supply chain"
+        validation:
+          - "Business impact analysis completed"
+          - "Critical processes documented"
+          - "Dependencies mapped and assessed"
+      governance:
+        requirements:
+          - "Information security policies established"
+          - "Legal and regulatory requirements identified"
+          - "Risk assessment processes defined"
+      risk_assessment:
+        requirements:
+          - "Threat landscape understood"
+          - "Vulnerabilities identified and analyzed"
+          - "Risk response strategies developed"
+        frequency: "quarterly or after significant changes"
+      risk_management:
+        requirements:
+          - "Risk tolerance defined"
+          - "Risk response strategies implemented"
+          - "Risk monitoring processes established"
+      supply_chain:
+        requirements:
+          - "Supply chain partners identified"
+          - "Supply chain risks assessed"
+          - "Supply chain security requirements defined"
+  protect:
+    description: "PR - Implement safeguards to ensure delivery of critical services"
+    subcategories:
+      identity_management:
+        requirements:
+          - "Unique user identities verified"
+          - "Privilege management implemented"
+          - "Multi-factor authentication required"
+        implementation:
+          - "Identity and Access Management (IAM)"
+          - "Role-based access control (RBAC)"
+          - "Regular access reviews"
+      awareness_training:
+        requirements:
+          - "Security awareness training provided"
+          - "Privileged users receive specialized training"
+          - "Third-party personnel training addressed"
+      data_security:
+        requirements:
+          - "Data classification scheme implemented"
+          - "Data encryption in transit and at rest"
+          - "Data disposal procedures established"
+        controls:
+          - "AES-256 encryption minimum"
+          - "TLS 1.2+ for data in transit"
+          - "Secure data deletion procedures"
+      information_protection:
+        requirements:
+          - "Access permissions managed"
+          - "Network integrity protected"
+          - "Removable media usage restricted"
+      maintenance:
+        requirements:
+          - "Maintenance performed and logged"
+          - "Remote maintenance controlled"
+          - "Maintenance tools restricted"
+      protective_technology:
+        requirements:
+          - "Communication and control networks protected"
+          - "Security configurations managed"
+          - "Network integrity protected"
+  detect:
+    description: "DE - Implement activities to identify cybersecurity events"
+    subcategories:
+      anomalies_events:
+        requirements:
+          - "Network communications monitored"
+          - "Physical environment monitored"
+          - "Personnel activity monitored"
+        implementation:
+          - "SIEM (Security Information and Event Management)"
+          - "Network monitoring tools"
+          - "User behavior analytics"
+      security_monitoring:
+        requirements:
+          - "Information system monitored"
+          - "Physical environment monitored"
+          - "Personnel activity monitored"
+        metrics:
+          - "Mean time to detection (MTTD)"
+          - "False positive rate"
+          - "Coverage percentage"
+      detection_processes:
+        requirements:
+          - "Detection activities defined"
+          - "Event analysis performed"
+          - "Incident alert thresholds established"
+  respond:
+    description: "RS - Take action regarding detected cybersecurity incidents"
+    subcategories:
+      response_planning:
+        requirements:
+          - "Response plan executed during incident"
+          - "Personnel know their roles during response"
+          - "Information sharing procedures established"
+        documentation:
+          - "Incident response playbooks"
+          - "Contact information current"
+          - "Communication templates"
+      communications:
+        requirements:
+          - "Personnel know their roles and responsibilities"
+          - "Events reported consistent with plan"
+          - "Information shared with stakeholders"
+        timelines:
+          - "Initial response: 1 hour"
+          - "Stakeholder notification: 4 hours"
+          - "Regulatory notification: 24-72 hours"
+      analysis:
+        requirements:
+          - "Notifications received from detection systems"
+          - "Impact of incidents understood"
+          - "Forensics performed"
+      mitigation:
+        requirements:
+          - "Activities performed to prevent expansion"
+          - "Incidents mitigated"
+          - "Newly identified vulnerabilities mitigated"
+      improvements:
+        requirements:
+          - "Response activities documented"
+          - "Response plan updated"
+          - "Response strategies updated"
+  recover:
+    description: "RC - Restore capabilities impaired by cybersecurity incidents"
+    subcategories:
+      recovery_planning:
+        requirements:
+          - "Recovery plan executed during recovery"
+          - "Recovery strategies updated"
+          - "Recovery testing performed"
+        testing_frequency: "annually"
+      improvements:
+        requirements:
+          - "Recovery activities documented"
+          - "Recovery plan updated"
+          - "Recovery strategies improved"
+      communications:
+        requirements:
+          - "Public relations managed"
+          - "Reputation repair activities performed"
+          - "Recovery activities communicated internally"
+  implementation_tiers:
+    description: "Maturity levels for cybersecurity practices"
+    tier_1_partial:
+      - "Risk management practices ad hoc"
+      - "Limited awareness of cybersecurity risk"
+      - "Irregular information sharing"
+    tier_2_risk_informed:
+      - "Risk management practices approved by management"
+      - "Cybersecurity risk-informed decisions"
+      - "Regular information sharing"
+    tier_3_repeatable:
+      - "Organization-wide risk management practices"
+      - "Regular updates to cybersecurity practices"
+      - "Formal information sharing agreements"
+    tier_4_adaptive:
+      - "Adaptive and agile approach"
+      - "Continuous improvement"
+      - "Advanced information sharing"

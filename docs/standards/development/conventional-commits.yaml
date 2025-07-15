@@ -1,0 +1,133 @@
+standard: conventional-commits
+name: "Conventional Commits"
+
+summary:
+  critical: |
+    - Format: <type>[optional scope]: <description>
+    - Primary types: feat, fix, docs, style, refactor, test, chore
+    - Breaking changes: Use ! or BREAKING CHANGE footer
+    - Imperative mood: "add feature" not "added feature"
+    - 50 char subject limit, 72 char body line limit
+  automation: "Enables semantic versioning and changelog generation"
+  version_bumping: "fix=patch, feat=minor, breaking=major"
+  infosec_comment: "Use InfoSec: prefix for security implications"
+
+display:
+  description: "A standardized format for commit messages that enables automation and improves collaboration"
+  principles:
+    - "Structured format: type(scope): description"
+    - "Clear type categorization (feat, fix, docs, etc.)"
+    - "Optional scope for context"
+    - "Breaking changes explicitly marked"
+    - "Imperative mood for descriptions"
+    - "Enables automated versioning"
+    - "Supports changelog generation"
+    - "Links commits to issues"
+  settings:
+    subject_length: 50
+    body_line_length: 72
+    allow_custom_types: false
+    require_scope: false
+    require_issue_reference: false
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/standards/development/conventional-commits"
+    local: "/docs/standards/development/conventional-commits.md"
+
+rules:
+  format:
+    description: "Commit message must follow conventional format"
+    pattern: "^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\\(.+\\))?: .{1,50}"
+    validation:
+      - "Type must be one of the allowed types"
+      - "Scope (if present) must be in parentheses"
+      - "Description must start with lowercase"
+      - "No trailing punctuation in subject"
+  types:
+    description: "Allowed commit types and their meanings"
+    allowed:
+      feat: "New feature for the user"
+      fix: "Bug fix for the user"
+      docs: "Documentation changes"
+      style: "Code style changes (formatting, etc.)"
+      refactor: "Code refactoring without feature/fix"
+      test: "Adding or updating tests"
+      chore: "Build process or auxiliary tool changes"
+      perf: "Performance improvements"
+      ci: "CI/CD configuration changes"
+      build: "Build system or dependency changes"
+      revert: "Reverting a previous commit"
+  scope:
+    description: "Optional scope provides context"
+    examples:
+      - "Component names: header, footer, nav"
+      - "Feature areas: auth, payment, search"
+      - "File/Module names: utils, database, api"
+      - "Technology: docker, webpack, jest"
+  breaking_changes:
+    description: "How to indicate breaking changes"
+    methods:
+      - "Add ! after type/scope: feat!: change API"
+      - "Add BREAKING CHANGE footer with description"
+    validation:
+      - "Major version bump required"
+      - "Must describe what breaks"
+      - "Migration guide recommended"
+  subject_rules:
+    description: "Rules for the subject line"
+    requirements:
+      - "Use imperative mood"
+      - "No capitalization of first letter"
+      - "No period at the end"
+      - "50 characters or less"
+      - "Complete the sentence: If applied, this commit will..."
+  body_rules:
+    description: "Optional body provides detailed explanation"
+    guidelines:
+      - "Wrap at 72 characters"
+      - "Explain what and why, not how"
+      - "Separate from subject with blank line"
+      - "Can use multiple paragraphs"
+  footer_rules:
+    description: "Optional footer for metadata"
+    types:
+      issue_references:
+        - "Closes #123"
+        - "Fixes #456, #789"
+        - "Refs #321"
+      coauthors:
+        - "Co-authored-by: Name <email>"
+      reviewers:
+        - "Reviewed-by: Name <email>"
+      security:
+        - "InfoSec: Security implication description"
+        - "CVE-2023-12345"
+  version_impact:
+    description: "How commits affect semantic versioning"
+    rules:
+      - type: "fix"
+        version: "patch"
+        example: "1.0.0 → 1.0.1"
+      - type: "feat"
+        version: "minor"
+        example: "1.0.0 → 1.1.0"
+      - type: "breaking"
+        version: "major"
+        example: "1.0.0 → 2.0.0"
+  automation:
+    description: "Tools that work with conventional commits"
+    tools:
+      - name: "semantic-release"
+        purpose: "Automated versioning and publishing"
+      - name: "conventional-changelog"
+        purpose: "Changelog generation"
+      - name: "commitizen"
+        purpose: "Interactive commit creation"
+      - name: "commitlint"
+        purpose: "Commit message validation"
+  security_notes:
+    description: "Security-related commit guidelines"
+    requirements:
+      - "Use InfoSec: prefix for security implications"
+      - "Reference CVE numbers when applicable"
+      - "Don't expose sensitive details in commits"
+      - "Mark security fixes clearly"

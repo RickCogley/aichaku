@@ -1,0 +1,13 @@
+name: "Architecture Standards"
+description: "Software architecture patterns and design principles"
+category: "architecture"
+tags: ["architecture", "design", "patterns"]
+standards:
+  - id: "15-factor"
+    name: "15-Factor Apps"
+    description: "Modern cloud-native principles"
+    tags: ["cloud", "microservices", "best-practices"]
+  - id: "clean-arch"
+    name: "Clean Architecture"
+    description: "Dependency inversion principles"
+    tags: ["architecture", "solid", "design"]
