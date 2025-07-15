@@ -41,18 +41,28 @@ integrated.
 ## 📚 Documentation & Resources
 
 ### 🎯 Interactive Methodology Guides (with Mermaid Diagrams)
-- [**Shape Up Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/shape-up/shape-up.md) - 6-week cycles with interactive workflow diagrams
-- [**Scrum Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/scrum/scrum.md) - Sprint planning with visual process flows
-- [**Kanban Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/kanban/kanban.md) - Flow visualization and WIP limits
+
+- [**Shape Up Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/shape-up/shape-up.md) -
+  6-week cycles with interactive workflow diagrams
+- [**Scrum Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/scrum/scrum.md) -
+  Sprint planning with visual process flows
+- [**Kanban Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/kanban/kanban.md) -
+  Flow visualization and WIP limits
 
 ### 📖 Complete Documentation
-- [**Full Documentation Hub**](docs/) - Comprehensive guides, tutorials, and reference materials
-- [**API Documentation**](https://aichaku.esolia.deno.net/) - Complete TypeScript API reference
+
+- [**Full Documentation Hub**](docs/) - Comprehensive guides, tutorials, and
+  reference materials
+- [**API Documentation**](https://aichaku.esolia.deno.net/) - Complete
+  TypeScript API reference
 - [**How-to Guides**](docs/how-to/) - Task-specific instructions and workflows
-- [**Reference Materials**](docs/reference/) - Technical specifications and options
+- [**Reference Materials**](docs/reference/) - Technical specifications and
+  options
 
 ### 🔗 Quick Links
-📦 **[JSR Package](https://jsr.io/@rick/aichaku)** | 🐙 **[GitHub Repository](https://github.com/RickCogley/aichaku)**
+
+📦 **[JSR Package](https://jsr.io/@rick/aichaku)** | 🐙
+**[GitHub Repository](https://github.com/RickCogley/aichaku)**
 
 **✨ Key Features:**
 

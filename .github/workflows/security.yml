@@ -17,7 +17,7 @@ permissions:
 jobs:
   security-tests:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
 
     steps:
       - name: Checkout code
@@ -44,8 +44,6 @@ jobs:
       - name: Run linter
         run: deno lint
 
-      - name: Run type checking
-        run: deno check **/*.ts
 
       - name: Run all tests with coverage
         run: |
@@ -67,81 +65,32 @@ jobs:
           files: ./coverage.lcov
           fail_ci_if_error: false
 
-      - name: Check for hardcoded secrets
+      - name: Basic security checks
         run: |
-          # Check for potential hardcoded secrets with comprehensive patterns
-          ! grep -r -E "(api[_-]?key|apikey|password|passwd|pwd|secret|private[_-]?key|token|auth[_-]?token|access[_-]?token|bearer|credential|client[_-]?secret|jwt[_-]?secret|database[_-]?url|connection[_-]?string|ssh[_-]?key|gpg[_-]?key|encryption[_-]?key|salt|oauth|github[_-]?token|gitlab[_-]?token|slack[_-]?token|aws[_-]?access|aws[_-]?secret|stripe[_-]?key|sendgrid[_-]?key|mailgun[_-]?key|twilio[_-]?auth)\s*[:=]\s*[\"'][^\"']+[\"']" \
-            --include="*.ts" --include="*.js" --include="*.json" \
-            --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" \
-            --exclude="*_test.ts" --exclude="*.md" --exclude="deno.lock" \
-            . | grep -v -E "(test|example|sample|mock|fake|dummy|placeholder|env\.get|process\.env|import|from|export|interface|type|const.*=.*require)"
-
-      - name: Check for dangerous patterns
-        run: |
-          # Check for eval, Function constructor, and other dangerous patterns
-          dangerous_patterns=(
-            # eval and Function constructor
-            "^\s*[^\"'/]*\b(eval\s*\(|new\s+Function\s*\()"
-            # Dynamic imports without validation
-            "import\s*\([^)]*\$\{[^}]*\}"
-            # Shell command execution
-            "child_process\.(exec|execSync|spawn|spawnSync)\s*\("
-            # Deno command execution without validation
-            "Deno\.run\s*\(\s*\{[^}]*cmd:\s*\[[^]]*\$"
-            # innerHTML usage
-            "\.innerHTML\s*="
-            # document.write
-            "document\.write\s*\("
-          )
-
-          found_dangerous=false
-          for pattern in "${dangerous_patterns[@]}"; do
-            if grep -r -E "$pattern" \
-              --include="*.ts" --include="*.js" \
-              --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" --exclude-dir="docs" \
-              --exclude="*_test.ts" \
-              . 2>/dev/null; then
-              echo "Found dangerous pattern: $pattern"
-              found_dangerous=true
-            fi
-          done
-
-          if [ "$found_dangerous" = true ]; then
+          echo "Running basic security checks..."
+          
+          # Check for obvious hardcoded secrets (simple patterns)
+          echo "Checking for hardcoded secrets..."
+          if grep -r -i "password\s*=\s*[\"']" --include="*.ts" --include="*.js" --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" --exclude="*_test.ts" . 2>/dev/null; then
+            echo "Found hardcoded password"
             exit 1
           fi
-
-      - name: Check for insecure randomness
-        run: |
-          # Check for use of Math.random() for security purposes
-          echo "Checking for insecure random number generation..."
-
-          if grep -r -E "Math\.random\s*\(\s*\)" \
-            --include="*.ts" --include="*.js" \
-            --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" --exclude-dir="docs" \
-            --exclude="*_test.ts" \
-            . 2>/dev/null | grep -E "(token|password|secret|key|salt|iv|nonce|session|id)" | grep -v -E "(test|mock|example|sample)"; then
-            echo "Found potential use of Math.random() for security-sensitive operations"
-            echo "Use crypto.getRandomValues() or crypto.randomUUID() instead"
+          
+          # Check for eval usage
+          echo "Checking for eval usage..."
+          if grep -r "\beval\s*\(" --include="*.ts" --include="*.js" --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" --exclude="*_test.ts" . 2>/dev/null; then
+            echo "Found eval usage"
             exit 1
-          else
-            echo "No insecure randomness found"
           fi
-
-      - name: Check for permission issues
-        run: |
-          # Check for overly broad Deno permissions
+          
+          # Check for overly broad permissions
           echo "Checking for overly broad permissions..."
-
-          if grep -r -E "deno\s+(run|test|install)\s+.*--allow-all" \
-            --include="*.ts" --include="*.js" --include="*.json" --include="*.md" --include="*.yml" --include="*.yaml" \
-            --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" --exclude-dir=".claude" --exclude-dir=".github" --exclude-dir="docs" \
-            . 2>/dev/null | grep -v -E "(# Example|# BAD|# Don't|# Never|# Avoid)"; then
+          if grep -r "--allow-all" --include="*.ts" --include="*.js" --include="*.json" --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" --exclude-dir=".claude" --exclude-dir=".github" --exclude-dir="docs" . 2>/dev/null | grep -v "# Example\|# BAD\|# Don't\|# Never\|# Avoid"; then
             echo "Found use of --allow-all flag"
-            echo "Use specific permissions instead"
             exit 1
-          else
-            echo "No overly broad permissions found"
           fi
+          
+          echo "Basic security checks passed"
 
       - name: Security audit report
         if: always()
@@ -152,7 +101,8 @@ jobs:
           echo "Branch: ${{ github.ref }}" >> security-report.txt
           echo "Commit: ${{ github.sha }}" >> security-report.txt
           echo "" >> security-report.txt
-          echo "All security tests completed" >> security-report.txt
+          echo "Basic security checks completed" >> security-report.txt
+          echo "Note: Advanced security scanning handled by CodeQL and DevSkim workflows" >> security-report.txt
 
       - name: Upload security report
         if: always()

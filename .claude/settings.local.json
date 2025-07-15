@@ -120,7 +120,12 @@
       "Bash(./scripts/migrate-standards.sh:*)",
       "Bash(./scripts/update-standards-references.sh:*)",
       "Bash(./cleanup-duplicate-standards.sh:*)",
-      "Bash(/Users/rcogley/dev/aichaku/fix-yaml-paths.sh:*)"
+      "Bash(/Users/rcogley/dev/aichaku/fix-yaml-paths.sh:*)",
+      "Bash(if grep -r -i \"password\\s*=\\s*[\\\"\"'']\" --include=\"*.ts\" --include=\"*.js\" --exclude-dir=\".git\" --exclude-dir=\"node_modules\" --exclude-dir=\"coverage\" --exclude=\"*_test.ts\" .)",
+      "Bash(then )",
+      "Bash(else )",
+      "Bash(fi)",
+      "Bash(if grep -r \"\\beval\\s*\\(\" --include=\"*.ts\" --include=\"*.js\" --exclude-dir=\".git\" --exclude-dir=\"node_modules\" --exclude-dir=\"coverage\" --exclude=\"*_test.ts\" .)"
     ],
     "deny": []
   }
