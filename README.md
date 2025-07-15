@@ -27,7 +27,7 @@ aichaku integrate       # Tell Claude about it
 ```
 
 That's it! Aichaku is now helping Claude understand your development workflow.
-Read on for details, or jump to [full documentation](docs/README.md).
+Read on for details, or jump to [full documentation](docs/).
 
 ## What is aichaku?
 
@@ -38,9 +38,21 @@ Code blend approaches based on your natural language. Say "sprint" and get Scrum
 practices; mention "shaping" and get Shape Up principles - all seamlessly
 integrated.
 
-📚 **[API Documentation](https://aichaku.esolia.deno.net/)** | 📦
-**[JSR Package](https://jsr.io/@rick/aichaku)** | 🐙
-**[GitHub](https://github.com/RickCogley/aichaku)**
+## 📚 Documentation & Resources
+
+### 🎯 Interactive Methodology Guides (with Mermaid Diagrams)
+- [**Shape Up Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/shape-up/SHAPE-UP-GUIDE.md) - 6-week cycles with interactive workflow diagrams
+- [**Scrum Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/scrum/SCRUM-GUIDE.md) - Sprint planning with visual process flows
+- [**Kanban Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/kanban/KANBAN-GUIDE.md) - Flow visualization and WIP limits
+
+### 📖 Complete Documentation
+- [**Full Documentation Hub**](docs/) - Comprehensive guides, tutorials, and reference materials
+- [**API Documentation**](https://aichaku.esolia.deno.net/) - Complete TypeScript API reference
+- [**How-to Guides**](docs/how-to/) - Task-specific instructions and workflows
+- [**Reference Materials**](docs/reference/) - Technical specifications and options
+
+### 🔗 Quick Links
+📦 **[JSR Package](https://jsr.io/@rick/aichaku)** | 🐙 **[GitHub Repository](https://github.com/RickCogley/aichaku)**
 
 **✨ Key Features:**
 
