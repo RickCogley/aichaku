@@ -44,7 +44,6 @@ jobs:
       - name: Run linter
         run: deno lint
 
-
       - name: Run all tests with coverage
         run: |
           if find . -name "*_test.ts" -type f | grep -q .; then
@@ -68,28 +67,28 @@ jobs:
       - name: Basic security checks
         run: |
           echo "Running basic security checks..."
-          
+
           # Check for obvious hardcoded secrets (simple patterns)
           echo "Checking for hardcoded secrets..."
           if grep -r -i "password\s*=\s*[\"']" --include="*.ts" --include="*.js" --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" --exclude="*_test.ts" . 2>/dev/null; then
             echo "Found hardcoded password"
             exit 1
           fi
-          
+
           # Check for eval usage
           echo "Checking for eval usage..."
           if grep -r "\beval\s*\(" --include="*.ts" --include="*.js" --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" --exclude="*_test.ts" . 2>/dev/null; then
             echo "Found eval usage"
             exit 1
           fi
-          
+
           # Check for overly broad permissions
           echo "Checking for overly broad permissions..."
           if grep -r "--allow-all" --include="*.ts" --include="*.js" --include="*.json" --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" --exclude-dir=".claude" --exclude-dir=".github" --exclude-dir="docs" . 2>/dev/null | grep -v "# Example\|# BAD\|# Don't\|# Never\|# Avoid"; then
             echo "Found use of --allow-all flag"
             exit 1
           fi
-          
+
           echo "Basic security checks passed"
 
       - name: Security audit report
