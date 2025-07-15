@@ -1,0 +1,26 @@
+{
+  "version": "2.0.0",
+  "project": {
+    "created": "2025-07-06T23:40:43.563Z",
+    "installedVersion": "0.29.0",
+    "lastUpdated": "2025-07-14T11:42:11.473Z",
+    "installationType": "local",
+    "methodology": "shape-up"
+  },
+  "standards": {
+    "development": [
+      "15-factor"
+    ],
+    "documentation": [],
+    "custom": {}
+  },
+  "config": {
+    "customizations": {
+      "userDir": "./user"
+    },
+    "globalVersion": "0.28.0"
+  },
+  "markers": {
+    "isAichakuProject": true
+  }
+}

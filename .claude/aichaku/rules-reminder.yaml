@@ -1,0 +1,69 @@
+# Rules for Claude Code when working with Aichaku projects
+# This file provides quick reminders about Aichaku project organization rules
+
+project_organization:
+  mandatory_checks:
+    - question: "Is it going in docs/projects/active/*/ ?"
+      required: true
+      fix_if_no: "mv [file] docs/projects/active/[current-project]/"
+    
+    - question: "Does STATUS.md exist there?"
+      required: true
+      fix_if_no: "Create STATUS.md immediately with project info"
+    
+    - question: "Have I updated STATUS.md recently?"
+      required: true
+      fix_if_no: "Update STATUS.md with current progress"
+
+  file_locations:
+    default_pattern: "docs/projects/active/YYYY-MM-DD-{project-name}/"
+    rules:
+      - "ALWAYS use today's date from environment info"
+      - "NEVER ask where to put files"
+      - "Automatic behavior - no asking, just doing"
+      - "NEVER create documents in project root"
+      - "NEVER use .claude/user/ for output (that's for user customizations)"
+    
+  wrong_location_fixes:
+    command: "mv [file] docs/projects/active/[current-project]/"
+    action: "Move immediately without asking"
+
+aichaku_specific:
+  discussion_mode:
+    trigger_keywords: ["shape", "pitch", "sprint", "scrum", "kanban", "board", "mvp", "lean"]
+    behavior:
+      - "Enter discussion mode when methodology keywords detected"
+      - "Ask clarifying questions"
+      - "Help refine ideas"
+      - "DO NOT create documents until user signals readiness"
+    
+  document_creation:
+    readiness_signals:
+      - "Let's create a project for this"
+      - "I'm ready to start"
+      - "Set up the project"
+      - "Create the documentation"
+    behavior:
+      - "Create project folder immediately"
+      - "Create STATUS.md first"
+      - "Read methodology guides from ~/.claude/aichaku/docs/methodologies/"
+      - "Create methodology-specific documents"
+      - "NEVER ask if user wants documents created"
+      - "NEVER proceed with implementation without approval"
+
+  visual_identity:
+    prefix: "🪴 Aichaku:"
+    growth_phases:
+      new: "🌱"
+      active: "🌿"
+      mature: "🌳"
+      complete: "🍃"
+    progress_format: "[Phase1] → [**CurrentPhase**] → [Phase3]"
+
+reminders:
+  - "This is AUTOMATIC behavior"
+  - "Users expect files in the right place"
+  - "No asking, just doing"
+  - "Update STATUS.md regularly"
+  - "Complete work gets renamed: active-* → done-*"
+  - "Creating proper structure is AUTOMATIC, not optional"
