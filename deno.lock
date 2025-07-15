@@ -3,13 +3,16 @@
   "specifiers": {
     "jsr:@davidbonnet/astring@1.8.6": "1.8.6",
     "jsr:@rick/nagare@2.9.1": "2.9.1",
+    "jsr:@std/assert@*": "1.0.13",
     "jsr:@std/assert@1": "1.0.13",
+    "jsr:@std/assert@1.0.0": "1.0.0",
     "jsr:@std/async@1": "1.0.13",
     "jsr:@std/cli@1": "1.0.20",
     "jsr:@std/fmt@1": "1.0.8",
     "jsr:@std/fs@1": "1.0.19",
     "jsr:@std/fs@1.0.0": "1.0.0",
     "jsr:@std/html@1.0.3": "1.0.3",
+    "jsr:@std/internal@^1.0.1": "1.0.9",
     "jsr:@std/internal@^1.0.6": "1.0.9",
     "jsr:@std/internal@^1.0.9": "1.0.9",
     "jsr:@std/path@1": "1.1.1",
@@ -38,6 +41,12 @@
         "jsr:@std/semver",
         "jsr:@std/yaml",
         "jsr:@vento/vento"
+      ]
+    },
+    "@std/assert@1.0.0": {
+      "integrity": "0e4f6d873f7f35e2a1e6194ceee39686c996b9e5d134948e644d35d4c4df2008",
+      "dependencies": [
+        "jsr:@std/internal@^1.0.1"
       ]
     },
     "@std/assert@1.0.13": {

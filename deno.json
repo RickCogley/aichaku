@@ -74,7 +74,7 @@
       "version.ts",
       "deps.ts",
       "src/",
-      "methodologies/",
+      "docs/",
       "README.md",
       "LICENSE",
       "CHANGELOG.md"
