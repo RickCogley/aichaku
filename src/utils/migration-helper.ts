@@ -117,7 +117,7 @@ export async function performMigration(
     await configManager.load();
 
     // Verify migration was successful
-    const config = configManager.get();
+    const _config = configManager.get();
     const integrity = configManager.verifyIntegrity();
 
     if (!integrity.valid) {
@@ -308,8 +308,8 @@ export async function compareConfigurations(
  * Recursively compare two objects and record differences
  */
 function compareObjects(
-  obj1: any,
-  obj2: any,
+  obj1: unknown,
+  obj2: unknown,
   path: string,
   differences: string[],
 ): void {

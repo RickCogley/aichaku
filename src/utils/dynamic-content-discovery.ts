@@ -117,7 +117,7 @@ export async function discoverContent(
 /**
  * Enhance metadata from category metadata.yaml file if it exists
  */
-async function enhanceMetadataFromYaml(
+async function _enhanceMetadataFromYaml(
   metadata: ContentMetadata,
   category: string,
   contentPath: string,
@@ -127,15 +127,16 @@ async function enhanceMetadataFromYaml(
   if (await exists(yamlPath)) {
     try {
       const yamlContent = await safeReadTextFile(yamlPath, dirname(yamlPath));
-      const yamlData = parseYaml(yamlContent) as any;
+      const yamlData = parseYaml(yamlContent) as Record<string, unknown>;
 
       // Look for this specific standard in the YAML
       if (yamlData.standards && Array.isArray(yamlData.standards)) {
         const standardId = metadata.path.split("/").pop()?.replace(".md", "") ||
           "";
-        const yamlStandard = yamlData.standards.find((s: any) =>
-          s.id === standardId
-        );
+        const yamlStandard =
+          (yamlData.standards as Array<Record<string, unknown>>).find((s) =>
+            s.id === standardId
+          );
 
         if (yamlStandard) {
           // Enhance with YAML metadata
@@ -200,7 +201,7 @@ function parseYamlMetadata(
   category: string,
 ): ContentMetadata | null {
   try {
-    const data = parseYaml(content) as any;
+    const data = parseYaml(content) as Record<string, unknown>;
 
     return {
       name: data.name || basename(relativePath, ".yaml").replace(/-/g, " "),
@@ -246,7 +247,10 @@ function extractMarkdownMetadata(
   const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---/);
   if (frontmatterMatch) {
     try {
-      const frontmatter = parseYaml(frontmatterMatch[1]) as any;
+      const frontmatter = parseYaml(frontmatterMatch[1]) as Record<
+        string,
+        unknown
+      >;
       if (frontmatter.description) {
         metadata.description = frontmatter.description;
       }

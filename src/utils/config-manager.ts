@@ -22,14 +22,14 @@ export interface AichakuConfig {
   standards: {
     development: string[];
     documentation: string[];
-    custom: Record<string, any>;
+    custom: Record<string, unknown>;
   };
   config: {
     outputPath?: string;
     enableHooks?: boolean;
     autoCommit?: boolean;
     gitIntegration?: boolean;
-    customizations?: Record<string, any>;
+    customizations?: Record<string, unknown>;
     globalVersion?: string;
     createdAt?: string;
   };
@@ -62,7 +62,7 @@ interface LegacyConfigJson {
   enableHooks?: boolean;
   autoCommit?: boolean;
   gitIntegration?: boolean;
-  customizations?: Record<string, any>;
+  customizations?: Record<string, unknown>;
 }
 
 /**
@@ -224,7 +224,7 @@ export class ConfigManager {
     return this.get().project.installationType;
   }
 
-  getCustomizations(): Record<string, any> {
+  getCustomizations(): Record<string, unknown> {
     return this.get().config.customizations || {};
   }
 
@@ -522,17 +522,26 @@ export class ConfigManager {
   /**
    * Deep merge utility for configuration updates
    */
-  private deepMerge(target: any, source: any): any {
-    const result = { ...target };
+  private deepMerge(target: unknown, source: unknown): unknown {
+    if (!target || typeof target !== "object") {
+      return source;
+    }
+    if (!source || typeof source !== "object") {
+      return target;
+    }
 
-    for (const key in source) {
+    const targetObj = target as Record<string, unknown>;
+    const sourceObj = source as Record<string, unknown>;
+    const result = { ...targetObj };
+
+    for (const key in sourceObj) {
       if (
-        source[key] && typeof source[key] === "object" &&
-        !Array.isArray(source[key])
+        sourceObj[key] && typeof sourceObj[key] === "object" &&
+        !Array.isArray(sourceObj[key])
       ) {
-        result[key] = this.deepMerge(target[key] || {}, source[key]);
+        result[key] = this.deepMerge(targetObj[key] || {}, sourceObj[key]);
       } else {
-        result[key] = source[key];
+        result[key] = sourceObj[key];
       }
     }
 

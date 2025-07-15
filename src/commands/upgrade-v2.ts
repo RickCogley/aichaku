@@ -8,7 +8,7 @@ import { parseArgs } from "jsr:@std/cli@1";
 import { exists } from "jsr:@std/fs@1";
 import { join } from "jsr:@std/path@1";
 import {
-  ConfigManager,
+  type ConfigManager,
   createProjectConfigManager,
 } from "../utils/config-manager.ts";
 import {
@@ -177,7 +177,7 @@ export async function upgradeCommand(args: string[]): Promise<void> {
 /**
  * Simulate upgrade for dry-run mode
  */
-async function simulateUpgrade(
+function simulateUpgrade(
   configManager: ConfigManager,
   targetVersion: string,
   options: UpgradeOptions,
@@ -285,7 +285,7 @@ async function performVersionSpecificUpgrades(
  */
 async function updateMethodologyFiles(
   methodology: string,
-  targetVersion: string,
+  _targetVersion: string,
   options: UpgradeOptions,
 ): Promise<void> {
   const projectRoot = Deno.cwd();
@@ -312,9 +312,9 @@ async function updateMethodologyFiles(
 /**
  * Show post-upgrade information and recommendations
  */
-async function showPostUpgradeInfo(
+function showPostUpgradeInfo(
   configManager: ConfigManager,
-  options: UpgradeOptions,
+  _options: UpgradeOptions,
 ): Promise<void> {
   const config = configManager.get();
 
@@ -354,7 +354,7 @@ async function showPostUpgradeInfo(
 /**
  * Get the latest available version (placeholder implementation)
  */
-async function getLatestVersion(): Promise<string> {
+function getLatestVersion(): string {
   // In a real implementation, this would fetch from a registry or API
   // For now, return a placeholder version
   return "0.30.0";

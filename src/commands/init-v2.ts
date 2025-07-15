@@ -266,8 +266,8 @@ async function createMethodologyFiles(
 /**
  * Create template files based on specified template
  */
-async function createTemplateFiles(
-  projectRoot: string,
+function createTemplateFiles(
+  _projectRoot: string,
   template: string,
   options: InitOptions,
 ): Promise<void> {
@@ -281,9 +281,9 @@ async function createTemplateFiles(
 /**
  * Show initialization summary
  */
-async function showInitializationSummary(
+function showInitializationSummary(
   configManager: ConfigManager,
-  options: InitOptions,
+  _options: InitOptions,
 ): Promise<void> {
   const config = configManager.get();
 
@@ -415,7 +415,7 @@ async function confirmReinitialize(): Promise<boolean> {
 /**
  * Get current version (placeholder implementation)
  */
-async function getCurrentVersion(): Promise<string> {
+function getCurrentVersion(): string {
   // In a real implementation, this would read from package.json or similar
   return "0.29.0";
 }

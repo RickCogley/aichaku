@@ -26,7 +26,7 @@ export async function list(): Promise<ListResult> {
   // Convert discovered content to Methodology format
   const available: Methodology[] = [];
 
-  for (const [category, items] of Object.entries(discovered.categories)) {
+  for (const [_category, items] of Object.entries(discovered.categories)) {
     for (const item of items) {
       const name = item.path.split("/")[0]; // Get methodology name from path
 

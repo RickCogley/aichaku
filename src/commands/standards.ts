@@ -109,10 +109,10 @@ async function getDiscoveredStandards(
 /**
  * Convert discovered standards to the legacy format for backward compatibility
  */
-function discoveredToLegacyFormat(
+function _discoveredToLegacyFormat(
   discovered: DiscoveredContent,
 ): typeof STANDARD_CATEGORIES {
-  const categories: any = {};
+  const categories: Record<string, unknown> = {};
 
   for (const [categoryKey, items] of Object.entries(discovered.categories)) {
     const categoryName = categoryKey.replace(/-/g, " ")

@@ -5,7 +5,7 @@
  * to the new consolidated aichaku.json format.
  */
 
-import { Brand } from "../utils/branded-messages.ts";
+import { AichakuBrand as Brand } from "../utils/branded-messages.ts";
 import {
   checkMigrationStatus,
   generateMigrationReport,
@@ -163,7 +163,7 @@ export async function migrate(
     // Scan for installations that need migration
     const installations = await scanForMigrations();
     const needsGlobalMigration = installations.global.needsMigration;
-    const needsProjectMigration = installations.projects.some((p) =>
+    const needsProjectMigration = installations.projects.some((p: any) =>
       p.needsMigration
     );
 
@@ -183,7 +183,7 @@ export async function migrate(
 
     // Show what will be migrated
     if (!options.silent && !options.dryRun) {
-      Brand.header("Metadata Migration");
+      Brand.log("\n=== Metadata Migration ===");
 
       if (needsGlobalMigration && (!options.project)) {
         console.log("🌍 Global installation needs migration");
@@ -195,7 +195,7 @@ export async function migrate(
 
       if (needsProjectMigration && (!options.global)) {
         for (
-          const project of installations.projects.filter((p) =>
+          const project of installations.projects.filter((p: any) =>
             p.needsMigration
           )
         ) {
@@ -248,7 +248,9 @@ export async function migrate(
       };
     } else if (options.project && !options.global) {
       // Only migrate current project
-      const project = installations.projects.find((p) => p.path === Deno.cwd());
+      const project = installations.projects.find((p: any) =>
+        p.path === Deno.cwd()
+      );
       if (!project?.needsMigration) {
         return {
           success: true,
@@ -297,9 +299,9 @@ export async function migrate(
 
       if (!options.silent) {
         if (options.dryRun) {
-          Brand.header("Migration Summary (Dry Run)");
+          Brand.log("\n=== Migration Summary (Dry Run) ===");
         } else {
-          Brand.header("Migration Summary");
+          Brand.log("\n=== Migration Summary ===");
         }
 
         console.log(
@@ -338,7 +340,9 @@ export async function migrate(
           : "Migration completed with some errors",
         details: {
           globalMigrated: results.global.success,
-          projectsMigrated: results.projects.filter((p) => p.success).length,
+          projectsMigrated: results.projects.filter((p: any) =>
+            p.success
+          ).length,
           filesCleanedUp: results.summary.totalCleaned,
         },
       };

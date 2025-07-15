@@ -6,7 +6,7 @@ import { assertEquals, assertRejects, assertThrows } from "jsr:@std/assert";
 import { exists } from "jsr:@std/fs@1";
 import { join } from "jsr:@std/path@1";
 import {
-  AichakuConfig,
+  type AichakuConfig,
   ConfigManager,
   createProjectConfigManager,
   getProjectMethodology,
