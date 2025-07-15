@@ -52,7 +52,7 @@ project/.claude/
 Before you begin, make sure you:
 
 - [ ] Back up your current `~/.claude/` directory
-- [ ] Note any custom standards in `~/.claude/standards/custom/`
+- [ ] Note any custom standards in `~/.claude/docs/standards/custom/`
 - [ ] Commit any uncommitted work in your projects
 - [ ] Update Aichaku to the latest version
 
@@ -92,8 +92,8 @@ Example output:
 
 Global migration needed:
   ✓ Will move: ~/.claude/methodologies/ → ~/.claude/aichaku/methodologies/
-  ✓ Will move: ~/.claude/standards/ → ~/.claude/aichaku/standards/
-  ✓ Will move: custom standards → ~/.claude/aichaku/user/standards/
+  ✓ Will move: ~/.claude/docs/standards/ → ~/.claude/aichaku/docs/standards/
+  ✓ Will move: custom standards → ~/.claude/aichaku/user/docs/standards/
   ✓ Will create backup: ~/.claude-backup-20250711-143022
 
 No issues detected. Ready to migrate.
@@ -123,11 +123,11 @@ Creating backup... ✓
 
 Moving core files... ✓
   Moved: methodologies/ → aichaku/methodologies/
-  Moved: standards/ → aichaku/standards/
+  Moved: standards/ → aichaku/docs/standards/
 
 Moving custom standards... ✓
   Found 3 custom standards
-  Moved to: aichaku/user/standards/
+  Moved to: aichaku/user/docs/standards/
 
 Migration complete! ✓
 ```
@@ -178,11 +178,11 @@ This is useful if:
 - You only use custom standards
 
 The command will check both old locations:
-- `~/.claude/standards/custom/*`
-- `~/.claude/aichaku/standards/custom/*`
+- `~/.claude/docs/standards/custom/*`
+- `~/.claude/aichaku/docs/standards/custom/*`
 
 And consolidate them in the new location:
-- `~/.claude/aichaku/user/standards/`
+- `~/.claude/aichaku/user/docs/standards/`
 
 ## Step 5: Verify Migration
 
@@ -226,8 +226,8 @@ Project Standards (./project-name):
 The old manual method:
 ```bash
 # ❌ Don't use this anymore
-mkdir -p ~/.claude/standards/custom
-echo "# My Standard" > ~/.claude/standards/custom/my-standard.md
+mkdir -p ~/.claude/docs/standards/custom
+echo "# My Standard" > ~/.claude/docs/standards/custom/my-standard.md
 ```
 
 The new recommended method:
@@ -291,21 +291,21 @@ Custom standards might be in the wrong location.
 **Check all possible locations:**
 ```bash
 # New location (correct)
-ls -la ~/.claude/aichaku/user/standards/
+ls -la ~/.claude/aichaku/user/docs/standards/
 
 # Old locations (need migration)
-ls -la ~/.claude/standards/custom/
-ls -la ~/.claude/aichaku/standards/custom/
+ls -la ~/.claude/docs/standards/custom/
+ls -la ~/.claude/aichaku/docs/standards/custom/
 ```
 
 **Manual fix if needed:**
 ```bash
 # Create destination if it doesn't exist
-mkdir -p ~/.claude/aichaku/user/standards/
+mkdir -p ~/.claude/aichaku/user/docs/standards/
 
 # Move from old locations
-mv ~/.claude/standards/custom/* ~/.claude/aichaku/user/standards/ 2>/dev/null
-mv ~/.claude/aichaku/standards/custom/* ~/.claude/aichaku/user/standards/ 2>/dev/null
+mv ~/.claude/docs/standards/custom/* ~/.claude/aichaku/user/docs/standards/ 2>/dev/null
+mv ~/.claude/aichaku/docs/standards/custom/* ~/.claude/aichaku/user/docs/standards/ 2>/dev/null
 ```
 
 ### Issue: Project standards file not found
@@ -393,8 +393,8 @@ If you have scripts that reference the old structure:
 ```bash
 # Old path references to update
 ~/.claude/methodologies/    → ~/.claude/aichaku/methodologies/
-~/.claude/standards/        → ~/.claude/aichaku/standards/
-~/.claude/standards/custom/ → ~/.claude/aichaku/user/standards/
+~/.claude/docs/standards/        → ~/.claude/aichaku/docs/standards/
+~/.claude/docs/standards/custom/ → ~/.claude/aichaku/user/docs/standards/
 
 # Project files to update
 .claude/.aichaku-standards.json → .claude/aichaku/standards.json

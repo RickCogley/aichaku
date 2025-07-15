@@ -7,7 +7,7 @@ The Aichaku codebase currently uses the following directory structure:
 ### Global Installation Paths
 - `~/.claude/` - Global Aichaku installation directory
   - `~/.claude/methodologies/` - All methodology files
-  - `~/.claude/standards/` - All standards files (security, architecture, development, etc.)
+  - `~/.claude/docs/standards/` - All standards files (security, architecture, development, etc.)
   - `~/.claude/user/` - Global user customizations
   - `~/.claude/output/` - Global output directory
   - `~/.claude/.aichaku.json` - Global metadata file
@@ -85,7 +85,7 @@ If we move everything under `.claude/aichaku/`, the following changes would be n
 ### Global Paths
 - Change: `~/.claude/` → `~/.claude/aichaku/`
 - Change: `~/.claude/methodologies/` → `~/.claude/aichaku/methodologies/`
-- Change: `~/.claude/standards/` → `~/.claude/aichaku/standards/`
+- Change: `~/.claude/docs/standards/` → `~/.claude/aichaku/docs/standards/`
 - Change: `~/.claude/user/` → `~/.claude/aichaku/user/`
 - Change: `~/.claude/output/` → `~/.claude/aichaku/output/`
 

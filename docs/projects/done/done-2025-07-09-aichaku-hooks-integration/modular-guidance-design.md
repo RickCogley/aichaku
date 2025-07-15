@@ -184,7 +184,7 @@ The integrated CLAUDE.md would have clearly marked sections:
 <!-- AICHAKU:DEVELOPMENT:END -->
 
 <!-- AICHAKU:CUSTOM:START -->
-[Team-specific standards from user/standards/]
+[Team-specific standards from user/docs/standards/]
 <!-- AICHAKU:CUSTOM:END -->
 ```
 

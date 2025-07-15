@@ -92,7 +92,7 @@ interface StandardsConfig {
     "team-guidelines": {
       "name": "Team Development Guidelines",
       "description": "Our team's specific coding standards and practices",
-      "path": "/Users/user/.claude/aichaku/user/standards/team-guidelines.md",
+      "path": "/Users/user/.claude/aichaku/user/docs/standards/team-guidelines.md",
       "tags": ["custom", "team", "guidelines"],
       "createdAt": "2025-07-11T10:00:00Z",
       "updatedAt": "2025-07-11T10:00:00Z"
@@ -100,7 +100,7 @@ interface StandardsConfig {
     "api-design": {
       "name": "API Design Standards",
       "description": "REST API design patterns and conventions",
-      "path": "/Users/user/.claude/aichaku/user/standards/api-design.md",
+      "path": "/Users/user/.claude/aichaku/user/docs/standards/api-design.md",
       "tags": ["custom", "api", "rest", "design"]
     }
   }
@@ -114,7 +114,7 @@ If you have an existing installation with the old configuration format:
 | Old Path | New Path |
 |----------|----------|
 | `.claude/.aichaku-standards.json` | `.claude/aichaku/standards.json` |
-| `~/.claude/standards/` | `~/.claude/aichaku/standards/` |
+| `~/.claude/docs/standards/` | `~/.claude/aichaku/docs/standards/` |
 
 Run the migration command to update:
 
@@ -348,8 +348,8 @@ aichaku uninstall [options]
 |------|---------|
 | `~/.claude/` | Root directory |
 | `~/.claude/methodologies/` | All methodology files |
-| `~/.claude/aichaku/standards/` | Built-in standards library |
-| `~/.claude/aichaku/user/standards/` | Custom standards directory |
+| `~/.claude/aichaku/docs/standards/` | Built-in standards library |
+| `~/.claude/aichaku/user/docs/standards/` | Custom standards directory |
 | `~/.claude/output/` | Generated projects |
 | `~/.claude/CLAUDE.md` | Global Claude instructions |
 | `~/.claude/settings.json` | Global settings (future) |
@@ -361,8 +361,8 @@ aichaku uninstall [options]
 |------|---------|
 | `.claude/` | Project root |
 | `.claude/methodologies/` | Project methodologies |
-| `.claude/aichaku/standards/` | Built-in standards (symlinked) |
-| `.claude/aichaku/user/standards/` | Custom standards (symlinked) |
+| `.claude/aichaku/docs/standards/` | Built-in standards (symlinked) |
+| `.claude/aichaku/user/docs/standards/` | Custom standards (symlinked) |
 | `.claude/aichaku/standards.json` | Standards configuration |
 | `.claude/output/` | Project work |
 | `.claude/output/active-*/` | Active projects |
@@ -435,7 +435,7 @@ aichaku uninstall [options]
 | Security | `/security/` | owasp-web, nist-csf |
 | Testing | `/testing/` | test-pyramid, bdd |
 | DevOps | `/devops/` | dora |
-| Custom | `~/.claude/aichaku/user/standards/` | User-created standards |
+| Custom | `~/.claude/aichaku/user/docs/standards/` | User-created standards |
 
 ### Standard identifiers
 
@@ -500,7 +500,7 @@ Each custom standard has associated metadata stored in `standards.json`:
   "my-standard": {
     "name": "My Custom Standard",
     "description": "Brief description of what this standard covers",
-    "path": "/Users/user/.claude/aichaku/user/standards/my-standard.md",
+    "path": "/Users/user/.claude/aichaku/user/docs/standards/my-standard.md",
     "tags": ["custom", "team", "api"],
     "createdAt": "2025-07-11T10:00:00Z",
     "updatedAt": "2025-07-11T10:00:00Z"

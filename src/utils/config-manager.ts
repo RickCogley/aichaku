@@ -1,24 +1,16 @@
 /**
  * Configuration Manager for Aichaku
- * Handles the consolidated aichaku.json metadata format
- *
- * This module manages the transition from multiple metadata files to a single
- * consolidated aichaku.json file, providing backward compatibility during migration.
+ * 
+ * Handles consolidation of metadata from multiple files into a single aichaku.json
+ * Provides backward compatibility during migration and type-safe configuration access
  */
 
-import { exists } from "jsr:@std/fs@1.0.0";
-import { join } from "jsr:@std/path@1.0.0";
-import { getAichakuPaths } from "../paths.ts";
+import { exists } from "jsr:@std/fs@1";
+import { join } from "jsr:@std/path@1";
 
-/**
- * Unified schema for the consolidated configuration file
- * Version 2.0.0 introduces the consolidated format
- */
+// Unified schema for consolidated configuration (v2.0.0)
 export interface AichakuConfig {
-  // Version of the config schema itself
   version: "2.0.0";
-
-  // Project metadata (from .aichaku.json and .aichaku-project)
   project: {
     created: string;
     installedVersion?: string;
@@ -27,27 +19,20 @@ export interface AichakuConfig {
     type?: "global" | "project";
     installationType?: "global" | "local";
   };
-
-  // Selected standards (from standards.json + aichaku-standards.json)
   standards: {
     development: string[];
     documentation: string[];
     custom: Record<string, any>;
   };
-
-  // Configuration settings (from aichaku.config.json)
   config: {
     outputPath?: string;
     enableHooks?: boolean;
     autoCommit?: boolean;
     gitIntegration?: boolean;
-    customizations?: {
-      userDir?: string;
-    };
+    customizations?: Record<string, any>;
     globalVersion?: string;
+    createdAt?: string;
   };
-
-  // Legacy markers (replacing .aichaku-project file)
   markers: {
     isAichakuProject: boolean;
     migrationVersion?: string;
@@ -58,10 +43,8 @@ export interface AichakuConfig {
 interface LegacyAichakuJson {
   version?: string;
   installedVersion?: string;
-  installedAt?: string;
   installDate?: string;
   lastUpdated?: string;
-  lastUpgrade?: string;
   type?: "global" | "project";
   installationType?: "global" | "local";
 }
@@ -75,61 +58,55 @@ interface LegacyConfigJson {
   version?: string;
   globalVersion?: string;
   createdAt?: string;
-  customizations?: {
-    userDir?: string;
-  };
   outputPath?: string;
   enableHooks?: boolean;
   autoCommit?: boolean;
   gitIntegration?: boolean;
-}
-
-interface LegacyProjectMarker {
-  version?: string;
-  installedAt?: string;
-  installationType?: string;
-  lastUpgrade?: string;
+  customizations?: Record<string, any>;
 }
 
 /**
- * Configuration Manager class for working with Aichaku metadata
+ * Configuration Manager Class
+ * Provides unified access to Aichaku configuration with automatic migration
  */
 export class ConfigManager {
   private config: AichakuConfig | null = null;
   private projectRoot: string;
+  private aichakuDir: string;
   private configPath: string;
 
-  constructor(projectRoot?: string) {
-    this.projectRoot = projectRoot || Deno.cwd();
-    const paths = getAichakuPaths();
-    this.configPath = join(
-      this.projectRoot,
-      ".claude",
-      "aichaku",
-      "aichaku.json",
-    );
+  constructor(projectRoot: string) {
+    this.projectRoot = projectRoot;
+    this.aichakuDir = join(projectRoot, ".claude", "aichaku");
+    this.configPath = join(this.aichakuDir, "aichaku.json");
   }
 
   /**
-   * Load configuration from disk (new format or legacy)
+   * Load configuration from consolidated file or migrate from legacy files
    */
   async load(): Promise<void> {
-    // Try loading the consolidated config first
-    this.config = await this.loadConsolidatedConfig();
-
-    // If not found, try loading from legacy files
-    if (!this.config) {
-      this.config = await this.loadLegacyConfig();
+    // Try to load from consolidated file first
+    if (await exists(this.configPath)) {
+      try {
+        const content = await Deno.readTextFile(this.configPath);
+        this.config = JSON.parse(content) as AichakuConfig;
+        return;
+      } catch (e) {
+        console.warn("Failed to load consolidated config:", (e as Error).message);
+      }
     }
 
-    // If still no config, this isn't an Aichaku project
-    if (!this.config) {
+    // Check if this is an Aichaku project by looking for any metadata files
+    if (await this.hasLegacyFiles()) {
+      console.log("🔄 Detected legacy metadata files, performing automatic migration...");
+      await this.migrateFromLegacy();
+    } else {
       throw new Error("No Aichaku configuration found");
     }
   }
 
   /**
-   * Get the loaded configuration
+   * Get the current configuration
    */
   get(): AichakuConfig {
     if (!this.config) {
@@ -139,7 +116,7 @@ export class ConfigManager {
   }
 
   /**
-   * Save the current configuration to disk
+   * Save the current configuration to file
    */
   async save(): Promise<void> {
     if (!this.config) {
@@ -147,355 +124,399 @@ export class ConfigManager {
     }
 
     // Ensure directory exists
-    const dir = join(this.projectRoot, ".claude", "aichaku");
-    await Deno.mkdir(dir, { recursive: true });
+    try {
+      await Deno.mkdir(this.aichakuDir, { recursive: true });
+    } catch {
+      // Directory already exists
+    }
 
-    // Write the consolidated config
     await Deno.writeTextFile(
       this.configPath,
-      JSON.stringify(this.config, null, 2),
+      JSON.stringify(this.config, null, 2)
     );
   }
 
   /**
-   * Update configuration with partial changes
+   * Update configuration with partial updates
    */
-  async update(updates: DeepPartial<AichakuConfig>): Promise<void> {
+  async update(updates: Partial<AichakuConfig>): Promise<void> {
     if (!this.config) {
-      await this.load();
+      throw new Error("Configuration not loaded");
     }
 
-    this.config = deepMerge(this.config!, updates) as AichakuConfig;
+    this.config = this.deepMerge(this.config, updates);
     await this.save();
   }
 
   /**
-   * Check if this is an Aichaku project
+   * Create default configuration for new projects
    */
-  isAichakuProject(): boolean {
-    return this.config?.markers.isAichakuProject ?? false;
-  }
-
-  /**
-   * Get the project methodology
-   */
-  getMethodology(): string | undefined {
-    return this.config?.project.methodology;
-  }
-
-  /**
-   * Get all selected standards (development + documentation)
-   */
-  getStandards(): string[] {
-    if (!this.config) return [];
-    return [
-      ...this.config.standards.development,
-      ...this.config.standards.documentation,
-    ];
-  }
-
-  /**
-   * Get development standards only
-   */
-  getDevelopmentStandards(): string[] {
-    return this.config?.standards.development ?? [];
-  }
-
-  /**
-   * Get documentation standards only
-   */
-  getDocumentationStandards(): string[] {
-    return this.config?.standards.documentation ?? [];
-  }
-
-  /**
-   * Get the installed version
-   */
-  getInstalledVersion(): string | undefined {
-    return this.config?.project.installedVersion;
-  }
-
-  /**
-   * Get the project type (global or project)
-   */
-  getProjectType(): "global" | "project" | undefined {
-    return this.config?.project.type;
-  }
-
-  /**
-   * Migrate from legacy format to consolidated format
-   */
-  async migrate(): Promise<boolean> {
-    // Check if already migrated
-    if (await exists(this.configPath)) {
-      console.log("✅ Already using consolidated aichaku.json");
-      return false;
-    }
-
-    console.log("🔄 Migrating to consolidated metadata format...");
-
-    // Load from legacy files
-    const legacyConfig = await this.loadLegacyConfig();
-    if (!legacyConfig) {
-      console.log("❌ No legacy configuration found to migrate");
-      return false;
-    }
-
-    // Save as consolidated format
-    this.config = legacyConfig;
-    await this.save();
-
-    console.log("✅ Created consolidated aichaku.json");
-
-    // Optionally clean up old files
-    // This should be done carefully after verification
-    // await this.cleanupLegacyFiles();
-
-    return true;
-  }
-
-  /**
-   * Load configuration from the consolidated file
-   */
-  private async loadConsolidatedConfig(): Promise<AichakuConfig | null> {
-    if (!await exists(this.configPath)) {
-      return null;
-    }
-
-    try {
-      const content = await Deno.readTextFile(this.configPath);
-      const config = JSON.parse(content);
-
-      // Validate version
-      if (config.version !== "2.0.0") {
-        console.warn(`Warning: Unknown config version ${config.version}`);
-      }
-
-      return config as AichakuConfig;
-    } catch (e) {
-      console.error("Failed to load aichaku.json:", e.message);
-      return null;
-    }
-  }
-
-  /**
-   * Load configuration from legacy files (backward compatibility)
-   */
-  private async loadLegacyConfig(): Promise<AichakuConfig | null> {
-    const aichakuDir = join(this.projectRoot, ".claude", "aichaku");
-
-    // Initialize with defaults
-    const config: AichakuConfig = {
+  static createDefault(methodology?: string): AichakuConfig {
+    return {
       version: "2.0.0",
       project: {
         created: new Date().toISOString(),
+        methodology,
+        type: "project",
+        installationType: "local",
       },
       standards: {
         development: [],
         documentation: [],
         custom: {},
       },
-      config: {},
+      config: {
+        customizations: {},
+      },
       markers: {
-        isAichakuProject: false,
+        isAichakuProject: true,
       },
     };
+  }
 
-    // Check for any legacy files to determine if this is an Aichaku project
-    let foundLegacyFiles = false;
+  /**
+   * Create global configuration
+   */
+  static createGlobal(version: string): AichakuConfig {
+    const config = ConfigManager.createDefault();
+    config.project.type = "global";
+    config.project.installationType = "global";
+    config.project.installedVersion = version;
+    config.config.globalVersion = version;
+    return config;
+  }
 
-    // Load from .aichaku.json
-    const aichakuJsonPath = join(aichakuDir, ".aichaku.json");
-    if (await exists(aichakuJsonPath)) {
-      foundLegacyFiles = true;
+  // Convenience methods
+  getStandards(): string[] {
+    const config = this.get();
+    return [
+      ...config.standards.development,
+      ...config.standards.documentation,
+    ];
+  }
+
+  getDevelopmentStandards(): string[] {
+    return this.get().standards.development;
+  }
+
+  getDocumentationStandards(): string[] {
+    return this.get().standards.documentation;
+  }
+
+  isAichakuProject(): boolean {
+    return this.get().markers.isAichakuProject;
+  }
+
+  getMethodology(): string | undefined {
+    return this.get().project.methodology;
+  }
+
+  getInstalledVersion(): string | undefined {
+    return this.get().project.installedVersion;
+  }
+
+  getInstallationType(): "global" | "local" | undefined {
+    return this.get().project.installationType;
+  }
+
+  getCustomizations(): Record<string, any> {
+    return this.get().config.customizations || {};
+  }
+
+  /**
+   * Set the methodology for the project
+   */
+  async setMethodology(methodology: string): Promise<void> {
+    await this.update({
+      project: {
+        ...this.get().project,
+        methodology,
+        lastUpdated: new Date().toISOString(),
+      }
+    });
+  }
+
+  /**
+   * Add or update development standards
+   */
+  async setDevelopmentStandards(standards: string[]): Promise<void> {
+    await this.update({
+      standards: {
+        ...this.get().standards,
+        development: standards,
+      }
+    });
+  }
+
+  /**
+   * Add or update documentation standards
+   */
+  async setDocumentationStandards(standards: string[]): Promise<void> {
+    await this.update({
+      standards: {
+        ...this.get().standards,
+        documentation: standards,
+      }
+    });
+  }
+
+  /**
+   * Update installed version
+   */
+  async setInstalledVersion(version: string): Promise<void> {
+    await this.update({
+      project: {
+        ...this.get().project,
+        installedVersion: version,
+        lastUpdated: new Date().toISOString(),
+      }
+    });
+  }
+
+  /**
+   * Check if legacy files exist
+   */
+  private async hasLegacyFiles(): Promise<boolean> {
+    const legacyFiles = [
+      ".aichaku.json",
+      ".aichaku-project",
+      "aichaku-standards.json",
+      "standards.json",
+      "aichaku.config.json",
+    ];
+
+    for (const file of legacyFiles) {
+      if (await exists(join(this.aichakuDir, file))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Migrate from legacy metadata files to consolidated format
+   */
+  private async migrateFromLegacy(): Promise<void> {
+    // Initialize default config
+    this.config = ConfigManager.createDefault();
+
+    // Migrate from .aichaku.json
+    await this.migrateLegacyAichakuJson();
+
+    // Migrate from standards files
+    await this.migrateLegacyStandards();
+
+    // Migrate from config file
+    await this.migrateLegacyConfig();
+
+    // Check for project marker
+    await this.checkProjectMarker();
+
+    // Detect methodology from project structure
+    await this.detectMethodology();
+
+    // Save the consolidated configuration
+    await this.save();
+    console.log("✅ Successfully migrated to consolidated aichaku.json");
+  }
+
+  /**
+   * Migrate from legacy .aichaku.json
+   */
+  private async migrateLegacyAichakuJson(): Promise<void> {
+    const legacyPath = join(this.aichakuDir, ".aichaku.json");
+    if (await exists(legacyPath)) {
       try {
-        const content = await Deno.readTextFile(aichakuJsonPath);
+        const content = await Deno.readTextFile(legacyPath);
         const legacy: LegacyAichakuJson = JSON.parse(content);
 
-        config.project.installedVersion = legacy.version ||
-          legacy.installedVersion;
-        config.project.created = legacy.installedAt || legacy.installDate ||
-          config.project.created;
-        config.project.lastUpdated = legacy.lastUpdated || legacy.lastUpgrade;
-        config.project.type = legacy.type;
-        config.project.installationType = legacy.installationType;
-        config.markers.isAichakuProject = true;
+        if (this.config) {
+          this.config.project.installedVersion = legacy.installedVersion;
+          this.config.project.created = legacy.installDate || this.config.project.created;
+          this.config.project.lastUpdated = legacy.lastUpdated;
+          this.config.project.type = legacy.type;
+          this.config.project.installationType = legacy.installationType;
+        }
+
+        console.log("  ✓ Migrated .aichaku.json");
       } catch (e) {
-        console.warn("Failed to load .aichaku.json:", e.message);
+        console.warn("  ⚠️ Failed to migrate .aichaku.json:", (e as Error).message);
       }
     }
+  }
 
-    // Load from .aichaku-project (older marker file)
-    const projectMarkerPath = join(aichakuDir, ".aichaku-project");
-    if (await exists(projectMarkerPath)) {
-      foundLegacyFiles = true;
-      config.markers.isAichakuProject = true;
-
-      try {
-        const content = await Deno.readTextFile(projectMarkerPath);
-        const legacy: LegacyProjectMarker = JSON.parse(content);
-
-        // Only update if not already set from .aichaku.json
-        if (!config.project.installedVersion) {
-          config.project.installedVersion = legacy.version;
-        }
-        if (!config.project.created) {
-          config.project.created = legacy.installedAt || config.project.created;
-        }
-        if (!config.project.lastUpdated) {
-          config.project.lastUpdated = legacy.lastUpgrade;
-        }
-        if (!config.project.installationType) {
-          config.project.installationType = legacy.installationType as
-            | "global"
-            | "local";
-        }
-      } catch (e) {
-        // It might be an empty marker file
-        console.warn("Failed to parse .aichaku-project:", e.message);
-      }
-    }
-
-    // Load development standards
-    const standardsFiles = [
-      join(aichakuDir, "aichaku-standards.json"),
-      join(aichakuDir, ".aichaku-standards.json"),
-      join(aichakuDir, "standards.json"),
+  /**
+   * Migrate from legacy standards files
+   */
+  private async migrateLegacyStandards(): Promise<void> {
+    // Migrate development standards
+    const devStandardsPaths = [
+      join(this.aichakuDir, "aichaku-standards.json"),
+      join(this.aichakuDir, "standards.json"),
+      join(this.aichakuDir, ".aichaku-standards.json"),
     ];
 
-    for (const path of standardsFiles) {
+    for (const path of devStandardsPaths) {
       if (await exists(path)) {
-        foundLegacyFiles = true;
         try {
           const content = await Deno.readTextFile(path);
           const legacy: LegacyStandardsJson = JSON.parse(content);
-          if (legacy.selected && legacy.selected.length > 0) {
-            config.standards.development = legacy.selected;
-            break; // Use the first file found with standards
+          if (this.config) {
+            this.config.standards.development = legacy.selected || [];
           }
-        } catch (e) {
-          console.warn(`Failed to load ${path}:`, e.message);
-        }
-      }
-    }
-
-    // Load documentation standards
-    const docStandardsFiles = [
-      join(aichakuDir, "doc-standards.json"),
-      join(aichakuDir, ".aichaku-doc-standards.json"),
-    ];
-
-    for (const path of docStandardsFiles) {
-      if (await exists(path)) {
-        foundLegacyFiles = true;
-        try {
-          const content = await Deno.readTextFile(path);
-          const legacy: LegacyStandardsJson = JSON.parse(content);
-          config.standards.documentation = legacy.selected || [];
+          console.log(`  ✓ Migrated ${path.split("/").pop()}`);
           break;
         } catch (e) {
-          console.warn(`Failed to load ${path}:`, e.message);
+          console.warn(`  ⚠️ Failed to migrate ${path.split("/").pop()}:`, (e as Error).message);
         }
       }
     }
 
-    // Load configuration
-    const configPath = join(aichakuDir, "aichaku.config.json");
+    // Migrate documentation standards
+    const docStandardsPaths = [
+      join(this.aichakuDir, "doc-standards.json"),
+      join(this.aichakuDir, ".aichaku-doc-standards.json"),
+    ];
+
+    for (const path of docStandardsPaths) {
+      if (await exists(path)) {
+        try {
+          const content = await Deno.readTextFile(path);
+          const legacy: LegacyStandardsJson = JSON.parse(content);
+          if (this.config) {
+            this.config.standards.documentation = legacy.selected || [];
+          }
+          console.log(`  ✓ Migrated ${path.split("/").pop()}`);
+          break;
+        } catch (e) {
+          console.warn(`  ⚠️ Failed to migrate ${path.split("/").pop()}:`, (e as Error).message);
+        }
+      }
+    }
+  }
+
+  /**
+   * Migrate from legacy config file
+   */
+  private async migrateLegacyConfig(): Promise<void> {
+    const configPath = join(this.aichakuDir, "aichaku.config.json");
     if (await exists(configPath)) {
-      foundLegacyFiles = true;
       try {
         const content = await Deno.readTextFile(configPath);
         const legacy: LegacyConfigJson = JSON.parse(content);
 
-        config.config = {
-          outputPath: legacy.outputPath,
-          enableHooks: legacy.enableHooks,
-          autoCommit: legacy.autoCommit,
-          gitIntegration: legacy.gitIntegration,
-          customizations: legacy.customizations,
-          globalVersion: legacy.globalVersion,
-        };
-
-        // If createdAt exists in config, use it
-        if (legacy.createdAt && !config.project.created) {
-          config.project.created = legacy.createdAt;
+        if (this.config) {
+          this.config.config = {
+            ...this.config.config,
+            outputPath: legacy.outputPath,
+            enableHooks: legacy.enableHooks,
+            autoCommit: legacy.autoCommit,
+            gitIntegration: legacy.gitIntegration,
+            customizations: legacy.customizations,
+            globalVersion: legacy.globalVersion,
+            createdAt: legacy.createdAt,
+          };
         }
+
+        console.log("  ✓ Migrated aichaku.config.json");
       } catch (e) {
-        console.warn("Failed to load aichaku.config.json:", e.message);
+        console.warn("  ⚠️ Failed to migrate aichaku.config.json:", (e as Error).message);
       }
     }
+  }
 
-    // Detect methodology from project structure
-    if (foundLegacyFiles && !config.project.methodology) {
-      config.project.methodology = await this.detectMethodology();
+  /**
+   * Check for .aichaku-project marker
+   */
+  private async checkProjectMarker(): Promise<void> {
+    const markerPath = join(this.aichakuDir, ".aichaku-project");
+    if (await exists(markerPath)) {
+      if (this.config) {
+        this.config.markers.isAichakuProject = true;
+      }
+      console.log("  ✓ Detected .aichaku-project marker");
     }
-
-    return foundLegacyFiles ? config : null;
   }
 
   /**
    * Detect methodology from project structure
    */
-  private async detectMethodology(): Promise<string | undefined> {
+  private async detectMethodology(): Promise<void> {
     const projectsDir = join(this.projectRoot, "docs", "projects");
-
     if (!await exists(projectsDir)) {
-      return undefined;
+      return;
     }
 
-    // Look for methodology-specific files
-    const methodologyPatterns = {
-      "shape-up": ["pitch.md", "hill-chart.md", "cycle-plan.md"],
-      "scrum": [
-        "sprint-planning.md",
-        "sprint-retrospective.md",
-        "user-story.md",
-      ],
+    const methodologyIndicators = {
+      "shape-up": ["pitch.md", "STATUS.md", "hill-chart.md"],
+      "scrum": ["sprint-planning.md", "retrospective.md", "user-story.md"],
       "kanban": ["kanban-board.md", "flow-metrics.md"],
-      "lean": ["experiment-plan.md", "hypothesis.md"],
-      "xp": ["user-story.md", "test-plan.md"],
-      "scrumban": ["planning-trigger.md", "kanban-board.md"],
+      "lean": ["experiment-plan.md"],
+      "scrumban": ["planning-trigger.md"],
     };
 
-    // Check active and done directories
-    for (const dir of ["active", "done"]) {
-      const searchDir = join(projectsDir, dir);
-      if (!await exists(searchDir)) continue;
-
-      // Read directory contents
+    // Check active projects directory
+    const activeDir = join(projectsDir, "active");
+    if (await exists(activeDir)) {
       try {
-        for await (const entry of Deno.readDir(searchDir)) {
+        for await (const entry of Deno.readDir(activeDir)) {
           if (entry.isDirectory) {
-            const projectDir = join(searchDir, entry.name);
-
-            // Check each methodology's signature files
-            for (
-              const [methodology, files] of Object.entries(methodologyPatterns)
-            ) {
+            const projectDir = join(activeDir, entry.name);
+            
+            for (const [methodology, files] of Object.entries(methodologyIndicators)) {
               for (const file of files) {
                 if (await exists(join(projectDir, file))) {
-                  return methodology;
+                  if (this.config) {
+                    this.config.project.methodology = methodology;
+                  }
+                  console.log(`  ✓ Detected ${methodology} methodology from ${file}`);
+                  return;
                 }
               }
             }
           }
         }
       } catch {
-        // Continue checking
+        // Continue without error if we can't read the directory
       }
     }
 
-    return undefined;
+    // Fallback: check for methodology files in projects root
+    for (const [methodology, files] of Object.entries(methodologyIndicators)) {
+      for (const file of files) {
+        if (await exists(join(projectsDir, file))) {
+          if (this.config) {
+            this.config.project.methodology = methodology;
+          }
+          console.log(`  ✓ Detected ${methodology} methodology from ${file}`);
+          return;
+        }
+      }
+    }
   }
 
   /**
-   * Clean up legacy metadata files after successful migration
-   * This should be called carefully after verifying the migration worked
+   * Deep merge utility for configuration updates
+   */
+  private deepMerge(target: any, source: any): any {
+    const result = { ...target };
+
+    for (const key in source) {
+      if (source[key] && typeof source[key] === "object" && !Array.isArray(source[key])) {
+        result[key] = this.deepMerge(target[key] || {}, source[key]);
+      } else {
+        result[key] = source[key];
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Clean up legacy files after successful migration
    */
   async cleanupLegacyFiles(): Promise<void> {
-    const aichakuDir = join(this.projectRoot, ".claude", "aichaku");
-
-    const filesToRemove = [
+    const legacyFiles = [
       ".aichaku.json",
       ".aichaku-project",
       ".aichaku-standards.json",
@@ -507,80 +528,102 @@ export class ConfigManager {
     ];
 
     console.log("🧹 Cleaning up legacy metadata files...");
+    let removedCount = 0;
 
-    for (const file of filesToRemove) {
-      const path = join(aichakuDir, file);
+    for (const file of legacyFiles) {
+      const path = join(this.aichakuDir, file);
       if (await exists(path)) {
         try {
           await Deno.remove(path);
           console.log(`  ✓ Removed ${file}`);
+          removedCount++;
         } catch (e) {
-          console.warn(`  ⚠️ Failed to remove ${file}:`, e.message);
+          console.warn(`  ⚠️ Failed to remove ${file}:`, (e as Error).message);
         }
       }
     }
-  }
-}
 
-/**
- * Deep partial type helper
- */
-type DeepPartial<T> = {
-  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
-};
-
-/**
- * Deep merge two objects
- */
-function deepMerge(target: any, source: any): any {
-  const result = { ...target };
-
-  for (const key in source) {
-    if (
-      source[key] && typeof source[key] === "object" &&
-      !Array.isArray(source[key])
-    ) {
-      result[key] = deepMerge(target[key] || {}, source[key]);
+    if (removedCount > 0) {
+      console.log(`✅ Cleaned up ${removedCount} legacy files`);
     } else {
-      result[key] = source[key];
+      console.log("✅ No legacy files to clean up");
     }
   }
 
-  return result;
+  /**
+   * Verify the integrity of the configuration
+   */
+  verifyIntegrity(): { valid: boolean; errors: string[] } {
+    const errors: string[] = [];
+
+    if (!this.config) {
+      errors.push("Configuration not loaded");
+      return { valid: false, errors };
+    }
+
+    // Check required fields
+    if (this.config.version !== "2.0.0") {
+      errors.push("Invalid configuration version");
+    }
+
+    if (!this.config.project.created) {
+      errors.push("Missing project creation date");
+    }
+
+    if (!this.config.markers) {
+      errors.push("Missing markers section");
+    }
+
+    if (!this.config.standards) {
+      errors.push("Missing standards section");
+    }
+
+    if (!this.config.config) {
+      errors.push("Missing config section");
+    }
+
+    return { valid: errors.length === 0, errors };
+  }
 }
 
 /**
- * Create a default configuration for new projects
+ * Factory function to create ConfigManager for project root
  */
-export function createDefaultConfig(
-  type: "global" | "project" = "project",
-): AichakuConfig {
-  return {
-    version: "2.0.0",
-    project: {
-      created: new Date().toISOString(),
-      type,
-    },
-    standards: {
-      development: [],
-      documentation: [],
-      custom: {},
-    },
-    config: {},
-    markers: {
-      isAichakuProject: true,
-    },
-  };
+export function createProjectConfigManager(projectRoot?: string): ConfigManager {
+  const root = projectRoot || Deno.cwd();
+  return new ConfigManager(root);
 }
 
 /**
- * Export a singleton instance for global configuration
+ * Factory function to create ConfigManager for global configuration
  */
-export const globalConfig = new ConfigManager(getAichakuPaths().global.root);
+export function createGlobalConfigManager(): ConfigManager {
+  const globalRoot = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "/tmp";
+  return new ConfigManager(globalRoot);
+}
 
 /**
- * Export a factory function for project configuration
+ * Utility function to check if a directory is an Aichaku project
  */
-export function getProjectConfig(projectRoot?: string): ConfigManager {
-  return new ConfigManager(projectRoot);
+export async function isAichakuProject(projectRoot?: string): Promise<boolean> {
+  try {
+    const manager = createProjectConfigManager(projectRoot);
+    await manager.load();
+    return manager.isAichakuProject();
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Utility function to get methodology for a project
+ */
+export async function getProjectMethodology(projectRoot?: string): Promise<string | undefined> {
+  try {
+    const manager = createProjectConfigManager(projectRoot);
+    await manager.load();
+    return manager.getMethodology();
+  } catch {
+    return undefined;
+  }
 }

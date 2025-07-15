@@ -6,7 +6,7 @@ Custom standards allow you to define organization-specific or project-specific g
 
 Ensure you have:
 - Aichaku installed and configured
-- Access to your `~/.claude/aichaku/user/standards/` directory
+- Access to your `~/.claude/aichaku/user/docs/standards/` directory
 - A text editor for creating standard files
 - Basic understanding of Markdown syntax
 
@@ -37,7 +37,7 @@ Custom standards are user-defined development guidelines that:
 
 | Aspect | Built-in Standards | Custom Standards |
 |--------|-------------------|------------------|
-| Location | `~/.claude/aichaku/methodologies/standards/` | `~/.claude/aichaku/user/standards/` |
+| Location | `~/.claude/aichaku/methodologies/docs/standards/` | `~/.claude/aichaku/user/docs/standards/` |
 | Prefix | None (e.g., `tdd`) | `custom:` (e.g., `custom:team-guidelines`) |
 | Icon | 📚 | 🛠️ |
 | Updates | Aichaku updates them | You maintain them |
@@ -46,7 +46,7 @@ Custom standards are user-defined development guidelines that:
 ### Storage and Discovery
 
 Custom standards are:
-- Stored in `~/.claude/aichaku/user/standards/`
+- Stored in `~/.claude/aichaku/user/docs/standards/`
 - Automatically discovered on startup
 - Named using UPPER-KEBAB-CASE.md convention
 - Loaded alongside built-in standards
@@ -73,7 +73,7 @@ You can also create standards manually:
 
 1. Navigate to the custom standards directory:
    ```bash
-   cd ~/.claude/aichaku/user/standards/
+   cd ~/.claude/aichaku/user/docs/standards/
    ```
 
 2. Create a new file using UPPER-KEBAB-CASE:
@@ -195,10 +195,10 @@ Edit your existing custom standards:
 aichaku standards --edit-custom security-hardening
 
 # Or edit directly
-vim ~/.claude/aichaku/user/standards/SECURITY-HARDENING.md
+vim ~/.claude/aichaku/user/docs/standards/SECURITY-HARDENING.md
 
 # On macOS, open in default app
-open ~/.claude/aichaku/user/standards/SECURITY-HARDENING.md
+open ~/.claude/aichaku/user/docs/standards/SECURITY-HARDENING.md
 ```
 
 ### Copy Custom Standards
@@ -286,7 +286,7 @@ When you run `aichaku integrate`, custom standards appear in CLAUDE.md with clea
 
 ### TEAM-GUIDELINES
 
-> 📍 **Source**: Custom standard from ~/.claude/aichaku/user/standards/TEAM-GUIDELINES.md
+> 📍 **Source**: Custom standard from ~/.claude/aichaku/user/docs/standards/TEAM-GUIDELINES.md
 
 [Your custom standard content...]
 
@@ -327,7 +327,7 @@ Write effective custom standards:
 Structure your custom standards library:
 
 ```text
-~/.claude/aichaku/user/standards/
+~/.claude/aichaku/user/docs/standards/
 ├── API-DESIGN.md              # REST API conventions
 ├── DATABASE-PATTERNS.md       # Data layer guidelines
 ├── MOBILE-SECURITY.md         # Mobile-specific security
@@ -351,7 +351,7 @@ Track standards in your team repository:
 ```bash
 # Create standards directory in your repo
 mkdir -p .team/standards
-cp ~/.claude/aichaku/user/standards/*.md .team/standards/
+cp ~/.claude/aichaku/user/docs/standards/*.md .team/docs/standards/
 
 # Add to git
 git add .team/standards
@@ -364,7 +364,7 @@ git commit -m "Add team development standards"
    ```bash
    # Clone team standards
    git clone https://github.com/team/standards.git
-   cp standards/*.md ~/.claude/aichaku/user/standards/
+   cp standards/*.md ~/.claude/aichaku/user/docs/standards/
    ```
 
 2. **Shared Drive**
@@ -393,7 +393,7 @@ git commit -m "Add team development standards"
 
 **Solutions**:
 - Check filename uses UPPER-KEBAB-CASE.md
-- Verify location: `~/.claude/aichaku/user/standards/`
+- Verify location: `~/.claude/aichaku/user/docs/standards/`
 - Ensure valid frontmatter (YAML format)
 - Look for parsing errors in the file
 
@@ -430,7 +430,7 @@ mv "My Standard.md" MY-STANDARD.md
 aichaku migrate --custom-standards-only
 
 # Manual migration
-mv ~/.claude/standards/custom/* ~/.claude/aichaku/user/standards/
+mv ~/.claude/docs/standards/custom/* ~/.claude/aichaku/user/docs/standards/
 ```
 
 ### Use Debug Commands
@@ -442,7 +442,7 @@ Troubleshoot issues with these commands:
 aichaku standards --list --debug
 
 # Verify file location and permissions
-ls -la ~/.claude/aichaku/user/standards/
+ls -la ~/.claude/aichaku/user/docs/standards/
 
 # Check specific standard loading
 AICHAKU_DEBUG=1 aichaku standards --show
@@ -473,8 +473,8 @@ aichaku migrate
 1. **Locate old standards**:
    ```bash
    # Common legacy locations
-   ~/.claude/standards/custom/
-   ~/.claude/.aichaku/standards/
+   ~/.claude/docs/standards/custom/
+   ~/.claude/.aichaku/docs/standards/
    ~/Documents/aichaku-standards/
    ```
 
@@ -484,8 +484,8 @@ aichaku migrate
    mkdir -p ~/.claude/aichaku/user/standards
 
    # Copy standards
-   cp ~/.claude/standards/custom/*.md \
-      ~/.claude/aichaku/user/standards/
+   cp ~/.claude/docs/standards/custom/*.md \
+      ~/.claude/aichaku/user/docs/standards/
    ```
 
 3. **Update names if needed**:

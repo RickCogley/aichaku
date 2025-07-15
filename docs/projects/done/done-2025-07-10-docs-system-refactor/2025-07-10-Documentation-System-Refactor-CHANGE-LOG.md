@@ -49,9 +49,9 @@ New command: `aichaku docs-standard`
 **Files created**:
 - `/src/commands/docs-standard.ts` - Main command implementation
 - `/src/commands/docs-standard_test.ts` - Comprehensive tests
-- `/standards/documentation/diataxis-google.md` - Diátaxis + Google style
-- `/standards/documentation/microsoft-style.md` - Microsoft writing guide
-- `/standards/documentation/writethedocs.md` - Write the Docs principles
+- `/docs/docs/standards/documentation/diataxis-google.md` - Diátaxis + Google style
+- `/docs/docs/standards/documentation/microsoft-style.md` - Microsoft writing guide
+- `/docs/docs/standards/documentation/writethedocs.md` - Write the Docs principles
 
 **Features**:
 - List, add, remove, show documentation standards
@@ -143,10 +143,10 @@ Created comprehensive test suites:
 - `/src/linters/diataxis-linter.ts`
 - `/src/linters/google-style-linter.ts`
 - `/src/linters/microsoft-style-linter.ts`
-- `/standards/documentation/diataxis-google.md`
-- `/standards/documentation/microsoft-style.md`
-- `/standards/documentation/writethedocs.md`
-- `/standards/documentation/templates/*.md` (12 template files)
+- `/docs/docs/standards/documentation/diataxis-google.md`
+- `/docs/docs/standards/documentation/microsoft-style.md`
+- `/docs/docs/standards/documentation/writethedocs.md`
+- `/docs/docs/standards/documentation/templates/*.md` (12 template files)
 
 ### Modified (7 files)
 - `/src/cli.ts` - Added new commands

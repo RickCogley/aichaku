@@ -92,7 +92,7 @@ NEW: .claude/aichaku/
 ### 5. Enhanced Features
 
 #### Custom Standards Support
-- Organized under `~/.claude/aichaku/user/standards/`
+- Organized under `~/.claude/aichaku/user/docs/standards/`
 - Proper namespace separation from built-in standards
 - Clear documentation for adding custom standards
 - Better separation between system and user content

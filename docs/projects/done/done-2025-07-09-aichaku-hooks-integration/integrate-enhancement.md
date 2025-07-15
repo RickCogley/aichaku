@@ -72,7 +72,7 @@ Based on your project configuration, follow these standards:
 
 4. **Standard Content Storage**
    ```
-   ~/.claude/standards/
+   ~/.claude/docs/standards/
    ├── security/
    │   ├── owasp-web.md
    │   ├── nist-csf.md

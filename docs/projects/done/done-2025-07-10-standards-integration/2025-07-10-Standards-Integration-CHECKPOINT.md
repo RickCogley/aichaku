@@ -44,10 +44,10 @@
   - `<!-- AICHAKU:METHODOLOGY:START/END -->` for methodology rules
   - `<!-- AICHAKU:STANDARDS:START/END -->` for selected standards
 - Created comprehensive standard content files:
-  - `~/.claude/standards/security/owasp-web.md` - OWASP Top 10 Web Application Security
-  - `~/.claude/standards/architecture/15-factor.md` - 15-Factor App Methodology
-  - `~/.claude/standards/development/tdd.md` - Test-Driven Development
-  - `~/.claude/standards/security/nist-csf.md` - NIST Cybersecurity Framework
+  - `~/.claude/docs/standards/security/owasp-web.md` - OWASP Top 10 Web Application Security
+  - `~/.claude/docs/standards/architecture/15-factor.md` - 15-Factor App Methodology
+  - `~/.claude/docs/standards/development/tdd.md` - Test-Driven Development
+  - `~/.claude/docs/standards/security/nist-csf.md` - NIST Cybersecurity Framework
 - Features:
   - Surgical updates preserving existing content
   - Dynamic content loading based on selected standards

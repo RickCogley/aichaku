@@ -100,7 +100,7 @@ async function getDiscoveredStandards(
 
   // Discover standards from filesystem
   const standardsPath = basePath || Deno.cwd();
-  cachedStandards = await discoverContent("standards", standardsPath, false);
+  cachedStandards = await discoverContent("standards", standardsPath, true);
   cacheTimestamp = now;
 
   return cachedStandards;
@@ -142,126 +142,10 @@ function discoveredToLegacyFormat(
 }
 
 /**
- * Standard categories with their modules
- * This is now dynamically populated from the filesystem
+ * Legacy standard categories - kept for backward compatibility
+ * @deprecated Use getDiscoveredStandards() for dynamic content discovery
  */
-export const STANDARD_CATEGORIES = {
-  security: {
-    name: "Security Standards",
-    description: "Security frameworks and compliance standards",
-    standards: {
-      "owasp-web": {
-        name: "OWASP Top 10 Web",
-        description: "Web application security risks",
-        tags: ["security", "web", "api"],
-      },
-      "nist-csf": {
-        name: "NIST Cybersecurity Framework",
-        description: "Governance and risk management",
-        tags: ["security", "governance", "compliance"],
-      },
-      "gdpr": {
-        name: "GDPR Privacy",
-        description: "EU privacy regulations",
-        tags: ["privacy", "compliance", "european"],
-      },
-      "pci-dss": {
-        name: "PCI DSS",
-        description: "Payment card security",
-        tags: ["security", "payments", "compliance"],
-      },
-    },
-  },
-  architecture: {
-    name: "Architecture Patterns",
-    description: "Software architecture and design patterns",
-    standards: {
-      "15-factor": {
-        name: "15-Factor Apps",
-        description: "Modern cloud-native principles",
-        tags: ["cloud", "microservices", "best-practices"],
-      },
-      "ddd": {
-        name: "Domain-Driven Design",
-        description: "Strategic and tactical patterns",
-        tags: ["architecture", "design", "patterns"],
-      },
-      "clean-arch": {
-        name: "Clean Architecture",
-        description: "Dependency inversion principles",
-        tags: ["architecture", "solid", "design"],
-      },
-      "microservices": {
-        name: "Microservices Patterns",
-        description: "Distributed system patterns",
-        tags: ["architecture", "distributed", "patterns"],
-      },
-    },
-  },
-  development: {
-    name: "Development Standards",
-    description: "Coding standards and best practices",
-    standards: {
-      "google-style": {
-        name: "Google Style Guides",
-        description: "Language-specific style guides",
-        tags: ["style", "formatting", "best-practices"],
-      },
-      "conventional-commits": {
-        name: "Conventional Commits",
-        description: "Structured commit messages",
-        tags: ["git", "commits", "automation"],
-      },
-      "solid": {
-        name: "SOLID Principles",
-        description: "Object-oriented design principles",
-        tags: ["oop", "design", "principles"],
-      },
-      "tdd": {
-        name: "Test-Driven Development",
-        description: "Red-green-refactor cycle",
-        tags: ["testing", "methodology", "quality"],
-      },
-    },
-  },
-  testing: {
-    name: "Testing Strategies",
-    description: "Testing methodologies and practices",
-    standards: {
-      "bdd": {
-        name: "Behavior-Driven Development",
-        description: "Given-when-then scenarios",
-        tags: ["testing", "behavior", "collaboration"],
-      },
-      "test-pyramid": {
-        name: "Test Pyramid",
-        description: "Balanced testing strategy",
-        tags: ["testing", "strategy", "quality"],
-      },
-    },
-  },
-  devops: {
-    name: "DevOps Practices",
-    description: "Operational excellence and automation",
-    standards: {
-      "sre": {
-        name: "Site Reliability Engineering",
-        description: "Error budgets and SLOs",
-        tags: ["operations", "reliability", "google"],
-      },
-      "gitops": {
-        name: "GitOps",
-        description: "Git as source of truth",
-        tags: ["operations", "automation", "kubernetes"],
-      },
-      "dora": {
-        name: "DORA Metrics",
-        description: "Deployment frequency and MTTR",
-        tags: ["metrics", "performance", "devops"],
-      },
-    },
-  },
-};
+export const STANDARD_CATEGORIES = {};
 
 /**
  * Standard selection options

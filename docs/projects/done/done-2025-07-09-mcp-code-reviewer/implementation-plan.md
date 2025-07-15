@@ -155,7 +155,7 @@ export class CodeQLScanner extends Scanner {
 
 ### 3.1 Unified Standards Manager
 ```typescript
-// src/standards/manager.ts
+// src/docs/standards/manager.ts
 export class StandardsManager {
   private standards: Map<string, Standard> = new Map();
   private methodologies: Map<string, Methodology> = new Map();
@@ -264,7 +264,7 @@ export class ShapeUpMethodology implements Methodology {
 
 ### 3.3 OWASP Implementation
 ```typescript
-// src/standards/owasp.ts
+// src/docs/standards/owasp.ts
 export class OWASPStandard implements Standard {
   id = 'owasp-web';
   

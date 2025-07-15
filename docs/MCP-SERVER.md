@@ -457,7 +457,7 @@ if (!methodologyResult.compliant) {
 
 ```typescript
 // Example 4: Use custom security standard
-// First, create custom standard at ~/.claude/aichaku/user/standards/MY-STANDARD.md
+// First, create custom standard at ~/.claude/aichaku/user/docs/standards/MY-STANDARD.md
 
 const standards = await mcp.callTool('get_standards', {
   projectPath: './my-project'
@@ -670,7 +670,7 @@ this.scanners.push(new MyScanner());
 
 ### Adding a New Standard
 
-1. Create standard file in `~/.claude/aichaku/user/standards/`:
+1. Create standard file in `~/.claude/aichaku/user/docs/standards/`:
 
 ```markdown
 # MY-STANDARD.md

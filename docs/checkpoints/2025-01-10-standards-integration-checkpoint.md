@@ -45,6 +45,6 @@
 - `/src/commands/standards.ts` - New standards command  
 - `/src/commands/integrate.ts` - Enhanced with standards support
 - `/cli.ts` - Added hooks and standards commands
-- Created standard content files in `~/.claude/standards/`
+- Created standard content files in `~/.claude/docs/standards/`
 
 The implementation successfully addresses Rick's vision for modular, user-choice driven standards selection with seamless integration into Claude Code's workflow.

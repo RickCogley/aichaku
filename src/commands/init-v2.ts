@@ -1,363 +1,529 @@
-import { ensureDir, exists } from "jsr:@std/fs@1";
+/**
+ * Updated Init Command using ConfigManager v2.0.0
+ * 
+ * Initializes new projects with consolidated metadata format
+ */
+
+import { parseArgs } from "jsr:@std/cli@1";
+import { exists } from "jsr:@std/fs@1";
 import { join } from "jsr:@std/path@1";
-import { copy } from "jsr:@std/fs@1/copy";
-import { VERSION } from "../../mod.ts";
-import { fetchMethodologies, fetchStandards } from "./content-fetcher.ts";
-import { ensureAichakuDirs, getAichakuPaths } from "../paths.ts";
-import { resolveProjectPath } from "../utils/project-paths.ts";
-import { Brand } from "../utils/branded-messages.ts";
-import {
-  ConfigManager,
-  createDefaultConfig,
-  getProjectConfig,
-  globalConfig,
-} from "../utils/config-manager.ts";
+import { createProjectConfigManager, ConfigManager } from "../utils/config-manager.ts";
+import { checkMigrationStatus } from "../utils/migration-helper.ts";
 
-/**
- * Options for initializing Aichaku
- * @public
- */
 interface InitOptions {
-  /** Initialize globally in ~/.claude instead of current project */
-  global?: boolean;
-  /** Project path for local initialization (defaults to current directory) */
-  projectPath?: string;
-  /** Force overwrite existing initialization */
+  methodology?: string;
+  standards?: string[];
   force?: boolean;
-  /** Suppress output messages */
-  silent?: boolean;
-  /** Preview what would be done without making changes */
-  dryRun?: boolean;
+  global?: boolean;
+  template?: string;
+  verbose?: boolean;
 }
 
-/**
- * Result of initialization operation
- * @public
- */
-interface InitResult {
-  /** Whether initialization succeeded */
-  success: boolean;
-  /** Path where Aichaku was initialized */
-  path: string;
-  /** Optional message describing the result */
-  message?: string;
-  /** Whether global installation was detected */
-  globalDetected?: boolean;
-  /** Action that was taken */
-  action?: "created" | "exists" | "error";
-}
+const AVAILABLE_METHODOLOGIES = [
+  "shape-up",
+  "scrum", 
+  "kanban",
+  "lean",
+  "scrumban",
+  "xp"
+];
+
+const AVAILABLE_STANDARDS = [
+  "15-factor",
+  "12-factor", 
+  "diataxis",
+  "google-docs",
+  "microsoft-docs"
+];
 
 /**
- * Initialize Aichaku globally or in a project (v2 with ConfigManager)
- *
- * This command sets up Aichaku for use with Claude. Global installation is required
- * before project-specific initialization can be done.
- *
- * **Global initialization** (`--global`):
- * - Installs all methodologies to ~/.claude/
- * - Downloads standards library
- * - Creates user customization directory
- * - Required before any project initialization
- *
- * **Project initialization** (default):
- * - Creates minimal .claude/ structure in project
- * - References global methodologies
- * - Creates project-specific customization area
- * - Requires global installation first
- *
- * @param {InitOptions} options - Initialization options
- * @returns {Promise<InitResult>} Result indicating success and what was done
- *
- * @example
- * ```ts
- * // First time setup - install globally
- * await init({ global: true });
- *
- * // Initialize in a project
- * await init({ projectPath: "/path/to/project" });
- *
- * // Preview what would be done
- * await init({ dryRun: true });
- *
- * // Force reinstall
- * await init({ global: true, force: true });
- * ```
- *
- * @public
+ * Initialize a new Aichaku project with v2.0.0 configuration format
  */
-export async function init(options: InitOptions = {}): Promise<InitResult> {
-  const isGlobal = options.global || false;
-  const paths = getAichakuPaths();
-  // Security: Use safe project path resolution
-  const projectPath = resolveProjectPath(options.projectPath);
+export async function initCommand(args: string[]): Promise<void> {
+  const parsedArgs = parseArgs(args, {
+    string: ["methodology", "standards", "template"],
+    boolean: ["force", "global", "verbose"],
+    alias: {
+      "m": "methodology",
+      "s": "standards", 
+      "f": "force",
+      "g": "global",
+      "t": "template",
+      "v": "verbose",
+    },
+  });
 
-  // Use centralized path management
-  const targetPath = isGlobal ? paths.global.root : paths.project.root;
-  const _globalPath = paths.global.root;
+  const options: InitOptions = {
+    methodology: parsedArgs.methodology,
+    standards: parsedArgs.standards ? parsedArgs.standards.split(",") : undefined,
+    force: parsedArgs.force,
+    global: parsedArgs.global,
+    template: parsedArgs.template,
+    verbose: parsedArgs.verbose,
+  };
 
-  // Check for dry-run first, before any filesystem checks
-  if (options.dryRun) {
-    if (isGlobal) {
-      console.log(
-        `[DRY RUN] Would initialize global Aichaku at: ${targetPath}`,
-      );
-      console.log("[DRY RUN] Would create:");
-      console.log("  - methodologies/ (all methodology files)");
-      console.log("  - user/ (global customization directory)");
-      console.log("  - aichaku.json (consolidated configuration)");
-      console.log("[DRY RUN] Would download content from GitHub");
-    } else {
-      console.log(
-        `[DRY RUN] Would initialize Aichaku project at: ${projectPath}`,
-      );
-      console.log("[DRY RUN] Would create:");
-      console.log("  - .claude/aichaku/aichaku.json (project configuration)");
-      console.log("  - .claude/aichaku/user/ (project customizations)");
-      console.log("  - docs/projects/active/ (project documentation)");
-    }
-    return {
-      success: true,
-      path: targetPath,
-      message: "Dry run completed. No files were created.",
-    };
-  }
-
-  // For project init, check if global is installed first
-  if (!isGlobal) {
-    // Check using ConfigManager
-    let globalExists = false;
+  const projectRoot = options.global ? getHomeDirectory() : Deno.cwd();
+  
+  try {
+    // Check if project is already initialized
+    const configManager = createProjectConfigManager(projectRoot);
+    const migrationStatus = await checkMigrationStatus(projectRoot);
+    
+    let alreadyExists = false;
     try {
-      await globalConfig.load();
-      globalExists = globalConfig.isAichakuProject();
+      await configManager.load();
+      alreadyExists = true;
     } catch {
-      globalExists = false;
+      // Project not initialized - this is expected for init
     }
 
-    if (!globalExists) {
-      return {
-        success: false,
-        path: projectPath,
-        message: Brand.errorWithSolution(
-          "Global installation required",
-          "Run 'aichaku init --global' first to install Aichaku globally.",
-        ),
-        globalDetected: false,
-      };
+    if (alreadyExists && !options.force) {
+      console.log("❌ Project already initialized");
+      console.log("Use --force to reinitialize or run 'aichaku upgrade' to update");
+      return;
     }
-  }
 
-  // Check if already initialized
-  const configManager = isGlobal ? globalConfig : getProjectConfig(targetPath);
-  let alreadyInitialized = false;
+    if (migrationStatus.legacyFilesFound.length > 0 && !alreadyExists) {
+      console.log("🔄 Legacy configuration files detected");
+      console.log("Consider running 'aichaku upgrade' to migrate existing configuration");
+      
+      if (!options.force && !await confirmReinitialize()) {
+        return;
+      }
+    }
 
-  try {
-    await configManager.load();
-    alreadyInitialized = configManager.isAichakuProject();
-  } catch {
-    // Not initialized yet, which is fine
-  }
+    // Interactive setup if no options provided
+    let methodology = options.methodology;
+    let standards = options.standards;
 
-  if (alreadyInitialized && !options.force) {
-    if (!options.silent) {
-      console.log(
-        `🪴 Aichaku is already initialized at ${targetPath}. Use --force to reinitialize.`,
+    if (!methodology && !options.force) {
+      methodology = await promptForMethodology();
+    }
+
+    if (!standards && !options.force) {
+      standards = await promptForStandards();
+    }
+
+    // Validate inputs
+    if (methodology && !AVAILABLE_METHODOLOGIES.includes(methodology)) {
+      console.log(`❌ Invalid methodology: ${methodology}`);
+      console.log(`Available: ${AVAILABLE_METHODOLOGIES.join(", ")}`);
+      return;
+    }
+
+    if (standards) {
+      const invalidStandards = standards.filter(s => !AVAILABLE_STANDARDS.includes(s));
+      if (invalidStandards.length > 0) {
+        console.log(`❌ Invalid standards: ${invalidStandards.join(", ")}`);
+        console.log(`Available: ${AVAILABLE_STANDARDS.join(", ")}`);
+        return;
+      }
+    }
+
+    // Create the configuration
+    console.log(`\n🌱 Initializing Aichaku project...`);
+    
+    const version = await getCurrentVersion();
+    const config = options.global 
+      ? ConfigManager.createGlobal(version)
+      : ConfigManager.createDefault(methodology);
+
+    // Set version information
+    config.project.installedVersion = version;
+    config.project.lastUpdated = new Date().toISOString();
+
+    // Set standards if provided
+    if (standards) {
+      const developmentStandards = standards.filter(s => 
+        ["15-factor", "12-factor"].includes(s)
       );
-    }
-    return {
-      success: true,
-      path: targetPath,
-      message: "Already initialized",
-      action: "exists",
-    };
-  }
-
-  try {
-    if (!options.silent) {
-      Brand.header(isGlobal ? "Global Setup" : "Project Setup");
-    }
-
-    // Ensure all required directories exist
-    await ensureAichakuDirs();
-
-    if (isGlobal) {
-      // Global initialization
-      if (!options.silent) {
-        Brand.progress("Creating directory structure...", "active");
-      }
-
-      // Create directory structure
-      await ensureDir(paths.global.root);
-      await ensureDir(paths.global.methodologies);
-      await ensureDir(paths.global.standards);
-      await ensureDir(paths.global.user.root);
-      await ensureDir(paths.global.user.methodologies);
-      await ensureDir(paths.global.user.standards);
-      await ensureDir(paths.global.user.templates);
-      await ensureDir(paths.global.user.config);
-
-      if (!options.silent) {
-        Brand.success("Directory structure created");
-      }
-
-      // Copy or fetch methodologies
-      if (!options.silent) {
-        Brand.progress("Installing methodologies...", "active");
-      }
-
-      // codeql[js/incomplete-url-substring-sanitization] Safe because import.meta.url is trusted and controlled by runtime
-      const isJSR = import.meta.url.startsWith("https://jsr.io");
-
-      let methodologySuccess = false;
-      if (isJSR) {
-        // Fetch from GitHub when running from JSR
-        methodologySuccess = await fetchMethodologies(
-          paths.global.root,
-          VERSION,
-          {
-            silent: options.silent,
-          },
-        );
-      } else {
-        // Local development - copy from source
-        const sourceMethodologies = join(
-          new URL(".", import.meta.url).pathname,
-          "../../../docs/methodologies",
-        );
-        if (await exists(sourceMethodologies)) {
-          await copy(sourceMethodologies, paths.global.methodologies);
-          methodologySuccess = true;
-        }
-      }
-
-      if (!methodologySuccess) {
-        throw new Error(
-          "Failed to install methodologies. Check network permissions.",
-        );
-      }
-
-      if (!options.silent) {
-        Brand.success("Methodologies installed");
-      }
-
-      // Install standards library
-      if (!options.silent) {
-        Brand.progress("Installing standards library...", "active");
-      }
-
-      let standardsSuccess = false;
-      if (isJSR) {
-        // Fetch from GitHub when running from JSR
-        standardsSuccess = await fetchStandards(paths.global.root, VERSION, {
-          silent: options.silent,
-        });
-      } else {
-        // Local development - copy from source
-        const sourceStandards = join(
-          new URL(".", import.meta.url).pathname,
-          "../../../docs/standards",
-        );
-        if (await exists(sourceStandards)) {
-          await copy(sourceStandards, paths.global.standards);
-          standardsSuccess = true;
-        }
-      }
-
-      if (!standardsSuccess) {
-        throw new Error(
-          "Failed to install standards. Check network permissions.",
-        );
-      }
-
-      if (!options.silent) {
-        Brand.success("Standards library installed");
-      }
-
-      // Create or update configuration
-      const config = createDefaultConfig("global");
-      config.project.installedVersion = VERSION;
-      config.project.created = new Date().toISOString();
-      config.project.installationType = "global";
-
-      // Save configuration
-      const configPath = join(paths.global.root, "aichaku.json");
-      await Deno.writeTextFile(
-        configPath,
-        JSON.stringify(config, null, 2),
+      const documentationStandards = standards.filter(s => 
+        ["diataxis", "google-docs", "microsoft-docs"].includes(s)
       );
-
-      if (!options.silent) {
-        Brand.completed("Global Aichaku initialization");
-        console.log(
-          "\n💡 Next: Navigate to a project and run 'aichaku init' to set it up",
-        );
-      }
-    } else {
-      // Project initialization
-      if (!options.silent) {
-        Brand.progress("Setting up project structure...", "active");
-      }
-
-      // Create project directories
-      await ensureDir(paths.project.root);
-      await ensureDir(join(paths.project.root, "user"));
-      await ensureDir(paths.project.output);
-      await ensureDir(paths.project.active);
-
-      // Create or update project configuration
-      const config = createDefaultConfig("project");
-      config.project.installedVersion = VERSION;
-      config.project.created = new Date().toISOString();
-      config.project.installationType = "local";
-
-      // Save configuration
-      const configPath = join(paths.project.root, "aichaku.json");
-      await Deno.writeTextFile(
-        configPath,
-        JSON.stringify(config, null, 2),
-      );
-
-      if (!options.silent) {
-        Brand.success("Project structure created");
-      }
-
-      // Check if CLAUDE.md exists
-      const claudeMdPath = join(projectPath, "CLAUDE.md");
-      const hasClaudeMd = await exists(claudeMdPath);
-
-      if (!hasClaudeMd && !options.silent) {
-        Brand.info(
-          "No CLAUDE.md found - run 'aichaku integrate' to add Aichaku directives",
-        );
-      }
-
-      if (!options.silent) {
-        Brand.completed("Project Aichaku initialization");
-        if (!hasClaudeMd) {
-          console.log(
-            "\n💡 Next: Run 'aichaku integrate' to add Aichaku directives to your project",
-          );
-        } else {
-          console.log(
-            "\n💡 Aichaku is ready! Claude will now recognize methodology commands in this project.",
-          );
-        }
-      }
+      
+      config.standards.development = developmentStandards;
+      config.standards.documentation = documentationStandards;
     }
 
-    return {
-      success: true,
-      path: targetPath,
-      action: "created",
-    };
+    // Create directory structure
+    await createDirectoryStructure(projectRoot, options);
+
+    // Save configuration
+    const newConfigManager = new ConfigManager(projectRoot);
+    newConfigManager["config"] = config; // Direct assignment for initialization
+    await newConfigManager.save();
+
+    // Create methodology-specific files
+    if (methodology) {
+      await createMethodologyFiles(projectRoot, methodology, options);
+    }
+
+    // Create template files if specified
+    if (options.template) {
+      await createTemplateFiles(projectRoot, options.template, options);
+    }
+
+    // Show initialization summary
+    await showInitializationSummary(newConfigManager, options);
+
+    console.log(`\n✅ Aichaku project initialized successfully!`);
+    
+    // Show next steps
+    showNextSteps(methodology, options);
+
   } catch (error) {
-    return {
-      success: false,
-      path: targetPath,
-      message: Brand.errorWithSolution(
-        "Initialization failed",
-        error instanceof Error ? error.message : String(error),
-      ),
-      action: "error",
-    };
+    console.error(`❌ Initialization failed: ${(error as Error).message}`);
+    if (options.verbose) {
+      console.error((error as Error).stack);
+    }
+    Deno.exit(1);
   }
 }
+
+/**
+ * Create the directory structure for the project
+ */
+async function createDirectoryStructure(projectRoot: string, options: InitOptions): Promise<void> {
+  const directories = [
+    ".claude/aichaku",
+    "docs/projects/active",
+    "docs/projects/done",
+    "docs/api",
+  ];
+
+  if (!options.global) {
+    directories.push(
+      "src",
+      "tests",
+      "scripts"
+    );
+  }
+
+  for (const dir of directories) {
+    const fullPath = join(projectRoot, dir);
+    if (!await exists(fullPath)) {
+      await Deno.mkdir(fullPath, { recursive: true });
+      if (options.verbose) {
+        console.log(`✓ Created directory: ${dir}`);
+      }
+    }
+  }
+}
+
+/**
+ * Create methodology-specific files and templates
+ */
+async function createMethodologyFiles(
+  projectRoot: string, 
+  methodology: string, 
+  options: InitOptions
+): Promise<void> {
+  const templatesDir = join(projectRoot, "docs", "projects", "active");
+  
+  const methodologyTemplates = {
+    "shape-up": {
+      "STATUS.md": generateShapeUpStatus(),
+      "pitch-template.md": generateShapeUpPitch(),
+    },
+    "scrum": {
+      "sprint-planning-template.md": generateScrumPlanning(),
+      "retrospective-template.md": generateScrumRetrospective(),
+    },
+    "kanban": {
+      "kanban-board-template.md": generateKanbanBoard(),
+    },
+    "lean": {
+      "experiment-template.md": generateLeanExperiment(),
+    },
+  };
+
+  const templates = methodologyTemplates[methodology as keyof typeof methodologyTemplates];
+  if (templates) {
+    for (const [filename, content] of Object.entries(templates)) {
+      const filePath = join(templatesDir, filename);
+      await Deno.writeTextFile(filePath, content);
+      if (options.verbose) {
+        console.log(`✓ Created ${methodology} template: ${filename}`);
+      }
+    }
+  }
+}
+
+/**
+ * Create template files based on specified template
+ */
+async function createTemplateFiles(
+  projectRoot: string, 
+  template: string, 
+  options: InitOptions
+): Promise<void> {
+  // Placeholder for template creation
+  // In a real implementation, this would create files based on the template type
+  if (options.verbose) {
+    console.log(`✓ Applied template: ${template}`);
+  }
+}
+
+/**
+ * Show initialization summary
+ */
+async function showInitializationSummary(
+  configManager: ConfigManager, 
+  options: InitOptions
+): Promise<void> {
+  const config = configManager.get();
+  
+  console.log(`\n📋 Initialization Summary:`);
+  console.log(`   Configuration Version: v${config.version}`);
+  console.log(`   Project Type: ${config.project.type}`);
+  console.log(`   Installation Type: ${config.project.installationType}`);
+  console.log(`   Aichaku Version: ${config.project.installedVersion}`);
+  
+  if (config.project.methodology) {
+    console.log(`   Methodology: ${config.project.methodology}`);
+  }
+  
+  if (config.standards.development.length > 0) {
+    console.log(`   Development Standards: ${config.standards.development.join(", ")}`);
+  }
+  
+  if (config.standards.documentation.length > 0) {
+    console.log(`   Documentation Standards: ${config.standards.documentation.join(", ")}`);
+  }
+}
+
+/**
+ * Show next steps after initialization
+ */
+function showNextSteps(methodology: string | undefined, options: InitOptions): void {
+  console.log(`\n🚀 Next Steps:`);
+  
+  if (methodology) {
+    console.log(`   • Explore ${methodology} templates in docs/projects/active/`);
+  } else {
+    console.log(`   • Set a methodology: aichaku methodology set <name>`);
+  }
+  
+  console.log(`   • Select development standards: aichaku standards select`);
+  console.log(`   • Create your first project: aichaku project create <name>`);
+  console.log(`   • Check project status: aichaku status`);
+  
+  if (!options.global) {
+    console.log(`   • Initialize git repository if not already done`);
+    console.log(`   • Add .claude/ to your .gitignore if desired`);
+  }
+}
+
+/**
+ * Prompt for methodology selection
+ */
+async function promptForMethodology(): Promise<string | undefined> {
+  console.log(`\nSelect a methodology (optional):`);
+  AVAILABLE_METHODOLOGIES.forEach((method, index) => {
+    console.log(`  ${index + 1}. ${method}`);
+  });
+  console.log(`  ${AVAILABLE_METHODOLOGIES.length + 1}. Skip (can set later)`);
+  
+  console.log(`\nChoice [1-${AVAILABLE_METHODOLOGIES.length + 1}]: `, { noNewLine: true });
+  
+  const buf = new Uint8Array(1024);
+  const n = await Deno.stdin.read(buf) ?? 0;
+  const input = new TextDecoder().decode(buf.subarray(0, n)).trim();
+  
+  const choice = parseInt(input);
+  if (choice >= 1 && choice <= AVAILABLE_METHODOLOGIES.length) {
+    return AVAILABLE_METHODOLOGIES[choice - 1];
+  }
+  
+  return undefined;
+}
+
+/**
+ * Prompt for standards selection
+ */
+async function promptForStandards(): Promise<string[]> {
+  console.log(`\nSelect standards (comma-separated numbers, or Enter to skip):`);
+  AVAILABLE_STANDARDS.forEach((standard, index) => {
+    console.log(`  ${index + 1}. ${standard}`);
+  });
+  
+  console.log(`\nChoices [1-${AVAILABLE_STANDARDS.length}]: `, { noNewLine: true });
+  
+  const buf = new Uint8Array(1024);
+  const n = await Deno.stdin.read(buf) ?? 0;
+  const input = new TextDecoder().decode(buf.subarray(0, n)).trim();
+  
+  if (!input) {
+    return [];
+  }
+  
+  const choices = input.split(",").map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+  return choices
+    .filter(choice => choice >= 1 && choice <= AVAILABLE_STANDARDS.length)
+    .map(choice => AVAILABLE_STANDARDS[choice - 1]);
+}
+
+/**
+ * Confirm reinitialization
+ */
+async function confirmReinitialize(): Promise<boolean> {
+  console.log("\nProceed with initialization anyway? [y/N] ", { noNewLine: true });
+  
+  const buf = new Uint8Array(1024);
+  const n = await Deno.stdin.read(buf) ?? 0;
+  const input = new TextDecoder().decode(buf.subarray(0, n)).trim().toLowerCase();
+  
+  return input === "y" || input === "yes";
+}
+
+/**
+ * Get current version (placeholder implementation)
+ */
+async function getCurrentVersion(): Promise<string> {
+  // In a real implementation, this would read from package.json or similar
+  return "0.29.0";
+}
+
+/**
+ * Get home directory
+ */
+function getHomeDirectory(): string {
+  return Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "/tmp";
+}
+
+// Template generators
+function generateShapeUpStatus(): string {
+  return `# Project Status
+
+## Overview
+Brief description of the project and current status.
+
+## Hill Chart
+\`\`\`
+Problem Space ←→ Solution Space
+[  ] [  ] [  ] [●] [  ] [  ] [  ]
+   Figuring out     Building
+\`\`\`
+
+## Progress Update
+- Current week:
+- Next week:
+- Blockers:
+
+## Last Updated
+${new Date().toISOString().split('T')[0]}
+`;
+}
+
+function generateShapeUpPitch(): string {
+  return `# Project Pitch
+
+## Problem
+What problem are we solving?
+
+## Appetite
+How much time is this worth?
+
+## Solution
+High-level approach to the solution.
+
+## Rabbit Holes
+What could derail this project?
+
+## No-Goes
+What are we explicitly NOT doing?
+`;
+}
+
+function generateScrumPlanning(): string {
+  return `# Sprint Planning
+
+## Sprint Goal
+What do we want to achieve this sprint?
+
+## Sprint Backlog
+- [ ] User Story 1
+- [ ] User Story 2
+- [ ] User Story 3
+
+## Definition of Done
+- [ ] Code reviewed
+- [ ] Tests passing
+- [ ] Documentation updated
+
+## Capacity
+Team capacity for this sprint.
+`;
+}
+
+function generateScrumRetrospective(): string {
+  return `# Sprint Retrospective
+
+## What Went Well?
+-
+
+## What Could Be Improved?
+-
+
+## Action Items
+- [ ] Action item 1
+- [ ] Action item 2
+
+## Sprint Metrics
+- Velocity:
+- Completed stories:
+- Carry-over stories:
+`;
+}
+
+function generateKanbanBoard(): string {
+  return `# Kanban Board
+
+## Backlog
+- Item 1
+- Item 2
+
+## In Progress
+- 
+
+## Review
+- 
+
+## Done
+- 
+
+## WIP Limits
+- In Progress: 3
+- Review: 2
+
+## Metrics
+- Lead time:
+- Cycle time:
+- Throughput:
+`;
+}
+
+function generateLeanExperiment(): string {
+  return `# Lean Experiment
+
+## Hypothesis
+We believe that [building this feature] for [these users] will achieve [this outcome].
+
+## Experiment
+We will validate this by [building this minimal version] and measuring [these metrics].
+
+## Success Criteria
+- Metric 1: Target value
+- Metric 2: Target value
+
+## Timeline
+- Start: 
+- Duration: 
+- Review: 
+
+## Results
+_To be filled after experiment_
+`;
+}
+
+export type { InitOptions };

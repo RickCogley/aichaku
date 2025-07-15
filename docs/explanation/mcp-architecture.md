@@ -49,7 +49,7 @@ graph TB
     subgraph "Local File System"
         PF[Project Files]
         CF[Configuration<br/>.claude/]
-        STD[Standards Library<br/>~/.claude/standards/]
+        STD[Standards Library<br/>~/.claude/docs/standards/]
     end
     
     subgraph "External Tools (Optional)"
@@ -105,7 +105,7 @@ Orchestrates the review process:
 
 Handles standards-related operations:
 - Loads selected standards from `.claude/.aichaku-standards.json`
-- Reads standard definitions from `~/.claude/standards/`
+- Reads standard definitions from `~/.claude/docs/standards/`
 - Applies standard-specific rules
 - Tracks violations and suggestions
 
@@ -288,9 +288,9 @@ How standards are loaded:
    → ["nist-csf", "tdd", "solid"]
 
 2. Load each standard:
-   ~/.claude/standards/security/nist-csf.md
-   ~/.claude/standards/testing/tdd.md
-   ~/.claude/standards/development/solid.md
+   ~/.claude/docs/standards/security/nist-csf.md
+   ~/.claude/docs/standards/testing/tdd.md
+   ~/.claude/docs/standards/development/solid.md
 
 3. Parse rules and patterns from each standard
 
@@ -342,7 +342,7 @@ export const securityPatterns = [
 
 ### Adding New Standards Support
 
-1. Create standard definition in `~/.claude/standards/`
+1. Create standard definition in `~/.claude/docs/standards/`
 2. Add parsing logic in `standards-manager.ts`
 3. Include standard-specific patterns
 4. Update documentation

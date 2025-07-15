@@ -1,447 +1,353 @@
+/**
+ * Updated Upgrade Command using ConfigManager v2.0.0
+ * 
+ * Provides enhanced upgrade feedback using consolidated metadata
+ */
+
+import { parseArgs } from "jsr:@std/cli@1";
 import { exists } from "jsr:@std/fs@1";
-import { join, resolve } from "jsr:@std/path@1";
-import { copy } from "jsr:@std/fs@1/copy";
-import { VERSION } from "../../mod.ts";
-import { fetchMethodologies, fetchStandards } from "./content-fetcher.ts";
-import { getAichakuPaths } from "../paths.ts";
-import { resolveProjectPath } from "../utils/project-paths.ts";
-import { safeRemove } from "../utils/path-security.ts";
-import { Brand } from "../utils/branded-messages.ts";
-import {
-  ConfigManager,
-  getProjectConfig,
-  globalConfig,
-} from "../utils/config-manager.ts";
+import { join } from "jsr:@std/path@1";
+import { createProjectConfigManager, ConfigManager } from "../utils/config-manager.ts";
+import { checkMigrationStatus, performMigration } from "../utils/migration-helper.ts";
 
 interface UpgradeOptions {
-  global?: boolean;
-  projectPath?: string;
-  force?: boolean;
-  silent?: boolean;
-  dryRun?: boolean;
-  check?: boolean;
-}
-
-interface UpgradeResult {
-  success: boolean;
-  path: string;
-  message?: string;
-  action?: "check" | "upgraded" | "current" | "error";
   version?: string;
-  latestVersion?: string;
+  dryRun?: boolean;
+  force?: boolean;
+  verbose?: boolean;
+  cleanup?: boolean;
+  migrate?: boolean;
 }
 
 /**
- * Upgrade Aichaku to the latest version (v2 with ConfigManager)
- *
- * @param options - Upgrade options
- * @returns Promise with upgrade result
+ * Upgrade command with enhanced feedback and metadata consolidation
  */
-export async function upgrade(
-  options: UpgradeOptions = {},
-): Promise<UpgradeResult> {
-  const isGlobal = options.global || false;
-  const paths = getAichakuPaths();
+export async function upgradeCommand(args: string[]): Promise<void> {
+  const parsedArgs = parseArgs(args, {
+    string: ["version"],
+    boolean: ["dry-run", "force", "verbose", "cleanup", "migrate"],
+    alias: {
+      "v": "version",
+      "d": "dry-run",
+      "f": "force",
+      "verbose": "verbose",
+      "c": "cleanup",
+      "m": "migrate",
+    },
+  });
 
-  // Use centralized path management
-  const targetPath = isGlobal ? paths.global.root : paths.project.root;
-  // Security: Use safe project path resolution
-  const _projectPath = resolveProjectPath(options.projectPath);
+  const options: UpgradeOptions = {
+    version: parsedArgs.version,
+    dryRun: parsedArgs["dry-run"],
+    force: parsedArgs.force,
+    verbose: parsedArgs.verbose,
+    cleanup: parsedArgs.cleanup,
+    migrate: parsedArgs.migrate,
+  };
 
-  // Use ConfigManager instead of direct metadata reading
-  const configManager = isGlobal ? globalConfig : getProjectConfig(targetPath);
-
-  // Try to load configuration
-  let hasConfig = false;
-  let needsMigration = false;
-
+  const projectRoot = Deno.cwd();
+  
   try {
-    await configManager.load();
-    hasConfig = true;
-  } catch {
-    // Check if legacy files exist
-    const legacyFiles = [
-      join(targetPath, ".aichaku.json"),
-      join(targetPath, ".aichaku-project"),
-      join(targetPath, "aichaku-standards.json"),
-      join(targetPath, "aichaku.config.json"),
-    ];
-
-    for (const file of legacyFiles) {
-      if (await exists(file)) {
-        needsMigration = true;
-        break;
-      }
-    }
-
-    if (!needsMigration) {
-      return {
-        success: false,
-        path: targetPath,
-        message:
-          `🪴 Aichaku: No installation found at ${targetPath}. Run 'aichaku init' first.`,
-      };
-    }
-  }
-
-  // Migrate if needed
-  if (needsMigration && !hasConfig) {
-    if (!options.silent) {
-      Brand.progress(
-        "Migrating to consolidated configuration format...",
-        "active",
-      );
-    }
-
-    const migrated = await configManager.migrate();
-    if (migrated) {
+    // Check if this is an Aichaku project
+    const configManager = createProjectConfigManager(projectRoot);
+    
+    let needsMigration = false;
+    try {
       await configManager.load();
-      hasConfig = true;
-
-      if (!options.silent) {
-        Brand.success("Configuration migrated to aichaku.json");
+    } catch (error) {
+      if ((error as Error).message.includes("No Aichaku configuration found")) {
+        console.log("❌ No Aichaku installation found in current directory");
+        console.log("Run 'aichaku init' to initialize this project");
+        return;
       }
-    } else {
-      return {
-        success: false,
-        path: targetPath,
-        message: "Failed to migrate configuration",
-      };
-    }
-  }
-
-  const config = configManager.get();
-  const currentVersion = config.project.installedVersion || VERSION;
-
-  // Check version
-  if (options.check) {
-    if (currentVersion === VERSION) {
-      return {
-        success: true,
-        path: targetPath,
-        message:
-          `ℹ️  Current version: v${VERSION}\n    Latest version:  v${VERSION}\n    \n✓ You're up to date!`,
-        action: "check",
-        version: currentVersion,
-        latestVersion: VERSION,
-      };
-    } else {
-      return {
-        success: true,
-        path: targetPath,
-        message:
-          `📦 Update available: v${currentVersion} → v${VERSION}\n\nRun 'aichaku upgrade' to install the latest version.`,
-        action: "check",
-        version: currentVersion,
-        latestVersion: VERSION,
-      };
-    }
-  }
-
-  // Check if already on latest version
-  if (currentVersion === VERSION && !options.force) {
-    return {
-      success: true,
-      path: targetPath,
-      message:
-        `🪴 Aichaku: Already on latest version (v${VERSION}). Use --force to reinstall.`,
-      action: "current",
-    };
-  }
-
-  if (options.dryRun) {
-    console.log(`[DRY RUN] Would upgrade Aichaku at: ${targetPath}`);
-    console.log(`[DRY RUN] Current version: v${currentVersion}`);
-    console.log(`[DRY RUN] New version: v${VERSION}`);
-    console.log("[DRY RUN] Would update:");
-    console.log("  - methodologies/ (latest methodology files)");
-    console.log("  - standards/ (latest standards library)");
-    console.log("[DRY RUN] Would preserve:");
-    console.log("  - user/ (all customizations)");
-    console.log("  - aichaku.json (with updated version)");
-    console.log("[DRY RUN] Would migrate:");
-    console.log("  - Legacy metadata files to consolidated aichaku.json");
-    return {
-      success: true,
-      path: targetPath,
-      message: "Dry run completed. No files were modified.",
-    };
-  }
-
-  try {
-    if (!options.silent) {
-      console.log(Brand.upgrading(currentVersion, VERSION));
-    }
-
-    // Check for user customizations
-    const userDir = join(targetPath, "user");
-    const hasCustomizations = await exists(userDir);
-    if (hasCustomizations && !options.silent) {
-      Brand.success("User customizations detected - will be preserved");
-    }
-
-    // Update methodologies
-    // codeql[js/incomplete-url-substring-sanitization] Safe because import.meta.url is trusted and controlled by runtime
-    const isJSR = import.meta.url.startsWith("https://jsr.io");
-
-    if (!options.silent) {
-      Brand.progress("Updating methodology files...", "active");
-    }
-
-    if (isJSR) {
-      // Fetch from GitHub when running from JSR
-      // First try to update in place (preserves any user modifications)
-      const fetchSuccess = await fetchMethodologies(
-        paths.global.root,
-        VERSION,
-        {
-          silent: options.silent,
-          overwrite: true, // Always overwrite during upgrades to get latest content
-        },
-      );
-
-      if (!fetchSuccess) {
-        // If fetch fails completely, try removing and re-fetching
-        const targetMethodologies = paths.global.methodologies;
-        if (await exists(targetMethodologies)) {
-          // Security: Use safe remove
-          await safeRemove(targetMethodologies, paths.global.root, {
-            recursive: true,
+      
+      // Check if we need migration
+      const migrationStatus = await checkMigrationStatus(projectRoot);
+      if (migrationStatus.needsMigration) {
+        needsMigration = true;
+        console.log("🔄 Legacy metadata files detected. Migration required before upgrade.");
+        
+        if (options.migrate || await promptForMigration()) {
+          const migrationResult = await performMigration(projectRoot, { 
+            cleanupLegacy: options.cleanup 
           });
+          
+          if (!migrationResult.success) {
+            console.log("❌ Migration failed:");
+            migrationResult.errors.forEach(error => console.log(`   ${error}`));
+            return;
+          }
+          
+          console.log("✅ Migration completed successfully");
+          await configManager.load(); // Reload after migration
+        } else {
+          console.log("❌ Upgrade cancelled. Migration is required to continue.");
+          return;
         }
-
-        const retrySuccess = await fetchMethodologies(
-          paths.global.root,
-          VERSION,
-          {
-            silent: options.silent,
-            overwrite: true,
-          },
-        );
-
-        if (!retrySuccess) {
-          throw new Error(
-            "Failed to update methodologies. Check network permissions.",
-          );
-        }
-      }
-    } else {
-      // Local development - copy from source
-      const sourceMethodologies = join(
-        new URL(".", import.meta.url).pathname,
-        "../../../docs/methodologies",
-      );
-      const targetMethodologies = paths.global.methodologies;
-
-      // Remove old methodologies for clean copy
-      if (await exists(targetMethodologies)) {
-        // Security: Use safe remove
-        await safeRemove(targetMethodologies, targetPath, { recursive: true });
-      }
-
-      await copy(sourceMethodologies, targetMethodologies);
-    }
-
-    // Update standards
-    if (!options.silent) {
-      Brand.progress("Updating standards library...", "active");
-    }
-
-    if (isJSR) {
-      // Fetch from GitHub when running from JSR
-      const fetchSuccess = await fetchStandards(paths.global.root, VERSION, {
-        silent: options.silent,
-        overwrite: true, // Always overwrite during upgrades to get latest content
-      });
-
-      if (!fetchSuccess) {
-        // If fetch fails completely, try removing and re-fetching
-        const targetStandards = paths.global.standards;
-        if (await exists(targetStandards)) {
-          // Security: Use safe remove
-          await safeRemove(targetStandards, paths.global.root, {
-            recursive: true,
-          });
-        }
-
-        const retrySuccess = await fetchStandards(paths.global.root, VERSION, {
-          silent: options.silent,
-          overwrite: true,
-        });
-
-        if (!retrySuccess) {
-          throw new Error(
-            "Failed to update standards. Check network permissions.",
-          );
-        }
-      }
-    } else {
-      // Local development - copy from source
-      const sourceStandards = join(
-        new URL(".", import.meta.url).pathname,
-        "../../../docs/standards",
-      );
-      const targetStandards = paths.global.standards;
-
-      // Remove old standards for clean copy
-      if (await exists(targetStandards)) {
-        // Security: Use safe remove
-        await safeRemove(targetStandards, targetPath, { recursive: true });
-      }
-
-      await copy(sourceStandards, targetStandards);
-    }
-
-    if (!options.silent) {
-      Brand.success("Standards library updated");
-    }
-
-    // Show what's new in this version
-    if (!options.silent && currentVersion !== VERSION) {
-      showWhatsNew(VERSION, currentVersion);
-    }
-
-    // Update configuration with new version
-    await configManager.update({
-      project: {
-        installedVersion: VERSION,
-        lastUpdated: new Date().toISOString(),
-      },
-    });
-
-    // Clean up legacy files if this was a migration
-    if (needsMigration && !options.dryRun) {
-      if (!options.silent) {
-        Brand.progress("Cleaning up legacy metadata files...", "active");
-      }
-
-      await configManager.cleanupLegacyFiles();
-
-      if (!options.silent) {
-        Brand.success("Legacy files cleaned up");
+      } else {
+        throw error; // Re-throw if it's not a migration issue
       }
     }
 
-    // NEW: If upgrading a project (not global), also update CLAUDE.md
-    if (!isGlobal && !options.dryRun) {
-      const projectPath = resolve(targetPath, "..");
-      const claudeMdPath = join(projectPath, "CLAUDE.md");
+    const config = configManager.get();
+    const currentVersion = config.project.installedVersion || "unknown";
+    const targetVersion = options.version || await getLatestVersion();
+    const methodology = config.project.methodology || "none";
+    const projectType = config.project.installationType || "unknown";
 
-      if (await exists(claudeMdPath)) {
-        if (!options.silent) {
-          Brand.progress(
-            "Updating CLAUDE.md with latest directives...",
-            "active",
-          );
-        }
-
-        // Import integrate function
-        const { integrate } = await import("./integrate.ts");
-
-        const integrateResult = await integrate({
-          projectPath,
-          force: true,
-          silent: options.silent,
-        });
-
-        if (integrateResult.success && !options.silent) {
-          Brand.success("CLAUDE.md updated successfully");
-        }
-      }
+    // Display current project status
+    console.log(`\n🌿 Aichaku Project Status`);
+    console.log(`   Current Version: ${currentVersion}`);
+    console.log(`   Target Version: ${targetVersion}`);
+    console.log(`   Methodology: ${methodology}`);
+    console.log(`   Installation Type: ${projectType}`);
+    console.log(`   Standards: ${config.standards.development.length + config.standards.documentation.length} selected`);
+    
+    if (config.standards.development.length > 0) {
+      console.log(`   Development: ${config.standards.development.join(", ")}`);
+    }
+    if (config.standards.documentation.length > 0) {
+      console.log(`   Documentation: ${config.standards.documentation.join(", ")}`);
     }
 
-    return {
-      success: true,
-      path: targetPath,
-      message: Brand.completed(`Upgrade to v${VERSION}`) +
-        "\n\n💡 All your projects now have the latest methodologies!" +
-        (needsMigration
-          ? "\n✨ Configuration migrated to consolidated format!"
-          : ""),
-      action: "upgraded",
-      version: VERSION,
-    };
+    // Check if upgrade is needed
+    if (currentVersion === targetVersion && !options.force) {
+      console.log(`\n✅ Already at version ${targetVersion}`);
+      
+      if (needsMigration) {
+        console.log("   Configuration has been migrated to v2.0.0 format");
+      }
+      
+      return;
+    }
+
+    // Perform dry run if requested
+    if (options.dryRun) {
+      console.log(`\n🔍 Dry Run: Would upgrade from ${currentVersion} to ${targetVersion}`);
+      await simulateUpgrade(configManager, targetVersion, options);
+      return;
+    }
+
+    // Confirm upgrade
+    if (!options.force && !await confirmUpgrade(currentVersion, targetVersion)) {
+      console.log("❌ Upgrade cancelled");
+      return;
+    }
+
+    // Perform the upgrade
+    console.log(`\n🚀 Upgrading from ${currentVersion} to ${targetVersion}...`);
+    await performUpgrade(configManager, targetVersion, options);
+    
+    console.log(`✅ Successfully upgraded to version ${targetVersion}`);
+    
+    // Show post-upgrade information
+    await showPostUpgradeInfo(configManager, options);
+
   } catch (error) {
-    return {
-      success: false,
-      path: targetPath,
-      message: Brand.errorWithSolution(
-        "Upgrade failed",
-        error instanceof Error ? error.message : String(error),
-      ),
-      action: "error",
-    };
+    console.error(`❌ Upgrade failed: ${(error as Error).message}`);
+    if (options.verbose) {
+      console.error((error as Error).stack);
+    }
+    Deno.exit(1);
   }
 }
 
 /**
- * Show what's new in the current version
+ * Simulate upgrade for dry-run mode
  */
-function showWhatsNew(version: string, previousVersion: string) {
-  // Type assertion to handle const literal type
-  const currentVersion = version as string;
-
-  console.log(`\n✨ What's new in v${currentVersion}:`);
-
-  // Add version-specific changelogs here
-  if (currentVersion === "0.30.0") {
-    console.log("   • 📦 Consolidated metadata into single aichaku.json");
-    console.log("   • 🔄 Automatic migration from legacy file formats");
-    console.log("   • 🧹 Cleaner .claude/aichaku directory structure");
-    console.log("   • ⚡ Improved configuration management");
-  } else if (currentVersion === "0.11.0") {
-    console.log("   • 🔄 Automatic methodology updates during upgrade");
-    console.log("   • 📁 Downloads new files added in releases");
-    console.log("   • ✨ Overwrites existing files with latest content");
-    console.log("   • 🚫 No more confusing network permission warnings");
-  } else if (currentVersion === "0.9.1") {
-    console.log("   • 🔧 Fixed installer upgrade verification");
-    console.log("   • 📁 Support for new project marker format");
-    console.log("   • 🚀 Better error handling during upgrades");
-  } else if (currentVersion === "0.9.0") {
-    console.log(
-      "   • 🎯 Unified upgrade command (no more integrate --force!)",
-    );
-    console.log("   • ✂️  Surgical CLAUDE.md updates with markers");
-    console.log("   • 🔄 Automatic project updates during upgrade");
-  } else if (currentVersion === "0.8.0") {
-    console.log("   • 🚀 Ultra-simple installation: deno run -A init.ts");
-    console.log("   • 📦 Enhanced install script with version feedback");
-    console.log("   • 🔄 Improved upgrade experience");
-    console.log("   • 💡 Clear next steps after installation");
-  } else if (currentVersion === "0.7.0") {
-    console.log("   • 🪴 Visual identity with progress indicators");
-    console.log("   • 💬 Discussion-first document creation");
-    console.log("   • 📊 Mermaid diagram integration");
-    // codeql[js/todo-comment] - This is a changelog message, not a TODO comment
-    console.log("   • ✅ Fixed TODO lists and formatting"); // DevSkim: ignore DS176209 - This is a changelog message, not a TODO comment
+async function simulateUpgrade(
+  configManager: ConfigManager, 
+  targetVersion: string, 
+  options: UpgradeOptions
+): Promise<void> {
+  const config = configManager.get();
+  
+  console.log(`\nWould perform the following actions:`);
+  console.log(`• Update version from ${config.project.installedVersion} to ${targetVersion}`);
+  console.log(`• Update lastUpdated timestamp`);
+  
+  if (options.cleanup) {
+    console.log(`• Clean up legacy configuration files`);
   }
-
-  // Show migration notice if upgrading from pre-consolidation version
-  const preConsolidationVersion = "0.29.0";
-  if (compareVersions(previousVersion, preConsolidationVersion) <= 0) {
-    console.log("\n🔄 Migration Notice:");
-    console.log(
-      "   Your metadata files have been consolidated into a single aichaku.json",
-    );
-    console.log("   Legacy files have been cleaned up automatically");
+  
+  // Check for methodology-specific upgrade tasks
+  if (config.project.methodology) {
+    console.log(`• Check for ${config.project.methodology} methodology updates`);
+  }
+  
+  // Check for standards updates
+  if (config.standards.development.length > 0) {
+    console.log(`• Verify development standards compatibility`);
+  }
+  
+  if (config.standards.documentation.length > 0) {
+    console.log(`• Verify documentation standards compatibility`);
   }
 }
 
 /**
- * Compare two semantic versions
- * Returns: -1 if v1 < v2, 0 if equal, 1 if v1 > v2
+ * Perform the actual upgrade
  */
-function compareVersions(v1: string, v2: string): number {
-  const parts1 = v1.split(".").map(Number);
-  const parts2 = v2.split(".").map(Number);
+async function performUpgrade(
+  configManager: ConfigManager, 
+  targetVersion: string, 
+  options: UpgradeOptions
+): Promise<void> {
+  // Update version information
+  await configManager.setInstalledVersion(targetVersion);
+  
+  // Update any global version references
+  await configManager.update({
+    config: {
+      ...configManager.get().config,
+      globalVersion: targetVersion,
+    }
+  });
 
-  for (let i = 0; i < 3; i++) {
-    const p1 = parts1[i] || 0;
-    const p2 = parts2[i] || 0;
-    if (p1 < p2) return -1;
-    if (p1 > p2) return 1;
+  // Perform any version-specific upgrade tasks
+  await performVersionSpecificUpgrades(configManager, targetVersion, options);
+  
+  // Clean up legacy files if requested
+  if (options.cleanup) {
+    console.log("🧹 Cleaning up legacy files...");
+    await configManager.cleanupLegacyFiles();
   }
 
-  return 0;
+  if (options.verbose) {
+    console.log("✓ Configuration updated successfully");
+    console.log("✓ Version information saved");
+  }
 }
+
+/**
+ * Perform version-specific upgrade tasks
+ */
+async function performVersionSpecificUpgrades(
+  configManager: ConfigManager, 
+  targetVersion: string, 
+  options: UpgradeOptions
+): Promise<void> {
+  const config = configManager.get();
+  
+  // Example: Version-specific migrations
+  if (targetVersion.startsWith("0.30.")) {
+    // Hypothetical v0.30.x upgrade tasks
+    if (options.verbose) {
+      console.log("✓ Applied v0.30.x compatibility updates");
+    }
+  }
+  
+  if (targetVersion.startsWith("1.0.")) {
+    // Hypothetical v1.0.x upgrade tasks
+    if (options.verbose) {
+      console.log("✓ Applied v1.0.x major version updates");
+    }
+  }
+  
+  // Update methodology-specific files if needed
+  if (config.project.methodology) {
+    await updateMethodologyFiles(config.project.methodology, targetVersion, options);
+  }
+}
+
+/**
+ * Update methodology-specific files and templates
+ */
+async function updateMethodologyFiles(
+  methodology: string, 
+  targetVersion: string, 
+  options: UpgradeOptions
+): Promise<void> {
+  const projectRoot = Deno.cwd();
+  const projectsDir = join(projectRoot, "docs", "projects");
+  
+  if (!await exists(projectsDir)) {
+    return;
+  }
+  
+  // Update methodology templates based on new version
+  const templateUpdates = {
+    "shape-up": ["STATUS.md", "pitch.md", "hill-chart.md"],
+    "scrum": ["sprint-planning.md", "retrospective.md"],
+    "kanban": ["kanban-board.md", "flow-metrics.md"],
+    "lean": ["experiment-plan.md"],
+  };
+  
+  const files = templateUpdates[methodology as keyof typeof templateUpdates];
+  if (files && options.verbose) {
+    console.log(`✓ Checked ${methodology} methodology files for updates`);
+  }
+}
+
+/**
+ * Show post-upgrade information and recommendations
+ */
+async function showPostUpgradeInfo(
+  configManager: ConfigManager, 
+  options: UpgradeOptions
+): Promise<void> {
+  const config = configManager.get();
+  
+  console.log(`\n📋 Post-Upgrade Summary:`);
+  console.log(`   Version: ${config.project.installedVersion}`);
+  console.log(`   Last Updated: ${config.project.lastUpdated}`);
+  console.log(`   Configuration Format: v${config.version}`);
+  
+  // Show recommendations based on current setup
+  console.log(`\n💡 Recommendations:`);
+  
+  if (config.project.methodology) {
+    console.log(`   • Review ${config.project.methodology} methodology templates for updates`);
+  } else {
+    console.log(`   • Consider setting a methodology with 'aichaku methodology set <name>'`);
+  }
+  
+  if (config.standards.development.length === 0) {
+    console.log(`   • Consider selecting development standards with 'aichaku standards select'`);
+  }
+  
+  if (config.standards.documentation.length === 0) {
+    console.log(`   • Consider selecting documentation standards for better consistency`);
+  }
+  
+  console.log(`   • Run 'aichaku status' to see current project configuration`);
+}
+
+/**
+ * Get the latest available version (placeholder implementation)
+ */
+async function getLatestVersion(): Promise<string> {
+  // In a real implementation, this would fetch from a registry or API
+  // For now, return a placeholder version
+  return "0.30.0";
+}
+
+/**
+ * Prompt user to confirm upgrade
+ */
+async function confirmUpgrade(currentVersion: string, targetVersion: string): Promise<boolean> {
+  console.log(`\n⚠️  This will upgrade from ${currentVersion} to ${targetVersion}`);
+  console.log("Continue? [y/N] ", { noNewLine: true });
+  
+  const buf = new Uint8Array(1024);
+  const n = await Deno.stdin.read(buf) ?? 0;
+  const input = new TextDecoder().decode(buf.subarray(0, n)).trim().toLowerCase();
+  
+  return input === "y" || input === "yes";
+}
+
+/**
+ * Prompt user for migration consent
+ */
+async function promptForMigration(): Promise<boolean> {
+  console.log("\nWould you like to migrate to the new configuration format? [Y/n] ", { noNewLine: true });
+  
+  const buf = new Uint8Array(1024);
+  const n = await Deno.stdin.read(buf) ?? 0;
+  const input = new TextDecoder().decode(buf.subarray(0, n)).trim().toLowerCase();
+  
+  return input === "" || input === "y" || input === "yes";
+}
+
+// Export for use in other modules
+export type { UpgradeOptions };

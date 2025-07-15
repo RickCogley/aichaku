@@ -263,7 +263,7 @@ standards/
 Users can add their own standards to extend Aichaku's built-in library:
 
 ### Location
-Custom standards must be placed in: `~/.claude/aichaku/user/standards/`
+Custom standards must be placed in: `~/.claude/aichaku/user/docs/standards/`
 
 ### File naming
 - Use UPPERCASE-KEBAB-CASE: `MY-CUSTOM-STANDARD.md`
@@ -350,7 +350,7 @@ Aichaku v2.0+ uses a new organized structure to avoid cluttering `~/.claude/`:
 - The installer automatically migrates existing installations
 - User files in `~/.claude/` are preserved in their original locations
 - Only Aichaku-specific files are moved to `~/.claude/aichaku/`
-- Custom standards should be moved to `~/.claude/aichaku/user/standards/`
+- Custom standards should be moved to `~/.claude/aichaku/user/docs/standards/`
 
 ## Output directory structure
 
@@ -458,7 +458,7 @@ Default permissions:
 
 # Ignore Aichaku core files (installed separately)
 .claude/aichaku/methodologies/
-.claude/aichaku/standards/
+.claude/aichaku/docs/standards/
 .claude/aichaku/cache/
 ```
 
@@ -469,7 +469,7 @@ Default permissions:
 
 # Aichaku core files (don't commit)
 .claude/aichaku/methodologies/
-.claude/aichaku/standards/
+.claude/aichaku/docs/standards/
 .claude/aichaku/cache/
 
 # Keep configuration

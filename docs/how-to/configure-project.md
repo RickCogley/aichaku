@@ -74,8 +74,8 @@ aichaku standards --list
 Example output with source paths:
 ```text
 Selected Standards:
-✅ owasp-web (OWASP Web Security) 📁 ~/.claude/aichaku/standards/security
-✅ solid (SOLID Principles) 📁 ~/.claude/aichaku/standards/architecture
+✅ owasp-web (OWASP Web Security) 📁 ~/.claude/aichaku/docs/standards/security
+✅ solid (SOLID Principles) 📁 ~/.claude/aichaku/docs/standards/architecture
 ✅ custom:api-design 📁 ~/.claude/aichaku/custom-standards
 
 Available Standards:
@@ -281,8 +281,8 @@ aichaku standards --list --selected
 
 Output shows both types:
 ```text
-✅ owasp-web (OWASP Web Security) 📁 ~/.claude/aichaku/standards/security
-✅ solid (SOLID Principles) 📁 ~/.claude/aichaku/standards/architecture
+✅ owasp-web (OWASP Web Security) 📁 ~/.claude/aichaku/docs/standards/security
+✅ solid (SOLID Principles) 📁 ~/.claude/aichaku/docs/standards/architecture
 ✅ custom:my-organization-api-design 📁 ~/.claude/aichaku/custom-standards
 ```
 
@@ -297,7 +297,7 @@ For detailed instructions, see [How to Manage Custom Standards](./manage-custom-
 
 ## Migration from old structure
 
-If you have custom standards in the old location (`~/.claude/standards/`), migrate them:
+If you have custom standards in the old location (`~/.claude/docs/standards/`), migrate them:
 
 ```bash
 # Run migration command
@@ -321,7 +321,7 @@ cd team-aichaku-config
 
 # Add team standards
 mkdir -p standards/team
-cp "$HOME/.claude/standards/company/"* standards/team/
+cp "$HOME/.claude/docs/standards/company/"* standards/team/
 
 # Add team templates
 mkdir -p methodologies/team-scrum
@@ -332,7 +332,7 @@ cp -r "$HOME/.claude/methodologies/scrum/"* methodologies/team-scrum/
 cat > setup.sh << 'EOF'
 #!/bin/bash
 echo "Setting up team Aichaku configuration..."
-cp -r standards/* "$HOME/.claude/standards/"
+cp -r standards/* "$HOME/.claude/docs/standards/"
 cp -r methodologies/* "$HOME/.claude/methodologies/"
 echo "✅ Team configuration installed"
 EOF

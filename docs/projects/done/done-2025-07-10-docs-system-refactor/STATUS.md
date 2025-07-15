@@ -91,9 +91,9 @@ MCP server review identified and fixed:
 - /src/linters/microsoft-style-linter.ts
 
 ### New Standards
-- /standards/documentation/diataxis-google.md
-- /standards/documentation/microsoft-style.md
-- /standards/documentation/writethedocs.md
+- /docs/docs/standards/documentation/diataxis-google.md
+- /docs/docs/standards/documentation/microsoft-style.md
+- /docs/docs/standards/documentation/writethedocs.md
 
 ### Documentation Restructure
 - All files moved from flat structure to Diátaxis categories

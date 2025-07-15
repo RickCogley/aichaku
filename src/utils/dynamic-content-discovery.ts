@@ -68,8 +68,8 @@ export async function discoverContent(
   for await (
     const entry of walk(contentPath, {
       includeDirs: false,
-      exts: [".md", ".yaml", ".yml"],
-      skip: [/\/templates\//, /\/scripts\//, /\/archive\//],
+      exts: [".md"],
+      skip: [/\/templates\//, /\/scripts\//, /\/archive\//, /metadata\.yaml$/],
     })
   ) {
     const relativePath = relative(contentPath, entry.path);
@@ -112,6 +112,51 @@ export async function discoverContent(
     items,
     count: items.length,
   };
+}
+
+/**
+ * Enhance metadata from category metadata.yaml file if it exists
+ */
+async function enhanceMetadataFromYaml(
+  metadata: ContentMetadata,
+  category: string,
+  contentPath: string,
+): Promise<void> {
+  const yamlPath = join(contentPath, category, "metadata.yaml");
+
+  if (await exists(yamlPath)) {
+    try {
+      const yamlContent = await safeReadTextFile(yamlPath, dirname(yamlPath));
+      const yamlData = parseYaml(yamlContent) as any;
+
+      // Look for this specific standard in the YAML
+      if (yamlData.standards && Array.isArray(yamlData.standards)) {
+        const standardId = metadata.path.split("/").pop()?.replace(".md", "") ||
+          "";
+        const yamlStandard = yamlData.standards.find((s: any) =>
+          s.id === standardId
+        );
+
+        if (yamlStandard) {
+          // Enhance with YAML metadata
+          if (yamlStandard.name && !metadata.name) {
+            metadata.name = yamlStandard.name;
+          }
+          if (yamlStandard.description && !metadata.description) {
+            metadata.description = yamlStandard.description;
+          }
+          if (yamlStandard.tags && yamlStandard.tags.length > 0) {
+            metadata.tags = [
+              ...new Set([...metadata.tags, ...yamlStandard.tags]),
+            ];
+          }
+        }
+      }
+    } catch (error) {
+      // Ignore YAML parsing errors for individual files
+      console.warn(`Failed to parse YAML metadata for ${category}:`, error);
+    }
+  }
 }
 
 /**
@@ -263,9 +308,12 @@ export function buildContentStructure(
       const itemPath = item.path;
       const parts = itemPath.split("/");
 
+      // Skip the first part if it's the same as the category (avoid duplication)
+      const pathParts = parts[0] === category ? parts.slice(1) : parts;
+
       let current = categoryObj;
-      for (let i = 0; i < parts.length - 1; i++) {
-        const part = parts[i];
+      for (let i = 0; i < pathParts.length - 1; i++) {
+        const part = pathParts[i];
         if (!current[part]) {
           current[part] = {};
         }
@@ -273,7 +321,7 @@ export function buildContentStructure(
       }
 
       // Set the file
-      const fileName = parts[parts.length - 1];
+      const fileName = pathParts[pathParts.length - 1];
       current[fileName] = "";
 
       // Add templates if they exist
