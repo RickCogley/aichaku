@@ -2,7 +2,7 @@
 
 ## The Problem
 
-When publishing markdown docs on GitHub Pages (which uses Jekyll), code samples containing template syntax (like `{{ }}` or `{% %}`) can cause issues with Jekyll's Liquid template processor.
+When publishing markdown docs on GitHub Pages (which uses Jekyll), code samples containing template syntax (like `&#123;&#123; &#125;&#125;` or `&#123;&#37; &#37;&#125;`) can cause issues with Jekyll's Liquid template processor.
 
 ## The Short Answer
 
