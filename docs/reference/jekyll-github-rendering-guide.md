@@ -6,7 +6,7 @@ When publishing markdown docs on GitHub Pages (which uses Jekyll), code samples 
 
 ## The Short Answer
 
-**Yes**, adding `{% raw %}` tags will impact GitHub's native markdown rendering - these tags will appear as literal text when viewing the files directly on GitHub.
+**Yes**, adding `&#123;&#37; raw &#37;&#125;` tags will impact GitHub's native markdown rendering - these tags will appear as literal text when viewing the files directly on GitHub.
 
 ## Visual Example
 
@@ -21,21 +21,21 @@ Here's a Vue.js example:
 ### With Jekyll/Liquid Protection:
 ```markdown
 Here's a Vue.js example:
-{% raw %}
-{{ message }}
-{% endraw %}
+&#123;&#37; raw &#37;&#125;
+&#123;&#123; message &#125;&#125;
+&#123;&#37; endraw &#37;&#125;
 ```
 
 ### How It Renders:
 
-| Context | Without `{% raw %}` | With `{% raw %}` |
+| Context | Without `&#123;&#37; raw &#37;&#125;` | With `&#123;&#37; raw &#37;&#125;` |
 |---------|-------------------|------------------|
-| **GitHub Repository View** | ✅ Shows `{{ message }}` correctly | ❌ Shows the literal text `{% raw %}{{ message }}{% endraw %}` |
-| **GitHub Pages (Jekyll)** | ❌ Breaks - tries to process as Liquid | ✅ Shows `{{ message }}` correctly |
+| **GitHub Repository View** | ✅ Shows `&#123;&#123; message &#125;&#125;` correctly | ❌ Shows the literal text `&#123;&#37; raw &#37;&#125;&#123;&#123; message &#125;&#125;&#123;&#37; endraw &#37;&#125;` |
+| **GitHub Pages (Jekyll)** | ❌ Breaks - tries to process as Liquid | ✅ Shows `&#123;&#123; message &#125;&#125;` correctly |
 
 ## Pros and Cons
 
-**Pros of using `{% raw %}`:**
+**Pros of using `&#123;&#37; raw &#37;&#125;`:**
 - ✅ Your GitHub Pages site works correctly
 - ✅ No Jekyll build errors
 - ✅ Code examples display properly on the published site
@@ -81,12 +81,12 @@ Here's a template example:
 Create an includes file:
 ```liquid
 <!-- _includes/raw-code.html -->
-{% raw %}{{ include.code }}{% endraw %}
+&#123;&#37; raw &#37;&#125;&#123;&#123; include.code &#125;&#125;&#123;&#37; endraw &#37;&#125;
 ```
 
 Then in your markdown:
 ```markdown
-{% include raw-code.html code="&#123;&#123; message &#125;&#125;" %}
+&#123;&#37; include raw-code.html code="&#123;&#123; message &#125;&#125;" &#37;&#125;
 ```
 
 ## Recommendation
@@ -104,7 +104,7 @@ The **HTML entities approach** is probably your best compromise if you need both
 docs/
 ├── README.md           # Uses HTML entities for compatibility
 ├── _config.yml         # Jekyll configuration
-├── guides/             # Jekyll-processed with {% raw %} tags
+├── guides/             # Jekyll-processed with &#123;&#37; raw &#37;&#125; tags
 │   └── vue-guide.md
 └── examples/           # Excluded from Jekyll, clean markdown
     └── vue-examples.md
