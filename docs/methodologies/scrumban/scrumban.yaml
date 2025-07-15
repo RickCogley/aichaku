@@ -1,0 +1,29 @@
+methodology: scrumban
+name: "Scrumban"
+
+summary:
+  key_concepts:
+    - Hybrid of Scrum and Kanban
+    - Planning triggers
+    - WIP limits within sprints
+    - Pull-based replenishment
+    - Continuous delivery
+  cycle_length: "Flexible (sprint-based planning with continuous flow)"
+  templates:
+    - planning-trigger.md
+
+display:
+  description: "Hybrid methodology combining Scrum's structured planning with Kanban's continuous flow"
+  phases:
+    - Backlog
+    - Ready Queue
+    - Sprint Queue
+    - In Progress
+    - Review
+    - Done
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/docs/methodologies/scrumban"
+    local: "~/.claude/aichaku/docs/methodologies/scrumban/scrumban.md"
+
+templates:
+  planning_trigger: "templates/planning-trigger.md"

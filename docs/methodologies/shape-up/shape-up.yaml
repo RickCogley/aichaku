@@ -1,0 +1,35 @@
+methodology: shape-up
+name: "Shape Up"
+
+summary:
+  key_concepts:
+    - Fixed time, variable scope
+    - 6-week cycles with 2-week cooldown
+    - Betting table for project selection
+    - Shaping work before betting
+    - No backlogs or sprints
+  cycle_length: "6 weeks"
+  templates:
+    - pitch.md
+    - cycle-plan.md
+    - execution-plan.md
+    - hill-chart.md
+    - change-summary.md
+
+display:
+  description: "Basecamp's methodology for fixed-time, variable-scope projects with autonomous teams"
+  phases:
+    - Shaping
+    - Betting
+    - Building
+    - Cool-down
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/docs/methodologies/shape-up"
+    local: "~/.claude/aichaku/docs/methodologies/shape-up/shape-up.md"
+
+templates:
+  pitch: "templates/pitch.md"
+  cycle_plan: "templates/cycle-plan.md"
+  execution_plan: "templates/execution-plan.md"
+  hill_chart: "templates/hill-chart.md"
+  change_summary: "templates/change-summary.md"

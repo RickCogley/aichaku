@@ -1,0 +1,33 @@
+methodology: xp
+name: "Extreme Programming"
+
+summary:
+  key_concepts:
+    - Test-Driven Development (TDD)
+    - Pair programming
+    - Continuous integration
+    - Refactoring
+    - Small releases
+  cycle_length: "1-3 weeks"
+  templates: []
+
+display:
+  description: "Engineering-focused agile methodology emphasizing code quality through practices like TDD and pair programming"
+  phases:
+    - Planning Game
+    - Small Releases
+    - Metaphor
+    - Simple Design
+    - Test-Driven Development
+    - Refactoring
+    - Pair Programming
+    - Collective Code Ownership
+    - Continuous Integration
+    - Sustainable Pace
+    - On-site Customer
+    - Coding Standards
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/docs/methodologies/xp"
+    local: "~/.claude/aichaku/docs/methodologies/xp/xp.md"
+
+templates: {}

@@ -1,0 +1,26 @@
+methodology: lean
+name: "Lean Startup"
+
+summary:
+  key_concepts:
+    - Build-Measure-Learn cycle
+    - Minimum Viable Product (MVP)
+    - Validated learning
+    - Pivot or persevere decisions
+    - Eliminate waste
+  cycle_length: "Variable (experiment-driven)"
+  templates: []
+
+display:
+  description: "Startup methodology focused on rapid experimentation, validated learning, and iterative product development"
+  phases:
+    - Ideation
+    - Build
+    - Measure
+    - Learn
+    - Pivot/Persevere
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/docs/methodologies/lean"
+    local: "~/.claude/aichaku/docs/methodologies/lean/lean.md"
+
+templates: {}

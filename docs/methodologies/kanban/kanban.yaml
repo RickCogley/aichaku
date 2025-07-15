@@ -1,0 +1,30 @@
+methodology: kanban
+name: "Kanban"
+
+summary:
+  key_concepts:
+    - Visual workflow
+    - Work In Progress (WIP) limits
+    - Continuous flow
+    - Pull-based system
+    - Just-in-time decisions
+  cycle_length: "Continuous"
+  templates:
+    - kanban-board.md
+    - flow-metrics.md
+
+display:
+  description: "Visual workflow management system for continuous flow and limiting work in progress"
+  phases:
+    - Backlog
+    - Ready
+    - In Progress
+    - Review
+    - Done
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/docs/methodologies/kanban"
+    local: "~/.claude/aichaku/docs/methodologies/kanban/kanban.md"
+
+templates:
+  kanban_board: "templates/kanban-board.md"
+  flow_metrics: "templates/flow-metrics.md"

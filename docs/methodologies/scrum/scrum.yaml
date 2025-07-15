@@ -1,0 +1,31 @@
+methodology: scrum
+name: "Scrum"
+
+summary:
+  key_concepts:
+    - Fixed-length sprints
+    - Daily standups
+    - Sprint planning and retrospectives
+    - Product Owner and Scrum Master roles
+    - Definition of Done
+  cycle_length: "1-4 weeks"
+  templates:
+    - sprint-planning.md
+    - sprint-retrospective.md
+    - user-story.md
+
+display:
+  description: "Agile framework with time-boxed sprints for predictable delivery and team rhythm"
+  phases:
+    - Sprint Planning
+    - Daily Scrum
+    - Sprint Review
+    - Sprint Retrospective
+  learn_more:
+    docs: "https://rickcogley.github.io/aichaku/docs/methodologies/scrum"
+    local: "~/.claude/aichaku/docs/methodologies/scrum/scrum.md"
+
+templates:
+  sprint_planning: "templates/sprint-planning.md"
+  sprint_retrospective: "templates/sprint-retrospective.md"
+  user_story: "templates/user-story.md"
