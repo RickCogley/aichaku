@@ -41,9 +41,9 @@ integrated.
 ## 📚 Documentation & Resources
 
 ### 🎯 Interactive Methodology Guides (with Mermaid Diagrams)
-- [**Shape Up Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/shape-up/SHAPE-UP-GUIDE.md) - 6-week cycles with interactive workflow diagrams
-- [**Scrum Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/scrum/SCRUM-GUIDE.md) - Sprint planning with visual process flows
-- [**Kanban Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/kanban/KANBAN-GUIDE.md) - Flow visualization and WIP limits
+- [**Shape Up Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/shape-up/shape-up.md) - 6-week cycles with interactive workflow diagrams
+- [**Scrum Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/scrum/scrum.md) - Sprint planning with visual process flows
+- [**Kanban Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/kanban/kanban.md) - Flow visualization and WIP limits
 
 ### 📖 Complete Documentation
 - [**Full Documentation Hub**](docs/) - Comprehensive guides, tutorials, and reference materials
@@ -72,7 +72,7 @@ integrated.
 
 ```bash
 # Install and initialize everything with one command:
-deno run -A https://rickcogley.github.io/aichaku/docs/init.ts
+deno run -A https://rickcogley.github.io/aichaku/init.ts
 ```
 
 This single command will:
