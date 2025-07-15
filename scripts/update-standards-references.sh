@@ -16,17 +16,21 @@ print_status() {
     echo -e "${color}${message}${NC}"
 }
 
-# Base directories
-REPO_ROOT="/Users/rcogley/dev/aichaku"
+# Base directories - detect repo root automatically
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 # Change to repo root
 cd "$REPO_ROOT"
 
 print_status "$GREEN" "Updating standards references from /standards/ to /docs/standards/"
 
-# Update the main source file that copies standards
-print_status "$YELLOW" "Updating src/commands/init.ts..."
+# Update the main source files that copy standards
+print_status "$YELLOW" "Updating source files..."
 sed -i '' 's|"../../../standards"|"../../../docs/standards"|g' src/commands/init.ts
+sed -i '' 's|"../../../standards"|"../../../docs/standards"|g' src/commands/upgrade.ts
+sed -i '' 's|"../../../standards"|"../../../docs/standards"|g' src/commands/upgrade-v2.ts
+sed -i '' 's|"../../../standards"|"../../../docs/standards"|g' src/commands/init-v2.ts
 
 # Update content fetcher to fetch to the right location
 print_status "$YELLOW" "Updating content fetcher references..."

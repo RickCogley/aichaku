@@ -254,7 +254,7 @@ export async function upgrade(
       // Local development - copy from source
       const sourceStandards = join(
         new URL(".", import.meta.url).pathname,
-        "../../../standards",
+        "../../../docs/standards",
       );
       const targetStandards = paths.global.standards;
 

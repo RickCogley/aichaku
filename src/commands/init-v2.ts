@@ -254,7 +254,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
         // Local development - copy from source
         const sourceStandards = join(
           new URL(".", import.meta.url).pathname,
-          "../../../standards",
+          "../../../docs/standards",
         );
         if (await exists(sourceStandards)) {
           await copy(sourceStandards, paths.global.standards);

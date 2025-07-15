@@ -17,8 +17,9 @@ print_status() {
     echo -e "${color}${message}${NC}"
 }
 
-# Base directories
-REPO_ROOT="/Users/rcogley/dev/aichaku"
+# Base directories - detect repo root automatically
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 SOURCE_DIR="${REPO_ROOT}/standards"
 TARGET_DIR="${REPO_ROOT}/docs/standards"
 
