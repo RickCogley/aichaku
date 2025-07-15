@@ -29,7 +29,7 @@ display:
     exclude_weekends: false
   learn_more:
     docs: "https://rickcogley.github.io/aichaku/standards/devops/dora"
-    local: "/docs/standards/devops/dora.md"
+    local: "~/.claude/aichaku/docs/standards/devops/dora.md"
 
 rules:
   deployment_frequency:

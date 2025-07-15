@@ -30,7 +30,7 @@ display:
     callouts: "tips, warnings, and notes in callout boxes"
   learn_more:
     docs: "https://rickcogley.github.io/aichaku/standards/documentation/microsoft-style"
-    local: "/docs/standards/documentation/microsoft-style.md"
+    local: "~/.claude/aichaku/docs/standards/documentation/microsoft-style.md"
 
 rules:
   global_readiness:

@@ -30,7 +30,7 @@ display:
     documentation_style: "executable_specifications"
   learn_more:
     docs: "https://rickcogley.github.io/aichaku/standards/testing/bdd"
-    local: "/docs/standards/testing/bdd.md"
+    local: "~/.claude/aichaku/docs/standards/testing/bdd.md"
 
 rules:
   three_amigos:

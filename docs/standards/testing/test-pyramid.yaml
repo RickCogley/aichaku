@@ -32,7 +32,7 @@ display:
     e2e_max_time: "60 seconds"
   learn_more:
     docs: "https://rickcogley.github.io/aichaku/standards/testing/test-pyramid"
-    local: "/docs/standards/testing/test-pyramid.md"
+    local: "~/.claude/aichaku/docs/standards/testing/test-pyramid.md"
 
 rules:
   unit_tests:

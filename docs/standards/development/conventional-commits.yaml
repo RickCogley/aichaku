@@ -31,7 +31,7 @@ display:
     require_issue_reference: false
   learn_more:
     docs: "https://rickcogley.github.io/aichaku/standards/development/conventional-commits"
-    local: "/docs/standards/development/conventional-commits.md"
+    local: "~/.claude/aichaku/docs/standards/development/conventional-commits.md"
 
 rules:
   format:

@@ -30,7 +30,7 @@ display:
     framework_independence: true
   learn_more:
     docs: "https://rickcogley.github.io/aichaku/standards/architecture/clean-arch"
-    local: "/docs/standards/architecture/clean-arch.md"
+    local: "~/.claude/aichaku/docs/standards/architecture/clean-arch.md"
 
 rules:
   dependency_rule:

@@ -38,7 +38,7 @@ display:
     health_checks: true
   learn_more:
     docs: "https://rickcogley.github.io/aichaku/standards/architecture/15-factor"
-    local: "/docs/standards/architecture/15-factor.md"
+    local: "~/.claude/aichaku/docs/standards/architecture/15-factor.md"
 
 rules:
   codebase:

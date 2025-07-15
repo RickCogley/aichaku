@@ -27,7 +27,7 @@ display:
     interface_first: true
   learn_more:
     docs: "https://rickcogley.github.io/aichaku/standards/development/solid"
-    local: "/docs/standards/development/solid.md"
+    local: "~/.claude/aichaku/docs/standards/development/solid.md"
 
 rules:
   single_responsibility:

@@ -29,7 +29,7 @@ display:
     access_review_frequency: "quarterly"
   learn_more:
     docs: "https://rickcogley.github.io/aichaku/standards/security/nist-csf"
-    local: "/docs/standards/security/nist-csf.md"
+    local: "~/.claude/aichaku/docs/standards/security/nist-csf.md"
 
 rules:
   govern:

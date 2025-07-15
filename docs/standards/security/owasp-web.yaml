@@ -33,7 +33,7 @@ display:
     security_headers: true
   learn_more:
     docs: "https://rickcogley.github.io/aichaku/standards/security/owasp-web"
-    local: "/docs/standards/security/owasp-web.md"
+    local: "~/.claude/aichaku/docs/standards/security/owasp-web.md"
 
 rules:
   access_control:

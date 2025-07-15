@@ -31,7 +31,7 @@ display:
     documentation_style: "jsdoc|docstring"
   learn_more:
     docs: "https://rickcogley.github.io/aichaku/standards/development/google-style"
-    local: "/docs/standards/development/google-style.md"
+    local: "~/.claude/aichaku/docs/standards/development/google-style.md"
 
 rules:
   naming_conventions:

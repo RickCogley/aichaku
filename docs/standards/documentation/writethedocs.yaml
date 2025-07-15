@@ -30,7 +30,7 @@ display:
     accessibility_focus: true
   learn_more:
     docs: "https://rickcogley.github.io/aichaku/standards/documentation/writethedocs"
-    local: "/docs/standards/documentation/writethedocs.md"
+    local: "~/.claude/aichaku/docs/standards/documentation/writethedocs.md"
 
 rules:
   community_driven:

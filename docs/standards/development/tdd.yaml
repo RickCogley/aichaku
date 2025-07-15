@@ -30,7 +30,7 @@ display:
     test_isolation: true
   learn_more:
     docs: "https://rickcogley.github.io/aichaku/docs/standards/development/tdd"
-    local: "/docs/standards/development/tdd.md"
+    local: "~/.claude/aichaku/docs/standards/development/tdd.md"
 
 rules:
   test_first:

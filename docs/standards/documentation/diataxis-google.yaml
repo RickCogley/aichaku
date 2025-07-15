@@ -31,7 +31,7 @@ display:
     code_examples: "working and realistic"
   learn_more:
     docs: "https://rickcogley.github.io/aichaku/standards/documentation/diataxis-google"
-    local: "/docs/standards/documentation/diataxis-google.md"
+    local: "~/.claude/aichaku/docs/standards/documentation/diataxis-google.md"
 
 rules:
   tutorial_mode:
