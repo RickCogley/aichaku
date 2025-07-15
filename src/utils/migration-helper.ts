@@ -1,6 +1,6 @@
 /**
  * Migration Helper Utilities
- * 
+ *
  * Provides utilities for migrating between different configuration formats
  */
 
@@ -25,12 +25,14 @@ export interface MigrationResult {
 /**
  * Check if a project needs migration from legacy files
  */
-export async function checkMigrationStatus(projectRoot: string): Promise<MigrationStatus> {
+export async function checkMigrationStatus(
+  projectRoot: string,
+): Promise<MigrationStatus> {
   const aichakuDir = join(projectRoot, ".claude", "aichaku");
   const consolidatedPath = join(aichakuDir, "aichaku.json");
-  
+
   const consolidatedExists = await exists(consolidatedPath);
-  
+
   const legacyFiles = [
     ".aichaku.json",
     ".aichaku-project",
@@ -70,23 +72,31 @@ export async function performMigration(
     createBackup?: boolean;
     cleanupLegacy?: boolean;
     dryRun?: boolean;
-  } = {}
+  } = {},
 ): Promise<MigrationResult> {
-  const { createBackup = true, cleanupLegacy = false, dryRun = false } = options;
-  
+  const { createBackup = true, cleanupLegacy = false, dryRun = false } =
+    options;
+
   const result: MigrationResult = {
     success: false,
     migratedFiles: [],
     errors: [],
-    consolidatedConfigPath: join(projectRoot, ".claude", "aichaku", "aichaku.json"),
+    consolidatedConfigPath: join(
+      projectRoot,
+      ".claude",
+      "aichaku",
+      "aichaku.json",
+    ),
   };
 
   try {
     const status = await checkMigrationStatus(projectRoot);
-    
+
     if (!status.needsMigration) {
       result.success = true;
-      result.errors.push("No migration needed - consolidated config already exists or no legacy files found");
+      result.errors.push(
+        "No migration needed - consolidated config already exists or no legacy files found",
+      );
       return result;
     }
 
@@ -109,9 +119,11 @@ export async function performMigration(
     // Verify migration was successful
     const config = configManager.get();
     const integrity = configManager.verifyIntegrity();
-    
+
     if (!integrity.valid) {
-      result.errors.push(`Migration verification failed: ${integrity.errors.join(", ")}`);
+      result.errors.push(
+        `Migration verification failed: ${integrity.errors.join(", ")}`,
+      );
       return result;
     }
 
@@ -122,7 +134,6 @@ export async function performMigration(
     if (cleanupLegacy) {
       await configManager.cleanupLegacyFiles();
     }
-
   } catch (error) {
     result.errors.push(`Migration failed: ${(error as Error).message}`);
   }
@@ -140,17 +151,20 @@ export async function createBackupFile(configPath: string): Promise<string> {
 
   const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
   const backupPath = `${configPath}.backup-${timestamp}`;
-  
+
   const content = await Deno.readTextFile(configPath);
   await Deno.writeTextFile(backupPath, content);
-  
+
   return backupPath;
 }
 
 /**
  * Restore from a backup file
  */
-export async function restoreFromBackup(backupPath: string, targetPath: string): Promise<void> {
+export async function restoreFromBackup(
+  backupPath: string,
+  targetPath: string,
+): Promise<void> {
   if (!await exists(backupPath)) {
     throw new Error(`Backup file not found: ${backupPath}`);
   }
@@ -165,9 +179,9 @@ export async function restoreFromBackup(backupPath: string, targetPath: string):
 export async function listBackups(configPath: string): Promise<string[]> {
   const dir = configPath.substring(0, configPath.lastIndexOf("/"));
   const filename = configPath.substring(configPath.lastIndexOf("/") + 1);
-  
+
   const backups: string[] = [];
-  
+
   try {
     for await (const entry of Deno.readDir(dir)) {
       if (entry.isFile && entry.name.startsWith(`${filename}.backup-`)) {
@@ -177,14 +191,16 @@ export async function listBackups(configPath: string): Promise<string[]> {
   } catch {
     // Directory doesn't exist or can't be read
   }
-  
+
   return backups.sort().reverse(); // Most recent first
 }
 
 /**
  * Validate a configuration file against the schema
  */
-export async function validateConfiguration(configPath: string): Promise<{ valid: boolean; errors: string[] }> {
+export async function validateConfiguration(
+  configPath: string,
+): Promise<{ valid: boolean; errors: string[] }> {
   if (!await exists(configPath)) {
     return { valid: false, errors: ["Configuration file not found"] };
   }
@@ -228,19 +244,25 @@ export async function validateConfiguration(configPath: string): Promise<{ valid
       if (!Array.isArray(config.standards.documentation)) {
         errors.push("standards.documentation must be an array");
       }
-      if (!config.standards.custom || typeof config.standards.custom !== "object") {
+      if (
+        !config.standards.custom || typeof config.standards.custom !== "object"
+      ) {
         errors.push("standards.custom must be an object");
       }
     }
 
-    if (config.markers && typeof config.markers.isAichakuProject !== "boolean") {
+    if (
+      config.markers && typeof config.markers.isAichakuProject !== "boolean"
+    ) {
       errors.push("markers.isAichakuProject must be a boolean");
     }
 
     return { valid: errors.length === 0, errors };
-
   } catch (error) {
-    return { valid: false, errors: [`Failed to parse configuration: ${(error as Error).message}`] };
+    return {
+      valid: false,
+      errors: [`Failed to parse configuration: ${(error as Error).message}`],
+    };
   }
 }
 
@@ -248,8 +270,8 @@ export async function validateConfiguration(configPath: string): Promise<{ valid
  * Compare two configuration files and return differences
  */
 export async function compareConfigurations(
-  path1: string, 
-  path2: string
+  path1: string,
+  path2: string,
 ): Promise<{ differences: string[]; identical: boolean }> {
   const differences: string[] = [];
 
@@ -268,7 +290,7 @@ export async function compareConfigurations(
   try {
     const content1 = await Deno.readTextFile(path1);
     const content2 = await Deno.readTextFile(path2);
-    
+
     const config1 = JSON.parse(content1);
     const config2 = JSON.parse(content2);
 
@@ -276,7 +298,6 @@ export async function compareConfigurations(
     compareObjects(config1, config2, "", differences);
 
     return { differences, identical: differences.length === 0 };
-
   } catch (error) {
     differences.push(`Comparison failed: ${(error as Error).message}`);
     return { differences, identical: false };
@@ -286,32 +307,57 @@ export async function compareConfigurations(
 /**
  * Recursively compare two objects and record differences
  */
-function compareObjects(obj1: any, obj2: any, path: string, differences: string[]): void {
+function compareObjects(
+  obj1: any,
+  obj2: any,
+  path: string,
+  differences: string[],
+): void {
   const keys1 = Object.keys(obj1 || {});
   const keys2 = Object.keys(obj2 || {});
   const allKeys = new Set([...keys1, ...keys2]);
 
   for (const key of allKeys) {
     const currentPath = path ? `${path}.${key}` : key;
-    
+
     if (!(key in obj1)) {
-      differences.push(`Missing in first: ${currentPath} = ${JSON.stringify(obj2[key])}`);
+      differences.push(
+        `Missing in first: ${currentPath} = ${JSON.stringify(obj2[key])}`,
+      );
     } else if (!(key in obj2)) {
-      differences.push(`Missing in second: ${currentPath} = ${JSON.stringify(obj1[key])}`);
+      differences.push(
+        `Missing in second: ${currentPath} = ${JSON.stringify(obj1[key])}`,
+      );
     } else if (typeof obj1[key] !== typeof obj2[key]) {
-      differences.push(`Type mismatch at ${currentPath}: ${typeof obj1[key]} vs ${typeof obj2[key]}`);
-    } else if (typeof obj1[key] === "object" && obj1[key] !== null && obj2[key] !== null) {
+      differences.push(
+        `Type mismatch at ${currentPath}: ${typeof obj1[key]} vs ${typeof obj2[
+          key
+        ]}`,
+      );
+    } else if (
+      typeof obj1[key] === "object" && obj1[key] !== null && obj2[key] !== null
+    ) {
       if (Array.isArray(obj1[key]) && Array.isArray(obj2[key])) {
         if (JSON.stringify(obj1[key]) !== JSON.stringify(obj2[key])) {
-          differences.push(`Array difference at ${currentPath}: ${JSON.stringify(obj1[key])} vs ${JSON.stringify(obj2[key])}`);
+          differences.push(
+            `Array difference at ${currentPath}: ${
+              JSON.stringify(obj1[key])
+            } vs ${JSON.stringify(obj2[key])}`,
+          );
         }
       } else if (!Array.isArray(obj1[key]) && !Array.isArray(obj2[key])) {
         compareObjects(obj1[key], obj2[key], currentPath, differences);
       } else {
-        differences.push(`Structure mismatch at ${currentPath}: array vs object`);
+        differences.push(
+          `Structure mismatch at ${currentPath}: array vs object`,
+        );
       }
     } else if (obj1[key] !== obj2[key]) {
-      differences.push(`Value difference at ${currentPath}: ${JSON.stringify(obj1[key])} vs ${JSON.stringify(obj2[key])}`);
+      differences.push(
+        `Value difference at ${currentPath}: ${JSON.stringify(obj1[key])} vs ${
+          JSON.stringify(obj2[key])
+        }`,
+      );
     }
   }
 }
@@ -319,10 +365,12 @@ function compareObjects(obj1: any, obj2: any, path: string, differences: string[
 /**
  * Generate a migration report
  */
-export async function generateMigrationReport(projectRoot: string): Promise<string> {
+export async function generateMigrationReport(
+  projectRoot: string,
+): Promise<string> {
   const status = await checkMigrationStatus(projectRoot);
   const configPath = join(projectRoot, ".claude", "aichaku", "aichaku.json");
-  
+
   let report = "# Aichaku Configuration Migration Report\n\n";
   report += `**Project Root:** ${projectRoot}\n\n`;
   report += `**Date:** ${new Date().toISOString()}\n\n`;
@@ -330,7 +378,9 @@ export async function generateMigrationReport(projectRoot: string): Promise<stri
   // Migration Status
   report += "## Migration Status\n\n";
   report += `- **Needs Migration:** ${status.needsMigration ? "Yes" : "No"}\n`;
-  report += `- **Consolidated Config Exists:** ${status.consolidatedExists ? "Yes" : "No"}\n`;
+  report += `- **Consolidated Config Exists:** ${
+    status.consolidatedExists ? "Yes" : "No"
+  }\n`;
   report += `- **Has Backup:** ${status.hasBackup ? "Yes" : "No"}\n`;
   report += `- **Legacy Files Found:** ${status.legacyFilesFound.length}\n\n`;
 
@@ -347,7 +397,7 @@ export async function generateMigrationReport(projectRoot: string): Promise<stri
     report += "## Configuration Validation\n\n";
     const validation = await validateConfiguration(configPath);
     report += `- **Valid:** ${validation.valid ? "Yes" : "No"}\n`;
-    
+
     if (validation.errors.length > 0) {
       report += "- **Errors:**\n";
       for (const error of validation.errors) {

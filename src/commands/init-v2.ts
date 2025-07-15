@@ -1,13 +1,16 @@
 /**
  * Updated Init Command using ConfigManager v2.0.0
- * 
+ *
  * Initializes new projects with consolidated metadata format
  */
 
 import { parseArgs } from "jsr:@std/cli@1";
 import { exists } from "jsr:@std/fs@1";
 import { join } from "jsr:@std/path@1";
-import { createProjectConfigManager, ConfigManager } from "../utils/config-manager.ts";
+import {
+  ConfigManager,
+  createProjectConfigManager,
+} from "../utils/config-manager.ts";
 import { checkMigrationStatus } from "../utils/migration-helper.ts";
 
 interface InitOptions {
@@ -21,19 +24,19 @@ interface InitOptions {
 
 const AVAILABLE_METHODOLOGIES = [
   "shape-up",
-  "scrum", 
+  "scrum",
   "kanban",
   "lean",
   "scrumban",
-  "xp"
+  "xp",
 ];
 
 const AVAILABLE_STANDARDS = [
   "15-factor",
-  "12-factor", 
+  "12-factor",
   "diataxis",
   "google-docs",
-  "microsoft-docs"
+  "microsoft-docs",
 ];
 
 /**
@@ -45,7 +48,7 @@ export async function initCommand(args: string[]): Promise<void> {
     boolean: ["force", "global", "verbose"],
     alias: {
       "m": "methodology",
-      "s": "standards", 
+      "s": "standards",
       "f": "force",
       "g": "global",
       "t": "template",
@@ -55,7 +58,9 @@ export async function initCommand(args: string[]): Promise<void> {
 
   const options: InitOptions = {
     methodology: parsedArgs.methodology,
-    standards: parsedArgs.standards ? parsedArgs.standards.split(",") : undefined,
+    standards: parsedArgs.standards
+      ? parsedArgs.standards.split(",")
+      : undefined,
     force: parsedArgs.force,
     global: parsedArgs.global,
     template: parsedArgs.template,
@@ -63,12 +68,12 @@ export async function initCommand(args: string[]): Promise<void> {
   };
 
   const projectRoot = options.global ? getHomeDirectory() : Deno.cwd();
-  
+
   try {
     // Check if project is already initialized
     const configManager = createProjectConfigManager(projectRoot);
     const migrationStatus = await checkMigrationStatus(projectRoot);
-    
+
     let alreadyExists = false;
     try {
       await configManager.load();
@@ -79,14 +84,18 @@ export async function initCommand(args: string[]): Promise<void> {
 
     if (alreadyExists && !options.force) {
       console.log("❌ Project already initialized");
-      console.log("Use --force to reinitialize or run 'aichaku upgrade' to update");
+      console.log(
+        "Use --force to reinitialize or run 'aichaku upgrade' to update",
+      );
       return;
     }
 
     if (migrationStatus.legacyFilesFound.length > 0 && !alreadyExists) {
       console.log("🔄 Legacy configuration files detected");
-      console.log("Consider running 'aichaku upgrade' to migrate existing configuration");
-      
+      console.log(
+        "Consider running 'aichaku upgrade' to migrate existing configuration",
+      );
+
       if (!options.force && !await confirmReinitialize()) {
         return;
       }
@@ -112,7 +121,9 @@ export async function initCommand(args: string[]): Promise<void> {
     }
 
     if (standards) {
-      const invalidStandards = standards.filter(s => !AVAILABLE_STANDARDS.includes(s));
+      const invalidStandards = standards.filter((s) =>
+        !AVAILABLE_STANDARDS.includes(s)
+      );
       if (invalidStandards.length > 0) {
         console.log(`❌ Invalid standards: ${invalidStandards.join(", ")}`);
         console.log(`Available: ${AVAILABLE_STANDARDS.join(", ")}`);
@@ -122,9 +133,9 @@ export async function initCommand(args: string[]): Promise<void> {
 
     // Create the configuration
     console.log(`\n🌱 Initializing Aichaku project...`);
-    
+
     const version = await getCurrentVersion();
-    const config = options.global 
+    const config = options.global
       ? ConfigManager.createGlobal(version)
       : ConfigManager.createDefault(methodology);
 
@@ -134,13 +145,13 @@ export async function initCommand(args: string[]): Promise<void> {
 
     // Set standards if provided
     if (standards) {
-      const developmentStandards = standards.filter(s => 
+      const developmentStandards = standards.filter((s) =>
         ["15-factor", "12-factor"].includes(s)
       );
-      const documentationStandards = standards.filter(s => 
+      const documentationStandards = standards.filter((s) =>
         ["diataxis", "google-docs", "microsoft-docs"].includes(s)
       );
-      
+
       config.standards.development = developmentStandards;
       config.standards.documentation = documentationStandards;
     }
@@ -167,10 +178,9 @@ export async function initCommand(args: string[]): Promise<void> {
     await showInitializationSummary(newConfigManager, options);
 
     console.log(`\n✅ Aichaku project initialized successfully!`);
-    
+
     // Show next steps
     showNextSteps(methodology, options);
-
   } catch (error) {
     console.error(`❌ Initialization failed: ${(error as Error).message}`);
     if (options.verbose) {
@@ -183,7 +193,10 @@ export async function initCommand(args: string[]): Promise<void> {
 /**
  * Create the directory structure for the project
  */
-async function createDirectoryStructure(projectRoot: string, options: InitOptions): Promise<void> {
+async function createDirectoryStructure(
+  projectRoot: string,
+  options: InitOptions,
+): Promise<void> {
   const directories = [
     ".claude/aichaku",
     "docs/projects/active",
@@ -195,7 +208,7 @@ async function createDirectoryStructure(projectRoot: string, options: InitOption
     directories.push(
       "src",
       "tests",
-      "scripts"
+      "scripts",
     );
   }
 
@@ -214,12 +227,12 @@ async function createDirectoryStructure(projectRoot: string, options: InitOption
  * Create methodology-specific files and templates
  */
 async function createMethodologyFiles(
-  projectRoot: string, 
-  methodology: string, 
-  options: InitOptions
+  projectRoot: string,
+  methodology: string,
+  options: InitOptions,
 ): Promise<void> {
   const templatesDir = join(projectRoot, "docs", "projects", "active");
-  
+
   const methodologyTemplates = {
     "shape-up": {
       "STATUS.md": generateShapeUpStatus(),
@@ -237,7 +250,8 @@ async function createMethodologyFiles(
     },
   };
 
-  const templates = methodologyTemplates[methodology as keyof typeof methodologyTemplates];
+  const templates =
+    methodologyTemplates[methodology as keyof typeof methodologyTemplates];
   if (templates) {
     for (const [filename, content] of Object.entries(templates)) {
       const filePath = join(templatesDir, filename);
@@ -253,9 +267,9 @@ async function createMethodologyFiles(
  * Create template files based on specified template
  */
 async function createTemplateFiles(
-  projectRoot: string, 
-  template: string, 
-  options: InitOptions
+  projectRoot: string,
+  template: string,
+  options: InitOptions,
 ): Promise<void> {
   // Placeholder for template creation
   // In a real implementation, this would create files based on the template type
@@ -268,46 +282,57 @@ async function createTemplateFiles(
  * Show initialization summary
  */
 async function showInitializationSummary(
-  configManager: ConfigManager, 
-  options: InitOptions
+  configManager: ConfigManager,
+  options: InitOptions,
 ): Promise<void> {
   const config = configManager.get();
-  
+
   console.log(`\n📋 Initialization Summary:`);
   console.log(`   Configuration Version: v${config.version}`);
   console.log(`   Project Type: ${config.project.type}`);
   console.log(`   Installation Type: ${config.project.installationType}`);
   console.log(`   Aichaku Version: ${config.project.installedVersion}`);
-  
+
   if (config.project.methodology) {
     console.log(`   Methodology: ${config.project.methodology}`);
   }
-  
+
   if (config.standards.development.length > 0) {
-    console.log(`   Development Standards: ${config.standards.development.join(", ")}`);
+    console.log(
+      `   Development Standards: ${config.standards.development.join(", ")}`,
+    );
   }
-  
+
   if (config.standards.documentation.length > 0) {
-    console.log(`   Documentation Standards: ${config.standards.documentation.join(", ")}`);
+    console.log(
+      `   Documentation Standards: ${
+        config.standards.documentation.join(", ")
+      }`,
+    );
   }
 }
 
 /**
  * Show next steps after initialization
  */
-function showNextSteps(methodology: string | undefined, options: InitOptions): void {
+function showNextSteps(
+  methodology: string | undefined,
+  options: InitOptions,
+): void {
   console.log(`\n🚀 Next Steps:`);
-  
+
   if (methodology) {
-    console.log(`   • Explore ${methodology} templates in docs/projects/active/`);
+    console.log(
+      `   • Explore ${methodology} templates in docs/projects/active/`,
+    );
   } else {
     console.log(`   • Set a methodology: aichaku methodology set <name>`);
   }
-  
+
   console.log(`   • Select development standards: aichaku standards select`);
   console.log(`   • Create your first project: aichaku project create <name>`);
   console.log(`   • Check project status: aichaku status`);
-  
+
   if (!options.global) {
     console.log(`   • Initialize git repository if not already done`);
     console.log(`   • Add .claude/ to your .gitignore if desired`);
@@ -323,18 +348,20 @@ async function promptForMethodology(): Promise<string | undefined> {
     console.log(`  ${index + 1}. ${method}`);
   });
   console.log(`  ${AVAILABLE_METHODOLOGIES.length + 1}. Skip (can set later)`);
-  
-  console.log(`\nChoice [1-${AVAILABLE_METHODOLOGIES.length + 1}]: `, { noNewLine: true });
-  
+
+  console.log(`\nChoice [1-${AVAILABLE_METHODOLOGIES.length + 1}]: `, {
+    noNewLine: true,
+  });
+
   const buf = new Uint8Array(1024);
   const n = await Deno.stdin.read(buf) ?? 0;
   const input = new TextDecoder().decode(buf.subarray(0, n)).trim();
-  
+
   const choice = parseInt(input);
   if (choice >= 1 && choice <= AVAILABLE_METHODOLOGIES.length) {
     return AVAILABLE_METHODOLOGIES[choice - 1];
   }
-  
+
   return undefined;
 }
 
@@ -342,37 +369,46 @@ async function promptForMethodology(): Promise<string | undefined> {
  * Prompt for standards selection
  */
 async function promptForStandards(): Promise<string[]> {
-  console.log(`\nSelect standards (comma-separated numbers, or Enter to skip):`);
+  console.log(
+    `\nSelect standards (comma-separated numbers, or Enter to skip):`,
+  );
   AVAILABLE_STANDARDS.forEach((standard, index) => {
     console.log(`  ${index + 1}. ${standard}`);
   });
-  
-  console.log(`\nChoices [1-${AVAILABLE_STANDARDS.length}]: `, { noNewLine: true });
-  
+
+  console.log(`\nChoices [1-${AVAILABLE_STANDARDS.length}]: `, {
+    noNewLine: true,
+  });
+
   const buf = new Uint8Array(1024);
   const n = await Deno.stdin.read(buf) ?? 0;
   const input = new TextDecoder().decode(buf.subarray(0, n)).trim();
-  
+
   if (!input) {
     return [];
   }
-  
-  const choices = input.split(",").map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+
+  const choices = input.split(",").map((s) => parseInt(s.trim())).filter((n) =>
+    !isNaN(n)
+  );
   return choices
-    .filter(choice => choice >= 1 && choice <= AVAILABLE_STANDARDS.length)
-    .map(choice => AVAILABLE_STANDARDS[choice - 1]);
+    .filter((choice) => choice >= 1 && choice <= AVAILABLE_STANDARDS.length)
+    .map((choice) => AVAILABLE_STANDARDS[choice - 1]);
 }
 
 /**
  * Confirm reinitialization
  */
 async function confirmReinitialize(): Promise<boolean> {
-  console.log("\nProceed with initialization anyway? [y/N] ", { noNewLine: true });
-  
+  console.log("\nProceed with initialization anyway? [y/N] ", {
+    noNewLine: true,
+  });
+
   const buf = new Uint8Array(1024);
   const n = await Deno.stdin.read(buf) ?? 0;
-  const input = new TextDecoder().decode(buf.subarray(0, n)).trim().toLowerCase();
-  
+  const input = new TextDecoder().decode(buf.subarray(0, n)).trim()
+    .toLowerCase();
+
   return input === "y" || input === "yes";
 }
 
@@ -411,7 +447,7 @@ Problem Space ←→ Solution Space
 - Blockers:
 
 ## Last Updated
-${new Date().toISOString().split('T')[0]}
+${new Date().toISOString().split("T")[0]}
 `;
 }
 

@@ -5,7 +5,13 @@
 import { assertEquals, assertRejects, assertThrows } from "jsr:@std/assert";
 import { exists } from "jsr:@std/fs@1";
 import { join } from "jsr:@std/path@1";
-import { ConfigManager, AichakuConfig, createProjectConfigManager, isAichakuProject, getProjectMethodology } from "./config-manager.ts";
+import {
+  AichakuConfig,
+  ConfigManager,
+  createProjectConfigManager,
+  getProjectMethodology,
+  isAichakuProject,
+} from "./config-manager.ts";
 
 // Test helper to create a temporary directory
 async function createTempDir(): Promise<string> {
@@ -54,7 +60,7 @@ async function createLegacyFiles(projectRoot: string) {
       installDate: "2025-07-15T00:00:00.000Z",
       type: "project",
       installationType: "local",
-    })
+    }),
   );
 
   // Create aichaku-standards.json
@@ -63,7 +69,7 @@ async function createLegacyFiles(projectRoot: string) {
     JSON.stringify({
       version: "1.0.0",
       selected: ["15-factor"],
-    })
+    }),
   );
 
   // Create aichaku.config.json
@@ -75,7 +81,7 @@ async function createLegacyFiles(projectRoot: string) {
       customizations: {
         userDir: "./user",
       },
-    })
+    }),
   );
 
   // Create .aichaku-project marker
@@ -83,8 +89,17 @@ async function createLegacyFiles(projectRoot: string) {
 }
 
 // Test helper to create project structure with methodology indicators
-async function createProjectStructure(projectRoot: string, methodology: string) {
-  const activeDir = join(projectRoot, "docs", "projects", "active", "test-project");
+async function createProjectStructure(
+  projectRoot: string,
+  methodology: string,
+) {
+  const activeDir = join(
+    projectRoot,
+    "docs",
+    "projects",
+    "active",
+    "test-project",
+  );
   await Deno.mkdir(activeDir, { recursive: true });
 
   const methodologyFiles = {
@@ -94,9 +109,13 @@ async function createProjectStructure(projectRoot: string, methodology: string) 
     "lean": ["experiment-plan.md"],
   };
 
-  const files = methodologyFiles[methodology as keyof typeof methodologyFiles] || [];
+  const files =
+    methodologyFiles[methodology as keyof typeof methodologyFiles] || [];
   for (const file of files) {
-    await Deno.writeTextFile(join(activeDir, file), `# ${file}\n\nTest content`);
+    await Deno.writeTextFile(
+      join(activeDir, file),
+      `# ${file}\n\nTest content`,
+    );
   }
 }
 
@@ -111,7 +130,7 @@ async function cleanup(tempDir: string) {
 
 Deno.test("ConfigManager - Load from consolidated config", async () => {
   const tempDir = await createTempDir();
-  
+
   try {
     const configManager = new ConfigManager(tempDir);
     const aichakuDir = join(tempDir, ".claude", "aichaku");
@@ -120,7 +139,7 @@ Deno.test("ConfigManager - Load from consolidated config", async () => {
     const testConfig = createTestConfig();
     await Deno.writeTextFile(
       join(aichakuDir, "aichaku.json"),
-      JSON.stringify(testConfig, null, 2)
+      JSON.stringify(testConfig, null, 2),
     );
 
     await configManager.load();
@@ -138,7 +157,7 @@ Deno.test("ConfigManager - Load from consolidated config", async () => {
 
 Deno.test("ConfigManager - Load from legacy files", async () => {
   const tempDir = await createTempDir();
-  
+
   try {
     const configManager = new ConfigManager(tempDir);
     await createLegacyFiles(tempDir);
@@ -153,7 +172,12 @@ Deno.test("ConfigManager - Load from legacy files", async () => {
     assertEquals(config.markers.isAichakuProject, true);
 
     // Verify consolidated file was created
-    const consolidatedPath = join(tempDir, ".claude", "aichaku", "aichaku.json");
+    const consolidatedPath = join(
+      tempDir,
+      ".claude",
+      "aichaku",
+      "aichaku.json",
+    );
     assertEquals(await exists(consolidatedPath), true);
   } finally {
     await cleanup(tempDir);
@@ -162,7 +186,7 @@ Deno.test("ConfigManager - Load from legacy files", async () => {
 
 Deno.test("ConfigManager - Migrate from legacy to consolidated", async () => {
   const tempDir = await createTempDir();
-  
+
   try {
     const configManager = new ConfigManager(tempDir);
     await createLegacyFiles(tempDir);
@@ -173,7 +197,7 @@ Deno.test("ConfigManager - Migrate from legacy to consolidated", async () => {
 
     // Should detect methodology from project structure
     assertEquals(config.project.methodology, "shape-up");
-    
+
     // Should preserve all legacy data
     assertEquals(config.project.installedVersion, "0.29.0");
     assertEquals(config.standards.development, ["15-factor"]);
@@ -185,7 +209,7 @@ Deno.test("ConfigManager - Migrate from legacy to consolidated", async () => {
 
 Deno.test("ConfigManager - Update configuration", async () => {
   const tempDir = await createTempDir();
-  
+
   try {
     const configManager = new ConfigManager(tempDir);
     const aichakuDir = join(tempDir, ".claude", "aichaku");
@@ -194,7 +218,7 @@ Deno.test("ConfigManager - Update configuration", async () => {
     const testConfig = createTestConfig();
     await Deno.writeTextFile(
       join(aichakuDir, "aichaku.json"),
-      JSON.stringify(testConfig, null, 2)
+      JSON.stringify(testConfig, null, 2),
     );
 
     await configManager.load();
@@ -205,7 +229,10 @@ Deno.test("ConfigManager - Update configuration", async () => {
 
     // Update development standards
     await configManager.setDevelopmentStandards(["12-factor", "15-factor"]);
-    assertEquals(configManager.getDevelopmentStandards(), ["12-factor", "15-factor"]);
+    assertEquals(configManager.getDevelopmentStandards(), [
+      "12-factor",
+      "15-factor",
+    ]);
 
     // Update version
     await configManager.setInstalledVersion("0.30.0");
@@ -215,7 +242,10 @@ Deno.test("ConfigManager - Update configuration", async () => {
     const configManager2 = new ConfigManager(tempDir);
     await configManager2.load();
     assertEquals(configManager2.getMethodology(), "scrum");
-    assertEquals(configManager2.getDevelopmentStandards(), ["12-factor", "15-factor"]);
+    assertEquals(configManager2.getDevelopmentStandards(), [
+      "12-factor",
+      "15-factor",
+    ]);
     assertEquals(configManager2.getInstalledVersion(), "0.30.0");
   } finally {
     await cleanup(tempDir);
@@ -224,14 +254,14 @@ Deno.test("ConfigManager - Update configuration", async () => {
 
 Deno.test("ConfigManager - Handle non-Aichaku project", async () => {
   const tempDir = await createTempDir();
-  
+
   try {
     const configManager = new ConfigManager(tempDir);
-    
+
     await assertRejects(
       () => configManager.load(),
       Error,
-      "No Aichaku configuration found"
+      "No Aichaku configuration found",
     );
   } finally {
     await cleanup(tempDir);
@@ -240,7 +270,7 @@ Deno.test("ConfigManager - Handle non-Aichaku project", async () => {
 
 Deno.test("ConfigManager - Convenience methods", async () => {
   const tempDir = await createTempDir();
-  
+
   try {
     const configManager = new ConfigManager(tempDir);
     const aichakuDir = join(tempDir, ".claude", "aichaku");
@@ -250,7 +280,7 @@ Deno.test("ConfigManager - Convenience methods", async () => {
     testConfig.standards.documentation = ["diataxis"];
     await Deno.writeTextFile(
       join(aichakuDir, "aichaku.json"),
-      JSON.stringify(testConfig, null, 2)
+      JSON.stringify(testConfig, null, 2),
     );
 
     await configManager.load();
@@ -271,7 +301,7 @@ Deno.test("ConfigManager - Convenience methods", async () => {
 
 Deno.test("ConfigManager - Detect methodology from project structure", async () => {
   const tempDir = await createTempDir();
-  
+
   try {
     const configManager = new ConfigManager(tempDir);
     await createLegacyFiles(tempDir);
@@ -288,7 +318,7 @@ Deno.test("ConfigManager - Detect methodology from project structure", async () 
 
 Deno.test("ConfigManager - Create default config", () => {
   const config = ConfigManager.createDefault("scrum");
-  
+
   assertEquals(config.version, "2.0.0");
   assertEquals(config.project.methodology, "scrum");
   assertEquals(config.project.type, "project");
@@ -300,7 +330,7 @@ Deno.test("ConfigManager - Create default config", () => {
 
 Deno.test("ConfigManager - Create global config", () => {
   const config = ConfigManager.createGlobal("0.29.0");
-  
+
   assertEquals(config.version, "2.0.0");
   assertEquals(config.project.type, "global");
   assertEquals(config.project.installationType, "global");
@@ -310,7 +340,7 @@ Deno.test("ConfigManager - Create global config", () => {
 
 Deno.test("ConfigManager - Verify integrity", async () => {
   const tempDir = await createTempDir();
-  
+
   try {
     const configManager = new ConfigManager(tempDir);
     const aichakuDir = join(tempDir, ".claude", "aichaku");
@@ -319,7 +349,7 @@ Deno.test("ConfigManager - Verify integrity", async () => {
     const testConfig = createTestConfig();
     await Deno.writeTextFile(
       join(aichakuDir, "aichaku.json"),
-      JSON.stringify(testConfig, null, 2)
+      JSON.stringify(testConfig, null, 2),
     );
 
     await configManager.load();
@@ -334,7 +364,7 @@ Deno.test("ConfigManager - Verify integrity", async () => {
 
 Deno.test("ConfigManager - Factory functions", async () => {
   const tempDir = await createTempDir();
-  
+
   try {
     const aichakuDir = join(tempDir, ".claude", "aichaku");
     await Deno.mkdir(aichakuDir, { recursive: true });
@@ -342,7 +372,7 @@ Deno.test("ConfigManager - Factory functions", async () => {
     const testConfig = createTestConfig();
     await Deno.writeTextFile(
       join(aichakuDir, "aichaku.json"),
-      JSON.stringify(testConfig, null, 2)
+      JSON.stringify(testConfig, null, 2),
     );
 
     const manager = createProjectConfigManager(tempDir);
@@ -361,34 +391,35 @@ Deno.test("ConfigManager - Factory functions", async () => {
 
 Deno.test("ConfigManager - Error handling for invalid config", async () => {
   const tempDir = await createTempDir();
-  
+
   try {
     const configManager = new ConfigManager(tempDir);
-    
+
     // Test getting config before loading
     assertThrows(
       () => configManager.get(),
       Error,
-      "Configuration not loaded. Call load() first."
+      "Configuration not loaded. Call load() first.",
     );
 
     // Test updating config before loading
     await assertRejects(
-      () => configManager.update({ 
-        project: { 
-          created: "2025-07-15T00:00:00.000Z",
-          methodology: "scrum" 
-        } 
-      }),
+      () =>
+        configManager.update({
+          project: {
+            created: "2025-07-15T00:00:00.000Z",
+            methodology: "scrum",
+          },
+        }),
       Error,
-      "Configuration not loaded"
+      "Configuration not loaded",
     );
 
     // Test saving config before loading
     await assertRejects(
       () => configManager.save(),
       Error,
-      "No configuration to save"
+      "No configuration to save",
     );
   } finally {
     await cleanup(tempDir);
@@ -397,17 +428,20 @@ Deno.test("ConfigManager - Error handling for invalid config", async () => {
 
 Deno.test("ConfigManager - Cleanup legacy files", async () => {
   const tempDir = await createTempDir();
-  
+
   try {
     const configManager = new ConfigManager(tempDir);
     await createLegacyFiles(tempDir);
 
     await configManager.load();
-    
+
     // Verify legacy files exist
     const aichakuDir = join(tempDir, ".claude", "aichaku");
     assertEquals(await exists(join(aichakuDir, ".aichaku.json")), true);
-    assertEquals(await exists(join(aichakuDir, "aichaku-standards.json")), true);
+    assertEquals(
+      await exists(join(aichakuDir, "aichaku-standards.json")),
+      true,
+    );
     assertEquals(await exists(join(aichakuDir, "aichaku.config.json")), true);
     assertEquals(await exists(join(aichakuDir, ".aichaku-project")), true);
 
@@ -416,7 +450,10 @@ Deno.test("ConfigManager - Cleanup legacy files", async () => {
 
     // Verify legacy files are removed
     assertEquals(await exists(join(aichakuDir, ".aichaku.json")), false);
-    assertEquals(await exists(join(aichakuDir, "aichaku-standards.json")), false);
+    assertEquals(
+      await exists(join(aichakuDir, "aichaku-standards.json")),
+      false,
+    );
     assertEquals(await exists(join(aichakuDir, "aichaku.config.json")), false);
     assertEquals(await exists(join(aichakuDir, ".aichaku-project")), false);
 

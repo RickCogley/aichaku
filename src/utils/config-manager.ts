@@ -1,6 +1,6 @@
 /**
  * Configuration Manager for Aichaku
- * 
+ *
  * Handles consolidation of metadata from multiple files into a single aichaku.json
  * Provides backward compatibility during migration and type-safe configuration access
  */
@@ -92,13 +92,18 @@ export class ConfigManager {
         this.config = JSON.parse(content) as AichakuConfig;
         return;
       } catch (e) {
-        console.warn("Failed to load consolidated config:", (e as Error).message);
+        console.warn(
+          "Failed to load consolidated config:",
+          (e as Error).message,
+        );
       }
     }
 
     // Check if this is an Aichaku project by looking for any metadata files
     if (await this.hasLegacyFiles()) {
-      console.log("🔄 Detected legacy metadata files, performing automatic migration...");
+      console.log(
+        "🔄 Detected legacy metadata files, performing automatic migration...",
+      );
       await this.migrateFromLegacy();
     } else {
       throw new Error("No Aichaku configuration found");
@@ -132,7 +137,7 @@ export class ConfigManager {
 
     await Deno.writeTextFile(
       this.configPath,
-      JSON.stringify(this.config, null, 2)
+      JSON.stringify(this.config, null, 2),
     );
   }
 
@@ -232,7 +237,7 @@ export class ConfigManager {
         ...this.get().project,
         methodology,
         lastUpdated: new Date().toISOString(),
-      }
+      },
     });
   }
 
@@ -244,7 +249,7 @@ export class ConfigManager {
       standards: {
         ...this.get().standards,
         development: standards,
-      }
+      },
     });
   }
 
@@ -256,7 +261,7 @@ export class ConfigManager {
       standards: {
         ...this.get().standards,
         documentation: standards,
-      }
+      },
     });
   }
 
@@ -269,7 +274,7 @@ export class ConfigManager {
         ...this.get().project,
         installedVersion: version,
         lastUpdated: new Date().toISOString(),
-      }
+      },
     });
   }
 
@@ -332,7 +337,8 @@ export class ConfigManager {
 
         if (this.config) {
           this.config.project.installedVersion = legacy.installedVersion;
-          this.config.project.created = legacy.installDate || this.config.project.created;
+          this.config.project.created = legacy.installDate ||
+            this.config.project.created;
           this.config.project.lastUpdated = legacy.lastUpdated;
           this.config.project.type = legacy.type;
           this.config.project.installationType = legacy.installationType;
@@ -340,7 +346,10 @@ export class ConfigManager {
 
         console.log("  ✓ Migrated .aichaku.json");
       } catch (e) {
-        console.warn("  ⚠️ Failed to migrate .aichaku.json:", (e as Error).message);
+        console.warn(
+          "  ⚠️ Failed to migrate .aichaku.json:",
+          (e as Error).message,
+        );
       }
     }
   }
@@ -367,7 +376,10 @@ export class ConfigManager {
           console.log(`  ✓ Migrated ${path.split("/").pop()}`);
           break;
         } catch (e) {
-          console.warn(`  ⚠️ Failed to migrate ${path.split("/").pop()}:`, (e as Error).message);
+          console.warn(
+            `  ⚠️ Failed to migrate ${path.split("/").pop()}:`,
+            (e as Error).message,
+          );
         }
       }
     }
@@ -389,7 +401,10 @@ export class ConfigManager {
           console.log(`  ✓ Migrated ${path.split("/").pop()}`);
           break;
         } catch (e) {
-          console.warn(`  ⚠️ Failed to migrate ${path.split("/").pop()}:`, (e as Error).message);
+          console.warn(
+            `  ⚠️ Failed to migrate ${path.split("/").pop()}:`,
+            (e as Error).message,
+          );
         }
       }
     }
@@ -420,7 +435,10 @@ export class ConfigManager {
 
         console.log("  ✓ Migrated aichaku.config.json");
       } catch (e) {
-        console.warn("  ⚠️ Failed to migrate aichaku.config.json:", (e as Error).message);
+        console.warn(
+          "  ⚠️ Failed to migrate aichaku.config.json:",
+          (e as Error).message,
+        );
       }
     }
   }
@@ -462,14 +480,20 @@ export class ConfigManager {
         for await (const entry of Deno.readDir(activeDir)) {
           if (entry.isDirectory) {
             const projectDir = join(activeDir, entry.name);
-            
-            for (const [methodology, files] of Object.entries(methodologyIndicators)) {
+
+            for (
+              const [methodology, files] of Object.entries(
+                methodologyIndicators,
+              )
+            ) {
               for (const file of files) {
                 if (await exists(join(projectDir, file))) {
                   if (this.config) {
                     this.config.project.methodology = methodology;
                   }
-                  console.log(`  ✓ Detected ${methodology} methodology from ${file}`);
+                  console.log(
+                    `  ✓ Detected ${methodology} methodology from ${file}`,
+                  );
                   return;
                 }
               }
@@ -502,7 +526,10 @@ export class ConfigManager {
     const result = { ...target };
 
     for (const key in source) {
-      if (source[key] && typeof source[key] === "object" && !Array.isArray(source[key])) {
+      if (
+        source[key] && typeof source[key] === "object" &&
+        !Array.isArray(source[key])
+      ) {
         result[key] = this.deepMerge(target[key] || {}, source[key]);
       } else {
         result[key] = source[key];
@@ -589,7 +616,9 @@ export class ConfigManager {
 /**
  * Factory function to create ConfigManager for project root
  */
-export function createProjectConfigManager(projectRoot?: string): ConfigManager {
+export function createProjectConfigManager(
+  projectRoot?: string,
+): ConfigManager {
   const root = projectRoot || Deno.cwd();
   return new ConfigManager(root);
 }
@@ -598,7 +627,8 @@ export function createProjectConfigManager(projectRoot?: string): ConfigManager 
  * Factory function to create ConfigManager for global configuration
  */
 export function createGlobalConfigManager(): ConfigManager {
-  const globalRoot = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "/tmp";
+  const globalRoot = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") ||
+    "/tmp";
   return new ConfigManager(globalRoot);
 }
 
@@ -618,7 +648,9 @@ export async function isAichakuProject(projectRoot?: string): Promise<boolean> {
 /**
  * Utility function to get methodology for a project
  */
-export async function getProjectMethodology(projectRoot?: string): Promise<string | undefined> {
+export async function getProjectMethodology(
+  projectRoot?: string,
+): Promise<string | undefined> {
   try {
     const manager = createProjectConfigManager(projectRoot);
     await manager.load();

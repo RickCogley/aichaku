@@ -262,7 +262,7 @@ async function fetchGitHubContentStructure(
 ): Promise<Record<string, unknown>> {
   // Try to fetch a manifest.json file from the repository
   const manifestUrl = `${baseUrl}/manifest.json`;
-  
+
   try {
     const response = await fetch(manifestUrl);
     if (response.ok) {
@@ -272,7 +272,7 @@ async function fetchGitHubContentStructure(
   } catch {
     // Manifest doesn't exist or couldn't be fetched
   }
-  
+
   // Fallback to hardcoded structure
   return contentType === "methodologies"
     ? getMethodologyStructure()
