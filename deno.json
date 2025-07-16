@@ -96,7 +96,8 @@
       ".claude/",
       "nagare-launcher.ts",
       "nagare.config.ts",
-      "deno.lock"
+      "deno.lock",
+      "!version.ts"
     ]
   },
   "exclude": [
