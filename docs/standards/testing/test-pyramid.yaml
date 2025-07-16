@@ -11,6 +11,11 @@ summary:
   distribution: "70% unit, 20% integration, 10% E2E"
   speed: "Unit tests <1s, Integration <10s, E2E <60s"
   maintenance: "Lower levels easier to maintain and debug"
+  unit_characteristics: "Pure functions, no external dependencies, milliseconds execution, deterministic"
+  integration_scope: "Database operations, API endpoints, service interactions, real test services"
+  e2e_focus: "Critical user journeys only, production-like environment, browser automation"
+  anti_patterns: "Ice cream cone (too many E2E), Hourglass (missing integration), Testing trophy (integration-heavy alternative)"
+  tools_by_layer: "Unit: Jest/PyTest/JUnit, Integration: Supertest/TestContainers, E2E: Playwright/Cypress"
 
 display:
   description: "Testing strategy emphasizing a pyramid-shaped distribution of automated tests for optimal feedback and confidence"

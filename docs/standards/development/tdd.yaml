@@ -12,6 +12,10 @@ summary:
   naming: Descriptive test names that explain the behavior
   coverage: Aim for 80%+ coverage with meaningful tests
   mocking: Mock external dependencies, not internal implementation
+  cycle_discipline: Tests must fail initially, minimal implementation to pass, refactor without breaking
+  isolation_requirements: Tests run independently, no shared state, any execution order
+  ci_integration: All tests pass before merge, coverage reports generated, visible in PRs
+  test_naming_patterns: "should [behavior] when [condition], returns [result] for [scenario]"
 
 display:
   description: "A software development methodology where tests are written before the actual code implementation"
