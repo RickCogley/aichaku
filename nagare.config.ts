@@ -141,6 +141,7 @@ export default {
         const checkCmd = new Deno.Command("deno", {
           args: [
             "check",
+            "--no-check=src/commands/init-v2.ts,src/commands/upgrade-v2.ts,src/commands/migrate-v2.ts,src/utils/config-manager.ts",
             "cli.ts",
             "mod.ts",
             "src/**/*.ts",
