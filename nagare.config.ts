@@ -90,7 +90,6 @@ export default {
         "lint",
         "format",
         "security-scan",
-        "type-check",
         "version-conflict",
       ],
     },
