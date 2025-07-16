@@ -126,7 +126,10 @@
       "Bash(else )",
       "Bash(fi)",
       "Bash(if grep -r \"\\beval\\s*\\(\" --include=\"*.ts\" --include=\"*.js\" --exclude-dir=\".git\" --exclude-dir=\"node_modules\" --exclude-dir=\"coverage\" --exclude=\"*_test.ts\" .)",
-      "Bash(./aichaku integrate)"
+      "Bash(./aichaku integrate)",
+      "Bash(deno:*)",
+      "Bash(./cli.ts learn owasp-web)",
+      "Bash(do echo \"=== $file ===\")"
     ],
     "deny": []
   }

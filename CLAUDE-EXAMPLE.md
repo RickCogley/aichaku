@@ -1,6 +1,7 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with this project.
+This file provides guidance to Claude Code (claude.ai/code) when working with
+this project.
 
 ## Project Overview
 

@@ -102,14 +102,18 @@ aichaku init
 
 ## 🔧 YAML Configuration System
 
-**The Revolutionary Core of Aichaku:** Aichaku transforms how Claude Code directives are created and maintained through a groundbreaking YAML-based "configuration as code" approach.
+**The Revolutionary Core of Aichaku:** Aichaku transforms how Claude Code
+directives are created and maintained through a groundbreaking YAML-based
+"configuration as code" approach.
 
 ### The Problem with Traditional Approaches
 
-- **Massive files**: Traditional CLAUDE.md files can exceed 50KB of repetitive content
+- **Massive files**: Traditional CLAUDE.md files can exceed 50KB of repetitive
+  content
 - **Difficult maintenance**: Changes require updating multiple large files
 - **No modularity**: Everything hardcoded in monolithic markdown files
-- **Version drift**: Different projects with different versions of the same guidance
+- **Version drift**: Different projects with different versions of the same
+  guidance
 
 ### Aichaku's Solution: 96% Size Reduction
 
@@ -134,10 +138,14 @@ behavioral_directives:
 
 ### How the Magic Works
 
-1. **Modular YAML Files**: Core behaviors, methodologies, and standards defined in separate, focused YAML files
-2. **Dynamic Assembly**: When you run `aichaku integrate`, the system reads multiple YAML sources and assembles a complete configuration
-3. **Smart Merging**: Base configuration + methodology-specific + project overrides = perfectly tailored guidance
-4. **Single Source of Truth**: Update one YAML file, and all projects benefit from improvements
+1. **Modular YAML Files**: Core behaviors, methodologies, and standards defined
+   in separate, focused YAML files
+2. **Dynamic Assembly**: When you run `aichaku integrate`, the system reads
+   multiple YAML sources and assembles a complete configuration
+3. **Smart Merging**: Base configuration + methodology-specific + project
+   overrides = perfectly tailored guidance
+4. **Single Source of Truth**: Update one YAML file, and all projects benefit
+   from improvements
 
 ### Configuration Hierarchy
 
@@ -155,6 +163,7 @@ behavioral_directives:
 ```
 
 **Project Overrides** (optional):
+
 ```
 your-project/.claude/aichaku/
 ├── overrides.yaml          # Project-specific customizations
@@ -164,12 +173,14 @@ your-project/.claude/aichaku/
 ### Real-World Impact
 
 **Before Aichaku:**
+
 - ❌ 50KB+ CLAUDE.md files
-- ❌ Copy-paste methodology content between projects  
+- ❌ Copy-paste methodology content between projects
 - ❌ Manual updates across multiple files
 - ❌ Inconsistent guidance between projects
 
 **After Aichaku:**
+
 - ✅ ~2KB dynamically generated directives
 - ✅ Methodology content shared from global installation
 - ✅ One-command updates across all projects
@@ -183,30 +194,32 @@ Want to customize for your organization? Create project-specific overrides:
 # .claude/aichaku/overrides.yaml
 aichaku:
   project_name: "My Custom Project"
-  
+
 directives:
   visual_identity:
-    prefix: "🚀 MyProject:"  # Custom prefix instead of Aichaku
-    
+    prefix: "🚀 MyProject:" # Custom prefix instead of Aichaku
+
   methodology_detection:
     custom_method:
       triggers: ["our-process", "company-way"]
       documents: ["company-process.md"]
 ```
 
-Run `aichaku integrate --force` and your CLAUDE.md is regenerated with your customizations merged seamlessly.
+Run `aichaku integrate --force` and your CLAUDE.md is regenerated with your
+customizations merged seamlessly.
 
 ### The Technical Architecture
 
 The YAML system enables unprecedented flexibility:
 
 - **Version Control**: All configurations are versioned and tracked
-- **Inheritance**: Projects inherit from global, override selectively  
+- **Inheritance**: Projects inherit from global, override selectively
 - **Validation**: YAML schemas ensure configuration correctness
 - **Modularity**: Mix and match methodologies, standards, and behaviors
 - **Maintenance**: Update once, deploy everywhere
 
-This isn't just a configuration system—it's a paradigm shift that makes Claude Code directives maintainable, consistent, and powerful.
+This isn't just a configuration system—it's a paradigm shift that makes Claude
+Code directives maintainable, consistent, and powerful.
 
 [Learn more about YAML configuration →](docs/how-to/configure-yaml-directives.md)
 
