@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "selected": [
+    "nist-csf",
+    "tdd",
+    "test-pyramid",
+    "conventional-commits",
+    "15-factor",
+    "clean-arch",
+    "google-style",
+    "bdd",
+    "dora"
+  ]
+}
