@@ -38,12 +38,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-deno-
 
-      - name: Run format check
-        run: deno fmt --check
-
-      - name: Run linter
-        run: deno lint
-
       - name: Basic security checks
         run: |
           echo "Running basic security checks..."
