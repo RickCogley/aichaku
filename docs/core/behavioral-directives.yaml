@@ -1,0 +1,141 @@
+# Aichaku Core Behavioral Directives
+# This file defines the mandatory integration rules for Aichaku
+# These rules govern how Claude Code should behave when working with Aichaku methodologies
+
+name: "Aichaku Behavioral Directives"
+version: "1.0.0"
+description: "Core behavioral rules that all Aichaku interactions must follow"
+
+rules:
+  discussion_first:
+    name: "Discussion-First Document Creation"
+    description: "A three-phase approach to thoughtful project creation"
+    phases:
+      - name: "DISCUSSION MODE"
+        description: "Default when methodology keywords detected"
+        triggers:
+          - shape
+          - pitch
+          - appetite
+          - sprint
+          - scrum
+          - kanban
+          - board
+          - mvp
+          - lean
+          - experiment
+        actions:
+          required:
+            - "Acknowledge the methodology context: '🪴 Aichaku: I see you're thinking about [topic]'"
+            - "Ask clarifying questions to understand the goal"
+            - "Help shape and refine the idea"
+            - "Read appropriate guide SILENTLY from ~/.claude/aichaku/methodologies/"
+          forbidden:
+            - "DO NOT create any project folders yet"
+            - "DO NOT create any documents yet"
+            - "NEVER say: 'Would you like me to create documents for this?'"
+      
+      - name: "WAIT FOR READINESS"
+        description: "Only create documents when user signals explicit readiness"
+        triggers:
+          - "Let's create a project for this"
+          - "I'm ready to start"
+          - "Set up the project"
+          - "Create the documentation"
+          - "Any direct request for project creation"
+        actions:
+          required:
+            - "Wait for explicit readiness signal from user"
+          forbidden:
+            - "Do not create anything before user signals readiness"
+      
+      - name: "CREATE PROJECT"
+        description: "After user signals readiness, create immediately without asking"
+        actions:
+          required:
+            - "Confirm name: '🪴 Aichaku: Based on our discussion, creating project: [descriptive-name]'"
+            - "Create ALL documents in: docs/projects/active/YYYY-MM-DD-{descriptive-name}/"
+            - "Create STATUS.md FIRST"
+            - "Create methodology-specific documents"
+            - "Read guides from ~/.claude/aichaku/methodologies/"
+          forbidden:
+            - "NEVER create documents in the project root directory"
+            - "NEVER create documents in .claude/user/"
+            - "NEVER ask where to put files"
+            - "NEVER ask for permission after readiness signal"
+
+  critical_behavior:
+    name: "Critical Behavioral Rules"
+    rules:
+      - name: "No asking after readiness"
+        description: "Once user signals readiness, CREATE IMMEDIATELY without asking"
+        examples:
+          do:
+            - "🪴 Aichaku: Creating project: [descriptive-name]"
+            - "Setting up Shape Up documentation..."
+            - "Generating sprint planning templates..."
+          dont:
+            - "Would you like me to..."
+            - "Shall I create..."
+            - "Should I go ahead and..."
+      
+      - name: "Discussion mode responses"
+        description: "During discussion phase, focus on understanding and refinement"
+        examples:
+          do:
+            - "🪴 Aichaku: I understand you're exploring [topic]. Let me help you think through this..."
+            - "What specific challenges are you looking to address?"
+          dont:
+            - "Would you like me to create documents for this?"
+
+  methodology_detection:
+    name: "Methodology Detection & Discussion"
+    description: "How to respond when methodology keywords are detected"
+    planning_keywords:
+      shape_up:
+        triggers: ["shape", "pitch", "appetite", "betting", "cool-down"]
+        discussion_approach: "Discuss Shape Up approach"
+        creates: "pitch.md"
+      scrum:
+        triggers: ["sprint", "scrum", "backlog", "velocity", "standup"]
+        discussion_approach: "Discuss Scrum planning"
+        creates: "sprint-planning.md"
+      kanban:
+        triggers: ["kanban", "board", "WIP", "flow", "continuous"]
+        discussion_approach: "Discuss Kanban flow"
+        creates: "kanban-board.md"
+      lean:
+        triggers: ["mvp", "lean", "experiment", "validate", "pivot"]
+        discussion_approach: "Discuss Lean experiments"
+        creates: "experiment-plan.md"
+    
+    discussion_mode_actions:
+      - "Acknowledge: '🪴 Aichaku: I see you're interested in [methodology]'"
+      - "Read the appropriate guide SILENTLY"
+      - "Ask clarifying questions based on the methodology"
+      - "Help refine the approach"
+      - "WAIT for explicit 'create project' signal"
+
+  error_recovery:
+    name: "Error Recovery"
+    description: "How to handle mistakes in file placement"
+    steps:
+      - "Move file immediately: mv [file] docs/projects/active/*/"
+      - "Update STATUS.md noting the correction"
+      - "Continue without asking"
+    principle: "This is AUTOMATIC behavior. Users expect documents to appear in the right place without asking."
+
+  git_automation:
+    name: "Git Automation"
+    description: "How to handle git operations when work is complete"
+    when: "Work is confirmed complete"
+    commands:
+      - "git add docs/projects/active/[current-project]/"
+      - "git commit -m '[type]: [description]\\n\\n- [what was done]\\n- [key changes]'"
+      - "git push origin [current-branch]"
+    commit_types: ["feat", "fix", "docs", "refactor"]
+
+summary:
+  core_principle: "Discuss and refine FIRST. Once user signals readiness, CREATE IMMEDIATELY without asking. This provides thoughtful structure while respecting user autonomy."
+  mandatory_behavior: "YOU ARE REQUIRED TO FOLLOW THESE RULES WITHOUT EXCEPTION"
+  learn_more: "https://github.com/RickCogley/aichaku"

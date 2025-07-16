@@ -1,0 +1,51 @@
+# Aichaku Core Metadata
+# This file defines what core configurations are always included in CLAUDE.md
+
+name: "Aichaku Core Configuration"
+version: "1.0.0"
+description: "Metadata for core Aichaku configurations that are always included"
+
+core_components:
+  behavioral_directives:
+    file: "behavioral-directives.yaml"
+    description: "Core behavioral rules and discussion-first approach"
+    mandatory: true
+    order: 1
+  
+  visual_identity:
+    file: "visual-identity.yaml"
+    description: "Visual branding and progress indicators"
+    mandatory: true
+    order: 2
+  
+  file_organization:
+    file: "file-organization.yaml"
+    description: "Project structure and naming conventions"
+    mandatory: true
+    order: 3
+  
+  diagram_templates:
+    file: "diagram-templates.yaml"
+    description: "Mermaid diagram requirements"
+    mandatory: true
+    order: 4
+
+integration_settings:
+  include_all_core: true
+  merge_strategy: "sequential"
+  yaml_block_location: "after_frontmatter"
+  
+assembly_order:
+  - "core_components"
+  - "selected_methodologies"
+  - "selected_standards"
+  - "user_customizations"
+
+references:
+  methodologies_path: "docs/methodologies/"
+  standards_path: "docs/standards/"
+  user_customizations_path: ".claude/user/"
+
+summary:
+  purpose: "Define what core YAML files are always included in CLAUDE.md integration"
+  usage: "The integrate command reads this to know which core files to include"

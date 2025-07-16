@@ -1,0 +1,126 @@
+# Aichaku File Organization Configuration
+# This file defines the project structure and naming conventions for Aichaku projects
+
+name: "Aichaku File Organization"
+version: "1.0.0"
+description: "Project structure, file paths, and naming conventions for Aichaku"
+
+project_structure:
+  root: "docs/projects/"
+  description: "All Aichaku projects live under this directory"
+  
+  states:
+    active:
+      path: "docs/projects/active/"
+      description: "Currently active projects"
+      naming: "active-YYYY-MM-DD-{descriptive-kebab-case-name}"
+      example: "active-2025-07-15-security-workflow-modernization"
+    
+    done:
+      path: "docs/projects/done/"
+      description: "Completed projects"
+      naming: "done-YYYY-MM-DD-{descriptive-kebab-case-name}"
+      example: "done-2025-07-14-consistent-branding"
+      transition: "Rename from active-* to done-* when complete"
+
+required_files:
+  STATUS.md:
+    description: "Project status tracking with lifecycle diagram"
+    created: "FIRST file created in any new project"
+    contains:
+      - "Project phase and progress"
+      - "Mermaid lifecycle diagram"
+      - "Current status and next steps"
+  
+  methodology_specific:
+    shape_up:
+      - "pitch.md"
+      - "cycle-plan.md"
+      - "hill-chart.md"
+    scrum:
+      - "sprint-planning.md"
+      - "user-story.md"
+      - "sprint-retrospective.md"
+    kanban:
+      - "kanban-board.md"
+      - "flow-metrics.md"
+    lean:
+      - "experiment-plan.md"
+      - "metrics-dashboard.md"
+  
+  completion_files:
+    change_log:
+      naming: "YYYY-MM-DD-{Project-Name}-CHANGE-LOG.md"
+      description: "Summary of all changes when completing work"
+      example: "2025-07-15-Security-Workflow-CHANGE-LOG.md"
+      rules:
+        - "Use TODAY'S date from environment info"
+        - "Include descriptive project name"
+        - "NEVER just 'CHANGE-LOG.md'"
+
+naming_conventions:
+  projects:
+    format: "YYYY-MM-DD-{descriptive-kebab-case-name}"
+    date_source: "TODAY'S date from environment (not example dates)"
+    case: "kebab-case (lowercase with hyphens)"
+    examples:
+      good:
+        - "2025-07-15-yaml-integration-redesign"
+        - "2025-07-14-security-architecture-modernization"
+      bad:
+        - "yaml-integration" # Missing date
+        - "2025-01-15-test" # Using wrong month
+        - "YAML_Integration" # Wrong case
+  
+  documents:
+    format: "{methodology-specific-name}.md"
+    case: "kebab-case for filenames"
+    extension: "Always .md for documentation"
+
+lifecycle_management:
+  starting_work:
+    steps:
+      - "CHECK TODAY'S DATE from environment info"
+      - "Create: docs/projects/active/YYYY-MM-DD-{descriptive-name}/"
+      - "Create STATUS.md immediately with status diagram"
+      - "Read appropriate methodology guides"
+      - "Create planning documents with workflow diagrams"
+      - "WAIT for human approval before coding"
+    
+    common_mistakes:
+      - "Using 01 instead of current month"
+      - "Using example dates instead of today's date"
+      - "Creating files in project root"
+  
+  during_work:
+    - "Update STATUS.md regularly"
+    - "Create supporting documents freely"
+    - "Keep all work within project folder"
+  
+  completing_work:
+    steps:
+      - "Create YYYY-MM-DD-{Project-Name}-CHANGE-LOG.md"
+      - "Update final diagram states"
+      - "Rename folder: active-* → done-*"
+      - "Ask: 'Work appears complete. Shall I commit and push?'"
+      - "Use conventional commits"
+
+forbidden_locations:
+  - path: "/"
+    reason: "Never create documents in project root"
+  - path: ".claude/user/"
+    reason: "That's for user customizations only"
+  - path: "src/"
+    reason: "Documentation belongs in docs/"
+
+error_recovery:
+  wrong_location:
+    detection: "File created outside docs/projects/"
+    action: "Move immediately: mv [file] docs/projects/active/*/"
+    followup: "Update STATUS.md noting the correction"
+    behavior: "Continue without asking - this is AUTOMATIC"
+
+summary:
+  core_principle: "Consistent, dated project organization with clear lifecycle"
+  key_rule: "All project documentation lives under docs/projects/"
+  date_critical: "ALWAYS use TODAY'S actual date from environment"

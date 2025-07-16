@@ -1,0 +1,95 @@
+# Aichaku Visual Identity Configuration
+# This file defines the visual branding and display rules for Aichaku
+
+name: "Aichaku Visual Identity"
+version: "1.0.0"
+description: "Visual branding, progress indicators, and display formatting for Aichaku"
+
+identity:
+  prefix:
+    mandatory: true
+    format: "🪴 Aichaku:"
+    usage: "ALWAYS prefix Aichaku messages with this exact format"
+  
+  growth_phases:
+    description: "Project lifecycle indicators"
+    phases:
+      new:
+        emoji: "🌱"
+        description: "New project just started"
+      active:
+        emoji: "🌿"
+        description: "Actively being worked on"
+      mature:
+        emoji: "🌳"
+        description: "In review or maturing"
+      complete:
+        emoji: "🍃"
+        description: "Completed and archived"
+    usage: "Use these indicators to show project phase in status updates"
+  
+  progress_display:
+    format:
+      phase_indicator: "[Phase] → [**Current**] → [Next]"
+      arrow_position: "Place ▲ under current phase"
+      progress_bar: "Week X/Y ████████░░░░░░░░░░░░ XX% [emoji]"
+    example: |
+      🪴 Aichaku: Shape Up Progress
+      [Shaping] → [**Betting**] → [Building] → [Cool-down]
+                    ▲
+      Week 2/6 ████████░░░░░░░░░░░░ 33% 🌿
+
+methodology_icons:
+  description: "Specific icons for each methodology's concepts"
+  shape_up:
+    betting: "🎯"
+    building: "🔨"
+  scrum:
+    sprints: "🏃"
+    backlog: "📋"
+  kanban:
+    cards: "📍"
+    flow: "🌊"
+  lean:
+    experiments: "🧪"
+    metrics: "📊"
+  xp:
+    testing: "🧪"
+    refactoring: "⚡"
+  scrumban:
+    hybrid: "🔄"
+    planning: "📊"
+
+display_rules:
+  forbidden:
+    - description: "No garden metaphors in text"
+      examples: ["planting", "growing", "harvesting", "cultivating", "nurturing"]
+    - description: "No mixing visual indicators"
+      rule: "Keep visual indicators consistent within a project"
+    - description: "No emoji overuse"
+      rule: "Maximum one emoji per concept"
+  
+  required:
+    - description: "Bold current phase"
+      format: "Use **bold** text for current phase in progress indicators"
+    - description: "Arrow positioning"
+      format: "Place ▲ directly under the current phase"
+    - description: "Consistent emoji usage"
+      rule: "Use the same emoji throughout a project's lifecycle"
+
+status_display:
+  format:
+    header: "🪴 Aichaku: [Methodology] Progress"
+    phases: "Show all phases with arrow under current"
+    timeline: "Week X/Y or Day X/Y format"
+    percentage: "Calculate and show completion percentage"
+    emoji: "Include current growth phase emoji"
+
+response_formatting:
+  during_work: "Start responses with: '🪴 Aichaku: Currently in [mode] working on [task]'"
+  acknowledgment: "Acknowledge context: '🪴 Aichaku: I see you're thinking about [topic]'"
+  project_creation: "Confirm creation: '🪴 Aichaku: Based on our discussion, creating project: [name]'"
+
+summary:
+  core_principle: "Visual consistency and clear progress indication"
+  mandatory: "The 🪴 Aichaku: prefix is MANDATORY for all Aichaku-related messages"

@@ -1,0 +1,164 @@
+# Aichaku Diagram Templates Configuration
+# This file defines the mandatory Mermaid diagrams for Aichaku projects
+
+name: "Aichaku Diagram Templates"
+version: "1.0.0"
+description: "Mermaid diagram requirements and templates for Aichaku documentation"
+
+requirements:
+  mandatory: true
+  description: "Include Mermaid diagrams in EVERY project documentation"
+  purposes:
+    - "Visualize project status and lifecycle"
+    - "Show methodology-specific workflows"
+    - "Provide clear progress indication"
+
+templates:
+  status_lifecycle:
+    document: "STATUS.md"
+    description: "Project lifecycle visualization"
+    type: "graph LR"
+    template: |
+      ```mermaid
+      graph LR
+          A[🌱 Started] --> B[🌿 Active]
+          B --> C[🌳 Review]
+          C --> D[🍃 Complete]
+          style B fill:#90EE90
+      ```
+    notes:
+      - "Update 'style' to highlight current phase"
+      - "Use growth phase emojis from visual-identity.yaml"
+  
+  shape_up_pitch:
+    document: "pitch.md"
+    methodology: "shape-up"
+    description: "Shape Up pitch structure"
+    type: "graph TD"
+    template: |
+      ```mermaid
+      graph TD
+          A[Problem] --> B[Appetite: 6 weeks]
+          B --> C[Solution Outline]
+          C --> D[Rabbit Holes]
+          D --> E[No-gos]
+      ```
+    customization: "Update appetite duration as needed"
+  
+  shape_up_hill:
+    document: "hill-chart.md"
+    methodology: "shape-up"
+    description: "Hill chart for progress tracking"
+    type: "graph LR"
+    template: |
+      ```mermaid
+      graph LR
+          subgraph "Figuring things out"
+              A[Task 1] --> B[Task 2]
+          end
+          subgraph "Getting it done"
+              C[Task 3] --> D[Task 4]
+          end
+          B --> C
+      ```
+  
+  scrum_sprint:
+    document: "sprint-planning.md"
+    methodology: "scrum"
+    description: "Sprint timeline visualization"
+    type: "gantt"
+    template: |
+      ```mermaid
+      gantt
+          title Sprint 15 Timeline
+          dateFormat  YYYY-MM-DD
+          section Sprint
+          Planning          :done, 2025-07-07, 1d
+          Development       :active, 2025-07-08, 8d
+          Review & Retro    :2025-07-16, 2d
+      ```
+    notes:
+      - "Update dates to match actual sprint"
+      - "Mark completed phases as ':done'"
+      - "Mark current phase as ':active'"
+  
+  kanban_board:
+    document: "kanban-board.md"
+    methodology: "kanban"
+    description: "Kanban board visualization"
+    type: "graph TD"
+    template: |
+      ```mermaid
+      graph TD
+          subgraph "Backlog"
+              A[Task A]
+              B[Task B]
+          end
+          subgraph "In Progress"
+              C[Task C]
+          end
+          subgraph "Review"
+              D[Task D]
+          end
+          subgraph "Done"
+              E[Task E]
+          end
+      ```
+  
+  lean_experiment:
+    document: "experiment-plan.md"
+    methodology: "lean"
+    description: "Lean experiment flow"
+    type: "graph TD"
+    template: |
+      ```mermaid
+      graph TD
+          A[Hypothesis] --> B[Experiment Design]
+          B --> C[Run Experiment]
+          C --> D{Validate?}
+          D -->|Yes| E[Scale]
+          D -->|No| F[Pivot]
+          F --> A
+      ```
+
+rules:
+  creation:
+    - "Include diagrams in initial document creation"
+    - "Use appropriate diagram type for content"
+    - "Keep diagrams simple and readable"
+  
+  updates:
+    - "Update diagrams to reflect current status"
+    - "Highlight current phase/step"
+    - "Maintain consistency with project progress"
+  
+  formatting:
+    - "Always use proper Mermaid syntax"
+    - "Include meaningful labels"
+    - "Use visual styling to indicate status"
+
+forbidden:
+  - "Creating diagrams without labels"
+  - "Using overly complex diagrams"
+  - "Forgetting to update diagrams with status changes"
+  - "Mixing diagram styles within same document"
+
+best_practices:
+  clarity:
+    - "Use clear, descriptive node labels"
+    - "Limit to essential information"
+    - "Prefer horizontal flow (LR) for simple progressions"
+  
+  styling:
+    - "Use fill colors to indicate current state"
+    - "Apply consistent color scheme"
+    - "Green (#90EE90) for active/current items"
+  
+  maintenance:
+    - "Update immediately when phase changes"
+    - "Keep synchronized with STATUS.md content"
+    - "Document any custom modifications"
+
+summary:
+  core_principle: "Visual clarity through consistent, updated diagrams"
+  key_requirement: "EVERY project must include relevant Mermaid diagrams"

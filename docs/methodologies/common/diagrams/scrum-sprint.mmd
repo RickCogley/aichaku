@@ -1,0 +1,63 @@
+# Scrum Sprint Diagrams
+
+## Sprint Cycle
+```mermaid
+graph TD
+    PB[Product Backlog] --> SP[Sprint Planning]
+    SP --> SB[Sprint Backlog]
+    SB --> Daily[Daily Scrum]
+    Daily --> |Every Day| Daily
+    Daily --> Review[Sprint Review]
+    Review --> Retro[Sprint Retrospective]
+    Retro --> PB
+    
+    style Daily fill:#90EE90
+```
+
+## Sprint Timeline
+```mermaid
+gantt
+    title Sprint 15 (2 Weeks)
+    dateFormat YYYY-MM-DD
+    
+    section Ceremonies
+    Sprint Planning      :done, plan, 2025-07-07, 4h
+    Daily Standups       :active, daily, after plan, 10d
+    Sprint Review        :review, 2025-07-18, 2h
+    Sprint Retrospective :retro, after review, 2h
+    
+    section Development
+    Story 1 (5 pts)      :done, s1, 2025-07-08, 3d
+    Story 2 (3 pts)      :active, s2, after s1, 2d
+    Story 3 (8 pts)      :s3, 2025-07-10, 5d
+    Story 4 (5 pts)      :s4, after s2, 3d
+```
+
+## Burndown Chart Concept
+```mermaid
+graph TD
+    subgraph "Sprint Burndown"
+        A[40 pts] -->|Day 1| B[38 pts]
+        B -->|Day 2| C[35 pts]
+        C -->|Day 3| D[32 pts]
+        D -->|Day 4| E[28 pts]
+        E -->|Day 5| F[24 pts - Current]
+        F -.->|Projected| G[20 pts]
+        G -.->|Day 10| H[0 pts]
+    end
+    
+    style F fill:#90EE90
+```
+
+## Team Velocity
+```mermaid
+graph LR
+    subgraph "Velocity Trend"
+        S1[Sprint 1<br/>32 pts] --> S2[Sprint 2<br/>38 pts]
+        S2 --> S3[Sprint 3<br/>35 pts]
+        S3 --> S4[Sprint 4<br/>40 pts]
+        S4 --> S5[Sprint 5<br/>37 pts - Avg]
+    end
+    
+    style S5 fill:#FFE4B5
+```
