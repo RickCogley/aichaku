@@ -62,8 +62,12 @@ async function readCoreConfigs(corePath: string): Promise<YamlConfig> {
     // Sort by order if specified
     const sortedComponents = Object.entries(components)
       .sort(([, a], [, b]) => {
-        const aOrder = typeof (a as any).order === 'number' ? (a as any).order : 999;
-        const bOrder = typeof (b as any).order === 'number' ? (b as any).order : 999;
+        const aOrder = typeof (a as any).order === "number"
+          ? (a as any).order
+          : 999;
+        const bOrder = typeof (b as any).order === "number"
+          ? (b as any).order
+          : 999;
         return aOrder - bOrder;
       });
 
@@ -239,8 +243,9 @@ export async function assembleYamlConfig(options: {
 
     if (config?.summary) {
       if (methodologyQuickRef.methodologies) {
-        (methodologyQuickRef.methodologies as any)[methodology.replace("-", "_")] =
-          config.summary;
+        (methodologyQuickRef.methodologies as any)[
+          methodology.replace("-", "_")
+        ] = config.summary;
       }
     }
   }

@@ -140,15 +140,23 @@ async function _enhanceMetadataFromYaml(
 
         if (yamlStandard) {
           // Enhance with YAML metadata
-          if (typeof yamlStandard.name === 'string' && !metadata.name) {
+          if (typeof yamlStandard.name === "string" && !metadata.name) {
             metadata.name = yamlStandard.name;
           }
-          if (typeof yamlStandard.description === 'string' && !metadata.description) {
+          if (
+            typeof yamlStandard.description === "string" &&
+            !metadata.description
+          ) {
             metadata.description = yamlStandard.description;
           }
-          if (Array.isArray(yamlStandard.tags) && yamlStandard.tags.length > 0) {
+          if (
+            Array.isArray(yamlStandard.tags) && yamlStandard.tags.length > 0
+          ) {
             metadata.tags = [
-              ...new Set([...metadata.tags, ...(yamlStandard.tags as string[])]),
+              ...new Set([
+                ...metadata.tags,
+                ...(yamlStandard.tags as string[]),
+              ]),
             ];
           }
         }
@@ -276,7 +284,7 @@ function extractMarkdownMetadata(
         string,
         unknown
       >;
-      if (typeof frontmatter.description === 'string') {
+      if (typeof frontmatter.description === "string") {
         metadata.description = frontmatter.description;
       }
       if (Array.isArray(frontmatter.tags)) {

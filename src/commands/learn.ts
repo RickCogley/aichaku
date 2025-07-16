@@ -6,9 +6,7 @@
 import { parse as parseYaml } from "jsr:@std/yaml@1";
 import { exists } from "jsr:@std/fs@1";
 import { join } from "jsr:@std/path@1";
-import {
-  discoverContent,
-} from "../utils/dynamic-content-discovery.ts";
+import { discoverContent } from "../utils/dynamic-content-discovery.ts";
 import { safeReadTextFile } from "../utils/path-security.ts";
 import { Brand } from "../utils/branded-messages.ts";
 import { getAichakuPaths } from "../paths.ts";
