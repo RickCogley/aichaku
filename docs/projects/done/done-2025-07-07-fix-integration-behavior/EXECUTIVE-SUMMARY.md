@@ -13,11 +13,14 @@ This executive summary outlines the transformation strategy for Aichaku.
 
 ## The Vision
 
-Transform Aichaku from a passive methodology library into an active behavioral modification system that makes Claude Code automatically follow best practices without user intervention.
+Transform Aichaku from a passive methodology library into an active behavioral
+modification system that makes Claude Code automatically follow best practices
+without user intervention.
 
 ## Core Problem
 
 Current Aichaku (v0.5.0) provides documentation but doesn't change behavior:
+
 - Claude Code ignores methodology keywords
 - Documents created in wrong locations
 - You must manually enforce conventions
@@ -26,12 +29,14 @@ Current Aichaku (v0.5.0) provides documentation but doesn't change behavior:
 ## The Solution: 5-Layer Behavioral System
 
 ### 1. **Imperative Instructions** (Not Suggestions)
+
 - Replace "This project uses..." with "YOU MUST..."
 - Use commanding language that LLMs follow
 - Repeat critical rules multiple times
 - Visual indicators (✅ ❌) for clarity
 
 ### 2. **Pre-Created Structure** (Guide Rails)
+
 ```text
 .claude/
 ├── AICHAKU-RULES.md         # Behavioral enforcement
@@ -44,18 +49,21 @@ Current Aichaku (v0.5.0) provides documentation but doesn't change behavior:
 ```
 
 ### 3. **Natural Language Triggers** (Just Works™)
+
 - "shape up X" → Creates pitch in correct location
 - "sprint planning" → Creates sprint docs automatically
 - "we're done" → Moves to done-*/ with retrospective
 - No configuration or questions
 
 ### 4. **Self-Correcting Behaviors** (Auto-Magic)
+
 - Wrong location? Automatically moved
 - Missing STATUS.md? Created instantly
 - Forgot to commit? Done for you
 - Project complete? Transitioned automatically
 
 ### 5. **Multiple Reinforcement Points** (Can't Miss)
+
 - CLAUDE.md - Primary directives
 - AICHAKU-RULES.md - Before each action
 - output/README.md - Location reminder
@@ -65,6 +73,7 @@ Current Aichaku (v0.5.0) provides documentation but doesn't change behavior:
 ## Immediate Actions (v0.5.1 - 2 hours)
 
 ### 1. Rewrite CLAUDE.md Integration Section
+
 ```markdown
 ## 🎯 MANDATORY: Aichaku Integration Rules
 
@@ -77,12 +86,14 @@ YOU MUST FOLLOW THESE RULES WITHOUT EXCEPTION:
 5. ✅ Git commit after changes
 
 When user says → You MUST create:
+
 - "shape" → pitch.md
 - "sprint" → sprint-plan.md
 - "done" → retrospective.md + move to done-*/
 ```
 
 ### 2. Update Init Command
+
 ```typescript
 // Add to cli/commands/init.ts
 - Create .claude/AICHAKU-RULES.md
@@ -93,6 +104,7 @@ When user says → You MUST create:
 ```
 
 ### 3. Add Behavioral Files
+
 - AICHAKU-RULES.md - Critical reminders
 - output/README.md - Location guide
 - output/WHERE-FILES-GO.md - Visual examples
@@ -101,18 +113,21 @@ When user says → You MUST create:
 ## Next Phase (v0.6.0 - 1 week)
 
 ### 1. Natural Language Detection
+
 - Intent detection from user input
 - Automatic methodology selection
 - Smart project naming
 - Context-aware responses
 
 ### 2. Auto-Correction System
+
 - File system monitor
 - Automatic path correction
 - Git integration for fixes
 - Status auto-updater
 
 ### 3. Enhanced Git Hooks
+
 - Pre-commit location checker
 - Automatic file movement
 - Commit message enhancement
@@ -121,16 +136,14 @@ When user says → You MUST create:
 ## Success Metrics
 
 ### Immediate (After v0.5.1)
-✅ You report "it just works"
-✅ No manual directory creation
-✅ Documents always in correct location
-✅ Natural language triggers work
+
+✅ You report "it just works" ✅ No manual directory creation ✅ Documents
+always in correct location ✅ Natural language triggers work
 
 ### Long-term (After v0.6.0)
-✅ Zero incorrect file placements
-✅ Automatic status tracking
-✅ Seamless project transitions
-✅ Delightful "magical" experience
+
+✅ Zero incorrect file placements ✅ Automatic status tracking ✅ Seamless
+project transitions ✅ Delightful "magical" experience
 
 ## The Magic Formula
 
@@ -159,6 +172,7 @@ Truly Magical Developer Experience
 ## Expected User Experience
 
 ### Before (Current v0.5.0)
+
 ```text
 User: "Let's shape up a search feature"
 Claude: "I'll help you with that" *creates file in project root*
@@ -167,6 +181,7 @@ Claude: "Let me move that..."
 ```
 
 ### After (Magical v0.5.1)
+
 ```text
 User: "Let's shape up a search feature"
 Claude: *automatically creates .claude/output/active-2025-01-07-search-feature/pitch.md*
@@ -183,4 +198,8 @@ User: "Wow, it just worked!"
 
 ## Conclusion
 
-By applying behavioral psychology principles and learning from successful automation tools, we can transform Aichaku from a passive library into an active assistant that makes methodology adoption truly effortless. The key is multiple layers of reinforcement that guide Claude Code to do the right thing automatically, every time.
+By applying behavioral psychology principles and learning from successful
+automation tools, we can transform Aichaku from a passive library into an active
+assistant that makes methodology adoption truly effortless. The key is multiple
+layers of reinforcement that guide Claude Code to do the right thing
+automatically, every time.

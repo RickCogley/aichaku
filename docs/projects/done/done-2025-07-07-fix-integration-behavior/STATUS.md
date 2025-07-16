@@ -2,13 +2,13 @@
 
 ## Project Status
 
-**Started**: 2025-07-07
-**Type**: Bug Fix / Enhancement
-**Priority**: High
+**Started**: 2025-07-07 **Type**: Bug Fix / Enhancement **Priority**: High
 
 ## Problem Statement
 
-Aichaku 0.5.0 isn't working as expected because Claude Code doesn't automatically follow the methodology patterns. Users report:
+Aichaku 0.5.0 isn't working as expected because Claude Code doesn't
+automatically follow the methodology patterns. Users report:
+
 - Keywords like "shape up" have no effect
 - Documents created in wrong locations (project root, .claude/user)
 - Too much manual effort required
@@ -17,7 +17,7 @@ Aichaku 0.5.0 isn't working as expected because Claude Code doesn't automaticall
 ## Root Cause Analysis
 
 1. **CLAUDE.md integration is informational, not directive**
-   - Says "this project uses Aichaku" 
+   - Says "this project uses Aichaku"
    - Doesn't tell Claude Code what to DO
 
 2. **No pre-created structure to guide behavior**
@@ -35,16 +35,19 @@ Aichaku 0.5.0 isn't working as expected because Claude Code doesn't automaticall
 ## Solution Approach
 
 ### Phase 1: Make CLAUDE.md Directive
+
 - Rewrite integration to use imperative commands
 - Add explicit "YOU MUST" behaviors
 - Include concrete examples
 
 ### Phase 2: Pre-create Structure
+
 - Create .claude/output/ during init
 - Add README explaining conventions
 - Create example structure
 
 ### Phase 3: Add Behavioral Hooks
+
 - Multiple touchpoints for reinforcement
 - Context-aware triggers
 - Clear error recovery paths
@@ -78,6 +81,7 @@ Aichaku 0.5.0 isn't working as expected because Claude Code doesn't automaticall
 ## Updates
 
 ### 2025-07-07T08:30:00Z
+
 - Completed comprehensive solution design
 - Created imperative CLAUDE.md rewrite with "YOU MUST" language
 - Designed 5-layer behavioral modification system
@@ -85,6 +89,7 @@ Aichaku 0.5.0 isn't working as expected because Claude Code doesn't automaticall
 - Ready for implementation phase
 
 ### 2025-07-07T09:15:00Z
+
 - ✅ Updated integrate.ts with directive CLAUDE.md content
 - ✅ Enhanced init.ts to pre-create output directory
 - ✅ Added behavioral reinforcement files (.aichaku-behavior, RULES-REMINDER.md)

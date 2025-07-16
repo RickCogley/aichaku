@@ -2,7 +2,9 @@
 
 ## Overview
 
-While PDF is ideal for formal documents, HTML provides an excellent intermediate format that:
+While PDF is ideal for formal documents, HTML provides an excellent intermediate
+format that:
+
 - Works immediately without dependencies
 - Renders beautifully in browsers
 - Can be converted to PDF via browser print
@@ -15,14 +17,17 @@ While PDF is ideal for formal documents, HTML provides an excellent intermediate
 ```typescript
 // src/output/generator.ts
 export class OutputGenerator {
-  async generate(inputPath: string, format: OutputFormat): Promise<OutputResult> {
+  async generate(
+    inputPath: string,
+    format: OutputFormat,
+  ): Promise<OutputResult> {
     switch (format) {
-      case 'html':
-        return this.generateHTML(inputPath);  // Always works
-      case 'pdf':
-        return await this.generatePDF(inputPath) || 
-               this.generateHTMLWithPDFInstructions(inputPath);
-      case 'auto':
+      case "html":
+        return this.generateHTML(inputPath); // Always works
+      case "pdf":
+        return await this.generatePDF(inputPath) ||
+          this.generateHTMLWithPDFInstructions(inputPath);
+      case "auto":
         return this.generateBestAvailable(inputPath);
     }
   }
@@ -37,7 +42,7 @@ export class HTMLGenerator {
   async generate(mdPath: string): Promise<string> {
     const content = await Deno.readTextFile(mdPath);
     const html = await this.markdownToHTML(content);
-    
+
     return `<!DOCTYPE html>
 <html>
 <head>
@@ -57,7 +62,7 @@ export class HTMLGenerator {
 </body>
 </html>`;
   }
-  
+
   private getProfessionalStyles(): string {
     return `
       body {
@@ -119,6 +124,7 @@ Aichaku-generated markdown files render beautifully in SharePoint:
 4. **Version control**: SharePoint tracks document versions
 
 ### Benefits
+
 - No conversion needed
 - Maintains formatting
 - Searchable content
@@ -177,7 +183,7 @@ export interface OutputSettings {
 ## Implementation Priority
 
 1. **Phase 1**: HTML generation (immediate value)
-2. **Phase 2**: SharePoint documentation  
+2. **Phase 2**: SharePoint documentation
 3. **Phase 3**: PDF with HTML fallback
 4. **Phase 4**: Advanced features (templates, styles)
 

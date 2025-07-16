@@ -1,11 +1,17 @@
 # Implementation Plan: Aichaku v0.5.0
-*"Making Aichaku Truly Superior"*
+
+_"Making Aichaku Truly Superior"_
 
 ## Vision
-Aichaku v0.5.0 will be a transformative release that makes the tool feel magical. Users should feel like they have a thoughtful assistant that understands their intent and keeps their workspace beautifully organized.
+
+Aichaku v0.5.0 will be a transformative release that makes the tool feel
+magical. Users should feel like they have a thoughtful assistant that
+understands their intent and keeps their workspace beautifully organized.
 
 ## Core Principles
-1. **Clarity Over Cleverness** - Every message should be immediately understandable
+
+1. **Clarity Over Cleverness** - Every message should be immediately
+   understandable
 2. **Beauty in Simplicity** - Terminal output should be visually pleasing
 3. **Natural Language First** - Commands are fallbacks; conversation is primary
 4. **Zero Friction** - Global install once, works everywhere
@@ -14,6 +20,7 @@ Aichaku v0.5.0 will be a transformative release that makes the tool feel magical
 ## 🏗️ Architecture Redesign
 
 ### Global Installation (One Time)
+
 ```
 ~/.claude/
 ├── methodologies/          # All methodology files live here
@@ -26,6 +33,7 @@ Aichaku v0.5.0 will be a transformative release that makes the tool feel magical
 ```
 
 ### Project Integration (Per Project)
+
 ```
 project/
 ├── CLAUDE.md             # Contains reference to global Aichaku
@@ -34,6 +42,7 @@ project/
 ```
 
 ### Key Change: No Methodology Duplication
+
 - Methodologies exist ONLY in global location
 - Projects reference global, never copy
 - Updates propagate automatically
@@ -41,6 +50,7 @@ project/
 ## 🎨 Beautiful Output Design
 
 ### Color Palette & Icons
+
 ```
 🎯 Primary Actions    - Bold cyan
 ✅ Success           - Green with subtle animation
@@ -54,6 +64,7 @@ project/
 ### Message Architecture
 
 #### 1. Progress Messages (During Operation)
+
 ```
 🔄 Checking global installation...
 📁 Creating project structure...
@@ -61,6 +72,7 @@ project/
 ```
 
 #### 2. Success Messages (Action Completed)
+
 ```
 ╭─────────────────────────────────────────╮
 │  ✅ Aichaku initialized in project!     │
@@ -72,6 +84,7 @@ project/
 ```
 
 #### 3. Status Messages (No Action Needed)
+
 ```
 ℹ️  Already up to date (v0.5.0)
     No action needed.
@@ -80,9 +93,11 @@ project/
 ## 📋 Command Behaviors
 
 ### `aichaku init --global`
+
 **Purpose**: One-time global setup
 
 **Output**:
+
 ```
 🌍 Installing Aichaku globally...
 
@@ -97,14 +112,17 @@ project/
 ```
 
 ### `aichaku init` (in project)
+
 **Purpose**: Minimal project setup
 
 **Flow**:
+
 1. Check global exists → Error if not
 2. Create .claude/user/ for customizations
 3. Interactive prompt for integration
 
 **Output**:
+
 ```
 🔍 Checking requirements...
 ✓ Global Aichaku found (v0.5.0)
@@ -119,6 +137,7 @@ This helps Claude Code understand your methodologies.
 ```
 
 **If Yes**:
+
 ```
 ✏️  Updating CLAUDE.md...
 
@@ -133,14 +152,17 @@ Your project now has:
 ```
 
 ### `aichaku integrate`
+
 **Purpose**: Add/update CLAUDE.md reference
 
 **Smart Detection**:
+
 - Check if already integrated
 - Find optimal insertion point
 - Preserve existing content
 
 **Output**:
+
 ```
 📄 Analyzing CLAUDE.md...
 ✏️  Adding Aichaku methodology section...
@@ -155,9 +177,11 @@ Your project now has:
 ```
 
 ### `aichaku upgrade`
+
 **Purpose**: Update global methodologies
 
 **Check Mode** (`--check`):
+
 ```
 🔍 Checking for updates...
 
@@ -168,6 +192,7 @@ Your project now has:
 ```
 
 **Upgrade Mode** (when update available):
+
 ```
 🔍 Checking for updates...
 
@@ -182,6 +207,7 @@ Proceed with upgrade? [Y/n]: _
 ```
 
 **After Upgrade**:
+
 ```
 🔄 Upgrading methodologies...
 ✓ Downloaded latest version
@@ -194,9 +220,11 @@ Proceed with upgrade? [Y/n]: _
 ```
 
 ### `aichaku uninstall`
+
 **Purpose**: Remove Aichaku (with safety checks)
 
 **Project Level**:
+
 ```
 🔍 Analyzing project...
 
@@ -211,6 +239,7 @@ Remove Aichaku from this project? [y/N]: _
 ```
 
 **After Confirmation**:
+
 ```
 🗑️  Removing project files...
 ✓ Removed .claude/user/
@@ -228,66 +257,75 @@ Remove Aichaku from this project? [y/N]: _
 ### Enhanced Methodology Files
 
 Each core file starts with:
+
 ```markdown
 ## 🏗️ PROJECT STRUCTURE - ALWAYS START HERE
 
 When you hear any of these:
+
 - "Let's add..." / "I want to..." / "Can we..."
 - "Help me implement..." / "We need to..."
 - "Fix..." / "Improve..." / "Change..."
 
-IMMEDIATELY create:
-📁 .claude/output/active-{YYYY-MM-DD}-{descriptive-name}/
-  └── STATUS.md
+IMMEDIATELY create: 📁 .claude/output/active-{YYYY-MM-DD}-{descriptive-name}/
+└── STATUS.md
 
 This is automatic - users shouldn't need to ask!
 ```
 
 ### STATUS.md Template
+
 ```markdown
 # Status: {Change Description}
 
-**Status**: ACTIVE - {Current Mode}
-**Started**: {Date}
-**Methodology**: {Detected blend}
+**Status**: ACTIVE - {Current Mode} **Started**: {Date} **Methodology**:
+{Detected blend}
 
 ## 🎯 Objective
+
 {What we're trying to achieve}
 
 ## 📋 Progress
+
 - [ ] Planning
-- [ ] Implementation  
+- [ ] Implementation
 - [ ] Testing
 - [ ] Documentation
 
 ## 📝 Notes
+
 {Decisions, context, learnings}
 
 ## 🔗 References
+
 {Related files, docs, discussions}
 ```
 
 ## 🛠️ Implementation Order
 
 ### Phase 1: Core Architecture (2 hours)
+
 1. Redesign init command for global/project split
 2. Remove methodology copying logic
 3. Add interactive prompts
 4. Create .aichaku-project marker file
 
 ### Phase 2: Message Cleanup (1 hour)
+
 1. Fix redundant success messages
 2. Add conditional messaging (check vs action)
 3. Implement beautiful output formatting
 4. Add progress indicators
 
 ### Phase 3: Enhanced Features (1 hour)
+
 1. Smart CLAUDE.md integration
 2. Uninstall improvements with line detection
 3. Update methodology files with structure emphasis
 4. Add interactive prompts where helpful
 
 ### Phase 4: Polish & Testing (1 hour)
+
 1. Test all command combinations
 2. Ensure git cleanliness
 3. Verify beautiful output rendering
@@ -304,6 +342,7 @@ This is automatic - users shouldn't need to ask!
 ## 💫 The Magic Touch
 
 ### Small Details That Matter
+
 - Subtle animations for progress (⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏)
 - Thoughtful emoji usage (meaningful, not excessive)
 - Helpful tips that appear at the right moment
@@ -311,12 +350,15 @@ This is automatic - users shouldn't need to ask!
 - Celebration for successful operations
 
 ### Example Error Handling
+
 Instead of:
+
 ```
 Error: Global installation not found
 ```
 
 We show:
+
 ```
 ❌ Aichaku not installed globally yet!
 
@@ -339,6 +381,7 @@ Learn more: https://github.com/RickCogley/aichaku#installation
 ## 📝 Migration Guide Preview
 
 For users upgrading from v0.4.x:
+
 ```
 🎉 Aichaku v0.5.0 - A Superior Experience!
 
@@ -359,4 +402,7 @@ Your customizations are preserved!
 
 ---
 
-This implementation plan transforms Aichaku from a good tool into a delightful experience. Every interaction should feel thoughtful, every output should be beautiful, and the entire system should work so naturally that users forget they're using a tool at all.
+This implementation plan transforms Aichaku from a good tool into a delightful
+experience. Every interaction should feel thoughtful, every output should be
+beautiful, and the entire system should work so naturally that users forget
+they're using a tool at all.

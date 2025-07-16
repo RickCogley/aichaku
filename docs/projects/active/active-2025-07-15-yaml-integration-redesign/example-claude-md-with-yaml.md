@@ -1,6 +1,7 @@
 # Example: New CLAUDE.md with YAML Integration
 
-This shows what CLAUDE.md will look like after implementing the YAML integration system.
+This shows what CLAUDE.md will look like after implementing the YAML integration
+system.
 
 ---
 
@@ -9,28 +10,29 @@ This shows what CLAUDE.md will look like after implementing the YAML integration
 Project instructions for Claude Code.
 
 <!-- AICHAKU:START -->
+
 ```yaml
 aichaku:
   version: "2.0.0"
   project: "aichaku"
-  
+
   # Methodology triggers and configuration
   methodologies:
     shape_up:
       triggers: ["shape", "appetite", "pitch", "betting", "6 weeks", "cycle"]
       integration_url: "aichaku://methodology/shape-up/guide"
       visual_indicator: "🎯"
-      
+
     scrum:
       triggers: ["sprint", "backlog", "daily", "retrospective", "velocity"]
       integration_url: "aichaku://methodology/scrum/guide"
       visual_indicator: "🏃"
-      
+
     kanban:
       triggers: ["board", "wip", "flow", "pull", "continuous"]
       integration_url: "aichaku://methodology/kanban/guide"
       visual_indicator: "📍"
-      
+
     lean:
       triggers: ["mvp", "pivot", "experiment", "hypothesis", "validate"]
       integration_url: "aichaku://methodology/lean/guide"
@@ -50,14 +52,14 @@ aichaku:
           forbidden:
             - "create_folders"
             - "create_documents"
-            
+
         - name: "ready"
           triggers: ["let's create", "I'm ready", "set up the project"]
           actions:
             - "create_immediately": true
             - "no_permission_asking": true
             - "use_descriptive_names": true
-            
+
     visual_identity:
       prefix: "🪴 Aichaku:"
       growth_phases:
@@ -69,7 +71,7 @@ aichaku:
         [Phase] → [**Current**] → [Next]
                    ▲
         Week X/Y ████░░░░ XX%
-        
+
     file_organization:
       project_root: "docs/projects/"
       structure:
@@ -78,19 +80,19 @@ aichaku:
       required_files:
         - "STATUS.md"
         - "{methodology}-specific.md"
-        
+
   # Development standards references
   standards:
     selected: ["owasp-web", "iso-27001", "tdd", "clean-code"]
     integration_urls:
       owasp: "aichaku://standards/security/owasp"
       iso27001: "aichaku://standards/compliance/iso-27001"
-      
+
   # Documentation standards
   documentation:
     standard: "diataxis"
     integration_url: "aichaku://standards/docs/diataxis"
-    
+
   # MCP configurations
   mcp:
     reviewer:
@@ -98,11 +100,12 @@ aichaku:
       blocklist_enabled: true
     statistics:
       enabled: true
-      
+
   # User customizations
   customizations:
     include: ["~/.claude/aichaku/user-config.yaml"]
 ```
+
 <!-- AICHAKU:END -->
 
 ## Project Specific Instructions
@@ -114,12 +117,14 @@ aichaku:
 ## Size Comparison
 
 ### Before (Current System)
-- **Size**: 50KB+ 
+
+- **Size**: 50KB+
 - **Lines**: 1,500+
 - **Content**: Full markdown guides duplicated inline
 - **Maintenance**: Edit multiple places for updates
 
 ### After (YAML Integration)
+
 - **Size**: ~2KB
 - **Lines**: ~80
 - **Content**: References to external content
@@ -136,7 +141,8 @@ aichaku:
 
 ## How It Works
 
-1. **Triggers**: When Claude sees keywords, it knows which methodology you're discussing
+1. **Triggers**: When Claude sees keywords, it knows which methodology you're
+   discussing
 2. **Integration URLs**: MCP hooks resolve these to actual content
 3. **Directives**: Define Claude's behavior without verbose instructions
 4. **Visual Identity**: Consistent presentation across all interactions

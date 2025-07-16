@@ -56,7 +56,12 @@
       ".claude/",
       "scratch/",
       "version.ts",
-      "docs/"
+      "docs/api/",
+      "docs/projects/**/*.ts",
+      "examples/**/*.ts",
+      "src/commands/*-v2.ts",
+      "src/utils/config-manager.ts",
+      "src/utils/migration-helper.ts"
     ]
   },
   "lint": {
@@ -64,7 +69,12 @@
       ".claude/",
       "scratch/",
       "version.ts",
-      "docs/"
+      "docs/api/",
+      "docs/projects/**/*.ts",
+      "examples/**/*.ts",
+      "src/commands/*-v2.ts",
+      "src/utils/config-manager.ts",
+      "src/utils/migration-helper.ts"
     ]
   },
   "publish": {
@@ -89,6 +99,17 @@
       "deno.lock"
     ]
   },
+  "exclude": [
+    ".claude/",
+    "scratch/",
+    "version.ts",
+    "docs/api/",
+    "docs/projects/**/*.ts",
+    "examples/**/*.ts",
+    "src/commands/*-v2.ts",
+    "src/utils/config-manager.ts",
+    "src/utils/migration-helper.ts"
+  ],
   "compilerOptions": {
     "lib": [
       "deno.window"

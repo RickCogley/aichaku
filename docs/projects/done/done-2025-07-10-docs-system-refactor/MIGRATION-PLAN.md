@@ -2,7 +2,8 @@
 
 ## Overview
 
-This document outlines the plan to migrate from `/references` to `/docs` and relocate auto-generated API documentation to a subfolder.
+This document outlines the plan to migrate from `/references` to `/docs` and
+relocate auto-generated API documentation to a subfolder.
 
 ## Current Structure
 
@@ -39,7 +40,7 @@ This document outlines the plan to migrate from `/references` to `/docs` and rel
 {
   "tasks": {
     // Change from:
-    "doc": "deno doc --html --name=Aichaku ./mod.ts --output=./docs"
+    "doc": "deno doc --html --name=Aichaku ./mod.ts --output=./docs",
     // To:
     "doc": "deno doc --html --name=Aichaku ./mod.ts --output=./docs/api"
   }
@@ -92,6 +93,7 @@ Files that need updating:
 ### 4. Update Cross-References
 
 Search and replace needed:
+
 ```
 /references/tutorials/     → /docs/tutorials/
 /references/how-to/        → /docs/how-to/
@@ -102,6 +104,7 @@ Search and replace needed:
 ### 5. CI/CD Updates
 
 If any CI/CD pipelines reference documentation:
+
 - Update paths in GitHub Actions
 - Update documentation deployment scripts
 
@@ -115,6 +118,7 @@ If any CI/CD pipelines reference documentation:
 ## Rollback Plan
 
 If issues arise:
+
 ```bash
 # 1. Move files back
 mv docs/tutorials docs/how-to docs/reference docs/explanation references/
@@ -130,6 +134,7 @@ git checkout -- README.md CONTRIBUTING.md
 ## Testing Checklist
 
 After migration:
+
 - [ ] All documentation links work
 - [ ] `deno task doc` generates to /docs/api/
 - [ ] Documentation linting works with new paths
@@ -162,4 +167,5 @@ deno task docs:lint docs/
 deno task test
 ```
 
-This migration maintains all functionality while moving to a more conventional structure.
+This migration maintains all functionality while moving to a more conventional
+structure.

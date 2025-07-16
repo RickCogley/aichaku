@@ -2,13 +2,16 @@
 
 ## Problem
 
-We currently maintain both YAML and Markdown files for each methodology and standard. This creates:
+We currently maintain both YAML and Markdown files for each methodology and
+standard. This creates:
+
 - **Drift risk**: Manual updates to one file might not be reflected in the other
 - **Duplication of effort**: Writing the same information twice
 - **Maintenance burden**: Two files to update for every change
 - **Inconsistency**: Different authors might structure content differently
 
 Examples:
+
 - `kanban.yaml` and `kanban.md` could have different descriptions
 - Summary in YAML might not match overview in Markdown
 - New fields added to YAML might be forgotten in Markdown
@@ -41,19 +44,23 @@ content:
 ```
 
 Generated `shape-up.md`:
+
 ```markdown
 # 🎯 Shape Up
 
 Basecamp's methodology...
 
 ## Key Concepts
+
 - Fixed time, variable scope
 - 6-week cycles...
 
 ## Overview
+
 [content from YAML]
 
 ## Quick Start
+
 [content from YAML]
 ```
 
@@ -80,12 +87,14 @@ async function generateMarkdown(yamlPath: string): Promise<void> {
 ## Rabbit Holes
 
 ### Not Doing
+
 - Custom Markdown extensions
 - Interactive documentation
 - Multi-language support
 - Version control of generated files
 
 ### Risks
+
 - Complex YAML structures might be hard to edit
 - Need good YAML validation
 - Template complexity could grow

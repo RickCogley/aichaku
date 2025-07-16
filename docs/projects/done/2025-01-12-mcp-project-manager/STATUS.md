@@ -3,12 +3,13 @@
 **Current Phase**: 🌱 Shaping
 
 ## Progress Indicator
-[**Shaping**] → [Betting] → [Building] → [Cool-down]
-▲
+
+[**Shaping**] → [Betting] → [Building] → [Cool-down] ▲
 
 ## Status Summary
 
 Just created the initial pitch based on discussion about:
+
 - Redundant folder naming (active-* inside active/)
 - Need for precise project lifecycle management
 - Automated documentation generation

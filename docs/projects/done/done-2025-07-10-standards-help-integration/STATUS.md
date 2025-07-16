@@ -2,12 +2,12 @@
 
 🪴 Aichaku: Making Standards Knowledge Accessible
 
-[Planning] → [Designing] → [Building] → [Testing] → [**Complete**]
-                                                     ▲
+[Planning] → [Designing] → [Building] → [Testing] → [**Complete**] ▲
 
 ## Project Overview
 
-Enhancing the `aichaku help` command to include modular standards information, creating a comprehensive knowledge base for developers.
+Enhancing the `aichaku help` command to include modular standards information,
+creating a comprehensive knowledge base for developers.
 
 ## Current Status 🍃
 
@@ -30,7 +30,8 @@ graph LR
 
 ## Key Decisions
 
-1. **Integration Approach**: Extend existing help command with `--standards` option
+1. **Integration Approach**: Extend existing help command with `--standards`
+   option
 2. **Content Format**: Similar to methodology guides with diagrams
 3. **Categories**: Maintain existing categories (security, architecture, etc.)
 4. **Cross-linking**: Connect help and standards commands

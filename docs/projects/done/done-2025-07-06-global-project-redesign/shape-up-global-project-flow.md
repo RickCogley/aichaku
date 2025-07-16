@@ -2,7 +2,9 @@
 
 ## Problem
 
-The current implementation copies all methodology files into each project, defeating the purpose of a global install. This creates:
+The current implementation copies all methodology files into each project,
+defeating the purpose of a global install. This creates:
+
 - File duplication across projects
 - Complex .gitignore requirements
 - Confusion about updates (which files are source of truth?)
@@ -30,22 +32,27 @@ The current implementation copies all methodology files into each project, defea
 ### Command Behaviors
 
 #### 1. Global Install (unchanged)
+
 ```bash
 aichaku init --global
 ```
+
 - Installs all methodologies to `~/.claude/`
 - Creates global user customization directory
 - One-time setup
 
 #### 2. Project Init (redesigned)
+
 ```bash
 aichaku init
 ```
 
 **New behavior**:
+
 1. Check if global Aichaku exists
-   - If not: Error message: "Please install Aichaku globally first: aichaku init --global"
-   
+   - If not: Error message: "Please install Aichaku globally first: aichaku init
+     --global"
+
 2. Create minimal project structure:
    ```
    .claude/
@@ -56,14 +63,15 @@ aichaku init
 3. Interactive prompt:
    ```
    ✓ Created project customization directory
-   
+
    Would you like to add Aichaku to this project's CLAUDE.md? (Y/n): _
    ```
-   
+
 4. If yes: Run integrate command automatically
 5. If no: Show message about running `aichaku integrate` later
 
 **Marker file content** (`.aichaku-project`):
+
 ```json
 {
   "version": "0.5.0",
@@ -76,24 +84,27 @@ aichaku init
 ```
 
 #### 3. Integrate Command (enhanced)
+
 ```bash
 aichaku integrate
 ```
 
 **Updated CLAUDE.md section**:
+
 ```markdown
 ## Methodologies
 
 This project uses the Aichaku adaptive methodology system.
 
-Aichaku is installed globally and provides adaptive methodology support
-that blends approaches based on your natural language:
+Aichaku is installed globally and provides adaptive methodology support that
+blends approaches based on your natural language:
+
 - Say "sprint" → Scrum practices activate
-- Say "shape" → Shape Up principles engage  
+- Say "shape" → Shape Up principles engage
 - Say "kanban" → Flow-based practices emerge
 
-Global methodologies location: ~/.claude/methodologies/
-Project customizations: ./.claude/user/
+Global methodologies location: ~/.claude/methodologies/ Project customizations:
+./.claude/user/
 
 Learn more: https://github.com/RickCogley/aichaku
 ```

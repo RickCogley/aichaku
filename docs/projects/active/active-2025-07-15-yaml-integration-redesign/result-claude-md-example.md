@@ -1,31 +1,41 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with this project.
+This file provides guidance to Claude Code (claude.ai/code) when working with
+this project.
 
 ## Methodologies Quick Reference
 
 ```yaml
 methodologies:
   shape_up:
-    triggers: ["shape", "appetite", "pitch", "betting table", "6 weeks", "cycle", "bet", "cool-down"]
+    triggers: [
+      "shape",
+      "appetite",
+      "pitch",
+      "betting table",
+      "6 weeks",
+      "cycle",
+      "bet",
+      "cool-down",
+    ]
     best_for: "Features with unclear solutions, fixed timeline projects, avoiding scope creep"
-    
+
   scrum:
     triggers: ["sprint", "scrum", "velocity", "standup", "product owner"]
     best_for: "Teams needing predictable delivery, client visibility, regular rhythm"
-    
+
   kanban:
     triggers: ["kanban", "flow", "WIP limit", "continuous", "pull"]
     best_for: "Continuous flow work, support teams, varying priorities, starting simply"
-    
+
   lean:
     triggers: ["MVP", "lean", "experiment", "validate", "pivot"]
     best_for: "Startups, MVPs, experimentation, uncertainty, learning fast"
-    
+
   xp:
     triggers: ["TDD", "test first", "pair programming", "refactor", "XP"]
     best_for: "Quality-critical code, learning teams, complex technical challenges"
-    
+
   scrumban:
     triggers: ["scrumban", "hybrid", "sprint flow", "planning triggers"]
     best_for: "Teams transitioning between methods, combining structure with flow"
@@ -37,7 +47,7 @@ methodologies:
 aichaku:
   version: "2.0.0"
   source: "configuration-as-code"
-  
+
 behavioral_directives:
   name: "Aichaku Behavioral Directives"
   version: "1.0.0"
@@ -48,7 +58,15 @@ behavioral_directives:
       description: "A three-phase approach to thoughtful project creation"
       phases:
         - name: "DISCUSSION MODE"
-          triggers: ["shape", "pitch", "sprint", "scrum", "kanban", "mvp", "lean"]
+          triggers: [
+            "shape",
+            "pitch",
+            "sprint",
+            "scrum",
+            "kanban",
+            "mvp",
+            "lean",
+          ]
           actions:
             required:
               - "Acknowledge the methodology context: '🪴 Aichaku: I see you're thinking about [topic]'"
@@ -69,10 +87,10 @@ visual_identity:
     mandatory: true
     format: "🪴 Aichaku:"
   growth_phases:
-    new: {emoji: "🌱", description: "New project just started"}
-    active: {emoji: "🌿", description: "Actively being worked on"}
-    mature: {emoji: "🌳", description: "In review or maturing"}
-    complete: {emoji: "🍃", description: "Completed and archived"}
+    new: { emoji: "🌱", description: "New project just started" }
+    active: { emoji: "🌿", description: "Actively being worked on" }
+    mature: { emoji: "🌳", description: "In review or maturing" }
+    complete: { emoji: "🍃", description: "Completed and archived" }
   progress_display:
     format:
       phase_indicator: "[Phase] → [**Current**] → [Next]"
@@ -86,10 +104,13 @@ file_organization:
   project_structure:
     root: "docs/projects/"
     states:
-      active: {path: "docs/projects/active/", naming: "active-YYYY-MM-DD-{name}"}
-      done: {path: "docs/projects/done/", naming: "done-YYYY-MM-DD-{name}"}
+      active: {
+        path: "docs/projects/active/",
+        naming: "active-YYYY-MM-DD-{name}",
+      }
+      done: { path: "docs/projects/done/", naming: "done-YYYY-MM-DD-{name}" }
   required_files:
-    STATUS.md: {created: "FIRST file created in any new project"}
+    STATUS.md: { created: "FIRST file created in any new project" }
   naming_conventions:
     projects: "YYYY-MM-DD-{descriptive-kebab-case-name}"
     change_logs: "YYYY-MM-DD-{Project-Name}-CHANGE-LOG.md"

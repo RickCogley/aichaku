@@ -2,12 +2,12 @@
 
 🪴 Aichaku: Building Automated Security & Standards Review
 
-[**Planning**] → [Building] → [Testing] → [Integration] → [Complete]
-    ▲
+[**Planning**] → [Building] → [Testing] → [Integration] → [Complete] ▲
 
 ## Project Overview
 
-Implementing the Model Context Protocol (MCP) server for automated code review based on Aichaku methodologies and standards.
+Implementing the Model Context Protocol (MCP) server for automated code review
+based on Aichaku methodologies and standards.
 
 ## Current Status 🌱
 
@@ -81,21 +81,25 @@ graph TB
 ## Implementation Plan
 
 ### Phase 1: Core Server (Today)
+
 - Basic MCP protocol implementation
 - File reading and analysis
 - Simple pattern-based checks
 
 ### Phase 2: Standards Integration
+
 - Load Aichaku standards
 - Implement OWASP checks
 - Add methodology compliance
 
 ### Phase 3: Educational Feedback
+
 - Multi-shot examples
 - Step-by-step guidance
 - Context explanations
 
 ### Phase 4: Distribution
+
 - Compile binaries
 - GitHub releases
 - Integration with Aichaku CLI

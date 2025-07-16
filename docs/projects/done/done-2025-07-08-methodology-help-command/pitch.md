@@ -2,20 +2,25 @@
 
 ## Problem
 
-Users want to understand what each methodology offers before choosing or using them. Currently, they need to:
+Users want to understand what each methodology offers before choosing or using
+them. Currently, they need to:
+
 - Search online for methodology information
 - Read through multiple files in `.claude/methodologies/`
 - Ask Claude Code directly (but lose context)
 
-There's no quick, built-in way to learn about a methodology's strengths, weaknesses, and use cases.
+There's no quick, built-in way to learn about a methodology's strengths,
+weaknesses, and use cases.
 
 ## Appetite
 
-Small batch - 2-3 days of work. This is a nice-to-have feature that enhances the user experience but isn't critical for core functionality.
+Small batch - 2-3 days of work. This is a nice-to-have feature that enhances the
+user experience but isn't critical for core functionality.
 
 ## Solution
 
-Add a `help` command that provides concise, practical information about each methodology:
+Add a `help` command that provides concise, practical information about each
+methodology:
 
 ```bash
 # Show help for specific methodology
@@ -127,6 +132,7 @@ For deeper insights, ask Claude Code:
 ## Rabbit Holes
 
 ### Not Doing
+
 - Interactive tutorials
 - Video content or external links
 - Methodology certification tracking
@@ -134,6 +140,7 @@ For deeper insights, ask Claude Code:
 - Methodology configuration/customization
 
 ### Keeping It Simple
+
 - Plain text output only
 - Self-contained content (no network requests)
 - Focus on practical usage over theory
@@ -151,7 +158,7 @@ For deeper insights, ask Claude Code:
 1. **Comparison Table**
    ```
    $ aichaku help --compare
-   
+
    ┌─────────────┬───────────┬──────────┬──────────┐
    │ Methodology │ Iteration │ Planning │ Best For │
    ├─────────────┼───────────┼──────────┼──────────┤
@@ -182,6 +189,7 @@ For deeper insights, ask Claude Code:
 ## Future Expansion
 
 This sets up for potential future features:
+
 - Methodology recommendations based on project type
 - Integration with `aichaku init` to suggest methodologies
 - Team onboarding workflows

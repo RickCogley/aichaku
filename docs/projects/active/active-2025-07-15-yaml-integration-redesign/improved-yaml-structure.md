@@ -2,9 +2,12 @@
 
 ## Current Problems
 
-1. **Too Sparse**: The current YAML example lacks context and descriptive information
-2. **Missing Directives**: The `METHODOLOGY_SECTION` rules aren't represented in YAML
-3. **No Clear Purpose**: Unclear what the YAML is for or how Claude should use it
+1. **Too Sparse**: The current YAML example lacks context and descriptive
+   information
+2. **Missing Directives**: The `METHODOLOGY_SECTION` rules aren't represented in
+   YAML
+3. **No Clear Purpose**: Unclear what the YAML is for or how Claude should use
+   it
 4. **No References**: No way to access full documentation when needed
 
 ## Proposed Enhanced YAML Structure
@@ -17,21 +20,21 @@ aichaku:
   version: "3.0.0"
   description: "Adaptive methodology support system for software development"
   generated: "2025-01-15T20:30:00Z"
-  
+
   # Core behavioral directives Claude must follow
   directives:
     visual_identity:
       prefix: "🪴 Aichaku:"
       phases:
         new: "🌱"
-        active: "🌿" 
+        active: "🌿"
         mature: "🌳"
         complete: "🍃"
       rules:
         - "Always prefix Aichaku messages with 🪴 Aichaku:"
         - "Show growth phase in status updates"
         - "Never use garden metaphors in text"
-    
+
     discussion_first:
       description: "Discuss and understand before creating any documents"
       phases:
@@ -45,9 +48,9 @@ aichaku:
             - "Creating project folders"
             - "Creating documents"
             - "Asking 'Would you like me to create...'"
-        
+
         - name: "ready"
-          triggers: 
+          triggers:
             - "Let's create a project for this"
             - "I'm ready to start"
             - "Set up the project"
@@ -59,7 +62,7 @@ aichaku:
           forbidden:
             - "Asking for confirmation"
             - "Saying 'Would you like me to...'"
-    
+
     project_structure:
       base_path: "docs/projects/active/YYYY-MM-DD-{descriptive-name}/"
       required_files:
@@ -69,7 +72,7 @@ aichaku:
         - "Project root directory"
         - ".claude/user/ (reserved for customizations)"
       date_format: "Use TODAY's actual date from environment"
-    
+
     progress_tracking:
       display_format: "[Phase] → [**Current**] → [Next] ▲"
       example: |
@@ -77,7 +80,7 @@ aichaku:
         [Shaping] → [**Betting**] → [Building] → [Cool-down]
                       ▲
         Week 2/6 ████████░░░░░░░░ 33% 🌿
-    
+
     mermaid_diagrams:
       required: true
       status_diagram: |
@@ -86,20 +89,29 @@ aichaku:
           B --> C[🌳 Review]
           C --> D[🍃 Complete]
           style B fill:#90EE90
-    
+
     git_workflow:
       on_complete:
         - "Create YYYY-MM-DD-{Project-Name}-CHANGE-LOG.md"
         - "Rename folder: active-* → done-*"
         - "Use conventional commits: feat:/fix:/docs:/refactor:"
         - "Ask: 'Work appears complete. Shall I commit and push?'"
-  
+
   # Available methodologies with full context
   methodologies:
     shape_up:
       name: "Shape Up"
       description: "Basecamp's product development methodology with fixed time, variable scope"
-      triggers: ["shape", "appetite", "pitch", "betting table", "6 weeks", "cycle", "bet", "cool-down"]
+      triggers: [
+        "shape",
+        "appetite",
+        "pitch",
+        "betting table",
+        "6 weeks",
+        "cycle",
+        "bet",
+        "cool-down",
+      ]
       best_for: "Features with unclear solutions, fixed timeline projects, avoiding scope creep"
       key_concepts:
         appetite: "Time willing to spend (not estimate)"
@@ -114,16 +126,29 @@ aichaku:
         - "pitch.md"
         - "hill-chart.md"
       reference: "~/.claude/aichaku/methodologies/shape-up/"
-    
+
     scrum:
       name: "Scrum"
       description: "Iterative development with fixed-length sprints and defined roles"
-      triggers: ["sprint", "scrum", "velocity", "standup", "product owner", "backlog", "retrospective"]
+      triggers: [
+        "sprint",
+        "scrum",
+        "velocity",
+        "standup",
+        "product owner",
+        "backlog",
+        "retrospective",
+      ]
       best_for: "Teams needing predictable delivery, client visibility, regular rhythm"
       key_concepts:
         sprint: "Fixed time iteration (1-4 weeks)"
         roles: ["Product Owner", "Scrum Master", "Development Team"]
-        ceremonies: ["Sprint Planning", "Daily Standup", "Sprint Review", "Retrospective"]
+        ceremonies: [
+          "Sprint Planning",
+          "Daily Standup",
+          "Sprint Review",
+          "Retrospective",
+        ]
       icons:
         sprint: "🏃"
         backlog: "📋"
@@ -131,11 +156,19 @@ aichaku:
         - "sprint-planning.md"
         - "retrospective.md"
       reference: "~/.claude/aichaku/methodologies/scrum/"
-    
+
     kanban:
       name: "Kanban"
       description: "Continuous flow system with visual boards and WIP limits"
-      triggers: ["kanban", "flow", "WIP limit", "continuous", "pull", "board", "column"]
+      triggers: [
+        "kanban",
+        "flow",
+        "WIP limit",
+        "continuous",
+        "pull",
+        "board",
+        "column",
+      ]
       best_for: "Continuous flow work, support teams, varying priorities, starting simply"
       key_concepts:
         wip_limits: "Limit work in progress"
@@ -147,7 +180,7 @@ aichaku:
       documents:
         - "kanban-board.md"
       reference: "~/.claude/aichaku/methodologies/kanban/"
-    
+
     lean:
       name: "Lean Startup"
       description: "Build-Measure-Learn cycles for validated learning"
@@ -164,11 +197,18 @@ aichaku:
         - "experiment-plan.md"
         - "mvp-definition.md"
       reference: "~/.claude/aichaku/methodologies/lean/"
-    
+
     xp:
       name: "Extreme Programming"
       description: "Engineering practices for high-quality software"
-      triggers: ["TDD", "test first", "pair programming", "refactor", "XP", "continuous integration"]
+      triggers: [
+        "TDD",
+        "test first",
+        "pair programming",
+        "refactor",
+        "XP",
+        "continuous integration",
+      ]
       best_for: "Quality-critical code, learning teams, complex technical challenges"
       key_practices:
         - "Test-Driven Development"
@@ -179,7 +219,7 @@ aichaku:
       documents:
         - "xp-practices.md"
       reference: "~/.claude/aichaku/methodologies/xp/"
-    
+
     scrumban:
       name: "Scrumban"
       description: "Hybrid combining Scrum structure with Kanban flow"
@@ -191,13 +231,20 @@ aichaku:
       documents:
         - "scrumban-board.md"
       reference: "~/.claude/aichaku/methodologies/scrumban/"
-  
+
   # Only selected standards are included (example with owasp and tdd)
   standards:
     owasp_web:
       name: "OWASP Top 10 Web Security"
       category: "security"
-      triggers: ["OWASP", "security check", "vulnerability", "top 10", "injection", "XSS"]
+      triggers: [
+        "OWASP",
+        "security check",
+        "vulnerability",
+        "top 10",
+        "injection",
+        "XSS",
+      ]
       focus: "Essential web application security verification"
       key_rules:
         - "A01: Broken Access Control"
@@ -206,7 +253,7 @@ aichaku:
         - "...and 7 more"
       applies_to: ["Web APIs", "Web Applications", "Services"]
       reference: "~/.claude/aichaku/standards/security/owasp-web.md"
-    
+
     tdd:
       name: "Test-Driven Development"
       category: "development"
@@ -224,9 +271,11 @@ aichaku:
 ## Key Improvements
 
 1. **Rich Context**: Each item has name, description, and purpose
-2. **Directives Included**: All behavioral rules from METHODOLOGY_SECTION in structured format
+2. **Directives Included**: All behavioral rules from METHODOLOGY_SECTION in
+   structured format
 3. **Clear Organization**: Separates directives, methodologies, and standards
-4. **Actionable Information**: Specific triggers, actions, and forbidden behaviors
+4. **Actionable Information**: Specific triggers, actions, and forbidden
+   behaviors
 5. **References**: Points to full documentation without bloating the file
 6. **Examples**: Shows exact format for progress displays and diagrams
 7. **Metadata**: Version, generation time, and description for context
@@ -240,6 +289,7 @@ aichaku:
 ## Usage by Claude
 
 When Claude reads this YAML:
+
 1. Immediately understands the behavioral rules (directives)
 2. Can detect methodology triggers in conversation
 3. Knows exactly what documents to create
@@ -247,4 +297,6 @@ When Claude reads this YAML:
 5. Can show proper progress indicators
 6. Follows the discussion-first approach
 
-The `reference` fields use the path format that Claude can understand, allowing it to request full content when needed without embedding everything in CLAUDE.md.
+The `reference` fields use the path format that Claude can understand, allowing
+it to request full content when needed without embedding everything in
+CLAUDE.md.

@@ -2,41 +2,57 @@
 
 ## Problem
 
-When users run `aichaku upgrade --global`, MCP servers are updated silently in the background without any user feedback. Additionally, the cleanup and upgrade commands fail to detect and handle many legacy file structures. This creates confusion and leaves projects in inconsistent states:
+When users run `aichaku upgrade --global`, MCP servers are updated silently in
+the background without any user feedback. Additionally, the cleanup and upgrade
+commands fail to detect and handle many legacy file structures. This creates
+confusion and leaves projects in inconsistent states:
 
 ### Upgrade Command Issues:
+
 - Users don't know if MCP servers were actually updated
 - The upgrade feels incomplete due to lack of transparency
 - **Critical missing step**: HTTP server restart is not documented
-- **Missing version feedback**: HTTP server doesn't show version when starting/stopping
-- **Misleading output**: Says "Updating methodology files" without clarifying they're global
-- **No session migration**: Doesn't detect or migrate `.claude/sessions/` to `docs/checkpoints/`
+- **Missing version feedback**: HTTP server doesn't show version when
+  starting/stopping
+- **Misleading output**: Says "Updating methodology files" without clarifying
+  they're global
+- **No session migration**: Doesn't detect or migrate `.claude/sessions/` to
+  `docs/checkpoints/`
 
 ### Cleanup Command Issues:
-- **Doesn't detect** `.claude/sessions/` as legacy (should migrate to `docs/checkpoints/`)
-- **Doesn't detect** `.claude/output/` as legacy (should migrate to `docs/projects/`)
+
+- **Doesn't detect** `.claude/sessions/` as legacy (should migrate to
+  `docs/checkpoints/`)
+- **Doesn't detect** `.claude/output/` as legacy (should migrate to
+  `docs/projects/`)
 - **Doesn't detect** duplicate files like `.aichaku-behavior` in wrong locations
 - **Doesn't handle** all legacy metadata file locations
 
 ### Real-World Evidence:
+
 Testing across 4 projects revealed:
+
 - 3 of 4 projects had sessions in wrong location
 - 1 project had output files in wrong location
 - Multiple projects had duplicate files
 - All projects showed misleading upgrade messages
 
-**Real user feedback:** 
-- "The `aichaku upgrade --global` should say the mcp's were updated and give some details."
+**Real user feedback:**
+
+- "The `aichaku upgrade --global` should say the mcp's were updated and give
+  some details."
 - "These steps need to be added to the upgrade process, in the README.md"
 - "The cleanup command should discover anything like this and fix it"
 
 ## Appetite
 
-**6 weeks** - This is a small but important UX improvement that affects every global upgrade.
+**6 weeks** - This is a small but important UX improvement that affects every
+global upgrade.
 
 ## Solution
 
-Improve both upgrade and cleanup commands to handle all legacy structures and provide clear feedback:
+Improve both upgrade and cleanup commands to handle all legacy structures and
+provide clear feedback:
 
 ### Upgrade Command Improvements
 
@@ -53,38 +69,38 @@ Improve both upgrade and cleanup commands to handle all legacy structures and pr
    ```
    🛑 Stopping MCP HTTP/SSE Server (v0.28.0)...
    ✅ MCP HTTP/SSE Server stopped
-   
+
    🚀 Starting MCP HTTP/SSE Server (v0.29.0)...
    ✅ MCP HTTP/SSE Server started successfully!
    ```
 
-2. **Error Handling**: Clear feedback when updates fail
+3. **Error Handling**: Clear feedback when updates fail
    ```
    ⚠️  aichaku-reviewer update failed: permission denied
    ✨ github-operations updated (v0.28.0 → v0.29.0)
    ⚠️  1 MCP server failed to update (see details above)
    ```
 
-3. **Summary Section**: Include MCP servers in final upgrade summary
+4. **Summary Section**: Include MCP servers in final upgrade summary
    ```
    ✅ 🎉 Upgrade to v0.29.0 complete!
    📊 Updated:
    • 31 methodology files
    • 11 standards files  
    • 3 MCP servers
-   
+
    ⚠️  Next step: Restart HTTP server if running
    • Run 'aichaku mcp --stop-server && aichaku mcp --start-server'
    ```
 
-4. **README Documentation Update**: Add HTTP server restart to upgrade process
+5. **README Documentation Update**: Add HTTP server restart to upgrade process
    ```bash
    # Step 5: Restart HTTP server (if running)
    aichaku mcp --stop-server
    aichaku mcp --start-server
    ```
 
-5. **Clarify Global vs Local**: Make it clear what's being updated
+6. **Clarify Global vs Local**: Make it clear what's being updated
    ```
    🌿 Updating global methodology files...
    ✨ Global methodologies ready (31 files verified/updated)
@@ -153,18 +169,26 @@ Improve both upgrade and cleanup commands to handle all legacy structures and pr
 
 ## Rabbit Holes
 
-- **Over-engineering the progress display** - Don't add complex animations or fancy formatting
-- **Making MCP updates blocking** - If one MCP server fails, don't stop the entire upgrade
-- **Version comparison complexity** - Don't try to parse every possible MCP server version format
-- **Cross-platform progress indicators** - Keep output simple and compatible across terminals
+- **Over-engineering the progress display** - Don't add complex animations or
+  fancy formatting
+- **Making MCP updates blocking** - If one MCP server fails, don't stop the
+  entire upgrade
+- **Version comparison complexity** - Don't try to parse every possible MCP
+  server version format
+- **Cross-platform progress indicators** - Keep output simple and compatible
+  across terminals
 
 ## No-Gos
 
 - **Verbose logging by default** - Don't overwhelm users with too much detail
-- **Interactive prompts** - Keep the upgrade process automated and non-interactive
-- **Network dependency checks** - Don't validate that MCP servers are working, just that files updated
-- **Breaking existing projects** - Migration must handle all old formats gracefully
-- **Forcing immediate migration** - Support reading old formats for backward compatibility
+- **Interactive prompts** - Keep the upgrade process automated and
+  non-interactive
+- **Network dependency checks** - Don't validate that MCP servers are working,
+  just that files updated
+- **Breaking existing projects** - Migration must handle all old formats
+  gracefully
+- **Forcing immediate migration** - Support reading old formats for backward
+  compatibility
 
 ## Technical Notes
 
@@ -175,43 +199,54 @@ Improve both upgrade and cleanup commands to handle all legacy structures and pr
 
 ### Upgrade Command Metadata Discovery Issue
 
-**Found during testing**: The upgrade command expects specific metadata files in specific locations:
+**Found during testing**: The upgrade command expects specific metadata files in
+specific locations:
 
 **For Project Upgrades** (looks in `{projectRoot}/.claude/aichaku/`):
+
 - `.aichaku.json` - Main project metadata (version, install date, etc.)
 - `.aichaku-project` - Legacy project marker file
 - `aichaku.config.json` - Current project config (not used by upgrade command)
 
 **Common Issue**: Projects may have metadata in wrong locations:
+
 - `.aichaku-project` in `.claude/` instead of `.claude/aichaku/`
 - Missing `.aichaku.json` file entirely
 - Only having `aichaku.config.json` (which upgrade command ignores)
 
-**Fix Required**: Upgrade command should handle multiple metadata file formats and locations, or init command should create consistent file structure.
+**Fix Required**: Upgrade command should handle multiple metadata file formats
+and locations, or init command should create consistent file structure.
 
 ### CRITICAL: Architecture Violation in Upgrade Process
 
-**Major Issue Found**: The upgrade command shows it will update local `methodologies/` files:
+**Major Issue Found**: The upgrade command shows it will update local
+`methodologies/` files:
+
 ```
 [DRY RUN] Would update:
   - methodologies/ (latest methodology files)
 ```
 
 **This violates the new architecture** where:
-- ✅ Methodologies should ONLY exist globally (`~/.claude/aichaku/methodologies/`)
+
+- ✅ Methodologies should ONLY exist globally
+  (`~/.claude/aichaku/methodologies/`)
 - ❌ Projects should NEVER have local `methodologies/` directories
 - ✅ Projects should only have references to global methodologies
 
 **Root Cause**: Either:
+
 1. Cleanup command failed to remove legacy `.claude/methodologies/`
 2. Upgrade command incorrectly tries to update local methodologies
 3. Project was never properly migrated to new architecture
 
-**Impact**: Users get confused about where methodologies live and whether they're truly global.
+**Impact**: Users get confused about where methodologies live and whether
+they're truly global.
 
 ### CRITICAL: Metadata File Chaos
 
 **Major Issue Found**: Projects have 6+ overlapping metadata files:
+
 ```
 .claude/aichaku/
 ├── .aichaku-project      (legacy marker)
@@ -223,11 +258,13 @@ Improve both upgrade and cleanup commands to handle all legacy structures and pr
 ```
 
 **This is confusing and unmaintainable!** Modern tools use a single config file:
+
 - Python: `pyproject.toml`
 - Node: `package.json`
 - Rust: `Cargo.toml`
 
 **Recommended Solution**: Consolidate to single `aichaku.json`:
+
 ```json
 {
   "version": "2.0.0",
@@ -251,16 +288,20 @@ Improve both upgrade and cleanup commands to handle all legacy structures and pr
 
 We've created a proof-of-concept implementation that shows how to:
 
-1. **Migrate existing projects** - Automatically consolidate all 6+ files into one
-2. **Maintain backward compatibility** - Support reading old format during transition
+1. **Migrate existing projects** - Automatically consolidate all 6+ files into
+   one
+2. **Maintain backward compatibility** - Support reading old format during
+   transition
 3. **Provide clean API** - Simple `ConfigManager` class for all operations
 4. **Enable smooth rollout** - Phased migration plan over several versions
 
 **Key files created**:
+
 - `metadata-consolidation-poc.ts` - Working implementation of consolidation
 - `migration-plan.md` - Detailed rollout strategy
 
 **Benefits achieved**:
+
 - Single source of truth for all configuration
 - 75% faster config operations (1 file read vs 6+)
 - Cleaner git commits (1 file change vs multiple)
@@ -272,12 +313,14 @@ We've created a proof-of-concept implementation that shows how to:
 ### Critical Issues Discovered
 
 **Token/API Pressure:**
+
 - CLAUDE.md growing to 4700+ lines when multiple standards added
 - Claude Code errors: "too many total text bytes: 9988915 > 9000000"
 - Standards being copied entirely instead of referenced
 - Stop hooks consuming tokens with frequent API calls
 
 **Standards Management Problems:**
+
 - `--remove` command broken (no feedback, doesn't actually remove)
 - Multiple overlapping standards files causing confusion
 - Integration creates "messy" CLAUDE.md files
@@ -287,12 +330,14 @@ We've created a proof-of-concept implementation that shows how to:
 Transform standards from narrative prose to structured, executable rules:
 
 **Current Approach (Narrative):**
+
 ```markdown
-Follow Test-Driven Development. Write tests first. 
-Ensure good test coverage. Consider edge cases.
+Follow Test-Driven Development. Write tests first. Ensure good test coverage.
+Consider edge cases.
 ```
 
 **New Approach (Structured):**
+
 ```yaml
 # Machine-readable rules in ~/.claude/aichaku/docs/standards/tdd/tdd.yaml
 tdd:
@@ -326,12 +371,13 @@ Each standard has two versions:
 Replace 4700+ lines of copied standards with compact references:
 
 **Before (4700+ lines):**
+
 ```markdown
 ## Test-Driven Development Standard
 
 [500+ lines of TDD documentation]
 
-## 15-Factor Application Standard  
+## 15-Factor Application Standard
 
 [800+ lines of 15-factor documentation]
 
@@ -339,6 +385,7 @@ Replace 4700+ lines of copied standards with compact references:
 ```
 
 **After (~200 lines):**
+
 ```yaml
 # Active Standards Reference
 # Full documentation: ~/.claude/aichaku/docs/standards/
@@ -356,6 +403,7 @@ standards:
 ### New Standards Commands
 
 #### Show Command (New)
+
 ```bash
 $ aichaku standards --show tdd
 
@@ -377,6 +425,7 @@ $ aichaku standards --show tdd
 ```
 
 #### Fixed Remove Command
+
 ```bash
 $ aichaku standards --remove tdd,dora
 
@@ -403,10 +452,12 @@ Current standards:
 
 1. **Compact References**: CLAUDE.md contains only critical rules in YAML
 2. **MCP Validation**: Your MCP tool checks code against full YAML rules
-3. **Targeted Injection**: MCP injects specific violations/suggestions into context
+3. **Targeted Injection**: MCP injects specific violations/suggestions into
+   context
 4. **Human Learning**: Developers use `--show` to understand standards deeply
 
-This approach provides the benefits of configuration-as-code while working within Claude Code's limitations.
+This approach provides the benefits of configuration-as-code while working
+within Claude Code's limitations.
 
 ## Success Metrics
 
@@ -421,7 +472,8 @@ This approach provides the benefits of configuration-as-code while working withi
 
 ## Immediate README Fix Needed
 
-The current upgrade documentation is missing the HTTP server restart step. This should be added immediately:
+The current upgrade documentation is missing the HTTP server restart step. This
+should be added immediately:
 
 **Current README section (lines 181-196) should include:**
 
@@ -432,4 +484,5 @@ aichaku mcp --stop-server    # Stop old version
 aichaku mcp --start-server   # Start updated version
 ```
 
-This ensures users don't continue running the old HTTP server version after upgrading everything else.
+This ensures users don't continue running the old HTTP server version after
+upgrading everything else.

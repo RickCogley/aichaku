@@ -2,7 +2,9 @@
 
 ## Overview
 
-Transform the MCP server from a passive review tool to an active documentation generation and quality assurance system that automatically engages when appropriate.
+Transform the MCP server from a passive review tool to an active documentation
+generation and quality assurance system that automatically engages when
+appropriate.
 
 ## Architecture Changes
 
@@ -50,47 +52,54 @@ interface GenerateDocumentationTool {
 
 class DocumentationGenerator implements GenerateDocumentationTool {
   name = "generate_documentation" as const;
-  
-  description = `Generate comprehensive project documentation in /docs based on selected standards.
+
+  description =
+    `Generate comprehensive project documentation in /docs based on selected standards.
     Creates: architecture diagrams, API docs, specifications, guides.
     Keywords: generate docs, create documentation, write documentation, comprehensive docs.
     Triggers on: "generate project documentation", "create docs", "document this project"`;
-  
+
   metadata = {
     triggers: [
       "generate.*documentation",
       "create.*docs",
       "write.*documentation",
-      "document.*project"
+      "document.*project",
     ],
     keywords: [
-      "generate", "create", "write", "documentation", 
-      "docs", "comprehensive", "architecture", "API"
+      "generate",
+      "create",
+      "write",
+      "documentation",
+      "docs",
+      "comprehensive",
+      "architecture",
+      "API",
     ],
-    autoChain: ["review_file"]
+    autoChain: ["review_file"],
   };
-  
+
   async execute(params: DocGenParams): Promise<DocGenResult> {
     // 1. Get project standards
     const standards = await this.getProjectStandards(params.projectPath);
-    
+
     // 2. Analyze project structure
     const analysis = await this.analyzeProject(params.projectPath);
-    
+
     // 3. Generate documentation outline
     const outline = await this.createOutline(analysis, standards);
-    
+
     // 4. Generate each section
     const docs = await this.generateSections(outline, analysis);
-    
+
     // 5. Write files
     const files = await this.writeDocumentation(docs, params.outputDir);
-    
+
     return {
       success: true,
       filesCreated: files,
       standards: standards,
-      message: `Generated ${files.length} documentation files`
+      message: `Generated ${files.length} documentation files`,
     };
   }
 }
@@ -108,11 +117,12 @@ interface AnalyzeProjectTool {
 
 class ProjectAnalyzer implements AnalyzeProjectTool {
   name = "analyze_project" as const;
-  
-  description = `Analyze project structure, dependencies, and architecture for documentation.
+
+  description =
+    `Analyze project structure, dependencies, and architecture for documentation.
     Examines: file structure, dependencies, patterns, API endpoints, components.
     Auto-invoked before: generate_documentation, create_architecture_diagram`;
-  
+
   async execute(params: AnalysisParams): Promise<ProjectAnalysis> {
     return {
       structure: await this.analyzeStructure(params.projectPath),
@@ -120,28 +130,28 @@ class ProjectAnalyzer implements AnalyzeProjectTool {
       architecture: await this.detectArchitecture(params.projectPath),
       apiEndpoints: await this.findApiEndpoints(params.projectPath),
       components: await this.identifyComponents(params.projectPath),
-      entryPoints: await this.findEntryPoints(params.projectPath)
+      entryPoints: await this.findEntryPoints(params.projectPath),
     };
   }
-  
+
   private async detectArchitecture(projectPath: string): Promise<Architecture> {
     // Detect patterns like MVC, Clean Architecture, etc.
     const files = await this.scanProjectFiles(projectPath);
-    
+
     if (this.hasCleanArchitecture(files)) {
       return {
         type: "clean",
-        layers: ["domain", "application", "infrastructure", "presentation"]
+        layers: ["domain", "application", "infrastructure", "presentation"],
       };
     }
-    
+
     if (this.hasMVCStructure(files)) {
       return {
         type: "mvc",
-        layers: ["models", "views", "controllers"]
+        layers: ["models", "views", "controllers"],
       };
     }
-    
+
     return { type: "modular", layers: [] };
   }
 }
@@ -158,19 +168,20 @@ interface CreateDocTemplateTool {
 
 class DocTemplateCreator implements CreateDocTemplateTool {
   name = "create_doc_template" as const;
-  
-  description = `Create documentation templates following selected standards (Diátaxis, etc).
+
+  description =
+    `Create documentation templates following selected standards (Diátaxis, etc).
     Types: tutorial, how-to, reference, explanation.
     Auto-invoked: when creating new documentation files`;
-  
+
   async execute(params: TemplateParams): Promise<TemplateResult> {
     const standard = params.standard || "diataxis-google";
     const template = await this.getTemplate(standard, params.type);
-    
+
     return {
       content: this.populateTemplate(template, params),
       standard: standard,
-      type: params.type
+      type: params.type,
     };
   }
 }
@@ -193,27 +204,27 @@ class MCPToolRegistry implements EnhancedToolRegistry {
     ["generate-docs", "generate_documentation"],
     ["review", "review_file"],
     ["check-standards", "get_standards"],
-    ["analyze", "analyze_project"]
+    ["analyze", "analyze_project"],
   ]);
-  
+
   triggers: TriggerRule[] = [
     {
       pattern: /generate.*comprehensive.*documentation/i,
       tools: ["analyze_project", "generate_documentation"],
-      confidence: 0.9
+      confidence: 0.9,
     },
     {
       pattern: /create.*docs.*\/docs/i,
       tools: ["generate_documentation"],
-      confidence: 0.85
+      confidence: 0.85,
     },
     {
       pattern: /review|check|audit|scan/i,
       tools: ["review_file"],
-      confidence: 0.8
-    }
+      confidence: 0.8,
+    },
   ];
-  
+
   chains: ToolChain[] = [
     {
       name: "comprehensive-doc-generation",
@@ -222,9 +233,9 @@ class MCPToolRegistry implements EnhancedToolRegistry {
         { tool: "get_standards", output: "standards" },
         { tool: "analyze_project", output: "analysis" },
         { tool: "generate_documentation", inputs: ["standards", "analysis"] },
-        { tool: "review_file", forEach: "generated_files" }
-      ]
-    }
+        { tool: "review_file", forEach: "generated_files" },
+      ],
+    },
   ];
 }
 ```
@@ -235,10 +246,10 @@ class MCPToolRegistry implements EnhancedToolRegistry {
 interface ToolDiscoveryEnhancement {
   // Enhanced tool listing response
   listTools(): ToolListResponse;
-  
+
   // Provide hints for automatic usage
   getToolHints(context: Context): ToolHint[];
-  
+
   // Suggest tool chains for complex tasks
   suggestWorkflow(userIntent: string): ToolChain | null;
 }
@@ -246,7 +257,7 @@ interface ToolDiscoveryEnhancement {
 class EnhancedMCPServer implements ToolDiscoveryEnhancement {
   listTools(): ToolListResponse {
     return {
-      tools: Array.from(this.registry.tools.values()).map(tool => ({
+      tools: Array.from(this.registry.tools.values()).map((tool) => ({
         name: tool.name,
         description: tool.description,
         inputSchema: tool.inputSchema,
@@ -257,33 +268,33 @@ class EnhancedMCPServer implements ToolDiscoveryEnhancement {
           keywords: tool.metadata?.keywords || [],
           examples: tool.metadata?.examples || [],
           autoInvoke: tool.metadata?.autoInvoke ?? false,
-          chainWith: tool.metadata?.chainWith || []
-        }
-      }))
+          chainWith: tool.metadata?.chainWith || [],
+        },
+      })),
     };
   }
-  
+
   getToolHints(context: Context): ToolHint[] {
     const hints: ToolHint[] = [];
-    
+
     // Recent file edits suggest review
     if (context.recentEdits.length > 0) {
       hints.push({
         tool: "review_file",
         reason: "Recent edits detected",
-        confidence: 0.8
+        confidence: 0.8,
       });
     }
-    
+
     // Project just opened
     if (context.sessionAge < 60000) { // Less than 1 minute
       hints.push({
         tool: "get_standards",
         reason: "New session started",
-        confidence: 0.7
+        confidence: 0.7,
       });
     }
-    
+
     return hints;
   }
 }
@@ -296,37 +307,38 @@ class AutoInvocationEngine {
   private rules: InvocationRule[] = [
     {
       name: "post-edit-security-review",
-      condition: (ctx) => ctx.lastAction === "edit" && 
-                          ctx.file.match(/auth|security|crypto/i),
+      condition: (ctx) =>
+        ctx.lastAction === "edit" &&
+        ctx.file.match(/auth|security|crypto/i),
       action: (ctx) => ({
         tool: "review_file",
-        params: { file: ctx.file, includeExternal: true }
-      })
+        params: { file: ctx.file, includeExternal: true },
+      }),
     },
     {
       name: "doc-generation-chain",
       condition: (ctx) => ctx.userMessage.match(/generate.*docs/i),
       action: (ctx) => ({
         chain: "comprehensive-doc-generation",
-        params: { projectPath: ctx.projectPath }
-      })
-    }
+        params: { projectPath: ctx.projectPath },
+      }),
+    },
   ];
-  
+
   async processContext(context: Context): Promise<ToolInvocation[]> {
     const invocations: ToolInvocation[] = [];
-    
+
     for (const rule of this.rules) {
       if (rule.condition(context)) {
         const action = rule.action(context);
-        if ('tool' in action) {
+        if ("tool" in action) {
           invocations.push(action);
-        } else if ('chain' in action) {
+        } else if ("chain" in action) {
           invocations.push(...this.expandChain(action.chain, action.params));
         }
       }
     }
-    
+
     return invocations;
   }
 }
@@ -335,24 +347,28 @@ class AutoInvocationEngine {
 ## Implementation Phases
 
 ### Phase 1: Core Documentation Tools (Day 1)
+
 1. Implement `generate_documentation` tool
 2. Implement `analyze_project` tool
 3. Create basic templates
 4. Test with simple projects
 
 ### Phase 2: Enhanced Discovery (Day 2)
+
 1. Update tool descriptions and metadata
 2. Implement alias system
 3. Add trigger patterns
 4. Create tool registry
 
 ### Phase 3: Auto-Invocation (Day 3)
+
 1. Build invocation engine
 2. Add context detection
 3. Implement tool chaining
 4. Test automatic workflows
 
 ### Phase 4: Integration & Polish (Day 4)
+
 1. Update MCP server protocol handlers
 2. Add comprehensive logging
 3. Performance optimization

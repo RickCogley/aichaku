@@ -1,6 +1,7 @@
 # Aichaku Project Documentation
 
-This directory contains all project documentation created using Aichaku methodologies.
+This directory contains all project documentation created using Aichaku
+methodologies.
 
 ## Active Projects
 
@@ -13,6 +14,7 @@ Browse the [done](./done/) directory for completed projects.
 ## Project Structure
 
 Each project follows this structure:
+
 - `STATUS.md` - Current project status and progress
 - Methodology-specific documents (pitch.md, sprint-planning.md, etc.)
 - Supporting documentation as needed
@@ -21,6 +23,7 @@ Each project follows this structure:
 
 - [Back to Documentation](../)
 - [View Checkpoints](../checkpoints/)
+
 ## Active Projects
 
 - [active-2025-07-06-pdf-generation-integration](./active/active-2025-07-06-pdf-generation-integration/)

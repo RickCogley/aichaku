@@ -3,8 +3,8 @@
 ## 🎯 User Scenarios & Commands
 
 ### Scenario 1: Fresh Installation
-**User**: New to Aichaku, clean project
-**Command**: `aichaku init`
+
+**User**: New to Aichaku, clean project **Command**: `aichaku init`
 
 ```bash
 # Enhanced init process
@@ -18,8 +18,9 @@ aichaku init
 ```
 
 ### Scenario 2: Existing Aichaku User (Clean Upgrade)
-**User**: Has Aichaku, wants permanent docs, no historical analysis
-**Command**: `aichaku references init`
+
+**User**: Has Aichaku, wants permanent docs, no historical analysis **Command**:
+`aichaku references init`
 
 ```bash
 # Bootstrap permanent docs for existing users
@@ -34,6 +35,7 @@ aichaku references init
 ```
 
 ### Scenario 3: Existing User with Rich History
+
 **User**: Has lots of `.claude/output/` projects, wants to extract all learnings
 **Command**: `aichaku references bootstrap --include-history`
 
@@ -55,8 +57,9 @@ aichaku references bootstrap --include-history
 ```
 
 ### Scenario 4: Selective Historical Analysis
-**User**: Wants to pick which projects to analyze
-**Command**: `aichaku references bootstrap --interactive`
+
+**User**: Wants to pick which projects to analyze **Command**:
+`aichaku references bootstrap --interactive`
 
 ```bash
 # Interactive selection of projects to analyze
@@ -78,8 +81,9 @@ aichaku references bootstrap --interactive
 ```
 
 ### Scenario 5: Quick Start (Minimal)
-**User**: Just wants basic structure, will fill in manually
-**Command**: `aichaku references init --minimal`
+
+**User**: Just wants basic structure, will fill in manually **Command**:
+`aichaku references init --minimal`
 
 ```bash
 # Minimal structure without analysis
@@ -92,8 +96,9 @@ aichaku references init --minimal
 ```
 
 ### Scenario 6: Fix Missing/Broken Standards
-**User**: Has Aichaku but some standards are missing or duplicated (like TEST-PYRAMID, SOLID, CONVENTIONAL-COMMITS)
-**Command**: `aichaku standards fix`
+
+**User**: Has Aichaku but some standards are missing or duplicated (like
+TEST-PYRAMID, SOLID, CONVENTIONAL-COMMITS) **Command**: `aichaku standards fix`
 
 ```bash
 # Fix missing or broken standards
@@ -109,33 +114,35 @@ aichaku standards fix
 ## 🛠️ Technical Implementation
 
 ### Enhanced Init Command
+
 ```typescript
 // aichaku init enhancement
 class InitCommand {
   async execute(options: InitOptions): Promise<void> {
     await this.setupMethodologies();
-    
+
     // NEW: Permanent docs integration
     if (await this.shouldGeneratePermanentDocs()) {
       const analysis = await this.analyzeCodebase();
       await this.generatePermanentDocs(analysis);
     }
-    
+
     await this.setupComplete();
   }
-  
+
   async shouldGeneratePermanentDocs(): Promise<boolean> {
     const hasCode = await this.detectExistingCode();
     if (!hasCode) return false;
-    
+
     return await this.promptUser(
-      "🪴 Aichaku: Generate permanent reference documents from your codebase? [Y/n]"
+      "🪴 Aichaku: Generate permanent reference documents from your codebase? [Y/n]",
     );
   }
 }
 ```
 
 ### New References Command
+
 ```typescript
 // New dedicated references command
 class ReferencesCommand {
@@ -143,24 +150,24 @@ class ReferencesCommand {
     if (options.includeHistory) {
       await this.analyzeHistoricalProjects();
     }
-    
+
     if (options.interactive) {
       await this.interactiveProjectSelection();
     }
-    
+
     if (options.minimal) {
       await this.createMinimalStructure();
       return;
     }
-    
+
     // Full analysis and generation
     await this.analyzeCodebaseAndGenerate();
   }
-  
+
   async analyzeHistoricalProjects(): Promise<void> {
     const projects = await this.findCompletedProjects();
     console.log(`📂 Found ${projects.length} completed projects`);
-    
+
     for (const project of projects) {
       const methodology = await this.detectMethodology(project);
       const learnings = await this.extractLearnings(project, methodology);
@@ -171,42 +178,45 @@ class ReferencesCommand {
 ```
 
 ### New Standards Command
+
 ```typescript
 // New standards management command
 class StandardsCommand {
   async fix(): Promise<void> {
-    console.log('🪴 Aichaku: Checking standards integrity...');
-    
+    console.log("🪴 Aichaku: Checking standards integrity...");
+
     const issues = await this.checkStandardsIntegrity();
-    
+
     if (issues.missing.length > 0) {
-      console.log(`❌ Found missing standards: ${issues.missing.join(', ')}`);
+      console.log(`❌ Found missing standards: ${issues.missing.join(", ")}`);
       await this.installMissingStandards(issues.missing);
     }
-    
+
     if (issues.duplicates.length > 0) {
-      console.log(`❌ Found duplicate content: ${issues.duplicates.join(', ')}`);
+      console.log(
+        `❌ Found duplicate content: ${issues.duplicates.join(", ")}`,
+      );
       await this.removeDuplicateContent(issues.duplicates);
     }
-    
-    console.log('✅ Standards integrity restored');
+
+    console.log("✅ Standards integrity restored");
   }
-  
+
   async checkStandardsIntegrity(): Promise<StandardsIssues> {
     const claudemd = await this.readClaudeMd();
     const missing = await this.findMissingStandards(claudemd);
     const duplicates = await this.findDuplicateContent(claudemd);
-    
+
     return { missing, duplicates };
   }
-  
+
   async installMissingStandards(standards: string[]): Promise<void> {
     for (const standard of standards) {
       const content = await this.loadStandardContent(standard);
       await this.insertStandardIntoClaudeMd(standard, content);
     }
   }
-  
+
   async removeDuplicateContent(duplicates: string[]): Promise<void> {
     // Remove content outside of AICHAKU:STANDARDS tags that duplicates
     // content inside the tags
@@ -216,6 +226,7 @@ class StandardsCommand {
 ```
 
 ### Command Structure
+
 ```bash
 # New command hierarchy
 aichaku references
@@ -235,6 +246,7 @@ aichaku standards
 ## 🎮 User Experience Flows
 
 ### Flow 1: Fresh Install with Analysis
+
 ```mermaid
 flowchart TD
     A[aichaku init] --> B[Detect existing code]
@@ -249,6 +261,7 @@ flowchart TD
 ```
 
 ### Flow 2: Existing User Bootstrap
+
 ```mermaid
 flowchart TD
     A[aichaku references bootstrap] --> B[Check for /references]
@@ -267,6 +280,7 @@ flowchart TD
 ```
 
 ### Flow 3: Interactive Historical Analysis
+
 ```mermaid
 flowchart TD
     A[aichaku references bootstrap --interactive] --> B[Scan .claude/output/]
@@ -281,22 +295,26 @@ flowchart TD
 ## 📋 Command Options & Flags
 
 ### `aichaku init`
+
 - **Default**: Includes permanent docs generation if code detected
 - **`--no-references`**: Skip permanent docs generation
 - **`--minimal`**: Create basic structure only
 
 ### `aichaku references init`
+
 - **Default**: Analyze current codebase only
 - **`--minimal`**: Create empty structure
 - **`--backup-existing`**: Backup existing /references before generating
 
 ### `aichaku references bootstrap`
+
 - **`--include-history`**: Analyze all .claude/output/ projects
 - **`--interactive`**: Choose which projects to analyze
 - **`--from-date DATE`**: Only analyze projects after date
 - **`--methodology TYPE`**: Only analyze specific methodology projects
 
 ### `aichaku references update`
+
 - **Default**: Update from recently completed projects
 - **`--project PATH`**: Update from specific project
 - **`--force`**: Overwrite existing sections
@@ -304,6 +322,7 @@ flowchart TD
 ## 🔄 Automatic Triggers
 
 ### Project Completion Auto-Update
+
 ```typescript
 // Automatic permanent doc updates on project completion
 class ProjectCompletionHandler {
@@ -311,9 +330,11 @@ class ProjectCompletionHandler {
     if (await this.permanentDocsExist()) {
       const learnings = await this.extractProjectLearnings(projectPath);
       const updates = await this.suggestPermanentDocUpdates(learnings);
-      
+
       if (updates.length > 0) {
-        console.log(`🪴 Aichaku: Found ${updates.length} potential updates to permanent docs`);
+        console.log(
+          `🪴 Aichaku: Found ${updates.length} potential updates to permanent docs`,
+        );
         await this.promptUserForUpdates(updates);
       }
     }
@@ -322,20 +343,21 @@ class ProjectCompletionHandler {
 ```
 
 ### Upgrade Path Integration
+
 ```typescript
 // Integration with aichaku upgrade
 class UpgradeCommand {
   async execute(): Promise<void> {
     await this.performUpgrade();
-    
+
     // NEW: Offer permanent docs on upgrade
-    if (await this.isNewFeature('permanent-references')) {
+    if (await this.isNewFeature("permanent-references")) {
       const shouldBootstrap = await this.promptUser(
-        "🪴 Aichaku: New feature available! Generate permanent reference documents? [Y/n]"
+        "🪴 Aichaku: New feature available! Generate permanent reference documents? [Y/n]",
       );
-      
+
       if (shouldBootstrap) {
-        await this.runCommand('references', ['bootstrap']);
+        await this.runCommand("references", ["bootstrap"]);
       }
     }
   }
@@ -345,14 +367,18 @@ class UpgradeCommand {
 ## 🎯 Migration Strategy
 
 ### For Existing Users
+
 1. **Soft Introduction**: Mention in upgrade notes
 2. **Optional Bootstrap**: Never force, always ask
 3. **Gradual Adoption**: Can start with minimal and build up
 4. **Historical Integration**: Option to extract from past work
 
-### For New Users  
+### For New Users
+
 1. **Default Behavior**: Generate if code detected
 2. **Educational**: Explain what's being created
 3. **Customizable**: Easy to skip or modify
 
-This comprehensive trigger system ensures that both new and existing users can easily adopt permanent reference documentation, with flexibility for different needs and preferences!
+This comprehensive trigger system ensures that both new and existing users can
+easily adopt permanent reference documentation, with flexibility for different
+needs and preferences!

@@ -2,7 +2,8 @@
 
 ## Summary
 
-We've successfully migrated from `.claude/` to `/docs/` structure for better @ autocomplete support and GitHub Pages visibility.
+We've successfully migrated from `.claude/` to `/docs/` structure for better @
+autocomplete support and GitHub Pages visibility.
 
 ## New Structure
 
@@ -46,14 +47,18 @@ Replace the existing checkpoint command (lines 39-41) with:
 
 ## Benefits
 
-1. **Better Discovery**: @ autocomplete now works for all project and session files
-2. **Public Documentation**: Project documentation can be browsed via GitHub Pages
+1. **Better Discovery**: @ autocomplete now works for all project and session
+   files
+2. **Public Documentation**: Project documentation can be browsed via GitHub
+   Pages
 3. **Consistent Structure**: All documentation in one place
-4. **No Special Magic**: `.claude/` had no special behavior, so no functionality lost
+4. **No Special Magic**: `.claude/` had no special behavior, so no functionality
+   lost
 
 ## Notes
 
-- The `.claude/` directory still contains methodologies, user customizations, etc.
+- The `.claude/` directory still contains methodologies, user customizations,
+  etc.
 - Only output and session files were moved to `/docs/`
 - CLAUDE.md has been updated with new paths
 - Migration script preserved for reference

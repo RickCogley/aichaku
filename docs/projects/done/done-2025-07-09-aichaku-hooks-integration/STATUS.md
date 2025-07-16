@@ -1,7 +1,9 @@
 # Project Status: Aichaku Hooks Integration
 
 ## Overview
-Enhancing Aichaku with Claude Code's hooks feature to provide automated methodology enforcement and improved developer experience.
+
+Enhancing Aichaku with Claude Code's hooks feature to provide automated
+methodology enforcement and improved developer experience.
 
 ## Current Status: 🌿 Active Development
 
@@ -14,11 +16,12 @@ graph LR
 ```
 
 ## Progress Timeline
-[Shaping] → [Pitching] → [Betting] → [**Building**] → [Cool-down]
-                                        ▲
-Day 7/14 ████████████░░░░░░░░░░░░░░░░░ 50% 🌿
+
+[Shaping] → [Pitching] → [Betting] → [**Building**] → [Cool-down] ▲ Day 7/14
+████████████░░░░░░░░░░░░░░░░░ 50% 🌿
 
 ## Completed Features
+
 - ✅ Basic hooks command implementation
 - ✅ Hook templates for basic, advanced, and security categories
 - ✅ Installation and removal functionality
@@ -26,6 +29,7 @@ Day 7/14 ████████████░░░░░░░░░░░�
 - ✅ Integration with Claude Code settings.json
 
 ## Key Decisions
+
 - [x] Decide on hook template categories (basic, advanced, security) - DONE
 - [ ] Determine role-based prompting approach
 - [ ] Resolve SECURITY_WORKFLOWS.md placement
@@ -33,8 +37,10 @@ Day 7/14 ████████████░░░░░░░░░░░�
 - [ ] Fix methodology-detector hook (sets unused AICHAKU_MODE variable)
 
 ## Features to Implement
+
 - [ ] Parse and display existing hooks from settings.json
-- [ ] Support both global (~/.claude/settings.json) and local (.claude/settings.json) installation
+- [ ] Support both global (~/.claude/settings.json) and local
+      (.claude/settings.json) installation
 - [ ] Enable individual hook installation (not just categories)
 - [ ] Add reminder about restarting Claude Code after hook changes
 - [ ] Interactive hook selection UI
@@ -44,6 +50,7 @@ Day 7/14 ████████████░░░░░░░░░░░�
 - [ ] Determine best location for hook scripts (global vs installed)
 
 ## Next Steps
+
 1. Implement existing hooks parser
 2. Add global vs local installation option
 3. Create individual hook installation command
@@ -51,7 +58,9 @@ Day 7/14 ████████████░░░░░░░░░░░�
 5. Fix methodology-detector implementation
 
 ## Blockers
+
 None currently
 
 ## Last Updated
+
 2025-01-13

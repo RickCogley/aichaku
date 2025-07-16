@@ -5,6 +5,7 @@
 ## More Standard Examples
 
 ### NIST Cybersecurity Framework
+
 ```
 🛡️ NIST Cybersecurity Framework
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -93,6 +94,7 @@ Level 5: Optimized  █████
 ```
 
 ### Domain-Driven Design (DDD)
+
 ```
 🏗️ Domain-Driven Design (DDD)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -183,6 +185,7 @@ AGGREGATE
 ```
 
 ### SOLID Principles
+
 ```
 🎯 SOLID Principles
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -311,18 +314,21 @@ D ── DEPENDENCY INVERSION ────────────────�
 ## Visual Elements That Work
 
 ### 1. **ASCII Diagrams**
+
 - Architecture overviews
 - Flow diagrams
 - Hierarchies
 - Process cycles
 
 ### 2. **Progress Bars**
+
 ```
 Implementation: ████████░░ 80%
 Testing:        ████░░░░░░ 40%
 ```
 
 ### 3. **Emoji Indicators**
+
 - 🔒 Security
 - 🎯 Goals
 - 💻 Code examples
@@ -331,13 +337,16 @@ Testing:        ████░░░░░░ 40%
 - 💡 Tips
 
 ### 4. **Structured Sections**
+
 - Clear headers with separators
 - Numbered steps
 - Bulleted lists
 - Code examples with context
 
 ### 5. **Comparative Examples**
+
 Always show:
+
 - ❌ What NOT to do
 - ✅ What TO do instead
 - Why one is better
@@ -350,4 +359,5 @@ Always show:
 4. **Scannable**: Easy to find information
 5. **Comprehensive**: Everything in one place
 
-These templates provide a consistent, engaging way to learn about development standards directly from the command line!
+These templates provide a consistent, engaging way to learn about development
+standards directly from the command line!

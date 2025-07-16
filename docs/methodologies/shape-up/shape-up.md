@@ -81,4 +81,5 @@ with betting table **Urgent**: Not suitable - use Kanban instead
 
 ## Advanced Topics
 
-- [**Blending Shape Up with other methodologies**](../integrations/shape-up-blending.md) - Guide for mixing Shape Up with Scrum, Kanban, Lean, and XP
+- [**Blending Shape Up with other methodologies**](../integrations/shape-up-blending.md) -
+  Guide for mixing Shape Up with Scrum, Kanban, Lean, and XP

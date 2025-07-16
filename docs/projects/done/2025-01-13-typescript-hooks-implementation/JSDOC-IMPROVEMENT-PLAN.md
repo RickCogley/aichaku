@@ -3,6 +3,7 @@
 ## Current State Summary
 
 ### Well-Documented ✅
+
 - `/src/types.ts` - All interfaces documented
 - `/src/utils/path-security.ts` - Comprehensive docs with examples
 - `/src/utils/project-paths.ts` - Good module and function docs
@@ -11,6 +12,7 @@
 ### Needs Improvement ❌
 
 #### Priority 1: Core Command Functions
+
 These are the main API surface and need immediate attention:
 
 1. **`/src/commands/hooks.ts`**
@@ -51,35 +53,36 @@ These are the main API surface and need immediate attention:
 
 For Deno's `deno doc` command, we should follow these patterns:
 
-```typescript
+````typescript
 /**
  * Brief description of the function
- * 
+ *
  * @module
  */
 
 /**
  * Detailed function description
- * 
+ *
  * @param {string} param - Parameter description
  * @returns {Promise<Result>} What the function returns
- * 
+ *
  * @example
  * ```ts
  * const result = await myFunction("value");
  * ```
- * 
+ *
  * @public
  */
 export function myFunction(param: string): Promise<Result> {
   // ...
 }
-```
+````
 
 ## Action Items
 
 ### 1. Document hooks.ts
-```typescript
+
+````typescript
 /**
  * Manages Claude Code hooks for the Aichaku CLI
  * 
@@ -107,38 +110,41 @@ export function myFunction(param: string): Promise<Result> {
  * @public
  */
 export async function hooks(options: HooksOptions = {}): Promise<void> {
-```
+````
 
 ### 2. Document standards.ts
-```typescript
+
+````typescript
 /**
  * Browse and copy development standards and guidelines
- * 
+ *
  * Provides access to a curated collection of industry standards including
  * NIST-CSF, TDD, Clean Architecture, and more.
- * 
+ *
  * @param {StandardsOptions} options - Options for browsing standards
  * @returns {Promise<void>}
- * 
+ *
  * @example
  * ```ts
  * // List all available standards
  * await standards({ list: true });
- * 
+ *
  * // Search for security-related standards
  * await standards({ search: "security" });
  * ```
- * 
+ *
  * @public
  */
-```
+````
 
 ### 3. Update mod.ts exports
+
 Add proper JSDoc for all exported functions that are missing it.
 
 ## Validation Process
 
 After adding JSDoc:
+
 1. Run `deno doc src/mod.ts` to generate documentation
 2. Check output in `/docs/api/`
 3. Verify all exported functions appear
@@ -147,6 +153,7 @@ After adding JSDoc:
 ## Expected Outcome
 
 Complete API documentation with:
+
 - All exported functions documented
 - All public interfaces documented
 - Examples for common use cases

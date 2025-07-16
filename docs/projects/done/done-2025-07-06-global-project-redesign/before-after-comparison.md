@@ -3,6 +3,7 @@
 ## 🏗️ Architecture
 
 ### Before (v0.4.x)
+
 ```
 project/
 └── .claude/
@@ -14,6 +15,7 @@ Problem: Every project duplicates all methodology files
 ```
 
 ### After (v0.5.0)
+
 ```
 ~/.claude/                 # Global (one copy)
 └── methodologies/         # All files here
@@ -29,6 +31,7 @@ project/
 ### `aichaku init`
 
 #### Before:
+
 ```
 📥 Fetching methodologies from GitHub...
 ✅ Methodologies installed successfully
@@ -46,6 +49,7 @@ Aichaku adapts to your language - just start working naturally!
 ```
 
 #### After:
+
 ```
 🔍 Checking requirements...
 ✓ Global Aichaku found (v0.5.0)
@@ -73,6 +77,7 @@ Your project now has:
 ### `aichaku integrate`
 
 #### Before:
+
 ```
 📝 Updated existing CLAUDE.md with Aichaku methodology section
 
@@ -80,9 +85,11 @@ Your project now has:
 
 Successfully updated CLAUDE.md with Aichaku reference
 ```
-*Three redundant messages saying the same thing*
+
+_Three redundant messages saying the same thing_
 
 #### After:
+
 ```
 📄 Analyzing CLAUDE.md...
 ✏️  Adding Aichaku methodology section...
@@ -95,11 +102,13 @@ Successfully updated CLAUDE.md with Aichaku reference
 
 ✨ Claude Code now understands your methodology preferences!
 ```
-*Clear, informative, and beautiful*
+
+_Clear, informative, and beautiful_
 
 ### `aichaku upgrade --check`
 
 #### Before:
+
 ```
 ✓ Aichaku is up to date (v0.4.0)
 
@@ -107,9 +116,11 @@ Successfully updated CLAUDE.md with Aichaku reference
 
 Already on latest version (v0.4.0)
 ```
-*Says "upgraded successfully" when nothing was upgraded*
+
+_Says "upgraded successfully" when nothing was upgraded_
 
 #### After:
+
 ```
 🔍 Checking for updates...
 
@@ -118,11 +129,13 @@ Already on latest version (v0.4.0)
     
 ✓ You're up to date!
 ```
-*Clear status check without false success claims*
+
+_Clear status check without false success claims_
 
 ### `aichaku uninstall --dry-run`
 
 #### Before:
+
 ```
 [DRY RUN] Would uninstall Aichaku from: /Users/rcogley/dev/nagare/.claude
 [DRY RUN] Would remove:
@@ -136,9 +149,11 @@ Already on latest version (v0.4.0)
 
 Dry run completed. No files were modified.
 ```
-*Claims success on a dry run*
+
+_Claims success on a dry run_
 
 #### After:
+
 ```
 🔍 Analyzing project...
 
@@ -149,20 +164,24 @@ Dry run completed. No files were modified.
 ℹ️  This is a preview. No changes will be made.
     Run without --dry-run to proceed.
 ```
-*Clear dry run indication*
+
+_Clear dry run indication_
 
 ## 🎯 Git Status
 
 ### Before:
+
 ```bash
 $ git status
 ?? .claude/.aichaku.json
 ?? .claude/methodologies/    # 50+ files!
 ?? .claude/user/
 ```
-*Requires extensive .gitignore configuration*
+
+_Requires extensive .gitignore configuration_
 
 ### After:
+
 ```bash
 $ git status
 # Clean! Methodologies are global
@@ -172,7 +191,9 @@ $ git status
 ## 🧠 Natural Language
 
 ### Before:
+
 Users need to remember to create folders:
+
 ```
 You: "Let's add a new authentication feature"
 Claude: "I'll help you add authentication. What type..."
@@ -180,7 +201,9 @@ Claude: "I'll help you add authentication. What type..."
 ```
 
 ### After:
+
 Automatic structure creation:
+
 ```
 You: "Let's add a new authentication feature"
 Claude: "I'll help you add authentication. I've created the project structure at:
@@ -192,6 +215,7 @@ Let me start by understanding your requirements..."
 ## 🌟 Overall Experience
 
 ### Before:
+
 - ❌ Confusing global vs local
 - ❌ Redundant messages
 - ❌ Cluttered git repos
@@ -199,6 +223,7 @@ Let me start by understanding your requirements..."
 - ❌ Unclear success/status
 
 ### After:
+
 - ✅ Clear architecture
 - ✅ Beautiful, concise output
 - ✅ Clean git repos
@@ -207,4 +232,6 @@ Let me start by understanding your requirements..."
 
 ## Summary
 
-v0.5.0 transforms Aichaku from a tool that works into a tool that delights. Every interaction is thoughtful, every message is clear, and the entire experience feels magical rather than mechanical.
+v0.5.0 transforms Aichaku from a tool that works into a tool that delights.
+Every interaction is thoughtful, every message is clear, and the entire
+experience feels magical rather than mechanical.

@@ -7,7 +7,8 @@ Aichaku already distributes compiled binaries for MCP servers:
 ```typescript
 // From src/commands/mcp.ts
 const binaryName = `aichaku-code-reviewer-${VERSION}-${platformName}${ext}`;
-const downloadUrl = `https://github.com/RickCogley/aichaku/releases/download/v${VERSION}/${binaryName}`;
+const downloadUrl =
+  `https://github.com/RickCogley/aichaku/releases/download/v${VERSION}/${binaryName}`;
 ```
 
 ### How MCP Binaries Work:
@@ -50,20 +51,20 @@ const downloadUrl = `https://github.com/RickCogley/aichaku/releases/download/v${
    async function ensureHookBinary(): Promise<void> {
      const hooksDir = expandTilde("~/.claude/aichaku/hooks");
      await ensureDir(hooksDir);
-     
+
      const platform = Deno.build.os;
      const arch = Deno.build.arch;
-     
+
      // Download binary like MCP does
      const binaryName = `aichaku-hooks-${VERSION}-${platformName}${ext}`;
      const targetPath = join(hooksDir, `aichaku-hooks${ext}`);
-     
-     const downloadUrl = 
+
+     const downloadUrl =
        `https://github.com/RickCogley/aichaku/releases/download/v${VERSION}/${binaryName}`;
-     
+
      // Download and install
      await downloadBinary(downloadUrl, targetPath);
-     
+
      // Make executable
      if (platform !== "windows") {
        await Deno.chmod(targetPath, 0o755);
@@ -86,10 +87,10 @@ const downloadUrl = `https://github.com/RickCogley/aichaku/releases/download/v${
 
 ```typescript
 // Before (current)
-command: `deno run --allow-read --allow-write ~/.claude/aichaku/hooks/aichaku-hooks.ts path-validator`
+command: `deno run --allow-read --allow-write ~/.claude/aichaku/hooks/aichaku-hooks.ts path-validator`;
 
 // After (with binary)
-command: `~/.claude/aichaku/hooks/aichaku-hooks path-validator`
+command: `~/.claude/aichaku/hooks/aichaku-hooks path-validator`;
 ```
 
 ### 2. Install during init:
@@ -116,18 +117,19 @@ export async function init(options: InitOptions = {}) {
       --target=x86_64-apple-darwin \
       --output=aichaku-hooks-${{ github.ref_name }}-macos-x64 \
       src/hooks/aichaku-hooks.ts
-    
+
     deno compile --allow-read --allow-write --allow-env \
       --target=aarch64-apple-darwin \
       --output=aichaku-hooks-${{ github.ref_name }}-macos-arm64 \
       src/hooks/aichaku-hooks.ts
-    
+
     # ... other platforms
 ```
 
 ## User Experience Improvement
 
 ### Current Flow:
+
 ```bash
 # Install Aichaku
 deno install -g -A -n aichaku jsr:@rick/aichaku/cli
@@ -140,6 +142,7 @@ aichaku hooks --install essential --global
 ```
 
 ### Proposed Flow:
+
 ```bash
 # Install Aichaku
 deno install -g -A -n aichaku jsr:@rick/aichaku/cli
@@ -156,6 +159,7 @@ aichaku hooks --install essential --global
 ## Platform Support
 
 Just like MCP servers, we'd support:
+
 - macOS ARM64 (Apple Silicon)
 - macOS x64 (Intel)
 - Linux x64
@@ -164,6 +168,7 @@ Just like MCP servers, we'd support:
 ## Version Management
 
 The hook binary version would be tied to Aichaku version:
+
 - Aichaku v0.29.0 → Hook binary v0.29.0
 - Ensures compatibility
 - Automatic updates with `aichaku upgrade`
@@ -171,10 +176,12 @@ The hook binary version would be tied to Aichaku version:
 ## Conclusion
 
 Distributing hooks as a compiled binary (just like MCP servers) would:
+
 1. Simplify installation (automatic during init)
 2. Improve performance (no Deno overhead)
 3. Ensure version consistency
 4. Work on systems without Deno
 5. Follow established pattern (MCP servers)
 
-This makes hooks truly "install and forget" - they're just there and ready to use!
+This makes hooks truly "install and forget" - they're just there and ready to
+use!

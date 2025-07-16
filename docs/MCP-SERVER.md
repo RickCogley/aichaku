@@ -2,23 +2,33 @@
 
 ## Overview
 
-The Aichaku MCP (Model Context Protocol) server provides security review and methodology compliance checking capabilities for software projects. It enables AI assistants and other tools to analyze code for security vulnerabilities, verify adherence to coding standards, and ensure methodology patterns are followed correctly.
+The Aichaku MCP (Model Context Protocol) server provides security review and
+methodology compliance checking capabilities for software projects. It enables
+AI assistants and other tools to analyze code for security vulnerabilities,
+verify adherence to coding standards, and ensure methodology patterns are
+followed correctly.
 
 ### Key Features
 
-- **Security Review**: Automated security scanning using multiple tools (Semgrep, ESLint security plugin, Bandit)
-- **Standards Compliance**: Check code against various coding standards (OWASP, NIST-CSF, Clean Architecture, etc.)
-- **Methodology Verification**: Validate project structure against methodologies (Shape Up, Scrum, Kanban, etc.)
+- **Security Review**: Automated security scanning using multiple tools
+  (Semgrep, ESLint security plugin, Bandit)
+- **Standards Compliance**: Check code against various coding standards (OWASP,
+  NIST-CSF, Clean Architecture, etc.)
+- **Methodology Verification**: Validate project structure against methodologies
+  (Shape Up, Scrum, Kanban, etc.)
 - **Extensible Architecture**: Easy to add new security scanners and standards
 
 ## Architecture
 
 ### Design Decisions
 
-1. **TypeScript Implementation**: Chosen for type safety and excellent tooling support
-2. **Modular Scanner System**: Each security scanner is a separate module for maintainability
+1. **TypeScript Implementation**: Chosen for type safety and excellent tooling
+   support
+2. **Modular Scanner System**: Each security scanner is a separate module for
+   maintainability
 3. **Plugin Architecture**: Standards and methodologies are loaded dynamically
-4. **Async/Await Pattern**: All operations are asynchronous for better performance
+4. **Async/Await Pattern**: All operations are asynchronous for better
+   performance
 5. **Error Resilience**: Graceful handling of missing tools or failed scans
 
 ### System Architecture
@@ -26,7 +36,8 @@ The Aichaku MCP (Model Context Protocol) server provides security review and met
 The MCP server supports two operational modes:
 
 1. **Process Mode** (Default): Each request spawns a new MCP server process
-2. **HTTP/SSE Server Mode**: A persistent HTTP server handles multiple clients via Server-Sent Events
+2. **HTTP/SSE Server Mode**: A persistent HTTP server handles multiple clients
+   via Server-Sent Events
 
 #### Process Mode Architecture
 
@@ -113,7 +124,7 @@ In process mode, the MCP server is spawned as a new process for each request:
 
 In HTTP/SSE mode, a persistent server handles multiple clients:
 
-- **Pros**: 
+- **Pros**:
   - Efficient resource usage
   - Faster response times (no process startup)
   - Supports multiple concurrent Claude Code instances
@@ -135,6 +146,7 @@ aichaku mcp --stop-server
 ```
 
 The server runs on port 7182 (AICHAKU on phone keypad) and provides:
+
 - `POST /rpc` - JSON-RPC request endpoint
 - `GET /sse` - Server-Sent Events for responses
 - `GET /health` - Health check endpoint
@@ -143,21 +155,25 @@ The server runs on port 7182 (AICHAKU on phone keypad) and provides:
 ### Core Components
 
 #### 1. MCP Server (`src/mcp-server.ts`)
+
 - Initializes the MCP server with stdio transport
 - Registers all available tools
 - Handles lifecycle management
 
 #### 2. Security Service (`src/services/security-service.ts`)
+
 - Orchestrates security scans
 - Aggregates results from multiple scanners
 - Formats findings for consistent output
 
 #### 3. Standards Service (`src/services/standards-service.ts`)
+
 - Loads and manages coding standards
 - Provides standard selection and retrieval
 - Handles custom standards from user directory
 
 #### 4. Methodology Service (`src/services/methodology-service.ts`)
+
 - Checks project structure against methodologies
 - Validates required files and patterns
 - Provides compliance reporting
@@ -171,18 +187,21 @@ The server runs on port 7182 (AICHAKU on phone keypad) and provides:
 Reviews a file for security vulnerabilities and code quality issues.
 
 **Parameters:**
+
 - `file` (string, required): Path to the file to review
 - `content` (string, optional): File content (if not provided, reads from disk)
-- `includeExternal` (boolean, optional): Include external security scanners (default: true)
+- `includeExternal` (boolean, optional): Include external security scanners
+  (default: true)
 
 **Returns:**
+
 ```typescript
 {
   success: boolean;
   summary: string;
   findings: Array<{
-    type: 'security' | 'quality' | 'style';
-    severity: 'error' | 'warning' | 'info';
+    type: "security" | "quality" | "style";
+    severity: "error" | "warning" | "info";
     message: string;
     line?: number;
     column?: number;
@@ -194,23 +213,24 @@ Reviews a file for security vulnerabilities and code quality issues.
     byType: Record<string, number>;
     bySeverity: Record<string, number>;
     byScanner: Record<string, number>;
-  };
+  }
 }
 ```
 
 **Example Usage:**
+
 ```typescript
 // Review a TypeScript file
-const result = await mcp.callTool('review_file', {
-  file: '/path/to/user-service.ts',
-  includeExternal: true
+const result = await mcp.callTool("review_file", {
+  file: "/path/to/user-service.ts",
+  includeExternal: true,
 });
 
 // Review with provided content
-const result = await mcp.callTool('review_file', {
-  file: 'temp.js',
+const result = await mcp.callTool("review_file", {
+  file: "temp.js",
   content: 'const password = "hardcoded123";',
-  includeExternal: false
+  includeExternal: false,
 });
 ```
 
@@ -219,10 +239,13 @@ const result = await mcp.callTool('review_file', {
 Checks if a project follows selected methodology patterns.
 
 **Parameters:**
+
 - `projectPath` (string, required): Path to the project root
-- `methodology` (string, optional): Specific methodology to check (e.g., 'shape-up', 'scrum')
+- `methodology` (string, optional): Specific methodology to check (e.g.,
+  'shape-up', 'scrum')
 
 **Returns:**
+
 ```typescript
 {
   success: boolean;
@@ -239,16 +262,17 @@ Checks if a project follows selected methodology patterns.
 ```
 
 **Example Usage:**
+
 ```typescript
 // Check Shape Up compliance
-const result = await mcp.callTool('review_methodology', {
-  projectPath: '/Users/dev/my-project',
-  methodology: 'shape-up'
+const result = await mcp.callTool("review_methodology", {
+  projectPath: "/Users/dev/my-project",
+  methodology: "shape-up",
 });
 
 // Check against configured methodology
-const result = await mcp.callTool('review_methodology', {
-  projectPath: '/Users/dev/my-project'
+const result = await mcp.callTool("review_methodology", {
+  projectPath: "/Users/dev/my-project",
 });
 ```
 
@@ -258,13 +282,18 @@ Gets currently selected standards for the project.
 
 #### 4. `send_feedback` - Feedback Display Tool
 
-Sends a feedback message that appears visibly in the Claude Code console. This tool is designed for use by hooks and automation scripts to provide real-time feedback to users.
+Sends a feedback message that appears visibly in the Claude Code console. This
+tool is designed for use by hooks and automation scripts to provide real-time
+feedback to users.
 
 **Parameters:**
+
 - `message` (string, required): The feedback message to display
-- `level` (string, optional): The feedback level/type ("info", "success", "warning", "error", default: "info")
+- `level` (string, optional): The feedback level/type ("info", "success",
+  "warning", "error", default: "info")
 
 **Returns:**
+
 ```typescript
 {
   content: [{
@@ -275,33 +304,35 @@ Sends a feedback message that appears visibly in the Claude Code console. This t
 ```
 
 **Example Usage:**
+
 ```typescript
 // Send informational feedback
-const result = await mcp.callTool('send_feedback', {
+const result = await mcp.callTool("send_feedback", {
   message: "Code review started for login.ts",
-  level: "info"
+  level: "info",
 });
 
 // Send success feedback
-const result = await mcp.callTool('send_feedback', {
+const result = await mcp.callTool("send_feedback", {
   message: "All security checks passed",
-  level: "success"
+  level: "success",
 });
 
 // Send warning feedback
-const result = await mcp.callTool('send_feedback', {
+const result = await mcp.callTool("send_feedback", {
   message: "Potential security issue detected",
-  level: "warning"
+  level: "warning",
 });
 
 // Send error feedback
-const result = await mcp.callTool('send_feedback', {
+const result = await mcp.callTool("send_feedback", {
   message: "Critical vulnerability found - immediate action required",
-  level: "error"
+  level: "error",
 });
 ```
 
 **Hook Integration Example:**
+
 ```bash
 #!/bin/bash
 # Example hook that uses send_feedback tool
@@ -315,9 +346,11 @@ deno run -A examples/send-feedback-example.ts message \
 #### 5. `get_standards` - Standards Retrieval Tool (Continued)
 
 **Parameters:**
+
 - `projectPath` (string, required): Path to the project root
 
 **Returns:**
+
 ```typescript
 {
   success: boolean;
@@ -337,15 +370,17 @@ deno run -A examples/send-feedback-example.ts message \
 ```
 
 **Example Usage:**
+
 ```typescript
-const result = await mcp.callTool('get_standards', {
-  projectPath: '/Users/dev/my-project'
+const result = await mcp.callTool("get_standards", {
+  projectPath: "/Users/dev/my-project",
 });
 ```
 
 ### Scanner Modules
 
 #### Semgrep Scanner
+
 - **Purpose**: Static analysis for security patterns
 - **Languages**: Multi-language support
 - **Configuration**: `.semgrep.yml` or default rules
@@ -355,6 +390,7 @@ const result = await mcp.callTool('get_standards', {
   - Auto-fix suggestions
 
 #### ESLint Security Plugin
+
 - **Purpose**: JavaScript/TypeScript security linting
 - **Configuration**: `.eslintrc` with security rules
 - **Key Rules**:
@@ -364,6 +400,7 @@ const result = await mcp.callTool('get_standards', {
   - `detect-buffer-noassert`: Buffer security
 
 #### Bandit Scanner
+
 - **Purpose**: Python security linting
 - **Configuration**: `.bandit` or command line
 - **Key Checks**:
@@ -376,7 +413,8 @@ const result = await mcp.callTool('get_standards', {
 
 ### Server Mode Selection
 
-The Aichaku CLI automatically detects and uses the HTTP/SSE server if it's running:
+The Aichaku CLI automatically detects and uses the HTTP/SSE server if it's
+running:
 
 ```bash
 # Start the HTTP/SSE server (one time)
@@ -397,17 +435,17 @@ aichaku review file2.ts
 
 ```typescript
 // Example 1: Review a single file
-const reviewResult = await mcp.callTool('review_file', {
-  file: './src/auth/login.ts'
+const reviewResult = await mcp.callTool("review_file", {
+  file: "./src/auth/login.ts",
 });
 
 if (!reviewResult.success) {
-  console.error('Review failed:', reviewResult.summary);
+  console.error("Review failed:", reviewResult.summary);
   return;
 }
 
 console.log(`Found ${reviewResult.stats.totalIssues} issues`);
-reviewResult.findings.forEach(finding => {
+reviewResult.findings.forEach((finding) => {
   console.log(`[${finding.severity}] ${finding.message} (${finding.scanner})`);
 });
 ```
@@ -416,14 +454,14 @@ reviewResult.findings.forEach(finding => {
 
 ```typescript
 // Example 2: Scan entire project
-const files = await glob('**/*.{js,ts,py}', { cwd: projectPath });
+const files = await glob("**/*.{js,ts,py}", { cwd: projectPath });
 
 const results = await Promise.all(
-  files.map(file => 
-    mcp.callTool('review_file', {
-      file: path.join(projectPath, file)
+  files.map((file) =>
+    mcp.callTool("review_file", {
+      file: path.join(projectPath, file),
     })
-  )
+  ),
 );
 
 // Aggregate results
@@ -435,19 +473,19 @@ console.log(`Total issues across project: ${totalIssues}`);
 
 ```typescript
 // Example 3: Verify Shape Up implementation
-const methodologyResult = await mcp.callTool('review_methodology', {
-  projectPath: './my-project',
-  methodology: 'shape-up'
+const methodologyResult = await mcp.callTool("review_methodology", {
+  projectPath: "./my-project",
+  methodology: "shape-up",
 });
 
 if (!methodologyResult.compliant) {
-  console.log('Project is not Shape Up compliant:');
-  methodologyResult.findings.forEach(f => {
+  console.log("Project is not Shape Up compliant:");
+  methodologyResult.findings.forEach((f) => {
     console.log(`- ${f.message}`);
   });
-  
-  console.log('\nRecommendations:');
-  methodologyResult.recommendations.forEach(r => {
+
+  console.log("\nRecommendations:");
+  methodologyResult.recommendations.forEach((r) => {
     console.log(`- ${r}`);
   });
 }
@@ -459,13 +497,13 @@ if (!methodologyResult.compliant) {
 // Example 4: Use custom security standard
 // First, create custom standard at ~/.claude/aichaku/user/docs/standards/MY-STANDARD.md
 
-const standards = await mcp.callTool('get_standards', {
-  projectPath: './my-project'
+const standards = await mcp.callTool("get_standards", {
+  projectPath: "./my-project",
 });
 
 // Review file against custom standard
-const customReview = await mcp.callTool('review_file', {
-  file: './src/critical-service.ts'
+const customReview = await mcp.callTool("review_file", {
+  file: "./src/critical-service.ts",
 });
 ```
 
@@ -483,30 +521,30 @@ async function getProjectStats(projectPath: string) {
     totalIssues: 0,
     criticalIssues: 0,
     byScanner: {},
-    byFileType: {}
+    byFileType: {},
   };
-  
+
   // Scan all files
-  const files = await glob('**/*.{js,ts,py,java}', { cwd: projectPath });
-  
+  const files = await glob("**/*.{js,ts,py,java}", { cwd: projectPath });
+
   for (const file of files) {
-    const result = await mcp.callTool('review_file', {
-      file: path.join(projectPath, file)
+    const result = await mcp.callTool("review_file", {
+      file: path.join(projectPath, file),
     });
-    
+
     if (result.success) {
       stats.totalFiles++;
       stats.totalIssues += result.stats.totalIssues;
       stats.criticalIssues += result.findings
-        .filter(f => f.severity === 'error').length;
-      
+        .filter((f) => f.severity === "error").length;
+
       // Aggregate by scanner
       Object.entries(result.stats.byScanner).forEach(([scanner, count]) => {
         stats.byScanner[scanner] = (stats.byScanner[scanner] || 0) + count;
       });
     }
   }
-  
+
   return stats;
 }
 ```
@@ -517,10 +555,10 @@ async function getProjectStats(projectPath: string) {
 // Generate security report
 async function generateSecurityReport(projectPath: string) {
   const stats = await getProjectStats(projectPath);
-  const methodology = await mcp.callTool('review_methodology', {
-    projectPath
+  const methodology = await mcp.callTool("review_methodology", {
+    projectPath,
   });
-  
+
   const report = {
     timestamp: new Date().toISOString(),
     project: projectPath,
@@ -528,14 +566,14 @@ async function generateSecurityReport(projectPath: string) {
       filesScanned: stats.totalFiles,
       totalIssues: stats.totalIssues,
       criticalIssues: stats.criticalIssues,
-      methodologyCompliant: methodology.compliant
+      methodologyCompliant: methodology.compliant,
     },
     details: {
       scannerBreakdown: stats.byScanner,
-      methodologyFindings: methodology.findings
-    }
+      methodologyFindings: methodology.findings,
+    },
   };
-  
+
   return report;
 }
 ```
@@ -549,6 +587,7 @@ async function generateSecurityReport(projectPath: string) {
 **Problem**: "Semgrep scanner not available" or similar error
 
 **Solution**:
+
 ```bash
 # Install missing scanner
 npm install -g semgrep  # For Semgrep
@@ -564,6 +603,7 @@ bandit --version
 **Problem**: Cannot read file or access directory
 
 **Solution**:
+
 - Check file permissions: `ls -la <file>`
 - Ensure MCP server has read access
 - Run with appropriate permissions
@@ -573,10 +613,11 @@ bandit --version
 **Problem**: Scanner times out on large files
 
 **Solution**:
+
 ```typescript
 // Increase timeout in scanner configuration
 const result = await runScanner(file, {
-  timeout: 60000  // 60 seconds
+  timeout: 60000, // 60 seconds
 });
 ```
 
@@ -585,6 +626,7 @@ const result = await runScanner(file, {
 **Problem**: Too many irrelevant findings
 
 **Solution**:
+
 - Configure scanner rules appropriately
 - Use `.semgrepignore` or similar ignore files
 - Add inline suppressions for known safe code
@@ -595,11 +637,11 @@ Enable debug logging for troubleshooting:
 
 ```typescript
 // Set environment variable
-process.env.AICHAKU_DEBUG = 'true';
+process.env.AICHAKU_DEBUG = "true";
 
 // Or in code
-import { logger } from './logger';
-logger.setLevel('debug');
+import { logger } from "./logger";
+logger.setLevel("debug");
 ```
 
 ### Performance Optimization
@@ -608,14 +650,12 @@ For large projects, optimize scanning:
 
 ```typescript
 // Parallel scanning with concurrency limit
-import pLimit from 'p-limit';
+import pLimit from "p-limit";
 
 const limit = pLimit(5); // Max 5 concurrent scans
 
 const results = await Promise.all(
-  files.map(file => 
-    limit(() => mcp.callTool('review_file', { file }))
-  )
+  files.map((file) => limit(() => mcp.callTool("review_file", { file }))),
 );
 ```
 
@@ -627,35 +667,35 @@ const results = await Promise.all(
 
 ```typescript
 // src/scanners/my-scanner.ts
-import { SecurityScanner, ScanResult } from '../types';
+import { ScanResult, SecurityScanner } from "../types";
 
 export class MyScanner implements SecurityScanner {
-  name = 'MyScanner';
-  
+  name = "MyScanner";
+
   async isAvailable(): Promise<boolean> {
     // Check if scanner is installed
     try {
-      await exec('my-scanner --version');
+      await exec("my-scanner --version");
       return true;
     } catch {
       return false;
     }
   }
-  
+
   async scan(filePath: string, content?: string): Promise<ScanResult> {
     // Implement scanning logic
     const findings = [];
-    
+
     // Run scanner
     const output = await exec(`my-scanner ${filePath}`);
-    
+
     // Parse results
     // ... parsing logic ...
-    
+
     return {
       success: true,
       findings,
-      scanner: this.name
+      scanner: this.name,
     };
   }
 }
@@ -672,7 +712,7 @@ this.scanners.push(new MyScanner());
 
 1. Create standard file in `~/.claude/aichaku/user/docs/standards/`:
 
-```markdown
+````markdown
 # MY-STANDARD.md
 
 ## My Custom Standard
@@ -684,10 +724,8 @@ this.scanners.push(new MyScanner());
 
 ### Implementation
 
-\```typescript
-// Example implementation
-\```
-```
+\```typescript // Example implementation \```
+````
 
 2. The standard will be automatically detected and available for use.
 
@@ -731,20 +769,20 @@ Start with basic security scanning and gradually add more sophisticated checks:
 
 ```typescript
 // Phase 1: Basic security scan
-const basicScan = await mcp.callTool('review_file', {
-  file: 'critical-file.js',
-  includeExternal: false
+const basicScan = await mcp.callTool("review_file", {
+  file: "critical-file.js",
+  includeExternal: false,
 });
 
 // Phase 2: Add external scanners
-const fullScan = await mcp.callTool('review_file', {
-  file: 'critical-file.js',
-  includeExternal: true
+const fullScan = await mcp.callTool("review_file", {
+  file: "critical-file.js",
+  includeExternal: true,
 });
 
 // Phase 3: Methodology compliance
-const compliance = await mcp.callTool('review_methodology', {
-  projectPath: '.'
+const compliance = await mcp.callTool("review_methodology", {
+  projectPath: ".",
 });
 ```
 
@@ -800,12 +838,12 @@ const baseline = {
   maxCriticalIssues: 0,
   maxHighIssues: 5,
   maxMediumIssues: 20,
-  allowedScanners: ['semgrep', 'eslint-security']
+  allowedScanners: ["semgrep", "eslint-security"],
 };
 
 // Fail build if baseline is exceeded
 if (stats.criticalIssues > baseline.maxCriticalIssues) {
-  throw new Error('Security baseline exceeded');
+  throw new Error("Security baseline exceeded");
 }
 ```
 
@@ -813,7 +851,9 @@ if (stats.criticalIssues > baseline.maxCriticalIssues) {
 
 ### Overview
 
-Aichaku MCP servers are automatically updated when you upgrade the main Aichaku package. However, you may need to manually upgrade or reinstall MCP servers in some cases.
+Aichaku MCP servers are automatically updated when you upgrade the main Aichaku
+package. However, you may need to manually upgrade or reinstall MCP servers in
+some cases.
 
 ### Automatic Upgrade (Recommended)
 
@@ -919,6 +959,7 @@ aichaku mcp --server-status
 **Problem**: `aichaku mcp` shows servers as "Not Installed"
 
 **Solution**:
+
 ```bash
 # Force reinstall all MCP servers
 aichaku setup --force
@@ -933,6 +974,7 @@ aichaku mcp --install-github
 **Problem**: Permission denied when upgrading
 
 **Solution**:
+
 ```bash
 # Use sudo for global npm packages (if needed)
 sudo npm update -g @aichaku/cli
@@ -946,6 +988,7 @@ npx @aichaku/cli@latest mcp
 **Problem**: Server won't start after upgrade
 
 **Solution**:
+
 ```bash
 # Check if old server is still running
 ps aux | grep aichaku
@@ -962,6 +1005,7 @@ aichaku mcp --start-server
 **Problem**: Claude Code can't find MCP servers after upgrade
 
 **Solution**:
+
 ```bash
 # Verify MCP configuration
 cat ~/.claude/settings.json
@@ -1035,8 +1079,10 @@ aichaku setup --force
 If you encounter issues during upgrade:
 
 1. **Check the troubleshooting section above**
-2. **Review GitHub issues**: [Aichaku Issues](https://github.com/RickCogley/aichaku/issues)
-3. **Check Claude Code documentation**: [Claude Code Docs](https://docs.anthropic.com/en/docs/claude-code)
+2. **Review GitHub issues**:
+   [Aichaku Issues](https://github.com/RickCogley/aichaku/issues)
+3. **Check Claude Code documentation**:
+   [Claude Code Docs](https://docs.anthropic.com/en/docs/claude-code)
 4. **File a bug report** with:
    - Aichaku version (`aichaku --version`)
    - Operating system
@@ -1045,6 +1091,11 @@ If you encounter issues during upgrade:
 
 ## Conclusion
 
-The Aichaku MCP server provides a powerful, extensible platform for security review and methodology compliance. By following this documentation, you can effectively integrate security scanning into your development workflow and maintain high code quality standards.
+The Aichaku MCP server provides a powerful, extensible platform for security
+review and methodology compliance. By following this documentation, you can
+effectively integrate security scanning into your development workflow and
+maintain high code quality standards.
 
-For additional support or feature requests, please visit the [Aichaku repository](https://github.com/RickCogley/aichaku) or contact the maintainers.
+For additional support or feature requests, please visit the
+[Aichaku repository](https://github.com/RickCogley/aichaku) or contact the
+maintainers.

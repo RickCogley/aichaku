@@ -2,17 +2,22 @@
 
 ## Problem
 
-Currently, Aichaku generates text-based documentation which lacks visual representations. Users would benefit from:
+Currently, Aichaku generates text-based documentation which lacks visual
+representations. Users would benefit from:
+
 - Visual project overviews
 - Workflow diagrams
 - Effort-specific visualizations
 - Architecture diagrams
 
-Without visuals, complex relationships and workflows are harder to understand at a glance.
+Without visuals, complex relationships and workflows are harder to understand at
+a glance.
 
 ## Solution
 
-Integrate Mermaid diagram generation into Aichaku's document creation workflow. Mermaid is ideal because:
+Integrate Mermaid diagram generation into Aichaku's document creation workflow.
+Mermaid is ideal because:
+
 - **Markdown-native**: Diagrams defined in markdown code blocks
 - **Version control friendly**: Text-based diagram definitions
 - **Wide support**: GitHub, GitLab, many markdown viewers render automatically
@@ -24,7 +29,7 @@ Integrate Mermaid diagram generation into Aichaku's document creation workflow. 
 
 Add to every project's documentation:
 
-```markdown
+````markdown
 ## Project Overview
 
 ```mermaid
@@ -36,8 +41,9 @@ graph TD
     D --> E[Review & Iterate]
     E --> F[Project Complete]
 ```
-```
+````
 
+````
 ### 2. Methodology-Specific Diagrams
 
 **Shape Up Projects:**
@@ -47,9 +53,10 @@ graph LR
     B --> C[Betting]
     C --> D[Building]
     D --> E[Cool-down]
-```
+````
 
 **Scrum Projects:**
+
 ```mermaid
 graph TD
     A[Product Backlog] --> B[Sprint Planning]
@@ -63,6 +70,7 @@ graph TD
 ### 3. Custom Effort Diagrams
 
 For specific efforts, generate relevant diagrams:
+
 - Architecture diagrams
 - Data flow diagrams
 - State machines
@@ -71,16 +79,19 @@ For specific efforts, generate relevant diagrams:
 ### 4. PDF Generation Strategy
 
 **Option A: Embedded SVG (Recommended)**
+
 - When generating PDFs, pre-render Mermaid to SVG
 - Embed SVG directly in markdown
 - Pandoc handles SVG in PDF generation
 
 **Option B: Dual Format**
+
 - Keep Mermaid blocks for web viewing
 - Add pre-rendered PNG/SVG for PDF
 - Use HTML comments to hide duplicates
 
 **Option C: Build Script Enhancement**
+
 ```bash
 # In PDF generation script
 mermaid -i input.md -o output.md --svg
@@ -94,13 +105,12 @@ pandoc output.md -o final.pdf
 ```markdown
 ### 5. Visual Documentation Requirements
 
-**YOU MUST include Mermaid diagrams in:**
-✅ Every PROJECT-OVERVIEW.md
-✅ Every methodology-specific workflow
-✅ Architecture decisions when relevant
-✅ Complex process flows
+**YOU MUST include Mermaid diagrams in:** ✅ Every PROJECT-OVERVIEW.md ✅ Every
+methodology-specific workflow ✅ Architecture decisions when relevant ✅ Complex
+process flows
 
 **Diagram Placement:**
+
 - After the summary section
 - Before detailed descriptions
 - Use clear, descriptive node labels
@@ -109,6 +119,7 @@ pandoc output.md -o final.pdf
 ### 2. Create Diagram Templates
 
 Store in `methodologies/common/diagrams/`:
+
 - `project-lifecycle.mmd`
 - `shape-up-cycle.mmd`
 - `scrum-sprint.mmd`
@@ -117,6 +128,7 @@ Store in `methodologies/common/diagrams/`:
 ### 3. PDF Generation Updates
 
 Update the pandoc-based script:
+
 ```bash
 #!/bin/bash
 # Pre-process Mermaid blocks
@@ -135,14 +147,13 @@ pandoc "$1.processed.md" -o "${1%.md}.pdf" --pdf-engine=xelatex
 
 ## Challenges & Solutions
 
-**Challenge**: Mermaid syntax in PDFs
-**Solution**: Pre-render to SVG during PDF generation
+**Challenge**: Mermaid syntax in PDFs **Solution**: Pre-render to SVG during PDF
+generation
 
-**Challenge**: Diagram complexity
-**Solution**: Start simple, provide templates
+**Challenge**: Diagram complexity **Solution**: Start simple, provide templates
 
-**Challenge**: Maintaining diagrams
-**Solution**: Make them part of status updates
+**Challenge**: Maintaining diagrams **Solution**: Make them part of status
+updates
 
 ## Success Criteria
 

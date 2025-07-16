@@ -2,22 +2,24 @@
 
 ## Storage Location
 
-**Old**: Single monolithic `~/.claude/settings.json` file (228+ lines)
-**New**: Individual files in `~/.claude/commands/` directory
+**Old**: Single monolithic `~/.claude/settings.json` file (228+ lines) **New**:
+Individual files in `~/.claude/commands/` directory
 
 ## Command Definition
 
 ### Old Format (JSON)
+
 ```json
 {
   "name": "preflight",
-  "description": "Show preflight checks for current project", 
+  "description": "Show preflight checks for current project",
   "prompt": "Based on the project type (check for deno.json, package.json, pyproject.toml, etc.), show me the appropriate preflight checks I should run before committing code."
 }
 ```
 
 ### New Format (Markdown)
-```markdown
+
+````markdown
 ---
 allowed-tools: Read, Bash(deno:*), Bash(npm:*), Bash(python:*)
 description: Show preflight checks based on project type
@@ -27,21 +29,24 @@ description: Show preflight checks based on project type
 
 Detecting project type...
 
-!test -f deno.json && echo "Deno project detected" || true
-!test -f package.json && echo "Node.js project detected" || true  
+!test -f deno.json && echo "Deno project detected" || true !test -f package.json
+&& echo "Node.js project detected" || true\
 !test -f pyproject.toml && echo "Python project detected" || true
 
 Based on the project type, here are your preflight checks:
 
 ## Deno Project
+
 ```bash
 deno fmt --check
 deno lint
 deno check **/*.ts
 deno test
 ```
+````
 
-## Node.js Project  
+## Node.js Project
+
 ```bash
 npm run format
 npm run lint
@@ -49,6 +54,7 @@ npm test
 ```
 
 ## Python Project
+
 ```bash
 black . --check
 mypy .
@@ -56,8 +62,8 @@ pytest
 ```
 
 Run these before committing your changes!
-```
 
+```
 ## Key Improvements
 
 ### 1. Tool Permissions
@@ -75,13 +81,11 @@ Run these before committing your changes!
 **Old**: All commands in one JSON array
 **New**: Organized in directories by category
 ```
-commands/
-├── aichaku/      # Aichaku-specific
-├── security/     # Security tools
-├── dev/          # Development helpers
-└── utils/        # General utilities
-```
 
+commands/ ├── aichaku/ # Aichaku-specific ├── security/ # Security tools ├──
+dev/ # Development helpers └── utils/ # General utilities
+
+```
 ### 4. Version Control
 **Old**: Single file changes affect all commands
 **New**: Each command tracked separately
@@ -113,3 +117,4 @@ commands/
 ### Commands to Enhance
 - `/preflight` - Add project type detection
 - `/security-rules` - Add examples and validation
+```

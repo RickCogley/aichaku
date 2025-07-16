@@ -1,10 +1,12 @@
 # Session Checkpoints
 
-This directory contains session checkpoints that document work progress and decisions.
+This directory contains session checkpoints that document work progress and
+decisions.
 
 ## Checkpoint Format
 
 Each checkpoint follows this structure:
+
 - Summary of work accomplished
 - Key technical decisions
 - Files created/modified

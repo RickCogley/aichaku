@@ -1,29 +1,36 @@
 # Market Validation: Is Adaptive Methodology Support Needed?
 
-## Status: ACTIVE - PLANNING MODE  
+## Status: ACTIVE - PLANNING MODE
+
 ## Date: 2025-07-06
 
 ## The Fundamental Question
+
 **Will people actually use this?**
 
 ## Target Users & Use Cases
 
 ### 1. Small Teams / Startups
+
 - **Need**: Flexibility as they discover what works
 - **Pain**: Rigid methodology tools that don't fit their reality
-- **Aichaku Value**: Start with startup-friendly Lean, naturally evolve to Scrum as they grow
+- **Aichaku Value**: Start with startup-friendly Lean, naturally evolve to Scrum
+  as they grow
 
 ### 2. Consultants / Freelancers
+
 - **Need**: Adapt to each client's terminology
 - **Pain**: Context switching between client methodologies
 - **Aichaku Value**: Speak the client's language while using best practices
 
 ### 3. Hybrid Organizations
+
 - **Need**: Different methodologies for different projects
 - **Pain**: Teams use inconsistent approaches
 - **Aichaku Value**: Common foundation with flexible implementation
 
 ### 4. Methodology Transitions
+
 - **Need**: Gradual change from one method to another
 - **Pain**: Big bang methodology changes fail
 - **Aichaku Value**: Gentle introduction of new concepts
@@ -31,7 +38,9 @@
 ## The Reality Check
 
 ### What Users Really Want
+
 Based on your insight:
+
 - **Flexibility in execution** ✅
 - **Consistency in key outputs** ✅ (like change control logs)
 - **Familiar terminology** ✅
@@ -54,6 +63,7 @@ Based on your insight:
 ## Proposed Solution: Flexibility Levels
 
 ### 1. Adaptive Mode (Default)
+
 ```json
 {
   "mode": "adaptive",
@@ -61,11 +71,13 @@ Based on your insight:
   "blending": "enabled"
 }
 ```
+
 - Full methodology blending
 - Natural language detection
 - Best for most users
 
 ### 2. Guided Mode
+
 ```json
 {
   "mode": "guided",
@@ -73,11 +85,13 @@ Based on your insight:
   "blending": "suggestions"
 }
 ```
+
 - Favors one methodology
 - Suggests others when relevant
 - Good for organizations with preferences
 
 ### 3. Strict Mode
+
 ```json
 {
   "mode": "strict",
@@ -86,6 +100,7 @@ Based on your insight:
   "required": ["daily-standup", "retrospective"]
 }
 ```
+
 - Enforces methodology rules
 - No blending
 - For regulated environments
@@ -93,6 +108,7 @@ Based on your insight:
 ## Validation Approach
 
 ### MVP Testing
+
 1. Release with adaptive mode only
 2. Gather usage data:
    - Which methodologies get used together?
@@ -100,6 +116,7 @@ Based on your insight:
    - Where do users get confused?
 
 ### Success Metrics
+
 - Users complete projects without methodology friction
 - Natural blending occurs (Shape Up + Scrum standup)
 - Positive feedback on flexibility
@@ -107,7 +124,8 @@ Based on your insight:
 
 ## The Bet
 
-**Hypothesis**: Developers using AI for project management want methodology guidance that adapts to their language, not forces them into rigid frameworks.
+**Hypothesis**: Developers using AI for project management want methodology
+guidance that adapts to their language, not forces them into rigid frameworks.
 
 **Risk**: Low - worst case, it works like current single-methodology tools
 
@@ -115,9 +133,11 @@ Based on your insight:
 
 ## Your Insight Applied
 
-> "it's ok to have some changes to how projects are documented, so long as certain things are 'set in stone'"
+> "it's ok to have some changes to how projects are documented, so long as
+> certain things are 'set in stone'"
 
 This is exactly right. Aichaku should:
+
 - Be flexible about HOW you work
 - Be consistent about WHAT you deliver
 - Let organizations define their "set in stone" requirements
@@ -125,6 +145,7 @@ This is exactly right. Aichaku should:
 ## Decision
 
 **Proceed with adaptive approach, but:**
+
 1. Start simple (adaptive only)
 2. Add configuration later based on usage
 3. Always respect organizational requirements
@@ -137,4 +158,5 @@ This is exactly right. Aichaku should:
 3. Iterate based on what actually helps
 4. Add strict mode if users request it
 
-The key insight: **Aichaku succeeds if it reduces methodology friction, not if it enforces methodology purity.**
+The key insight: **Aichaku succeeds if it reduces methodology friction, not if
+it enforces methodology purity.**

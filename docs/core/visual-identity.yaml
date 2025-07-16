@@ -10,7 +10,7 @@ identity:
     mandatory: true
     format: "🪴 Aichaku:"
     usage: "ALWAYS prefix Aichaku messages with this exact format"
-  
+
   growth_phases:
     description: "Project lifecycle indicators"
     phases:
@@ -27,7 +27,7 @@ identity:
         emoji: "🍃"
         description: "Completed and archived"
     usage: "Use these indicators to show project phase in status updates"
-  
+
   progress_display:
     format:
       phase_indicator: "[Phase] → [**Current**] → [Next]"
@@ -63,12 +63,18 @@ methodology_icons:
 display_rules:
   forbidden:
     - description: "No garden metaphors in text"
-      examples: ["planting", "growing", "harvesting", "cultivating", "nurturing"]
+      examples: [
+        "planting",
+        "growing",
+        "harvesting",
+        "cultivating",
+        "nurturing",
+      ]
     - description: "No mixing visual indicators"
       rule: "Keep visual indicators consistent within a project"
     - description: "No emoji overuse"
       rule: "Maximum one emoji per concept"
-  
+
   required:
     - description: "Bold current phase"
       format: "Use **bold** text for current phase in progress indicators"

@@ -3,7 +3,10 @@
 ## Why 🪴 Perfectly Represents 愛着 (Aichaku)
 
 ### The Essence of 愛着
-愛着 (aichaku) is that warm feeling of attachment we develop toward things through sustained use and care. It's not just liking something - it's the comfort and trust that grows from repeated interaction.
+
+愛着 (aichaku) is that warm feeling of attachment we develop toward things
+through sustained use and care. It's not just liking something - it's the
+comfort and trust that grows from repeated interaction.
 
 ### Why Potted Plant?
 
@@ -35,6 +38,7 @@
 ### Growth Metaphors in Action
 
 **Project Phases as Plant Growth:**
+
 - 🌱 **Seedling** - New ideas taking root
 - 🌿 **Growing** - Active development
 - 🌳 **Established** - Mature and stable
@@ -42,6 +46,7 @@
 - 🍃 **Renewal** - Reflection and regrowth
 
 **Garden as Portfolio:**
+
 - Your `.claude/output/` becomes a garden
 - Each project is a plant in various growth stages
 - You tend to multiple projects like a gardener
@@ -49,11 +54,13 @@
 ### Cultural Resonance
 
 In Japanese culture:
+
 - **盆栽 (Bonsai)** - The art of patient cultivation
 - **育てる (Sodateru)** - To raise/nurture with care
 - **手入れ (Teire)** - Regular maintenance and care
 
-The potted plant connects to these concepts while remaining universally understood.
+The potted plant connects to these concepts while remaining universally
+understood.
 
 ### Practical Benefits
 
@@ -65,23 +72,31 @@ The potted plant connects to these concepts while remaining universally understo
 ### Examples in Practice
 
 Instead of:
+
 > "Project failed"
 
 We say:
+
 > "🪴 This project needs different soil"
 
 Instead of:
+
 > "Starting new project"
 
 We say:
+
 > "🪴 Planting new seeds"
 
 Instead of:
+
 > "Project complete"
 
 We say:
+
 > "🪴 Ready to harvest"
 
 ## Conclusion
 
-The 🪴 potted plant transforms Aichaku from a tool into a living system that users nurture and grow with. It captures the essence of 愛着 - that warm attachment that develops through sustained care and interaction.
+The 🪴 potted plant transforms Aichaku from a tool into a living system that
+users nurture and grow with. It captures the essence of 愛着 - that warm
+attachment that develops through sustained care and interaction.

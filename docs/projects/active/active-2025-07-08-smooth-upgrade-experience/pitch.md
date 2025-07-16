@@ -4,26 +4,33 @@
 
 The current Aichaku upgrade process is clunky and confusing:
 
-1. **Version Requirement Hell** - You must specify exact version: `jsr:@rick/aichaku@0.7.0/cli`
+1. **Version Requirement Hell** - You must specify exact version:
+   `jsr:@rick/aichaku@0.7.0/cli`
 2. **Silent Upgrades** - No feedback about what version was installed
-3. **Unclear Next Steps** - After global upgrade, you don't know how to upgrade local installs
-4. **Manual Version Tracking** - You must check JSR or GitHub to find latest version
-5. **Inconsistent Commands** - Global uses `deno install`, local uses `aichaku upgrade`
+3. **Unclear Next Steps** - After global upgrade, you don't know how to upgrade
+   local installs
+4. **Manual Version Tracking** - You must check JSR or GitHub to find latest
+   version
+5. **Inconsistent Commands** - Global uses `deno install`, local uses
+   `aichaku upgrade`
 
 ## Appetite
 
-**1 week** - Simple wrapper script and CLI improvements without major architecture changes.
+**1 week** - Simple wrapper script and CLI improvements without major
+architecture changes.
 
 ## Solution
 
 ### 1. Ultra-Simple Installation (Achieved!)
 
 Following Lume's pattern, you can now install with:
+
 ```bash
 deno run -A https://raw.githubusercontent.com/RickCogley/aichaku/main/init.ts
 ```
 
 This single command:
+
 - Installs Aichaku CLI globally
 - Sets up methodologies
 - Optionally initializes the current project
@@ -33,6 +40,7 @@ This single command:
 ### 2. Verbose Installation Feedback
 
 When installing/upgrading globally:
+
 ```text
 🪴 Aichaku Global Installation
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -48,6 +56,7 @@ Next steps for your projects:
 ### 3. Enhanced Upgrade Command
 
 Improve `aichaku upgrade` to show:
+
 ```text
 🪴 Aichaku Project Upgrade
 ━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -69,17 +78,22 @@ What's new in v0.7.0:
 ### 4. Update README Documentation
 
 Add clear upgrade instructions:
-```markdown
+
+````markdown
 ## Upgrading
 
 ### Global CLI (Recommended)
+
 ```bash
 # Always get the latest version
 deno install -g -A -n aichaku --force jsr:@rick/aichaku@latest/cli
 ```
+````
 
 ### Projects
+
 After upgrading globally, update each project:
+
 ```bash
 # Update methodology files and CLAUDE.md
 aichaku upgrade
@@ -87,8 +101,8 @@ aichaku upgrade
 # Or just refresh CLAUDE.md directives
 aichaku integrate --force
 ```
-```
 
+````
 ## Rabbit Holes
 
 1. **Complex version detection**: Keep simple - just check JSR API
@@ -133,11 +147,12 @@ async function getLatestVersion(): Promise<string> {
   const versions = await response.json();
   return versions[0].version;
 }
-```
+````
 
 ### 3. Installation Script
 
 Create `install.ts`:
+
 ```typescript
 // Detect current version
 const current = await getCurrentGlobalVersion();

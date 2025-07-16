@@ -1,12 +1,16 @@
 # Conversation Summary Hook
 
-The `conversation-summary` hook automatically creates structured checkpoint summaries of your Claude Code conversations. It runs as both a Stop and PreCompact hook, ensuring you have persistent records of your work sessions without manual intervention.
+The `conversation-summary` hook automatically creates structured checkpoint
+summaries of your Claude Code conversations. It runs as both a Stop and
+PreCompact hook, ensuring you have persistent records of your work sessions
+without manual intervention.
 
 ## Purpose
 
-This hook solves the problem of losing context when conversations are compacted or ended. It automatically:
+This hook solves the problem of losing context when conversations are compacted
+or ended. It automatically:
 
-- Reads conversation transcripts 
+- Reads conversation transcripts
 - Generates structured summaries using Claude CLI
 - Saves checkpoint files with timestamps
 - Provides deterministic, automatic documentation
@@ -16,6 +20,7 @@ This hook solves the problem of losing context when conversations are compacted 
 ### Trigger Events
 
 The hook runs automatically on:
+
 - **Stop**: When you end a Claude Code session
 - **PreCompact**: When Claude Code compacts long conversations
 
@@ -31,6 +36,7 @@ The hook runs automatically on:
 ## Output Format
 
 Checkpoint files are saved as:
+
 ```
 /docs/checkpoints/checkpoint-YYYY-MM-DD-HHMMSS.md
 ```
@@ -43,18 +49,23 @@ Each checkpoint includes:
 # Checkpoint Summary - YYYY-MM-DD
 
 ## Session Overview
+
 Brief summary of what was accomplished
 
 ## Key Technical Decisions
+
 Important choices made and rationale
 
 ## Files Modified
+
 List of files created/modified with brief descriptions
 
 ## Problems Solved
+
 Issues resolved during this session
 
 ## Next Steps
+
 Immediate follow-up tasks or improvements needed
 ```
 
@@ -62,17 +73,20 @@ Immediate follow-up tasks or improvements needed
 
 ### Automatic (Recommended)
 
-The conversation-summary hook is installed automatically with Aichaku and configured in your global Claude Code settings at `~/.claude/settings.json`.
+The conversation-summary hook is installed automatically with Aichaku and
+configured in your global Claude Code settings at `~/.claude/settings.json`.
 
 ### Manual Verification
 
 Check if it's installed:
+
 ```bash
 # View current hook configuration
 grep -A 10 -B 10 "conversation-summary" ~/.claude/settings.json
 ```
 
 You should see entries for both Stop and PreCompact hooks:
+
 ```json
 "Stop": [
   {
@@ -99,14 +113,18 @@ You should see entries for both Stop and PreCompact hooks:
 ## What You'll See
 
 ### Success Messages
+
 When the hook works correctly:
+
 ```
 🪴 Aichaku: ✅ Checkpoint summary created automatically
    📄 Saved to: docs/checkpoints/checkpoint-2025-07-14-125047.md
 ```
 
 ### Error Messages
+
 If something goes wrong:
+
 ```
 🪴 Aichaku: ⚠️ Could not create automatic summary
    💡 Use /checkpoint command to create manual summary
@@ -115,6 +133,7 @@ If something goes wrong:
 ## Requirements
 
 The hook requires these Deno permissions:
+
 - `--allow-read` - Read conversation transcripts
 - `--allow-write` - Write checkpoint files
 - `--allow-env` - Access environment variables
@@ -149,6 +168,7 @@ The hook requires these Deno permissions:
 ### Claude CLI Not Found
 
 If you see "command not found" errors:
+
 1. Ensure Claude CLI is installed and in PATH
 2. Test: `claude --version`
 3. Restart your terminal/Claude Code
@@ -156,6 +176,7 @@ If you see "command not found" errors:
 ### Permission Errors
 
 If you see permission-related errors:
+
 1. Check the hook command includes all required `--allow-*` flags
 2. Ensure the aichaku-hooks.ts file is readable
 3. Verify the checkpoints directory is writable
@@ -163,16 +184,19 @@ If you see permission-related errors:
 ## Benefits
 
 ### Automatic Documentation
+
 - No manual effort required
 - Consistent format across all sessions
 - Timestamped for easy reference
 
 ### Context Preservation
+
 - Maintains record of technical decisions
 - Documents problem-solving approaches
 - Tracks file modifications
 
 ### Project Continuity
+
 - Easy to resume work from where you left off
 - Helps onboard team members
 - Provides audit trail for complex projects
@@ -180,6 +204,7 @@ If you see permission-related errors:
 ## Performance
 
 The hook is designed to be efficient:
+
 - Uses Claude CLI via stdin to avoid argument length limits
 - Minimal file I/O
 - Runs asynchronously after conversation ends
@@ -192,4 +217,6 @@ The hook is designed to be efficient:
 - Uses secure temporary file handling
 - Respects Deno's permission model
 
-This hook ensures you never lose important context from your development sessions, providing automatic documentation that helps maintain project continuity and knowledge preservation.
+This hook ensures you never lose important context from your development
+sessions, providing automatic documentation that helps maintain project
+continuity and knowledge preservation.

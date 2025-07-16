@@ -2,13 +2,16 @@
 
 ## Overview
 
-Based on comprehensive research of industry standards and best practices, this enhanced design expands Aichaku's modular guidance system to include a rich set of categories that address modern software development needs.
+Based on comprehensive research of industry standards and best practices, this
+enhanced design expands Aichaku's modular guidance system to include a rich set
+of categories that address modern software development needs.
 
 ## Enhanced Guidance Categories
 
 ### 1. **Security & Compliance Standards**
 
 #### NIST Framework Suite
+
 - **NIST CSF 2.0**: Universal cybersecurity governance (NEW: Govern function)
 - **NIST SSDF (SP 800-218)**: Secure Software Development Framework
 - **NIST SP 800-53**: Comprehensive security controls catalog
@@ -17,12 +20,14 @@ Based on comprehensive research of industry standards and best practices, this e
 - **NIST SP 800-190**: Container security guidance
 
 #### OWASP Standards
+
 - **OWASP Top 10**: Web application security (existing)
 - **OWASP API Security Top 10**: API-specific vulnerabilities
 - **OWASP Mobile Top 10**: Mobile app security
 - **OWASP Proactive Controls**: Security-positive patterns
 
 #### European Regulations
+
 - **GDPR**: Privacy by Design principles
 - **NIS2 Directive**: Cybersecurity requirements (mandatory Oct 2024)
 - **DORA**: Financial services resilience (mandatory Jan 2025)
@@ -30,6 +35,7 @@ Based on comprehensive research of industry standards and best practices, this e
 - **ISO/IEC 27701**: Privacy Information Management System
 
 #### Industry-Specific Compliance
+
 - **PCI DSS**: Payment card processing (universally applicable)
 - **SOC 2 Type II**: Cloud service trust criteria
 - **HIPAA**: Healthcare data protection (US)
@@ -38,6 +44,7 @@ Based on comprehensive research of industry standards and best practices, this e
 ### 2. **Software Architecture Patterns**
 
 #### Foundational Architectures
+
 - **Domain-Driven Design (DDD)**: Strategic and tactical patterns
 - **Hexagonal Architecture**: Ports and adapters pattern
 - **Clean Architecture**: Dependency inversion principles
@@ -45,6 +52,7 @@ Based on comprehensive research of industry standards and best practices, this e
 - **Microservices Patterns**: Circuit breaker, saga, service mesh
 
 #### Cloud-Native Architectures
+
 - **15-Factor Apps**: Modern cloud-native principles (existing)
 - **15-Factor Static Sites**: Static site best practices (existing)
 - **12-Factor Apps**: Classic cloud principles
@@ -52,11 +60,13 @@ Based on comprehensive research of industry standards and best practices, this e
 - **Container Patterns**: Sidecar, ambassador, adapter
 
 #### Well-Architected Frameworks
+
 - **AWS Well-Architected**: 6 pillars including sustainability
 - **Azure Well-Architected**: 5 pillars with workload guidance
 - **Google Cloud Architecture**: Best practices and patterns
 
 #### Design Principles
+
 - **SOLID Principles**: Object-oriented design fundamentals
 - **DRY/KISS/YAGNI**: Simplicity principles
 - **CAP Theorem**: Distributed systems tradeoffs
@@ -65,6 +75,7 @@ Based on comprehensive research of industry standards and best practices, this e
 ### 3. **Development Standards**
 
 #### Code Style Guidelines
+
 - **Google Style Guides**: C++, Python, Java, JavaScript, TypeScript, Go
 - **Microsoft Standards**: C#, TypeScript, .NET conventions
 - **Airbnb JavaScript**: React and ES6+ patterns
@@ -73,6 +84,7 @@ Based on comprehensive research of industry standards and best practices, this e
 - **Rust Guidelines**: Memory safety patterns
 
 #### Universal Code Principles
+
 - **Clarity Over Cleverness**: Readability first
 - **Consistent Naming**: Language-appropriate conventions
 - **Error Handling**: Explicit, fail-fast approaches
@@ -80,6 +92,7 @@ Based on comprehensive research of industry standards and best practices, this e
 - **Testing Standards**: Test as first-class code
 
 #### Commit Standards
+
 - **Conventional Commits**: Structured commit messages (existing)
 - **Semantic Versioning**: Version number standards
 - **Git Flow**: Branching strategies
@@ -88,12 +101,14 @@ Based on comprehensive research of industry standards and best practices, this e
 ### 4. **API Design & Standards**
 
 #### API Specifications
+
 - **OpenAPI 3.0/3.1**: RESTful API documentation
 - **AsyncAPI**: Event-driven API documentation
 - **GraphQL Schema**: Type system and queries
 - **gRPC/Protocol Buffers**: Service definitions
 
 #### API Design Principles
+
 - **REST Maturity Model**: Richardson's 4 levels
 - **HATEOAS**: Hypermedia as engine of state
 - **API Versioning**: URL, header, and content negotiation
@@ -101,6 +116,7 @@ Based on comprehensive research of industry standards and best practices, this e
 - **Pagination**: Cursor vs offset patterns
 
 #### API Security
+
 - **OAuth 2.1**: Modern authorization
 - **OpenID Connect**: Authentication layer
 - **JWT Best Practices**: Token handling
@@ -109,11 +125,13 @@ Based on comprehensive research of industry standards and best practices, this e
 ### 5. **Testing Methodologies**
 
 #### Testing Philosophies
+
 - **Test-Driven Development (TDD)**: Red-green-refactor
 - **Behavior-Driven Development (BDD)**: Given-when-then
 - **Acceptance Test-Driven Development (ATDD)**: User story validation
 
 #### Testing Strategies
+
 - **Test Pyramid**: Unit, integration, E2E balance
 - **Test Trophy**: Modern testing distribution
 - **Contract Testing**: Consumer-driven contracts
@@ -121,6 +139,7 @@ Based on comprehensive research of industry standards and best practices, this e
 - **Mutation Testing**: Test quality validation
 
 #### Performance Testing
+
 - **Load Testing**: Normal capacity validation
 - **Stress Testing**: Breaking point identification
 - **Spike Testing**: Sudden load handling
@@ -129,24 +148,28 @@ Based on comprehensive research of industry standards and best practices, this e
 ### 6. **DevOps & Operational Excellence**
 
 #### Site Reliability Engineering (SRE)
+
 - **Error Budgets**: Innovation vs reliability balance
 - **Service Level Objectives (SLOs)**: Clear reliability targets
 - **Toil Reduction**: Automation priorities
 - **Postmortem Culture**: Blameless learning
 
 #### Continuous Delivery
+
 - **GitOps Principles**: Git as source of truth
 - **Progressive Delivery**: Feature flags, canary deployments
 - **Blue-Green Deployments**: Zero-downtime releases
 - **Infrastructure as Code**: Terraform, Pulumi patterns
 
 #### Observability
+
 - **OpenTelemetry**: Vendor-neutral instrumentation
 - **Three Pillars**: Logs, metrics, traces
 - **Service Mesh Observability**: Distributed tracing
 - **DORA Metrics**: Deployment frequency, lead time, MTTR, change failure
 
 #### Security Operations
+
 - **DevSecOps**: Shift-left security
 - **Policy as Code**: OPA, Sentinel
 - **Supply Chain Security**: SBOM, dependency scanning
@@ -155,18 +178,21 @@ Based on comprehensive research of industry standards and best practices, this e
 ### 7. **Documentation Standards**
 
 #### Documentation Frameworks
+
 - **Diátaxis Framework**: Tutorial, how-to, reference, explanation
 - **Docs as Code**: Version-controlled documentation
 - **Architecture Decision Records (ADRs)**: Decision documentation
 - **C4 Model**: Architecture visualization
 
 #### Style Guides
+
 - **Google Developer Documentation**: Global audience focus
 - **Microsoft Writing Style**: Enterprise documentation
 - **README Best Practices**: Project entry points
 - **API Documentation Standards**: OpenAPI integration
 
 #### Knowledge Management
+
 - **Changelog Conventions**: Keep a Changelog standard
 - **Semantic Versioning**: Version documentation
 - **Knowledge Graphs**: Connected documentation
@@ -175,18 +201,21 @@ Based on comprehensive research of industry standards and best practices, this e
 ### 8. **Team & Process Standards**
 
 #### Agile Practices
+
 - **Scrum Guide**: Official Scrum framework
 - **SAFe (Scaled Agile)**: Enterprise agile
 - **LeSS (Large Scale Scrum)**: Scaling patterns
 - **Spotify Model**: Squad organization
 
 #### Team Topologies
+
 - **Stream-Aligned Teams**: Business value delivery
 - **Enabling Teams**: Capability building
 - **Complicated Subsystem Teams**: Specialized expertise
 - **Platform Teams**: Internal services
 
 #### Cultural Practices
+
 - **Blameless Postmortems**: Learning from incidents
 - **Psychological Safety**: Team effectiveness
 - **Diversity & Inclusion**: Inclusive practices
@@ -312,6 +341,7 @@ Based on comprehensive research of industry standards and best practices, this e
 Based on project characteristics, Aichaku can recommend relevant modules:
 
 **For Web Applications:**
+
 - OWASP Top 10 Web
 - GDPR Privacy by Design
 - WCAG Accessibility
@@ -319,6 +349,7 @@ Based on project characteristics, Aichaku can recommend relevant modules:
 - Progressive Delivery
 
 **For Financial Services:**
+
 - PCI DSS
 - DORA Compliance
 - SOC 2 Type II
@@ -326,6 +357,7 @@ Based on project characteristics, Aichaku can recommend relevant modules:
 - Secure Architecture Patterns
 
 **For Government Projects:**
+
 - FedRAMP
 - NIST Full Suite
 - Accessibility Standards
@@ -333,6 +365,7 @@ Based on project characteristics, Aichaku can recommend relevant modules:
 - Security-First DevOps
 
 **For Startups:**
+
 - 15-Factor Apps
 - Lean Testing Strategies
 - MVP Documentation
@@ -340,6 +373,7 @@ Based on project characteristics, Aichaku can recommend relevant modules:
 - Simple Git Flow
 
 **For Enterprise:**
+
 - ISO 27001/27701
 - SAFe or LeSS
 - Enterprise Architecture
@@ -418,7 +452,8 @@ aichaku integrate --phase=expert
 
 ## Benefits of Enhanced System
 
-1. **Comprehensive Coverage**: From security to documentation, all aspects covered
+1. **Comprehensive Coverage**: From security to documentation, all aspects
+   covered
 2. **Industry Alignment**: Standards from Google, Microsoft, NIST, and more
 3. **Regulatory Compliance**: Built-in support for GDPR, NIS2, DORA, etc.
 4. **Modern Practices**: DevOps, SRE, and cloud-native patterns included
@@ -429,6 +464,7 @@ aichaku integrate --phase=expert
 ## Implementation Priority
 
 ### Phase 1: Core Security & Development (Week 1)
+
 - OWASP Top 10 (existing enhancement)
 - NIST CSF 2.0 basics
 - Universal code principles
@@ -436,21 +472,26 @@ aichaku integrate --phase=expert
 - Basic testing strategies
 
 ### Phase 2: Architecture & Quality (Week 2)
+
 - Architecture patterns (DDD, Clean, Hexagonal)
 - API standards (OpenAPI)
 - Testing philosophies (TDD, BDD)
 - Documentation frameworks (Diátaxis)
 
 ### Phase 3: Operations & Compliance (Week 3)
+
 - DevOps practices (GitOps, IaC)
 - Observability (OpenTelemetry, DORA)
 - Compliance modules (GDPR, PCI DSS)
 - Team practices
 
 ### Phase 4: Specialization (Week 4+)
+
 - Industry-specific modules
 - Advanced architecture patterns
 - Enterprise scaling practices
 - Custom team standards
 
-This enhanced design provides a comprehensive, modern, and flexible guidance system that can adapt to any software development context while maintaining Aichaku's core philosophy of natural, adaptive methodology support.
+This enhanced design provides a comprehensive, modern, and flexible guidance
+system that can adapt to any software development context while maintaining
+Aichaku's core philosophy of natural, adaptive methodology support.

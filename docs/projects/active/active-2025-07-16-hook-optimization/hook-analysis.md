@@ -1,11 +1,13 @@
 # Hook Optimization Analysis
 
 ## Problem
+
 API usage cutoff likely due to excessive hook invocations.
 
 ## Analysis Results
 
 ### Hook Invocation Frequency
+
 Based on log analysis from `/tmp/aichaku-hooks.log`:
 
 1. **aichaku-feedback**: 1,719 calls ⚠️ CRITICAL
@@ -44,13 +46,18 @@ Based on log analysis from `/tmp/aichaku-hooks.log`:
 ## Recommendations
 
 ### Immediate Actions
-1. **DISABLE aichaku-feedback** - This is the primary issue, providing minimal value for 1,719 API calls
-2. **REFINE commit-validator** - Should only run on actual git commands, not all bash commands
-3. **CONSOLIDATE PostToolUse hooks** - Combine docs-review, jsdoc-checker, and markdown-review into one
+
+1. **DISABLE aichaku-feedback** - This is the primary issue, providing minimal
+   value for 1,719 API calls
+2. **REFINE commit-validator** - Should only run on actual git commands, not all
+   bash commands
+3. **CONSOLIDATE PostToolUse hooks** - Combine docs-review, jsdoc-checker, and
+   markdown-review into one
 
 ### Hook Configuration Changes
 
 Current problematic configuration:
+
 ```json
 {
   "matcher": ".*",
@@ -64,6 +71,7 @@ Current problematic configuration:
 Should be removed entirely or significantly restricted.
 
 ## Impact
+
 - aichaku-feedback alone accounts for ~70% of all hook calls
 - Removing it should drastically reduce API usage
 - Other hooks provide actual value and can be optimized rather than removed

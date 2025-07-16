@@ -14,7 +14,7 @@ if (!isGlobal) {
   // Check global version
   const globalPath = join(Deno.env.get("HOME") || "", ".claude");
   const globalMetadata = await readMetadata(join(globalPath, ".aichaku.json"));
-  
+
   if (globalMetadata && globalMetadata.version !== VERSION) {
     console.log(`
 ⚠️  Version mismatch detected!
@@ -25,11 +25,11 @@ Your methodologies are outdated. Update them first:
   aichaku init --global --force
 
 Then run 'aichaku upgrade' again.`);
-    
+
     return {
       success: false,
       message: "Please update global methodologies first",
-      action: 'error'
+      action: "error",
     };
   }
 }
@@ -44,14 +44,14 @@ Instead of just showing CLI version, show full status:
 ```typescript
 if (args.version) {
   console.log(`Aichaku v${VERSION}`);
-  
+
   // Check global installation
   const globalPath = join(Deno.env.get("HOME") || "", ".claude");
   try {
     const metadata = JSON.parse(
-      await Deno.readTextFile(join(globalPath, ".aichaku.json"))
+      await Deno.readTextFile(join(globalPath, ".aichaku.json")),
     );
-    
+
     if (metadata.version !== VERSION) {
       console.log(`
 ⚠️  Global methodologies: v${metadata.version} (outdated)
@@ -62,7 +62,7 @@ if (args.version) {
   } catch {
     console.log("ℹ️  No global installation found");
   }
-  
+
   Deno.exit(0);
 }
 ```
@@ -70,9 +70,11 @@ if (args.version) {
 ## Phase 3: Post-Install Message (30 min)
 
 ### Option A: Add to README install instructions
+
 Make it crystal clear in docs
 
 ### Option B: Create install wrapper script
+
 ```bash
 #!/bin/bash
 deno install -g -A -n aichaku --force "$@"
@@ -84,6 +86,7 @@ echo "   aichaku init --global --force"
 ```
 
 ### Option C: First-run detection
+
 When CLI version > methodology version, show reminder
 
 ## Phase 4: Test & Refine (20 min)

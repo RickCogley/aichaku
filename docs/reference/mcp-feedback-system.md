@@ -2,7 +2,11 @@
 
 ## Overview
 
-The Aichaku MCP (Model Context Protocol) server includes a comprehensive feedback and visibility system designed to provide clear, branded, and informative feedback for Claude Code's interactions with the server. This system ensures users understand what's happening during code reviews and security scans.
+The Aichaku MCP (Model Context Protocol) server includes a comprehensive
+feedback and visibility system designed to provide clear, branded, and
+informative feedback for Claude Code's interactions with the server. This system
+ensures users understand what's happening during code reviews and security
+scans.
 
 ## Visual Brand Identity
 
@@ -17,6 +21,7 @@ The feedback system uses consistent Aichaku branding:
 ### Visual Language
 
 #### Growth Phases
+
 - 🌱 **Seed**: Starting/initializing operations
 - 🌿 **Growing**: Active processing, ongoing work
 - 🌸 **Blooming**: Success states, positive outcomes
@@ -24,6 +29,7 @@ The feedback system uses consistent Aichaku branding:
 - 🍃 **Harvest**: Results and outputs
 
 #### Activity Indicators
+
 - 🔍 **Scanning**: File analysis, security scanning
 - ⚙️ **Analyzing**: Processing and evaluation
 - ✅ **Validating**: Compliance checking
@@ -207,21 +213,25 @@ When external security scanners are used:
 ## Console Output Design Principles
 
 ### 1. Clarity Over Verbosity
+
 - Essential information only
 - Clear visual hierarchy
 - Consistent formatting
 
 ### 2. Branded Experience
+
 - Consistent use of 🪴 Aichaku branding
 - Growth-themed visual language
 - Professional but friendly tone
 
 ### 3. Actionable Information
+
 - Clear indication of what's happening
 - Progress indicators for long operations
 - Educational context for issues
 
 ### 4. Error Resilience
+
 - Graceful error handling
 - Clear error messages
 - Helpful suggestions for resolution
@@ -230,13 +240,16 @@ When external security scanners are used:
 
 ### Environment Variables
 
-- `AICHAKU_FEEDBACK_LEVEL`: Control feedback verbosity (minimal, standard, verbose)
-- `AICHAKU_PROGRESS_THRESHOLD`: Milliseconds before showing progress (default: 1500)
+- `AICHAKU_FEEDBACK_LEVEL`: Control feedback verbosity (minimal, standard,
+  verbose)
+- `AICHAKU_PROGRESS_THRESHOLD`: Milliseconds before showing progress
+  (default: 1500)
 - `AICHAKU_TIMING_THRESHOLD`: Milliseconds before showing timing (default: 3000)
 
 ### Customization
 
-The feedback system is designed to be configurable while maintaining brand consistency. Key aspects that can be customized:
+The feedback system is designed to be configurable while maintaining brand
+consistency. Key aspects that can be customized:
 
 - Progress thresholds
 - Verbosity levels
@@ -245,7 +258,8 @@ The feedback system is designed to be configurable while maintaining brand consi
 
 ## Integration with Claude Code
 
-The feedback system is designed to work seamlessly with Claude Code's console output:
+The feedback system is designed to work seamlessly with Claude Code's console
+output:
 
 1. **stderr logging**: All feedback goes to stderr for visibility
 2. **Non-blocking**: Feedback doesn't interfere with MCP communication
@@ -299,11 +313,13 @@ The system is designed to be extensible:
 ### Debugging
 
 Enable verbose logging:
+
 ```bash
 AICHAKU_FEEDBACK_LEVEL=verbose aichaku mcp
 ```
 
 Monitor timing:
+
 ```bash
 AICHAKU_TIMING_THRESHOLD=1000 aichaku mcp
 ```

@@ -3,6 +3,7 @@
 ## The Problem
 
 Users are confused about what Aichaku is:
+
 - They think they need to choose a methodology
 - Documentation shows different commands
 - No clear upgrade path
@@ -10,9 +11,11 @@ Users are confused about what Aichaku is:
 
 ## The Solution
 
-Make Aichaku what it was meant to be: **one adaptive system** that responds to context.
+Make Aichaku what it was meant to be: **one adaptive system** that responds to
+context.
 
 ### Before (Confusing)
+
 ```bash
 # Which methodology do I need?
 aichaku shape-up
@@ -21,6 +24,7 @@ aichaku install  # Wait, what?
 ```
 
 ### After (Clear)
+
 ```bash
 # Just initialize - Aichaku handles the rest
 aichaku init
@@ -66,6 +70,7 @@ $ tree .claude/
 ## Why This Matters
 
 Aichaku becomes what users expect:
+
 - One tool that adapts
 - Not a methodology picker
 - Customizable without fear

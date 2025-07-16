@@ -9,7 +9,8 @@
 
 ## Overview
 
-This guide provides step-by-step instructions to integrate PDF generation capabilities into Aichaku.
+This guide provides step-by-step instructions to integrate PDF generation
+capabilities into Aichaku.
 
 ## Phase 1: Core PDF Module (2 hours)
 
@@ -26,7 +27,7 @@ export class PDFGenerator {
     }
 
     // Determine output path
-    const output = outputPath || inputPath.replace('.md', '.pdf');
+    const output = outputPath || inputPath.replace(".md", ".pdf");
     // Run pandoc with appropriate engine
     const result = await this.runPandoc(inputPath, output, deps.engine);
     return result;
@@ -38,7 +39,11 @@ export class PDFGenerator {
     // Return best available option
   }
 
-  private async runPandoc(input: string, output: string, engine: string): Promise<PDFResult> {
+  private async runPandoc(
+    input: string,
+    output: string,
+    engine: string,
+  ): Promise<PDFResult> {
     // Execute pandoc with proper flags
     // Handle Unicode based on engine
     // Return success/failure with details
@@ -56,7 +61,7 @@ export class PDFSetup {
       pandoc: await this.checkPandoc(),
       latex: await this.checkLatex(),
       fonts: await this.checkFonts(),
-      ready: false // true if all pass
+      ready: false, // true if all pass
     };
   }
 
@@ -102,7 +107,7 @@ export const DEFAULT_PDF_SETTINGS: PDFSettings = {
   autoGenerate: ["final-summary", "change-summary"],
   engine: "auto",
   coverPage: false,
-  tableOfContents: false
+  tableOfContents: false,
 };
 ```
 
@@ -156,7 +161,9 @@ async function completeWork(workDir: string) {
   const summaryPath = join(workDir, "FINAL-SUMMARY.md");
   // Check PDF generation settings
   const settings = await loadSettings();
-  if (settings.pdf?.enabled && settings.pdf.autoGenerate.includes("final-summary")) {
+  if (
+    settings.pdf?.enabled && settings.pdf.autoGenerate.includes("final-summary")
+  ) {
     console.log("📄 Generating PDF...");
     const generator = new PDFGenerator();
     const result = await generator.generate(summaryPath);
@@ -188,11 +195,11 @@ async function completeWork(workDir: string) {
 
 ```markdown
 <!-- templates/cover-page.md -->
+
 # &#123;&#123;title&#125;&#125;
 
-**Project**: &#123;&#123;project&#125;&#125;
-**Date**: &#123;&#123;date&#125;&#125;
-**Version**: &#123;&#123;version&#125;&#125;
+**Project**: &#123;&#123;project&#125;&#125; **Date**:
+&#123;&#123;date&#125;&#125; **Version**: &#123;&#123;version&#125;&#125;
 **Status**: &#123;&#123;status&#125;&#125;
 
 ---

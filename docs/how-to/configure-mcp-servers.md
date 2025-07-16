@@ -1,13 +1,15 @@
 # Getting Started with MCP Server Configuration
 
-This guide explains how to set up Aichaku's MCP (Model Context Protocol) servers to work with Claude Code.
+This guide explains how to set up Aichaku's MCP (Model Context Protocol) servers
+to work with Claude Code.
 
 ## Prerequisites
 
 Before you begin, ensure you have:
 
 - [Claude Code](https://claude.ai/code) installed and running
-- [Aichaku CLI](https://github.com/RickCogley/aichaku) installed (`npm install -g @aichaku/cli`)
+- [Aichaku CLI](https://github.com/RickCogley/aichaku) installed
+  (`npm install -g @aichaku/cli`)
 - Basic familiarity with command line interfaces
 - Administrator access to your system for installing software
 - Understanding of what MCP (Model Context Protocol) is
@@ -46,6 +48,7 @@ aichaku mcp
 ```
 
 This automatically:
+
 - Installs MCP server binaries to `~/.claude/mcp/`
 - Configures Claude Code settings
 - Makes MCP tools available immediately
@@ -99,6 +102,7 @@ Installed MCP Servers
 ## Available MCP Tools
 
 #### Aichaku Code Reviewer (6 tools)
+
 - `mcp__aichaku-reviewer__review_file` - Security and code quality review
 - `mcp__aichaku-reviewer__review_methodology` - Methodology compliance checking
 - `mcp__aichaku-reviewer__get_standards` - Retrieve coding standards
@@ -107,6 +111,7 @@ Installed MCP Servers
 - `mcp__aichaku-reviewer__generate_documentation` - Auto-generate docs
 
 #### GitHub Operations (11 tools)
+
 - `mcp__github-operations__auth_status` - Check GitHub authentication
 - `mcp__github-operations__auth_login` - Login to GitHub
 - `mcp__github-operations__release_upload` - Upload release assets
@@ -123,7 +128,8 @@ Installed MCP Servers
 
 ## HTTP/SSE Bridge Server (Optional - aichaku-reviewer only)
 
-For better performance with multiple Claude Code instances (aichaku-reviewer only):
+For better performance with multiple Claude Code instances (aichaku-reviewer
+only):
 
 ```bash
 # Start the HTTP/SSE bridge server
@@ -137,6 +143,7 @@ aichaku mcp --stop-server
 ```
 
 The server runs on port 7182 and provides:
+
 - Faster response times (no process startup overhead)
 - Support for multiple concurrent clients
 - Persistent session management
@@ -155,7 +162,7 @@ MCP servers are configured in `~/.claude/settings.json`:
       "env": {}
     },
     "github-operations": {
-      "command": "/Users/username/.claude/mcp/github-operations/index.js", 
+      "command": "/Users/username/.claude/mcp/github-operations/index.js",
       "args": [],
       "env": {}
     }
@@ -163,7 +170,8 @@ MCP servers are configured in `~/.claude/settings.json`:
 }
 ```
 
-**Note**: `aichaku setup` automatically manages this configuration. You rarely need to edit it manually.
+**Note**: `aichaku setup` automatically manages this configuration. You rarely
+need to edit it manually.
 
 ## Verification
 
@@ -176,6 +184,7 @@ In Claude Code, use the `/mcp` command to verify configuration:
 ```
 
 This shows:
+
 - Configured MCP servers
 - Connection status
 - Available tools count
@@ -199,6 +208,7 @@ MCP tools appear with the `mcp__` prefix in Claude's tool usage.
 **Problem**: MCP tools don't appear in Claude Code
 
 **Solution**:
+
 ```bash
 # Check if servers are installed
 aichaku mcp
@@ -214,6 +224,7 @@ aichaku setup --force
 **Problem**: Permission denied errors
 
 **Solution**:
+
 ```bash
 # Fix file permissions
 chmod +x ~/.claude/mcp/*/index.js
@@ -227,6 +238,7 @@ aichaku setup --force
 **Problem**: Claude Code can't find MCP servers
 
 **Solution**:
+
 ```bash
 # Check Claude Code settings
 cat ~/.claude/settings.json
@@ -241,6 +253,7 @@ aichaku setup
 **Problem**: `aichaku mcp --start-server` fails
 
 **Solution**:
+
 ```bash
 # Check if port 7182 is in use
 lsof -i :7182
@@ -255,17 +268,20 @@ aichaku mcp --start-server
 ## Best Practices
 
 ## Use Stdio Mode by Default
+
 - Stdio servers are simpler and more reliable
 - No persistent processes to manage
 - Automatically started by Claude Code when needed
 
 ## HTTP/SSE Mode for Heavy Usage (aichaku-reviewer only)
+
 - Use when running multiple Claude Code instances
 - Better for frequent aichaku-reviewer tool usage
 - Requires manual server management
 - **Only works with aichaku-reviewer tools currently**
 
 ## Keep Servers Updated
+
 ```bash
 # Update all servers with Aichaku
 npm update -g @aichaku/cli
@@ -275,6 +291,7 @@ aichaku mcp --tools
 ```
 
 ## Monitor Server Health
+
 ```bash
 # Check status regularly
 aichaku mcp
@@ -286,16 +303,19 @@ aichaku mcp --tools
 ## Security Considerations
 
 ## Local Execution
+
 - MCP servers run with your user permissions
 - They can access files and APIs you have access to
 - Review tool permissions before use
 
 ## Authentication
+
 - GitHub MCP requires GitHub token for API access
 - Store tokens securely (environment variables)
 - Use minimal required permissions
 
 ## Network Access
+
 - HTTP/SSE server only binds to localhost (127.0.0.1)
 - No external network exposure by default
 - Firewall rules generally not needed
@@ -307,7 +327,8 @@ If you encounter issues:
 1. **Check server status**: `aichaku mcp`
 2. **View detailed logs**: Check Claude Code console output
 3. **Reset configuration**: `aichaku setup --force`
-4. **Report issues**: [Aichaku GitHub Issues](https://github.com/RickCogley/aichaku/issues)
+4. **Report issues**:
+   [Aichaku GitHub Issues](https://github.com/RickCogley/aichaku/issues)
 
 ## Summary
 
@@ -317,4 +338,5 @@ If you encounter issues:
 - **Use `aichaku setup`** for automatic configuration
 - **Restart Claude Code** after configuration changes
 
-The MCP system enables powerful integrations between Claude Code and external tools while maintaining security and performance.
+The MCP system enables powerful integrations between Claude Code and external
+tools while maintaining security and performance.

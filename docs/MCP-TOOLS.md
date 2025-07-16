@@ -1,8 +1,12 @@
 # MCP Tools Reference
 
-> **Note**: This document describes planned future MCP tools for Aichaku. Currently, the MCP server provides security review capabilities. The tools described here (analyze_project, create_doc_template, generate_documentation) are on the roadmap for future implementation.
+> **Note**: This document describes planned future MCP tools for Aichaku.
+> Currently, the MCP server provides security review capabilities. The tools
+> described here (analyze_project, create_doc_template, generate_documentation)
+> are on the roadmap for future implementation.
 
-This reference describes the planned Model Context Protocol (MCP) tools for enhanced project analysis and documentation generation.
+This reference describes the planned Model Context Protocol (MCP) tools for
+enhanced project analysis and documentation generation.
 
 ## Prerequisites
 
@@ -11,38 +15,47 @@ Before using the MCP tools described in this guide, you need:
 - **Aichaku installed**: The MCP server must be running and configured
 - **Project access**: Read/write permissions to your project directory
 - **Basic command line knowledge**: Familiarity with terminal/command prompt
-- **Understanding of your project structure**: Knowledge of your codebase organization
+- **Understanding of your project structure**: Knowledge of your codebase
+  organization
 
 For setup instructions, see the main [Aichaku documentation](../README.md).
 
 ## Current Status
 
 **Currently Available:**
+
 - `review_file` - Security and standards review for individual files
 - `review_methodology` - Check project methodology compliance
 - `get_standards` - Retrieve project standards configuration
 - `get_statistics` - Get usage statistics and analytics
 - `send_feedback` - Send visible feedback messages to Claude Code console
 
-See [MCP-SERVER.md](./MCP-SERVER.md) for documentation of currently available tools.
+See [MCP-SERVER.md](./MCP-SERVER.md) for documentation of currently available
+tools.
 
 ## Planned Tools (Future Implementation)
 
-Future releases include the following tools to provide automated capabilities for:
+Future releases include the following tools to provide automated capabilities
+for:
+
 - Analyzing project structure and dependencies
 - Creating documentation templates based on project type
 - Generating comprehensive documentation automatically
 
-These tools work seamlessly with Aichaku's existing methodology support and you access them through the `mcp__aichaku__` prefix when implemented.
+These tools work seamlessly with Aichaku's existing methodology support and you
+access them through the `mcp__aichaku__` prefix when implemented.
 
 ## Tools Reference
 
 ## analyze_project
 
-Analyzes a project directory to understand its structure, technologies, and patterns.
+Analyzes a project directory to understand its structure, technologies, and
+patterns.
 
 ### Description
+
 This tool performs deep analysis of a codebase to identify:
+
 - Programming languages and frameworks used
 - Project structure and organization
 - Dependencies and package managers
@@ -53,12 +66,12 @@ This tool performs deep analysis of a codebase to identify:
 
 ### Parameters
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `projectPath` | string | Yes | Absolute or relative path to the project directory |
-| `depth` | number | No | How deep to analyze (1-5, default: 3) |
-| `includeTests` | boolean | No | Whether to analyze test files (default: true) |
-| `includeDocs` | boolean | No | Whether to analyze documentation (default: true) |
+| Parameter      | Type    | Required | Description                                        |
+| -------------- | ------- | -------- | -------------------------------------------------- |
+| `projectPath`  | string  | Yes      | Absolute or relative path to the project directory |
+| `depth`        | number  | No       | How deep to analyze (1-5, default: 3)              |
+| `includeTests` | boolean | No       | Whether to analyze test files (default: true)      |
+| `includeDocs`  | boolean | No       | Whether to analyze documentation (default: true)   |
 
 ### Return Schema
 
@@ -66,7 +79,7 @@ This tool performs deep analysis of a codebase to identify:
 interface ProjectAnalysis {
   projectPath: string;
   name: string;
-  type: 'application' | 'library' | 'tool' | 'mixed';
+  type: "application" | "library" | "tool" | "mixed";
   languages: Array<{
     name: string;
     percentage: number;
@@ -102,6 +115,7 @@ interface ProjectAnalysis {
 ### Usage Examples
 
 **Basic Project Analysis:**
+
 ```bash
 # Analyze current directory
 mcp__aichaku__analyze_project --projectPath .
@@ -111,6 +125,7 @@ mcp__aichaku__analyze_project --projectPath /path/to/my-project
 ```
 
 **Deep Analysis with Options:**
+
 ```bash
 # Maximum depth analysis including all files
 mcp__aichaku__analyze_project \
@@ -121,11 +136,12 @@ mcp__aichaku__analyze_project \
 ```
 
 **Integration with Aichaku Workflow:**
+
 ```typescript
 // In a Claude conversation or script
 const analysis = await mcp__aichaku__analyze_project({
-  projectPath: './my-project',
-  depth: 3
+  projectPath: "./my-project",
+  depth: 3,
 });
 
 // Use analysis to determine documentation needs
@@ -135,7 +151,7 @@ if (analysis.structure.hasTests && !analysis.structure.hasDocs) {
 }
 
 // Check methodology alignment
-if (analysis.methodology.detected.includes('shape-up')) {
+if (analysis.methodology.detected.includes("shape-up")) {
   console.log("Project appears to follow Shape Up methodology");
   // Create Shape Up specific documentation
 }
@@ -146,7 +162,9 @@ if (analysis.methodology.detected.includes('shape-up')) {
 Generates documentation templates based on project type and detected patterns.
 
 ### Description
+
 Creates customized documentation templates that match your project's:
+
 - Technology stack
 - Project structure
 - Detected methodology
@@ -154,13 +172,13 @@ Creates customized documentation templates that match your project's:
 
 ### Parameters
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `projectPath` | string | Yes | Path to the project |
-| `templateType` | string | Yes | Type of template: 'readme', 'api', 'architecture', 'contributing', 'testing' |
-| `format` | string | No | Output format: 'markdown', 'asciidoc', 'rst' (default: 'markdown') |
-| `analysis` | object | No | Pre-computed project analysis (to avoid re-analysis) |
-| `standards` | string[] | No | Documentation standards to follow |
+| Parameter      | Type     | Required | Description                                                                  |
+| -------------- | -------- | -------- | ---------------------------------------------------------------------------- |
+| `projectPath`  | string   | Yes      | Path to the project                                                          |
+| `templateType` | string   | Yes      | Type of template: 'readme', 'api', 'architecture', 'contributing', 'testing' |
+| `format`       | string   | No       | Output format: 'markdown', 'asciidoc', 'rst' (default: 'markdown')           |
+| `analysis`     | object   | No       | Pre-computed project analysis (to avoid re-analysis)                         |
+| `standards`    | string[] | No       | Documentation standards to follow                                            |
 
 ### Return Schema
 
@@ -187,6 +205,7 @@ interface DocTemplate {
 ### Usage Examples
 
 **Generate README Template:**
+
 ```bash
 # Basic README for current project
 mcp__aichaku__create_doc_template \
@@ -201,12 +220,13 @@ mcp__aichaku__create_doc_template \
 ```
 
 **Create API Documentation Template:**
+
 ```javascript
 // For a REST API project
 const apiTemplate = await mcp__aichaku__create_doc_template({
-  projectPath: './api-service',
-  templateType: 'api',
-  format: 'markdown'
+  projectPath: "./api-service",
+  templateType: "api",
+  format: "markdown",
 });
 
 // Template includes sections for:
@@ -219,17 +239,18 @@ const apiTemplate = await mcp__aichaku__create_doc_template({
 ```
 
 **Architecture Documentation:**
+
 ```typescript
 // Use with pre-computed analysis
 const analysis = await mcp__aichaku__analyze_project({
-  projectPath: './microservices'
+  projectPath: "./microservices",
 });
 
 const archTemplate = await mcp__aichaku__create_doc_template({
-  projectPath: './microservices',
-  templateType: 'architecture',
-  analysis: analysis,  // Reuse analysis
-  standards: ['c4-model', 'adr']
+  projectPath: "./microservices",
+  templateType: "architecture",
+  analysis: analysis, // Reuse analysis
+  standards: ["c4-model", "adr"],
 });
 
 // Creates template with:
@@ -241,10 +262,13 @@ const archTemplate = await mcp__aichaku__create_doc_template({
 
 ## generate_documentation
 
-Automatically generates complete documentation by analyzing code and existing docs.
+Automatically generates complete documentation by analyzing code and existing
+docs.
 
 ### Description
+
 This tool goes beyond templates to generate actual documentation content by:
+
 - Extracting information from code comments
 - Analyzing function signatures and types
 - Reading configuration files
@@ -253,16 +277,16 @@ This tool goes beyond templates to generate actual documentation content by:
 
 ### Parameters
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `projectPath` | string | Yes | Path to the project |
-| `outputPath` | string | No | Where to save documentation (default: './docs') |
-| `types` | string[] | No | Documentation types to generate: ['api', 'readme', 'guides', 'all'] |
-| `format` | string | No | Output format (default: 'markdown') |
-| `includeExamples` | boolean | No | Generate usage examples (default: true) |
-| `analysis` | object | No | Pre-computed project analysis |
-| `standards` | string[] | No | Documentation standards to follow |
-| `methodology` | string | No | Specific methodology to align with |
+| Parameter         | Type     | Required | Description                                                         |
+| ----------------- | -------- | -------- | ------------------------------------------------------------------- |
+| `projectPath`     | string   | Yes      | Path to the project                                                 |
+| `outputPath`      | string   | No       | Where to save documentation (default: './docs')                     |
+| `types`           | string[] | No       | Documentation types to generate: ['api', 'readme', 'guides', 'all'] |
+| `format`          | string   | No       | Output format (default: 'markdown')                                 |
+| `includeExamples` | boolean  | No       | Generate usage examples (default: true)                             |
+| `analysis`        | object   | No       | Pre-computed project analysis                                       |
+| `standards`       | string[] | No       | Documentation standards to follow                                   |
+| `methodology`     | string   | No       | Specific methodology to align with                                  |
 
 ### Return Schema
 
@@ -293,6 +317,7 @@ interface GeneratedDocs {
 ### Usage Examples
 
 **Generate Complete Documentation:**
+
 ```bash
 # Generate all documentation types
 mcp__aichaku__generate_documentation \
@@ -309,15 +334,16 @@ mcp__aichaku__generate_documentation \
 ```
 
 **API-Only Documentation:**
+
 ```typescript
 // Generate API docs for a TypeScript project
 const apiDocs = await mcp__aichaku__generate_documentation({
-  projectPath: './typescript-api',
-  outputPath: './docs/api',
-  types: ['api'],
-  format: 'markdown',
+  projectPath: "./typescript-api",
+  outputPath: "./docs/api",
+  types: ["api"],
+  format: "markdown",
   includeExamples: true,
-  standards: ['openapi', 'jsdoc']
+  standards: ["openapi", "jsdoc"],
 });
 
 // Generates:
@@ -328,13 +354,14 @@ const apiDocs = await mcp__aichaku__generate_documentation({
 ```
 
 **Methodology-Aligned Documentation:**
+
 ```javascript
 // For a Shape Up project
 const shapeUpDocs = await mcp__aichaku__generate_documentation({
-  projectPath: './my-project',
-  types: ['guides', 'readme'],
-  methodology: 'shape-up',
-  standards: ['shape-up', 'conventional-commits']
+  projectPath: "./my-project",
+  types: ["guides", "readme"],
+  methodology: "shape-up",
+  standards: ["shape-up", "conventional-commits"],
 });
 
 // Creates Shape Up aligned docs:
@@ -353,26 +380,26 @@ The MCP tools integrate seamlessly with Aichaku's methodology support:
 ```typescript
 // 1. Analyze project to detect methodology
 const analysis = await mcp__aichaku__analyze_project({
-  projectPath: '.'
+  projectPath: ".",
 });
 
 // 2. Create appropriate templates
-if (analysis.methodology.detected.includes('scrum')) {
+if (analysis.methodology.detected.includes("scrum")) {
   // Generate Scrum-aligned documentation
   const template = await mcp__aichaku__create_doc_template({
-    projectPath: '.',
-    templateType: 'contributing',
+    projectPath: ".",
+    templateType: "contributing",
     analysis: analysis,
-    standards: ['scrum', 'agile']
+    standards: ["scrum", "agile"],
   });
 }
 
 // 3. Generate complete documentation
 const docs = await mcp__aichaku__generate_documentation({
-  projectPath: '.',
+  projectPath: ".",
   analysis: analysis,
   methodology: analysis.methodology.detected[0],
-  types: ['all']
+  types: ["all"],
 });
 ```
 
@@ -383,14 +410,14 @@ The tools respect Aichaku's configured documentation standards:
 ```typescript
 // Read configured standards
 const standards = await mcp__aichaku__get_standards({
-  projectPath: '.'
+  projectPath: ".",
 });
 
 // Generate docs following those standards
 const docs = await mcp__aichaku__generate_documentation({
-  projectPath: '.',
+  projectPath: ".",
   standards: standards.selected,
-  includeExamples: true
+  includeExamples: true,
 });
 ```
 
@@ -422,29 +449,29 @@ Use the tools in sequence for best results:
 ```typescript
 // Step 1: Analyze
 const analysis = await mcp__aichaku__analyze_project({
-  projectPath: './my-project',
-  depth: 4
+  projectPath: "./my-project",
+  depth: 4,
 });
 
 // Step 2: Create templates based on analysis
 const templates = await Promise.all([
   mcp__aichaku__create_doc_template({
-    projectPath: './my-project',
-    templateType: 'readme',
-    analysis: analysis
+    projectPath: "./my-project",
+    templateType: "readme",
+    analysis: analysis,
   }),
   mcp__aichaku__create_doc_template({
-    projectPath: './my-project',
-    templateType: 'api',
-    analysis: analysis
-  })
+    projectPath: "./my-project",
+    templateType: "api",
+    analysis: analysis,
+  }),
 ]);
 
 // Step 3: Generate documentation
 const docs = await mcp__aichaku__generate_documentation({
-  projectPath: './my-project',
+  projectPath: "./my-project",
   analysis: analysis,
-  types: ['all']
+  types: ["all"],
 });
 ```
 
@@ -460,7 +487,7 @@ async function getProjectAnalysis(path) {
   if (!analysisCache.has(path)) {
     const analysis = await mcp__aichaku__analyze_project({
       projectPath: path,
-      depth: 5
+      depth: 5,
     });
     analysisCache.set(path, analysis);
   }
@@ -475,23 +502,23 @@ Generate documentation incrementally:
 ```typescript
 // Start with essential docs
 await mcp__aichaku__generate_documentation({
-  projectPath: '.',
-  types: ['readme'],
-  includeExamples: false
+  projectPath: ".",
+  types: ["readme"],
+  includeExamples: false,
 });
 
 // Add API docs when ready
 await mcp__aichaku__generate_documentation({
-  projectPath: '.',
-  types: ['api'],
-  includeExamples: true
+  projectPath: ".",
+  types: ["api"],
+  includeExamples: true,
 });
 
 // Add guides as project matures
 await mcp__aichaku__generate_documentation({
-  projectPath: '.',
-  types: ['guides'],
-  methodology: 'shape-up'
+  projectPath: ".",
+  types: ["guides"],
+  methodology: "shape-up",
 });
 ```
 
@@ -502,9 +529,9 @@ Define custom standards for your organization:
 ```typescript
 // Use custom standards
 const customDocs = await mcp__aichaku__generate_documentation({
-  projectPath: './enterprise-app',
-  standards: ['iso-27001', 'company-style-guide'],
-  types: ['all']
+  projectPath: "./enterprise-app",
+  standards: ["iso-27001", "company-style-guide"],
+  types: ["all"],
 });
 
 // Template includes security sections
@@ -532,8 +559,8 @@ The tools handle polyglot projects intelligently:
 ```typescript
 // Generates appropriate docs for each language
 const docs = await mcp__aichaku__generate_documentation({
-  projectPath: './fullstack-app',
-  types: ['api'],
+  projectPath: "./fullstack-app",
+  types: ["api"],
   // Tool detects:
   // - TypeScript frontend → TSDoc
   // - Python backend → Sphinx
@@ -552,8 +579,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'src/**'
-      - 'docs/**'
+      - "src/**"
+      - "docs/**"
 
 jobs:
   generate-docs:
@@ -591,13 +618,13 @@ Use analysis to validate documentation coverage:
 ```typescript
 // Check documentation coverage
 const analysis = await mcp__aichaku__analyze_project({
-  projectPath: '.',
-  includeDocs: true
+  projectPath: ".",
+  includeDocs: true,
 });
 
 const docs = await mcp__aichaku__generate_documentation({
-  projectPath: '.',
-  analysis: analysis
+  projectPath: ".",
+  analysis: analysis,
 });
 
 // Validate coverage
@@ -606,13 +633,15 @@ if (docs.summary.coverage.functions < 80) {
 }
 
 // Check for missing sections
-const requiredSections = ['installation', 'usage', 'api', 'contributing'];
-const missingSections = requiredSections.filter(section =>
-  !docs.files.some(f => f.type === section)
+const requiredSections = ["installation", "usage", "api", "contributing"];
+const missingSections = requiredSections.filter((section) =>
+  !docs.files.some((f) => f.type === section)
 );
 
 if (missingSections.length > 0) {
-  console.error(`Missing documentation sections: ${missingSections.join(', ')}`);
+  console.error(
+    `Missing documentation sections: ${missingSections.join(", ")}`,
+  );
 }
 ```
 
@@ -623,15 +652,15 @@ All tools provide detailed error information:
 ```typescript
 try {
   const docs = await mcp__aichaku__generate_documentation({
-    projectPath: './my-project',
-    types: ['all']
+    projectPath: "./my-project",
+    types: ["all"],
   });
 } catch (error) {
-  if (error.code === 'PROJECT_NOT_FOUND') {
+  if (error.code === "PROJECT_NOT_FOUND") {
     console.error("Project directory not found");
-  } else if (error.code === 'NO_SOURCE_FILES') {
+  } else if (error.code === "NO_SOURCE_FILES") {
     console.error("No source files found to document");
-  } else if (error.code === 'PERMISSION_DENIED') {
+  } else if (error.code === "PERMISSION_DENIED") {
     console.error("Cannot write to output directory");
   }
 
@@ -645,6 +674,10 @@ try {
 
 ## Conclusion
 
-The Aichaku MCP tools provide powerful automation for project analysis and documentation generation. By combining these tools with Aichaku's methodology support and standards configuration, you can maintain high-quality, consistent documentation across all your projects with minimal manual effort.
+The Aichaku MCP tools provide powerful automation for project analysis and
+documentation generation. By combining these tools with Aichaku's methodology
+support and standards configuration, you can maintain high-quality, consistent
+documentation across all your projects with minimal manual effort.
 
-For more information on configuring standards and methodologies, see the main Aichaku documentation.
+For more information on configuring standards and methodologies, see the main
+Aichaku documentation.

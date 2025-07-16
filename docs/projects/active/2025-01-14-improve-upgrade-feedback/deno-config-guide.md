@@ -1,6 +1,8 @@
 # Deno App Configuration and Metadata Guide
 
-This guide shows you how to implement configuration and metadata management for Deno/TypeScript applications, covering both development and installed application scenarios.
+This guide shows you how to implement configuration and metadata management for
+Deno/TypeScript applications, covering both development and installed
+application scenarios.
 
 ## Overview
 
@@ -9,13 +11,15 @@ Application configuration involves two distinct scenarios:
 1. **Development configuration**: Project metadata and build-time settings
 2. **User configuration**: Runtime settings for installed applications
 
-Think of this like the difference between an architect's blueprint (development) and how each homeowner arranges their furniture (user configuration).
+Think of this like the difference between an architect's blueprint (development)
+and how each homeowner arranges their furniture (user configuration).
 
 ## Development Configuration
 
 ### Set Up Project Metadata
 
-Create a `deno.json` file in your project root to define project metadata and tooling configuration:
+Create a `deno.json` file in your project root to define project metadata and
+tooling configuration:
 
 ```json
 {
@@ -40,7 +44,8 @@ Create a `deno.json` file in your project root to define project metadata and to
 
 ### Create a Configuration Schema
 
-Define and validate your configuration structure using TypeScript and runtime validation:
+Define and validate your configuration structure using TypeScript and runtime
+validation:
 
 ```typescript
 // config/schema.ts
@@ -69,18 +74,18 @@ Build your configuration from multiple sources with clear precedence:
 export async function loadConfig(): Promise<Config> {
   // Start with defaults
   let config = getDefaultConfig();
-  
+
   // Layer in config files (if they exist)
   try {
     const fileConfig = await Deno.readTextFile("./config.json");
     config = { ...config, ...JSON.parse(fileConfig) };
-  } catch { 
+  } catch {
     // File is optional
   }
-  
+
   // Override with environment variables (highest priority)
   config = mergeWithEnvVars(config);
-  
+
   // Validate the final result
   return ConfigSchema.parse(config);
 }
@@ -94,7 +99,7 @@ Never log sensitive values and keep secrets separate from regular configuration:
 // config/secrets.ts
 export class SecretManager {
   private secrets = new Map<string, string>();
-  
+
   async loadFromEnv() {
     const dbPassword = Deno.env.get("DB_PASSWORD");
     if (dbPassword) {
@@ -102,7 +107,7 @@ export class SecretManager {
       console.log("✓ Database password loaded"); // Don't log the value
     }
   }
-  
+
   get(key: string): string | undefined {
     return this.secrets.get(key);
   }
@@ -121,11 +126,11 @@ import { join } from "@std/path/mod.ts";
 
 export function getConfigDir(): string {
   const home = Deno.env.get("HOME") || Deno.env.get("USERPROFILE");
-  
+
   // Follow XDG Base Directory spec on Unix-like systems
   const xdgConfig = Deno.env.get("XDG_CONFIG_HOME");
   if (xdgConfig) return join(xdgConfig, "theapp");
-  
+
   // Platform-specific defaults
   switch (Deno.build.os) {
     case "darwin":
@@ -140,9 +145,9 @@ export function getConfigDir(): string {
 export function getDataDir(): string {
   const xdgData = Deno.env.get("XDG_DATA_HOME");
   if (xdgData) return join(xdgData, "theapp");
-  
+
   const home = Deno.env.get("HOME") || Deno.env.get("USERPROFILE");
-  
+
   switch (Deno.build.os) {
     case "darwin":
       return join(home!, "Library", "Application Support", "theapp", "data");
@@ -174,7 +179,8 @@ Organize configuration files by purpose:
 
 ### Implement Configuration Manager
 
-Create a manager class to handle loading, saving, and migrating user configuration:
+Create a manager class to handle loading, saving, and migrating user
+configuration:
 
 ```typescript
 // config/user-config.ts
@@ -198,12 +204,12 @@ interface UserConfig {
 export class UserConfigManager {
   private configPath: string;
   private config: UserConfig;
-  
+
   constructor() {
     this.configPath = join(getConfigDir(), "config.json");
     this.config = this.getDefaults();
   }
-  
+
   private getDefaults(): UserConfig {
     return {
       version: "1.0",
@@ -213,21 +219,21 @@ export class UserConfigManager {
         autoUpdate: true,
       },
       features: {
-        telemetry: false,  // Privacy by default
+        telemetry: false, // Privacy by default
         experimental: false,
       },
       lastUsed: {},
     };
   }
-  
+
   async load(): Promise<void> {
     try {
       const data = await Deno.readTextFile(this.configPath);
       const loaded = JSON.parse(data);
-      
+
       // Merge with defaults to handle missing fields
       this.config = { ...this.getDefaults(), ...loaded };
-      
+
       // Handle version migrations
       await this.migrate();
     } catch (error) {
@@ -238,19 +244,19 @@ export class UserConfigManager {
       await this.save();
     }
   }
-  
+
   async save(): Promise<void> {
     await Deno.mkdir(getConfigDir(), { recursive: true });
     await Deno.writeTextFile(
       this.configPath,
-      JSON.stringify(this.config, null, 2)
+      JSON.stringify(this.config, null, 2),
     );
   }
-  
+
   get(): UserConfig {
     return this.config;
   }
-  
+
   set(updates: Partial<UserConfig>): void {
     this.config = { ...this.config, ...updates };
   }
@@ -265,7 +271,7 @@ Create a smooth first-run experience that sets up the user's configuration:
 // app/first-run.ts
 export async function handleFirstRun() {
   const configDir = getConfigDir();
-  
+
   // Check if this is first run
   try {
     await Deno.stat(join(configDir, ".initialized"));
@@ -273,9 +279,9 @@ export async function handleFirstRun() {
   } catch {
     // Continue with first run setup
   }
-  
+
   console.log("Welcome to TheApp! Setting up your configuration...");
-  
+
   // Create directory structure
   const dirs = [
     configDir,
@@ -284,19 +290,19 @@ export async function handleFirstRun() {
     join(getDataDir(), "cache"),
     join(getDataDir(), "logs"),
   ];
-  
+
   for (const dir of dirs) {
     await Deno.mkdir(dir, { recursive: true });
   }
-  
+
   // Initialize with defaults
   const config = new UserConfigManager();
   await config.load(); // Creates default config
-  
+
   // Mark as initialized
   await Deno.writeTextFile(
-    join(configDir, ".initialized"), 
-    new Date().toISOString()
+    join(configDir, ".initialized"),
+    new Date().toISOString(),
   );
 }
 ```
@@ -315,23 +321,23 @@ const migrations: Record<string, MigrationFn> = {
     version: "1.0",
     preferences: {
       theme: cfg.darkMode ? "dark" : "light",
-      ...cfg.preferences
-    }
+      ...cfg.preferences,
+    },
   }),
   "1.0": (cfg) => ({
     ...cfg,
     version: "1.1",
     features: {
       telemetry: false,
-      ...cfg.features
-    }
-  })
+      ...cfg.features,
+    },
+  }),
 };
 
 export async function migrateConfig(config: any): Promise<UserConfig> {
   let current = config;
   const currentVersion = current.version || "0.0";
-  
+
   // Apply migrations sequentially
   for (const [fromVersion, migrate] of Object.entries(migrations)) {
     if (currentVersion <= fromVersion) {
@@ -339,7 +345,7 @@ export async function migrateConfig(config: any): Promise<UserConfig> {
       console.log(`Migrated config from ${fromVersion} to ${current.version}`);
     }
   }
-  
+
   return current;
 }
 ```
@@ -353,7 +359,7 @@ Implement a clear precedence order for configuration sources:
 export async function loadCompleteConfig() {
   // 1. Built-in defaults (lowest priority)
   let config = getAppDefaults();
-  
+
   // 2. System-wide config (if exists)
   try {
     const systemConfig = await Deno.readTextFile("/etc/theapp/config.json");
@@ -361,18 +367,18 @@ export async function loadCompleteConfig() {
   } catch {
     // System config is optional
   }
-  
+
   // 3. User config (higher priority)
   const userConfig = new UserConfigManager();
   await userConfig.load();
   config = { ...config, ...userConfig.get() };
-  
+
   // 4. Environment variables (higher priority)
   config = mergeEnvOverrides(config);
-  
+
   // 5. Command-line flags (highest priority)
   config = mergeCLIFlags(config, Deno.args);
-  
+
   return validateConfig(config);
 }
 ```
@@ -438,24 +444,24 @@ Create tests for your configuration system:
 Deno.test("loads default configuration", async () => {
   const config = new UserConfigManager();
   await config.load();
-  
+
   assertEquals(config.get().preferences.theme, "auto");
   assertEquals(config.get().features.telemetry, false);
 });
 
 Deno.test("merges environment variables correctly", async () => {
   Deno.env.set("APP_PORT", "3000");
-  
+
   const config = await loadCompleteConfig();
   assertEquals(config.app.port, "3000");
-  
+
   Deno.env.delete("APP_PORT");
 });
 
 Deno.test("handles config migration", async () => {
   const oldConfig = { darkMode: true, version: "0.0" };
   const migrated = await migrateConfig(oldConfig);
-  
+
   assertEquals(migrated.version, "1.1");
   assertEquals(migrated.preferences.theme, "dark");
 });
@@ -465,13 +471,15 @@ Deno.test("handles config migration", async () => {
 
 ### Common Issues
 
-**Configuration not loading**: Check file permissions and ensure directories exist.
+**Configuration not loading**: Check file permissions and ensure directories
+exist.
 
 **Migration failures**: Always backup user configuration before migrations.
 
 **Cross-platform paths**: Test on all target platforms, especially Windows.
 
-**Permission errors**: Request appropriate Deno permissions (--allow-read, --allow-write, --allow-env).
+**Permission errors**: Request appropriate Deno permissions (--allow-read,
+--allow-write, --allow-env).
 
 ## Further Reading
 

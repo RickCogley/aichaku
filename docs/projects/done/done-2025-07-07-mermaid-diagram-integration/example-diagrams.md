@@ -2,7 +2,8 @@
 
 ## How Mermaid Works
 
-Mermaid diagrams are created using markdown code blocks with the `mermaid` language identifier:
+Mermaid diagrams are created using markdown code blocks with the `mermaid`
+language identifier:
 
 ````markdown
 ```mermaid
@@ -15,6 +16,7 @@ graph TD
 ## Aichaku Workflow Visualization
 
 ### Overall Aichaku Flow
+
 ```mermaid
 graph TB
     User[User Message] --> Detect{Detect Methodology Keywords}
@@ -31,6 +33,7 @@ graph TB
 ```
 
 ### Methodology Detection
+
 ```mermaid
 flowchart LR
     Input[User Input] --> Keywords{Check Keywords}
@@ -46,6 +49,7 @@ flowchart LR
 ```
 
 ### Document Generation Pipeline
+
 ```mermaid
 sequenceDiagram
     participant User
@@ -67,6 +71,7 @@ sequenceDiagram
 ## PDF Generation Approaches
 
 ### Option 1: Pre-rendered SVG
+
 ```mermaid
 graph LR
     MD[Markdown + Mermaid] -->|mermaid-cli| SVG[SVG Files]
@@ -74,6 +79,7 @@ graph LR
 ```
 
 ### Option 2: Inline Processing
+
 ```mermaid
 graph LR
     MD[Markdown] -->|mermaid filter| Processed[Processed MD]
@@ -81,6 +87,7 @@ graph LR
 ```
 
 ## Benefits Visualization
+
 ```mermaid
 mindmap
   root((Mermaid in Aichaku))
@@ -103,6 +110,7 @@ mindmap
 ```
 
 ## Implementation Status
+
 ```mermaid
 gantt
     title Mermaid Integration Timeline
@@ -120,7 +128,8 @@ gantt
 
 ## Notes on PDF Generation
 
-The key challenge is that Mermaid blocks need to be converted to images for PDF. Here's a working approach:
+The key challenge is that Mermaid blocks need to be converted to images for PDF.
+Here's a working approach:
 
 ```bash
 # Install mermaid CLI
@@ -134,6 +143,7 @@ pandoc document-with-svg.md -o document.pdf
 ```
 
 For Aichaku integration, we could:
+
 1. Add this to the existing PDF generation script
 2. Make it optional (only if mermaid blocks detected)
 3. Cache rendered diagrams for performance

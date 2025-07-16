@@ -4,8 +4,10 @@
 
 Enhanced the Aichaku MCP server to address two key user concerns:
 
-1. **MCP Usage Visibility**: Added clear console logging to show when the MCP is actively being used
-2. **Document Linting**: Extended MCP capabilities to lint markdown documentation files
+1. **MCP Usage Visibility**: Added clear console logging to show when the MCP is
+   actively being used
+2. **Document Linting**: Extended MCP capabilities to lint markdown
+   documentation files
 
 ## Key Improvements
 
@@ -22,6 +24,7 @@ The MCP now logs to stderr (visible in Claude Code console) with clear prefixes:
 ```
 
 This makes it immediately apparent when the MCP is:
+
 - Starting up
 - Being invoked by Claude
 - Processing files
@@ -32,17 +35,20 @@ This makes it immediately apparent when the MCP is:
 Added comprehensive documentation patterns that check for:
 
 #### Diátaxis Framework Compliance
+
 - Tutorial structure (prerequisites, learning objectives)
 - How-to guide structure (before you begin, solution sections)
 - Proper document type identification
 
 #### Google Developer Style Guide
+
 - Sentence length (< 25 words)
 - Present tense usage
 - Second person pronouns (you, your)
 - Active voice preference
 
 #### General Quality
+
 - Broken or placeholder links
 - Missing code block languages
 - Inconsistent header levels
@@ -51,6 +57,7 @@ Added comprehensive documentation patterns that check for:
 ### 3. Enhanced Output
 
 The MCP now:
+
 - Identifies document type (Tutorial, How-to, Reference, Explanation)
 - Provides document-specific feedback
 - Shows "Documentation Review Results" for markdown files
@@ -89,16 +96,19 @@ When reviewing a markdown file:
 ## Implementation Notes
 
 ### Type Safety
+
 - Updated all pattern interfaces to match new SecurityPattern type
 - Added proper typing for checkFn functions
 - Fixed compilation errors across all pattern files
 
 ### Pattern Architecture
+
 - Patterns can use regex OR custom check functions
 - Line-specific error reporting
 - Framework-specific patterns (only apply to relevant standards)
 
 ### Future Enhancements
+
 1. Auto-fix capabilities for common issues
 2. Integration with `deno fmt` for markdown
 3. Additional style guides (Microsoft, Write the Docs)
@@ -119,7 +129,8 @@ When reviewing a markdown file:
 
 3. Restart Claude Code
 
-4. Ask Claude to review a markdown file - you'll see the MCP activity in the console!
+4. Ask Claude to review a markdown file - you'll see the MCP activity in the
+   console!
 
 ## Benefits
 

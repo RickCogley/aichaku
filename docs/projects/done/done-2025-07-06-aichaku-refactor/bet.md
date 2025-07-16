@@ -3,6 +3,7 @@
 ## Problem
 
 Aichaku's current implementation doesn't match its core vision:
+
 - CLI uses `aichaku <methodology>` implying users must choose
 - README and mod.ts have inconsistent documentation
 - No upgrade path that preserves user customizations
@@ -18,12 +19,14 @@ Aichaku's current implementation doesn't match its core vision:
 Transform Aichaku into a truly adaptive system:
 
 ### 1. Single Installation Command
+
 ```bash
 aichaku init          # Installs everything
 aichaku init --global # Global installation
 ```
 
 ### 2. User Customization Layer
+
 ```
 .claude/
 ├── methodologies/    # Core (managed)
@@ -35,11 +38,13 @@ aichaku init --global # Global installation
 ```
 
 ### 3. Lifecycle Commands
+
 - `aichaku init` - Install all methodologies
 - `aichaku upgrade` - Update core, preserve user/
 - `aichaku uninstall` - Clean removal
 
 ### 4. Aligned Messaging
+
 - "Adaptive methodology support"
 - "Natural 3-mode workflow"
 - Remove methodology selection

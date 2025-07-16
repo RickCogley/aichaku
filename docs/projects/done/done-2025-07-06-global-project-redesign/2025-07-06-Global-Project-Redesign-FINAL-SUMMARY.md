@@ -2,7 +2,8 @@
 
 ## 🎯 What We Achieved
 
-Successfully transformed Aichaku from a "copy everything everywhere" tool to an elegant global-first architecture.
+Successfully transformed Aichaku from a "copy everything everywhere" tool to an
+elegant global-first architecture.
 
 ## 📊 Key Metrics
 
@@ -14,12 +15,14 @@ Successfully transformed Aichaku from a "copy everything everywhere" tool to an 
 ## 🏗️ Architectural Changes
 
 ### Before (v0.4.x)
+
 - Every project got full methodology copies
-- Complex .gitignore requirements  
+- Complex .gitignore requirements
 - Confusing upgrade process
 - Redundant messaging
 
 ### After (v0.5.0)
+
 - **Global-only methodologies** in `~/.claude/`
 - **Projects reference global** + local customizations only
 - **Clean git repos** by default
@@ -32,14 +35,14 @@ Successfully transformed Aichaku from a "copy everything everywhere" tool to an 
    - Project: Minimal setup, no file copying
    - Interactive prompts guide users
 
-2. **Fixed all messaging**  
+2. **Fixed all messaging**
    - Removed triple redundancy
    - Context-aware output
    - Success only when action occurs
 
 3. **Enhanced all commands**
    - `integrate`: Shows line numbers
-   - `uninstall`: Detects CLAUDE.md references  
+   - `uninstall`: Detects CLAUDE.md references
    - `upgrade`: Clear check vs action
 
 4. **Updated methodologies**
@@ -56,14 +59,19 @@ Successfully transformed Aichaku from a "copy everything everywhere" tool to an 
 
 ## 📚 Lessons Learned
 
-1. **Architecture matters** - Global-first design eliminated entire categories of problems
-2. **Messages shape experience** - Clear, non-redundant output makes tools feel professional
-3. **Interactive guidance helps** - Prompts at the right moment prevent confusion
-4. **Dog-fooding reveals issues** - Using Aichaku on itself would have caught these earlier
+1. **Architecture matters** - Global-first design eliminated entire categories
+   of problems
+2. **Messages shape experience** - Clear, non-redundant output makes tools feel
+   professional
+3. **Interactive guidance helps** - Prompts at the right moment prevent
+   confusion
+4. **Dog-fooding reveals issues** - Using Aichaku on itself would have caught
+   these earlier
 
 ## 🚀 Impact
 
 This redesign positions Aichaku as a truly elegant tool that:
+
 - Respects developer workflows
 - Keeps repositories clean
 - Guides without imposing
@@ -71,9 +79,9 @@ This redesign positions Aichaku as a truly elegant tool that:
 
 ## 📅 Timeline
 
-- **Started**: 2025-07-06 
+- **Started**: 2025-07-06
 - **Planning**: ~2 hours (including testing/feedback)
-- **Implementation**: ~3 hours  
+- **Implementation**: ~3 hours
 - **Released**: v0.5.0 published to JSR
 - **Verified**: Working in production (Nagare project)
 
@@ -86,4 +94,4 @@ This redesign positions Aichaku as a truly elegant tool that:
 
 ---
 
-*This change transformed Aichaku from a good tool into a delightful experience.*
+_This change transformed Aichaku from a good tool into a delightful experience._

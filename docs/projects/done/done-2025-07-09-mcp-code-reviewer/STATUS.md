@@ -2,14 +2,16 @@
 
 🪴 Aichaku: Automated Security & Standards Review Server
 
-[Planning] → [**Designing**] → [Building] → [Testing] → [Complete]
-               ▲
+[Planning] → [**Designing**] → [Building] → [Testing] → [Complete] ▲
 
 ## Project Overview
 
-Creating a Model Context Protocol (MCP) server that performs automated security and standards review as code is produced, leveraging local tools like codeql and devskim as a "first line of defence".
+Creating a Model Context Protocol (MCP) server that performs automated security
+and standards review as code is produced, leveraging local tools like codeql and
+devskim as a "first line of defence".
 
-**Consolidated Design**: Merged security/standards review capabilities with methodology compliance checking from earlier MCP design (2025-01-09).
+**Consolidated Design**: Merged security/standards review capabilities with
+methodology compliance checking from earlier MCP design (2025-01-09).
 
 ## Current Status 🌿
 
@@ -66,7 +68,9 @@ graph LR
 3. **Hook automation**: Seamless integration via Claude Code hooks
 4. **Manual PR creation**: User-initiated only, prevents PR spam
 5. **No Claude invocation**: MCP is a tool used BY Claude, not vice versa
-6. **External tools**: DevSkim, CodeQL installed separately, detected automatically
+6. **External tools**: DevSkim, CodeQL installed separately, detected
+   automatically
 7. **Progressive enhancement**: Works with built-in patterns, better with tools
 8. **Educational feedback**: MCP helps Claude learn from mistakes in-session
-9. **Advanced prompting**: Uses proven LLM techniques for effective behavior change
+9. **Advanced prompting**: Uses proven LLM techniques for effective behavior
+   change

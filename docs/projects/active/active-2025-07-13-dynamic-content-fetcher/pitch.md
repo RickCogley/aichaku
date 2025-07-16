@@ -2,7 +2,8 @@
 
 ## Problem
 
-The current content-fetcher.ts has hard-coded file structures that get out of sync with the actual repository contents. This causes:
+The current content-fetcher.ts has hard-coded file structures that get out of
+sync with the actual repository contents. This causes:
 
 - False "failure" messages during upgrades (e.g., "3 files failed")
 - Missing files that exist in the repo but aren't in the hard-coded list
@@ -36,27 +37,33 @@ Replace the hard-coded file structures with a dynamic system that:
 
 ```typescript
 // Instead of hard-coded structure:
-async function fetchMethodologyStructure(version: string): Promise<FileStructure> {
+async function fetchMethodologyStructure(
+  version: string,
+): Promise<FileStructure> {
   try {
     // Try GitHub API first
-    return await fetchStructureFromGitHub('methodologies', version);
+    return await fetchStructureFromGitHub("methodologies", version);
   } catch {
     // Fall back to bundled manifest
-    return await loadBundledManifest('methodologies', version);
+    return await loadBundledManifest("methodologies", version);
   }
 }
 
 // Generate manifest during build
 async function generateManifest() {
-  const files = await walkDirectory('./methodologies');
-  await Deno.writeTextFile('./manifests/methodologies.json', JSON.stringify(files));
+  const files = await walkDirectory("./methodologies");
+  await Deno.writeTextFile(
+    "./manifests/methodologies.json",
+    JSON.stringify(files),
+  );
 }
 ```
 
 ## Rabbit Holes
 
 - **Not** building a complex caching system - simple in-memory cache is enough
-- **Not** trying to version individual files - whole methodology set is versioned together
+- **Not** trying to version individual files - whole methodology set is
+  versioned together
 - **Not** implementing partial updates - full methodology refresh on upgrade
 - **Not** adding file watching or sync features
 

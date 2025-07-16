@@ -3,6 +3,7 @@
 ## Problem
 
 Our bash-based hooks implementation caused catastrophic issues:
+
 - Endless subshell spawning leading to 40,000 duplicate hooks
 - 250,000+ lines added to settings file
 - Complex bash escaping issues
@@ -17,21 +18,22 @@ Our bash-based hooks implementation caused catastrophic issues:
 
 ### 1. Single TypeScript Hook Runner
 
-Create a unified TypeScript file that handles all hooks through command-line switches:
+Create a unified TypeScript file that handles all hooks through command-line
+switches:
 
 ```typescript
 // aichaku-hooks.ts
 const hookType = Deno.args[0];
 const hookName = Deno.args[1];
 
-switch(hookName) {
-  case 'path-validator':
+switch (hookName) {
+  case "path-validator":
     await runPathValidator();
     break;
-  case 'owasp-checker':
+  case "owasp-checker":
     await runOwaspChecker();
     break;
-  // ... other hooks
+    // ... other hooks
 }
 ```
 
@@ -57,17 +59,20 @@ Based on Anthropic's guidance, hooks must follow this structure:
 Following Anthropic's three key pieces of advice:
 
 #### Advice 1: TypeScript Execution Options
+
 - **Direct execution**: `deno run --allow-read /path/to/script.ts`
 - **Compiled JavaScript**: `node /path/to/compiled-script.js`
 - **Via npx**: `npx tsx /path/to/script.ts`
 
 #### Advice 2: Input/Output Protocol
+
 - Scripts receive JSON input via stdin
 - Must parse JSON safely with error handling
 - Output to stdout for Claude Code display
 - 60-second default timeout (configurable)
 
 #### Advice 3: Safety Practices
+
 - **Prevent recursion**: No Write hooks that write files
 - **Validate inputs**: Never trust input data blindly
 - **Use absolute paths**: Always use full paths to scripts
@@ -78,6 +83,7 @@ Following Anthropic's three key pieces of advice:
 ### 4. Implementation Details
 
 #### Single Compiled Binary
+
 ```bash
 # Compile once
 deno compile --allow-read --output aichaku-hooks aichaku-hooks.ts
@@ -91,6 +97,7 @@ deno compile --allow-read --output aichaku-hooks aichaku-hooks.ts
 ```
 
 #### Input Parsing (Modern Deno API)
+
 ```typescript
 const decoder = new TextDecoder();
 const reader = Deno.stdin.readable.getReader();
@@ -106,19 +113,25 @@ const input = JSON.parse(decoder.decode(result.value));
 ## Rabbit Holes
 
 ### 1. Don't Create Individual Hook Files
+
 Creating separate TypeScript files for each hook leads to:
+
 - Multiple compilation steps
 - Harder distribution
 - More complex maintenance
 
 ### 2. Don't Use External Dependencies
+
 Stick to Deno built-ins to avoid:
+
 - Dependency management issues
 - Compilation problems
 - Security vulnerabilities
 
 ### 3. Don't Over-Engineer Error Handling
+
 Hooks should fail silently to avoid disrupting Claude Code:
+
 ```typescript
 try {
   // Hook logic

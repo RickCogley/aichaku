@@ -2,7 +2,10 @@
 
 ## Problem
 
-The installer shows where the aichaku command is installed (`/Users/rcogley/.deno/bin/aichaku`) but doesn't show where the methodologies are installed. Users need to know both locations for transparency and troubleshooting.
+The installer shows where the aichaku command is installed
+(`/Users/rcogley/.deno/bin/aichaku`) but doesn't show where the methodologies
+are installed. Users need to know both locations for transparency and
+troubleshooting.
 
 ## Appetite
 
@@ -11,10 +14,12 @@ Small batch - 30 minutes
 ## Solution
 
 Update the installer output to clearly show both:
+
 1. Where the CLI command is installed
 2. Where the methodologies are installed
 
 ### Current Output
+
 ```
 ✅ Successfully installed aichaku
 /Users/rcogley/.deno/bin/aichaku
@@ -27,6 +32,7 @@ Update the installer output to clearly show both:
 ```
 
 ### Proposed Output
+
 ```
 ✅ Successfully installed aichaku
 📍 CLI: /Users/rcogley/.deno/bin/aichaku

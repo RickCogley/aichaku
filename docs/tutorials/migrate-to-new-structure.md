@@ -2,19 +2,26 @@
 
 ## Overview
 
-Starting with Aichaku v0.20.0, we've reorganized the folder structure to provide better separation between Aichaku's core files and your custom content. This migration guide will walk you through updating your existing setup to the new structure.
+Starting with Aichaku v0.20.0, we've reorganized the folder structure to provide
+better separation between Aichaku's core files and your custom content. This
+migration guide will walk you through updating your existing setup to the new
+structure.
 
 ### Why Migrate?
 
 The new structure provides:
+
 - **Clear ownership**: Aichaku files live in `aichaku/` subdirectories
 - **Better organization**: Custom standards have a dedicated location
-- **Easier updates**: Core files can be updated without affecting your customizations
-- **Cleaner root**: The `~/.claude/` directory stays organized for multiple tools
+- **Easier updates**: Core files can be updated without affecting your
+  customizations
+- **Cleaner root**: The `~/.claude/` directory stays organized for multiple
+  tools
 
 ### What's Changing
 
 **Before (v0.19.0 and earlier):**
+
 ```
 ~/.claude/
 ├── methodologies/         # Aichaku's methodologies
@@ -29,6 +36,7 @@ project/.claude/
 ```
 
 **After (v0.20.0+):**
+
 ```
 ~/.claude/
 └── aichaku/             # All Aichaku files
@@ -82,11 +90,13 @@ aichaku migrate --dry-run
 ```
 
 The dry run will show you:
+
 - What files will be moved
 - What backups will be created
 - Any potential issues
 
 Example output:
+
 ```
 🪴 Aichaku Migration Analysis
 
@@ -109,12 +119,14 @@ aichaku migrate --global
 ```
 
 This command will:
+
 1. Create a backup of your current `~/.claude/` directory
 2. Move core Aichaku files to `~/.claude/aichaku/`
 3. Move custom standards to the new location
 4. Update internal references
 
 Example output:
+
 ```
 🪴 Aichaku Global Migration
 
@@ -147,11 +159,13 @@ aichaku migrate --project .
 ```
 
 This will:
+
 - Move `.claude/.aichaku-standards.json` → `.claude/aichaku/standards.json`
 - Update any path references in the configuration
 - Create the new directory structure
 
 Example for multiple projects:
+
 ```bash
 # Quick way to migrate multiple projects
 for project in ~/projects/*; do
@@ -173,15 +187,18 @@ aichaku migrate --custom-standards-only
 ```
 
 This is useful if:
+
 - You manually moved some files
 - You're upgrading from a partial migration
 - You only use custom standards
 
 The command will check both old locations:
+
 - `~/.claude/docs/standards/custom/*`
 - `~/.claude/aichaku/docs/standards/custom/*`
 
 And consolidate them in the new location:
+
 - `~/.claude/aichaku/user/docs/standards/`
 
 ## Step 5: Verify Migration
@@ -201,6 +218,7 @@ aichaku standards --show
 ```
 
 Expected output:
+
 ```
 🪴 Aichaku Standards
 
@@ -224,6 +242,7 @@ Project Standards (./project-name):
 ### Creating Custom Standards (New Way)
 
 The old manual method:
+
 ```bash
 # ❌ Don't use this anymore
 mkdir -p ~/.claude/docs/standards/custom
@@ -231,6 +250,7 @@ echo "# My Standard" > ~/.claude/docs/standards/custom/my-standard.md
 ```
 
 The new recommended method:
+
 ```bash
 # ✅ Use this instead
 aichaku standards --create-custom "My Standard Name"
@@ -273,11 +293,13 @@ aichaku standards --search "security"
 This can happen if migration was partially completed.
 
 **Solution:** Force migration with backup:
+
 ```bash
 aichaku migrate --force --backup
 ```
 
 **Manual verification:**
+
 ```bash
 # Check both locations
 ls -la ~/.claude/methodologies/        # Old
@@ -289,6 +311,7 @@ ls -la ~/.claude/aichaku/methodologies/ # New
 Custom standards might be in the wrong location.
 
 **Check all possible locations:**
+
 ```bash
 # New location (correct)
 ls -la ~/.claude/aichaku/user/docs/standards/
@@ -299,6 +322,7 @@ ls -la ~/.claude/aichaku/docs/standards/custom/
 ```
 
 **Manual fix if needed:**
+
 ```bash
 # Create destination if it doesn't exist
 mkdir -p ~/.claude/aichaku/user/docs/standards/
@@ -313,6 +337,7 @@ mv ~/.claude/aichaku/docs/standards/custom/* ~/.claude/aichaku/user/docs/standar
 The standards configuration file has been renamed and moved.
 
 **Check both locations:**
+
 ```bash
 # Old location and name
 ls -la .claude/.aichaku-standards.json
@@ -322,6 +347,7 @@ ls -la .claude/aichaku/standards.json
 ```
 
 **Manual fix:**
+
 ```bash
 # Create new structure
 mkdir -p .claude/aichaku
@@ -333,6 +359,7 @@ mv .claude/.aichaku-standards.json .claude/aichaku/standards.json
 ### Issue: Permission denied during migration
 
 **Solution:** Check and fix permissions:
+
 ```bash
 # Check permissions
 ls -la ~/.claude/
@@ -357,6 +384,7 @@ aichaku migrate --rollback $BACKUP_DIR
 ```
 
 **Manual rollback:**
+
 ```bash
 # Remove new structure
 rm -rf ~/.claude/aichaku
@@ -369,12 +397,12 @@ cp -r ~/.claude-backup-20250711-143022/* ~/.claude/
 
 These important locations don't change:
 
-| Location | Purpose | Why it stays |
-|----------|---------|--------------|
-| `.claude/output/` | Your work documents | User-created content |
-| `.claude/user/` | Your customizations | User-owned directory |
-| `.claude/CLAUDE.md` | AI instructions | Top-level config |
-| `.claude/settings.local.json` | Claude Code settings | Tool-specific |
+| Location                      | Purpose              | Why it stays         |
+| ----------------------------- | -------------------- | -------------------- |
+| `.claude/output/`             | Your work documents  | User-created content |
+| `.claude/user/`               | Your customizations  | User-owned directory |
+| `.claude/CLAUDE.md`           | AI instructions      | Top-level config     |
+| `.claude/settings.local.json` | Claude Code settings | Tool-specific        |
 
 ## Post-Migration Checklist
 
@@ -404,7 +432,8 @@ If you have scripts that reference the old structure:
 
 Now that you've migrated:
 
-1. **Learn about custom standards**: See [Managing Custom Standards](/docs/how-to/manage-custom-standards.md)
+1. **Learn about custom standards**: See
+   [Managing Custom Standards](/docs/how-to/manage-custom-standards.md)
 2. **Explore new features**: Check [What's New](/docs/reference/changelog.md)
 3. **Share with your team**: Use this guide to help others migrate
 
@@ -428,4 +457,5 @@ The migration process is designed to be safe and reversible:
 3. **Updates automatically** when you run commands
 4. **Can be rolled back** if needed
 
-Remember: This is a one-time migration. Once completed, Aichaku will use the new structure going forward, providing better organization and easier maintenance.
+Remember: This is a one-time migration. Once completed, Aichaku will use the new
+structure going forward, providing better organization and easier maintenance.

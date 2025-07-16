@@ -2,13 +2,15 @@
 
 ## Key Finding
 
-SharePoint natively renders markdown files with reasonable formatting, making it an excellent solution for sharing technical documentation with business users.
+SharePoint natively renders markdown files with reasonable formatting, making it
+an excellent solution for sharing technical documentation with business users.
 
 ## What This Means
 
 1. **Zero Conversion Needed**: Upload .md files directly to SharePoint
 2. **Automatic Formatting**: SharePoint handles the markdown → HTML conversion
-3. **Business-Friendly**: Non-technical users see formatted documents, not raw markdown
+3. **Business-Friendly**: Non-technical users see formatted documents, not raw
+   markdown
 4. **Version Control**: SharePoint's built-in versioning tracks changes
 
 ## Implementation Impact
@@ -16,6 +18,7 @@ SharePoint natively renders markdown files with reasonable formatting, making it
 This discovery changes our output strategy:
 
 ### Before (Complex)
+
 ```
 Markdown → LaTeX → PDF → Email/Share
          ↓ (if LaTeX fails)
@@ -23,6 +26,7 @@ Markdown → LaTeX → PDF → Email/Share
 ```
 
 ### After (Simple)
+
 ```
 Markdown → SharePoint (renders automatically)
          ↓ (optional)
@@ -67,8 +71,12 @@ Tip: Create a dedicated folder for Aichaku outputs
 
 Add to Aichaku README:
 
-> **Pro Tip**: SharePoint users can upload markdown files directly. SharePoint automatically renders them with formatting, making them perfect for sharing with non-technical stakeholders. No PDF conversion needed!
+> **Pro Tip**: SharePoint users can upload markdown files directly. SharePoint
+> automatically renders them with formatting, making them perfect for sharing
+> with non-technical stakeholders. No PDF conversion needed!
 
 ---
 
-*Screenshot provided by user shows SharePoint rendering a markdown file called "compass_art__markdown.md" with proper formatting including headers, lists, and text styling.*
+_Screenshot provided by user shows SharePoint rendering a markdown file called
+"compass_art__markdown.md" with proper formatting including headers, lists, and
+text styling._

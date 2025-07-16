@@ -90,6 +90,7 @@ export default {
         "lint",
         "format",
         "security-scan",
+        "type-check", // Re-enabled: deno check now respects top-level exclude
         "version-conflict",
       ],
     },
@@ -138,59 +139,11 @@ export default {
 
         console.log("🔍 Running type check...");
         const checkCmd = new Deno.Command("deno", {
-          args: [
-            "check",
-            "cli.ts",
-            "mod.ts",
-            "src/commands/cleanup.ts",
-            "src/commands/content-fetcher.ts",
-            "src/commands/docs-lint.ts",
-            "src/commands/docs-standard.ts",
-            "src/commands/github.ts",
-            "src/commands/help.ts",
-            "src/commands/hooks.ts",
-            "src/commands/init.ts",
-            "src/commands/integrate.ts",
-            "src/commands/learn.ts",
-            "src/commands/mcp-daemon.ts",
-            "src/commands/mcp.ts",
-            "src/commands/migrate.ts",
-            "src/commands/review.ts",
-            "src/commands/standards.ts",
-            "src/commands/uninstall.ts",
-            "src/commands/upgrade-fix.ts",
-            "src/commands/upgrade.ts",
-            "src/installer.ts",
-            "src/linters/*.ts",
-            "src/migration/folder-migration.ts",
-            "src/paths.ts",
-            "src/types.ts",
-            "src/updater.ts",
-            "src/utils/branded-messages.ts",
-            "src/utils/dynamic-content-discovery.ts",
-            "src/utils/feedback.ts",
-            "src/utils/logger.ts",
-            "src/utils/mcp-client.ts",
-            "src/utils/mcp-http-client.ts",
-            "src/utils/mcp-socket-client.ts",
-            "src/utils/mcp-tcp-client.ts",
-            "src/utils/path-security.ts",
-            "src/utils/project-paths.ts",
-            "src/utils/terminal-formatter.ts",
-            "src/utils/ui.ts",
-            "src/utils/version-checker.ts",
-            "src/utils/yaml-config-reader.ts",
-            "mcp/*/src/**/*.ts",
-            "nagare.config.ts",
-            "nagare-launcher.ts",
-            "version.ts",
-          ],
+          args: ["check"], // No args = respects top-level exclude
         });
         const checkResult = await checkCmd.output();
         if (!checkResult.success) {
-          const errorText = new TextDecoder().decode(checkResult.stderr);
-          console.error("Type check stderr:", errorText);
-          throw new Error(`Type check failed: ${errorText}`);
+          throw new Error("Type check failed");
         }
 
         // TODO: Re-enable tests when we have test coverage // DevSkim: ignore DS176209 - Legitimate TODO for test coverage

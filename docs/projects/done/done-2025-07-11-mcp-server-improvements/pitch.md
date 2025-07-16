@@ -2,20 +2,24 @@
 
 ## Problem
 
-Currently, managing the MCP server requires extensive manual commands and system administration knowledge:
+Currently, managing the MCP server requires extensive manual commands and system
+administration knowledge:
 
 - No version information displayed
 - Manual process management with `pkill` and direct binary execution
 - Manual file copying for updates
-- Confusing configuration instructions (JSON snippet instead of `claude mcp add`)
+- Confusing configuration instructions (JSON snippet instead of
+  `claude mcp add`)
 - Platform-specific commands that don't work cross-platform
 - No indication of when to restart Claude Code
 
-Users are frustrated by the complexity and error-prone nature of the current approach.
+Users are frustrated by the complexity and error-prone nature of the current
+approach.
 
 ## Appetite
 
-**2-3 days** - This is a focused improvement to an existing feature that will significantly improve user experience.
+**2-3 days** - This is a focused improvement to an existing feature that will
+significantly improve user experience.
 
 ## Solution
 
@@ -74,7 +78,7 @@ class MCPProcessManager {
       await this.startUnix();
     }
   }
-  
+
   async stop(): Promise<void> {
     const pid = await this.readPidFile();
     if (Deno.build.os === "windows") {
@@ -99,15 +103,15 @@ interface MCPVersionInfo {
 async function checkVersion(): Promise<MCPVersionInfo> {
   // Check embedded version in binary
   const current = await this.getCurrentVersion();
-  
+
   // Check GitHub releases API
   const latest = await this.getLatestVersion();
-  
+
   return {
     current,
     latest,
     updateAvailable: current !== latest,
-    releaseNotes: await this.getReleaseNotes(latest)
+    releaseNotes: await this.getReleaseNotes(latest),
   };
 }
 ```
@@ -139,18 +143,21 @@ async function checkVersion(): Promise<MCPVersionInfo> {
 ## Implementation Plan
 
 ### Phase 1: Process Management (Day 1)
+
 - [ ] Create MCPProcessManager class
 - [ ] Implement PID file tracking
 - [ ] Add start/stop/restart commands
 - [ ] Test on macOS, Linux, Windows
 
 ### Phase 2: Version Management (Day 2)
+
 - [ ] Embed version info in binary
 - [ ] Add version check against GitHub
 - [ ] Implement upgrade command
 - [ ] Add upgrade confirmation flow
 
 ### Phase 3: Better UX (Day 3)
+
 - [ ] Enhanced status display
 - [ ] Better configuration instructions
 - [ ] Improved error messages

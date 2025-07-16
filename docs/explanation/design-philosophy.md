@@ -1,57 +1,76 @@
 # Aichaku Design Philosophy
 
-This document explains the thinking behind Aichaku's design decisions and why certain trade-offs were made.
+This document explains the thinking behind Aichaku's design decisions and why
+certain trade-offs were made.
 
 ## The core insight
 
-Software teams face a fundamental challenge: they need flexibility in how they work, but consistency in what they produce. This creates tension between:
+Software teams face a fundamental challenge: they need flexibility in how they
+work, but consistency in what they produce. This creates tension between:
 
-- **Process flexibility**: Teams must adapt their workflow to changing circumstances
+- **Process flexibility**: Teams must adapt their workflow to changing
+  circumstances
 - **Quality consistency**: Code standards can't vary from sprint to sprint
 
-Aichaku resolves this tension by treating methodologies and standards as fundamentally different resources.
+Aichaku resolves this tension by treating methodologies and standards as
+fundamentally different resources.
 
 ## Methodologies as toolkits
 
 Think of methodologies like different styles of cooking:
-- **French cuisine** (Shape Up): Careful preparation, precise timing, elegant presentation
+
+- **French cuisine** (Shape Up): Careful preparation, precise timing, elegant
+  presentation
 - **Stir-fry** (Kanban): Continuous flow, quick adjustments, immediate serving
-- **Baking** (Scrum): Fixed time boxes, specific ingredients, predictable results
+- **Baking** (Scrum): Fixed time boxes, specific ingredients, predictable
+  results
 
-Just as a chef might use techniques from multiple cuisines in one meal, development teams blend methodologies. A team might use Shape Up's pitches with Scrum's daily standups and Kanban's WIP limits.
+Just as a chef might use techniques from multiple cuisines in one meal,
+development teams blend methodologies. A team might use Shape Up's pitches with
+Scrum's daily standups and Kanban's WIP limits.
 
-This is why Aichaku provides all methodologies upfront - you can't predict which techniques you'll need until you're in the kitchen.
+This is why Aichaku provides all methodologies upfront - you can't predict which
+techniques you'll need until you're in the kitchen.
 
 ## Standards as ingredients
 
-While cooking techniques vary, food safety standards remain constant. You always:
+While cooking techniques vary, food safety standards remain constant. You
+always:
+
 - Wash your hands
 - Keep ingredients at safe temperatures
 - Avoid cross-contamination
 - Check expiration dates
 
-Similarly, coding standards provide consistent quality regardless of methodology:
+Similarly, coding standards provide consistent quality regardless of
+methodology:
+
 - OWASP security practices apply whether you're in a sprint or a cycle
 - TDD works with any planning approach
 - SOLID principles transcend process boundaries
 
-This is why standards are selectively integrated - you choose your quality ingredients once and use them throughout.
+This is why standards are selectively integrated - you choose your quality
+ingredients once and use them throughout.
 
 ## Design principles
 
 ### 1. Natural over formal
 
-**Traditional approach**: Learn command syntax, memorize flags, follow rigid workflows
+**Traditional approach**: Learn command syntax, memorize flags, follow rigid
+workflows
 
-**Aichaku approach**: Express intent naturally, let the system understand context
+**Aichaku approach**: Express intent naturally, let the system understand
+context
 
 Example:
+
 ```
 Traditional: aichaku create project --type=shape-up --name=auth --template=pitch
 Aichaku: "I need to shape a solution for authentication"
 ```
 
-The natural approach reduces cognitive load and makes the tool disappear into the workflow.
+The natural approach reduces cognitive load and makes the tool disappear into
+the workflow.
 
 ### 2. Progressive disclosure
 
@@ -61,15 +80,18 @@ The natural approach reduces cognitive load and makes the tool disappear into th
 
 **Never overwhelming**: Context-appropriate suggestions, not information dumps
 
-This mirrors how humans learn - start with fundamentals, add nuance through experience.
+This mirrors how humans learn - start with fundamentals, add nuance through
+experience.
 
 ### 3. Flexibility through structure
 
-**Paradox**: Too much flexibility creates chaos; too much structure creates rigidity
+**Paradox**: Too much flexibility creates chaos; too much structure creates
+rigidity
 
 **Resolution**: Provide flexible methodologies within structured organization
 
-The `.claude/output/` structure is rigid, but what goes inside is completely flexible. Like a garden with defined beds but diverse plants.
+The `.claude/output/` structure is rigid, but what goes inside is completely
+flexible. Like a garden with defined beds but diverse plants.
 
 ### 4. Explicit transitions
 
@@ -78,6 +100,7 @@ The `.claude/output/` structure is rigid, but what goes inside is completely fle
 **Solution**: Clear phase transitions with visual indicators
 
 When moving from planning to execution, both user and Claude see:
+
 - Status update in STATUS.md
 - Visual indicator change (🌱 → 🌿)
 - Appropriate document templates
@@ -89,6 +112,7 @@ When moving from planning to execution, both user and Claude see:
 **Aichaku**: Documentation IS the work
 
 Every Aichaku interaction produces tangible artifacts:
+
 - Plans become pitch.md
 - Progress lives in STATUS.md
 - Decisions recorded in documents
@@ -102,6 +126,7 @@ Aichaku uses gardening metaphors thoughtfully:
 ### Why gardens?
 
 Gardens represent:
+
 - **Organic growth**: Projects evolve naturally, not mechanically
 - **Careful tending**: Success requires attention, not just process
 - **Seasonal cycles**: Different phases need different care
@@ -110,6 +135,7 @@ Gardens represent:
 ### Why NOT gardens?
 
 We avoid overdoing the metaphor:
+
 - No "planting seeds of ideas"
 - No "harvesting results"
 - No "cross-pollinating concepts"
@@ -125,6 +151,7 @@ The metaphor provides visual indicators and mental models, not purple prose.
 **Option B**: Install all methodologies always
 
 **We chose B because**:
+
 - Teams rarely know which methodologies they'll need
 - Disk space is cheap (300KB total)
 - Friction prevents experimentation
@@ -141,6 +168,7 @@ The metaphor provides visual indicators and mental models, not purple prose.
 **Option B**: Use the file system as the database
 
 **We chose B because**:
+
 - Complete transparency
 - Git versioning works naturally
 - No corruption issues
@@ -158,6 +186,7 @@ The metaphor provides visual indicators and mental models, not purple prose.
 **Option B**: Standards injected into CLAUDE.md
 
 **We chose B because**:
+
 - Single file for Claude to read
 - Faster performance
 - Users can customize
@@ -229,25 +258,30 @@ As Aichaku evolves, these principles will guide decisions:
 
 ## The philosophy in practice
 
-Consider a real scenario: A startup beginning with Lean experiments, growing into Scrum, then maturing to Shape Up.
+Consider a real scenario: A startup beginning with Lean experiments, growing
+into Scrum, then maturing to Shape Up.
 
 **Without Aichaku**: Each transition requires:
+
 - Learning new tools
 - Migrating data
 - Retraining team
 - Lost context
 
 **With Aichaku**: Transitions are natural:
+
 - All methodologies already available
 - Same file structure throughout
 - Historical work preserved
 - Mix approaches as needed
 
-The startup's OWASP security standards and TDD practices remain constant throughout, providing stability during process evolution.
+The startup's OWASP security standards and TDD practices remain constant
+throughout, providing stability during process evolution.
 
 ## Why this matters
 
-Software development is fundamentally about managing complexity. Aichaku's philosophy reduces complexity through:
+Software development is fundamentally about managing complexity. Aichaku's
+philosophy reduces complexity through:
 
 1. **Clear conceptual models**: Methodologies vs. standards
 2. **Predictable behavior**: No surprises or magic
@@ -259,13 +293,18 @@ Software development is fundamentally about managing complexity. Aichaku's philo
 
 Aichaku's design philosophy can be summarized as:
 
-> Provide complete flexibility for how teams work (methodologies) while maintaining consistency in what they produce (standards), through natural interfaces and transparent operations.
+> Provide complete flexibility for how teams work (methodologies) while
+> maintaining consistency in what they produce (standards), through natural
+> interfaces and transparent operations.
 
-Every design decision flows from this principle. When faced with choices, we ask:
+Every design decision flows from this principle. When faced with choices, we
+ask:
+
 - Does this respect the methodology/standards distinction?
 - Does this feel natural to use?
 - Does this work offline?
 - Does this increase transparency?
 - Does this preserve flexibility?
 
-The result is a tool that enhances human-AI collaboration without getting in the way - structure that enables rather than constrains.
+The result is a tool that enhances human-AI collaboration without getting in the
+way - structure that enables rather than constrains.

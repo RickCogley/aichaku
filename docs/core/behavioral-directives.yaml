@@ -34,7 +34,7 @@ rules:
             - "DO NOT create any project folders yet"
             - "DO NOT create any documents yet"
             - "NEVER say: 'Would you like me to create documents for this?'"
-      
+
       - name: "WAIT FOR READINESS"
         description: "Only create documents when user signals explicit readiness"
         triggers:
@@ -48,7 +48,7 @@ rules:
             - "Wait for explicit readiness signal from user"
           forbidden:
             - "Do not create anything before user signals readiness"
-      
+
       - name: "CREATE PROJECT"
         description: "After user signals readiness, create immediately without asking"
         actions:
@@ -78,7 +78,7 @@ rules:
             - "Would you like me to..."
             - "Shall I create..."
             - "Should I go ahead and..."
-      
+
       - name: "Discussion mode responses"
         description: "During discussion phase, focus on understanding and refinement"
         examples:
@@ -108,7 +108,7 @@ rules:
         triggers: ["mvp", "lean", "experiment", "validate", "pivot"]
         discussion_approach: "Discuss Lean experiments"
         creates: "experiment-plan.md"
-    
+
     discussion_mode_actions:
       - "Acknowledge: '🪴 Aichaku: I see you're interested in [methodology]'"
       - "Read the appropriate guide SILENTLY"

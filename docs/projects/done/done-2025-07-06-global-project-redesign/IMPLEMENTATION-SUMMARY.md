@@ -2,17 +2,21 @@
 
 ## 🎉 What We Accomplished
 
-We've successfully implemented a major architectural redesign of Aichaku that transforms it from a "copy files everywhere" tool to a clean, global-first system.
+We've successfully implemented a major architectural redesign of Aichaku that
+transforms it from a "copy files everywhere" tool to a clean, global-first
+system.
 
 ## 🏗️ Architecture Changes
 
 ### Before (v0.4.x)
+
 - Every project got a full copy of all methodology files
 - Git repositories cluttered with 50+ files
 - Confusing duplication and update challenges
 - Redundant messaging everywhere
 
 ### After (v0.5.0)
+
 - **Global installation**: Methodologies live in `~/.claude/` only
 - **Project integration**: Just references global + customizations
 - **Clean git**: No methodology files to track
@@ -56,6 +60,7 @@ We've successfully implemented a major architectural redesign of Aichaku that tr
 ## 🚀 Ready for Release
 
 All implementation is complete:
+
 - ✅ Architecture redesigned
 - ✅ Commands updated
 - ✅ Output beautified
@@ -69,4 +74,5 @@ All implementation is complete:
 2. **Test with Nagare** to verify the new flow
 3. **Publish to JSR**
 
-The implementation matches the vision perfectly - Aichaku now feels magical rather than mechanical!
+The implementation matches the vision perfectly - Aichaku now feels magical
+rather than mechanical!

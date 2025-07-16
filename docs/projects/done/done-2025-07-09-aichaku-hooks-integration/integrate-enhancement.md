@@ -2,11 +2,14 @@
 
 ## Overview
 
-Update the `aichaku integrate` command to include both methodology rules AND selected standards in CLAUDE.md, creating a complete guidance system for Claude Code.
+Update the `aichaku integrate` command to include both methodology rules AND
+selected standards in CLAUDE.md, creating a complete guidance system for Claude
+Code.
 
 ## Current State
 
 The `integrate` command currently only adds methodology rules between markers:
+
 ```
 <!-- AICHAKU:START -->
 [methodology rules]
@@ -19,33 +22,43 @@ The `integrate` command currently only adds methodology rules between markers:
 
 ```markdown
 <!-- AICHAKU:METHODOLOGY:START -->
+
 [methodology rules - existing content]
+
 <!-- AICHAKU:METHODOLOGY:END -->
 
 <!-- AICHAKU:STANDARDS:START -->
+
 ## 📚 Selected Standards & Guidelines
 
 Based on your project configuration, follow these standards:
 
 ### Security Standards
+
 #### OWASP Top 10 Web
+
 - Validate all inputs
 - Use parameterized queries
 - Implement proper authentication
 - [full OWASP guidance content]
 
-### Architecture Standards  
+### Architecture Standards
+
 #### 15-Factor Apps
+
 - Store config in environment
 - Treat backing services as attached resources
 - [full 15-factor guidance content]
 
 ### Testing Standards
+
 #### Test-Driven Development
+
 - Write test first (red)
 - Make it pass (green)
 - Refactor (clean)
 - [full TDD guidance content]
+
 <!-- AICHAKU:STANDARDS:END -->
 ```
 
@@ -108,7 +121,8 @@ aichaku integrate
 
 ### Integration with MCP
 
-The MCP will read the same `.claude/.aichaku-standards.json` file to know which standards to review against, ensuring consistency between generation and review.
+The MCP will read the same `.claude/.aichaku-standards.json` file to know which
+standards to review against, ensuring consistency between generation and review.
 
 ## Next Steps
 

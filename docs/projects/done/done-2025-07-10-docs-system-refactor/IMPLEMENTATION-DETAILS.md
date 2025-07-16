@@ -2,7 +2,9 @@
 
 ## Overview
 
-This document provides comprehensive details about the documentation system overhaul for Aichaku, including the implementation of Diátaxis framework, Google style guide, documentation standards feature, and linting tools.
+This document provides comprehensive details about the documentation system
+overhaul for Aichaku, including the implementation of Diátaxis framework, Google
+style guide, documentation standards feature, and linting tools.
 
 ## 1. Diátaxis Framework Implementation
 
@@ -128,9 +130,12 @@ Options:
 ### Integration with CLAUDE.md
 
 Standards are injected between markers:
+
 ```markdown
 <!-- AICHAKU:DOC-STANDARDS:START -->
+
 [Selected standards content]
+
 <!-- AICHAKU:DOC-STANDARDS:END -->
 ```
 
@@ -148,6 +153,7 @@ BaseLinter (abstract)
 ### Checks Performed
 
 #### Diátaxis Linter
+
 - Document type detection
 - Mixed content detection
 - Required section validation
@@ -155,6 +161,7 @@ BaseLinter (abstract)
 - Focus validation
 
 #### Google Style Linter
+
 - Sentence length (max 20 words)
 - Present tense usage
 - Active voice detection
@@ -181,11 +188,13 @@ path/to/file.md
 MCP review identified vulnerabilities:
 
 **Before**:
+
 ```typescript
-const filePath = join(projectPath, path);  // Vulnerable
+const filePath = join(projectPath, path); // Vulnerable
 ```
 
 **After**:
+
 ```typescript
 const resolvedPath = resolve(path);
 if (!resolvedPath.startsWith(resolve(projectPath))) {
@@ -194,6 +203,7 @@ if (!resolvedPath.startsWith(resolve(projectPath))) {
 ```
 
 ### Applied To
+
 - docs-standard.ts: Fixed file path handling
 - docs-lint.ts: Fixed directory traversal
 - All path operations now use safe resolution
@@ -201,10 +211,12 @@ if (!resolvedPath.startsWith(resolve(projectPath))) {
 ## 7. Testing Coverage
 
 ### Test Files Created
+
 - /src/commands/docs-standard_test.ts (14 tests)
 - /src/commands/docs-lint_test.ts (8 tests)
 
 ### Test Categories
+
 1. Command functionality
 2. File operations
 3. Error handling
@@ -258,6 +270,7 @@ case "docs-lint":
 ### Proposed /docs Structure
 
 Moving from /references to /docs:
+
 ```
 /docs/                    # More conventional location
 ├── [all current content]
@@ -266,6 +279,7 @@ Moving from /references to /docs:
 ```
 
 Benefits:
+
 - Matches GitHub Pages default
 - Developer expectation
 - Clear separation of generated content

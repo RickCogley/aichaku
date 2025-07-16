@@ -2,13 +2,15 @@
 
 ## Overview
 
-Add a blocklist/exclusion feature to the MCP reviewer hook to allow users to exclude certain file types or patterns from review processing.
+Add a blocklist/exclusion feature to the MCP reviewer hook to allow users to
+exclude certain file types or patterns from review processing.
 
 ## Requirements
 
 ### 1. Configuration Support
 
 The blocklist should be configurable through:
+
 - Command-line options: `--exclude` or `--ignore`
 - Configuration file: `.aichaku/reviewer-config.yaml`
 - Environment variables: `AICHAKU_REVIEWER_EXCLUDE`
@@ -25,7 +27,7 @@ reviewer:
       - ".min.css"
       - ".map"
       - ".lock"
-      
+
     # Glob patterns
     patterns:
       - "**/node_modules/**"
@@ -33,15 +35,15 @@ reviewer:
       - "**/build/**"
       - "**/*.generated.*"
       - "**/vendor/**"
-      
+
     # Specific files
     files:
       - "package-lock.json"
       - "yarn.lock"
       - "poetry.lock"
-      
+
     # Size-based exclusions
-    max_file_size: "1MB"  # Skip files larger than this
+    max_file_size: "1MB" # Skip files larger than this
 ```
 
 ### 3. Implementation Details
@@ -51,22 +53,27 @@ reviewer:
 The MCP reviewer hook should check exclusions before processing:
 
 ```typescript
-async function shouldReviewFile(filePath: string, config: ReviewerConfig): Promise<boolean> {
+async function shouldReviewFile(
+  filePath: string,
+  config: ReviewerConfig,
+): Promise<boolean> {
   // Check file extension
-  if (config.exclude?.extensions?.some(ext => filePath.endsWith(ext))) {
+  if (config.exclude?.extensions?.some((ext) => filePath.endsWith(ext))) {
     return false;
   }
-  
+
   // Check glob patterns
-  if (config.exclude?.patterns?.some(pattern => minimatch(filePath, pattern))) {
+  if (
+    config.exclude?.patterns?.some((pattern) => minimatch(filePath, pattern))
+  ) {
     return false;
   }
-  
+
   // Check specific files
   if (config.exclude?.files?.includes(basename(filePath))) {
     return false;
   }
-  
+
   // Check file size
   if (config.exclude?.max_file_size) {
     const stats = await Deno.stat(filePath);
@@ -74,7 +81,7 @@ async function shouldReviewFile(filePath: string, config: ReviewerConfig): Promi
       return false;
     }
   }
-  
+
   return true;
 }
 ```
@@ -85,17 +92,17 @@ Provide sensible defaults that users can override:
 
 ```typescript
 const DEFAULT_EXCLUSIONS = {
-  extensions: ['.min.js', '.min.css', '.map', '.lock'],
+  extensions: [".min.js", ".min.css", ".map", ".lock"],
   patterns: [
-    '**/node_modules/**',
-    '**/dist/**',
-    '**/build/**',
-    '**/.git/**',
-    '**/coverage/**',
-    '**/*.generated.*'
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/.git/**",
+    "**/coverage/**",
+    "**/*.generated.*",
   ],
-  files: ['package-lock.json', 'yarn.lock', 'poetry.lock', 'Gemfile.lock'],
-  max_file_size: '500KB'
+  files: ["package-lock.json", "yarn.lock", "poetry.lock", "Gemfile.lock"],
+  max_file_size: "500KB",
 };
 ```
 
@@ -134,6 +141,7 @@ Exclusion rules applied:
 ### 5. Integration with Existing Features
 
 The blocklist should work seamlessly with:
+
 - File selection (`--files`)
 - Category filtering (`--category`)
 - External tool integration
@@ -148,6 +156,7 @@ The blocklist should work seamlessly with:
 ### 7. Error Handling
 
 Handle edge cases gracefully:
+
 - Invalid glob patterns
 - Conflicting inclusion/exclusion rules
 - Missing configuration files
@@ -157,7 +166,9 @@ Handle edge cases gracefully:
 
 **Priority: Medium**
 
-While not critical for core functionality, this feature will significantly improve user experience by:
+While not critical for core functionality, this feature will significantly
+improve user experience by:
+
 - Reducing noise from irrelevant files
 - Speeding up review processes
 - Allowing project-specific customization
@@ -172,6 +183,7 @@ While not critical for core functionality, this feature will significantly impro
 ## Documentation Updates
 
 Update the following documentation:
+
 - CLI help text for review command
 - Configuration file examples
 - User guide with common exclusion patterns
@@ -186,7 +198,9 @@ Update the following documentation:
 
 ## Related to YAML Integration Project
 
-This feature is separate from the YAML integration redesign but should be kept in mind for:
+This feature is separate from the YAML integration redesign but should be kept
+in mind for:
+
 - Consistent configuration approaches
 - Potential shared configuration file structure
 - Similar pattern matching needs

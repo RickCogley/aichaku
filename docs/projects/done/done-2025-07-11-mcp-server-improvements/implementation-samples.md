@@ -42,12 +42,12 @@ export class PIDManager {
     if (existingPID && await this.isProcessRunning(existingPID)) {
       return false; // Another instance is running
     }
-    
+
     // Clean up stale PID file
     if (existingPID) {
       await this.removePID();
     }
-    
+
     return true;
   }
 
@@ -66,7 +66,7 @@ export class PIDManager {
         stdout: "piped",
         stderr: "piped",
       });
-      
+
       const { success } = await command.output();
       return success;
     } catch {
@@ -80,10 +80,10 @@ export class PIDManager {
       stdout: "piped",
       stderr: "piped",
     });
-    
+
     const { stdout, success } = await command.output();
     if (!success) return false;
-    
+
     const output = new TextDecoder().decode(stdout);
     return output.includes(pid.toString());
   }
@@ -123,10 +123,10 @@ export class MCPProcessManager {
     if (!homeDir) {
       throw new Error("Could not determine home directory");
     }
-    
+
     this.mcpDir = join(homeDir, ".aichaku", "mcp-server");
-    this.binaryName = Deno.build.os === "windows" 
-      ? "mcp-code-reviewer.exe" 
+    this.binaryName = Deno.build.os === "windows"
+      ? "mcp-code-reviewer.exe"
       : "mcp-code-reviewer";
     this.pidManager = new PIDManager(this.mcpDir);
   }
@@ -138,7 +138,7 @@ export class MCPProcessManager {
       return {
         success: false,
         message: "MCP server is already running",
-        pid
+        pid,
       };
     }
 
@@ -147,7 +147,8 @@ export class MCPProcessManager {
     if (!await exists(binaryPath)) {
       return {
         success: false,
-        message: `MCP server not found at ${binaryPath}. Run 'aichaku mcp --install' first.`
+        message:
+          `MCP server not found at ${binaryPath}. Run 'aichaku mcp --install' first.`,
       };
     }
 
@@ -160,7 +161,7 @@ export class MCPProcessManager {
       });
 
       const process = command.spawn();
-      
+
       // Write PID file
       await this.pidManager.writePID(process.pid);
       this.startTime = new Date();
@@ -171,12 +172,12 @@ export class MCPProcessManager {
       return {
         success: true,
         message: "MCP server started successfully",
-        pid: process.pid
+        pid: process.pid,
       };
     } catch (error) {
       return {
         success: false,
-        message: `Failed to start MCP server: ${error.message}`
+        message: `Failed to start MCP server: ${error.message}`,
       };
     }
   }
@@ -186,7 +187,7 @@ export class MCPProcessManager {
     if (!pid) {
       return {
         success: false,
-        message: "MCP server is not running"
+        message: "MCP server is not running",
       };
     }
 
@@ -198,15 +199,15 @@ export class MCPProcessManager {
       }
 
       await this.pidManager.removePID();
-      
+
       return {
         success: true,
-        message: "MCP server stopped successfully"
+        message: "MCP server stopped successfully",
       };
     } catch (error) {
       return {
         success: false,
-        message: `Failed to stop MCP server: ${error.message}`
+        message: `Failed to stop MCP server: ${error.message}`,
       };
     }
   }
@@ -218,7 +219,7 @@ export class MCPProcessManager {
     }
 
     // Wait a moment for clean shutdown
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     return await this.start();
   }
@@ -231,9 +232,11 @@ export class MCPProcessManager {
     return {
       running,
       pid: running ? pid : undefined,
-      uptime: running && this.startTime ? this.formatUptime(this.startTime) : undefined,
+      uptime: running && this.startTime
+        ? this.formatUptime(this.startTime)
+        : undefined,
       binaryPath,
-      version: await this.getVersion()
+      version: await this.getVersion(),
     };
   }
 
@@ -251,15 +254,15 @@ export class MCPProcessManager {
   private async stopUnix(pid: number): Promise<void> {
     // Try graceful shutdown first
     Deno.kill(pid, "SIGTERM");
-    
+
     // Wait up to 5 seconds
     for (let i = 0; i < 50; i++) {
       if (!await this.isProcessRunningUnix(pid)) {
         return;
       }
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 100));
     }
-    
+
     // Force kill if still running
     Deno.kill(pid, "SIGKILL");
   }
@@ -270,7 +273,7 @@ export class MCPProcessManager {
       stdout: "piped",
       stderr: "piped",
     });
-    
+
     await command.output();
   }
 
@@ -289,10 +292,10 @@ export class MCPProcessManager {
       stdout: "piped",
       stderr: "piped",
     });
-    
+
     const { stdout, success } = await command.output();
     if (!success) return false;
-    
+
     const output = new TextDecoder().decode(stdout);
     return output.includes(pid.toString());
   }
@@ -301,11 +304,13 @@ export class MCPProcessManager {
     const diff = Date.now() - startTime.getTime();
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    
+
     if (hours > 0) {
-      return `${hours} hour${hours > 1 ? 's' : ''} ${minutes} minute${minutes !== 1 ? 's' : ''}`;
+      return `${hours} hour${hours > 1 ? "s" : ""} ${minutes} minute${
+        minutes !== 1 ? "s" : ""
+      }`;
     } else {
-      return `${minutes} minute${minutes !== 1 ? 's' : ''}`;
+      return `${minutes} minute${minutes !== 1 ? "s" : ""}`;
     }
   }
 
@@ -374,7 +379,7 @@ export async function runMCPCommand(options: MCPOptions): Promise<void> {
 
 async function showEnhancedStatus(
   processManager: MCPProcessManager,
-  versionManager: MCPVersionManager
+  versionManager: MCPVersionManager,
 ): Promise<void> {
   console.log("🔍 MCP Server Status");
   console.log("━".repeat(50));
@@ -384,18 +389,22 @@ async function showEnhancedStatus(
   const latestVersion = await versionManager.getLatestVersion();
   const updateAvailable = currentVersion !== latestVersion;
 
-  console.log(`📦 Version:        ${currentVersion || "Unknown"}${
-    updateAvailable ? ` (latest: ${latestVersion} available)` : " (latest)"
-  }`);
+  console.log(
+    `📦 Version:        ${currentVersion || "Unknown"}${
+      updateAvailable ? ` (latest: ${latestVersion} available)` : " (latest)"
+    }`,
+  );
   console.log(`📍 Location:       ${status.binaryPath}`);
-  console.log(`${status.running ? "🟢" : "🔴"} Status:         ${
-    status.running ? "Running" : "Stopped"
-  }${status.pid ? ` (PID: ${status.pid})` : ""}`);
-  
+  console.log(
+    `${status.running ? "🟢" : "🔴"} Status:         ${
+      status.running ? "Running" : "Stopped"
+    }${status.pid ? ` (PID: ${status.pid})` : ""}`,
+  );
+
   if (status.uptime) {
     console.log(`⏱️  Uptime:         ${status.uptime}`);
   }
-  
+
   console.log(`🔧 Platform:       ${Deno.build.os} ${Deno.build.arch}`);
 
   // Check for external tools
@@ -410,26 +419,28 @@ async function showEnhancedStatus(
     console.log("   aichaku mcp --restart    Restart the MCP server");
     console.log("   aichaku mcp --stop       Stop the MCP server");
   }
-  
+
   if (updateAvailable) {
     console.log("   aichaku mcp --upgrade    Upgrade to latest version");
   }
-  
+
   console.log("   aichaku mcp --config     Show configuration instructions");
 }
 
 async function startServer(processManager: MCPProcessManager): Promise<void> {
   console.log("🚀 Starting MCP server...");
-  
+
   const result = await processManager.start();
-  
+
   if (result.success) {
     console.log(`✅ ${result.message}`);
     console.log(`   PID: ${result.pid}`);
-    console.log("\n💡 The MCP server will be available to Claude Code after restart");
+    console.log(
+      "\n💡 The MCP server will be available to Claude Code after restart",
+    );
   } else {
     console.error(`❌ ${result.message}`);
-    
+
     // Provide helpful suggestions based on error
     if (result.message.includes("already running")) {
       console.log("\n💡 Use 'aichaku mcp --restart' to restart the server");
@@ -441,9 +452,9 @@ async function startServer(processManager: MCPProcessManager): Promise<void> {
 
 async function stopServer(processManager: MCPProcessManager): Promise<void> {
   console.log("🛑 Stopping MCP server...");
-  
+
   const result = await processManager.stop();
-  
+
   if (result.success) {
     console.log(`✅ ${result.message}`);
   } else {
@@ -453,9 +464,9 @@ async function stopServer(processManager: MCPProcessManager): Promise<void> {
 
 async function restartServer(processManager: MCPProcessManager): Promise<void> {
   console.log("🔄 Restarting MCP server...");
-  
+
   const result = await processManager.restart();
-  
+
   if (result.success) {
     console.log(`✅ ${result.message}`);
     console.log("\n💡 Claude Code will reconnect to the restarted server");
@@ -475,31 +486,31 @@ function showConfigInstructions(): void {
     homeDir,
     ".aichaku",
     "mcp-server",
-    Deno.build.os === "windows" ? "mcp-code-reviewer.exe" : "mcp-code-reviewer"
+    Deno.build.os === "windows" ? "mcp-code-reviewer.exe" : "mcp-code-reviewer",
   );
 
   console.log("📝 To configure Claude Code:\n");
   console.log("Run this command once per system:");
   console.log("─".repeat(70));
-  
+
   if (Deno.build.os === "windows") {
     console.log(`claude mcp add aichaku-reviewer --stdio -- "${binaryPath}"`);
   } else {
     console.log(`claude mcp add aichaku-reviewer --stdio -- ${binaryPath}`);
   }
-  
+
   console.log("─".repeat(70));
-  
+
   console.log("\n✅ This enables the MCP server for all your aichaku projects");
   console.log("💡 Restart Claude Code after making changes");
-  
+
   console.log("\n📍 The MCP server provides:");
   console.log("   • Security scanning (OWASP Top 10 vulnerabilities)");
   console.log("   • Standards compliance checking");
   console.log("   • Methodology validation (Shape Up, Scrum, Kanban)");
   console.log("   • TypeScript best practices");
   console.log("   • Educational feedback");
-  
+
   console.log("\n🔧 Available MCP tools in Claude Code:");
   console.log("   • review_file - Review a file against standards");
   console.log("   • review_methodology - Check methodology compliance");

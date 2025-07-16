@@ -2,14 +2,15 @@
 
 ## 🌳 Project Status: Review
 
-**Started**: 2025-01-13  
-**Target**: 6-week cycle  
+**Started**: 2025-01-13\
+**Target**: 6-week cycle\
 **Phase**: [Problem] → [Solution] → [Implementation] → [**Testing**] → [Release]
-                                                         ▲
+▲
 
 ## Progress Overview
 
 ### Completed ✅
+
 - [x] Identified catastrophic bash hooks failure (40k duplicates!)
 - [x] Received TypeScript guidance from Anthropic support
 - [x] Documented three key pieces of advice
@@ -26,17 +27,21 @@
 - [x] Added "github" hook category for easy installation
 
 ### In Progress 🔄
+
 - [ ] Compile TypeScript to single binary (attempted but timeout issues)
 - [ ] Test all hook scenarios in production
 
 ### Upcoming 📋
+
 - [ ] Create migration documentation
 - [ ] Release v0.29.0 with TypeScript hooks
 
 ## Key Decisions
 
-1. **Single Binary Approach**: One compiled TypeScript file handles all hooks via CLI arguments
-2. **Silent Failures**: Hooks exit quietly on errors to avoid disrupting Claude Code
+1. **Single Binary Approach**: One compiled TypeScript file handles all hooks
+   via CLI arguments
+2. **Silent Failures**: Hooks exit quietly on errors to avoid disrupting Claude
+   Code
 3. **5-Second Timeouts**: Prevent runaway processes
 4. **No External Dependencies**: Use only Deno built-ins
 

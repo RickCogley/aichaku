@@ -65,12 +65,14 @@ graph TB
 ## Core Components
 
 ### 1. MCP API Handler
+
 - Implements MCP protocol
 - Handles review requests
 - Manages client connections
 - Streams results back to Claude Code
 
 ### 2. Review Engine
+
 - Orchestrates review process
 - Aggregates results from multiple sources
 - Prioritizes findings by severity
@@ -78,18 +80,21 @@ graph TB
 - **Methodology compliance checking**
 
 ### 3. Standards Manager
+
 - Loads selected standards from Aichaku config
 - Maps standards to concrete review rules
 - Provides context-aware suggestions
 - **Loads methodology rules from ~/.claude/methodologies/**
 
 ### 4. Scanner Controller
+
 - Abstracts different security scanners
 - Runs scanners in parallel
 - Normalizes output formats
 - Caches results for performance
 
 ### 5. Methodology Reviewer
+
 - Checks code against selected methodologies (Shape Up, Scrum, etc.)
 - Validates architectural decisions
 - Ensures process compliance
@@ -119,24 +124,28 @@ sequenceDiagram
 ## Scanner Integration
 
 ### CodeQL
+
 - **Purpose**: Deep semantic analysis
 - **Strengths**: Complex vulnerability patterns
 - **Integration**: Local CodeQL CLI
 - **Rules**: OWASP, CWE mappings
 
 ### DevSkim
+
 - **Purpose**: Fast pattern matching
 - **Strengths**: IDE-speed feedback
 - **Integration**: DevSkim CLI or library
 - **Rules**: Microsoft security patterns
 
 ### Semgrep
+
 - **Purpose**: Custom rule engine
 - **Strengths**: Flexible, extensible
 - **Integration**: Semgrep CLI
 - **Rules**: Community + custom rules
 
 ### ESLint Security
+
 - **Purpose**: JavaScript/TypeScript specific
 - **Strengths**: AST-based analysis
 - **Integration**: ESLint API
@@ -145,6 +154,7 @@ sequenceDiagram
 ## Methodology Implementation
 
 ### Shape Up Compliance
+
 ```typescript
 interface ShapeUpRule {
   id: string;           // e.g., "appetite-check"
@@ -161,6 +171,7 @@ interface ShapeUpRule {
 ```
 
 ### Scrum Compliance
+
 ```typescript
 interface ScrumRule {
   id: string;           // e.g., "sprint-velocity"
@@ -179,23 +190,25 @@ interface ScrumRule {
 ## Standards Implementation
 
 ### OWASP Top 10 Mapping
+
 ```typescript
 interface OWASPRule {
-  id: string;           // e.g., "A01-2021"
-  name: string;         // e.g., "Broken Access Control"
-  scanners: Scanner[];  // Which scanners detect this
-  patterns: Pattern[];  // What to look for
-  remediation: string;  // How to fix
+  id: string; // e.g., "A01-2021"
+  name: string; // e.g., "Broken Access Control"
+  scanners: Scanner[]; // Which scanners detect this
+  patterns: Pattern[]; // What to look for
+  remediation: string; // How to fix
 }
 ```
 
 ### Custom Standards
+
 ```typescript
 interface CustomStandard {
-  id: string;           // e.g., "15-factor"
-  rules: Rule[];        // Concrete checks
-  severity: Severity;   // Priority level
-  autoFix?: boolean;    // Can suggest fixes
+  id: string; // e.g., "15-factor"
+  rules: Rule[]; // Concrete checks
+  severity: Severity; // Priority level
+  autoFix?: boolean; // Can suggest fixes
 }
 ```
 
@@ -218,6 +231,7 @@ interface CustomStandard {
 ## Configuration
 
 ### Project Configuration (.claude/.aichaku-standards.json)
+
 ```json
 {
   "version": "1.0.0",
@@ -234,6 +248,7 @@ interface CustomStandard {
 ```
 
 ### MCP Configuration (~/.config/mcp-code-reviewer.json)
+
 ```json
 {
   "mcp-code-reviewer": {
@@ -269,6 +284,7 @@ interface CustomStandard {
 ## Advanced Features
 
 ### Automated Fix Generation (On-Demand)
+
 ```typescript
 interface AutoFix {
   finding: Finding;
@@ -280,7 +296,7 @@ interface AutoFix {
 // Example: Command injection fix
 class CommandInjectionFix implements AutoFix {
   canAutoFix = true;
-  
+
   generateFix(): string {
     // Transform: bash -c "echo $VAR"
     // To: bash -c 'echo "$1"' -- "$VAR"
@@ -290,6 +306,7 @@ class CommandInjectionFix implements AutoFix {
 ```
 
 ### Pull Request Creation (Manual Command Only)
+
 ```typescript
 // IMPORTANT: PR creation is NEVER automatic - only via explicit command
 // User must run: "Create a PR to fix the security issues"
@@ -298,28 +315,28 @@ class PRCreator {
   async createFixPR(findings: Finding[], options: PROptions): Promise<PRInfo> {
     // Require explicit confirmation
     if (!options.confirmed) {
-      throw new Error('PR creation requires explicit confirmation');
+      throw new Error("PR creation requires explicit confirmation");
     }
     const branch = `mcp-security-fixes-${Date.now()}`;
-    
+
     // Create branch
-    await this.git('checkout', '-b', branch);
-    
+    await this.git("checkout", "-b", branch);
+
     // Apply auto-fixes
     const fixes = await this.applyAutoFixes(findings);
-    
+
     // Commit
-    await this.git('add', '-A');
-    await this.git('commit', '-m', this.generateCommitMessage(fixes));
-    
+    await this.git("add", "-A");
+    await this.git("commit", "-m", this.generateCommitMessage(fixes));
+
     // Push and create PR
-    await this.git('push', '-u', 'origin', branch);
+    await this.git("push", "-u", "origin", branch);
     const pr = await this.createPR({
-      title: 'Security fixes from MCP review',
+      title: "Security fixes from MCP review",
       body: this.generatePRBody(fixes),
-      branch
+      branch,
     });
-    
+
     return pr;
   }
 }
@@ -328,6 +345,7 @@ class PRCreator {
 ## Deployment Architecture
 
 ### Local Deployment (Required for Privacy)
+
 - **🔒 PRIVACY GUARANTEE**: Your code NEVER leaves your machine
 - **Performance**: No network latency, instant feedback
 - **Security**: No API keys, no cloud storage, no data transmission
@@ -336,6 +354,7 @@ class PRCreator {
 - **Control**: You own your data and review process
 
 ### Compilation Strategy
+
 ```bash
 # Multi-platform compilation
 deno compile \
@@ -353,10 +372,10 @@ The MCP provides guidance to help Claude adjust behavior within sessions:
 
 ```typescript
 interface ClaudeGuidance {
-  reminder: string;      // What CLAUDE.md/standards require
-  pattern: string;       // What Claude did wrong
-  correction: string;    // How to fix it
-  example: string;       // Correct approach
+  reminder: string; // What CLAUDE.md/standards require
+  pattern: string; // What Claude did wrong
+  correction: string; // How to fix it
+  example: string; // Correct approach
   reinforcement: string; // What Claude should remember
 }
 ```
@@ -373,6 +392,7 @@ The MCP uses proven LLM prompting strategies:
 6. **Step-by-Step**: Guides through the thinking process
 
 ### Example Enhanced Feedback
+
 ```
 🌱 Learning Opportunity - Let's fix this properly:
 
@@ -400,7 +420,8 @@ const user: UserData = await getUser(id);
 📌 Note to self: I should follow the TypeScript standards in CLAUDE.md.
 ```
 
-This comprehensive approach transforms the MCP from a critic into an effective teacher, dramatically improving Claude's code quality within the session.
+This comprehensive approach transforms the MCP from a critic into an effective
+teacher, dramatically improving Claude's code quality within the session.
 
 ## Next Steps
 

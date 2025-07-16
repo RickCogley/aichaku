@@ -4,11 +4,13 @@
 
 ## Overview
 
-Enhance `aichaku help` to provide comprehensive guidance on modular standards, creating a valuable knowledge base for developers.
+Enhance `aichaku help` to provide comprehensive guidance on modular standards,
+creating a valuable knowledge base for developers.
 
 ## Command Structure
 
 ### Current
+
 ```bash
 aichaku help                    # General help
 aichaku help shape-up          # Methodology help
@@ -16,6 +18,7 @@ aichaku help --list            # List methodologies
 ```
 
 ### Enhanced
+
 ```bash
 aichaku help                    # General help (shows both methodologies & standards)
 aichaku help shape-up          # Methodology help
@@ -31,6 +34,7 @@ aichaku help --all             # Everything available
 Each standard gets comprehensive help similar to methodologies:
 
 ### Example: OWASP Web Help
+
 ```typescript
 const STANDARDS_HELP = {
   "owasp-web": `
@@ -301,38 +305,50 @@ class Calculator {
   • One assertion per test (usually)
   • Use descriptive test names
   • Delete redundant tests
-`
+`,
 };
 ```
 
 ## Implementation Plan
 
 ### 1. Extend Help Command Options
+
 ```typescript
 // In help.ts
 const args = parseArgs(Deno.args, {
-  boolean: ["list", "compare", "standards", "all", "security", "architecture", 
-            "development", "testing", "devops"],
+  boolean: [
+    "list",
+    "compare",
+    "standards",
+    "all",
+    "security",
+    "architecture",
+    "development",
+    "testing",
+    "devops",
+  ],
   string: ["methodology", "standard"],
 });
 ```
 
 ### 2. Create Help Content Map
+
 ```typescript
 // Combine methodologies and standards
 const ALL_HELP_CONTENT = {
   ...METHODOLOGY_HELP,
-  ...STANDARDS_HELP
+  ...STANDARDS_HELP,
 };
 ```
 
 ### 3. Add Category Filtering
+
 ```typescript
 function listStandardsByCategory(category: string) {
   const standards = Object.entries(STANDARD_CATEGORIES[category].standards);
   console.log(`\n${STANDARD_CATEGORIES[category].name}`);
   console.log(`${STANDARD_CATEGORIES[category].description}\n`);
-  
+
   for (const [id, standard] of standards) {
     console.log(`  • ${id} - ${standard.name}`);
     console.log(`    ${standard.description}`);
@@ -341,6 +357,7 @@ function listStandardsByCategory(category: string) {
 ```
 
 ### 4. Enhanced Help Display
+
 ```typescript
 function showGeneralHelp() {
   console.log(`

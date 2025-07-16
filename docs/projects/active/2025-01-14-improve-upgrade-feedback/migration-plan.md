@@ -2,7 +2,8 @@
 
 ## Overview
 
-This document outlines the plan to migrate from 6+ metadata files to a single `aichaku.json` configuration file, following modern tooling patterns.
+This document outlines the plan to migrate from 6+ metadata files to a single
+`aichaku.json` configuration file, following modern tooling patterns.
 
 ## Current State (6+ files)
 
@@ -26,23 +27,27 @@ This document outlines the plan to migrate from 6+ metadata files to a single `a
 ## Implementation Phases
 
 ### Phase 1: Add Backward Compatibility (v0.29.1)
+
 - Update all commands to read from either new or old format
 - Add `ConfigManager` class that abstracts the differences
 - No changes to existing projects yet
 - Add migration detection logic
 
 ### Phase 2: Auto-Migration on Upgrade (v0.30.0)
+
 - When running `aichaku upgrade`, automatically consolidate metadata
 - Keep old files as `.backup` for one version
 - Show clear migration messages to users
 - Add `--skip-migration` flag for users who need more time
 
 ### Phase 3: Deprecation Warnings (v0.31.0)
+
 - Show warnings when legacy files are detected
 - Provide `aichaku migrate-config` command for manual migration
 - Update all documentation to show new format
 
 ### Phase 4: Remove Legacy Support (v1.0.0)
+
 - Remove backward compatibility code
 - Legacy file detection only shows migration instructions
 - Clean, simple codebase with single config format
@@ -136,6 +141,7 @@ This document outlines the plan to migrate from 6+ metadata files to a single `a
 ## Rollback Plan
 
 If issues arise:
+
 1. The .backup files allow manual restoration
 2. Version detection allows old CLI versions to work
 3. Migration can be disabled via environment variable

@@ -1,10 +1,13 @@
 # Getting Started with Aichaku
 
-Welcome to Aichaku! This tutorial teaches you how to install Aichaku and create your first project. By the end, you'll understand how Aichaku helps Claude work with your team using development methodologies.
+Welcome to Aichaku! This tutorial teaches you how to install Aichaku and create
+your first project. By the end, you'll understand how Aichaku helps Claude work
+with your team using development methodologies.
 
 ## What you'll learn
 
 In this tutorial, you'll:
+
 - Install Aichaku on your system
 - Set up your first project with a methodology
 - Add coding standards to your project
@@ -14,11 +17,13 @@ In this tutorial, you'll:
 ## Before you begin
 
 You need:
+
 - **Deno runtime** (version 2.4.0 or higher)
 - **Write access** to your home directory
 - **5 minutes** to complete this tutorial
 
 Don't have Deno? Install it with:
+
 ```bash
 # macOS/Linux
 curl -fsSL https://deno.land/install.sh | sh
@@ -44,7 +49,8 @@ Check that Aichaku installed correctly:
 aichaku --version
 ```
 
-You should see version information. If you get "command not found", add Deno to your PATH:
+You should see version information. If you get "command not found", add Deno to
+your PATH:
 
 ```bash
 echo 'export PATH="$HOME/.deno/bin:$PATH"' >> ~/.zshrc
@@ -60,6 +66,7 @@ aichaku init --global
 ```
 
 This creates a `~/.claude/` directory with:
+
 - Methodology templates (Shape Up, Scrum, Kanban, etc.)
 - Coding standards library
 - Global Claude configuration
@@ -89,7 +96,8 @@ Initialize Aichaku in your project:
 aichaku init
 ```
 
-This creates a `.claude/` directory in your project with everything Claude needs.
+This creates a `.claude/` directory in your project with everything Claude
+needs.
 
 ### Integrate with Claude
 
@@ -134,6 +142,7 @@ Now you're ready to use Aichaku with Claude! Open Claude and try:
 ```
 
 Claude will:
+
 1. Recognize you're in planning mode
 2. Ask clarifying questions
 3. Help you shape the idea
@@ -151,10 +160,12 @@ Claude creates organized documents in `docs/projects/active/YYYY-MM-DD-*/`.
 ### ⭐ Automatic Session Summaries
 
 Aichaku automatically creates structured summaries of your work:
+
 - 📄 **Saved automatically** when conversations end or are compacted
 - 📋 **Organized** in `docs/checkpoints/` directory
 - 📅 **Timestamped** for easy reference
-- 📝 **Structured** with session overview, decisions, files modified, and next steps
+- 📝 **Structured** with session overview, decisions, files modified, and next
+  steps
 
 No more losing context between sessions!
 
@@ -214,6 +225,7 @@ This shows you the exact guidance Claude follows when writing tests.
 ## Next steps
 
 You've successfully:
+
 - ✅ Installed Aichaku
 - ✅ Set up a project
 - ✅ Added coding standards
@@ -221,14 +233,20 @@ You've successfully:
 - ✅ **Enabled automatic session summaries** ⭐
 
 Continue learning:
+
 - Read [First Project Tutorial](first-project.md) to build something real
-- Check [Configure Your Project](../how-to/configure-project.md) for customization
-- Explore [Core Concepts](../explanation/core-concepts.md) to understand the philosophy
+- Check [Configure Your Project](../how-to/configure-project.md) for
+  customization
+- Explore [Core Concepts](../explanation/core-concepts.md) to understand the
+  philosophy
 
 ## Getting help
 
 - Run `aichaku help` for command reference
-- Visit [GitHub Issues](https://github.com/RickCogley/aichaku/issues) for support
-- Read the [Configuration Options](../reference/configuration-options.md) for detailed settings
+- Visit [GitHub Issues](https://github.com/RickCogley/aichaku/issues) for
+  support
+- Read the [Configuration Options](../reference/configuration-options.md) for
+  detailed settings
 
-Remember: Aichaku makes Claude a better development partner by providing structure without rigidity. Happy coding!
+Remember: Aichaku makes Claude a better development partner by providing
+structure without rigidity. Happy coding!

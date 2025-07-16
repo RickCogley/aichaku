@@ -1,11 +1,13 @@
 # Implementation Plan: Aichaku Adaptive Refactor
 
 ## Status: ACTIVE - PLANNING MODE
+
 ## Date: 2025-07-06
 
 ## Objective
 
-Transform Aichaku from a "methodology selector" to a true adaptive system with simple init/upgrade/uninstall lifecycle.
+Transform Aichaku from a "methodology selector" to a true adaptive system with
+simple init/upgrade/uninstall lifecycle.
 
 ## Technical Tasks
 
@@ -14,7 +16,7 @@ Transform Aichaku from a "methodology selector" to a true adaptive system with s
 1. **Refactor CLI command structure**
    - [ ] Change from `aichaku <methodology>` to `aichaku <command>`
    - [ ] Implement `init` command
-   - [ ] Implement `upgrade` command  
+   - [ ] Implement `upgrade` command
    - [ ] Implement `uninstall` command
    - [ ] Add `--global` flag support
    - [ ] Add `--dry-run` flag support
@@ -110,6 +112,7 @@ Transform Aichaku from a "methodology selector" to a true adaptive system with s
 ## Rollback Plan
 
 If issues arise:
+
 1. Git revert to v0.2.2
 2. Document lessons learned
 3. Re-approach with adjustments

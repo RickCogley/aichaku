@@ -4,7 +4,8 @@
 
 ## Concept: Educational Review Results
 
-The MCP doesn't just report problems - it helps Claude learn and adjust within the session.
+The MCP doesn't just report problems - it helps Claude learn and adjust within
+the session.
 
 ## How It Works
 
@@ -14,10 +15,10 @@ interface ReviewResult {
   summary: Summary;
   // NEW: Educational feedback for Claude
   claudeGuidance: {
-    reminder: string;      // What Claude should remember
-    pattern: string;       // The pattern to avoid
-    correction: string;    // How to fix it going forward
-    example: string;       // Correct example
+    reminder: string; // What Claude should remember
+    pattern: string; // The pattern to avoid
+    correction: string; // How to fix it going forward
+    example: string; // Correct example
   };
 }
 ```
@@ -25,38 +26,44 @@ interface ReviewResult {
 ## Example Implementation
 
 ### MCP Generates Dynamic Feedback
+
 ```typescript
 class ReviewEngine {
   generateClaudeGuidance(findings: Finding[]): ClaudeGuidance {
     // Analyze patterns in findings
     const patterns = this.detectPatterns(findings);
-    
+
     // Example: Many TypeScript 'any' violations
-    if (patterns.includes('typescript-any-overuse')) {
+    if (patterns.includes("typescript-any-overuse")) {
       return {
-        reminder: "I notice you used 'any' type 7 times, despite CLAUDE.md saying to avoid it. Please use proper types.",
+        reminder:
+          "I notice you used 'any' type 7 times, despite CLAUDE.md saying to avoid it. Please use proper types.",
         pattern: "Replacing proper types with 'any'",
-        correction: "For each 'any', determine the actual type from usage context",
-        example: "Instead of 'const data: any', use 'const data: UserData' or 'const data: unknown'"
+        correction:
+          "For each 'any', determine the actual type from usage context",
+        example:
+          "Instead of 'const data: any', use 'const data: UserData' or 'const data: unknown'",
       };
     }
-    
+
     // Example: Missing authorization checks
-    if (patterns.includes('missing-auth-checks')) {
+    if (patterns.includes("missing-auth-checks")) {
       return {
-        reminder: "Multiple endpoints are missing authorization. CLAUDE.md requires auth checks on all user data access.",
+        reminder:
+          "Multiple endpoints are missing authorization. CLAUDE.md requires auth checks on all user data access.",
         pattern: "Direct parameter usage without authorization",
         correction: "Add authorization middleware or checks before data access",
-        example: "if (!user.can('read', resource)) throw new ForbiddenError();"
+        example: "if (!user.can('read', resource)) throw new ForbiddenError();",
       };
     }
-    
+
     return this.buildGuidance(patterns);
   }
 }
 ```
 
 ### MCP Response Structure
+
 ```json
 {
   "toolResult": {
@@ -79,6 +86,7 @@ class ReviewEngine {
 ## Claude's Response Flow
 
 ### Before (Without Guidance)
+
 ```
 Claude: Here's the code you requested
 MCP: Found 5 issues with 'any' types
@@ -87,6 +95,7 @@ Claude: I see there are some type issues
 ```
 
 ### After (With Guidance)
+
 ```
 Claude: Here's the code you requested
 MCP: Found 5 issues + guidance
@@ -102,10 +111,11 @@ Claude: I apologize - I used 'any' types despite your CLAUDE.md
 ## Advanced Pattern Learning
 
 ### 1. Violation Tracking
+
 ```typescript
 class PatternTracker {
   private violations = new Map<string, ViolationInfo>();
-  
+
   track(finding: Finding) {
     const key = finding.rule;
     const info = this.violations.get(key) || { count: 0, examples: [] };
@@ -113,7 +123,7 @@ class PatternTracker {
     info.examples.push(finding);
     this.violations.set(key, info);
   }
-  
+
   getMostCommonViolation(): string {
     return Array.from(this.violations.entries())
       .sort((a, b) => b[1].count - a[1].count)[0][0];
@@ -122,6 +132,7 @@ class PatternTracker {
 ```
 
 ### 2. Contextual Guidance
+
 ```typescript
 generateContextualGuidance(violations: Map<string, ViolationInfo>): string {
   const topViolation = this.getMostCommonViolation(violations);
@@ -140,20 +151,21 @@ generateContextualGuidance(violations: Map<string, ViolationInfo>): string {
 ## Implementation in MCP Tools
 
 ### review_file Tool
+
 ```typescript
-server.setRequestHandler('tools/run', async (request) => {
-  if (request.params.name === 'review_file') {
+server.setRequestHandler("tools/run", async (request) => {
+  if (request.params.name === "review_file") {
     const result = await reviewEngine.reviewFile(path, content);
-    
+
     // Add Claude guidance based on findings
     if (result.findings.length > 0) {
       result.claudeGuidance = guidanceEngine.generate(
         result.findings,
         projectStandards,
-        previousViolations
+        previousViolations,
       );
     }
-    
+
     return { toolResult: result };
   }
 });
@@ -162,35 +174,40 @@ server.setRequestHandler('tools/run', async (request) => {
 ## Guidance Templates
 
 ### Security Violations
+
 ```typescript
 const SECURITY_GUIDANCE = {
-  'command-injection': {
-    reminder: "You introduced command injection vulnerabilities. This is a CRITICAL security issue.",
+  "command-injection": {
+    reminder:
+      "You introduced command injection vulnerabilities. This is a CRITICAL security issue.",
     pattern: "Passing unsanitized user input to shell commands",
-    correction: "Use parameter expansion: bash -c 'cmd \"$1\"' -- \"$VAR\"",
-    severity: "critical"
+    correction: 'Use parameter expansion: bash -c \'cmd "$1"\' -- "$VAR"',
+    severity: "critical",
   },
-  'sql-injection': {
-    reminder: "SQL injection detected. Your CLAUDE.md requires parameterized queries.",
+  "sql-injection": {
+    reminder:
+      "SQL injection detected. Your CLAUDE.md requires parameterized queries.",
     pattern: "String concatenation in SQL queries",
-    correction: "Use parameterized queries: query('SELECT * FROM users WHERE id = ?', [id])"
-  }
+    correction:
+      "Use parameterized queries: query('SELECT * FROM users WHERE id = ?', [id])",
+  },
 };
 ```
 
 ### Methodology Violations
+
 ```typescript
 const METHODOLOGY_GUIDANCE = {
-  'shape-up-appetite': {
+  "shape-up-appetite": {
     reminder: "Shape Up requires defining appetite upfront. You missed this.",
     pattern: "Creating pitch without time bounds",
-    correction: "Add 'Appetite: 6 weeks' or 'Appetite: 2 weeks' section"
+    correction: "Add 'Appetite: 6 weeks' or 'Appetite: 2 weeks' section",
   },
-  'scrum-no-estimate': {
+  "scrum-no-estimate": {
     reminder: "Scrum stories need estimates. Your team uses story points.",
     pattern: "User stories without point estimates",
-    correction: "Add story points to each story (1, 2, 3, 5, 8, 13)"
-  }
+    correction: "Add story points to each story (1, 2, 3, 5, 8, 13)",
+  },
 };
 ```
 
@@ -215,7 +232,7 @@ const METHODOLOGY_GUIDANCE = {
         "rule": "typescript-any",
         "line": 42,
         "message": "Avoid 'any' type"
-      },
+      }
       // ... more findings
     ],
     "summary": {
@@ -242,4 +259,5 @@ const METHODOLOGY_GUIDANCE = {
 4. **Positive Reinforcement**: Praise when standards followed
 5. **Learning Metrics**: Track improvement over time
 
-This creates a true feedback loop where the MCP doesn't just find problems but actively helps Claude learn and improve within the session!
+This creates a true feedback loop where the MCP doesn't just find problems but
+actively helps Claude learn and improve within the session!

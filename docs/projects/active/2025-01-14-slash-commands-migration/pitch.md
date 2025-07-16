@@ -2,17 +2,25 @@
 
 ## Problem
 
-Claude Code has introduced a new way to define slash commands using markdown files in `~/.claude/commands/`, but we're still using the old JSON format in `settings.json`. This creates several issues:
+Claude Code has introduced a new way to define slash commands using markdown
+files in `~/.claude/commands/`, but we're still using the old JSON format in
+`settings.json`. This creates several issues:
 
-1. **Outdated approach**: Our 10 slash commands are defined in a 228-line JSON file, making them hard to maintain
-2. **No version control**: Individual commands can't be tracked separately in git
-3. **Limited capabilities**: The new format supports YAML frontmatter with tool permissions
-4. **Potential conflicts**: Claude now has built-in GitHub commands that may overlap with our MCP
-5. **Poor discoverability**: Commands buried in JSON are hard to find and understand
+1. **Outdated approach**: Our 10 slash commands are defined in a 228-line JSON
+   file, making them hard to maintain
+2. **No version control**: Individual commands can't be tracked separately in
+   git
+3. **Limited capabilities**: The new format supports YAML frontmatter with tool
+   permissions
+4. **Potential conflicts**: Claude now has built-in GitHub commands that may
+   overlap with our MCP
+5. **Poor discoverability**: Commands buried in JSON are hard to find and
+   understand
 
 ### Evidence from Current State
 
 **Current commands in settings.json**:
+
 - `/memin` - Load memory files
 - `/security-rules` - DevSkim/CodeQL syntax
 - `/preflight` - Project-specific checks
@@ -25,17 +33,20 @@ Claude Code has introduced a new way to define slash commands using markdown fil
 - `/addglobal` - Add global config
 
 **New built-in commands** (potential overlaps):
+
 - `/review` - Code review (overlaps with our MCP reviewer?)
 - `/init` - Initialize project (overlaps with Aichaku init?)
 - `/config` - View/modify config (overlaps with our settings?)
 
 ## Appetite
 
-**3 weeks** - This is a medium-sized migration that improves maintainability and aligns with Claude's new standards.
+**3 weeks** - This is a medium-sized migration that improves maintainability and
+aligns with Claude's new standards.
 
 ## Solution
 
-Migrate all slash commands to individual markdown files with proper metadata and organization.
+Migrate all slash commands to individual markdown files with proper metadata and
+organization.
 
 ### Directory Structure
 
@@ -60,6 +71,7 @@ Migrate all slash commands to individual markdown files with proper metadata and
 ### Example Migration: `/checkpoint` Command
 
 **Before** (in settings.json):
+
 ```json
 {
   "name": "checkpoint",
@@ -69,6 +81,7 @@ Migrate all slash commands to individual markdown files with proper metadata and
 ```
 
 **After** (`~/.claude/commands/aichaku/checkpoint.md`):
+
 ```markdown
 ---
 allowed-tools: Write, Bash(mkdir:*), Bash(date:*)
@@ -85,25 +98,25 @@ Create a session checkpoint by following these steps:
 
 2. CHECKPOINT CONTENT (use these exact sections):
    # Session Checkpoint - {date} - {name}
-   
+
    ## Summary of Work Accomplished
    List main tasks completed
-   
+
    ## Key Technical Decisions
    Document architectural choices
-   
+
    ## Files Created/Modified
    ### Created
    - New files with purpose
-   ### Modified  
+   ### Modified
    - Changed files with changes
-   
+
    ## Problems Solved
    Issues resolved and solutions
-   
+
    ## Lessons Learned
    Key insights discovered
-   
+
    ## Next Steps
    Future work or improvements
 
@@ -124,13 +137,13 @@ interface OldSlashCommand {
 async function migrateCommands() {
   // Read old settings
   const settings = JSON.parse(
-    await Deno.readTextFile("~/.claude/settings.json")
+    await Deno.readTextFile("~/.claude/settings.json"),
   );
-  
+
   // Create directories
   const categories = {
     memin: "aichaku",
-    checkpoint: "aichaku", 
+    checkpoint: "aichaku",
     project: "aichaku",
     "security-rules": "security",
     owasp: "security",
@@ -138,18 +151,18 @@ async function migrateCommands() {
     preflight: "dev",
     "directory-structure": "dev",
     commands: "utils",
-    addglobal: "utils"
+    addglobal: "utils",
   };
-  
+
   // Migrate each command
   for (const cmd of settings.slashCommands) {
     const category = categories[cmd.name] || "misc";
     const dir = `~/.claude/commands/${category}`;
     await Deno.mkdir(dir, { recursive: true });
-    
+
     // Determine allowed tools
     const allowedTools = detectRequiredTools(cmd.prompt);
-    
+
     // Create markdown file
     const content = `---
 allowed-tools: ${allowedTools.join(", ")}
@@ -158,18 +171,18 @@ description: ${cmd.description}
 
 ${improvePrompt(cmd.prompt)}
 `;
-    
+
     await Deno.writeTextFile(
       `${dir}/${cmd.name}.md`,
-      content
+      content,
     );
   }
-  
+
   // Update settings.json
   delete settings.slashCommands;
   await Deno.writeTextFile(
     "~/.claude/settings.json",
-    JSON.stringify(settings, null, 2)
+    JSON.stringify(settings, null, 2),
   );
 }
 ```
@@ -186,7 +199,7 @@ description: Search for a pattern in the codebase
 
 Search for "$ARGUMENTS" across the codebase:
 
-!grep -r "$ARGUMENTS" --include="*.ts" --include="*.js"
+!grep -r "$ARGUMENTS" --include="_.ts" --include="_.js"
 
 Show the first 5 matches with context.
 ```
@@ -199,14 +212,11 @@ allowed-tools: Bash(git:*)
 description: Show git status with branch info
 ---
 
-Current git status:
-!git status --porcelain
+Current git status: !git status --porcelain
 
-Current branch:
-!git branch --show-current
+Current branch: !git branch --show-current
 
-Recent commits:
-!git log --oneline -5
+Recent commits: !git log --oneline -5
 ```
 
 #### 3. **File References** (`@file`)
@@ -230,7 +240,7 @@ Summarize the project setup based on these files.
 
 Since Claude now has built-in commands, we should:
 
-1. **Remove duplicates**: 
+1. **Remove duplicates**:
    - Our `/commands` → Use Claude's `/help` instead
    - Consider if `/review` replaces our MCP reviewer
 

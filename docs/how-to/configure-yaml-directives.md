@@ -2,7 +2,9 @@
 
 ## Overview
 
-Aichaku uses a YAML-based configuration system that allows you to customize how Claude Code works with your projects. Instead of large static markdown files, directives are now modular YAML configurations that can be mixed and matched.
+Aichaku uses a YAML-based configuration system that allows you to customize how
+Claude Code works with your projects. Instead of large static markdown files,
+directives are now modular YAML configurations that can be mixed and matched.
 
 ## Key Benefits
 
@@ -36,6 +38,7 @@ When you run `aichaku integrate`, the system:
 ```
 
 **Project overrides** (optional):
+
 ```
 your-project/.claude/aichaku/
 ├── overrides.yaml          # Project-specific customizations
@@ -44,7 +47,7 @@ your-project/.claude/aichaku/
 
 ## Example YAML Structure
 
-```yaml
+````yaml
 aichaku:
   version: "0.29.0"
   source: "configuration-as-code"
@@ -55,7 +58,7 @@ directives:
       - "docs/projects/active/"
       - "docs/checkpoints/"
     naming_convention: "YYYY-MM-DD-descriptive-name"
-    
+
   methodology_detection:
     shape_up:
       triggers: ["shape", "appetite", "pitch", "betting table", "6 weeks"]
@@ -81,7 +84,7 @@ directives:
           C --> D[🍃 Complete]
           style B fill:#90EE90
       ```
-```
+````
 
 ## Customizing for Your Project
 
@@ -99,16 +102,16 @@ Create `.claude/aichaku/overrides.yaml`:
 # Override default behavior for this project
 aichaku:
   project_name: "My Custom Project"
-  
+
 directives:
   visual_identity:
-    prefix: "🚀 MyProject:"  # Custom prefix instead of Aichaku
-    
+    prefix: "🚀 MyProject:" # Custom prefix instead of Aichaku
+
   methodology_detection:
     custom_method:
       triggers: ["our-process", "company-way"]
       documents: ["company-process.md"]
-      
+
   project_structure:
     additional_directories:
       - "docs/architecture/"
@@ -135,7 +138,8 @@ This will regenerate your `CLAUDE.md` with the new configuration.
 
 ### Methodology-Specific Options
 
-Each methodology (Shape Up, Scrum, Kanban, etc.) has its own configuration file with:
+Each methodology (Shape Up, Scrum, Kanban, etc.) has its own configuration file
+with:
 
 - Specific terminology and triggers
 - Document templates and requirements
@@ -188,4 +192,5 @@ If you were using older versions of Aichaku with large markdown files:
 2. **No manual migration needed** - just run `aichaku upgrade`
 3. **Old files are automatically cleaned up** during upgrade
 
-The new YAML system provides the same functionality with much better maintainability and performance.
+The new YAML system provides the same functionality with much better
+maintainability and performance.

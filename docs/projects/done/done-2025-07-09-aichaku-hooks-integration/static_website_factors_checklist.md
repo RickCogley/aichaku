@@ -1,14 +1,21 @@
 # The Static Website Factors: A Comprehensive Development Checklist
 
-While static websites don't have a formal "12-factor" methodology like applications do, this checklist synthesizes best practices from JAMstack principles, modern web standards, and industry expertise into a structured framework for building high-quality static sites.
+While static websites don't have a formal "12-factor" methodology like
+applications do, this checklist synthesizes best practices from JAMstack
+principles, modern web standards, and industry expertise into a structured
+framework for building high-quality static sites.
 
 ## Core Philosophy
 
-Think of static websites as **digital sculptures** - once carved, they stand unchanged until the artist returns. Unlike dynamic applications that reshape themselves for each visitor, static sites deliver pre-built experiences with the speed of light and the reliability of stone.
+Think of static websites as **digital sculptures** - once carved, they stand
+unchanged until the artist returns. Unlike dynamic applications that reshape
+themselves for each visitor, static sites deliver pre-built experiences with the
+speed of light and the reliability of stone.
 
 ## The 15 Factors for Static Websites
 
 ### Factor I: Source Control & Versioning
+
 **One repository, infinite deployments**
 
 - [ ] Single Git repository for entire site
@@ -19,6 +26,7 @@ Think of static websites as **digital sculptures** - once carved, they stand unc
 - [ ] README with setup instructions
 
 **Implementation:**
+
 ```bash
 # Repository structure
 /my-static-site
@@ -36,6 +44,7 @@ Think of static websites as **digital sculptures** - once carved, they stand unc
 ```
 
 ### Factor II: Build Process & Dependencies
+
 **Explicit, reproducible builds**
 
 - [ ] Package manager with lockfile (package-lock.json, yarn.lock)
@@ -46,6 +55,7 @@ Think of static websites as **digital sculptures** - once carved, they stand unc
 - [ ] Clean separation of source and build output
 
 **Example package.json:**
+
 ```json
 {
   "scripts": {
@@ -61,6 +71,7 @@ Think of static websites as **digital sculptures** - once carved, they stand unc
 ```
 
 ### Factor III: Content Architecture
+
 **Structure defines experience**
 
 - [ ] Clear information hierarchy
@@ -71,6 +82,7 @@ Think of static websites as **digital sculptures** - once carved, they stand unc
 - [ ] XML sitemap generated automatically
 
 **Good URL patterns:**
+
 ```
 ✅ /about
 ✅ /blog/2025/my-post
@@ -81,6 +93,7 @@ Think of static websites as **digital sculptures** - once carved, they stand unc
 ```
 
 ### Factor IV: Asset Optimization
+
 **Every byte counts**
 
 - [ ] Images optimized and in modern formats (WebP, AVIF)
@@ -92,18 +105,17 @@ Think of static websites as **digital sculptures** - once carved, they stand unc
 - [ ] Resource hints (preconnect, prefetch)
 
 **Image optimization pattern:**
+
 ```html
 <picture>
   <source srcset="hero.avif" type="image/avif">
   <source srcset="hero.webp" type="image/webp">
-  <img src="hero.jpg" alt="Hero image" 
-       loading="lazy" 
-       width="1200" 
-       height="600">
+  <img src="hero.jpg" alt="Hero image" loading="lazy" width="1200" height="600">
 </picture>
 ```
 
 ### Factor V: Performance Standards
+
 **Speed is a feature**
 
 - [ ] Target < 3 second load time on 3G
@@ -115,6 +127,7 @@ Think of static websites as **digital sculptures** - once carved, they stand unc
 - [ ] Efficient caching headers
 
 **Performance budget example:**
+
 ```yaml
 performance_budget:
   html: 50KB
@@ -126,6 +139,7 @@ performance_budget:
 ```
 
 ### Factor VI: SEO Foundation
+
 **Discoverable by design**
 
 - [ ] Unique, descriptive title tags (< 60 chars)
@@ -137,6 +151,7 @@ performance_budget:
 - [ ] XML sitemap submitted to search engines
 
 **SEO meta template:**
+
 ```html
 <head>
   <title>Page Title - Site Name</title>
@@ -149,6 +164,7 @@ performance_budget:
 ```
 
 ### Factor VII: Accessibility Standards
+
 **Universal access as baseline**
 
 - [ ] WCAG 2.1 AA compliance minimum
@@ -161,6 +177,7 @@ performance_budget:
 - [ ] Focus indicators visible
 
 **Accessibility checklist:**
+
 ```html
 <!-- Good practices -->
 <nav role="navigation" aria-label="Main">
@@ -170,6 +187,7 @@ performance_budget:
 ```
 
 ### Factor VIII: Responsive Design
+
 **One site, every device**
 
 - [ ] Mobile-first CSS approach
@@ -181,6 +199,7 @@ performance_budget:
 - [ ] Images scale appropriately
 
 **Responsive foundation:**
+
 ```css
 /* Mobile-first breakpoints */
 :root {
@@ -206,6 +225,7 @@ performance_budget:
 ```
 
 ### Factor IX: Security Headers
+
 **Static doesn't mean unsecured**
 
 - [ ] HTTPS enforced (SSL certificate)
@@ -217,6 +237,7 @@ performance_budget:
 - [ ] No exposed sensitive files (.git, .env)
 
 **Security headers example:**
+
 ```nginx
 # Netlify _headers file
 /*
@@ -228,6 +249,7 @@ performance_budget:
 ```
 
 ### Factor X: CDN & Deployment
+
 **Global reach, local speed**
 
 - [ ] Deployed to CDN (not single server)
@@ -239,6 +261,7 @@ performance_budget:
 - [ ] Geographic distribution
 
 **Deployment platforms:**
+
 - Netlify
 - Vercel
 - Cloudflare Pages
@@ -246,6 +269,7 @@ performance_budget:
 - AWS S3 + CloudFront
 
 ### Factor XI: Analytics & Monitoring
+
 **Measure to improve**
 
 - [ ] Analytics installed (privacy-respecting)
@@ -257,13 +281,18 @@ performance_budget:
 - [ ] Search Console connected
 
 **Minimal analytics setup:**
+
 ```html
 <!-- Privacy-focused analytics -->
-<script defer data-domain="example.com" 
-        src="https://plausible.io/js/script.js"></script>
+<script
+  defer
+  data-domain="example.com"
+  src="https://plausible.io/js/script.js"
+></script>
 ```
 
 ### Factor XII: Content Management
+
 **Separation of concerns**
 
 - [ ] Content separate from presentation
@@ -275,6 +304,7 @@ performance_budget:
 - [ ] Editorial workflow defined
 
 **Content structure:**
+
 ```markdown
 ---
 title: "Blog Post Title"
@@ -290,6 +320,7 @@ Content in Markdown...
 ```
 
 ### Factor XIII: Progressive Enhancement
+
 **Core functionality first**
 
 - [ ] Site works without JavaScript
@@ -301,9 +332,10 @@ Content in Markdown...
 - [ ] Core content in HTML
 
 **Enhancement pattern:**
+
 ```javascript
 // Check for feature support
-if ('IntersectionObserver' in window) {
+if ("IntersectionObserver" in window) {
   // Add lazy loading
   const observer = new IntersectionObserver(/*...*/);
 } else {
@@ -312,6 +344,7 @@ if ('IntersectionObserver' in window) {
 ```
 
 ### Factor XIV: Testing & Quality
+
 **Trust but verify**
 
 - [ ] Automated build tests
@@ -324,6 +357,7 @@ if ('IntersectionObserver' in window) {
 - [ ] Visual regression testing
 
 **Testing checklist:**
+
 ```yaml
 tests:
   - html_validation
@@ -331,13 +365,14 @@ tests:
   - lighthouse_scores
   - accessibility_axe
   - cross_browser:
-    - Chrome
-    - Firefox
-    - Safari
-    - Edge
+      - Chrome
+      - Firefox
+      - Safari
+      - Edge
 ```
 
 ### Factor XV: Documentation & Maintenance
+
 **Future-proof your work**
 
 - [ ] README with setup instructions
@@ -352,24 +387,28 @@ tests:
 ## Implementation Phases
 
 ### Phase 1: Foundation (Week 1)
+
 1. Set up repository and build process
 2. Choose static site generator
 3. Establish content architecture
 4. Create base templates
 
 ### Phase 2: Development (Weeks 2-3)
+
 5. Build responsive layouts
 6. Implement SEO foundations
 7. Add core content
 8. Optimize assets
 
 ### Phase 3: Enhancement (Week 4)
+
 9. Add progressive enhancements
 10. Implement analytics
 11. Configure security headers
 12. Set up CDN deployment
 
 ### Phase 4: Launch Preparation (Week 5)
+
 13. Comprehensive testing
 14. Performance optimization
 15. Documentation completion
@@ -378,6 +417,7 @@ tests:
 ## Pre-Launch Checklist
 
 ### Content Review
+
 - [ ] All content proofread
 - [ ] Links tested and working
 - [ ] Images have alt text
@@ -385,6 +425,7 @@ tests:
 - [ ] Legal pages present (privacy, terms)
 
 ### Technical Review
+
 - [ ] Mobile responsive verified
 - [ ] Cross-browser tested
 - [ ] Performance budgets met
@@ -394,6 +435,7 @@ tests:
 - [ ] SSL certificate valid
 
 ### Final Checks
+
 - [ ] 404 page created
 - [ ] Favicon uploaded
 - [ ] Social sharing tested
@@ -413,9 +455,13 @@ tests:
 
 ## The Static Site Mantra
 
-> "Pre-render everything possible, enhance where valuable, and deliver at the speed of light."
+> "Pre-render everything possible, enhance where valuable, and deliver at the
+> speed of light."
 
-Remember: The goal is to create sites that are **fast**, **secure**, **accessible**, and **maintainable**. Each factor contributes to these goals, but don't let perfect be the enemy of good. Start with the basics and progressively enhance.
+Remember: The goal is to create sites that are **fast**, **secure**,
+**accessible**, and **maintainable**. Each factor contributes to these goals,
+but don't let perfect be the enemy of good. Start with the basics and
+progressively enhance.
 
 ## Quick Start Commands
 
@@ -437,4 +483,6 @@ npm run build
 netlify deploy --prod
 ```
 
-This checklist represents the collective wisdom of the static site community. Adapt it to your needs, but always keep user experience at the forefront of your decisions.
+This checklist represents the collective wisdom of the static site community.
+Adapt it to your needs, but always keep user experience at the forefront of your
+decisions.

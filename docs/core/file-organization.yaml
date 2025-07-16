@@ -8,14 +8,14 @@ description: "Project structure, file paths, and naming conventions for Aichaku"
 project_structure:
   root: "docs/projects/"
   description: "All Aichaku projects live under this directory"
-  
+
   states:
     active:
       path: "docs/projects/active/"
       description: "Currently active projects"
       naming: "active-YYYY-MM-DD-{descriptive-kebab-case-name}"
       example: "active-2025-07-15-security-workflow-modernization"
-    
+
     done:
       path: "docs/projects/done/"
       description: "Completed projects"
@@ -31,7 +31,7 @@ required_files:
       - "Project phase and progress"
       - "Mermaid lifecycle diagram"
       - "Current status and next steps"
-  
+
   methodology_specific:
     shape_up:
       - "pitch.md"
@@ -47,7 +47,7 @@ required_files:
     lean:
       - "experiment-plan.md"
       - "metrics-dashboard.md"
-  
+
   completion_files:
     change_log:
       naming: "YYYY-MM-DD-{Project-Name}-CHANGE-LOG.md"
@@ -71,7 +71,7 @@ naming_conventions:
         - "yaml-integration" # Missing date
         - "2025-01-15-test" # Using wrong month
         - "YAML_Integration" # Wrong case
-  
+
   documents:
     format: "{methodology-specific-name}.md"
     case: "kebab-case for filenames"
@@ -86,17 +86,17 @@ lifecycle_management:
       - "Read appropriate methodology guides"
       - "Create planning documents with workflow diagrams"
       - "WAIT for human approval before coding"
-    
+
     common_mistakes:
       - "Using 01 instead of current month"
       - "Using example dates instead of today's date"
       - "Creating files in project root"
-  
+
   during_work:
     - "Update STATUS.md regularly"
     - "Create supporting documents freely"
     - "Keep all work within project folder"
-  
+
   completing_work:
     steps:
       - "Create YYYY-MM-DD-{Project-Name}-CHANGE-LOG.md"

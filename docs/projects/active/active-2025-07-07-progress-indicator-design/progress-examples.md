@@ -3,6 +3,7 @@
 ## Shape Up Examples
 
 ### Week 1 - Shaping Phase
+
 ```
 ┌─ Shape Up: Authentication System ────────────────┐
 │                                                  │
@@ -18,6 +19,7 @@
 ```
 
 ### Week 3 - Building Phase
+
 ```
 ┌─ Shape Up: Authentication System ────────────────┐
 │                                                  │
@@ -33,6 +35,7 @@
 ```
 
 ### Week 5 - At Risk
+
 ```
 ┌─ Shape Up: Authentication System ────────────────┐
 │                                                  │
@@ -48,6 +51,7 @@
 ```
 
 ### Week 6 - Cool-down
+
 ```
 ┌─ Shape Up: Authentication System ────────────────┐
 │                                                  │
@@ -65,6 +69,7 @@
 ## Scrum Sprint Examples
 
 ### Sprint Day 1 - Planning
+
 ```
 ┌─ Sprint 15: User Dashboard ──────────────────────┐
 │                                                  │
@@ -81,6 +86,7 @@
 ```
 
 ### Sprint Day 5 - Mid Sprint
+
 ```
 ┌─ Sprint 15: User Dashboard ──────────────────────┐
 │                                                  │
@@ -102,6 +108,7 @@
 ```
 
 ### Sprint Day 10 - Sprint Review
+
 ```
 ┌─ Sprint 15: User Dashboard ──────────────────────┐
 │                                                  │
@@ -123,6 +130,7 @@
 ## Kanban Flow Examples
 
 ### Normal Flow
+
 ```
 ┌─ Kanban Board ───────────────────────────────────┐
 │                                                  │
@@ -142,6 +150,7 @@
 ```
 
 ### Bottleneck Detected
+
 ```
 ┌─ Kanban Board ───────────────────────────────────┐
 │                                                  │
@@ -159,6 +168,7 @@
 ```
 
 ### WIP Limit Violation
+
 ```
 ┌─ Kanban Board ───────────────────────────────────┐
 │                                                  │
@@ -177,6 +187,7 @@
 ## Lean MVP Examples
 
 ### Build Phase
+
 ```
 ┌─ Lean MVP: Payment Integration ──────────────────┐
 │                                                  │
@@ -196,6 +207,7 @@
 ```
 
 ### Measure Phase
+
 ```
 ┌─ Lean MVP: Payment Integration ──────────────────┐
 │                                                  │
@@ -217,6 +229,7 @@
 ```
 
 ### Learn Phase
+
 ```
 ┌─ Lean MVP: Payment Integration ──────────────────┐
 │                                                  │
@@ -242,6 +255,7 @@
 ## XP Iteration Examples
 
 ### Test-Driven Development
+
 ```
 ┌─ XP Iteration 8: Authentication ─────────────────┐
 │                                                  │
@@ -261,6 +275,7 @@
 ```
 
 ### Daily Progress
+
 ```
 ┌─ XP Iteration 8 ─────────────────────────────────┐
 │                                                  │
@@ -287,6 +302,7 @@
 ## Compact Mode Examples
 
 ### All Methodologies - One Line
+
 ```
 Shape Up  [S:✓|B:████░░░░|C:     ] Week 3/6 58%
 Scrum     [Day 6/10] ██████░░░░ 23/40pts Sprint 15
@@ -296,6 +312,7 @@ XP Iter 8 [Stories:5/8|TDD:🟢|Pair:@alice] Day 3/5
 ```
 
 ### Terminal Animation Examples
+
 ```
 # Building animation
 Shape Up  [S:✓|B:████████▓▓▓▓|C:     ] Building...
@@ -316,47 +333,42 @@ Scrum     [Day 5/10] ██████░░░░ 🌙 Day complete
 ## STATUS.md Embedded Examples
 
 ### Shape Up STATUS.md
+
 ```markdown
 <!-- AICHAKU:PROGRESS:START -->
-Methodology: Shape Up
-Phase: Building
-Progress: 58%
-Week: 3.5 of 6
-Status: on-track
 
-Visual:
-[Shaping:✓][Building:████████░░░░][Cool-down:      ]
-📍 Building Phase - Week 3.5/6 - ON TRACK ✅
+Methodology: Shape Up Phase: Building Progress: 58% Week: 3.5 of 6 Status:
+on-track
+
+Visual: [Shaping:✓][Building:████████░░░░][Cool-down: ] 📍 Building Phase - Week
+3.5/6 - ON TRACK ✅
+
 <!-- AICHAKU:PROGRESS:END -->
 ```
 
 ### Scrum STATUS.md
+
 ```markdown
 <!-- AICHAKU:PROGRESS:START -->
-Methodology: Scrum
-Sprint: 15
-Day: 6 of 10
-Points: 23 of 40
-Status: on-track
 
-Visual:
-Sprint 15 [██████░░░░░░░░] Day 6/10
-Burndown: ▂▃▄▅▆▇ (57% complete)
+Methodology: Scrum Sprint: 15 Day: 6 of 10 Points: 23 of 40 Status: on-track
+
+Visual: Sprint 15 [██████░░░░░░░░] Day 6/10 Burndown: ▂▃▄▅▆▇ (57% complete)
 Velocity: 23/40 points - ON TRACK ✅
+
 <!-- AICHAKU:PROGRESS:END -->
 ```
 
 ### Kanban STATUS.md
+
 ```markdown
 <!-- AICHAKU:PROGRESS:START -->
-Methodology: Kanban
-WIP: 8 of 10
-Cycle Time: 3.2 days
-Throughput: 12 items/week
+
+Methodology: Kanban WIP: 8 of 10 Cycle Time: 3.2 days Throughput: 12 items/week
 Status: normal
 
-Visual:
-[Backlog:12|Ready:5|Doing:2*|Review:1|Done:47]
-Flow: Normal | CT: 3.2d (↓0.5) | TP: 12/wk (↑2)
+Visual: [Backlog:12|Ready:5|Doing:2*|Review:1|Done:47] Flow: Normal | CT: 3.2d
+(↓0.5) | TP: 12/wk (↑2)
+
 <!-- AICHAKU:PROGRESS:END -->
 ```

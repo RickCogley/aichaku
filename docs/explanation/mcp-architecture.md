@@ -1,10 +1,13 @@
 # MCP Architecture
 
-Understand the Model Context Protocol (MCP) and how Aichaku's MCP server integrates with Claude Code to provide automated code review capabilities.
+Understand the Model Context Protocol (MCP) and how Aichaku's MCP server
+integrates with Claude Code to provide automated code review capabilities.
 
 ## What is MCP?
 
-The Model Context Protocol (MCP) is a standard that enables AI assistants like Claude to interact with external tools and services. Think of it as a bridge between Claude's AI capabilities and specialized tools on your computer.
+The Model Context Protocol (MCP) is a standard that enables AI assistants like
+Claude to interact with external tools and services. Think of it as a bridge
+between Claude's AI capabilities and specialized tools on your computer.
 
 ### Key concepts
 
@@ -16,11 +19,13 @@ The Model Context Protocol (MCP) is a standard that enables AI assistants like C
 ### Why MCP matters
 
 Without MCP:
+
 - Claude can only work with information you provide
 - No access to specialized tools or local resources
 - Limited ability to verify or validate code
 
 With MCP:
+
 - Claude can use security scanners
 - Access project-specific configurations
 - Provide real-time code analysis
@@ -80,12 +85,14 @@ graph TB
 #### MCP Server (`mcp-code-reviewer`)
 
 The main server process that:
+
 - Implements the MCP protocol
 - Handles tool requests from Claude
 - Manages the lifecycle of reviews
 - Returns structured responses
 
 Key characteristics:
+
 - **Stateless** - No persistent state between requests
 - **Ephemeral** - Spawned on demand, exits when done
 - **Isolated** - Each request is independent
@@ -94,6 +101,7 @@ Key characteristics:
 #### Review Engine
 
 Orchestrates the review process:
+
 1. Parses the review request
 2. Loads project configuration
 3. Runs security patterns
@@ -104,6 +112,7 @@ Orchestrates the review process:
 #### Standards Manager
 
 Handles standards-related operations:
+
 - Loads selected standards from `.claude/.aichaku-standards.json`
 - Reads standard definitions from `~/.claude/docs/standards/`
 - Applies standard-specific rules
@@ -112,6 +121,7 @@ Handles standards-related operations:
 #### Methodology Manager
 
 Detects and validates methodologies:
+
 - Scans project structure for methodology artifacts
 - Loads methodology rules from `~/.claude/methodologies/`
 - Checks compliance with methodology practices
@@ -120,6 +130,7 @@ Detects and validates methodologies:
 #### Scanner Controller
 
 Manages external security scanners:
+
 - Detects available scanners in PATH
 - Runs scanners with appropriate parameters
 - Parses scanner output (SARIF format)
@@ -128,6 +139,7 @@ Manages external security scanners:
 #### Feedback Builder
 
 Creates educational responses:
+
 - Formats issues with context
 - Provides good/bad examples
 - Includes step-by-step fixes
@@ -141,6 +153,7 @@ Creates educational responses:
 MCP uses JSON-RPC 2.0 for communication:
 
 1. **Request from Claude:**
+
 ```json
 {
   "jsonrpc": "2.0",
@@ -157,6 +170,7 @@ MCP uses JSON-RPC 2.0 for communication:
 ```
 
 2. **Response from MCP Server:**
+
 ```json
 {
   "jsonrpc": "2.0",
@@ -186,13 +200,13 @@ MCP uses JSON-RPC 2.0 for communication:
 
 The MCP server is designed to be secure by default:
 
-| Threat | Mitigation |
-|--------|------------|
-| Code injection | Read-only operations, no code execution |
-| Path traversal | Strict path validation, project boundaries |
-| Information disclosure | No network access, local only |
-| Privilege escalation | Runs as user, no elevated permissions |
-| Supply chain attacks | Minimal dependencies, signed releases |
+| Threat                 | Mitigation                                 |
+| ---------------------- | ------------------------------------------ |
+| Code injection         | Read-only operations, no code execution    |
+| Path traversal         | Strict path validation, project boundaries |
+| Information disclosure | No network access, local only              |
+| Privilege escalation   | Runs as user, no elevated permissions      |
+| Supply chain attacks   | Minimal dependencies, signed releases      |
 
 ### Security Boundaries
 
@@ -334,8 +348,8 @@ export const securityPatterns = [
     owasp: "A03",
     pattern: /query.*\+.*user|user.*\+.*query/i,
     message: "Potential SQL injection",
-    fix: "Use parameterized queries"
-  }
+    fix: "Use parameterized queries",
+  },
   // Add new patterns here
 ];
 ```
@@ -356,8 +370,8 @@ const scanners = {
   newscanner: {
     command: "newscanner",
     args: ["--format", "sarif"],
-    parse: (output) => JSON.parse(output)
-  }
+    parse: (output) => JSON.parse(output),
+  },
 };
 ```
 
@@ -399,12 +413,12 @@ const scanners = {
 
 ### Design trade-offs
 
-| Choice | Benefit | Trade-off |
-|--------|---------|-----------|
-| Stdio transport | Security, simplicity | No remote access |
+| Choice           | Benefit                | Trade-off              |
+| ---------------- | ---------------------- | ---------------------- |
+| Stdio transport  | Security, simplicity   | No remote access       |
 | Stateless design | Scalability, isolation | No cross-file analysis |
-| Local only | Privacy, performance | No cloud features |
-| Read-only | Security | Cannot auto-fix issues |
+| Local only       | Privacy, performance   | No cloud features      |
+| Read-only        | Security               | Cannot auto-fix issues |
 
 ## Future Architecture Considerations
 
@@ -419,6 +433,7 @@ const scanners = {
 ### Maintaining simplicity
 
 The architecture prioritizes:
+
 - **Simplicity over features**
 - **Security over convenience**
 - **Privacy over analytics**
@@ -429,16 +444,18 @@ The architecture prioritizes:
 
 The Aichaku MCP server architecture provides:
 
-✅ **Secure** - Multiple layers of protection  
-✅ **Private** - Everything stays on your machine  
-✅ **Fast** - Sub-second response times  
-✅ **Educational** - Teaches while reviewing  
-✅ **Extensible** - Add patterns and scanners  
+✅ **Secure** - Multiple layers of protection\
+✅ **Private** - Everything stays on your machine\
+✅ **Fast** - Sub-second response times\
+✅ **Educational** - Teaches while reviewing\
+✅ **Extensible** - Add patterns and scanners
 
-The architecture makes Claude Code a more capable development partner while maintaining the security and privacy developers expect.
+The architecture makes Claude Code a more capable development partner while
+maintaining the security and privacy developers expect.
 
 ## Related Documentation
 
 - [Setup MCP Server](../tutorials/setup-mcp-server.md) - Get started
 - [MCP API Reference](../reference/mcp-api.md) - Technical details
-- [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md) - Practical usage
+- [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md) -
+  Practical usage

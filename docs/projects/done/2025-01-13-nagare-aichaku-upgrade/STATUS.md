@@ -1,13 +1,14 @@
 # Nagare Aichaku Upgrade - Status
 
-**Project**: Upgrade Nagare to Aichaku v0.28.0  
-**Status**: 🌳 Complete  
-**Created**: 2025-01-13  
-**Completed**: 2025-01-13  
+**Project**: Upgrade Nagare to Aichaku v0.28.0\
+**Status**: 🌳 Complete\
+**Created**: 2025-01-13\
+**Completed**: 2025-01-13
 
 ## Summary
 
-Successfully upgraded the Nagare project from Aichaku v0.21.1 to v0.28.0, including migration to the new project structure.
+Successfully upgraded the Nagare project from Aichaku v0.21.1 to v0.28.0,
+including migration to the new project structure.
 
 ## What Was Done
 
@@ -37,6 +38,7 @@ Successfully upgraded the Nagare project from Aichaku v0.21.1 to v0.28.0, includ
 ## Migration Path for Other Projects
 
 This same process can be used for any project with old aichaku structure:
+
 1. Move `.claude/output/*` to `docs/projects/`
 2. Remove `.claude/methodologies/` and `.claude/.aichaku.json`
 3. Run `aichaku init --force`

@@ -1,7 +1,9 @@
 # MCP Server Enhancement Summary
 
 ## Overview
-This document summarizes the comprehensive MCP server enhancements implemented in this session.
+
+This document summarizes the comprehensive MCP server enhancements implemented
+in this session.
 
 ## Version 0.22.0 - 2025-07-11
 
@@ -17,9 +19,11 @@ This document summarizes the comprehensive MCP server enhancements implemented i
 
 - **New MCP Documentation Tools**:
   - Add `analyze_project` tool for deep project analysis and structure discovery
-  - Add `create_doc_template` tool for generating context-aware documentation templates
+  - Add `create_doc_template` tool for generating context-aware documentation
+    templates
   - Add `generate_documentation` tool for automated documentation generation
-  - Support multiple documentation formats (README, API, Architecture, Contributing)
+  - Support multiple documentation formats (README, API, Architecture,
+    Contributing)
   - Implement caching for performance optimization
   - Add methodology-aware documentation generation
 

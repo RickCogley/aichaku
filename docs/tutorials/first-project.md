@@ -1,10 +1,12 @@
 # Your First Aichaku Project
 
-This tutorial walks you through creating a real project with Aichaku and Claude. You'll build a simple feature from planning through completion.
+This tutorial walks you through creating a real project with Aichaku and Claude.
+You'll build a simple feature from planning through completion.
 
 ## What you'll build
 
 You'll create a user profile feature for a web application, learning how to:
+
 - Plan the feature using a methodology
 - Switch to execution mode
 - Track progress with STATUS.md
@@ -14,6 +16,7 @@ You'll create a user profile feature for a web application, learning how to:
 ## Prerequisites
 
 You should have:
+
 - Completed the [Getting Started](getting-started.md) tutorial
 - Aichaku installed and configured
 - Access to Claude
@@ -68,37 +71,42 @@ Claude immediately creates the project structure:
 Claude creates initial documents based on your discussion:
 
 ### STATUS.md
+
 ```markdown
 # Project Status
 
 🪴 Aichaku: Shape Up Progress
 
-[**Shaping**] → [Betting] → [Building] → [Cool-down]
-    ▲
+[**Shaping**] → [Betting] → [Building] → [Cool-down] ▲
 
 Week 1/6 ████░░░░░░░░░░░░░░ 17% 🌱
 
 ## Current Focus
+
 Shaping the user profile feature solution
 
 ## Key Decisions
+
 - Supporting avatar uploads (max 5MB)
 - Bio limited to 500 characters
 - Three privacy levels: public, friends, private
 
 ## Next Actions
+
 - [ ] Complete technical approach in pitch
 - [ ] Identify rabbit holes
 - [ ] Estimate appetite
 ```
 
 ### pitch.md
+
 ```markdown
 # User Profile Feature
 
 ## Problem
 
 Users cannot personalize their presence on the platform. They want to:
+
 - Express their identity with avatars and bios
 - Control who sees their information
 - Build community connections
@@ -110,6 +118,7 @@ Users cannot personalize their presence on the platform. They want to:
 ## Solution
 
 ### Core elements
+
 1. Profile edit page
 2. Avatar upload system
 3. Privacy controls
@@ -162,7 +171,7 @@ Current status:
 Ready to start implementation!
 ```
 
-## Step 6: Mix methodologies 
+## Step 6: Mix methodologies
 
 During building, you might want practices from other methodologies:
 
@@ -183,10 +192,12 @@ This blends nicely with Shape Up - using cycles for planning but Kanban for exec
 ```
 
 ### kanban-board.md
+
 ```markdown
 # Implementation Kanban Board
 
 ## 📋 Backlog (8)
+
 - [ ] Design database schema
 - [ ] Create profile edit API endpoint
 - [ ] Build avatar upload service
@@ -197,10 +208,12 @@ This blends nicely with Shape Up - using cycles for planning but Kanban for exec
 - [ ] Write integration tests
 
 ## 🚧 In Progress (WIP: 2/3)
+
 - [ ] Set up profile model (@alex)
 - [ ] Create edit form component (@sam)
 
 ## 👀 Review (1)
+
 - [ ] Database migration script
 
 ## ✅ Done (0)
@@ -293,20 +306,24 @@ Claude creates a retrospective document:
 ```
 
 ### retrospective.md
+
 ```markdown
 # User Profile Feature Retrospective
 
 ## What went well? 🌟
+
 - Clean API design
 - Good privacy control implementation
 - Effective use of Kanban board mid-cycle
 
 ## What could improve? 🔧
+
 - Avatar upload complexity underestimated
 - Need better upfront technical research
 - Testing took longer than expected
 
 ## Action items 📋
+
 - [ ] Research cloud services for future uploads
 - [ ] Add technical spike to shaping phase
 - [ ] Budget more time for testing
@@ -315,6 +332,7 @@ Claude creates a retrospective document:
 ## What you learned
 
 In this tutorial, you:
+
 - ✅ Started with natural conversation
 - ✅ Let ideas develop before creating documents
 - ✅ Used Shape Up as primary methodology
@@ -328,6 +346,7 @@ In this tutorial, you:
 ### The natural flow
 
 Notice how you never:
+
 - Memorized commands
 - Configured complex settings
 - Worried about file placement
@@ -338,6 +357,7 @@ Everything flowed naturally through conversation.
 ### Methodology flexibility
 
 You started with Shape Up but borrowed:
+
 - Kanban board for task tracking
 - Scrum retrospective for learning
 
@@ -346,6 +366,7 @@ This mixing is encouraged - real teams work this way.
 ### Document artifacts
 
 Every phase produced useful documents:
+
 - Planning → pitch.md
 - Execution → kanban-board.md
 - Completion → CHANGE-LOG.md
@@ -388,6 +409,7 @@ Watch Claude seamlessly blend the methodologies.
 ## Common patterns
 
 ### Starting projects
+
 ```
 "I need to [action] for [feature/problem]"
 → Discussion mode → 
@@ -396,6 +418,7 @@ Project created
 ```
 
 ### Switching modes
+
 ```
 "Let's start building" → Execution mode
 "Time for a retrospective" → Improvement mode
@@ -403,6 +426,7 @@ Project created
 ```
 
 ### Adding practices
+
 ```
 "Can we add [practice] from [methodology]?"
 → Claude adds without disrupting flow
@@ -411,14 +435,18 @@ Project created
 ## Next steps
 
 Now you can:
+
 - Create projects with confidence
 - Mix methodologies naturally
 - Track progress effectively
 - Complete work properly
 
 Continue learning:
+
 - Read [Configure Your Project](../how-to/configure-project.md)
 - Explore [Core Concepts](../explanation/core-concepts.md)
-- Study [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md)
+- Study
+  [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md)
 
-Remember: Aichaku adapts to how you work, not the other way around. Happy building! 🪴
+Remember: Aichaku adapts to how you work, not the other way around. Happy
+building! 🪴

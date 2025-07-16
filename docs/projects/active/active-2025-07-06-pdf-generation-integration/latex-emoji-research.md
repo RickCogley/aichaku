@@ -1,6 +1,6 @@
 # LaTeX Emoji Support Research
 
-*Source: Claude.ai research on Unicode emoji support in LaTeX*
+_Source: Claude.ai research on Unicode emoji support in LaTeX_
 
 ## Key Findings for Aichaku PDF Generation
 
@@ -23,12 +23,14 @@
 ### Font Recommendations
 
 #### Color Fonts (LuaLaTeX only)
+
 - **Noto Color Emoji** - Best cross-platform, open-source
 - **Apple Color Emoji** - macOS only, proprietary format
 - **Segoe UI Emoji** - Windows default
 - **Twemoji Mozilla** - Twitter's open-source set
 
 #### Monochrome Fonts (All engines)
+
 - **Symbola** - Most comprehensive coverage
 - **DejaVu Sans** - Good basic coverage
 - **Noto Emoji** (monochrome version)
@@ -52,12 +54,12 @@ Based on this research, our PDF generator should:
    % For LuaLaTeX
    \usepackage{emoji}
    \setemojifont{Noto Color Emoji}
-   
+
    % For XeLaTeX
    \usepackage{fontspec}
    \setmainfont{Latin Modern Roman}
    \newfontfamily\emojifont{Symbola}
-   
+
    % For pdfLaTeX
    % Warn user about emoji limitations
    ```
@@ -70,6 +72,7 @@ Based on this research, our PDF generator should:
 ### Platform-Specific Setup
 
 #### macOS
+
 ```bash
 brew install --cask mactex  # Full TeX
 # or
@@ -78,11 +81,13 @@ sudo tlmgr install emoji
 ```
 
 #### Windows
+
 - Install MiKTeX
 - Segoe UI Emoji included by default
 - May need: `tlmgr install emoji`
 
 #### Linux
+
 ```bash
 sudo apt-get install texlive-xetex texlive-luatex
 sudo apt-get install fonts-noto-color-emoji
@@ -101,26 +106,27 @@ sudo tlmgr install emoji
 ```typescript
 export const LATEX_CONFIGS = {
   lualatex: {
-    packages: ['emoji'],
-    setup: '\\setemojifont{Noto Color Emoji}',
-    emojiSupport: 'full-color'
+    packages: ["emoji"],
+    setup: "\\setemojifont{Noto Color Emoji}",
+    emojiSupport: "full-color",
   },
   xelatex: {
-    packages: ['fontspec'],
-    setup: '\\newfontfamily\\emojifont{Symbola}',
-    emojiSupport: 'monochrome'
+    packages: ["fontspec"],
+    setup: "\\newfontfamily\\emojifont{Symbola}",
+    emojiSupport: "monochrome",
   },
   pdflatex: {
     packages: [],
-    setup: '',
-    emojiSupport: 'none'
-  }
+    setup: "",
+    emojiSupport: "none",
+  },
 };
 ```
 
 ## Conclusion
 
 For Aichaku's PDF generation:
+
 1. Prioritize LuaLaTeX for best emoji support
 2. Fall back to XeLaTeX with Symbola for basic support
 3. Always offer HTML as emoji-preserving alternative

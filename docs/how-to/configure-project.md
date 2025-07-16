@@ -3,15 +3,18 @@
 ## Before you begin
 
 Ensure you have Aichaku installed and initialized in your project. You need:
+
 - Basic understanding of JSON configuration files
 - Access to your project's `.claude` directory
 - Text editor or command-line access
 
-This guide shows you how to configure Aichaku for your specific needs. Each section addresses a specific configuration task.
+This guide shows you how to configure Aichaku for your specific needs. Each
+section addresses a specific configuration task.
 
 ## Solution
 
-Follow these sections to configure different aspects of your Aichaku project. Each provides step-by-step instructions for specific configuration tasks.
+Follow these sections to configure different aspects of your Aichaku project.
+Each provides step-by-step instructions for specific configuration tasks.
 
 ## Configure project settings
 
@@ -34,10 +37,12 @@ Edit your project's settings in `.claude/settings.local.json`:
 ```
 
 This file controls:
+
 - Which coding standards Claude follows (including custom standards)
 - Your primary methodology (for documentation)
 - Where you create files
-- Custom standards metadata that you configure at `~/.claude/aichaku/standards.json`
+- Custom standards metadata that you configure at
+  `~/.claude/aichaku/standards.json`
 
 ## Add or remove coding standards
 
@@ -72,6 +77,7 @@ aichaku standards --list
 ```
 
 Example output with source paths:
+
 ```text
 Selected Standards:
 ✅ owasp-web (OWASP Web Security) 📁 ~/.claude/aichaku/docs/standards/security
@@ -103,15 +109,18 @@ Edit any template to match your team's needs:
 
 ```markdown
 <!-- In sprint-planning.md -->
+
 # Sprint Planning - $\{TEAM_NAME\}
 
-Sprint Duration: **3 weeks** <!-- Changed from 2 weeks -->
-Team Velocity: **45 points** <!-- Your team's actual velocity -->
+Sprint Duration: **3 weeks** <!-- Changed from 2 weeks --> Team Velocity: **45
+points** <!-- Your team's actual velocity -->
 
 ## Sprint Goal
+
 [Your custom sprint goal format]
 
 ## Selected Items
+
 [Your custom backlog format]
 ```
 
@@ -170,6 +179,7 @@ Create quick-access commands in `.claude/commands.json`:
 ```
 
 Use these in Claude:
+
 ```text
 "Run the deploy command"
 "Show me the test coverage"
@@ -215,7 +225,7 @@ git config core.hooksPath .githooks
 
 Update your README.md:
 
-```markdown
+````markdown
 ## Setup
 
 Enable git hooks for automatic formatting:
@@ -223,8 +233,9 @@ Enable git hooks for automatic formatting:
 ```bash
 git config core.hooksPath .githooks
 ```
-```
+````
 
+````
 ## Use environment variables
 
 ## Set Aichaku environment variables
@@ -241,7 +252,7 @@ export AICHAKU_DEBUG="true"
 
 # Custom templates directory
 export AICHAKU_TEMPLATES="/path/to/custom/templates"
-```
+````
 
 ## Add to your shell configuration
 
@@ -254,7 +265,8 @@ source ~/.zshrc
 
 ## Working with custom standards
 
-Custom standards allow you to define organization-specific coding guidelines that work alongside built-in standards.
+Custom standards allow you to define organization-specific coding guidelines
+that work alongside built-in standards.
 
 ## Create a custom standard
 
@@ -280,6 +292,7 @@ aichaku standards --list --selected
 ```
 
 Output shows both types:
+
 ```text
 ✅ owasp-web (OWASP Web Security) 📁 ~/.claude/aichaku/docs/standards/security
 ✅ solid (SOLID Principles) 📁 ~/.claude/aichaku/docs/standards/architecture
@@ -293,11 +306,13 @@ Output shows both types:
 3. **Add** - Include in project with `--add custom:name`
 4. **Share** - Export and import across teams
 
-For detailed instructions, see [How to Manage Custom Standards](./manage-custom-standards.md).
+For detailed instructions, see
+[How to Manage Custom Standards](./manage-custom-standards.md).
 
 ## Migration from old structure
 
-If you have custom standards in the old location (`~/.claude/docs/standards/`), migrate them:
+If you have custom standards in the old location (`~/.claude/docs/standards/`),
+migrate them:
 
 ```bash
 # Run migration command
@@ -341,6 +356,7 @@ chmod +x setup.sh
 ```
 
 Team members run:
+
 ```bash
 git clone team-config-repo
 cd team-config-repo
@@ -392,6 +408,7 @@ cat .claude/settings.local.json
 ```
 
 Example output with custom standards:
+
 ```json
 {
   "selectedStandards": [
@@ -471,6 +488,8 @@ cp templates/CONTRIBUTING.md .claude/methodologies/common/templates/
 
 ## Next steps
 
-- Read the [Configuration Reference](../reference/configuration-options.md) for all options
-- Learn about [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md)
+- Read the [Configuration Reference](../reference/configuration-options.md) for
+  all options
+- Learn about
+  [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md)
 - Explore [Core Concepts](../explanation/core-concepts.md)

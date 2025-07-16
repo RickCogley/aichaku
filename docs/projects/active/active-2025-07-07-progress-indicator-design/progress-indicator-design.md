@@ -2,7 +2,9 @@
 
 ## Overview
 
-This document designs an optimal progress indicator system for Aichaku that works effectively in Claude Code's environment, supporting all methodologies with clear visual feedback.
+This document designs an optimal progress indicator system for Aichaku that
+works effectively in Claude Code's environment, supporting all methodologies
+with clear visual feedback.
 
 ## Design Principles
 
@@ -55,8 +57,8 @@ const shapeUpProgress = {
 └──────────────────────────────────────────────────┘`,
 
   compact: `Shape Up [Shaping✓|Building>>>|Cool-down ] 58% (Week 3.5/6)`,
-  
-  minimal: `[████████████░░░░░░░░] Building - Week 3.5/6`
+
+  minimal: `[████████████░░░░░░░░] Building - Week 3.5/6`,
 };
 ```
 
@@ -80,8 +82,8 @@ const scrumProgress = {
 └──────────────────────────────────────────────────┘`,
 
   compact: `Sprint 15 [Day 6/10] ████████░░░░ 23/40 pts`,
-  
-  minimal: `[██████░░░░] Day 6/10 - 57% complete`
+
+  minimal: `[██████░░░░] Day 6/10 - 57% complete`,
 };
 ```
 
@@ -105,8 +107,8 @@ const kanbanProgress = {
 └──────────────────────────────────────────────────┘`,
 
   compact: `Kanban [12|5*|2|1|47] WIP: 8/10, CT: 3.2d`,
-  
-  minimal: `[Ready:5|Doing:2*|Review:1] Flow: Normal`
+
+  minimal: `[Ready:5|Doing:2*|Review:1] Flow: Normal`,
 };
 ```
 
@@ -131,8 +133,8 @@ const leanProgress = {
 └──────────────────────────────────────────────────┘`,
 
   compact: `MVP Cycle [Build:75%|Measure:0%|Learn:0%] Day 3/5`,
-  
-  minimal: `[B:████░░|M:░░░░░░|L:░░░░░░] Building`
+
+  minimal: `[B:████░░|M:░░░░░░|L:░░░░░░] Building`,
 };
 ```
 
@@ -159,8 +161,8 @@ const xpProgress = {
 └──────────────────────────────────────────────────┘`,
 
   compact: `XP Iter 8 [5/8 stories] TDD:12✅2❌ Pair:@alice`,
-  
-  minimal: `[████████░░░░░░] Story 5/8 - TDD Active`
+
+  minimal: `[████████░░░░░░] Story 5/8 - TDD Active`,
 };
 ```
 
@@ -169,26 +171,26 @@ const xpProgress = {
 ```typescript
 interface ProgressIndicator {
   // Core display methods
-  show(style: 'ascii' | 'compact' | 'minimal'): string;
+  show(style: "ascii" | "compact" | "minimal"): string;
   update(progress: ProgressData): void;
-  
+
   // STATUS.md integration
   writeToStatus(filePath: string): void;
   parseFromStatus(filePath: string): ProgressData;
-  
+
   // Interactive features (where supported)
   animate(options?: AnimationOptions): void;
   showMilestone(message: string): void;
 }
 
 interface ProgressData {
-  methodology: 'shape-up' | 'scrum' | 'kanban' | 'lean' | 'xp';
+  methodology: "shape-up" | "scrum" | "kanban" | "lean" | "xp";
   phase: string;
   percentage: number;
   currentUnit: number;
   totalUnits: number;
-  unitType: 'days' | 'weeks' | 'points' | 'stories';
-  status: 'on-track' | 'at-risk' | 'blocked';
+  unitType: "days" | "weeks" | "points" | "stories";
+  status: "on-track" | "at-risk" | "blocked";
   metadata?: Record<string, any>;
 }
 ```
@@ -198,16 +200,16 @@ interface ProgressData {
 ```markdown
 # Status: [Project Name]
 
-**Status**: ACTIVE - [Phase]
-**Started**: [Date]
-**Methodology**: Shape Up
+**Status**: ACTIVE - [Phase] **Started**: [Date] **Methodology**: Shape Up
 
 ## Progress Indicator
+
 <!-- AICHAKU:PROGRESS:START -->
 ```
-Shape Up Cycle: Feature Authentication
-[Shaping:✓][Building:████░░░░][Cool-down:      ]
-Week 3.5 of 6 | 58% Complete | ON TRACK
+
+Shape Up Cycle: Feature Authentication [Shaping:✓][Building:████░░░░][Cool-down:
+] Week 3.5 of 6 | 58% Complete | ON TRACK
+
 ```
 <!-- AICHAKU:PROGRESS:END -->
 
@@ -221,6 +223,7 @@ Week 3.5 of 6 | 58% Complete | ON TRACK
 ## CLI Display Examples
 
 ### Full Dashboard View
+
 ```bash
 $ aichaku status
 
@@ -243,6 +246,7 @@ $ aichaku status
 ```
 
 ### Inline Progress Updates
+
 ```bash
 $ aichaku progress
 Shape Up [Building ████████░░░░] Week 3.5/6 - Creating auth service...
@@ -253,18 +257,18 @@ Shape Up [Building ████████░░░░] Week 3.5/6 - Creating a
 ```typescript
 // Spinner variations per methodology
 const spinners = {
-  'shape-up': ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'],
-  'scrum': ['◐', '◓', '◑', '◒'],
-  'kanban': ['→', '↘', '↓', '↙', '←', '↖', '↑', '↗'],
-  'lean': ['?', '!', '→', '✓'],
-  'xp': ['🔴', '🟢', '♻️']  // Red, Green, Refactor
+  "shape-up": ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"],
+  "scrum": ["◐", "◓", "◑", "◒"],
+  "kanban": ["→", "↘", "↓", "↙", "←", "↖", "↑", "↗"],
+  "lean": ["?", "!", "→", "✓"],
+  "xp": ["🔴", "🟢", "♻️"], // Red, Green, Refactor
 };
 
 // Progress animations
 const animations = {
-  'wave': '░▒▓█▓▒░',
-  'blocks': '▁▂▃▄▅▆▇█',
-  'dots': '⣾⣽⣻⢿⡿⣟⣯⣷'
+  "wave": "░▒▓█▓▒░",
+  "blocks": "▁▂▃▄▅▆▇█",
+  "dots": "⣾⣽⣻⢿⡿⣟⣯⣷",
 };
 ```
 
@@ -272,11 +276,11 @@ const animations = {
 
 ```typescript
 const colors = {
-  'on-track': '\x1b[32m',    // Green
-  'at-risk': '\x1b[33m',     // Yellow
-  'blocked': '\x1b[31m',     // Red
-  'complete': '\x1b[36m',    // Cyan
-  'current': '\x1b[1m'       // Bold
+  "on-track": "\x1b[32m", // Green
+  "at-risk": "\x1b[33m", // Yellow
+  "blocked": "\x1b[31m", // Red
+  "complete": "\x1b[36m", // Cyan
+  "current": "\x1b[1m", // Bold
 };
 ```
 
@@ -300,7 +304,8 @@ const colors = {
 
 ## Benefits Over External Libraries
 
-While libraries like `ora` or `cli-progress` offer features, our custom solution provides:
+While libraries like `ora` or `cli-progress` offer features, our custom solution
+provides:
 
 1. **Zero Dependencies**: Maintains Aichaku's security stance
 2. **Methodology-Aware**: Tailored to each workflow's needs

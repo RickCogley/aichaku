@@ -2,11 +2,14 @@
 
 ## What We're Building
 
-A comprehensive improvement to the MCP server management experience that eliminates manual system administration tasks and provides a user-friendly interface.
+A comprehensive improvement to the MCP server management experience that
+eliminates manual system administration tasks and provides a user-friendly
+interface.
 
 ## Key Improvements
 
 ### 1. Enhanced Commands
+
 ```bash
 # Current (manual and complex)
 ps aux | grep mcp-code-reviewer
@@ -22,6 +25,7 @@ aichaku mcp --upgrade    # Auto-upgrade to latest
 ```
 
 ### 2. Rich Status Display
+
 ```
 🔍 MCP Server Status
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -35,12 +39,15 @@ aichaku mcp --upgrade    # Auto-upgrade to latest
 ```
 
 ### 3. Better Configuration Instructions
+
 Instead of showing raw JSON, we'll show the actual command to run:
+
 ```
 claude mcp add aichaku-reviewer --stdio -- ~/.aichaku/mcp-server/mcp-code-reviewer
 ```
 
 ### 4. Cross-Platform Support
+
 - Works identically on Windows, macOS, and Linux
 - Handles platform differences transparently
 - Uses appropriate process management for each OS
@@ -48,12 +55,14 @@ claude mcp add aichaku-reviewer --stdio -- ~/.aichaku/mcp-server/mcp-code-review
 ## Technical Approach
 
 ### Architecture
+
 - **MCPProcessManager**: Handles start/stop/restart with PID tracking
 - **MCPVersionManager**: Checks versions and handles upgrades
 - **PIDManager**: Cross-platform PID file management
 - **Platform Handlers**: OS-specific implementations
 
 ### Key Features
+
 - PID file tracking for single instance
 - Graceful shutdown with timeout
 - Automatic version detection
@@ -63,16 +72,19 @@ claude mcp add aichaku-reviewer --stdio -- ~/.aichaku/mcp-server/mcp-code-review
 ## Implementation Timeline
 
 **Day 1**: Process Management
+
 - PID file tracking
 - Start/stop/restart commands
 - Cross-platform testing
 
-**Day 2**: Version Management  
+**Day 2**: Version Management
+
 - Version embedding in binary
 - GitHub release checking
 - Upgrade command
 
 **Day 3**: User Experience
+
 - Enhanced status display
 - Better error messages
 - Documentation updates
@@ -93,4 +105,5 @@ claude mcp add aichaku-reviewer --stdio -- ~/.aichaku/mcp-server/mcp-code-review
 
 ## Next Steps
 
-The design is complete and ready for implementation. The modular architecture allows for incremental development and testing of each component.
+The design is complete and ready for implementation. The modular architecture
+allows for incremental development and testing of each component.

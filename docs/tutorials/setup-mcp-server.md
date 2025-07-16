@@ -1,10 +1,13 @@
 # Setting Up the Aichaku MCP Server
 
-Learn how to install and configure the Aichaku MCP (Model Context Protocol) server for automated code review in Claude Code. This tutorial covers first-time setup and verification.
+Learn how to install and configure the Aichaku MCP (Model Context Protocol)
+server for automated code review in Claude Code. This tutorial covers first-time
+setup and verification.
 
 ## What you'll learn
 
 In this tutorial, you'll:
+
 - Install the Aichaku MCP server globally
 - Configure Claude Code to use the MCP server
 - Verify the installation is working
@@ -14,23 +17,27 @@ In this tutorial, you'll:
 ## Before you begin
 
 You need:
+
 - **Aichaku installed** (run `aichaku --version` to check)
 - **Claude Code** with MCP support
 - **Admin access** to install global tools
 - **10 minutes** to complete this tutorial
 
-Don't have Aichaku? Follow the [Getting Started](getting-started.md) guide first.
+Don't have Aichaku? Follow the [Getting Started](getting-started.md) guide
+first.
 
 ## Understanding MCP
 
-The Model Context Protocol (MCP) lets Claude Code use external tools. The Aichaku MCP server provides:
+The Model Context Protocol (MCP) lets Claude Code use external tools. The
+Aichaku MCP server provides:
 
 - **Security scanning** - OWASP Top 10 vulnerability detection
 - **Standards checking** - TDD, SOLID, conventional commits, etc.
 - **Methodology validation** - Shape Up, Scrum, Kanban compliance
 - **Educational feedback** - Learning opportunities, not just errors
 - **Privacy-first** - All scanning happens locally on your machine
-- **HTTP/SSE Server Mode** - Optional shared server for multiple Claude Code instances
+- **HTTP/SSE Server Mode** - Optional shared server for multiple Claude Code
+  instances
 
 ## Step 1: Install the MCP server
 
@@ -40,11 +47,13 @@ Install the Aichaku MCP server globally:
 aichaku mcp --install
 ```
 
-This downloads the correct binary for your platform and installs it to `~/.aichaku/mcp-server/`.
+This downloads the correct binary for your platform and installs it to
+`~/.aichaku/mcp-server/`.
 
 ### What happens during installation
 
 The installer:
+
 1. Detects your operating system and architecture
 2. Downloads the pre-compiled binary from GitHub releases
 3. Saves it to `~/.aichaku/mcp-server/mcp-code-reviewer`
@@ -60,6 +69,7 @@ aichaku mcp --status
 ```
 
 You should see:
+
 ```
 🔍 Checking MCP Server Status...
 
@@ -91,13 +101,15 @@ claude mcp list
 ```
 
 **Scope Options:**
+
 - `-s user` (recommended): Available to you across all projects
-- `-s local`: Private to you in current project only  
+- `-s local`: Private to you in current project only
 - `-s project`: Shared with everyone working on this project
 
 ### Restart Claude Code
 
-After adding the servers, you must restart Claude Code for the changes to take effect.
+After adding the servers, you must restart Claude Code for the changes to take
+effect.
 
 ### Verify Claude Code configuration
 
@@ -111,6 +123,7 @@ After restarting Claude Code:
    - `mcp__aichaku-reviewer__get_standards`
 
 If you don't see these tools, check:
+
 - The settings file path is correct
 - The JSON syntax is valid (no trailing commas)
 - Claude Code was fully restarted
@@ -145,6 +158,7 @@ Now ask Claude to review it:
 ```
 
 Claude will use the MCP server to:
+
 1. Scan for security vulnerabilities
 2. Check against your project standards
 3. Provide educational feedback with fixes
@@ -174,6 +188,7 @@ execFile('echo', [userInput])
 ```
 
 This educational approach helps you:
+
 - Understand why something is a problem
 - Learn the secure alternative
 - Apply the fix with confidence
@@ -228,6 +243,7 @@ dotnet tool install -g Microsoft.CST.DevSkim.CLI
 **Problem:** Claude doesn't see the MCP tools
 
 **Solutions:**
+
 1. Verify the settings file location is correct
 2. Check JSON syntax (use a JSON validator)
 3. Ensure the binary path in settings is absolute
@@ -238,6 +254,7 @@ dotnet tool install -g Microsoft.CST.DevSkim.CLI
 **Problem:** Binary download fails
 
 **Solutions:**
+
 1. Check your internet connection
 2. Try the manual installation:
    ```bash
@@ -252,6 +269,7 @@ dotnet tool install -g Microsoft.CST.DevSkim.CLI
 **Problem:** Claude can see the tools but reviews fail
 
 **Solutions:**
+
 1. Check file permissions on the MCP binary
 2. Run `aichaku mcp --status` to verify installation
 3. Check Claude's developer console for errors
@@ -259,7 +277,8 @@ dotnet tool install -g Microsoft.CST.DevSkim.CLI
 
 ## Optional: HTTP/SSE Server Mode
 
-For users running multiple Claude Code instances or frequent reviews, you can use the HTTP/SSE server mode:
+For users running multiple Claude Code instances or frequent reviews, you can
+use the HTTP/SSE server mode:
 
 ### Start the shared server
 
@@ -275,16 +294,19 @@ aichaku mcp --stop-server
 ```
 
 When the HTTP/SSE server is running:
+
 - The `aichaku review` command automatically uses it
 - Multiple Claude Code instances can share the same server
 - Faster response times (no process startup overhead)
 - Works on port 7182 (AICHAKU on phone keypad)
 
-The server mode is completely optional - the default process mode works perfectly for most users.
+The server mode is completely optional - the default process mode works
+perfectly for most users.
 
 ## What's next?
 
 You've successfully:
+
 - ✅ Installed the MCP server globally
 - ✅ Configured Claude Code to use it
 - ✅ Tested automated security scanning
@@ -292,14 +314,20 @@ You've successfully:
 - ✅ Learned about the optional HTTP/SSE server mode
 
 Continue with:
-- [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md) - Share one server across projects
+
+- [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md) -
+  Share one server across projects
 - [MCP API Reference](../reference/mcp-api.md) - All available tools and options
-- [MCP Architecture](../explanation/mcp-architecture.md) - How it works under the hood
+- [MCP Architecture](../explanation/mcp-architecture.md) - How it works under
+  the hood
 
 ## Getting help
 
 - Run `aichaku mcp --help` for command options
-- Check the [MCP README](https://github.com/RickCogley/aichaku/tree/main/mcp-server) for details
+- Check the
+  [MCP README](https://github.com/RickCogley/aichaku/tree/main/mcp-server) for
+  details
 - Report issues on [GitHub](https://github.com/RickCogley/aichaku/issues)
 
-Remember: The MCP server runs locally and never sends your code anywhere. All security scanning happens on your machine for complete privacy.
+Remember: The MCP server runs locally and never sends your code anywhere. All
+security scanning happens on your machine for complete privacy.

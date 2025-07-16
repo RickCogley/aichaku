@@ -3,6 +3,7 @@
 ## 1. Visual Identity Examples
 
 ### Basic Usage
+
 ```
 🪴 Aichaku: Welcome! I see you want to plan a new feature.
 🪴 Aichaku: Creating project: payment-integration-redesign
@@ -10,6 +11,7 @@
 ```
 
 ### With Status Indicators
+
 ```
 🪴 Aichaku: ✅ Project initialized successfully
 🪴 Aichaku: ⚠️ Existing project detected. Use --force to override
@@ -20,6 +22,7 @@
 ## 2. Progress Indicator Examples
 
 ### Shape Up Cycle
+
 ```
 Shape Up - User Auth Redesign
 [Shaping] → [**Betting**] → [Building] → [Cool-down]
@@ -32,6 +35,7 @@ Minimal: ████░░░░░░░░░░░░ 33%
 ```
 
 ### Scrum Sprint
+
 ```
 Sprint 15 - Payment Gateway
 Day 6/10 ████████░░░░░░ 60% - 24/40 points complete
@@ -43,6 +47,7 @@ Minimal: S15:D6 ██████░░░░
 ```
 
 ### Kanban Flow
+
 ```
 Kanban Board - Infrastructure Team
 [Backlog] → [Ready] → [**Doing**] → [Review] → [Done]
@@ -57,6 +62,7 @@ Minimal: →12→5*→**2**→1→47✓
 ```
 
 ### Lean MVP
+
 ```
 MVP Cycle 1 - Mobile App Prototype
 [**Build**] → [Measure] → [Learn]
@@ -69,6 +75,7 @@ Minimal: **B:75%** M:0% L:0%
 ```
 
 ### XP Iteration
+
 ```
 XP Week 3 - API Refactoring
 [Stories:████████░░░░][Tests:████████████][Integration:████░░░░░░░░]
@@ -82,6 +89,7 @@ Minimal: 5/8✓ TDD:✅ CI:🔄
 ## 3. Startup Reminder Examples
 
 ### First Contact
+
 ```
 ╭─────────────────────────────────────────────────╮
 │ 🪴 Aichaku v0.6.0 - Methodology Support Active  │
@@ -97,6 +105,7 @@ Minimal: 5/8✓ TDD:✅ CI:🔄
 ```
 
 ### With Active Projects
+
 ```
 🪴 Aichaku Status - 3 active projects:
   • payment-gateway (Sprint 15, Day 6/10) 🌿
@@ -106,6 +115,7 @@ Minimal: 5/8✓ TDD:✅ CI:🔄
 ```
 
 ### Contextual Tips
+
 ```
 🪴 Aichaku: You mentioned "sprint planning"
    Ready to create Scrum documents when you are.
@@ -113,6 +123,7 @@ Minimal: 5/8✓ TDD:✅ CI:🔄
 ```
 
 ### Minimal Reminder
+
 ```
 🪴 Aichaku ready (3 active) - "help" for more
 ```
@@ -120,12 +131,14 @@ Minimal: 5/8✓ TDD:✅ CI:🔄
 ## 4. Combined Example: Full Project Lifecycle
 
 ### 1. Initial Discussion
+
 ```
 User: I want to redesign our payment flow
 🪴 Aichaku: I see you want to redesign the payment flow. Let's explore this...
 ```
 
 ### 2. Ready Signal
+
 ```
 User: Let's create a project for this
 🪴 Aichaku: Creating project: payment-flow-redesign
@@ -133,6 +146,7 @@ User: Let's create a project for this
 ```
 
 ### 3. During Work
+
 ```
 🪴 Aichaku: Project Status Update
 [Shaping] → [**Betting**] → [Building] → [Cool-down]
@@ -142,6 +156,7 @@ Status: Betting Phase 🌿 - ON TRACK ✅
 ```
 
 ### 4. Completion
+
 ```
 🪴 Aichaku: Project Complete! 
            Moving payment-flow-redesign to done-2025-07-21/

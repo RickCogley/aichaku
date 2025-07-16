@@ -1,12 +1,14 @@
 # 🪴 Aichaku MCP Visibility Enhancements
 
-**Status**: 🌿 Active  
-**Created**: 2025-07-10  
+**Status**: 🌿 Active\
+**Created**: 2025-07-10\
 **Type**: Feature Enhancement
 
 ## Overview
 
-Enhanced the Aichaku MCP (Model Context Protocol) server to provide better visibility when being used by Claude Code and added document linting capabilities.
+Enhanced the Aichaku MCP (Model Context Protocol) server to provide better
+visibility when being used by Claude Code and added document linting
+capabilities.
 
 ## Progress
 
@@ -25,11 +27,14 @@ graph LR
 Added console logging to stderr for visibility in Claude Code console:
 
 - **Tool Invocation Logging**: Every MCP tool call now logs to console
-- **File Review Logging**: Shows which file is being reviewed and what standards are being used
+- **File Review Logging**: Shows which file is being reviewed and what standards
+  are being used
 - **Startup Messages**: Clear indication when MCP server starts
-- **Document Type Detection**: Identifies document types (Tutorial, How-to, Reference, Explanation)
+- **Document Type Detection**: Identifies document types (Tutorial, How-to,
+  Reference, Explanation)
 
 Example output:
+
 ```
 🪴 [Aichaku MCP] Code Reviewer Server v0.1.0 started
 🪴 [Aichaku MCP] Ready to review code and documentation
@@ -45,18 +50,21 @@ Example output:
 Created comprehensive documentation patterns for the MCP to lint markdown files:
 
 #### Diátaxis Patterns
+
 - Tutorial structure validation
 - Prerequisites section checking
 - How-to guide structure validation
 - Document type detection
 
 #### Google Style Guide Patterns
+
 - Sentence length checking (< 25 words)
 - Present tense enforcement
 - Second person (you) usage
 - Active voice preference
 
 #### General Documentation Quality
+
 - Broken link detection
 - Code block language specification
 - Header level consistency
@@ -98,11 +106,13 @@ Created comprehensive documentation patterns for the MCP to lint markdown files:
 ## Technical Details
 
 ### Visibility Implementation
+
 - Uses `console.error()` to write to stderr (visible in Claude Code)
 - Prefixes all messages with `🪴 [Aichaku MCP]`
 - Logs at key points: startup, tool invocation, review start/end
 
 ### Document Linting
+
 - Patterns use regex and custom check functions
 - Line-specific error reporting
 - Actionable fix suggestions
@@ -117,6 +127,7 @@ After installing the updated MCP server:
 3. **Restart Claude Code**
 
 The MCP will now:
+
 - Show clear activity in the console
 - Lint documentation files automatically
 - Provide specific guidance for doc improvements

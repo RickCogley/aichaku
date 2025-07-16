@@ -86,14 +86,14 @@ rules:
       style: "Google docstrings"
       example: |
         """Calculate the total price including tax.
-        
+
         Args:
             base_price: The base price before tax.
             tax_rate: The tax rate as a decimal.
-            
+
         Returns:
             The total price including tax.
-            
+
         Raises:
             ValueError: If base_price is negative.
         """

@@ -2,15 +2,18 @@
 
 ## Overview
 
-Based on analysis of existing security implementations in Nagare and Salty, plus the new 15-factor app guidelines, this document outlines how Aichaku can provide modular, reusable guidance sections.
+Based on analysis of existing security implementations in Nagare and Salty, plus
+the new 15-factor app guidelines, this document outlines how Aichaku can provide
+modular, reusable guidance sections.
 
 ## Guidance Categories
 
 ### 1. **Security Standards**
 
 #### OWASP Top 10
+
 - **Source**: Extracted from Nagare and Salty CLAUDE.md files
-- **Variations**: 
+- **Variations**:
   - Generic (all projects)
   - Web application specific
   - CLI tool specific
@@ -18,6 +21,7 @@ Based on analysis of existing security implementations in Nagare and Salty, plus
 - **Integration**: Can be included via `--sections=owasp` flag
 
 #### ISO 27001 Compliance
+
 - **Key Requirements**:
   - Document all security decisions
   - Maintain audit trails
@@ -28,29 +32,34 @@ Based on analysis of existing security implementations in Nagare and Salty, plus
 ### 2. **Application Architecture**
 
 #### 15-Factor Apps (Cloud-Native)
+
 - **Source**: fifteen_factor_claude_code_guide.md
 - **Covers**: Modern cloud-native application patterns
 - **Implementation Phases**: 4 phases over 8 weeks
 - **Best For**: SaaS, microservices, containerized apps
 
 #### 15-Factor Static Sites
-- **Source**: static_website_factors_checklist.md  
+
+- **Source**: static_website_factors_checklist.md
 - **Covers**: Static site best practices
 - **Implementation Phases**: 5 weeks
 - **Best For**: Documentation sites, marketing sites, blogs
 
 #### 12-Factor Apps (Classic)
+
 - **Backward Compatibility**: For teams using original 12-factor
 - **Subset**: Of the 15-factor approach
 
 ### 3. **Development Standards**
 
 #### Conventional Commits
+
 - **Format**: `type(scope): description`
 - **InfoSec Extension**: Security impact documentation
 - **Integration**: Hook-based enforcement possible
 
 #### Code Style Guidelines
+
 - **Language Specific**: TypeScript, Python, Go, etc.
 - **Tool Integration**: Prettier, Black, gofmt
 - **Hook Support**: Auto-format on commit
@@ -58,11 +67,13 @@ Based on analysis of existing security implementations in Nagare and Salty, plus
 ### 4. **Team Practices**
 
 #### Security Review Process
+
 - **5-Step Process**: From global CLAUDE.md
 - **Customizable**: Per team requirements
 - **Checklist Format**: Easy to follow
 
 #### DevSkim/CodeQL Configuration
+
 - **Suppression Syntax**: Detailed guidance
 - **False Positive Handling**: Best practices
 - **Directory Exclusions**: Common patterns
@@ -92,7 +103,6 @@ Based on analysis of existing security implementations in Nagare and Salty, plus
 │       └── codeql-config.md
 └── user/
     └── standards/          # Custom team standards
-
 ```
 
 ## Modular Section Format
@@ -109,16 +119,21 @@ requires: []  # dependencies on other modules
 ---
 
 <!-- MODULE:START -->
+
 ## [Title]
 
 ### Quick Reference
+
 [Checklist or summary]
 
 ### Detailed Guidelines
+
 [Full content]
 
 ### Integration with Methodologies
+
 [How it works with Shape Up, Scrum, etc.]
+
 <!-- MODULE:END -->
 ```
 
@@ -168,23 +183,33 @@ The integrated CLAUDE.md would have clearly marked sections:
 # CLAUDE.md
 
 <!-- AICHAKU:METHODOLOGY:START -->
+
 [Methodology rules as current]
+
 <!-- AICHAKU:METHODOLOGY:END -->
 
 <!-- AICHAKU:SECURITY:START -->
+
 [OWASP Top 10, ISO 27001, Security Review Process]
+
 <!-- AICHAKU:SECURITY:END -->
 
 <!-- AICHAKU:ARCHITECTURE:START -->
+
 [15-factor or 12-factor guidelines]
+
 <!-- AICHAKU:ARCHITECTURE:END -->
 
 <!-- AICHAKU:DEVELOPMENT:START -->
+
 [Conventional commits, code style, etc.]
+
 <!-- AICHAKU:DEVELOPMENT:END -->
 
 <!-- AICHAKU:CUSTOM:START -->
+
 [Team-specific standards from user/docs/standards/]
+
 <!-- AICHAKU:CUSTOM:END -->
 ```
 

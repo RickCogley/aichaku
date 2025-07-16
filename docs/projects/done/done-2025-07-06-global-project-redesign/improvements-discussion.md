@@ -3,45 +3,58 @@
 ## Issues Found During Testing
 
 ### 1. Global vs Project Installation Confusion
-**Problem**: When Aichaku is installed globally, running `aichaku init` in a project still copies all methodologies locally.
+
+**Problem**: When Aichaku is installed globally, running `aichaku init` in a
+project still copies all methodologies locally.
+
 - Creates unnecessary duplication
 - Forces users to add `.claude/` to `.gitignore` in every project
 - Updates to global methodologies don't propagate to projects
 - Confusing UX - why copy files if they're already global?
 
 **Proposed Solution**:
+
 - Global install: Methodologies live only in `~/.claude/`
 - Project init: Only creates a `.aichaku-project` marker file
 - Claude Code reads from global when available, falls back to project
 - No need to gitignore methodology files
 
 ### 2. Redundant Messaging in Commands
+
 **Problem**: Commands print the same information multiple times
+
 - `aichaku integrate`: 3 variations of "updated CLAUDE.md"
 - `aichaku upgrade --check`: Shows "upgraded successfully" when only checking
 - `aichaku upgrade`: Shows "upgraded successfully" even when already up to date
 - `aichaku uninstall --dry-run`: Shows "uninstalled successfully" on dry run
 
 **Specific Issues**:
+
 - Success messages appear even when no action was taken
 - Check operations shouldn't say "upgraded"
 - Dry runs shouldn't say "successfully completed action"
 
 **Proposed Solution**:
+
 - Keep progress messages (real-time feedback)
 - Show success only when action actually happened
 - Different messages for check vs action
 - Clear dry run output without success claims
 
 ### 3. Missing "project" Qualifier
+
 **Problem**: Messages say "CLAUDE.md" instead of "project CLAUDE.md"
+
 - Not clear whether it's updating project or global file
 
 **Proposed Solution**:
+
 - Add "project" or "global" qualifier to all file references
 
 ### 4. Init Command Missing Helpful Next Steps
+
 **Problem**: After init, users don't know about:
+
 - `aichaku integrate` command
 - `--help` for more options
 - GitHub repo for docs
@@ -66,6 +79,7 @@
 ## Next Steps for Testing
 
 Still need to test:
+
 - [ ] `aichaku upgrade --check`
 - [ ] `aichaku upgrade`
 - [ ] `aichaku uninstall --dry-run`

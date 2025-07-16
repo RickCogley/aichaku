@@ -2,7 +2,9 @@
 
 ## Overview
 
-This document outlines how MCP (Model Context Protocol) hooks can dynamically load content based on references in the CLAUDE.md YAML block, enabling a compact configuration that expands into full context when needed.
+This document outlines how MCP (Model Context Protocol) hooks can dynamically
+load content based on references in the CLAUDE.md YAML block, enabling a compact
+configuration that expands into full context when needed.
 
 ## Architecture
 
@@ -20,19 +22,19 @@ graph TD
 
 ### 1. Pre-Read Hook: `aichaku-yaml-expander`
 
-**Trigger**: Before Claude reads CLAUDE.md
-**Function**: Detects YAML block and expands references
+**Trigger**: Before Claude reads CLAUDE.md **Function**: Detects YAML block and
+expands references
 
 ```yaml
 # Example CLAUDE.md YAML block
 aichaku:
   version: "3.0.0"
-  
+
   methodologies:
     shape_up:
       reference: "~/.claude/aichaku/methodologies/shape-up/"
       # Hook will expand this to full content when needed
-  
+
   standards:
     owasp_web:
       reference: "~/.claude/aichaku/standards/security/owasp-web.md"
@@ -41,8 +43,8 @@ aichaku:
 
 ### 2. Context Hook: `aichaku-context-provider`
 
-**Trigger**: When Claude detects methodology/standard keywords
-**Function**: Loads specific content on-demand
+**Trigger**: When Claude detects methodology/standard keywords **Function**:
+Loads specific content on-demand
 
 ```typescript
 // Hook implementation pseudocode
@@ -59,7 +61,7 @@ const yamlExpanderHook: AichakuHook = {
     const yaml = parseYamlBlock(context.content);
     const expanded = await expandReferences(yaml);
     return mergeContext(context, expanded);
-  }
+  },
 };
 ```
 
@@ -78,13 +80,13 @@ async function resolveReference(ref: YamlReference): Promise<string> {
   switch (ref.type) {
     case "file":
       return await readFile(expandPath(ref.path));
-    
+
     case "directory":
       return await readGuideFiles(expandPath(ref.path));
-    
+
     case "url":
       return await fetchUrl(ref.path);
-    
+
     case "aichaku":
       // Special protocol for Aichaku content
       // aichaku://methodologies/shape-up/guide
@@ -101,14 +103,14 @@ aichaku:
   standards:
     owasp_web:
       reference: "~/.claude/aichaku/standards/security/owasp-web.md"
-      loading: "lazy"  # Don't load until triggered
+      loading: "lazy" # Don't load until triggered
       triggers: ["OWASP", "security", "vulnerability"]
-      cache_duration: "session"  # Cache for entire session
-    
+      cache_duration: "session" # Cache for entire session
+
     tdd:
       reference: "~/.claude/aichaku/standards/development/tdd.md"
-      loading: "eager"  # Load immediately if selected
-      summary_only: true  # Only load summary section
+      loading: "eager" # Load immediately if selected
+      summary_only: true # Only load summary section
 ```
 
 ### Phase 3: Hook Configuration
@@ -141,37 +143,40 @@ aichaku:
 ## Content Loading Strategies
 
 ### 1. Lazy Loading
+
 - Only load content when keywords are detected
 - Reduces initial context size
 - Better performance for large projects
 
 ### 2. Progressive Enhancement
+
 ```yaml
 standards:
   owasp_web:
     # Level 1: Always included (minimal)
     name: "OWASP Top 10"
     triggers: ["OWASP", "security"]
-    
+
     # Level 2: Loaded on trigger
     reference: "~/.claude/aichaku/standards/security/owasp-web.md"
-    
+
     # Level 3: Deep dive (on explicit request)
     deep_reference: "~/.claude/aichaku/standards/security/owasp-detailed/"
 ```
 
 ### 3. Context-Aware Loading
+
 ```typescript
 // Hook decides what to load based on conversation context
 async function contextAwareLoader(context: ConversationContext) {
   const topics = detectTopics(context.recentMessages);
-  
+
   if (topics.includes("security") && topics.includes("web")) {
     return loadFullContent("owasp_web");
   } else if (topics.includes("security")) {
     return loadSummary("owasp_web");
   }
-  
+
   return null; // Don't load if not relevant
 }
 ```
@@ -237,4 +242,5 @@ aichaku test-hooks --simulate "OWASP security check"
 - **Week 5**: Integration with CLI
 - **Week 6**: Documentation and release
 
-This design enables the compact YAML approach while maintaining full functionality through intelligent, dynamic content loading.
+This design enables the compact YAML approach while maintaining full
+functionality through intelligent, dynamic content loading.

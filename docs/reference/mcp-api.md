@@ -1,6 +1,7 @@
 # MCP API Reference
 
-Complete reference for the Aichaku MCP (Model Context Protocol) server API, including all available tools, parameters, and configuration options.
+Complete reference for the Aichaku MCP (Model Context Protocol) server API,
+including all available tools, parameters, and configuration options.
 
 ## Available Tools
 
@@ -8,29 +9,30 @@ The Aichaku MCP server provides three tools to Claude Code:
 
 ### `review_file`
 
-Reviews a single file for security vulnerabilities, standards compliance, and code quality issues.
+Reviews a single file for security vulnerabilities, standards compliance, and
+code quality issues.
 
 #### Parameters
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `file` | string | Yes | - | Path to the file to review |
-| `content` | string | No | - | File content (if not provided, reads from disk) |
-| `includeExternal` | boolean | No | true | Include external security scanners if available |
+| Parameter         | Type    | Required | Default | Description                                     |
+| ----------------- | ------- | -------- | ------- | ----------------------------------------------- |
+| `file`            | string  | Yes      | -       | Path to the file to review                      |
+| `content`         | string  | No       | -       | File content (if not provided, reads from disk) |
+| `includeExternal` | boolean | No       | true    | Include external security scanners if available |
 
 #### Example Usage
 
 ```typescript
 // Basic file review
-await mcp__aichaku-reviewer__review_file({
-  file: "/path/to/src/auth.ts"
+await mcp__aichaku - reviewer__review_file({
+  file: "/path/to/src/auth.ts",
 });
 
 // Review with content (useful for unsaved files)
-await mcp__aichaku-reviewer__review_file({
+await mcp__aichaku - reviewer__review_file({
   file: "untitled.js",
   content: "const password = 'hardcoded123';",
-  includeExternal: false
+  includeExternal: false,
 });
 ```
 
@@ -66,10 +68,10 @@ Checks if a project follows the specified methodology patterns and practices.
 
 #### Parameters
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `projectPath` | string | Yes | - | Path to the project root directory |
-| `methodology` | string | Yes | - | Methodology to check against |
+| Parameter     | Type   | Required | Default | Description                        |
+| ------------- | ------ | -------- | ------- | ---------------------------------- |
+| `projectPath` | string | Yes      | -       | Path to the project root directory |
+| `methodology` | string | Yes      | -       | Methodology to check against       |
 
 #### Supported Methodologies
 
@@ -84,9 +86,9 @@ Checks if a project follows the specified methodology patterns and practices.
 
 ```typescript
 // Check Shape Up compliance
-await mcp__aichaku-reviewer__review_methodology({
+await mcp__aichaku - reviewer__review_methodology({
   projectPath: "/Users/you/projects/app",
-  methodology: "shape-up"
+  methodology: "shape-up",
 });
 ```
 
@@ -114,16 +116,16 @@ Retrieves the currently selected standards for a project.
 
 #### Parameters
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `projectPath` | string | Yes | - | Path to the project root directory |
+| Parameter     | Type   | Required | Default | Description                        |
+| ------------- | ------ | -------- | ------- | ---------------------------------- |
+| `projectPath` | string | Yes      | -       | Path to the project root directory |
 
 #### Example Usage
 
 ```typescript
 // Get project standards
-await mcp__aichaku-reviewer__get_standards({
-  projectPath: "/Users/you/projects/app"
+await mcp__aichaku - reviewer__get_standards({
+  projectPath: "/Users/you/projects/app",
 });
 ```
 
@@ -147,11 +149,11 @@ Gets usage statistics and analytics for MCP tool usage.
 
 #### Parameters
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `type` | string | No | "dashboard" | Type of statistics: "dashboard", "realtime", "insights", "export" |
-| `question` | string | No | - | Specific question to answer about usage |
-| `format` | string | No | "json" | Export format (only for type="export"): "json", "csv" |
+| Parameter  | Type   | Required | Default     | Description                                                       |
+| ---------- | ------ | -------- | ----------- | ----------------------------------------------------------------- |
+| `type`     | string | No       | "dashboard" | Type of statistics: "dashboard", "realtime", "insights", "export" |
+| `question` | string | No       | -           | Specific question to answer about usage                           |
+| `format`   | string | No       | "json"      | Export format (only for type="export"): "json", "csv"             |
 
 #### Example Usage
 
@@ -196,10 +198,10 @@ Analyzes project structure, languages, architecture, and dependencies.
 
 #### Parameters
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `projectPath` | string | Yes | - | Path to the project directory to analyze |
-| `detailed` | boolean | No | true | Include detailed analysis of files and components |
+| Parameter     | Type    | Required | Default | Description                                       |
+| ------------- | ------- | -------- | ------- | ------------------------------------------------- |
+| `projectPath` | string  | Yes      | -       | Path to the project directory to analyze          |
+| `detailed`    | boolean | No       | true    | Include detailed analysis of files and components |
 
 #### Example Usage
 
@@ -220,15 +222,15 @@ Generates comprehensive documentation following selected standards.
 
 #### Parameters
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `projectPath` | string | Yes | - | Path to the project directory |
-| `outputPath` | string | No | projectPath/docs | Output path for documentation |
-| `standard` | string | No | "diataxis" | Documentation standard: "diataxis", "google", "microsoft", etc. |
-| `includeExamples` | boolean | No | true | Include code examples |
-| `includeDiagrams` | boolean | No | true | Generate architecture diagrams |
-| `overwrite` | boolean | No | false | Overwrite existing documentation |
-| `autoChain` | boolean | No | true | Run analyze_project first and review_file after |
+| Parameter         | Type    | Required | Default          | Description                                                     |
+| ----------------- | ------- | -------- | ---------------- | --------------------------------------------------------------- |
+| `projectPath`     | string  | Yes      | -                | Path to the project directory                                   |
+| `outputPath`      | string  | No       | projectPath/docs | Output path for documentation                                   |
+| `standard`        | string  | No       | "diataxis"       | Documentation standard: "diataxis", "google", "microsoft", etc. |
+| `includeExamples` | boolean | No       | true             | Include code examples                                           |
+| `includeDiagrams` | boolean | No       | true             | Generate architecture diagrams                                  |
+| `overwrite`       | boolean | No       | false            | Overwrite existing documentation                                |
+| `autoChain`       | boolean | No       | true             | Run analyze_project first and review_file after                 |
 
 #### Example Usage
 
@@ -250,13 +252,13 @@ Creates a documentation template file for tutorials, how-tos, references, etc.
 
 #### Parameters
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `outputPath` | string | Yes | - | Path where the template file should be created |
-| `templateType` | string | Yes | - | Type: "tutorial", "how-to", "reference", "explanation", etc. |
-| `title` | string | No | - | Title for the document |
-| `projectName` | string | No | - | Name of the project (used in templates) |
-| `customFields` | object | No | {} | Custom fields to replace in the template |
+| Parameter      | Type   | Required | Default | Description                                                  |
+| -------------- | ------ | -------- | ------- | ------------------------------------------------------------ |
+| `outputPath`   | string | Yes      | -       | Path where the template file should be created               |
+| `templateType` | string | Yes      | -       | Type: "tutorial", "how-to", "reference", "explanation", etc. |
+| `title`        | string | No       | -       | Title for the document                                       |
+| `projectName`  | string | No       | -       | Name of the project (used in templates)                      |
+| `customFields` | object | No       | {}      | Custom fields to replace in the template                     |
 
 #### Example Usage
 
@@ -277,14 +279,15 @@ Creates a documentation template file for tutorials, how-tos, references, etc.
 
 ### Project Configuration
 
-The MCP server reads project configuration from `.claude/.aichaku-standards.json`:
+The MCP server reads project configuration from
+`.claude/.aichaku-standards.json`:
 
 ```json
 {
   "version": "1.0.0",
   "selected": [
     "nist-csf",
-    "owasp-web", 
+    "owasp-web",
     "tdd",
     "conventional-commits"
   ],
@@ -317,8 +320,8 @@ Global MCP settings can be placed in `~/.aichaku/mcp-config.json`:
     }
   },
   "performance": {
-    "maxFileSize": 5242880,  // 5MB
-    "timeout": 60000,        // 60 seconds
+    "maxFileSize": 5242880, // 5MB
+    "timeout": 60000, // 60 seconds
     "parallel": true
   }
 }
@@ -330,22 +333,23 @@ The MCP server includes built-in patterns for detecting:
 
 ### OWASP Top 10 (2021)
 
-| Category | Pattern Examples |
-|----------|-----------------|
-| A01: Broken Access Control | Missing auth checks, path traversal |
-| A02: Cryptographic Failures | Hardcoded secrets, weak encryption |
-| A03: Injection | SQL injection, command injection, XSS |
-| A04: Insecure Design | Security anti-patterns |
-| A05: Security Misconfiguration | Verbose errors, default configs |
-| A06: Vulnerable Components | Outdated dependencies |
-| A07: Auth Failures | Weak password handling |
-| A08: Software Integrity | Unsigned code, untrusted sources |
-| A09: Logging Failures | Sensitive data in logs |
-| A10: SSRF | Unvalidated redirects |
+| Category                       | Pattern Examples                      |
+| ------------------------------ | ------------------------------------- |
+| A01: Broken Access Control     | Missing auth checks, path traversal   |
+| A02: Cryptographic Failures    | Hardcoded secrets, weak encryption    |
+| A03: Injection                 | SQL injection, command injection, XSS |
+| A04: Insecure Design           | Security anti-patterns                |
+| A05: Security Misconfiguration | Verbose errors, default configs       |
+| A06: Vulnerable Components     | Outdated dependencies                 |
+| A07: Auth Failures             | Weak password handling                |
+| A08: Software Integrity        | Unsigned code, untrusted sources      |
+| A09: Logging Failures          | Sensitive data in logs                |
+| A10: SSRF                      | Unvalidated redirects                 |
 
 ### Language-Specific Patterns
 
 #### TypeScript/JavaScript
+
 ```typescript
 // Detected patterns:
 - eval() and Function() usage
@@ -356,6 +360,7 @@ The MCP server includes built-in patterns for detecting:
 ```
 
 #### Python
+
 ```python
 # Detected patterns:
 - pickle deserialization
@@ -366,6 +371,7 @@ The MCP server includes built-in patterns for detecting:
 ```
 
 #### Go
+
 ```go
 // Detected patterns:
 - SQL query building
@@ -380,24 +386,28 @@ The MCP server includes built-in patterns for detecting:
 ### CodeQL
 
 When CodeQL is available, the MCP server runs:
+
 ```bash
 codeql database analyze --format=sarif-latest
 ```
 
 Supports:
+
 - JavaScript/TypeScript security queries
-- Python security queries  
+- Python security queries
 - Go security queries
 - Custom query packs
 
 ### DevSkim
 
 When DevSkim is available:
+
 ```bash
 devskim analyze -f sarif -o results.sarif
 ```
 
 Features:
+
 - IDE-focused security rules
 - Low false positive rate
 - Cross-language support
@@ -405,11 +415,13 @@ Features:
 ### Semgrep
 
 When Semgrep is available:
+
 ```bash
 semgrep --config=auto --json
 ```
 
 Benefits:
+
 - Community rules
 - Custom patterns
 - Fast scanning
@@ -463,7 +475,7 @@ Benefits:
           "suggestion": "Create auth.test.ts with test cases"
         },
         {
-          "standard": "conventional-commits", 
+          "standard": "conventional-commits",
           "rule": "commit-format",
           "message": "Non-conventional commit message",
           "suggestion": "Use format: type(scope): description"
@@ -478,13 +490,13 @@ Benefits:
 
 ### Common Errors
 
-| Error Code | Description | Solution |
-|------------|-------------|----------|
-| `FILE_NOT_FOUND` | File doesn't exist | Check file path |
-| `PROJECT_NOT_INITIALIZED` | No .claude directory | Run `aichaku init` |
-| `INVALID_METHODOLOGY` | Unknown methodology | Check spelling |
-| `SCANNER_TIMEOUT` | External scanner timeout | Increase timeout or disable |
-| `PERMISSION_DENIED` | Can't read file | Check file permissions |
+| Error Code                | Description              | Solution                    |
+| ------------------------- | ------------------------ | --------------------------- |
+| `FILE_NOT_FOUND`          | File doesn't exist       | Check file path             |
+| `PROJECT_NOT_INITIALIZED` | No .claude directory     | Run `aichaku init`          |
+| `INVALID_METHODOLOGY`     | Unknown methodology      | Check spelling              |
+| `SCANNER_TIMEOUT`         | External scanner timeout | Increase timeout or disable |
+| `PERMISSION_DENIED`       | Can't read file          | Check file permissions      |
 
 ### Error Response Format
 
@@ -510,6 +522,7 @@ Benefits:
 ### Caching
 
 The MCP server implements smart caching:
+
 - File content cache (5 minute TTL)
 - Standards configuration cache
 - External scanner results cache
@@ -517,28 +530,31 @@ The MCP server implements smart caching:
 ### Parallel Processing
 
 When reviewing multiple files:
+
 - Runs security patterns in parallel
 - External scanners run sequentially
 - Results aggregated asynchronously
 
 ## Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `AICHAKU_MCP_DEBUG` | Enable debug logging | `false` |
-| `AICHAKU_MCP_TIMEOUT` | Global timeout (ms) | `60000` |
-| `AICHAKU_MCP_CACHE_DIR` | Cache directory | `~/.aichaku/cache` |
-| `AICHAKU_MCP_NO_EXTERNAL` | Disable external scanners | `false` |
+| Variable                  | Description               | Default            |
+| ------------------------- | ------------------------- | ------------------ |
+| `AICHAKU_MCP_DEBUG`       | Enable debug logging      | `false`            |
+| `AICHAKU_MCP_TIMEOUT`     | Global timeout (ms)       | `60000`            |
+| `AICHAKU_MCP_CACHE_DIR`   | Cache directory           | `~/.aichaku/cache` |
+| `AICHAKU_MCP_NO_EXTERNAL` | Disable external scanners | `false`            |
 
 ## Logging
 
-Debug logs are written to `~/.aichaku/mcp-server/logs/` when debug mode is enabled:
+Debug logs are written to `~/.aichaku/mcp-server/logs/` when debug mode is
+enabled:
 
 ```bash
 export AICHAKU_MCP_DEBUG=true
 ```
 
 Log format:
+
 ```
 [2024-07-10T15:30:45Z] [INFO] Starting file review: /path/to/file.ts
 [2024-07-10T15:30:45Z] [DEBUG] Loading standards: ["nist-csf", "tdd"]
@@ -548,14 +564,15 @@ Log format:
 ## Version Compatibility
 
 | MCP Server Version | Aichaku Version | Claude Code Version |
-|-------------------|-----------------|---------------------|
-| 1.0.x | 1.0.x | 0.9.x+ |
-| 1.1.x | 1.1.x | 1.0.x+ |
+| ------------------ | --------------- | ------------------- |
+| 1.0.x              | 1.0.x           | 0.9.x+              |
+| 1.1.x              | 1.1.x           | 1.0.x+              |
 
 Always use matching Aichaku and MCP server versions for best results.
 
 ## See Also
 
 - [Setup MCP Server](../tutorials/setup-mcp-server.md) - Installation guide
-- [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md) - Multi-project setup
+- [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md) -
+  Multi-project setup
 - [MCP Architecture](../explanation/mcp-architecture.md) - Technical deep dive

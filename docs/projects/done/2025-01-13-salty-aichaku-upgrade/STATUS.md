@@ -1,13 +1,14 @@
 # Salty Aichaku Upgrade - Status
 
-**Project**: Upgrade Salty to Aichaku v0.28.0  
-**Status**: 🌳 Complete  
-**Created**: 2025-01-13  
-**Completed**: 2025-01-13  
+**Project**: Upgrade Salty to Aichaku v0.28.0\
+**Status**: 🌳 Complete\
+**Created**: 2025-01-13\
+**Completed**: 2025-01-13
 
 ## Summary
 
-Successfully upgraded the Salty project to Aichaku v0.28.0, including migration to the new project structure.
+Successfully upgraded the Salty project to Aichaku v0.28.0, including migration
+to the new project structure.
 
 ## What Was Done
 
@@ -37,10 +38,12 @@ Successfully upgraded the Salty project to Aichaku v0.28.0, including migration 
 ## Projects Migrated
 
 **Active (4):**
+
 - active-2025-07-07-api-analysis
-- active-2025-07-07-output-directory-analysis  
+- active-2025-07-07-output-directory-analysis
 - active-2025-07-07-shape-up-planning
 - planned-2025-07-15-paste-detection
 
 **Done (8):**
+
 - Various completed projects from 2024-2025

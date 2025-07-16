@@ -7,6 +7,7 @@
 **Short answer**: No, they must be installed separately.
 
 **Why not?**
+
 1. **Different languages**: DevSkim (C#), CodeQL (Java), Semgrep (Python)
 2. **Different runtimes**: Each needs its own runtime environment
 3. **Licensing**: Each has its own license terms
@@ -16,6 +17,7 @@
 ## How It Works Instead
 
 ### 1. Smart Detection
+
 ```typescript
 // MCP detects what's available
 Available tools:
@@ -28,11 +30,13 @@ Available tools:
 ```
 
 ### 2. Progressive Enhancement
+
 - **No tools**: Still works with built-in patterns
 - **Some tools**: Better coverage
 - **All tools**: Maximum security coverage
 
 ### 3. Easy Installation
+
 ```bash
 # One-time setup (optional)
 npm install -g @microsoft/devskim-cli
@@ -42,10 +46,9 @@ pip install semgrep
 
 ## What We CAN Bundle
 
-✅ **Pattern matching** - Built into our Deno binary
-✅ **OWASP rules** - Our own implementation
-✅ **Methodology checks** - Native TypeScript
-✅ **Basic security scans** - No dependencies
+✅ **Pattern matching** - Built into our Deno binary ✅ **OWASP rules** - Our
+own implementation ✅ **Methodology checks** - Native TypeScript ✅ **Basic
+security scans** - No dependencies
 
 ## Distribution Approach
 
@@ -62,6 +65,7 @@ mcp-code-reviewer (5-10MB compiled)
 ## User Experience
 
 ### First Run
+
 ```
 $ mcp-code-reviewer
 🪴 MCP Code Reviewer
@@ -76,6 +80,7 @@ optional tools for enhanced coverage.
 ```
 
 ### With Tools
+
 ```
 $ mcp-code-reviewer
 🪴 MCP Code Reviewer
@@ -100,6 +105,7 @@ Maximum security coverage enabled!
 ## Installation Priority
 
 For most users:
+
 1. **Start with MCP only** (built-in patterns)
 2. **Add DevSkim** if doing general development
 3. **Add Semgrep** for custom rules

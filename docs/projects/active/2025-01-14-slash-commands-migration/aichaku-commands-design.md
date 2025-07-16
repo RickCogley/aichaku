@@ -2,17 +2,22 @@
 
 ## Overview
 
-After successfully migrating personal slash commands to the new markdown format, we should consider adding slash command management to Aichaku itself. This would allow users to install, manage, and share slash commands through the Aichaku CLI.
+After successfully migrating personal slash commands to the new markdown format,
+we should consider adding slash command management to Aichaku itself. This would
+allow users to install, manage, and share slash commands through the Aichaku
+CLI.
 
 ## Current State Analysis
 
 ### What Works Well
+
 - Individual markdown files are easy to edit and version
 - YAML frontmatter provides structure and permissions
 - Directory organization by category makes sense
 - File-based approach allows git versioning
 
 ### Gaps for Aichaku Integration
+
 - No installation mechanism for shared commands
 - No version management for command updates
 - No way to distribute commands with methodologies
@@ -45,6 +50,7 @@ After successfully migrating personal slash commands to the new markdown format,
 ### CLI Commands
 
 #### `aichaku commands list`
+
 ```bash
 # List all available commands
 aichaku commands list
@@ -60,6 +66,7 @@ aichaku commands list --scope project
 ```
 
 #### `aichaku commands install`
+
 ```bash
 # Install command from Aichaku registry
 aichaku commands install security/owasp-check
@@ -72,6 +79,7 @@ aichaku commands install ./my-command.md --category custom
 ```
 
 #### `aichaku commands create`
+
 ```bash
 # Create new command interactively
 aichaku commands create my-command
@@ -84,6 +92,7 @@ aichaku commands create my-command --category security --scope user
 ```
 
 #### `aichaku commands remove`
+
 ```bash
 # Remove user command
 aichaku commands remove my-command
@@ -93,6 +102,7 @@ aichaku commands remove security/my-security-check
 ```
 
 #### `aichaku commands update`
+
 ```bash
 # Update all Aichaku-managed commands
 aichaku commands update
@@ -138,6 +148,7 @@ install:
 Commands that ship with Aichaku:
 
 #### Methodology Commands
+
 ```
 /aichaku:shape-up    # Create Shape Up pitch
 /aichaku:scrum       # Create sprint planning
@@ -146,6 +157,7 @@ Commands that ship with Aichaku:
 ```
 
 #### Project Commands
+
 ```
 /aichaku:init        # Initialize Aichaku project
 /aichaku:status      # Show project status
@@ -154,6 +166,7 @@ Commands that ship with Aichaku:
 ```
 
 #### Memory Commands
+
 ```
 /aichaku:memin       # Load memory files
 /aichaku:standards   # Show selected standards
@@ -232,24 +245,28 @@ aichaku commands sync --repo https://github.com/team/aichaku-commands
 ### Implementation Phases
 
 #### Phase 1: Basic Command Management (v0.30.0)
+
 - `aichaku commands list`
 - `aichaku commands create`
 - Basic command metadata support
 - Install built-in Aichaku commands
 
 #### Phase 2: Installation & Updates (v0.31.0)
+
 - `aichaku commands install`
 - `aichaku commands update`
 - Command registry system
 - Conflict resolution
 
 #### Phase 3: Sharing & Collaboration (v0.32.0)
+
 - `aichaku commands export/import`
 - Git-based command sharing
 - Team command synchronization
 - Command dependencies
 
 #### Phase 4: Advanced Features (v1.0.0)
+
 - Command templates
 - Interactive command builder
 - Command analytics
@@ -291,10 +308,13 @@ Add to `aichaku.json`:
 
 ## Recommendation
 
-Start with Phase 1 in Aichaku v0.30.0 to provide basic command management. This would:
+Start with Phase 1 in Aichaku v0.30.0 to provide basic command management. This
+would:
+
 - Install built-in Aichaku commands during `aichaku init`
 - Provide `aichaku commands list` for discovery
 - Allow `aichaku commands create` for custom commands
 - Set foundation for future sharing features
 
-The file-based approach works well, but adding Aichaku management would make commands more discoverable and shareable across the community.
+The file-based approach works well, but adding Aichaku management would make
+commands more discoverable and shareable across the community.

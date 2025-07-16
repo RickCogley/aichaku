@@ -1,15 +1,16 @@
 # Project Status: Progress Indicator Design
 
-**Status**: ACTIVE - Design Phase
-**Started**: 2025-07-07
-**Target**: Feature for v0.7.0
+**Status**: ACTIVE - Design Phase **Started**: 2025-07-07 **Target**: Feature
+for v0.7.0
 
 ## Prerequisites
+
 - Aichaku methodology library understanding
 - ASCII art rendering knowledge
 - CLI interface design experience
 
 ## Current Phase
+
 📐 PLANNING MODE - You are designing optimal progress indicators
 
 ```mermaid
@@ -23,52 +24,65 @@ graph LR
 ## Progress
 
 ### Phase 1: Research & Design ✅
+
 - [x] Research requirements and constraints
 - [x] Design ASCII-first progress indicators
 - [x] Create methodology-specific examples
 - [x] Document implementation strategy
 
 ### Phase 2: Validation & Prototyping 🔄
+
 - [ ] Review with team
 - [ ] Prototype core engine
 - [ ] Implement renderers
 
 ### Phase 3: Integration 📋
+
 - [ ] Integrate with CLI
 - [ ] Test with real projects
 - [ ] Finalize documentation
 
 ## Key Decisions
 
-1. **ASCII-First Design**: You maintain Claude Code compatibility with ASCII-first rendering
-2. **Per-Methodology Indicators**: Each methodology gets unique workflow indicators
-3. **STATUS.md Integration**: You integrate via comment markers for seamless updates
-4. **Three Display Modes**: You can choose between ascii, compact, and minimal modes
-5. **Zero Dependencies**: You maintain security stance with no external dependencies
+1. **ASCII-First Design**: You maintain Claude Code compatibility with
+   ASCII-first rendering
+2. **Per-Methodology Indicators**: Each methodology gets unique workflow
+   indicators
+3. **STATUS.md Integration**: You integrate via comment markers for seamless
+   updates
+4. **Three Display Modes**: You can choose between ascii, compact, and minimal
+   modes
+5. **Zero Dependencies**: You maintain security stance with no external
+   dependencies
 
 ## Design Highlights
 
 ### Shape Up Progress
+
 - 6-week cycles with three phases
 - Clear "You are here" indicator
 - Appetite tracking
 
 ### Scrum Progress
+
 - Sprint burndown visualization
 - Daily progress dots
 - Velocity tracking
 
 ### Kanban Progress
+
 - WIP limit indicators
 - Flow metrics (cycle time, throughput)
 - Bottleneck detection
 
 ### Lean MVP Progress
+
 - Build-Measure-Learn cycle
 - Hypothesis validation tracking
 - Time/budget indicators
 
 ### XP Progress
+
 - TDD cycle visualization (Red-Green-Refactor)
 - Pair programming tracking
 - Practice adoption metrics
@@ -97,9 +111,12 @@ graph LR
 
 ## Related Documents
 
-- [`progress-indicator-design.md`](./progress-indicator-design.md) - Complete design specification
-- [`progress-examples.md`](./progress-examples.md) - Visual examples for all methodologies
-- [`implementation-guide.md`](./implementation-guide.md) - Step-by-step implementation plan
+- [`progress-indicator-design.md`](./progress-indicator-design.md) - Complete
+  design specification
+- [`progress-examples.md`](./progress-examples.md) - Visual examples for all
+  methodologies
+- [`implementation-guide.md`](./implementation-guide.md) - Step-by-step
+  implementation plan
 
 ## Success Criteria
 
@@ -110,4 +127,5 @@ graph LR
 - [ ] Performance remains under 50ms for rendering
 
 ---
-*Last updated: 2025-07-14 by Claude*
+
+_Last updated: 2025-07-14 by Claude_

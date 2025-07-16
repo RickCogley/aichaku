@@ -121,6 +121,7 @@ class MermaidClassDiagramGenerator {
 ### Python Class Diagrams
 
 {% raw %}
+
 ```python
 # py2mermaid.py
 import ast
@@ -194,6 +195,7 @@ if __name__ == '__main__':
         diagram = generate_from_file(sys.argv[1])
         print(diagram)
 ```
+
 {% endraw %}
 
 ### Go Structure Diagrams
@@ -890,6 +892,7 @@ config.systems.forEach((system) => {
 ### GitHub Actions Workflow
 
 {% raw %}
+
 ```yaml
 # .github/workflows/diagrams.yml
 name: Generate and Update Diagrams
@@ -962,6 +965,7 @@ jobs:
           git commit -m "chore: update generated diagrams [skip ci]"
           git push
 ```
+
 {% endraw %}
 
 ### GitLab CI Pipeline

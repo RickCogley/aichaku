@@ -2,21 +2,26 @@
 
 ## Executive Summary
 
-Transform Aichaku from passive documentation to active behavioral modification through imperative instructions, multiple reinforcement points, and self-correcting mechanisms.
+Transform Aichaku from passive documentation to active behavioral modification
+through imperative instructions, multiple reinforcement points, and
+self-correcting mechanisms.
 
 ## Core Psychological Principles
 
 ### 1. Imperative Over Descriptive
-**Current**: "This project uses Aichaku"
-**Magical**: "YOU MUST create ALL documents in `.claude/output/active-*/`"
+
+**Current**: "This project uses Aichaku" **Magical**: "YOU MUST create ALL
+documents in `.claude/output/active-*/`"
 
 ### 2. Multiple Reinforcement Points
-**Current**: Single CLAUDE.md mention
-**Magical**: 7+ touchpoints that reinforce behavior
+
+**Current**: Single CLAUDE.md mention **Magical**: 7+ touchpoints that reinforce
+behavior
 
 ### 3. Positive Automatic Actions
-**Current**: User must remember conventions
-**Magical**: System auto-corrects and guides
+
+**Current**: User must remember conventions **Magical**: System auto-corrects
+and guides
 
 ## Implementation Strategy
 
@@ -30,6 +35,7 @@ When working on this project, Claude Code MUST AUTOMATICALLY:
 ## 1. Document Location Rules (NO EXCEPTIONS)
 
 YOU MUST:
+
 - ✅ Create ALL documents in `.claude/output/active-[date]-[project-name]/`
 - ❌ NEVER create documents in the project root
 - ❌ NEVER create documents in `.claude/user/`
@@ -38,14 +44,16 @@ YOU MUST:
 ## 2. Automatic Methodology Detection
 
 When the user says → You MUST automatically:
+
 - "shape" → Create Shape Up pitch in active directory
-- "sprint" → Create Scrum sprint plan in active directory  
+- "sprint" → Create Scrum sprint plan in active directory
 - "kanban" → Create/update Kanban board in active directory
 - "retrospective" → Move project to done-*/ and create retrospective
 
 ## 3. Project Lifecycle Automation
 
 YOU MUST AUTOMATICALLY:
+
 1. Create STATUS.md when starting ANY new work
 2. Update STATUS.md after EVERY work session
 3. Git commit with descriptive message after changes
@@ -54,6 +62,7 @@ YOU MUST AUTOMATICALLY:
 ## 4. Self-Correcting Behaviors
 
 IF you accidentally create a file in the wrong location:
+
 1. IMMEDIATELY move it to `.claude/output/active-*/`
 2. Update any references
 3. Commit the correction
@@ -69,33 +78,33 @@ Remember: This is AUTOMATIC behavior, not optional guidance.
 // In cli/init.ts
 async function createMagicalStructure() {
   const structure = {
-    '.claude/': {
-      'AICHAKU-ACTIVE.txt': '', // Tracks current project
-      'BEHAVIORAL-RULES.md': BEHAVIORAL_RULES_CONTENT,
-      'output/': {
-        'README.md': OUTPUT_README_CONTENT,
-        'active-example-shape-up-project/': {
-          'STATUS.md': EXAMPLE_STATUS_CONTENT,
-          'pitch.md': EXAMPLE_PITCH_CONTENT
+    ".claude/": {
+      "AICHAKU-ACTIVE.txt": "", // Tracks current project
+      "BEHAVIORAL-RULES.md": BEHAVIORAL_RULES_CONTENT,
+      "output/": {
+        "README.md": OUTPUT_README_CONTENT,
+        "active-example-shape-up-project/": {
+          "STATUS.md": EXAMPLE_STATUS_CONTENT,
+          "pitch.md": EXAMPLE_PITCH_CONTENT,
         },
-        'done-example-completed-project/': {
-          'retrospective.md': EXAMPLE_RETRO_CONTENT
-        }
+        "done-example-completed-project/": {
+          "retrospective.md": EXAMPLE_RETRO_CONTENT,
+        },
       },
-      'hooks/': {
-        'pre-create-file.sh': PRE_CREATE_HOOK,
-        'post-create-file.sh': POST_CREATE_HOOK
-      }
-    }
+      "hooks/": {
+        "pre-create-file.sh": PRE_CREATE_HOOK,
+        "post-create-file.sh": POST_CREATE_HOOK,
+      },
+    },
   };
-  
+
   await createStructure(structure);
 }
 ```
 
 #### B. Behavioral Rules File
 
-```markdown
+````markdown
 # BEHAVIORAL-RULES.md
 
 ## 🚨 CRITICAL: Before Creating ANY File
@@ -107,25 +116,28 @@ STOP! Check these THREE things:
 3. ✅ Is there a STATUS.md in that directory?
 
 If ANY answer is NO, you MUST:
+
 1. Create the proper directory structure
 2. Create STATUS.md first
 3. THEN create your intended file
 
 ## 🎯 Quick Reference
 
-Current active project: active-2025-01-07-your-project
-Next document goes in: .claude/output/active-2025-01-07-your-project/
+Current active project: active-2025-01-07-your-project Next document goes in:
+.claude/output/active-2025-01-07-your-project/
 
 ## 🔄 Automatic Corrections
 
 If you created a file in the wrong place:
+
 ```bash
 mv wrong/path/file.md .claude/output/active-*/
 git add -A
 git commit -m "fix: move document to correct Aichaku location"
 ```
-```
+````
 
+````
 ### Phase 3: Context-Aware Triggers
 
 #### A. Enhanced commands.json
@@ -158,18 +170,18 @@ git commit -m "fix: move document to correct Aichaku location"
     }
   }
 }
-```
+````
 
 #### B. Active Project Tracking
 
 ```typescript
 // New file: .claude/.aichaku-active
 // Simple text file with current project name
-active-2025-01-07-fix-integration-behavior
+active - 2025 - 01 - 07 - fix - integration - behavior;
 
 // Helper script to read current project
 export function getCurrentProject(): string {
-  const activePath = '.claude/.aichaku-active';
+  const activePath = ".claude/.aichaku-active";
   if (existsSync(activePath)) {
     return Deno.readTextFileSync(activePath).trim();
   }
@@ -212,11 +224,11 @@ fi
 ```typescript
 // Auto-update STATUS.md after operations
 export async function autoUpdateStatus(projectPath: string, action: string) {
-  const statusPath = join(projectPath, 'STATUS.md');
+  const statusPath = join(projectPath, "STATUS.md");
   const timestamp = new Date().toISOString();
-  
+
   const update = `\n\n## Update: ${timestamp}\n- ${action}\n`;
-  
+
   if (await exists(statusPath)) {
     await Deno.appendTextFile(statusPath, update);
   } else {
@@ -267,15 +279,15 @@ export function detectIntent(input: string): IntentResult {
     scrum: /sprint|scrum|story|backlog/i,
     kanban: /kanban|board|flow|wip/i,
     lean: /mvp|hypothesis|measure|lean/i,
-    completion: /done|complete|finish|retro/i
+    completion: /done|complete|finish|retro/i,
   };
-  
+
   for (const [methodology, pattern] of Object.entries(patterns)) {
     if (pattern.test(input)) {
       return {
         methodology,
         action: METHODOLOGY_ACTIONS[methodology],
-        outputPath: `.claude/output/${getCurrentProject()}/`
+        outputPath: `.claude/output/${getCurrentProject()}/`,
       };
     }
   }

@@ -2,13 +2,16 @@
 
 ## Summary
 
-Successfully implemented comprehensive folder reorganization to move Aichaku files from `~/.claude/` to `~/.claude/aichaku/` for better organization and namespace separation.
+Successfully implemented comprehensive folder reorganization to move Aichaku
+files from `~/.claude/` to `~/.claude/aichaku/` for better organization and
+namespace separation.
 
 ## Major Changes
 
 ### 1. New Path Structure
 
 **Global Paths** (User Home):
+
 ```
 OLD: ~/.claude/
 ├── methodologies/
@@ -26,6 +29,7 @@ NEW: ~/.claude/aichaku/
 ```
 
 **Project Paths**:
+
 ```
 OLD: .claude/
 ├── .aichaku-project
@@ -42,24 +46,28 @@ NEW: .claude/aichaku/
 ### 2. Core Infrastructure Created
 
 #### Path Management Module (`src/paths.ts`)
+
 - Centralized path configuration for all Aichaku operations
 - Type-safe path access with `AichakuPaths` interface
 - Legacy path support for backward compatibility
 - Security validation with `isPathSafe()` function
 
 #### Migration System (`src/migration/`)
+
 - **folder-migration.ts**: Core migration logic with backup/rollback support
 - **migrate.ts**: CLI command for user-initiated migrations
 - **Comprehensive testing**: 10 test cases covering all scenarios
 - **Safety features**: Dry-run mode, automatic backups, idempotent operations
 
 #### Utilities
+
 - **logger.ts**: Enhanced logging with progress indicators
 - **deps.ts**: Centralized dependency management
 
 ### 3. Updated All Core Commands
 
 #### Files Updated to Use New Path Structure:
+
 - ✅ `src/commands/integrate.ts` - Standards and methodology loading
 - ✅ `src/commands/standards.ts` - Standards management
 - ✅ `src/commands/init.ts` - Project initialization
@@ -73,18 +81,23 @@ NEW: .claude/aichaku/
 - ✅ `cli.ts` - Command line interface
 
 #### MCP Server Updated:
-- ✅ `mcp-server/src/standards-manager.ts` - Standards loading with legacy fallback
-- ✅ `mcp-server/src/methodology-manager.ts` - Methodology loading with legacy fallback
+
+- ✅ `mcp-server/src/standards-manager.ts` - Standards loading with legacy
+  fallback
+- ✅ `mcp-server/src/methodology-manager.ts` - Methodology loading with legacy
+  fallback
 
 ### 4. Backward Compatibility
 
 **Migration Strategy:**
+
 - Auto-detects legacy installations
 - Prompts users for migration (non-breaking)
 - Supports both old and new paths during transition
 - Safe rollback capabilities
 
 **Legacy Support:**
+
 - All commands check new paths first, then fall back to legacy paths
 - No breaking changes for existing users
 - Migration is optional but recommended
@@ -92,12 +105,14 @@ NEW: .claude/aichaku/
 ### 5. Enhanced Features
 
 #### Custom Standards Support
+
 - Organized under `~/.claude/aichaku/user/docs/standards/`
 - Proper namespace separation from built-in standards
 - Clear documentation for adding custom standards
 - Better separation between system and user content
 
 #### Project Configuration
+
 - Cleaner config files in `.claude/aichaku/`
 - Better separation from other Claude Code files
 - Reduced namespace conflicts
@@ -105,12 +120,14 @@ NEW: .claude/aichaku/
 ### 6. Documentation Updates
 
 #### Created Documentation:
+
 - **Shape Up Pitch**: Complete reorganization plan with rationale
 - **Migration Guide**: User-friendly migration instructions
 - **Path Structure Guide**: New folder organization explanation
 - **Custom Standards Guide**: How to add organization-specific standards
 
 #### Updated Existing Docs:
+
 - README.md path references
 - CLAUDE.md examples
 - All inline documentation
@@ -122,7 +139,8 @@ NEW: .claude/aichaku/
 3. **Easier Uninstall**: Simply remove `~/.claude/aichaku/`
 4. **Future-Proof**: Room for growth without cluttering `~/.claude/`
 5. **Professional Structure**: Follows best practices for tool organization
-6. **System/User Separation**: Clear distinction between system content and user customizations
+6. **System/User Separation**: Clear distinction between system content and user
+   customizations
 
 ## Security Improvements
 
@@ -134,6 +152,7 @@ NEW: .claude/aichaku/
 ## Breaking Changes
 
 **None** - Full backward compatibility maintained through:
+
 - Legacy path detection and fallback
 - Optional migration (user-initiated)
 - Continued support for old path structure
@@ -142,10 +161,12 @@ NEW: .claude/aichaku/
 ## Migration Path for Users
 
 ### New Users
+
 - Install directly to new structure
 - No migration needed
 
 ### Existing Users
+
 ```bash
 # Check if migration is available
 aichaku migrate --dry-run
@@ -165,7 +186,8 @@ aichaku migrate --project /path/to/project
 - `src/commands/migrate.ts` - Migration CLI command
 - `src/utils/logger.ts` - Enhanced logging
 - `deps.ts` - Dependency management
-- Documentation files in `.claude/output/active-2025-07-10-folder-reorganization/`
+- Documentation files in
+  `.claude/output/active-2025-07-10-folder-reorganization/`
 
 ## Files Modified
 
@@ -189,4 +211,5 @@ aichaku migrate --project /path/to/project
 3. **Monitor Adoption**: Track migration success rates
 4. **Future Cleanup**: Consider removing legacy support in v2.0
 
-This reorganization significantly improves Aichaku's professional structure while maintaining full backward compatibility for existing users.
+This reorganization significantly improves Aichaku's professional structure
+while maintaining full backward compatibility for existing users.

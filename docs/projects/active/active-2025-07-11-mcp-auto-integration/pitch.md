@@ -2,18 +2,21 @@
 
 ## Problem
 
-When users ask Claude Code to "Generate comprehensive project documentation," the MCP server tools are not being used automatically. This results in:
+When users ask Claude Code to "Generate comprehensive project documentation,"
+the MCP server tools are not being used automatically. This results in:
 
 - Documentation generated without standards compliance
 - No automatic linting or review of created content
 - Missed opportunity to leverage project-specific standards
 - Manual follow-up required to achieve quality
 
-The root cause: The MCP server only has tools for **reviewing** existing content, not **generating** new documentation.
+The root cause: The MCP server only has tools for **reviewing** existing
+content, not **generating** new documentation.
 
 ## Appetite
 
-**3-4 days** - Adding documentation generation capabilities to the MCP server and improving tool discovery.
+**3-4 days** - Adding documentation generation capabilities to the MCP server
+and improving tool discovery.
 
 ## Solution
 
@@ -71,10 +74,10 @@ Update existing tool descriptions to include trigger keywords:
 
 ```typescript
 // Before
-"Review a file for security, standards, and methodology compliance"
+"Review a file for security, standards, and methodology compliance";
 
-// After  
-"Review a file for security, standards, and methodology compliance. Automatically reviews generated documentation, code files, and any content created by Claude Code to ensure quality."
+// After
+"Review a file for security, standards, and methodology compliance. Automatically reviews generated documentation, code files, and any content created by Claude Code to ensure quality.";
 ```
 
 ### 4. Proactive Tool Invocation
@@ -135,11 +138,15 @@ The `generate_documentation` tool would:
 
 ### Avoid These
 
-1. **Building a full static site generator** - Focus on content generation, not publishing
+1. **Building a full static site generator** - Focus on content generation, not
+   publishing
 2. **Complex template engines** - Use simple markdown templates
-3. **Trying to understand every codebase pattern** - Start with common architectures
-4. **Perfect diagram generation** - Simple, clear diagrams are better than complex ones
-5. **Language-specific parsing for everything** - Start with TypeScript/JavaScript, Python
+3. **Trying to understand every codebase pattern** - Start with common
+   architectures
+4. **Perfect diagram generation** - Simple, clear diagrams are better than
+   complex ones
+5. **Language-specific parsing for everything** - Start with
+   TypeScript/JavaScript, Python
 
 ### Keep It Simple
 
@@ -151,25 +158,29 @@ The `generate_documentation` tool would:
 ## No-Goes
 
 1. **Modifying user's code** - Only create documentation files
-2. **Overwriting existing docs without consent** - Always preserve existing content
+2. **Overwriting existing docs without consent** - Always preserve existing
+   content
 3. **Complex configuration files** - Use project's existing standards
 4. **External API dependencies** - Keep it self-contained
 
 ## Implementation Plan
 
 ### Phase 1: Core Tools (Day 1-2)
+
 - [ ] Create `generate_documentation` tool
 - [ ] Create `analyze_project_structure` tool
 - [ ] Create `create_documentation_outline` tool
 - [ ] Update tool descriptions with keywords
 
 ### Phase 2: Integration (Day 2-3)
+
 - [ ] Implement tool chaining logic
 - [ ] Add automatic review after generation
 - [ ] Test with different project types
 - [ ] Ensure standards compliance
 
 ### Phase 3: Enhancement (Day 3-4)
+
 - [ ] Add diagram generation
 - [ ] Improve project analysis
 - [ ] Add more documentation templates
@@ -186,6 +197,7 @@ The `generate_documentation` tool would:
 ## Example User Flow
 
 **Before:**
+
 ```
 User: "Generate comprehensive project documentation"
 Claude: [Generates docs without using MCP tools]
@@ -194,6 +206,7 @@ Claude: [Uses review_file tool]
 ```
 
 **After:**
+
 ```
 User: "Generate comprehensive project documentation"
 Claude: [Automatically uses MCP tools in sequence]

@@ -1,34 +1,39 @@
 # All Repositories Aichaku Upgrade - Status
 
-**Project**: Upgrade all repositories to Aichaku v0.28.0  
-**Status**: 🌳 Complete  
-**Created**: 2025-01-13  
-**Completed**: 2025-01-13  
+**Project**: Upgrade all repositories to Aichaku v0.28.0\
+**Status**: 🌳 Complete\
+**Created**: 2025-01-13\
+**Completed**: 2025-01-13
 
 ## Summary
 
-Successfully upgraded all 4 repositories to Aichaku v0.28.0 with the new docs/projects/ structure.
+Successfully upgraded all 4 repositories to Aichaku v0.28.0 with the new
+docs/projects/ structure.
 
 ## Repositories Upgraded
 
 ### 1. Aichaku (Self)
+
 - **Version**: Already on v0.28.0 (developed the feature)
 - **Action**: Re-initialized with correct structure
 - **Fixed**: Path structure from .claude/aichaku/output/ to docs/projects/
 
 ### 2. Nagare
+
 - **Version**: v0.21.1 → v0.28.0
 - **Projects**: 3 active, 15 done
 - **Cleanup**: Removed 23 methodology files (3,447 lines)
 - **Result**: Clean repository with global methodologies
 
 ### 3. Salty
+
 - **Version**: Partial install → v0.28.0
 - **Projects**: 4 active, 8 done
 - **Special**: Already had no methodology files
 - **Note**: Manual file creation due to directory restrictions
 
 ### 4. Dotfiles
+
 - **Version**: v0.21.1 → v0.28.0
 - **Projects**: 1 completed (zsh-cleanup)
 - **Clean**: No methodology files to remove

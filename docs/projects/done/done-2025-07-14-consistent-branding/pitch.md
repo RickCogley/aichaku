@@ -2,7 +2,8 @@
 
 ## Problem
 
-The `aichaku init` command output lacks the distinctive 🪴 Aichaku branding that appears in other parts of the system. This is particularly important because:
+The `aichaku init` command output lacks the distinctive 🪴 Aichaku branding that
+appears in other parts of the system. This is particularly important because:
 
 - It's often the first screen new users see
 - It sets the tone for the entire experience
@@ -10,12 +11,14 @@ The `aichaku init` command output lacks the distinctive 🪴 Aichaku branding th
 - The current output feels generic
 
 Current output:
+
 ```
 🔍 Checking requirements...
 ✓ Global Aichaku found (v0.28.0)
 ```
 
 Should be:
+
 ```
 🪴 Aichaku: Setting up your adaptive methodology system...
 ✓ Global installation found (v0.28.0)
@@ -23,45 +26,48 @@ Should be:
 
 ## Appetite
 
-1 week - This is a small but high-impact improvement that affects every user's first impression.
+1 week - This is a small but high-impact improvement that affects every user's
+first impression.
 
 ## Solution
 
-Create a centralized branding system that makes it effortless for any script or command to maintain consistent branding.
+Create a centralized branding system that makes it effortless for any script or
+command to maintain consistent branding.
 
 ### Architectural Approach
 
-Instead of manually adding branding to each command, create a branded messaging module:
+Instead of manually adding branding to each command, create a branded messaging
+module:
 
 ```typescript
 // src/utils/branded-messages.ts
 export class AichakuBrand {
   static readonly EMOJI = "🪴";
   static readonly NAME = "Aichaku";
-  
+
   // Branded console methods
   static log(message: string): void {
     console.log(`${this.EMOJI} ${this.NAME}: ${message}`);
   }
-  
+
   static error(message: string): void {
     console.error(`${this.EMOJI} ${this.NAME}: ${message}`);
   }
-  
+
   static success(message: string): void {
     console.log(`✅ ${message}`);
   }
-  
+
   static progress(message: string, phase?: GrowthPhase): void {
     const emoji = phase ? this.getPhaseEmoji(phase) : "🌿";
     console.log(`${emoji} ${message}`);
   }
-  
+
   // Branded message templates
   static welcome(version: string): string {
     return `${this.EMOJI} ${this.NAME}: Setting up your adaptive methodology system...`;
   }
-  
+
   static upgrading(fromVersion: string, toVersion: string): string {
     return `${this.EMOJI} ${this.NAME}: Growing from v${fromVersion} to v${toVersion}...`;
   }
@@ -76,6 +82,7 @@ Brand.error("Oops! Let me help you fix this...");
 ```
 
 This approach ensures:
+
 1. **Zero effort** - Developers just use Brand.log() instead of console.log()
 2. **Consistency** - Branding is automatic, not manual
 3. **Maintainability** - Change branding in one place
@@ -93,6 +100,7 @@ This approach ensures:
 Following established CLI UX principles and Google's documentation approach:
 
 #### 1. **Clarity** (Google Style)
+
 ```typescript
 // ❌ Bad: Vague
 Brand.log("Processing...");
@@ -102,6 +110,7 @@ Brand.log("Fetching methodologies from GitHub...");
 ```
 
 #### 2. **User-Focused** (Google Style)
+
 ```typescript
 // ❌ Bad: Technical
 Brand.error("ENOENT: stat() failed on path");
@@ -111,6 +120,7 @@ Brand.error("Can't find that file. Did you mean 'init' instead of 'upgrade'?");
 ```
 
 #### 3. **Progressive Disclosure** (CLI Best Practice)
+
 ```typescript
 // Default: Essential info only
 Brand.log("Upgraded to v0.29.0");
@@ -119,19 +129,25 @@ Brand.log("Upgraded to v0.29.0");
 Brand.log("Upgraded to v0.29.0 (31 files updated, 2.3s)");
 
 // Debug: Full details
-Brand.debug("Upgraded to v0.29.0\n  Files: 31 updated, 0 failed\n  Time: 2.3s\n  From: v0.28.0");
+Brand.debug(
+  "Upgraded to v0.29.0\n  Files: 31 updated, 0 failed\n  Time: 2.3s\n  From: v0.28.0",
+);
 ```
 
 #### 4. **Actionable Errors** (12-Factor CLI Apps)
+
 ```typescript
 // ❌ Bad: Dead end
 Brand.error("Permission denied");
 
 // ✅ Good: Next steps
-Brand.error("Permission denied. Try:\n  sudo aichaku init --global\n  or check file ownership");
+Brand.error(
+  "Permission denied. Try:\n  sudo aichaku init --global\n  or check file ownership",
+);
 ```
 
 #### 5. **Consistent Voice** (Content Strategy)
+
 - **Active voice**: "Creating project..." not "Project is being created..."
 - **Present tense**: "Create" not "Created" for ongoing actions
 - **You/Your**: "Your project is ready" not "The project is ready"
@@ -142,7 +158,7 @@ Brand.error("Permission denied. Try:\n  sudo aichaku init --global\n  or check f
 // Init command
 console.log("🪴 Aichaku: Setting up your adaptive methodology system...");
 
-// Upgrade command  
+// Upgrade command
 console.log("🪴 Aichaku: Growing to v0.29.0...");
 
 // Help command
@@ -169,12 +185,14 @@ console.error("🪴 Aichaku: Oops! Let me help you fix this...");
 ## Implementation Benefits
 
 ### For Developers
+
 - **Drop-in replacement** - Just change `console.log` to `Brand.log`
 - **Type safety** - TypeScript ensures correct usage
 - **No learning curve** - Familiar console API
 - **Automatic compliance** - Can't forget branding
 
 ### For Users
+
 - **Consistent experience** - Every interaction feels cohesive
 - **Clear source** - Always know messages are from Aichaku
 - **Professional feel** - Polished, thoughtful interface
@@ -212,33 +230,33 @@ console.error("🪴 Aichaku: Oops! Let me help you fix this...");
 interface MessageStandards {
   // Informational - What's happening
   info: {
-    tone: "neutral, present tense",
-    example: "Checking requirements..."
-  },
-  
+    tone: "neutral, present tense";
+    example: "Checking requirements...";
+  };
+
   // Success - Task completed
   success: {
-    tone: "positive, past tense", 
-    example: "✅ Project initialized!"
-  },
-  
+    tone: "positive, past tense";
+    example: "✅ Project initialized!";
+  };
+
   // Warning - Attention needed
   warning: {
-    tone: "cautious, actionable",
-    example: "⚠️  Old version detected. Run 'upgrade' to update."
-  },
-  
+    tone: "cautious, actionable";
+    example: "⚠️  Old version detected. Run 'upgrade' to update.";
+  };
+
   // Error - Task failed
   error: {
-    tone: "helpful, solution-oriented",
-    example: "❌ Can't write to directory. Check permissions or use sudo."
-  },
-  
+    tone: "helpful, solution-oriented";
+    example: "❌ Can't write to directory. Check permissions or use sudo.";
+  };
+
   // Progress - Ongoing work
   progress: {
-    tone: "active, specific",
-    example: "📦 Downloading methodology files... (22/31)"
-  }
+    tone: "active, specific";
+    example: "📦 Downloading methodology files... (22/31)";
+  };
 }
 ```
 

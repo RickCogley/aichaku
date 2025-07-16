@@ -29,7 +29,7 @@ templates:
     notes:
       - "Update 'style' to highlight current phase"
       - "Use growth phase emojis from visual-identity.yaml"
-  
+
   shape_up_pitch:
     document: "pitch.md"
     methodology: "shape-up"
@@ -44,7 +44,7 @@ templates:
           D --> E[No-gos]
       ```
     customization: "Update appetite duration as needed"
-  
+
   shape_up_hill:
     document: "hill-chart.md"
     methodology: "shape-up"
@@ -61,7 +61,7 @@ templates:
           end
           B --> C
       ```
-  
+
   scrum_sprint:
     document: "sprint-planning.md"
     methodology: "scrum"
@@ -81,7 +81,7 @@ templates:
       - "Update dates to match actual sprint"
       - "Mark completed phases as ':done'"
       - "Mark current phase as ':active'"
-  
+
   kanban_board:
     document: "kanban-board.md"
     methodology: "kanban"
@@ -104,7 +104,7 @@ templates:
               E[Task E]
           end
       ```
-  
+
   lean_experiment:
     document: "experiment-plan.md"
     methodology: "lean"
@@ -126,12 +126,12 @@ rules:
     - "Include diagrams in initial document creation"
     - "Use appropriate diagram type for content"
     - "Keep diagrams simple and readable"
-  
+
   updates:
     - "Update diagrams to reflect current status"
     - "Highlight current phase/step"
     - "Maintain consistency with project progress"
-  
+
   formatting:
     - "Always use proper Mermaid syntax"
     - "Include meaningful labels"
@@ -148,12 +148,12 @@ best_practices:
     - "Use clear, descriptive node labels"
     - "Limit to essential information"
     - "Prefer horizontal flow (LR) for simple progressions"
-  
+
   styling:
     - "Use fill colors to indicate current state"
     - "Apply consistent color scheme"
     - "Green (#90EE90) for active/current items"
-  
+
   maintenance:
     - "Update immediately when phase changes"
     - "Keep synchronized with STATUS.md content"

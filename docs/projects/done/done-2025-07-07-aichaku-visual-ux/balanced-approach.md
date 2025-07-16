@@ -2,13 +2,15 @@
 
 ## The Right Balance
 
-After feedback, we've refined the visual identity to be clear and professional while maintaining the warm 愛着 (aichaku) feeling through subtle visual cues.
+After feedback, we've refined the visual identity to be clear and professional
+while maintaining the warm 愛着 (aichaku) feeling through subtle visual cues.
 
 ## What We Keep
 
 1. **🪴 Icon** - Primary identity marker for all Aichaku messages
 2. **Growth Icons** - 🌱🌿🌳🍃 as subtle phase indicators
-3. **Green Progress** - Consider using green colors for progress bars (implementation-specific)
+3. **Green Progress** - Consider using green colors for progress bars
+   (implementation-specific)
 
 ## What We Avoid
 
@@ -19,6 +21,7 @@ After feedback, we've refined the visual identity to be clear and professional w
 ## Good Examples
 
 ✅ **Clear and Professional:**
+
 ```
 🪴 Aichaku: Creating project: user-auth-redesign
 🪴 Aichaku: Sprint 15, Day 6/10 🌿
@@ -26,6 +29,7 @@ After feedback, we've refined the visual identity to be clear and professional w
 ```
 
 ❌ **Too Metaphorical:**
+
 ```
 🪴 Aichaku: Planting new seeds in your garden
 🪴 Aichaku: Your project is blooming nicely
@@ -46,4 +50,5 @@ After feedback, we've refined the visual identity to be clear and professional w
 - Professional communication that doesn't confuse
 - Maintains the warm 愛着 feeling without overdoing it
 
-This balanced approach ensures Aichaku enhances rather than obscures the user experience.
+This balanced approach ensures Aichaku enhances rather than obscures the user
+experience.

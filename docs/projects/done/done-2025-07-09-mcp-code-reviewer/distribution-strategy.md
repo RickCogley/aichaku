@@ -12,6 +12,7 @@
 ## Distribution via GitHub Packages
 
 ### 1. Cross-Platform Binaries
+
 ```yaml
 # .github/workflows/release.yml
 name: Build and Release
@@ -37,12 +38,12 @@ jobs:
           - os: windows-latest
             target: x86_64-pc-windows-msvc
             name: mcp-code-reviewer-windows.exe
-    
+
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: denoland/setup-deno@v1
-      
+
       - name: Compile
         run: |
           deno compile \
@@ -53,7 +54,7 @@ jobs:
             --target ${{ matrix.target }} \
             --output ${{ matrix.name }} \
             src/server.ts
-      
+
       - name: Upload to Release
         uses: actions/upload-release-asset@v1
         with:
@@ -63,6 +64,7 @@ jobs:
 ```
 
 ### 2. Installation Script
+
 ```bash
 #!/bin/bash
 # install.sh - One-line installer
@@ -98,47 +100,51 @@ echo "🔒 Privacy: All reviews happen locally on your machine"
 ## Tool Integration Strategy
 
 ### Cannot Bundle External Tools ❌
+
 **Why?** DevSkim, CodeQL, and Semgrep are:
+
 - Written in different languages (C#, Java, Python)
 - Have their own runtimes
 - Licensed separately
 - Update independently
 
 ### Smart Tool Detection ✅
+
 ```typescript
 class ToolDetector {
   async detectAvailableTools(): Promise<ToolStatus> {
     const tools = {
-      devskim: await this.checkCommand('devskim --version'),
-      codeql: await this.checkCommand('codeql --version'),
-      semgrep: await this.checkCommand('semgrep --version'),
-      eslint: await this.checkNodePackage('eslint')
+      devskim: await this.checkCommand("devskim --version"),
+      codeql: await this.checkCommand("codeql --version"),
+      semgrep: await this.checkCommand("semgrep --version"),
+      eslint: await this.checkNodePackage("eslint"),
     };
-    
+
     return {
       available: Object.entries(tools)
         .filter(([_, installed]) => installed)
         .map(([name]) => name),
       missing: Object.entries(tools)
         .filter(([_, installed]) => !installed)
-        .map(([name]) => name)
+        .map(([name]) => name),
     };
   }
-  
+
   async suggestInstallation(missing: string[]): Promise<string> {
     const suggestions = {
-      devskim: 'npm install -g @microsoft/devskim-cli',
-      codeql: 'brew install codeql',
-      semgrep: 'pip install semgrep',
-      eslint: 'npm install -g eslint eslint-plugin-security'
+      devskim: "npm install -g @microsoft/devskim-cli",
+      codeql: "brew install codeql",
+      semgrep: "pip install semgrep",
+      eslint: "npm install -g eslint eslint-plugin-security",
     };
-    
-    return missing.map(tool => suggestions[tool]).join('\n');
+
+    return missing.map((tool) => suggestions[tool]).join("\n");
   }
 }
 ```
 
 ### Progressive Enhancement
+
 ```typescript
 // MCP works with whatever tools are available
 async performReview(file: string): ReviewResult {
@@ -161,6 +167,7 @@ async performReview(file: string): ReviewResult {
 ## User Experience
 
 ### First Run
+
 ```
 $ mcp-code-reviewer
 🪴 MCP Code Reviewer v1.0.0
@@ -182,6 +189,7 @@ Ready to review code!
 ```
 
 ### Optional Tool Installation
+
 ```bash
 # Helper command
 $ mcp-code-reviewer install-tools
@@ -203,12 +211,14 @@ Install all? [y/N]
 ## PR Creation - Manual Only
 
 ### Why Manual?
+
 - Avoids PR spam
 - User maintains control
 - Conscious decision required
 - Better for team workflows
 
 ### How It Works
+
 ```
 User: "Create a PR to fix the security issues you found"
 Claude: "I'll create a PR with the security fixes"
@@ -218,12 +228,13 @@ Claude: "Created PR #123: [Security fixes for command injection and path travers
 ```
 
 ### Never Automatic
+
 ```typescript
 // BAD - Would create too many PRs
 hooks: [{
   name: "Auto PR on High Severity",
-  command: "mcp-reviewer create-pr --auto"  // ❌ Don't do this
-}]
+  command: "mcp-reviewer create-pr --auto", // ❌ Don't do this
+}];
 
 // GOOD - User decides
 // User explicitly asks: "Fix these security issues"
@@ -233,24 +244,28 @@ hooks: [{
 ## Installation Methods
 
 ### 1. Direct Download (Recommended)
+
 ```bash
 # One-liner
 curl -fsSL https://aichaku.dev/install-mcp | bash
 ```
 
 ### 2. Via Aichaku CLI
+
 ```bash
 # Future enhancement
 aichaku install-mcp
 ```
 
 ### 3. Manual Download
+
 - Go to: https://github.com/aichaku/mcp-code-reviewer/releases
 - Download for your platform
 - Add to PATH
 - Configure Claude Code
 
 ### 4. Build from Source
+
 ```bash
 git clone https://github.com/aichaku/mcp-code-reviewer
 cd mcp-code-reviewer
@@ -260,6 +275,7 @@ deno compile --allow-all --output mcp-code-reviewer src/server.ts
 ## Security & Privacy Guarantees
 
 ### What We Promise
+
 1. **No Network Calls**: Except to check for updates (optional)
 2. **No Telemetry**: Zero tracking or analytics
 3. **No Code Storage**: Everything in memory only
@@ -267,10 +283,12 @@ deno compile --allow-all --output mcp-code-reviewer src/server.ts
 5. **Open Source**: Audit the code yourself
 
 ### User Documentation Must Emphasize
+
 ```markdown
 ## 🔒 Privacy First
 
 The MCP Code Reviewer runs 100% locally on your machine:
+
 - Your code NEVER leaves your computer
 - No cloud services or APIs involved
 - No account or authentication required

@@ -2,10 +2,8 @@
 
 ## Status
 
-🌿 **Phase**: Solution Shaped
-**Started**: 2025-07-11
-**Progress**: [Problem] → [**Shaping**] → [Building] → [Complete]
-                           ▲
+🌿 **Phase**: Solution Shaped **Started**: 2025-07-11 **Progress**: [Problem] →
+[**Shaping**] → [Building] → [Complete] ▲
 
 ```mermaid
 graph LR
@@ -17,7 +15,9 @@ graph LR
 
 ## Problem Statement
 
-Claude Code is not automatically using the MCP server tools when generating documentation, requiring manual intervention to achieve the desired quality and standards compliance.
+Claude Code is not automatically using the MCP server tools when generating
+documentation, requiring manual intervention to achieve the desired quality and
+standards compliance.
 
 ## Key Issues
 
@@ -28,4 +28,5 @@ Claude Code is not automatically using the MCP server tools when generating docu
 
 ## Goal
 
-Make MCP tool usage automatic and transparent whenever Claude Code performs tasks that would benefit from review, linting, or standards checking.
+Make MCP tool usage automatic and transparent whenever Claude Code performs
+tasks that would benefit from review, linting, or standards checking.

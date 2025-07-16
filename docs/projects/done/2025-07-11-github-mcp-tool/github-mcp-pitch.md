@@ -1,7 +1,10 @@
 # GitHub MCP Tool Pitch
 
 ## Problem
-The current release process relies on the `gh` CLI being available in the shell context during the `postRelease` hook. This can fail due to:
+
+The current release process relies on the `gh` CLI being available in the shell
+context during the `postRelease` hook. This can fail due to:
+
 - Context switching during automated releases
 - Authentication issues in different environments
 - Shell PATH problems
@@ -10,6 +13,7 @@ The current release process relies on the `gh` CLI being available in the shell 
 ## Solution: GitHub MCP Tool
 
 Create a dedicated MCP tool for GitHub operations that can:
+
 1. Handle authentication properly
 2. Upload release binaries reliably
 3. Manage GitHub operations independent of shell context
@@ -18,12 +22,14 @@ Create a dedicated MCP tool for GitHub operations that can:
 ## Key Features
 
 ### Core Tools
+
 - `mcp__github__upload_release_assets` - Upload files to GitHub releases
 - `mcp__github__create_release` - Create GitHub releases
 - `mcp__github__get_release_info` - Get release information
 - `mcp__github__manage_repository` - Repository management operations
 
 ### Benefits
+
 - **Reliability**: No dependency on shell context or PATH
 - **Authentication**: Proper token management
 - **Error Handling**: Better error reporting and retry logic
@@ -44,15 +50,20 @@ Create a dedicated MCP tool for GitHub operations that can:
 postRelease: [
   async () => {
     // Use MCP tool instead of shell command
-    await claude.useTool('mcp__github__upload_release_assets', {
+    await claude.useTool("mcp__github__upload_release_assets", {
       tag: `v${VERSION}`,
-      assets: ['./dist/aichaku-*.exe', './dist/aichaku-*', './dist/mcp-code-reviewer-*']
+      assets: [
+        "./dist/aichaku-*.exe",
+        "./dist/aichaku-*",
+        "./dist/mcp-code-reviewer-*",
+      ],
     });
-  }
-]
+  },
+];
 ```
 
 ## Next Steps
+
 1. Create proof-of-concept GitHub MCP server
 2. Test with current release
 3. Integrate into nagare workflow

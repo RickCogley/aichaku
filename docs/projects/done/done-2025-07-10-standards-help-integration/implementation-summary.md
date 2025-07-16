@@ -6,7 +6,8 @@
 
 ### 1. Enhanced Help Command
 
-The `aichaku help` command now supports both methodologies and development standards:
+The `aichaku help` command now supports both methodologies and development
+standards:
 
 ```bash
 # View comprehensive help
@@ -31,6 +32,7 @@ aichaku help --all
 ### 2. Standards Documentation
 
 Created detailed help content for 6 key standards:
+
 - **OWASP Top 10** - Web application security risks
 - **15-Factor Apps** - Cloud-native best practices
 - **TDD** - Test-Driven Development cycle
@@ -39,6 +41,7 @@ Created detailed help content for 6 key standards:
 - **SOLID** - Object-oriented principles
 
 Each standard includes:
+
 - Visual diagrams and ASCII art
 - Code examples
 - Implementation tips
@@ -48,6 +51,7 @@ Each standard includes:
 ### 3. Unified Knowledge Base
 
 The help system now presents a unified view of:
+
 - 6 Development Methodologies
 - 17 Standards across 5 categories
 - Clear navigation between topics
@@ -56,15 +60,18 @@ The help system now presents a unified view of:
 ### 4. Smart Topic Detection
 
 The CLI automatically detects whether a topic is a methodology or standard:
+
 ```typescript
-const isStandard = topic && (topic.includes("owasp") || topic.includes("factor") || 
-                             topic === "tdd" || topic === "nist" || topic === "ddd" || 
-                             topic === "solid");
+const isStandard = topic &&
+  (topic.includes("owasp") || topic.includes("factor") ||
+    topic === "tdd" || topic === "nist" || topic === "ddd" ||
+    topic === "solid");
 ```
 
 ## Benefits
 
-1. **Comprehensive Knowledge**: Developers can learn both methodologies AND standards
+1. **Comprehensive Knowledge**: Developers can learn both methodologies AND
+   standards
 2. **Quick Reference**: Terminal-based help for immediate access
 3. **Visual Learning**: ASCII diagrams make concepts memorable
 4. **Practical Examples**: Real code snippets for each standard
@@ -73,16 +80,19 @@ const isStandard = topic && (topic.includes("owasp") || topic.includes("factor")
 ## Technical Implementation
 
 ### Files Modified
+
 1. `/src/commands/help.ts` - Added standards support
 2. `/cli.ts` - Enhanced argument parsing for new options
 
 ### Key Functions Added
+
 - `normalizeStandardName()` - Handle various standard name formats
 - `listStandards()` - Display available standards
 - `listByCategory()` - Filter by category
 - `listAllResources()` - Show complete knowledge base
 
 ### Integration Points
+
 - Imports `STANDARD_CATEGORIES` from standards.ts
 - Maintains backward compatibility with methodology help
 - Uses consistent help result interface
@@ -90,6 +100,7 @@ const isStandard = topic && (topic.includes("owasp") || topic.includes("factor")
 ## Testing Results
 
 All commands tested successfully:
+
 - ✅ `aichaku help` - Shows enhanced main help
 - ✅ `aichaku help --standards` - Lists all standards
 - ✅ `aichaku help tdd` - Shows specific standard
@@ -100,6 +111,7 @@ All commands tested successfully:
 ## Next Steps
 
 The standards are now available in the help system. Users can:
+
 1. Browse available standards with `aichaku help --standards`
 2. Learn specific standards with `aichaku help <standard>`
 3. Use `aichaku standards --add` to select standards for their project

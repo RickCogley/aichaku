@@ -17,11 +17,11 @@ export interface ProgressMetrics {
   phase: string;
   timeElapsed: number;
   timeRemaining: number;
-  status: 'on-track' | 'at-risk' | 'blocked' | 'complete';
+  status: "on-track" | "at-risk" | "blocked" | "complete";
   milestones: Milestone[];
 }
 
-export type RenderStyle = 'ascii' | 'compact' | 'minimal' | 'dashboard';
+export type RenderStyle = "ascii" | "compact" | "minimal" | "dashboard";
 ```
 
 ### 2. Methodology-Specific Renderers
@@ -80,20 +80,23 @@ export class ShapeUpRenderer implements MethodologyRenderer {
 ```typescript
 // src/progress/status-integration.ts
 export class StatusFileIntegration {
-  private readonly MARKER_START = '<!-- AICHAKU:PROGRESS:START -->';
-  private readonly MARKER_END = '<!-- AICHAKU:PROGRESS:END -->';
-  
-  async updateProgress(filePath: string, progress: ProgressData): Promise<void> {
+  private readonly MARKER_START = "<!-- AICHAKU:PROGRESS:START -->";
+  private readonly MARKER_END = "<!-- AICHAKU:PROGRESS:END -->";
+
+  async updateProgress(
+    filePath: string,
+    progress: ProgressData,
+  ): Promise<void> {
     const content = await Deno.readTextFile(filePath);
     const updatedContent = this.injectProgress(content, progress);
     await Deno.writeTextFile(filePath, updatedContent);
   }
-  
+
   private injectProgress(content: string, progress: ProgressData): string {
     const renderer = this.getRenderer(progress.methodology);
     const metrics = this.calculateMetrics(progress);
-    const visual = renderer.render(metrics, 'compact');
-    
+    const visual = renderer.render(metrics, "compact");
+
     const progressBlock = `
 ${this.MARKER_START}
 Methodology: ${progress.methodology}
@@ -104,17 +107,17 @@ Status: ${metrics.status}
 Visual:
 ${visual}
 ${this.MARKER_END}`;
-    
+
     // Replace existing block or insert after ## Progress header
     if (content.includes(this.MARKER_START)) {
       return content.replace(
         /<!-- AICHAKU:PROGRESS:START -->[\s\S]*<!-- AICHAKU:PROGRESS:END -->/,
-        progressBlock
+        progressBlock,
       );
     } else {
       return content.replace(
         /## Progress\n/,
-        `## Progress\n${progressBlock}\n`
+        `## Progress\n${progressBlock}\n`,
       );
     }
   }
@@ -128,36 +131,36 @@ ${this.MARKER_END}`;
 export class ProgressCommand implements Command {
   async execute(args: string[]): Promise<void> {
     const subcommand = args[0];
-    
+
     switch (subcommand) {
-      case 'show':
+      case "show":
         await this.showProgress(args.slice(1));
         break;
-      case 'update':
+      case "update":
         await this.updateProgress(args.slice(1));
         break;
-      case 'dashboard':
+      case "dashboard":
         await this.showDashboard();
         break;
       default:
         await this.showCurrentProgress();
     }
   }
-  
+
   private async showCurrentProgress(): Promise<void> {
     const projects = await this.findActiveProjects();
-    
+
     for (const project of projects) {
       const progress = await this.loadProgress(project);
       const renderer = this.getRenderer(progress.methodology);
-      const output = renderer.render(progress, 'compact');
+      const output = renderer.render(progress, "compact");
       console.log(output);
     }
   }
-  
+
   private async showDashboard(): Promise<void> {
     const projects = await this.findActiveProjects();
-    
+
     console.log(`
 ╔══════════════════════════════════════════════════╗
 ║           Aichaku Project Status                 ║
@@ -165,17 +168,21 @@ export class ProgressCommand implements Command {
 ║                                                  ║
 ║  Active Projects: ${projects.length}                              ║
 ║                                                  ║`);
-    
+
     for (const [index, project] of projects.entries()) {
       const progress = await this.loadProgress(project);
       const renderer = this.getRenderer(progress.methodology);
-      const output = renderer.render(progress, 'minimal');
-      
-      console.log(`║  ${index + 1}. ${project.name} (${progress.methodology})                      ║`);
+      const output = renderer.render(progress, "minimal");
+
+      console.log(
+        `║  ${
+          index + 1
+        }. ${project.name} (${progress.methodology})                      ║`,
+      );
       console.log(`║     ${output}             ║`);
       console.log(`║                                                  ║`);
     }
-    
+
     console.log(`╚══════════════════════════════════════════════════╝`);
   }
 }
@@ -187,34 +194,35 @@ export class ProgressCommand implements Command {
 // src/progress/animation.ts
 export class ProgressAnimator {
   private readonly spinners = {
-    'shape-up': ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'],
-    'scrum': ['◐', '◓', '◑', '◒'],
-    'kanban': ['→', '↘', '↓', '↙', '←', '↖', '↑', '↗'],
-    'lean': ['?', '!', '→', '✓'],
-    'xp': ['🔴', '🟢', '♻️']
+    "shape-up": ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"],
+    "scrum": ["◐", "◓", "◑", "◒"],
+    "kanban": ["→", "↘", "↓", "↙", "←", "↖", "↑", "↗"],
+    "lean": ["?", "!", "→", "✓"],
+    "xp": ["🔴", "🟢", "♻️"],
   };
-  
+
   async *animate(
     progress: ProgressData,
-    message: string
+    message: string,
   ): AsyncGenerator<string> {
-    const spinner = this.spinners[progress.methodology] || this.spinners['shape-up'];
+    const spinner = this.spinners[progress.methodology] ||
+      this.spinners["shape-up"];
     let frame = 0;
-    
+
     while (true) {
       const spin = spinner[frame % spinner.length];
       const renderer = this.getRenderer(progress.methodology);
-      const bar = renderer.render(progress, 'minimal');
-      
+      const bar = renderer.render(progress, "minimal");
+
       yield `${spin} ${bar} ${message}`;
-      
+
       frame++;
       await this.sleep(100);
     }
   }
-  
+
   private sleep(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }
 ```
@@ -225,39 +233,39 @@ export class ProgressAnimator {
 // src/progress/color.ts
 export class ColorSupport {
   private supportsColor: boolean;
-  
+
   constructor() {
     this.supportsColor = this.detectColorSupport();
   }
-  
+
   private detectColorSupport(): boolean {
     // Check for NO_COLOR env var
-    if (Deno.env.get('NO_COLOR')) return false;
-    
+    if (Deno.env.get("NO_COLOR")) return false;
+
     // Check for FORCE_COLOR
-    if (Deno.env.get('FORCE_COLOR')) return true;
-    
+    if (Deno.env.get("FORCE_COLOR")) return true;
+
     // Check if running in TTY
     if (!Deno.isatty(Deno.stdout.rid)) return false;
-    
+
     // Check TERM env var
-    const term = Deno.env.get('TERM');
-    if (!term || term === 'dumb') return false;
-    
+    const term = Deno.env.get("TERM");
+    if (!term || term === "dumb") return false;
+
     return true;
   }
-  
-  color(text: string, color: 'green' | 'yellow' | 'red' | 'cyan'): string {
+
+  color(text: string, color: "green" | "yellow" | "red" | "cyan"): string {
     if (!this.supportsColor) return text;
-    
+
     const colors = {
-      green: '\x1b[32m',
-      yellow: '\x1b[33m',
-      red: '\x1b[31m',
-      cyan: '\x1b[36m',
-      reset: '\x1b[0m'
+      green: "\x1b[32m",
+      yellow: "\x1b[33m",
+      red: "\x1b[31m",
+      cyan: "\x1b[36m",
+      reset: "\x1b[0m",
     };
-    
+
     return `${colors[color]}${text}${colors.reset}`;
   }
 }
@@ -290,22 +298,22 @@ async execute() {
 // Update methodology detection to include progress hints
 export function detectMethodology(input: string): MethodologyInfo {
   const info = existingDetection(input);
-  
+
   // Add progress-related hints
-  if (input.includes('week') && info.methodology === 'shape-up') {
+  if (input.includes("week") && info.methodology === "shape-up") {
     info.progressHint = {
-      unit: 'weeks',
+      unit: "weeks",
       total: 6,
-      phases: ['shaping', 'building', 'cool-down']
+      phases: ["shaping", "building", "cool-down"],
     };
-  } else if (input.includes('sprint') && info.methodology === 'scrum') {
+  } else if (input.includes("sprint") && info.methodology === "scrum") {
     info.progressHint = {
-      unit: 'days',
+      unit: "days",
       total: 10, // Assuming 2-week sprints
-      phases: ['planning', 'execution', 'review']
+      phases: ["planning", "execution", "review"],
     };
   }
-  
+
   return info;
 }
 ```
@@ -330,41 +338,41 @@ export function detectMethodology(input: string): MethodologyInfo {
 // src/progress/progress_test.ts
 Deno.test("Shape Up progress calculation", () => {
   const progress = new ProgressData({
-    methodology: 'shape-up',
-    phase: 'building',
-    startDate: new Date('2025-01-01'),
-    currentDate: new Date('2025-01-22'), // 3 weeks later
+    methodology: "shape-up",
+    phase: "building",
+    startDate: new Date("2025-01-01"),
+    currentDate: new Date("2025-01-22"), // 3 weeks later
   });
-  
+
   const metrics = engine.calculate(progress);
-  
+
   assertEquals(metrics.percentage, 50); // 3 weeks of 6
-  assertEquals(metrics.phase, 'building');
-  assertEquals(metrics.status, 'on-track');
+  assertEquals(metrics.phase, "building");
+  assertEquals(metrics.status, "on-track");
 });
 
 Deno.test("Progress bar rendering", () => {
   const metrics = {
     percentage: 60,
-    phase: 'building',
-    status: 'on-track'
+    phase: "building",
+    status: "on-track",
   };
-  
-  const output = renderer.render(metrics, 'minimal');
-  
-  assertStringIncludes(output, '██████░░░░');
-  assertStringIncludes(output, '60%');
+
+  const output = renderer.render(metrics, "minimal");
+
+  assertStringIncludes(output, "██████░░░░");
+  assertStringIncludes(output, "60%");
 });
 
 Deno.test("STATUS.md integration", async () => {
   const tempFile = await Deno.makeTempFile();
   await Deno.writeTextFile(tempFile, "# Status\n\n## Progress\n\n## Details");
-  
+
   await statusIntegration.updateProgress(tempFile, progressData);
-  
+
   const content = await Deno.readTextFile(tempFile);
-  assertStringIncludes(content, '<!-- AICHAKU:PROGRESS:START -->');
-  assertStringIncludes(content, 'Visual:');
+  assertStringIncludes(content, "<!-- AICHAKU:PROGRESS:START -->");
+  assertStringIncludes(content, "Visual:");
 });
 ```
 
@@ -385,23 +393,27 @@ Deno.test("STATUS.md integration", async () => {
 ## Rollout Plan
 
 ### Phase 1: Core Engine (Week 1)
+
 - Progress calculation engine
 - Basic ASCII renderers
 - STATUS.md integration
 
 ### Phase 2: Methodology Support (Week 2)
+
 - Shape Up renderer
 - Scrum renderer
 - Kanban renderer
 - Lean & XP renderers
 
 ### Phase 3: CLI Integration (Week 3)
+
 - Progress command
 - Dashboard view
 - Settings integration
 - Auto-update hooks
 
 ### Phase 4: Polish (Week 4)
+
 - Color support
 - Animations (where supported)
 - Performance optimization

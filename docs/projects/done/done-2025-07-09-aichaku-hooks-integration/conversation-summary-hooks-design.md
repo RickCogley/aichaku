@@ -1,11 +1,15 @@
 # Conversation Summary Hooks Design
 
 ## Overview
-Implement hooks that automatically create conversation summaries at two critical points:
+
+Implement hooks that automatically create conversation summaries at two critical
+points:
+
 - **Stop**: When user pauses/stops a conversation
 - **PreCompact**: Before Claude compacts context due to length limits
 
 ## The Problem
+
 - Conversations can lose important context when compacted
 - Manual checkpoint creation is often forgotten
 - Need deterministic way to preserve conversation state
@@ -13,7 +17,9 @@ Implement hooks that automatically create conversation summaries at two critical
 ## Proposed Solution
 
 ### Hook Script: summarize-conversation.ts
+
 The existing script accepts:
+
 - Session ID
 - Transcript path
 - Hook event name (Stop or PreCompact)
@@ -21,31 +27,38 @@ The existing script accepts:
 ### Script Location Options
 
 #### Option 1: Global Aichaku Directory (Recommended)
+
 ```
 ~/.claude/aichaku/hooks/summarize-conversation.ts
 ```
+
 **Pros:**
+
 - Consistent with Aichaku's new directory structure
 - Easy to manage and update
 - Clear ownership (Aichaku manages it)
 
 #### Option 2: Deno Bin Directory
+
 ```
 ~/.deno/bin/aichaku-hooks/summarize-conversation.ts
 ```
+
 **Pros:**
-- Close to installed binaries
-**Cons:**
+
+- Close to installed binaries **Cons:**
 - Mixing data with executables
 - Harder to find and manage
 
 #### Option 3: Separate Hooks Directory
+
 ```
 ~/.aichaku/hooks/summarize-conversation.ts
 ```
+
 **Pros:**
-- Clean separation
-**Cons:**
+
+- Clean separation **Cons:**
 - Yet another directory to manage
 
 ### Implementation Plan
@@ -88,7 +101,9 @@ The existing script accepts:
 ## Technical Considerations
 
 ### Claude Code Hook Format
+
 Based on the example-hooks-for-stop-and-precompact.md, the format should be:
+
 ```json
 {
   "hooks": {
@@ -135,6 +150,7 @@ Based on the example-hooks-for-stop-and-precompact.md, the format should be:
 ## Integration with Aichaku
 
 ### New Command Option
+
 ```bash
 # Install conversation summary hooks
 aichaku hooks --install conversation-summary
@@ -144,7 +160,9 @@ aichaku hooks --config summary-dir ./docs/checkpoints
 ```
 
 ### Hook Categories Update
+
 Add to HOOK_CATEGORIES:
+
 ```typescript
 productivity: {
   name: "Productivity",
@@ -169,4 +187,5 @@ productivity: {
 4. What format for summary filenames?
 
 ---
-*Design created: 2025-01-13*
+
+_Design created: 2025-01-13_

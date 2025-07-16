@@ -1,6 +1,9 @@
 # Getting Started with Aichaku API
 
-This comprehensive tutorial teaches you how to use the Aichaku methodology library and MCP (Model Context Protocol) server. You learn how to use all available tools, CLI commands, and configuration options to enhance your development workflow.
+This comprehensive tutorial teaches you how to use the Aichaku methodology
+library and MCP (Model Context Protocol) server. You learn how to use all
+available tools, CLI commands, and configuration options to enhance your
+development workflow.
 
 ## Prerequisites
 
@@ -29,6 +32,7 @@ Before you begin this tutorial, ensure you have:
 ### Core Commands
 
 #### `aichaku init`
+
 Initialize a new Aichaku project in your current directory.
 
 ```bash
@@ -42,6 +46,7 @@ Options:
 ```
 
 #### `aichaku install`
+
 Install a methodology in your current project or globally.
 
 ```bash
@@ -55,6 +60,7 @@ Options:
 ```
 
 #### `aichaku list`
+
 View available and installed methodologies.
 
 ```bash
@@ -67,6 +73,7 @@ Options:
 ```
 
 #### `aichaku standards`
+
 Manage documentation standards for your project.
 
 ```bash
@@ -83,6 +90,7 @@ Options:
 ```
 
 #### `aichaku mcp`
+
 Start the MCP server for Claude Code integration.
 
 ```bash
@@ -96,35 +104,39 @@ Options:
 
 ## MCP Tools
 
-You can access Aichaku MCP server tools through Claude Code using the `mcp__aichaku-reviewer__` prefix for review tools and `mcp__aichaku__` prefix for documentation tools.
+You can access Aichaku MCP server tools through Claude Code using the
+`mcp__aichaku-reviewer__` prefix for review tools and `mcp__aichaku__` prefix
+for documentation tools.
 
 ### Code Review Tools
 
 #### `review_file`
 
-Review a single file for security vulnerabilities, standards compliance, and code quality issues.
+Review a single file for security vulnerabilities, standards compliance, and
+code quality issues.
 
 ##### Parameters
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `file` | string | Yes | - | Path to the file you want to review |
-| `content` | string | No | - | File content (if not provided, reads from disk) |
-| `includeExternal` | boolean | No | true | Include external security scanners if available |
+| Parameter         | Type    | Required | Default | Description                                     |
+| ----------------- | ------- | -------- | ------- | ----------------------------------------------- |
+| `file`            | string  | Yes      | -       | Path to the file you want to review             |
+| `content`         | string  | No       | -       | File content (if not provided, reads from disk) |
+| `includeExternal` | boolean | No       | true    | Include external security scanners if available |
 
 ##### Example Usage
 
 ```typescript
 // Basic file review
-await mcp__aichaku-reviewer__review_file({
-  file: "/path/to/src/auth.ts"
+await mcp__aichaku - reviewer__review_file({
+  file: "/path/to/src/auth.ts",
 });
 
 // Review with content (useful for unsaved files)
-await mcp__aichaku-reviewer__review_file({
+await mcp__aichaku - reviewer__review_file({
   file: "untitled.js",
-  content: "const password = process.env.DB_PASSWORD; // Use environment variables for secrets",
-  includeExternal: false
+  content:
+    "const password = process.env.DB_PASSWORD; // Use environment variables for secrets",
+  includeExternal: false,
 });
 ```
 
@@ -184,10 +196,10 @@ Check if your project follows the specified methodology patterns and practices.
 
 ##### Parameters
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `projectPath` | string | Yes | - | Path to your project root directory |
-| `methodology` | string | No | - | Methodology to check against (auto-detects if not specified) |
+| Parameter     | Type   | Required | Default | Description                                                  |
+| ------------- | ------ | -------- | ------- | ------------------------------------------------------------ |
+| `projectPath` | string | Yes      | -       | Path to your project root directory                          |
+| `methodology` | string | No       | -       | Methodology to check against (auto-detects if not specified) |
 
 ##### Supported Methodologies
 
@@ -222,9 +234,9 @@ Retrieve the currently selected standards for your project.
 
 ##### Parameters
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `projectPath` | string | Yes | - | Path to your project root directory |
+| Parameter     | Type   | Required | Default | Description                         |
+| ------------- | ------ | -------- | ------- | ----------------------------------- |
+| `projectPath` | string | Yes      | -       | Path to your project root directory |
 
 ##### Response Format
 
@@ -244,16 +256,17 @@ Retrieve the currently selected standards for your project.
 
 #### `analyze_project`
 
-Analyze your project directory to understand its structure, technologies, and patterns.
+Analyze your project directory to understand its structure, technologies, and
+patterns.
 
 ##### Parameters
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `projectPath` | string | Yes | Absolute or relative path to your project directory |
-| `depth` | number | No | How deep to analyze (1-5, default: 3) |
-| `includeTests` | boolean | No | Whether to analyze test files (default: true) |
-| `includeDocs` | boolean | No | Whether to analyze documentation (default: true) |
+| Parameter      | Type    | Required | Description                                         |
+| -------------- | ------- | -------- | --------------------------------------------------- |
+| `projectPath`  | string  | Yes      | Absolute or relative path to your project directory |
+| `depth`        | number  | No       | How deep to analyze (1-5, default: 3)               |
+| `includeTests` | boolean | No       | Whether to analyze test files (default: true)       |
+| `includeDocs`  | boolean | No       | Whether to analyze documentation (default: true)    |
 
 ##### Response Format
 
@@ -299,32 +312,33 @@ Analyze your project directory to understand its structure, technologies, and pa
 ```typescript
 // Analyze current directory
 const analysis = await mcp__aichaku__analyze_project({
-  projectPath: '.',
-  depth: 3
+  projectPath: ".",
+  depth: 3,
 });
 
 // Deep analysis with all options
 const deepAnalysis = await mcp__aichaku__analyze_project({
-  projectPath: './my-app',
+  projectPath: "./my-app",
   depth: 5,
   includeTests: true,
-  includeDocs: true
+  includeDocs: true,
 });
 ```
 
 #### `create_doc_template`
 
-Generate documentation templates based on your project type and detected patterns.
+Generate documentation templates based on your project type and detected
+patterns.
 
 ##### Parameters
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `projectPath` | string | Yes | Path to your project |
-| `templateType` | string | Yes | Type of template: 'readme', 'api', 'architecture', 'contributing', 'testing' |
-| `format` | string | No | Output format: 'markdown', 'asciidoc', 'rst' (default: 'markdown') |
-| `analysis` | object | No | Pre-computed project analysis (to avoid re-analysis) |
-| `standards` | string[] | No | Documentation standards to follow |
+| Parameter      | Type     | Required | Description                                                                  |
+| -------------- | -------- | -------- | ---------------------------------------------------------------------------- |
+| `projectPath`  | string   | Yes      | Path to your project                                                         |
+| `templateType` | string   | Yes      | Type of template: 'readme', 'api', 'architecture', 'contributing', 'testing' |
+| `format`       | string   | No       | Output format: 'markdown', 'asciidoc', 'rst' (default: 'markdown')           |
+| `analysis`     | object   | No       | Pre-computed project analysis (to avoid re-analysis)                         |
+| `standards`    | string[] | No       | Documentation standards to follow                                            |
 
 ##### Response Format
 
@@ -353,35 +367,36 @@ Generate documentation templates based on your project type and detected pattern
 ```typescript
 // Create README template
 const readme = await mcp__aichaku__create_doc_template({
-  projectPath: '.',
-  templateType: 'readme',
-  standards: ['conventional-commits', 'semver']
+  projectPath: ".",
+  templateType: "readme",
+  standards: ["conventional-commits", "semver"],
 });
 
 // Create API documentation template
 const apiDocs = await mcp__aichaku__create_doc_template({
-  projectPath: './api-service',
-  templateType: 'api',
-  format: 'markdown'
+  projectPath: "./api-service",
+  templateType: "api",
+  format: "markdown",
 });
 ```
 
 #### `generate_documentation`
 
-Automatically generate complete documentation by analyzing your code and existing docs.
+Automatically generate complete documentation by analyzing your code and
+existing docs.
 
 ##### Parameters
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `projectPath` | string | Yes | Path to your project |
-| `outputPath` | string | No | Where to save documentation (default: './docs') |
-| `types` | string[] | No | Documentation types to generate: ['api', 'readme', 'guides', 'all'] |
-| `format` | string | No | Output format (default: 'markdown') |
-| `includeExamples` | boolean | No | Generate usage examples (default: true) |
-| `analysis` | object | No | Pre-computed project analysis |
-| `standards` | string[] | No | Documentation standards to follow |
-| `methodology` | string | No | Specific methodology to align with |
+| Parameter         | Type     | Required | Description                                                         |
+| ----------------- | -------- | -------- | ------------------------------------------------------------------- |
+| `projectPath`     | string   | Yes      | Path to your project                                                |
+| `outputPath`      | string   | No       | Where to save documentation (default: './docs')                     |
+| `types`           | string[] | No       | Documentation types to generate: ['api', 'readme', 'guides', 'all'] |
+| `format`          | string   | No       | Output format (default: 'markdown')                                 |
+| `includeExamples` | boolean  | No       | Generate usage examples (default: true)                             |
+| `analysis`        | object   | No       | Pre-computed project analysis                                       |
+| `standards`       | string[] | No       | Documentation standards to follow                                   |
+| `methodology`     | string   | No       | Specific methodology to align with                                  |
 
 ##### Response Format
 
@@ -414,24 +429,24 @@ Automatically generate complete documentation by analyzing your code and existin
 ```typescript
 // Generate all documentation types
 const docs = await mcp__aichaku__generate_documentation({
-  projectPath: '.',
-  types: ['all'],
-  includeExamples: true
+  projectPath: ".",
+  types: ["all"],
+  includeExamples: true,
 });
 
 // Generate API documentation only
 const apiDocs = await mcp__aichaku__generate_documentation({
-  projectPath: './typescript-api',
-  outputPath: './docs/api',
-  types: ['api'],
-  standards: ['openapi', 'jsdoc']
+  projectPath: "./typescript-api",
+  outputPath: "./docs/api",
+  types: ["api"],
+  standards: ["openapi", "jsdoc"],
 });
 
 // Generate methodology-aligned documentation
 const shapeUpDocs = await mcp__aichaku__generate_documentation({
-  projectPath: './my-project',
-  types: ['guides', 'readme'],
-  methodology: 'shape-up'
+  projectPath: "./my-project",
+  types: ["guides", "readme"],
+  methodology: "shape-up",
 });
 ```
 
@@ -443,15 +458,16 @@ Retrieve usage statistics and analytics for your MCP tool usage.
 
 ##### Parameters
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `type` | string | No | Type of statistics: 'dashboard', 'realtime', 'insights', 'export' |
-| `format` | string | No | Export format (for type=export): 'json', 'csv' |
-| `question` | string | No | Specific question to answer about your usage |
+| Parameter  | Type   | Required | Description                                                       |
+| ---------- | ------ | -------- | ----------------------------------------------------------------- |
+| `type`     | string | No       | Type of statistics: 'dashboard', 'realtime', 'insights', 'export' |
+| `format`   | string | No       | Export format (for type=export): 'json', 'csv'                    |
+| `question` | string | No       | Specific question to answer about your usage                      |
 
 ##### Response Types
 
 ###### Dashboard Statistics
+
 ```typescript
 {
   generatedAt: Date;
@@ -497,6 +513,7 @@ Retrieve usage statistics and analytics for your MCP tool usage.
 ```
 
 ###### Real-time Statistics
+
 ```typescript
 {
   activeSession?: {
@@ -518,6 +535,7 @@ Retrieve usage statistics and analytics for your MCP tool usage.
 ```
 
 ###### Insights Report
+
 ```typescript
 {
   totalOperations: number;
@@ -542,25 +560,25 @@ Retrieve usage statistics and analytics for your MCP tool usage.
 
 ```typescript
 // Get dashboard statistics
-const stats = await mcp__aichaku-reviewer__get_statistics({
-  type: 'dashboard'
+const stats = await mcp__aichaku - reviewer__get_statistics({
+  type: "dashboard",
 });
 
 // Get real-time performance data
-const realtime = await mcp__aichaku-reviewer__get_statistics({
-  type: 'realtime'
+const realtime = await mcp__aichaku - reviewer__get_statistics({
+  type: "realtime",
 });
 
 // Export statistics as CSV
-const csvExport = await mcp__aichaku-reviewer__get_statistics({
-  type: 'export',
-  format: 'csv'
+const csvExport = await mcp__aichaku - reviewer__get_statistics({
+  type: "export",
+  format: "csv",
 });
 
 // Ask specific questions
-const answer = await mcp__aichaku-reviewer__get_statistics({
-  type: 'insights',
-  question: 'Which files have the most security issues?'
+const answer = await mcp__aichaku - reviewer__get_statistics({
+  type: "insights",
+  question: "Which files have the most security issues?",
 });
 ```
 
@@ -568,7 +586,8 @@ const answer = await mcp__aichaku-reviewer__get_statistics({
 
 ### Project Configuration
 
-You can configure project-specific settings in `.claude/.aichaku-standards.json`:
+You can configure project-specific settings in
+`.claude/.aichaku-standards.json`:
 
 ```json
 {
@@ -634,48 +653,53 @@ You can set up global defaults in `~/.aichaku/mcp-config.json`:
 ### TypeScript/JavaScript
 
 ```typescript
-import { Aichaku } from 'aichaku';
+import { Aichaku } from "aichaku";
 
 // Initialize
 const aichaku = new Aichaku({
-  projectPath: '.',
-  methodology: 'shape-up'
+  projectPath: ".",
+  methodology: "shape-up",
 });
 
 // Initialize project
 await aichaku.init({
-  standards: ['nist-csf', 'tdd']
+  standards: ["nist-csf", "tdd"],
 });
 
 // Install methodology
-await aichaku.install('scrum', {
+await aichaku.install("scrum", {
   global: false,
-  force: true
+  force: true,
 });
 
 // List methodologies
 const methodologies = await aichaku.list();
 
 // Manage standards
-await aichaku.standards.add('conventional-commits');
-await aichaku.standards.remove('owasp-web');
+await aichaku.standards.add("conventional-commits");
+await aichaku.standards.remove("owasp-web");
 const current = await aichaku.standards.list();
 ```
 
 ### Deno Module
 
 ```typescript
-import { init, install, list, standards } from "https://deno.land/x/aichaku/mod.ts";
+import {
+  init,
+  install,
+  list,
+  standards,
+} from "https://deno.land/x/aichaku/mod.ts";
 
 // Initialize project
 await init({
-  methodology: 'kanban',
-  standards: ['google-style', 'bdd']
+  methodology: "kanban",
+  standards: ["google-style", "bdd"],
 });
 
 // Install methodology globally
-await install('lean', {
-  global: true
+await install("lean", {
+  global: true,
 });
 
 // Get available standards
@@ -684,26 +708,28 @@ const availableStandards = await standards.list();
 
 ## Security Patterns
 
-The MCP server includes built-in patterns for detecting security vulnerabilities:
+The MCP server includes built-in patterns for detecting security
+vulnerabilities:
 
 ### OWASP Top 10 (2021)
 
-| Category | Pattern Examples |
-|----------|-----------------|
-| A01: Broken Access Control | Missing auth checks, path traversal |
-| A02: Cryptographic Failures | Hardcoded secrets, weak encryption |
-| A03: Injection | SQL injection, command injection, XSS |
-| A04: Insecure Design | Security anti-patterns |
-| A05: Security Misconfiguration | Verbose errors, default configs |
-| A06: Vulnerable Components | Outdated dependencies |
-| A07: Auth Failures | Weak password handling |
-| A08: Software Integrity | Unsigned code, untrusted sources |
-| A09: Logging Failures | Sensitive data in logs |
-| A10: SSRF | Unvalidated redirects |
+| Category                       | Pattern Examples                      |
+| ------------------------------ | ------------------------------------- |
+| A01: Broken Access Control     | Missing auth checks, path traversal   |
+| A02: Cryptographic Failures    | Hardcoded secrets, weak encryption    |
+| A03: Injection                 | SQL injection, command injection, XSS |
+| A04: Insecure Design           | Security anti-patterns                |
+| A05: Security Misconfiguration | Verbose errors, default configs       |
+| A06: Vulnerable Components     | Outdated dependencies                 |
+| A07: Auth Failures             | Weak password handling                |
+| A08: Software Integrity        | Unsigned code, untrusted sources      |
+| A09: Logging Failures          | Sensitive data in logs                |
+| A10: SSRF                      | Unvalidated redirects                 |
 
 ### Language-Specific Patterns
 
 #### TypeScript/JavaScript
+
 - Dynamic code execution with user input (use JSON.parse() instead)
 - Unvalidated user input in child processes
 - DOM-based cross-site scripting vulnerabilities
@@ -711,6 +737,7 @@ The MCP server includes built-in patterns for detecting security vulnerabilities
 - Cryptographically weak random values
 
 #### Python
+
 - `pickle` deserialization
 - SQL string formatting
 - Command injection via `subprocess`
@@ -718,6 +745,7 @@ The MCP server includes built-in patterns for detecting security vulnerabilities
 - Weak cryptography usage
 
 #### Go
+
 - SQL query building
 - Command execution
 - Path cleaning issues
@@ -729,6 +757,7 @@ The MCP server includes built-in patterns for detecting security vulnerabilities
 ### CodeQL
 
 When CodeQL is available, the MCP server runs:
+
 ```bash
 codeql database analyze --format=sarif-latest
 ```
@@ -736,6 +765,7 @@ codeql database analyze --format=sarif-latest
 ### DevSkim
 
 When DevSkim is available:
+
 ```bash
 devskim analyze -f sarif -o results.sarif
 ```
@@ -743,6 +773,7 @@ devskim analyze -f sarif -o results.sarif
 ### Semgrep
 
 When Semgrep is available:
+
 ```bash
 semgrep --config=auto --json
 ```
@@ -751,15 +782,15 @@ semgrep --config=auto --json
 
 ### Common Errors
 
-| Error Code | Description | Solution |
-|------------|-------------|----------|
-| `FILE_NOT_FOUND` | File doesn't exist | Check file path |
-| `PROJECT_NOT_INITIALIZED` | No .claude directory | Run `aichaku init` |
-| `INVALID_METHODOLOGY` | Unknown methodology | Check spelling |
-| `SCANNER_TIMEOUT` | External scanner timeout | Increase timeout or disable |
-| `PERMISSION_DENIED` | Can't read file | Check file permissions |
-| `NO_SOURCE_FILES` | No source files found | Check project structure |
-| `INVALID_TEMPLATE_TYPE` | Unknown template type | Use valid template type |
+| Error Code                | Description              | Solution                    |
+| ------------------------- | ------------------------ | --------------------------- |
+| `FILE_NOT_FOUND`          | File doesn't exist       | Check file path             |
+| `PROJECT_NOT_INITIALIZED` | No .claude directory     | Run `aichaku init`          |
+| `INVALID_METHODOLOGY`     | Unknown methodology      | Check spelling              |
+| `SCANNER_TIMEOUT`         | External scanner timeout | Increase timeout or disable |
+| `PERMISSION_DENIED`       | Can't read file          | Check file permissions      |
+| `NO_SOURCE_FILES`         | No source files found    | Check project structure     |
+| `INVALID_TEMPLATE_TYPE`   | Unknown template type    | Use valid template type     |
 
 ### Error Response Format
 
@@ -781,38 +812,41 @@ semgrep --config=auto --json
 ## Performance Considerations
 
 ### File Size Limits
+
 - Default: 5MB per file
 - You can configure this in `mcp-config.json`
 - Large files may timeout
 
 ### Caching
+
 - File content cache (5 minute TTL)
 - Standards configuration cache
 - External scanner results cache
 - Project analysis cache
 
 ### Parallel Processing
+
 - Security patterns run in parallel
 - External scanners run sequentially
 - Results aggregated asynchronously
 
 ## Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `AICHAKU_MCP_DEBUG` | Enable debug logging | `false` |
-| `AICHAKU_MCP_TIMEOUT` | Global timeout (ms) | `60000` |
-| `AICHAKU_MCP_CACHE_DIR` | Cache directory | `~/.aichaku/cache` |
-| `AICHAKU_MCP_NO_EXTERNAL` | Disable external scanners | `false` |
-| `AICHAKU_FEEDBACK_LEVEL` | Feedback verbosity | `standard` |
-| `AICHAKU_PROGRESS_THRESHOLD` | Progress indicator delay | `1500` |
+| Variable                     | Description               | Default            |
+| ---------------------------- | ------------------------- | ------------------ |
+| `AICHAKU_MCP_DEBUG`          | Enable debug logging      | `false`            |
+| `AICHAKU_MCP_TIMEOUT`        | Global timeout (ms)       | `60000`            |
+| `AICHAKU_MCP_CACHE_DIR`      | Cache directory           | `~/.aichaku/cache` |
+| `AICHAKU_MCP_NO_EXTERNAL`    | Disable external scanners | `false`            |
+| `AICHAKU_FEEDBACK_LEVEL`     | Feedback verbosity        | `standard`         |
+| `AICHAKU_PROGRESS_THRESHOLD` | Progress indicator delay  | `1500`             |
 
 ## Version Compatibility
 
 | MCP Server Version | Aichaku Version | Claude Code Version |
-|-------------------|-----------------|---------------------|
-| 1.0.x | 1.0.x | 0.9.x+ |
-| 1.1.x | 1.1.x | 1.0.x+ |
+| ------------------ | --------------- | ------------------- |
+| 1.0.x              | 1.0.x           | 0.9.x+              |
+| 1.1.x              | 1.1.x           | 1.0.x+              |
 
 You should always use matching Aichaku and MCP server versions for best results.
 

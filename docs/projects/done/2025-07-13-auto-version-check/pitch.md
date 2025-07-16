@@ -2,15 +2,20 @@
 
 ## Problem
 
-Users are confused when upgrading Aichaku because there are two separate components that can have different versions:
+Users are confused when upgrading Aichaku because there are two separate
+components that can have different versions:
+
 - The CLI tool (the `aichaku` command)
 - The global files (methodologies and config in `~/.claude/aichaku/`)
 
-Currently, users can upgrade the CLI to v0.27.0 but still have v0.25.0 global files, leading to version mismatches and confusion. The system doesn't tell them about this mismatch.
+Currently, users can upgrade the CLI to v0.27.0 but still have v0.25.0 global
+files, leading to version mismatches and confusion. The system doesn't tell them
+about this mismatch.
 
 ## Appetite
 
-2 weeks - This is a quality-of-life improvement that will prevent user confusion.
+2 weeks - This is a quality-of-life improvement that will prevent user
+confusion.
 
 ## Solution
 
@@ -22,7 +27,7 @@ Add automatic version checking when the CLI starts:
    ⚠️  Version mismatch detected:
    CLI version: v0.27.0
    Global files: v0.25.0
-   
+
    Run 'aichaku upgrade --global' to sync versions
    ```
 3. **Optional**: Add a `--check-versions` flag to see all version info
@@ -30,7 +35,8 @@ Add automatic version checking when the CLI starts:
 
 ## Rabbit Holes
 
-- **Don't** try to auto-upgrade without user consent - this could break workflows
+- **Don't** try to auto-upgrade without user consent - this could break
+  workflows
 - **Don't** check versions on every single file operation - just on CLI startup
 - **Don't** make it blocking - just show a warning
 

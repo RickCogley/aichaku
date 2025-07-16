@@ -50,7 +50,7 @@ interface MCPProcessManager {
   stop(): Promise<ProcessResult>;
   restart(): Promise<ProcessResult>;
   status(): Promise<ProcessStatus>;
-  
+
   // Helpers
   isRunning(): Promise<boolean>;
   getPID(): Promise<number | null>;
@@ -163,10 +163,10 @@ export abstract class BasePlatformHandler {
   abstract startProcess(cmd: string, args: string[]): Promise<ProcessInfo>;
   abstract stopProcess(pid: number): Promise<boolean>;
   abstract isProcessRunning(pid: number): Promise<boolean>;
-  
+
   // Common functionality
   protected async readProcessOutput(
-    process: Deno.ChildProcess
+    process: Deno.ChildProcess,
   ): Promise<string> {
     const decoder = new TextDecoder();
     const output = await process.output();
@@ -183,26 +183,26 @@ export class UnixPlatformHandler extends BasePlatformHandler {
         stdout: "piped",
         stderr: "piped",
       });
-      
+
       const { success } = await command.output();
       return success;
     } catch {
       return false;
     }
   }
-  
+
   async stopProcess(pid: number): Promise<boolean> {
     try {
       Deno.kill(pid, "SIGTERM");
-      
+
       // Wait up to 5 seconds for graceful shutdown
       for (let i = 0; i < 50; i++) {
         if (!await this.isProcessRunning(pid)) {
           return true;
         }
-        await new Promise(resolve => setTimeout(resolve, 100));
+        await new Promise((resolve) => setTimeout(resolve, 100));
       }
-      
+
       // Force kill if still running
       Deno.kill(pid, "SIGKILL");
       return true;
@@ -220,21 +220,21 @@ export class WindowsPlatformHandler extends BasePlatformHandler {
       stdout: "piped",
       stderr: "piped",
     });
-    
+
     const { stdout, success } = await command.output();
     if (!success) return false;
-    
+
     const output = new TextDecoder().decode(stdout);
     return output.includes(pid.toString());
   }
-  
+
   async stopProcess(pid: number): Promise<boolean> {
     const command = new Deno.Command("taskkill", {
       args: ["/PID", pid.toString(), "/F"],
       stdout: "piped",
       stderr: "piped",
     });
-    
+
     const { success } = await command.output();
     return success;
   }
@@ -246,19 +246,20 @@ export class WindowsPlatformHandler extends BasePlatformHandler {
 ```typescript
 // utils/mcp/version-manager.ts
 export class MCPVersionManager {
-  private readonly GITHUB_API = "https://api.github.com/repos/RickCogley/aichaku/releases/latest";
+  private readonly GITHUB_API =
+    "https://api.github.com/repos/RickCogley/aichaku/releases/latest";
   private readonly VERSION_REGEX = /VERSION:\s*([0-9]+\.[0-9]+\.[0-9]+)/;
-  
+
   async getCurrentVersion(): Promise<string> {
     const binaryPath = this.getBinaryPath();
-    
+
     // Try to extract version from binary
     const command = new Deno.Command(binaryPath, {
       args: ["--version"],
       stdout: "piped",
       stderr: "piped",
     });
-    
+
     try {
       const { stdout } = await command.output();
       const output = new TextDecoder().decode(stdout);
@@ -267,49 +268,49 @@ export class MCPVersionManager {
     } catch {
       // Fall back to embedded version
     }
-    
+
     // Check if version is embedded in binary metadata
     return await this.getEmbeddedVersion(binaryPath);
   }
-  
+
   async getLatestVersion(): Promise<string> {
     const response = await fetch(this.GITHUB_API);
     const data = await response.json();
-    return data.tag_name.replace('v', '');
+    return data.tag_name.replace("v", "");
   }
-  
+
   async upgrade(): Promise<UpgradeResult> {
     const current = await this.getCurrentVersion();
     const latest = await this.getLatestVersion();
-    
+
     if (current === latest) {
       return {
         success: true,
         previousVersion: current,
         newVersion: latest,
-        message: "Already running the latest version"
+        message: "Already running the latest version",
       };
     }
-    
+
     // Download new version
     const downloadUrl = await this.getDownloadUrl(latest);
     const newBinary = await this.downloadBinary(downloadUrl);
-    
+
     // Stop current process
     const processManager = new MCPProcessManager();
     await processManager.stop();
-    
+
     // Replace binary
     await this.replaceBinary(newBinary);
-    
+
     // Start new version
     await processManager.start();
-    
+
     return {
       success: true,
       previousVersion: current,
       newVersion: latest,
-      message: `Successfully upgraded from ${current} to ${latest}`
+      message: `Successfully upgraded from ${current} to ${latest}`,
     };
   }
 }
@@ -322,26 +323,34 @@ export class MCPVersionManager {
 async function displayStatus(status: ProcessStatus): Promise<void> {
   console.log("🔍 MCP Server Status");
   console.log("━".repeat(50));
-  
+
   const versionManager = new MCPVersionManager();
   const current = await versionManager.getCurrentVersion();
   const latest = await versionManager.getLatestVersion();
   const updateAvailable = current !== latest;
-  
-  console.log(`📦 Version:        ${current}${updateAvailable ? ` (latest: ${latest} available)` : " (latest)"}`);
+
+  console.log(
+    `📦 Version:        ${current}${
+      updateAvailable ? ` (latest: ${latest} available)` : " (latest)"
+    }`,
+  );
   console.log(`📍 Location:       ${status.binaryPath}`);
-  console.log(`${status.running ? "🟢" : "🔴"} Status:         ${status.running ? "Running" : "Stopped"}${status.pid ? ` (PID: ${status.pid})` : ""}`);
-  
+  console.log(
+    `${status.running ? "🟢" : "🔴"} Status:         ${
+      status.running ? "Running" : "Stopped"
+    }${status.pid ? ` (PID: ${status.pid})` : ""}`,
+  );
+
   if (status.uptime) {
     console.log(`⏱️  Uptime:         ${status.uptime}`);
   }
-  
+
   console.log(`🔧 Platform:       ${Deno.build.os} ${Deno.build.arch}`);
-  
+
   if (updateAvailable) {
     console.log("\n💡 To upgrade: aichaku mcp --upgrade");
   }
-  
+
   if (!status.running) {
     console.log("\n💡 To start: aichaku mcp --start");
   }
@@ -355,17 +364,17 @@ async function displayStatus(status: ProcessStatus): Promise<void> {
 function displayConfigInstructions(): void {
   const binaryPath = getMCPBinaryPath();
   const isWindows = Deno.build.os === "windows";
-  
+
   console.log("📝 To configure Claude Code:\n");
   console.log("Run this command once per system:");
   console.log("─".repeat(70));
-  
+
   if (isWindows) {
     console.log(`claude mcp add aichaku-reviewer --stdio -- "${binaryPath}"`);
   } else {
     console.log(`claude mcp add aichaku-reviewer --stdio -- ${binaryPath}`);
   }
-  
+
   console.log("─".repeat(70));
   console.log("\n✅ This enables the MCP server for all your aichaku projects");
   console.log("💡 Restart Claude Code after making changes");
@@ -385,7 +394,7 @@ class MCPError extends Error {
   constructor(
     message: string,
     public readonly code: MCPErrorCode,
-    public readonly details?: unknown
+    public readonly details?: unknown,
   ) {
     super(message);
     this.name = "MCPError";

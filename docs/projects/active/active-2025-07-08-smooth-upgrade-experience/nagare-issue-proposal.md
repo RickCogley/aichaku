@@ -2,11 +2,15 @@
 
 ## Problem Statement
 
-Currently, nagare's release process has a critical timing issue that causes releases to fail in CI almost every time. The root cause is that nagare modifies files during the release process but creates and pushes tags before validating that these modifications pass formatting and type checking.
+Currently, nagare's release process has a critical timing issue that causes
+releases to fail in CI almost every time. The root cause is that nagare modifies
+files during the release process but creates and pushes tags before validating
+that these modifications pass formatting and type checking.
 
 ## Current Flow vs Proposed Flow
 
 ### Current Flow (Problematic)
+
 ```mermaid
 graph TD
     A[Run pre-release hooks] --> B[Modify files<br/>- version.ts<br/>- CHANGELOG.md<br/>- deno.json]
@@ -19,6 +23,7 @@ graph TD
 ```
 
 ### Proposed Flow (Fixed)
+
 ```mermaid
 graph TD
     A[Run pre-release hooks] --> B[Modify files<br/>- version.ts<br/>- CHANGELOG.md<br/>- deno.json]
@@ -124,12 +129,12 @@ private async validateModifiedFiles(): Promise<void> {
 ```typescript
 export async function rollbackRelease(version: string): Promise<void> {
   console.log(`🔄 Rolling back release v${version}...`);
-  
+
   try {
     // Delete local tag
     await run(["git", "tag", "-d", `v${version}`]);
     console.log("✅ Deleted local tag");
-    
+
     // Try to delete remote tag
     try {
       await run(["git", "push", "origin", `:refs/tags/v${version}`]);
@@ -137,11 +142,10 @@ export async function rollbackRelease(version: string): Promise<void> {
     } catch {
       console.log("ℹ️  Remote tag not found or already deleted");
     }
-    
+
     // Reset to previous commit
     await run(["git", "reset", "--hard", "HEAD~1"]);
     console.log("✅ Reset to previous commit");
-    
   } catch (error) {
     console.error("❌ Rollback failed:", error);
     throw error;
@@ -173,13 +177,15 @@ export interface NagareConfig {
 
 1. **No more broken tags**: Tags will only be created after validation passes
 2. **Faster feedback**: Errors caught locally before pushing
-3. **Automatic formatting**: Files modified by nagare are automatically formatted
+3. **Automatic formatting**: Files modified by nagare are automatically
+   formatted
 4. **Easy rollback**: If something goes wrong, rollback is automated
 5. **CI always passes**: Since validation happens before tagging
 
 ## Migration Guide
 
-For existing nagare users, the change would be transparent but they could opt-in to stricter validation:
+For existing nagare users, the change would be transparent but they could opt-in
+to stricter validation:
 
 ```typescript
 // nagare.config.ts
@@ -206,10 +212,16 @@ export default defineConfig({
 
 ## Alternative Solutions Considered
 
-1. **Run formatting in git pre-commit hooks**: This doesn't help with files modified by nagare itself
-2. **Add formatting to CI only**: This discovers issues too late, after tags are created
-3. **Manual pre-release checklist**: Error-prone and defeats the purpose of automation
+1. **Run formatting in git pre-commit hooks**: This doesn't help with files
+   modified by nagare itself
+2. **Add formatting to CI only**: This discovers issues too late, after tags are
+   created
+3. **Manual pre-release checklist**: Error-prone and defeats the purpose of
+   automation
 
 ## Conclusion
 
-This enhancement would make nagare's release process much more reliable by ensuring that only properly formatted and validated code gets tagged and released. The current "tag first, validate later" approach causes unnecessary friction and manual intervention in what should be an automated process.
+This enhancement would make nagare's release process much more reliable by
+ensuring that only properly formatted and validated code gets tagged and
+released. The current "tag first, validate later" approach causes unnecessary
+friction and manual intervention in what should be an automated process.

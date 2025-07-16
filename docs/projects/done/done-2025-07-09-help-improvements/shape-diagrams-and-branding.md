@@ -13,7 +13,9 @@ Small batch - 1 hour
 ## Solution
 
 ### 1. Complete Branding
+
 Add the Aichaku header to all methodology help pages:
+
 ```
 🎯 Methodology Name
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -21,9 +23,11 @@ Brought to you by Aichaku (愛着) - Adaptive Methodology Support
 ```
 
 ### 2. Add ASCII Diagrams
+
 Simple, clear diagrams for each methodology:
 
 **Shape Up Cycle:**
+
 ```
 ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
 │   Shaping   │→ │   Betting   │→ │   Building  │
@@ -37,6 +41,7 @@ Simple, clear diagrams for each methodology:
 ```
 
 **Scrum Flow:**
+
 ```
 Product Backlog → Sprint Planning → Sprint Backlog
        ↑                                  ↓
@@ -44,6 +49,7 @@ Product Backlog → Sprint Planning → Sprint Backlog
 ```
 
 **Kanban Board:**
+
 ```
 ┌─────────┬─────────┬─────────┬─────────┬─────────┐
 │ Backlog │  To Do  │  Doing  │ Testing │  Done   │
@@ -55,7 +61,9 @@ Product Backlog → Sprint Planning → Sprint Backlog
 ```
 
 ### 3. Clarify Help vs --help
+
 In the default `aichaku help` output:
+
 ```
 💡 Looking for CLI commands?
    Run 'aichaku --help' to see all available commands and options
@@ -64,11 +72,13 @@ In the default `aichaku help` output:
 ```
 
 ## Rabbit Holes
+
 - Don't make diagrams too complex
 - Keep ASCII art simple and readable
 - Don't duplicate full CLI help
 
 ## No-gos
+
 - No Unicode box drawing (compatibility issues)
 - No colored output (terminal compatibility)
 - No interactive diagrams

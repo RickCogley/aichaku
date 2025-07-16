@@ -47,7 +47,7 @@ export async function initCommand(options: InitOptions) {
 
   // Create behavioral structure
   const claudeDir = join(Deno.cwd(), ".claude");
-  
+
   // 1. Create directories with examples
   const structure = {
     "AICHAKU-RULES.md": BEHAVIORAL_RULES,
@@ -61,13 +61,13 @@ export async function initCommand(options: InitOptions) {
       },
       "done-example-completed-sprint/": {
         "retrospective.md": createExampleRetro(),
-      }
+      },
     },
     "hooks/": {
       "pre-create-file.sh": createPreCreateHook(),
       "post-create-file.sh": createPostCreateHook(),
       "check-location.sh": createLocationChecker(),
-    }
+    },
   };
 
   await createStructure(claudeDir, structure);
@@ -164,36 +164,36 @@ export class IntentDetector {
     shapeUp: {
       triggers: /shape|shaping|pitch|appetite|bet/i,
       projectExtractor: /shape\s+(?:up\s+)?(?:a\s+)?(.+)/i,
-      documents: ['pitch.md', 'STATUS.md']
+      documents: ["pitch.md", "STATUS.md"],
     },
     scrum: {
       triggers: /sprint|scrum|story|backlog|planning/i,
       projectExtractor: /(?:sprint|plan)\s+(?:for\s+)?(.+)/i,
-      documents: ['sprint-plan.md', 'backlog.md', 'STATUS.md']
+      documents: ["sprint-plan.md", "backlog.md", "STATUS.md"],
     },
     kanban: {
       triggers: /kanban|board|wip|flow/i,
       projectExtractor: /(?:kanban|board)\s+(?:for\s+)?(.+)/i,
-      documents: ['kanban-board.md', 'STATUS.md']
+      documents: ["kanban-board.md", "STATUS.md"],
     },
     completion: {
       triggers: /done|complete|finish|retrospective/i,
       projectExtractor: /(?:done|completed|finished)\s+(?:with\s+)?(.+)/i,
-      documents: ['retrospective.md']
-    }
+      documents: ["retrospective.md"],
+    },
   };
 
   detect(input: string): Intent | null {
     for (const [methodology, config] of Object.entries(this.patterns)) {
       if (config.triggers.test(input)) {
         const projectMatch = input.match(config.projectExtractor);
-        const projectName = projectMatch?.[1]?.trim() || 'untitled';
-        
+        const projectName = projectMatch?.[1]?.trim() || "untitled";
+
         return {
           methodology,
-          action: methodology === 'completion' ? 'complete' : 'create',
+          action: methodology === "completion" ? "complete" : "create",
           projectName: this.sanitizeProjectName(projectName),
-          documents: config.documents
+          documents: config.documents,
         };
       }
     }
@@ -203,8 +203,8 @@ export class IntentDetector {
   private sanitizeProjectName(name: string): string {
     return name
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '')
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
       .slice(0, 50);
   }
 }
@@ -213,11 +213,11 @@ export class IntentDetector {
 export function createAutoResponse(userInput: string): string {
   const detector = new IntentDetector();
   const intent = detector.detect(userInput);
-  
-  if (!intent) return '';
-  
+
+  if (!intent) return "";
+
   const date = formatDate(new Date());
-  const projectDir = intent.action === 'complete' 
+  const projectDir = intent.action === "complete"
     ? `done-${date}-${intent.projectName}`
     : `active-${date}-${intent.projectName}`;
 
@@ -228,9 +228,10 @@ export function createAutoResponse(userInput: string): string {
 // Creating in: .claude/output/${projectDir}/
 
 mkdir -p .claude/output/${projectDir}
-${intent.documents.map(doc => 
-  `touch .claude/output/${projectDir}/${doc}`
-).join('\n')}
+${
+    intent.documents.map((doc) => `touch .claude/output/${projectDir}/${doc}`)
+      .join("\n")
+  }
 
 echo "${projectDir}" > .claude/.aichaku-active`;
 }
@@ -246,7 +247,8 @@ import { join, relative } from "@std/path";
 
 export class AichakuFileMonitor {
   private watchedPaths = new Set<string>();
-  private correctPath = /^\.claude\/output\/(active|done)-\d{4}-\d{2}-\d{2}-[\w-]+\//;
+  private correctPath =
+    /^\.claude\/output\/(active|done)-\d{4}-\d{2}-\d{2}-[\w-]+\//;
 
   async checkAndCorrect(filePath: string): Promise<string | null> {
     // Skip if already in correct location
@@ -261,8 +263,8 @@ export class AichakuFileMonitor {
       /^src\//,
       /^tests?\//,
     ];
-    
-    if (allowed.some(pattern => pattern.test(filePath))) {
+
+    if (allowed.some((pattern) => pattern.test(filePath))) {
       return null;
     }
 
@@ -276,7 +278,7 @@ export class AichakuFileMonitor {
       /retro/i,
     ];
 
-    if (docPatterns.some(pattern => pattern.test(filePath))) {
+    if (docPatterns.some((pattern) => pattern.test(filePath))) {
       return this.suggestCorrection(filePath);
     }
 
@@ -286,7 +288,7 @@ export class AichakuFileMonitor {
   private async suggestCorrection(wrongPath: string): Promise<string> {
     const activeProject = await this.getActiveProject();
     const filename = basename(wrongPath);
-    const correctPath = join('.claude/output', activeProject, filename);
+    const correctPath = join(".claude/output", activeProject, filename);
 
     // Auto-correct
     console.log(`🔄 Auto-correcting file location...`);
@@ -310,7 +312,7 @@ export class AichakuFileMonitor {
 
 - Moved from: ${oldPath}
 - Moved to: ${newPath}
-- Following Aichaku conventions" || true`
+- Following Aichaku conventions" || true`,
     ];
 
     for (const cmd of commands) {
@@ -320,11 +322,11 @@ export class AichakuFileMonitor {
 
   private async getActiveProject(): Promise<string> {
     try {
-      const active = await Deno.readTextFile('.claude/.aichaku-active');
+      const active = await Deno.readTextFile(".claude/.aichaku-active");
       return active.trim();
     } catch {
       const defaultProject = `active-${formatDate(new Date())}-untitled`;
-      await Deno.writeTextFile('.claude/.aichaku-active', defaultProject);
+      await Deno.writeTextFile(".claude/.aichaku-active", defaultProject);
       return defaultProject;
     }
   }
@@ -333,11 +335,11 @@ export class AichakuFileMonitor {
 // Auto-correction daemon
 export async function startFileMonitor() {
   const monitor = new AichakuFileMonitor();
-  
+
   // Watch for new files
   const watcher = Deno.watchFs(".", {
     recursive: true,
-    exclude: ["node_modules", ".git", "target"]
+    exclude: ["node_modules", ".git", "target"],
   });
 
   for await (const event of watcher) {
@@ -345,7 +347,7 @@ export async function startFileMonitor() {
       for (const path of event.paths) {
         const relativePath = relative(Deno.cwd(), path);
         const correction = await monitor.checkAndCorrect(relativePath);
-        
+
         if (correction) {
           console.log(`✅ File automatically moved to: ${correction}`);
         }
@@ -363,8 +365,8 @@ export async function startFileMonitor() {
 export class StatusUpdater {
   async updateStatus(action: string, details?: Record<string, any>) {
     const activeProject = await this.getActiveProject();
-    const statusPath = join('.claude/output', activeProject, 'STATUS.md');
-    
+    const statusPath = join(".claude/output", activeProject, "STATUS.md");
+
     // Ensure STATUS.md exists
     if (!await exists(statusPath)) {
       await this.createStatus(activeProject);
@@ -374,11 +376,11 @@ export class StatusUpdater {
     const timestamp = new Date().toISOString();
     const update = `
 ### ${timestamp}
-- ${action}${details ? '\n' + this.formatDetails(details) : ''}
+- ${action}${details ? "\n" + this.formatDetails(details) : ""}
 `;
 
     await Deno.appendTextFile(statusPath, update);
-    
+
     // Auto-commit
     await this.commitUpdate(activeProject, action);
   }
@@ -386,7 +388,7 @@ export class StatusUpdater {
   private formatDetails(details: Record<string, any>): string {
     return Object.entries(details)
       .map(([key, value]) => `  - ${key}: ${value}`)
-      .join('\n');
+      .join("\n");
   }
 
   private async commitUpdate(project: string, action: string) {
@@ -398,21 +400,21 @@ export class StatusUpdater {
   async transitionToComplete(reason?: string) {
     const activeProject = await this.getActiveProject();
     const date = formatDate(new Date());
-    const projectName = activeProject.replace(/^active-\d{4}-\d{2}-\d{2}-/, '');
+    const projectName = activeProject.replace(/^active-\d{4}-\d{2}-\d{2}-/, "");
     const doneProject = `done-${date}-${projectName}`;
 
     // Move directory
     await Deno.rename(
-      join('.claude/output', activeProject),
-      join('.claude/output', doneProject)
+      join(".claude/output", activeProject),
+      join(".claude/output", doneProject),
     );
 
     // Create retrospective
-    const retroPath = join('.claude/output', doneProject, 'retrospective.md');
+    const retroPath = join(".claude/output", doneProject, "retrospective.md");
     await this.createRetrospective(retroPath, projectName, reason);
 
     // Update active tracker
-    await Deno.remove('.claude/.aichaku-active');
+    await Deno.remove(".claude/.aichaku-active");
 
     // Commit transition
     await exec(`git add -A .claude/output/`);
@@ -427,16 +429,16 @@ export class StatusUpdater {
 export function installStatusHooks() {
   // Override file write operations
   const originalWriteTextFile = Deno.writeTextFile;
-  
-  Deno.writeTextFile = async function(path: string, data: string) {
+
+  Deno.writeTextFile = async function (path: string, data: string) {
     const result = await originalWriteTextFile(path, data);
-    
+
     // Auto-update status
-    if (typeof path === 'string' && path.includes('.claude/output/active-')) {
+    if (typeof path === "string" && path.includes(".claude/output/active-")) {
       const updater = new StatusUpdater();
       await updater.updateStatus(`Created/Updated ${basename(path)}`);
     }
-    
+
     return result;
   };
 }
@@ -481,32 +483,32 @@ Deno.test("Natural language creates correct structure", async () => {
       input: "Let's shape up a payment feature",
       expected: {
         dir: /active-\d{4}-\d{2}-\d{2}-payment-feature/,
-        files: ["STATUS.md", "pitch.md"]
-      }
+        files: ["STATUS.md", "pitch.md"],
+      },
     },
     {
       input: "Start sprint planning for authentication",
       expected: {
         dir: /active-\d{4}-\d{2}-\d{2}-authentication/,
-        files: ["STATUS.md", "sprint-plan.md", "backlog.md"]
-      }
+        files: ["STATUS.md", "sprint-plan.md", "backlog.md"],
+      },
     },
     {
       input: "We're done with the search feature",
       expected: {
         dir: /done-\d{4}-\d{2}-\d{2}-search-feature/,
-        files: ["retrospective.md"]
-      }
-    }
+        files: ["retrospective.md"],
+      },
+    },
   ];
 
   for (const test of testInputs) {
     // Simulate Claude Code processing
     const result = await processNaturalLanguage(test.input);
-    
+
     // Check directory created
     assert(test.expected.dir.test(result.directory));
-    
+
     // Check files created
     for (const file of test.expected.files) {
       const filePath = join(result.directory, file);
@@ -518,11 +520,11 @@ Deno.test("Natural language creates correct structure", async () => {
 Deno.test("Files in wrong location get auto-corrected", async () => {
   // Create file in wrong location
   await Deno.writeTextFile("./wrong-location.md", "# Test");
-  
+
   // Run monitor
   const monitor = new AichakuFileMonitor();
   const corrected = await monitor.checkAndCorrect("./wrong-location.md");
-  
+
   // Should be moved
   assert(corrected?.includes(".claude/output/active-"));
   assert(!await exists("./wrong-location.md"));

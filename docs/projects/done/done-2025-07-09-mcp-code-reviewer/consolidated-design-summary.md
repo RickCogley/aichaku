@@ -5,12 +5,14 @@
 ## Overview
 
 This MCP server combines the best of both design efforts:
+
 1. **Security & Standards Review** (from the manual review example)
 2. **Methodology Compliance** (from the earlier conceptual design)
 
 ## What It Reviews
 
 ### 1. Security Issues (Like We Did Manually)
+
 - Command injection vulnerabilities
 - Path traversal attacks
 - TypeScript `any` usage
@@ -19,7 +21,9 @@ This MCP server combines the best of both design efforts:
 - And more via CodeQL, DevSkim, Semgrep
 
 ### 2. Standards Compliance
+
 Based on your selected standards in `.aichaku-standards.json`:
+
 - OWASP Top 10 (A01-A10)
 - 15-Factor Apps principles
 - Test-Driven Development practices
@@ -28,7 +32,9 @@ Based on your selected standards in `.aichaku-standards.json`:
 - Any custom standards
 
 ### 3. Methodology Compliance
+
 Automatically detected or configured:
+
 - **Shape Up**: Appetite limits, pitch completeness, scope creep
 - **Scrum**: Sprint goals, story points, velocity tracking
 - **Kanban**: WIP limits, flow metrics
@@ -70,6 +76,7 @@ Automatically detected or configured:
 ## Configuration (Unified)
 
 ### Project Level (.claude/.aichaku-standards.json)
+
 ```json
 {
   "version": "1.0.0",
@@ -80,6 +87,7 @@ Automatically detected or configured:
 ```
 
 ### System Level (~/.config/mcp-code-reviewer.json)
+
 ```json
 {
   "scanners": {
@@ -152,7 +160,8 @@ Note to self: I should follow the TypeScript standards in CLAUDE.md and avoid us
 
 1. **Comprehensive**: Reviews security, standards, AND methodology compliance
 2. **Automated**: Runs on save, commit, or on-demand via hooks
-3. **Local-First**: 🔒 **Your code NEVER leaves your machine** - complete privacy
+3. **Local-First**: 🔒 **Your code NEVER leaves your machine** - complete
+   privacy
 4. **Configurable**: Adapts to your project's specific needs
 5. **Actionable**: Provides specific fixes, not just problems
 6. **Manual PR Creation**: No automatic PR spam - you decide when to fix
@@ -172,20 +181,25 @@ Note to self: I should follow the TypeScript standards in CLAUDE.md and avoid us
 ## Key Design Decisions
 
 ### 1. Tool Integration
+
 - **External tools** (DevSkim, CodeQL) installed separately
 - **Smart detection** - works with whatever's available
 - **Progressive enhancement** - better with more tools
 - **Built-in patterns** always available
 
 ### 2. PR Creation
+
 - **Manual only** - no automatic PRs
 - **User initiated** - "Create a PR to fix these"
 - **Avoids spam** - conscious decision required
 
 ### 3. Distribution
+
 - **Compiled binaries** via `deno compile`
 - **GitHub releases** for easy download
 - **Cross-platform** - macOS (Intel/ARM), Linux, Windows
 - **One-line installer** for convenience
 
-This consolidated design brings together the automated security review capabilities you demonstrated with the methodology-aware guidance from the earlier concept, creating a powerful unified tool for code quality.
+This consolidated design brings together the automated security review
+capabilities you demonstrated with the methodology-aware guidance from the
+earlier concept, creating a powerful unified tool for code quality.

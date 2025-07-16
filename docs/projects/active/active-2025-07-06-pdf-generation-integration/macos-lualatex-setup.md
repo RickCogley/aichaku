@@ -1,6 +1,7 @@
 # macOS LuaLaTeX Setup Guide
 
-*Source: [Qiita article by haru52](https://qiita.com/haru52/items/d521d7689c5a1e48a2db)*
+_Source:
+[Qiita article by haru52](https://qiita.com/haru52/items/d521d7689c5a1e48a2db)_
 
 ## Quick Setup for Aichaku Users
 
@@ -67,6 +68,7 @@ brew install --cask font-noto-color-emoji
 ### Integration with Aichaku
 
 Once installed, Aichaku will automatically:
+
 1. Detect LuaLaTeX availability
 2. Use it for PDF generation with emoji support
 3. Fall back to HTML if not available
@@ -74,6 +76,7 @@ Once installed, Aichaku will automatically:
 ### Troubleshooting
 
 If `tlmgr` commands fail:
+
 ```bash
 # Fix permissions
 sudo chown -R $(whoami) /usr/local/texlive/
@@ -83,6 +86,7 @@ sudo tlmgr update --self --all
 ```
 
 If PATH not found:
+
 ```bash
 # Add to ~/.zshrc or ~/.bash_profile
 echo 'export PATH="/Library/TeX/texbin:$PATH"' >> ~/.zshrc

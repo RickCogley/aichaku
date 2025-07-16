@@ -4,7 +4,8 @@
 
 ## Overview
 
-Claude Code hooks provide the perfect mechanism for automatic MCP reviews without explicit user commands.
+Claude Code hooks provide the perfect mechanism for automatic MCP reviews
+without explicit user commands.
 
 ## Hook Flow
 
@@ -21,6 +22,7 @@ File Save → PostToolUse Hook → MCP Review → Claude Sees Results → User I
 ## Integration Patterns
 
 ### 1. Basic Auto-Review
+
 ```json
 // ~/.claude/settings.json
 {
@@ -36,6 +38,7 @@ File Save → PostToolUse Hook → MCP Review → Claude Sees Results → User I
 ```
 
 ### 2. Smart Conditional Review
+
 ```bash
 #!/bin/bash
 # ~/.claude/hooks/smart-mcp-review.sh
@@ -65,6 +68,7 @@ fi
 ```
 
 ### 3. Pre-Commit Comprehensive Review
+
 ```json
 {
   "hooks": {
@@ -80,6 +84,7 @@ fi
 ## Advanced Hook Patterns
 
 ### 1. Progressive Review (Performance Optimized)
+
 ```typescript
 // Hook that escalates based on findings
 const progressiveReviewHook = {
@@ -95,11 +100,12 @@ const progressiveReviewHook = {
       # Standard scan
       mcp-code-reviewer review "$TOOL_INPUT_FILE_PATH"
     fi
-  '`
+  '`,
 };
 ```
 
 ### 2. Methodology-Aware Reviews
+
 ```bash
 #!/bin/bash
 # Hook that detects methodology and reviews accordingly
@@ -129,6 +135,7 @@ esac
 ```
 
 ### 3. Review with Fix Suggestions (No Auto-PR)
+
 ```json
 {
   "hooks": {
@@ -141,11 +148,14 @@ esac
 }
 ```
 
-**Note**: PR creation is ALWAYS manual. The hook can suggest fixes but won't create PRs automatically. Users must explicitly ask: "Create a PR to fix these issues".
+**Note**: PR creation is ALWAYS manual. The hook can suggest fixes but won't
+create PRs automatically. Users must explicitly ask: "Create a PR to fix these
+issues".
 
 ## Installation Commands
 
 ### 1. Install MCP Reviewer
+
 ```bash
 # Install compiled binary
 curl -fsSL https://aichaku.dev/install-mcp.sh | sh
@@ -155,6 +165,7 @@ npm install -g @aichaku/mcp-code-reviewer
 ```
 
 ### 2. Install Aichaku Hooks
+
 ```bash
 # Install MCP integration hooks
 aichaku hooks --install mcp-review
@@ -166,6 +177,7 @@ aichaku hooks --install mcp-review
 ```
 
 ### 3. Configure Standards
+
 ```bash
 # Select standards for automatic review
 aichaku standards --add owasp-web,15-factor,tdd
@@ -181,6 +193,7 @@ aichaku integrate
 When you run `aichaku hooks --install mcp-review`, it creates:
 
 ### 1. mcp-auto-review
+
 ```json
 {
   "name": "Aichaku MCP Auto Review",
@@ -191,6 +204,7 @@ When you run `aichaku hooks --install mcp-review`, it creates:
 ```
 
 ### 2. mcp-pre-commit
+
 ```json
 {
   "name": "Aichaku MCP Pre-commit",
@@ -201,6 +215,7 @@ When you run `aichaku hooks --install mcp-review`, it creates:
 ```
 
 ### 3. mcp-smart-review
+
 ```json
 {
   "name": "Aichaku MCP Smart Review",
@@ -213,6 +228,7 @@ When you run `aichaku hooks --install mcp-review`, it creates:
 ## Performance Considerations
 
 ### 1. Debouncing
+
 ```bash
 # Prevent multiple reviews on rapid saves
 LAST_REVIEW="/tmp/mcp-last-review-$(echo $FILE | md5)"
@@ -227,6 +243,7 @@ touch "$LAST_REVIEW"
 ```
 
 ### 2. Incremental Review
+
 ```bash
 # Only review changed portions
 mcp-code-reviewer review \
@@ -236,6 +253,7 @@ mcp-code-reviewer review \
 ```
 
 ### 3. Background Processing
+
 ```bash
 # Non-blocking review
 {
@@ -248,6 +266,7 @@ mcp-code-reviewer review \
 ## Troubleshooting
 
 ### Hook Not Triggering
+
 ```bash
 # Check hook is registered
 cat ~/.claude/settings.json | jq '.hooks'
@@ -257,6 +276,7 @@ TOOL_INPUT_FILE_PATH="test.ts" bash -c 'your-hook-command'
 ```
 
 ### MCP Not Found
+
 ```bash
 # Verify MCP is in PATH
 which mcp-code-reviewer
@@ -266,6 +286,7 @@ export PATH="$PATH:~/.claude/bin"
 ```
 
 ### Performance Issues
+
 ```bash
 # Use lightweight mode
 mcp-code-reviewer config set mode lightweight

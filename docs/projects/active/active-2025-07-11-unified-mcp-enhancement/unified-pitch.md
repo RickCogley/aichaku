@@ -4,23 +4,29 @@
 
 The current MCP server experience has several disconnected issues:
 
-1. **Manual Process Management** - Complex commands requiring system admin knowledge
-2. **Invisible Operations** - Claude Code gives no feedback about MCP interactions 
-3. **Passive Documentation** - Tools only review, don't generate comprehensive docs
+1. **Manual Process Management** - Complex commands requiring system admin
+   knowledge
+2. **Invisible Operations** - Claude Code gives no feedback about MCP
+   interactions
+3. **Passive Documentation** - Tools only review, don't generate comprehensive
+   docs
 4. **Black Box Experience** - Users don't know what's happening or why
 5. **No Usage Insights** - Can't track how MCP tools are being used
 
-This creates a fragmented, opaque experience that doesn't match Aichaku's philosophy of thoughtful, visible development.
+This creates a fragmented, opaque experience that doesn't match Aichaku's
+philosophy of thoughtful, visible development.
 
 ## Appetite
 
-**1-2 weeks** - This is a foundational improvement that will dramatically enhance the entire Aichaku experience.
+**1-2 weeks** - This is a foundational improvement that will dramatically
+enhance the entire Aichaku experience.
 
 ## Solution
 
 ### Unified Enhancement Strategy
 
-Instead of separate improvements, create one cohesive system that addresses all pain points:
+Instead of separate improvements, create one cohesive system that addresses all
+pain points:
 
 ```mermaid
 graph TB
@@ -38,6 +44,7 @@ graph TB
 ### Phase 1: Transparent MCP Operations (Days 1-3)
 
 #### 1.1 Enhanced Process Management
+
 ```bash
 # Simple, reliable commands
 aichaku mcp --status     # Rich status with version, uptime, capabilities
@@ -46,6 +53,7 @@ aichaku mcp --upgrade    # Automatic version checking and updating
 ```
 
 #### 1.2 Branded Feedback System
+
 ```
 🪴 Aichaku MCP Server
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -61,6 +69,7 @@ aichaku mcp --upgrade    # Automatic version checking and updating
 ```
 
 #### 1.3 Real-Time Progress Tracking
+
 - Show when MCP tools are invoked
 - Display progress for longer operations
 - Report standards being checked
@@ -69,7 +78,9 @@ aichaku mcp --upgrade    # Automatic version checking and updating
 ### Phase 2: Automatic Documentation Generation (Days 4-6)
 
 #### 2.1 New Documentation Tools
+
 Add tools that match user requests:
+
 ```typescript
 // Tools that trigger on "generate comprehensive documentation"
 - analyze_project: "Understand project structure and architecture"
@@ -78,6 +89,7 @@ Add tools that match user requests:
 ```
 
 #### 2.2 Intelligent Tool Chaining
+
 ```
 User: "Generate comprehensive project documentation"
 
@@ -93,7 +105,9 @@ User: "Generate comprehensive project documentation"
 ```
 
 #### 2.3 Enhanced Tool Descriptions
+
 Update tool descriptions to trigger automatically:
+
 ```
 Before: "Review a file for security compliance"
 After: "Automatically scan code for security vulnerabilities (OWASP), 
@@ -104,7 +118,9 @@ After: "Automatically scan code for security vulnerabilities (OWASP),
 ### Phase 3: Usage Analytics & Insights (Days 7-8)
 
 #### 3.1 Statistics Collection
+
 Track MCP usage with privacy protection:
+
 ```typescript
 interface UsageStats {
   sessionsToday: number;
@@ -116,6 +132,7 @@ interface UsageStats {
 ```
 
 #### 3.2 Development Insights
+
 ```
 🪴 Development Session Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -127,7 +144,9 @@ interface UsageStats {
 ```
 
 #### 3.3 Q&A Interface
+
 Enable natural language queries:
+
 ```
 User: "How often did I use security scanning this week?"
 🪴 This week you used security tools 47 times across 12 files, 
@@ -137,7 +156,9 @@ User: "How often did I use security scanning this week?"
 ### Phase 4: Documentation & Polish (Days 9-10)
 
 #### 4.1 Comprehensive Documentation Update
+
 Update `/docs` to reflect all new capabilities:
+
 - Complete MCP management guide
 - Documentation generation workflows
 - Feedback system explanation
@@ -145,7 +166,9 @@ Update `/docs` to reflect all new capabilities:
 - Troubleshooting and FAQ
 
 #### 4.2 User Onboarding
+
 Create smooth onboarding experience:
+
 ```
 🪴 Welcome to Aichaku MCP!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -158,21 +181,25 @@ Create smooth onboarding experience:
 ## Key Features
 
 ### 1. Seamless Integration
+
 - MCP server auto-starts when needed
 - No manual configuration required
 - Cross-platform compatibility
 
 ### 2. Transparent Operations
+
 - Clear feedback about every action
 - Aichaku-branded console output
 - Progress indicators for long operations
 
 ### 3. Intelligent Automation
+
 - Natural language triggers tool usage
 - Automatic tool chaining for complex tasks
 - Standards-compliant output without manual intervention
 
 ### 4. Valuable Insights
+
 - Track development patterns
 - Monitor code quality trends
 - Understand tool usage effectiveness
@@ -180,11 +207,13 @@ Create smooth onboarding experience:
 ## Implementation Sequence
 
 ### Week 1: Core Infrastructure
+
 - Days 1-2: Process management and feedback system
 - Days 3-4: Auto-invocation and tool chaining
 - Day 5: Integration testing
 
 ### Week 2: Features & Polish
+
 - Days 6-7: Documentation generation tools
 - Days 8-9: Statistics and analytics
 - Day 10: Documentation and final testing
@@ -200,8 +229,10 @@ Create smooth onboarding experience:
 ## No-Goes
 
 1. **Complex Configuration** - Keep everything auto-configured
-2. **Overwhelming Output** - Smart timing prevents information overload  
+2. **Overwhelming Output** - Smart timing prevents information overload
 3. **Privacy Violations** - All analytics are anonymized and local
 4. **Breaking Changes** - Maintain backward compatibility throughout
 
-This unified approach creates a cohesive, professional MCP experience that embodies Aichaku's philosophy of thoughtful, visible, and productive development.
+This unified approach creates a cohesive, professional MCP experience that
+embodies Aichaku's philosophy of thoughtful, visible, and productive
+development.

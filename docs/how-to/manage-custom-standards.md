@@ -1,10 +1,14 @@
 # How to Manage Custom Standards
 
-Custom standards allow you to define organization-specific or project-specific guidelines that complement Aichaku's built-in standards. They integrate seamlessly with the standard selection system and appear in your CLAUDE.md alongside official standards.
+Custom standards allow you to define organization-specific or project-specific
+guidelines that complement Aichaku's built-in standards. They integrate
+seamlessly with the standard selection system and appear in your CLAUDE.md
+alongside official standards.
 
 ## Before you begin
 
 Ensure you have:
+
 - Aichaku installed and configured
 - Access to your `~/.claude/aichaku/user/docs/standards/` directory
 - A text editor for creating standard files
@@ -28,6 +32,7 @@ aichaku integrate
 ### What Are Custom Standards?
 
 Custom standards are user-defined development guidelines that:
+
 - Capture your team's specific practices and conventions
 - Extend or specialize existing standards for your domain
 - Document organizational requirements not covered by built-in standards
@@ -35,17 +40,18 @@ Custom standards are user-defined development guidelines that:
 
 ### How They Differ from Built-in Standards
 
-| Aspect | Built-in Standards | Custom Standards |
-|--------|-------------------|------------------|
-| Location | `~/.claude/aichaku/methodologies/docs/standards/` | `~/.claude/aichaku/user/docs/standards/` |
-| Prefix | None (e.g., `tdd`) | `custom:` (e.g., `custom:team-guidelines`) |
-| Icon | 📚 | 🛠️ |
-| Updates | Aichaku updates them | You maintain them |
-| Scope | Universal best practices | Organization/project specific |
+| Aspect   | Built-in Standards                                | Custom Standards                           |
+| -------- | ------------------------------------------------- | ------------------------------------------ |
+| Location | `~/.claude/aichaku/methodologies/docs/standards/` | `~/.claude/aichaku/user/docs/standards/`   |
+| Prefix   | None (e.g., `tdd`)                                | `custom:` (e.g., `custom:team-guidelines`) |
+| Icon     | 📚                                                | 🛠️                                         |
+| Updates  | Aichaku updates them                              | You maintain them                          |
+| Scope    | Universal best practices                          | Organization/project specific              |
 
 ### Storage and Discovery
 
 Custom standards are:
+
 - Stored in `~/.claude/aichaku/user/docs/standards/`
 - Automatically discovered on startup
 - Named using UPPER-KEBAB-CASE.md convention
@@ -62,6 +68,7 @@ aichaku standards --create-custom "Security Hardening"
 ```
 
 This command:
+
 1. Prompts for the standard name if not provided
 2. Converts to UPPER-KEBAB-CASE filename
 3. Creates a pre-formatted template
@@ -94,7 +101,7 @@ You can also create standards manually:
 
 When you use `--create-custom`, Aichaku generates this template:
 
-```markdown
+````markdown
 ---
 title: "Security Hardening Guidelines"
 description: "Additional security measures for production"
@@ -105,7 +112,8 @@ tags: ["security", "production", "custom"]
 
 ## Overview
 
-Brief description of what this standard covers and why it's important for your organization.
+Brief description of what this standard covers and why it's important for your
+organization.
 
 ## Core Principles
 
@@ -120,23 +128,26 @@ List the fundamental principles this standard is based on:
 ### Category One
 
 #### Rule 1.1
+
 Clear, actionable guideline.
 
 ```typescript
 // ✅ Good example
 const secureConfig = {
-  encryption: 'AES-256',
-  timeout: 30000
+  encryption: "AES-256",
+  timeout: 30000,
 };
 
 // ❌ Bad example
 const config = {
-  encryption: 'weak',
-  timeout: null
+  encryption: "weak",
+  timeout: null,
 };
 ```
+````
 
 #### Rule 1.2
+
 Another guideline with examples.
 
 ### Category Two
@@ -153,8 +164,8 @@ Structure your guidelines in logical categories...
 
 - [Internal Wiki Link](https://wiki.company.com/security)
 - [External Best Practices](https://example.com)
-```
 
+````
 ## Managing Custom Standards
 
 ### List Custom Standards
@@ -170,9 +181,10 @@ aichaku standards --list | grep "🛠️"
 
 # Show detailed view with descriptions
 aichaku standards --list --detailed
-```
+````
 
 Output example:
+
 ```text
 Available Standards:
 
@@ -260,6 +272,7 @@ aichaku standards --show --detailed
 ```
 
 Output example:
+
 ```text
 Current Project Standards:
 - 📚 tdd (Built-in)
@@ -270,13 +283,16 @@ Current Project Standards:
 
 ## Integration with CLAUDE.md
 
-When you run `aichaku integrate`, custom standards appear in CLAUDE.md with clear attribution:
+When you run `aichaku integrate`, custom standards appear in CLAUDE.md with
+clear attribution:
 
-```markdown
+`````markdown
 <!-- AICHAKU:STANDARDS:START -->
+
 ## 📚 Selected Standards & Guidelines
 
-🪴 Aichaku: Based on your project configuration, follow these standards when generating code:
+🪴 Aichaku: Based on your project configuration, follow these standards when
+generating code:
 
 ### TDD
 
@@ -286,14 +302,16 @@ When you run `aichaku integrate`, custom standards appear in CLAUDE.md with clea
 
 ### TEAM-GUIDELINES
 
-> 📍 **Source**: Custom standard from ~/.claude/aichaku/user/docs/standards/TEAM-GUIDELINES.md
+> 📍 **Source**: Custom standard from
+> ~/.claude/aichaku/user/docs/standards/TEAM-GUIDELINES.md
 
 [Your custom standard content...]
 
 ---
-<!-- AICHAKU:STANDARDS:END -->
-```markdown
 
+<!-- AICHAKU:STANDARDS:END -->
+
+````markdown
 ## Best Practices
 
 ### Use Clear Naming Conventions
@@ -321,6 +339,8 @@ Write effective custom standards:
 ❌ Include outdated practices
 ❌ Mix unrelated concerns
 ```
+````
+`````
 
 ### Organize Your Standards
 
@@ -336,6 +356,7 @@ Structure your custom standards library:
 ```
 
 Use consistent tags for easy filtering:
+
 - `team` - Team-wide conventions
 - `frontend` - UI/UX guidelines
 - `backend` - Server-side patterns
@@ -392,6 +413,7 @@ git commit -m "Add team development standards"
 **Problem**: Your created standard doesn't appear in `--list`
 
 **Solutions**:
+
 - Check filename uses UPPER-KEBAB-CASE.md
 - Verify location: `~/.claude/aichaku/user/docs/standards/`
 - Ensure valid frontmatter (YAML format)
@@ -402,6 +424,7 @@ git commit -m "Add team development standards"
 **Problem**: `aichaku integrate` doesn't add your custom standard
 
 **Solutions**:
+
 - Confirm standard is added to project: `aichaku standards --show`
 - Check for typos in standard name
 - Use full prefix: `custom:standard-name`
@@ -412,6 +435,7 @@ git commit -m "Add team development standards"
 **Problem**: Your standard has wrong name or format
 
 **Solutions**:
+
 ```bash
 # Rename to correct format
 mv wrong-name.md CORRECT-NAME.md
@@ -425,6 +449,7 @@ mv "My Standard.md" MY-STANDARD.md
 **Problem**: Your standards in old location aren't recognized
 
 **Solution**: Run migration
+
 ```bash
 # Automatic migration
 aichaku migrate --custom-standards-only
@@ -521,4 +546,6 @@ aichaku integrate
 
 ---
 
-Remember: Custom standards are a powerful way to codify your team's specific practices while leveraging Aichaku's integration capabilities. Keep them focused, well-documented, and actively maintained for maximum benefit.
+Remember: Custom standards are a powerful way to codify your team's specific
+practices while leveraging Aichaku's integration capabilities. Keep them
+focused, well-documented, and actively maintained for maximum benefit.

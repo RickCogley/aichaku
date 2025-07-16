@@ -2,7 +2,8 @@
 
 ## Critical Issue
 
-The MCP feedback system that should have been implemented yesterday is missing, which is why you're not seeing any output from the MCP server interactions.
+The MCP feedback system that should have been implemented yesterday is missing,
+which is why you're not seeing any output from the MCP server interactions.
 
 ## Immediate Action Required
 
@@ -36,26 +37,33 @@ function logAichakuFeedback(message: string) {
 // review_file handler
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
-  
+
   if (name === "review_file") {
     logAichakuFeedback(`🔍 Tool invoked: review_file`);
     logAichakuFeedback(`⚙️ Processing: ${args.file}`);
-    
+
     const startTime = Date.now();
-    
+
     try {
-      const result = await reviewEngine.reviewFile(args.file, args.includeExternal);
+      const result = await reviewEngine.reviewFile(
+        args.file,
+        args.includeExternal,
+      );
       const duration = Date.now() - startTime;
-      
-      logAichakuFeedback(`✨ Review complete: ${result.issues?.length || 0} findings (${duration}ms)`);
-      
+
+      logAichakuFeedback(
+        `✨ Review complete: ${
+          result.issues?.length || 0
+        } findings (${duration}ms)`,
+      );
+
       return { content: [{ type: "text", text: result }] };
     } catch (error) {
       logAichakuFeedback(`❌ Review failed: ${error.message}`);
       throw error;
     }
   }
-  
+
   // Similar for other tools...
 });
 ```
@@ -82,11 +90,11 @@ When finishing a project or session, display MCP usage:
 // New function to add to completion messages
 async function getMCPSessionSummary(): Promise<string> {
   const stats = await mcpStatsManager.getSessionStats();
-  
+
   if (stats.toolsUsed === 0) {
     return ""; // No MCP usage to report
   }
-  
+
   return `
 
 🪴 MCP Session Summary
@@ -94,16 +102,20 @@ async function getMCPSessionSummary(): Promise<string> {
 🔍 Tools Used: ${stats.toolsUsed} operations
 📊 Most Active: ${stats.mostUsedTool} (${stats.mostUsedCount} times)
 ⚡ Avg Response: ${stats.avgResponseTime}ms
-✨ Quality Score: ${stats.qualityScore}% ${stats.improvement > 0 ? `(+${stats.improvement}% improvement)` : ''}
-📚 Standards Applied: ${stats.standardsChecked.join(', ')}
+✨ Quality Score: ${stats.qualityScore}% ${
+    stats.improvement > 0 ? `(+${stats.improvement}% improvement)` : ""
+  }
+📚 Standards Applied: ${stats.standardsChecked.join(", ")}
 🎯 Files Reviewed: ${stats.filesReviewed}`;
 }
 
 // Usage in completion messages:
 async function showCompletion() {
   console.log("Unified MCP Enhancement Plan Complete! 🌿");
-  console.log("I've successfully merged and sequenced both improvement efforts...");
-  
+  console.log(
+    "I've successfully merged and sequenced both improvement efforts...",
+  );
+
   const mcpSummary = await getMCPSessionSummary();
   if (mcpSummary) {
     console.log(mcpSummary);
@@ -117,4 +129,5 @@ async function showCompletion() {
 2. **DAY 1** (tomorrow): Full feedback system with branding
 3. **DAY 10**: Completion statistics integration
 
-This will restore the missing feedback loop and add the statistics feature you requested.
+This will restore the missing feedback loop and add the statistics feature you
+requested.

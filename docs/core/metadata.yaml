@@ -11,19 +11,19 @@ core_components:
     description: "Core behavioral rules and discussion-first approach"
     mandatory: true
     order: 1
-  
+
   visual_identity:
     file: "visual-identity.yaml"
     description: "Visual branding and progress indicators"
     mandatory: true
     order: 2
-  
+
   file_organization:
     file: "file-organization.yaml"
     description: "Project structure and naming conventions"
     mandatory: true
     order: 3
-  
+
   diagram_templates:
     file: "diagram-templates.yaml"
     description: "Mermaid diagram requirements"
@@ -34,7 +34,7 @@ integration_settings:
   include_all_core: true
   merge_strategy: "sequential"
   yaml_block_location: "after_frontmatter"
-  
+
 assembly_order:
   - "core_components"
   - "selected_methodologies"

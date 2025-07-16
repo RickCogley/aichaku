@@ -1,21 +1,30 @@
 # Software Project Reference Documentation Analysis
 
-This document categorizes and analyzes the essential types of permanent reference documents that software projects typically need, based on industry best practices and examples from well-documented projects.
+This document categorizes and analyzes the essential types of permanent
+reference documents that software projects typically need, based on industry
+best practices and examples from well-documented projects.
 
 ## 1. Architecture Documents
 
 ### Purpose
-Capture high-level system design, component relationships, and architectural decisions.
+
+Capture high-level system design, component relationships, and architectural
+decisions.
 
 ### Common Formats and Structures
+
 - **System Overview**: High-level description of the system's purpose and goals
-- **Component Architecture**: Detailed breakdown of system components and their relationships
-- **Physical Architecture**: Infrastructure, deployment topology, hardware requirements
-- **Process Architecture**: Background processes, service interactions, lifecycle management
+- **Component Architecture**: Detailed breakdown of system components and their
+  relationships
+- **Physical Architecture**: Infrastructure, deployment topology, hardware
+  requirements
+- **Process Architecture**: Background processes, service interactions,
+  lifecycle management
 - **Data Flow Diagrams**: How information moves through the system
 - **Technology Stack**: Languages, frameworks, databases, and tools used
 
 ### Essential Sections
+
 1. **Executive Summary**: Non-technical overview for stakeholders
 2. **System Context**: External interfaces and boundaries
 3. **Architectural Patterns**: MVC, microservices, event-driven, etc.
@@ -25,6 +34,7 @@ Capture high-level system design, component relationships, and architectural dec
 7. **Security Architecture**: Security controls and boundaries
 
 ### Mermaid Diagram Opportunities
+
 ```mermaid
 graph TB
     subgraph "System Architecture"
@@ -44,11 +54,13 @@ graph TB
 ```
 
 ### Update Frequency
+
 - Major updates: When architecture changes significantly
 - Minor updates: Quarterly or with each major release
 - Review cycle: Annual architecture review
 
 ### Cross-References
+
 - Links to ADRs for specific architectural decisions
 - References to deployment guides for implementation details
 - Connection to API documentation for interface specifications
@@ -56,11 +68,13 @@ graph TB
 ## 2. API References
 
 ### Purpose
+
 Document all programmatic interfaces for internal and external consumers.
 
 ### Common Formats and Structures
 
 #### REST API Documentation
+
 - **OpenAPI/Swagger Specification**: Machine-readable API definition
 - **Endpoint Catalog**: Complete list of available endpoints
 - **Request/Response Examples**: Real-world usage examples
@@ -69,6 +83,7 @@ Document all programmatic interfaces for internal and external consumers.
 - **Error Codes**: Comprehensive error reference
 
 #### GraphQL Documentation
+
 - **Schema Definition**: Complete type system
 - **Query/Mutation Examples**: Common operations
 - **Subscription Patterns**: Real-time data access
@@ -76,6 +91,7 @@ Document all programmatic interfaces for internal and external consumers.
 - **Deprecation Strategy**: How fields are phased out
 
 #### CLI Documentation
+
 - **Command Reference**: All available commands and subcommands
 - **Option Flags**: Detailed flag descriptions and defaults
 - **Configuration Files**: Format and location
@@ -83,6 +99,7 @@ Document all programmatic interfaces for internal and external consumers.
 - **Shell Completion**: Installation instructions
 
 ### Essential Sections
+
 1. **Quick Start Guide**: Get running in 5 minutes
 2. **Authentication & Authorization**: How to access the API
 3. **Common Use Cases**: Solve real problems
@@ -92,6 +109,7 @@ Document all programmatic interfaces for internal and external consumers.
 7. **Sandbox/Testing Environment**: Safe experimentation
 
 ### Mermaid Diagram Opportunities
+
 ```mermaid
 sequenceDiagram
     participant Client
@@ -110,11 +128,13 @@ sequenceDiagram
 ```
 
 ### Update Frequency
+
 - Real-time: Generated from code annotations
 - Version releases: With each API version
 - Breaking changes: Advance notice period
 
 ### Cross-References
+
 - Architecture documents for system context
 - Security documentation for auth details
 - Data models for payload structures
@@ -122,10 +142,13 @@ sequenceDiagram
 ## 3. Data Models and Schemas
 
 ### Purpose
+
 Define the structure, relationships, and constraints of data within the system.
 
 ### Common Formats and Structures
-- **Entity-Relationship Diagrams (ERDs)**: Visual representation of data relationships
+
+- **Entity-Relationship Diagrams (ERDs)**: Visual representation of data
+  relationships
 - **Data Dictionary**: Comprehensive field-level documentation
 - **Schema Definitions**: DDL scripts, migrations, constraints
 - **Data Flow Documentation**: How data moves and transforms
@@ -133,6 +156,7 @@ Define the structure, relationships, and constraints of data within the system.
 - **Data Lifecycle**: Creation, retention, archival, deletion policies
 
 ### Essential Sections
+
 1. **Conceptual Model**: High-level business entities
 2. **Logical Model**: Normalized relationships
 3. **Physical Model**: Actual implementation details
@@ -142,6 +166,7 @@ Define the structure, relationships, and constraints of data within the system.
 7. **Backup and Recovery**: Data protection strategies
 
 ### Mermaid Diagram Opportunities
+
 ```mermaid
 erDiagram
     CUSTOMER ||--o{ ORDER : places
@@ -177,11 +202,13 @@ erDiagram
 ```
 
 ### Update Frequency
+
 - Schema changes: With each migration
 - Documentation: Within same sprint as changes
 - Full review: Quarterly data model review
 
 ### Cross-References
+
 - API documentation for data transfer objects
 - Security docs for data classification
 - Architecture for data layer design
@@ -189,17 +216,21 @@ erDiagram
 ## 4. Security Documentation
 
 ### Purpose
+
 Document security controls, threat models, and compliance requirements.
 
 ### Common Formats and Structures
 
 #### Threat Models
-- **STRIDE Analysis**: Spoofing, Tampering, Repudiation, Information Disclosure, DoS, Elevation of Privilege
+
+- **STRIDE Analysis**: Spoofing, Tampering, Repudiation, Information Disclosure,
+  DoS, Elevation of Privilege
 - **Attack Surface Documentation**: Entry points and vulnerabilities
 - **Risk Assessment Matrix**: Likelihood vs. impact analysis
 - **Mitigation Strategies**: Controls for identified threats
 
 #### Security Policies
+
 - **Access Control Policies**: RBAC, ABAC definitions
 - **Data Classification**: Public, internal, confidential, restricted
 - **Encryption Standards**: At-rest and in-transit requirements
@@ -207,12 +238,14 @@ Document security controls, threat models, and compliance requirements.
 - **Incident Response Plan**: Escalation and remediation procedures
 
 #### Compliance Documentation
+
 - **Regulatory Mapping**: GDPR, CCPA, HIPAA, PCI-DSS
 - **Audit Trails**: What, when, who, where logging
 - **Security Controls**: NIST CSF, ISO 27001 implementation
 - **Vulnerability Management**: Scanning, patching, disclosure
 
 ### Essential Sections
+
 1. **Security Architecture Overview**: Zones, boundaries, controls
 2. **Authentication & Authorization**: Identity management approach
 3. **Data Protection**: Encryption, masking, anonymization
@@ -222,6 +255,7 @@ Document security controls, threat models, and compliance requirements.
 7. **Incident Response**: Detection, containment, recovery
 
 ### Mermaid Diagram Opportunities
+
 ```mermaid
 graph TB
     subgraph "Security Zones"
@@ -254,12 +288,14 @@ graph TB
 ```
 
 ### Update Frequency
+
 - Threat models: Annual review + major changes
 - Security policies: Quarterly review
 - Incident response: After each incident
 - Compliance: Per regulatory requirements
 
 ### Cross-References
+
 - Architecture for security boundaries
 - Operations guides for security procedures
 - ADRs for security decisions
@@ -267,11 +303,13 @@ graph TB
 ## 5. Deployment and Operations Guides
 
 ### Purpose
+
 Enable reliable deployment, operation, and maintenance of the system.
 
 ### Common Formats and Structures
 
 #### Deployment Documentation
+
 - **Infrastructure as Code**: Terraform, CloudFormation templates
 - **Container Orchestration**: Kubernetes manifests, Helm charts
 - **CI/CD Pipelines**: Build, test, deploy automation
@@ -279,6 +317,7 @@ Enable reliable deployment, operation, and maintenance of the system.
 - **Rollback Procedures**: Recovery from failed deployments
 
 #### Operations Runbooks
+
 - **System Startup/Shutdown**: Proper sequence and checks
 - **Monitoring Setup**: Metrics, alerts, dashboards
 - **Log Management**: Collection, retention, analysis
@@ -286,6 +325,7 @@ Enable reliable deployment, operation, and maintenance of the system.
 - **Disaster Recovery**: RTO/RPO targets, procedures
 
 #### Troubleshooting Guides
+
 - **Common Issues**: Symptoms, causes, solutions
 - **Diagnostic Tools**: Commands, scripts, queries
 - **Performance Tuning**: Optimization techniques
@@ -293,6 +333,7 @@ Enable reliable deployment, operation, and maintenance of the system.
 - **Post-Mortem Templates**: Learning from incidents
 
 ### Essential Sections
+
 1. **Prerequisites**: Required tools, access, knowledge
 2. **Step-by-Step Procedures**: Clear, numbered instructions
 3. **Verification Steps**: How to confirm success
@@ -302,6 +343,7 @@ Enable reliable deployment, operation, and maintenance of the system.
 7. **Security Considerations**: Safe operational practices
 
 ### Mermaid Diagram Opportunities
+
 ```mermaid
 graph LR
     subgraph "CI/CD Pipeline"
@@ -318,12 +360,14 @@ graph LR
 ```
 
 ### Update Frequency
+
 - Runbooks: After each operational change
 - Deployment guides: With infrastructure updates
 - Troubleshooting: As new issues discovered
 - Full review: Semi-annual operations review
 
 ### Cross-References
+
 - Architecture for system layout
 - Security docs for access procedures
 - Monitoring specs for alert definitions
@@ -331,9 +375,11 @@ graph LR
 ## 6. Integration Specifications
 
 ### Purpose
+
 Define how the system integrates with external systems and services.
 
 ### Common Formats and Structures
+
 - **Integration Patterns**: Synchronous, asynchronous, batch, streaming
 - **Protocol Specifications**: REST, SOAP, GraphQL, gRPC, WebSocket
 - **Message Formats**: JSON, XML, Protocol Buffers, Avro
@@ -342,6 +388,7 @@ Define how the system integrates with external systems and services.
 - **Authentication Methods**: OAuth, SAML, mutual TLS
 
 ### Essential Sections
+
 1. **Integration Inventory**: All external touchpoints
 2. **Data Mapping**: Field-level transformations
 3. **Error Handling**: Retry logic, circuit breakers
@@ -351,6 +398,7 @@ Define how the system integrates with external systems and services.
 7. **Security Considerations**: Data in transit protection
 
 ### Mermaid Diagram Opportunities
+
 ```mermaid
 graph TB
     subgraph "Integration Architecture"
@@ -381,12 +429,14 @@ graph TB
 ```
 
 ### Update Frequency
+
 - New integrations: Before implementation
 - API changes: With version updates
 - SLA updates: Per agreement changes
 - Review cycle: Quarterly integration health check
 
 ### Cross-References
+
 - API documentation for internal interfaces
 - Security docs for auth/encryption
 - Operations guides for monitoring
@@ -394,9 +444,11 @@ graph TB
 ## 7. Protocol/Format Specifications
 
 ### Purpose
+
 Define custom protocols, file formats, or data interchange formats.
 
 ### Common Formats and Structures
+
 - **Wire Protocols**: Binary formats, custom TCP/UDP protocols
 - **File Formats**: Custom data files, configuration formats
 - **Serialization Formats**: Custom encoding/decoding rules
@@ -405,6 +457,7 @@ Define custom protocols, file formats, or data interchange formats.
 - **Encoding Standards**: Character sets, data representation
 
 ### Essential Sections
+
 1. **Format Overview**: Purpose and design goals
 2. **Detailed Specification**: Byte-level layout
 3. **Examples**: Hex dumps with annotations
@@ -414,6 +467,7 @@ Define custom protocols, file formats, or data interchange formats.
 7. **Test Vectors**: Known good inputs/outputs
 
 ### Mermaid Diagram Opportunities
+
 ```mermaid
 graph TB
     subgraph "Custom Protocol State Machine"
@@ -436,12 +490,14 @@ graph TB
 ```
 
 ### Update Frequency
+
 - Format changes: Major version bumps only
 - Documentation: With each change
 - Examples: As edge cases discovered
 - Review: Annual compatibility review
 
 ### Cross-References
+
 - Integration specs for usage context
 - Security docs for encryption layers
 - API docs for protocol endpoints
@@ -449,10 +505,13 @@ graph TB
 ## 8. Architecture Decision Records (ADRs)
 
 ### Purpose
+
 Capture important architectural decisions with their context and consequences.
 
 ### Common Formats and Structures
-- **Title**: Brief, descriptive name (ADR-001: Use PostgreSQL for primary datastore)
+
+- **Title**: Brief, descriptive name (ADR-001: Use PostgreSQL for primary
+  datastore)
 - **Status**: Draft, Proposed, Accepted, Deprecated, Superseded
 - **Context**: Forces, constraints, and background
 - **Decision**: What was decided and why
@@ -460,6 +519,7 @@ Capture important architectural decisions with their context and consequences.
 - **Alternatives Considered**: Other options evaluated
 
 ### Essential Sections
+
 1. **Metadata**: Date, decision makers, stakeholders
 2. **Problem Statement**: What issue is being addressed
 3. **Decision Drivers**: Key factors influencing decision
@@ -469,6 +529,7 @@ Capture important architectural decisions with their context and consequences.
 7. **Review Triggers**: When to revisit decision
 
 ### Mermaid Diagram Opportunities
+
 ```mermaid
 graph LR
     subgraph "ADR Lifecycle"
@@ -485,12 +546,14 @@ graph LR
 ```
 
 ### Update Frequency
+
 - New ADRs: As decisions are made
 - Status updates: When decisions change
 - Reviews: During architecture reviews
 - Never modified: ADRs are immutable once accepted
 
 ### Cross-References
+
 - Architecture docs implement ADR decisions
 - Related ADRs for context
 - Implementation PRs/commits
@@ -498,6 +561,7 @@ graph LR
 ## Documentation Maintenance Strategy
 
 ### Living Documentation Principles
+
 1. **Proximity**: Keep docs close to code
 2. **Automation**: Generate from code where possible
 3. **Validation**: Test documentation accuracy
@@ -507,6 +571,7 @@ graph LR
 7. **Feedback Loops**: User input channels
 
 ### Documentation Debt Management
+
 - Track outdated sections
 - Prioritize by user impact
 - Allocate time each sprint
@@ -514,6 +579,7 @@ graph LR
 - Celebrate improvements
 
 ### Tools and Automation
+
 - **Static Site Generators**: MkDocs, Docusaurus, Sphinx
 - **API Doc Tools**: Swagger UI, Redoc, GraphQL Playground
 - **Diagram Tools**: Mermaid, PlantUML, Draw.io
@@ -525,6 +591,7 @@ graph LR
 ## Conclusion
 
 Well-maintained reference documentation is crucial for:
+
 - **Onboarding**: New team members productive quickly
 - **Compliance**: Regulatory and audit requirements
 - **Operations**: Reliable system management
@@ -532,4 +599,6 @@ Well-maintained reference documentation is crucial for:
 - **Quality**: Consistent implementation
 - **Knowledge Transfer**: Reduced key person dependencies
 
-The key to successful documentation is treating it as a first-class deliverable, maintained with the same rigor as code, and continuously improved based on user feedback and system evolution.
+The key to successful documentation is treating it as a first-class deliverable,
+maintained with the same rigor as code, and continuously improved based on user
+feedback and system evolution.
