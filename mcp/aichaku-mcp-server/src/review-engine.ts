@@ -13,13 +13,16 @@ import { SecurityPatterns } from "./patterns/security-patterns.ts";
 import { TypeScriptPatterns } from "./patterns/typescript-patterns.ts";
 import { DocumentationPatterns } from "./patterns/documentation-patterns.ts";
 import { safeReadTextFile } from "./utils/path-security.ts";
+import { FileFilter, type ReviewerConfig } from "./utils/file-filter.ts";
 
 export class ReviewEngine {
   private scannerController: ScannerController;
   private patterns: SecurityPattern[] = [];
+  private fileFilter: FileFilter;
 
-  constructor() {
+  constructor(config: ReviewerConfig = {}) {
     this.scannerController = new ScannerController();
+    this.fileFilter = new FileFilter(config.exclude || {}, !config.noDefaultExclusions);
     this.loadPatterns();
   }
 
@@ -42,8 +45,20 @@ export class ReviewEngine {
     // Get file content
     const content = request.content || await this.readFile(request.file);
 
+    // InfoSec: Check if file should be excluded from review
+    const exclusionResult = await this.fileFilter.getExclusionReason(request.file, content);
+    if (exclusionResult.shouldExclude) {
+      return {
+        file: request.file,
+        findings: [],
+        summary: { critical: 0, high: 0, medium: 0, low: 0, info: 0 },
+        excluded: true,
+        excludeReason: exclusionResult.reason
+      };
+    }
+
     // 1. Run pattern-based checks
-    findings.push(...this.runPatternChecks(content, request.file));
+    findings.push(...await this.runPatternChecks(content, request.file));
 
     // 2. Run standard-specific checks
     if (request.standards && request.standards.length > 0) {
@@ -116,13 +131,13 @@ export class ReviewEngine {
     }
   }
 
-  private runPatternChecks(content: string, filePath: string): Finding[] {
+  private async runPatternChecks(content: string, filePath: string): Promise<Finding[]> {
     const findings: Finding[] = [];
     const lines = content.split("\n");
 
     for (const pattern of this.patterns) {
       // Check if this pattern applies to the file type
-      if (!this.shouldCheckPattern(pattern, filePath)) continue;
+      if (!(await this.shouldCheckPattern(pattern, filePath))) continue;
 
       // Use custom check function if provided
       if (pattern.checkFn) {
@@ -161,10 +176,16 @@ export class ReviewEngine {
     return findings;
   }
 
-  private shouldCheckPattern(
+  private async shouldCheckPattern(
     pattern: SecurityPattern,
     filePath: string,
-  ): boolean {
+  ): Promise<boolean> {
+    // InfoSec: Check pattern-specific exclusions first
+    const tool = `aichaku-${pattern.category}`;
+    if (await this.fileFilter.shouldExcludeFile(filePath, undefined, tool)) {
+      return false;
+    }
+
     // TypeScript patterns only for .ts/.tsx files
     if (pattern.category === "typescript") {
       return /\.(ts|tsx)$/.test(filePath);

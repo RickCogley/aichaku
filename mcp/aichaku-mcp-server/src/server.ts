@@ -37,6 +37,7 @@ import {
   type CreateDocTemplateArgs,
   createDocTemplateTool,
 } from "./tools/create-doc-template.ts";
+// Note: integrate command moved to main CLI
 
 const PACKAGE_JSON = {
   name: "@aichaku/mcp-code-reviewer",
@@ -468,6 +469,8 @@ class MCPCodeReviewer {
                 ],
               };
             }
+
+            // Note: integrate_aichaku has been moved to the main CLI
 
             case "send_feedback": {
               if (!args) {

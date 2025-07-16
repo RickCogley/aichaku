@@ -38,6 +38,8 @@ export interface ReviewResult {
   analysis?: unknown;
   templateType?: string;
   outputPath?: string;
+  excluded?: boolean;
+  excludeReason?: string;
 }
 
 export interface MethodologyCompliance {

@@ -1,0 +1,171 @@
+# Aichaku MCP Reviewer Configuration
+# This file shows example configurations for the file exclusion system
+
+reviewer:
+  # Global exclusion settings
+  exclude:
+    # File extensions to exclude
+    extensions:
+      - ".min.js"
+      - ".min.css"
+      - ".map"
+      - ".lock"
+      - ".secret"
+      - ".key"
+      - ".token"
+      - ".env"
+      - ".generated.js"
+      - ".bundle.js"
+      - ".chunk.js"
+      
+    # Glob patterns to exclude
+    patterns:
+      - "**/node_modules/**"
+      - "**/dist/**"
+      - "**/build/**"
+      - "**/.git/**"
+      - "**/coverage/**"
+      - "**/*.generated.*"
+      - "**/vendor/**"
+      - "**/__pycache__/**"
+      - "**/target/**"
+      - "**/.next/**"
+      - "**/.nuxt/**"
+      - "**/out/**"
+      - "**/.DS_Store"
+      - "**/Thumbs.db"
+      # Claude commands protection (HIGH PRIORITY)
+      - "**/.claude/commands/**"
+      - "**/.claude/user/**"
+      # Sensitive files
+      - "**/*.secret"
+      - "**/*.key"
+      - "**/*.token"
+      - "**/.env*"
+      - "**/secrets/**"
+      - "**/credentials/**"
+      
+    # Specific filenames to exclude
+    files:
+      - "package-lock.json"
+      - "yarn.lock"
+      - "poetry.lock"
+      - "Gemfile.lock"
+      - "Pipfile.lock"
+      - "composer.lock"
+      - "go.sum"
+      - "Cargo.lock"
+      - "pnpm-lock.yaml"
+      - "bun.lockb"
+      # Claude settings
+      - "settings.json"
+      - "claude.json"
+      - ".claude-config.json"
+      
+    # Directory names to exclude
+    directories:
+      - "node_modules"
+      - ".git"
+      - "dist"
+      - "build"
+      - "vendor"
+      - "__pycache__"
+      - "coverage"
+      - "target"
+      - ".next"
+      - ".nuxt"
+      - "out"
+      - "tmp"
+      - "temp"
+      # Claude directories
+      - "commands"
+      - "user"
+      
+    # Path patterns to exclude
+    paths:
+      - "/.claude/commands/"
+      - "/.claude/user/"
+      - "/tmp/"
+      - "/temp/"
+      - "/.env"
+      - "/.secret"
+      - "/secrets/"
+      - "/credentials/"
+      - "/keys/"
+      
+    # Content patterns to exclude (HIGH SECURITY)
+    contentTypes:
+      - "!`"           # Claude command execution syntax
+      - "!bash"        # Bash command indicators
+      - "!sh"          # Shell command indicators
+      - "!zsh"         # Zsh command indicators
+      - "-----BEGIN"   # PEM/certificate files
+      - "PRIVATE KEY"  # Private key files
+      - "API_KEY"      # API key patterns
+      - "SECRET"       # Secret patterns
+      - "PASSWORD"     # Password patterns
+      - "TOKEN"        # Token patterns
+      
+    # File size limit
+    maxFileSize: "1MB"
+    
+    # Tool-specific exclusions
+    perToolExclusions:
+      devskim:
+        - "**/.claude/commands/**"
+        - "**/test/**"
+        - "**/spec/**"
+        - "**/*.test.*"
+        - "**/*.spec.*"
+      semgrep:
+        - "**/.claude/commands/**"
+        - "**/node_modules/**"
+        - "**/vendor/**"
+      aichaku-patterns:
+        - "**/.claude/commands/**"
+        - "**/secrets/**"
+        - "**/credentials/**"
+      aichaku-owasp:
+        - "**/.claude/commands/**"
+        - "**/test/**"
+        - "**/mock/**"
+        
+  # Disable default exclusions (not recommended)
+  noDefaultExclusions: false
+
+# Project-specific settings
+project:
+  # Override for specific project types
+  type: "typescript"  # typescript, node, python, etc.
+  
+  # Custom exclusions for this project
+  customExclusions:
+    patterns:
+      - "**/generated/**"
+      - "**/proto/**"
+      - "**/migrations/**"
+    files:
+      - "schema.sql"
+      - "database.db"
+      
+# Security settings
+security:
+  # Enable sensitive content detection
+  detectSensitiveContent: true
+  
+  # Report excluded files
+  reportExclusions: true
+  
+  # Validate configuration for security issues
+  validateConfig: true
+
+# Performance settings
+performance:
+  # Cache exclusion checks
+  cacheExclusions: true
+  
+  # Batch size for file processing
+  batchSize: 100
+  
+  # Maximum concurrent file checks
+  maxConcurrency: 10
