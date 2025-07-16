@@ -55,7 +55,6 @@
     "exclude": [
       ".claude/",
       "scratch/",
-      "version.ts",
       "docs/api/",
       "docs/projects/**/*.ts",
       "examples/**/*.ts",
@@ -69,7 +68,6 @@
     "exclude": [
       ".claude/",
       "scratch/",
-      "version.ts",
       "docs/api/",
       "docs/projects/**/*.ts",
       "examples/**/*.ts",
@@ -104,7 +102,6 @@
   "exclude": [
     ".claude/",
     "scratch/",
-    "version.ts",
     "docs/api/",
     "docs/projects/**/*.ts",
     "examples/**/*.ts",
