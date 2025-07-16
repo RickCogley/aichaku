@@ -30,6 +30,7 @@ import { upgrade } from "./src/commands/upgrade.ts";
 import { uninstall } from "./src/commands/uninstall.ts";
 import { integrate } from "./src/commands/integrate.ts";
 import { help } from "./src/commands/help.ts";
+import { learn } from "./src/commands/learn.ts";
 import { hooks } from "./src/commands/hooks.ts";
 import { standards } from "./src/commands/standards.ts";
 import { docsStandard } from "./src/commands/docs-standard.ts";
@@ -86,6 +87,7 @@ const args = parseArgs(Deno.args, {
     "development",
     "testing",
     "devops",
+    "methodologies",
     "config",
     "status",
     "install-mcp",
@@ -181,7 +183,8 @@ Commands:
   upgrade     Upgrade methodologies to latest version
   uninstall   Remove Aichaku from your system
   integrate   Add Aichaku reference to project's CLAUDE.md
-  help        Show methodology information and guidance
+  help        Show methodology information and guidance (deprecated - use learn)
+  learn       Learn about methodologies and standards (dynamically from YAML)
   hooks       Manage Claude Code hooks for automation
   standards   Choose modular guidance standards for your project
   docs-standard Choose documentation writing style guides for your project
@@ -215,11 +218,11 @@ Examples:
   aichaku upgrade
 
   # Learn about methodologies & standards
-  aichaku help
-  aichaku help shape-up
-  aichaku help owasp-web
-  aichaku help --list
-  aichaku help --standards
+  aichaku learn
+  aichaku learn shape-up
+  aichaku learn owasp-web
+  aichaku learn --methodologies
+  aichaku learn --standards
   
   # Install and configure MCP server
   aichaku mcp --install
@@ -483,6 +486,32 @@ ${
         Deno.exit(1);
       }
 
+      if (result.content && !args.silent) {
+        console.log(result.content);
+      }
+      break;
+    }
+
+    case "learn": {
+      // Parse topic from remaining args
+      const topic = args._[1]?.toString();
+
+      const learnOptions = {
+        topic,
+        list: args.list as boolean | undefined,
+        all: args.all as boolean | undefined,
+        methodologies: args.methodologies as boolean | undefined,
+        standards: args.standards as boolean | undefined,
+        category: args.category as string | undefined,
+        compare: args.compare as boolean | undefined,
+        silent: args.silent as boolean | undefined,
+      };
+
+      const result = await learn(learnOptions);
+      if (!result.success) {
+        console.error(`❌ ${result.message}`);
+        Deno.exit(1);
+      }
       if (result.content && !args.silent) {
         console.log(result.content);
       }

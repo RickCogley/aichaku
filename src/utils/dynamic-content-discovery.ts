@@ -64,11 +64,11 @@ export async function discoverContent(
     return { categories, items, count: 0 };
   }
 
-  // Walk through the content directory
+  // Walk through the content directory looking for YAML files
   for await (
     const entry of walk(contentPath, {
       includeDirs: false,
-      exts: [".md"],
+      exts: [".yaml", ".yml"],
       skip: [/\/templates\//, /\/scripts\//, /\/archive\//, /metadata\.yaml$/],
     })
   ) {
@@ -140,15 +140,15 @@ async function _enhanceMetadataFromYaml(
 
         if (yamlStandard) {
           // Enhance with YAML metadata
-          if (yamlStandard.name && !metadata.name) {
+          if (typeof yamlStandard.name === 'string' && !metadata.name) {
             metadata.name = yamlStandard.name;
           }
-          if (yamlStandard.description && !metadata.description) {
+          if (typeof yamlStandard.description === 'string' && !metadata.description) {
             metadata.description = yamlStandard.description;
           }
-          if (yamlStandard.tags && yamlStandard.tags.length > 0) {
+          if (Array.isArray(yamlStandard.tags) && yamlStandard.tags.length > 0) {
             metadata.tags = [
-              ...new Set([...metadata.tags, ...yamlStandard.tags]),
+              ...new Set([...metadata.tags, ...(yamlStandard.tags as string[])]),
             ];
           }
         }
@@ -202,11 +202,36 @@ function parseYamlMetadata(
 ): ContentMetadata | null {
   try {
     const data = parseYaml(content) as Record<string, unknown>;
+    const display = data.display as Record<string, unknown> | undefined;
+    const summary = data.summary as Record<string, unknown> | undefined;
+
+    // Extract name from YAML or derive from filename
+    const name = (data.name as string) ||
+      basename(relativePath, ".yaml").replace(/-/g, " ")
+        .replace(/\b\w/g, (c) => c.toUpperCase());
+
+    // Get description from display section, summary, or key concepts
+    let description = (display?.description as string) ||
+      (data.description as string) ||
+      "No description available";
+
+    // If no description but has key concepts, use the first one
+    if (description === "No description available" && summary?.key_concepts) {
+      const concepts = summary.key_concepts as string[];
+      if (Array.isArray(concepts) && concepts.length > 0) {
+        description = concepts[0];
+      }
+    }
+
+    // Extract tags from display or summary
+    const tags = (display?.tags as string[]) ||
+      (data.tags as string[]) ||
+      [];
 
     return {
-      name: data.name || basename(relativePath, ".yaml").replace(/-/g, " "),
-      description: data.description || "No description available",
-      tags: data.tags || [],
+      name,
+      description,
+      tags,
       category,
       path: relativePath,
     };
@@ -251,11 +276,11 @@ function extractMarkdownMetadata(
         string,
         unknown
       >;
-      if (frontmatter.description) {
+      if (typeof frontmatter.description === 'string') {
         metadata.description = frontmatter.description;
       }
-      if (frontmatter.tags) {
-        metadata.tags = frontmatter.tags;
+      if (Array.isArray(frontmatter.tags)) {
+        metadata.tags = frontmatter.tags as string[];
       }
     } catch {
       // Ignore YAML parsing errors
