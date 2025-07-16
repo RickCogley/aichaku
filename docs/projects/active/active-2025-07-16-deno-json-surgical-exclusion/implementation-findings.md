@@ -2,18 +2,25 @@
 
 ## Executive Summary
 
-Successfully implemented top-level exclude configuration in deno.json to fix nagare release failures. The solution leverages Deno v2.3.1+ behavior where `deno check` (without arguments) respects top-level exclude patterns.
+Successfully implemented top-level exclude configuration in deno.json to fix
+nagare release failures. The solution leverages Deno v2.3.1+ behavior where
+`deno check` (without arguments) respects top-level exclude patterns.
 
 ## Problem Analysis
 
 ### Initial Issue
-- Nagare release process was failing due to type checking errors in deprecated v2 files
-- Files like `config-manager.ts` had type errors but needed to remain for backward compatibility
-- Pre-release hooks and nagare's autofix were running different type check commands
+
+- Nagare release process was failing due to type checking errors in deprecated
+  v2 files
+- Files like `config-manager.ts` had type errors but needed to remain for
+  backward compatibility
+- Pre-release hooks and nagare's autofix were running different type check
+  commands
 
 ### Root Cause
+
 1. `deno check **/*.ts` ignores exclusion configurations
-2. `deno check .` also ignores exclusion configurations  
+2. `deno check .` also ignores exclusion configurations
 3. Only `deno check` (no arguments) respects the top-level exclude
 
 ## Solution Implementation
@@ -21,6 +28,7 @@ Successfully implemented top-level exclude configuration in deno.json to fix nag
 ### 1. Top-Level Exclude Configuration
 
 Added to deno.json:
+
 ```json
 {
   "exclude": [
@@ -41,6 +49,7 @@ Added to deno.json:
 ### 2. Pre-Release Hook Update
 
 Updated nagare.config.ts:
+
 ```typescript
 const checkCmd = new Deno.Command("deno", {
   args: ["check"], // No args = respects top-level exclude
@@ -49,7 +58,9 @@ const checkCmd = new Deno.Command("deno", {
 
 ### 3. Import Chain Consideration
 
-**Important Discovery**: Files are checked if imported by non-excluded files. We had to exclude:
+**Important Discovery**: Files are checked if imported by non-excluded files. We
+had to exclude:
+
 - `config-manager.ts` (the problematic file)
 - `config-manager.test.ts` (imports config-manager)
 - `migration-helper.ts` (imports config-manager)
@@ -57,17 +68,18 @@ const checkCmd = new Deno.Command("deno", {
 ## Technical Details
 
 ### Deno Version Requirement
+
 - Minimum: Deno v2.3.1
 - Tested with: Deno v2.4.1
 
 ### Behavior Matrix
 
-| Command | Respects Exclude | Use Case |
-|---------|-----------------|----------|
-| `deno check` | ✅ Yes | CI/CD, pre-commit hooks |
-| `deno check .` | ❌ No | Not recommended |
-| `deno check **/*.ts` | ❌ No | Not recommended |
-| `deno check file.ts` | ❌ No | Direct file checking |
+| Command              | Respects Exclude | Use Case                |
+| -------------------- | ---------------- | ----------------------- |
+| `deno check`         | ✅ Yes           | CI/CD, pre-commit hooks |
+| `deno check .`       | ❌ No            | Not recommended         |
+| `deno check **/*.ts` | ❌ No            | Not recommended         |
+| `deno check file.ts` | ❌ No            | Direct file checking    |
 
 ### Configuration Hierarchy
 
@@ -77,10 +89,13 @@ const checkCmd = new Deno.Command("deno", {
 
 ## Lessons Learned
 
-1. **Read the GitHub Issues**: The behavior was documented in [denoland/deno#26864](https://github.com/denoland/deno/issues/26864)
+1. **Read the GitHub Issues**: The behavior was documented in
+   [denoland/deno#26864](https://github.com/denoland/deno/issues/26864)
 2. **Test Exit Codes**: Don't just look at output - check exit codes
-3. **Understand Import Graphs**: Excluding a file doesn't help if it's imported by included files
-4. **Nagare Compatibility**: Nagare respects the project's deno.json configuration
+3. **Understand Import Graphs**: Excluding a file doesn't help if it's imported
+   by included files
+4. **Nagare Compatibility**: Nagare respects the project's deno.json
+   configuration
 
 ## Migration Guide
 
@@ -110,7 +125,7 @@ For projects experiencing similar issues:
 ## Future Considerations
 
 1. **Deno Evolution**: This behavior might change in future Deno versions
-2. **Alternative Solutions**: 
+2. **Alternative Solutions**:
    - Fix the type errors (best long-term solution)
    - Use `// @ts-ignore` comments (not recommended)
    - Separate deprecated code into a different package
@@ -119,5 +134,5 @@ For projects experiencing similar issues:
 
 ---
 
-_Document created: 2025-07-16_  
+_Document created: 2025-07-16_\
 _Last updated: 2025-07-16_
