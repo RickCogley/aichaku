@@ -23,9 +23,9 @@ STATUS.md tracks your progress through Planning → Execution → Improvement
 ```
 
 ## Files to Update
-1. `/methodologies/core/PLANNING-MODE.md`
-2. `/methodologies/core/EXECUTION-MODE.md`
-3. `/methodologies/core/IMPROVEMENT-MODE.md`
+1. `/methodologies/common/PLANNING-MODE.md`
+2. `/methodologies/common/EXECUTION-MODE.md`
+3. `/methodologies/common/IMPROVEMENT-MODE.md`
 4. `/methodologies/BLENDING-GUIDE.md`
 
 ## Key Point

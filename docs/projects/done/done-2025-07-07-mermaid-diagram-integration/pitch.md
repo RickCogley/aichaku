@@ -108,7 +108,7 @@ pandoc output.md -o final.pdf
 
 ### 2. Create Diagram Templates
 
-Store in `methodologies/core/diagrams/`:
+Store in `methodologies/common/diagrams/`:
 - `project-lifecycle.mmd`
 - `shape-up-cycle.mmd`
 - `scrum-sprint.mmd`

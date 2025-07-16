@@ -7,7 +7,7 @@ Currently in Planning Mode, working on fixing Aichaku integration behavior.
 
 ### 1. **Specific File Paths Everywhere**
 - Every "read" instruction now has exact paths
-- Example: "Read `~/.claude/methodologies/core/PLANNING-MODE.md`"
+- Example: "Read `~/.claude/methodologies/common/PLANNING-MODE.md`"
 - No guesswork required
 
 ### 2. **Automatic Document Creation**

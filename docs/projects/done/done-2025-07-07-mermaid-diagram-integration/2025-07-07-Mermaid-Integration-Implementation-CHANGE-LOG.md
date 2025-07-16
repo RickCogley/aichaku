@@ -14,7 +14,7 @@ Added Mermaid diagram requirements to Aichaku and created reusable diagram templ
 - Included examples with proper Mermaid syntax
 
 ### 2. Created Diagram Templates
-Created `/methodologies/core/diagrams/`:
+Created `/methodologies/common/diagrams/`:
 - `project-lifecycle.mmd` - Generic project flows
 - `shape-up-cycle.mmd` - Shape Up specific diagrams
 - `scrum-sprint.mmd` - Sprint timelines and burndown

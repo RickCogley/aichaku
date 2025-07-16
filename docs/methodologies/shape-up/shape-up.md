@@ -78,3 +78,7 @@ with betting table **Urgent**: Not suitable - use Kanban instead
    - Cut scope not quality
    - Stop at deadline
    - No "just one more day"
+
+## Advanced Topics
+
+- [**Blending Shape Up with other methodologies**](../integrations/shape-up-blending.md) - Guide for mixing Shape Up with Scrum, Kanban, Lean, and XP

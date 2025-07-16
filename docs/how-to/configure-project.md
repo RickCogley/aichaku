@@ -466,7 +466,7 @@ aichaku init
 aichaku standards --add conventional-commits,solid,google-style
 
 # Add contributing templates
-cp templates/CONTRIBUTING.md .claude/methodologies/core/templates/
+cp templates/CONTRIBUTING.md .claude/methodologies/common/templates/
 ```
 
 ## Next steps

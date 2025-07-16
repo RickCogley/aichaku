@@ -13,14 +13,19 @@ Before you start using Aichaku:
 
 ## 🆕 Latest Updates
 
-**v0.29.0 - TypeScript Hooks & Enhanced Standards**
-- **NEW**: TypeScript-based hooks system for Claude Code automation
-- **NEW**: **Automatic session summaries** - Never lose context with automatic checkpoint creation
-- **NEW**: GitHub integration hooks (todo-tracker, pr-checker, etc.)
-- **NEW**: Documentation review hooks (docs-review, jsdoc-checker)
-- **IMPROVED**: Standards command with better search and management
-- **IMPROVED**: Comprehensive JSDoc for better API documentation
+**v0.29.0 - YAML Configuration Revolution & Enhanced Automation**
+- **🔧 REVOLUTIONARY**: **YAML-based "configuration as code"** - 96% reduction in file sizes (50KB→2KB)
+- **🏗️ NEW**: Modular configuration system with dynamic assembly and smart merging
+- **🎯 NEW**: Project-specific overrides with inheritance from global configuration  
+- **📝 NEW**: **Automatic session summaries** - Never lose context with automatic checkpoint creation
+- **🔗 NEW**: TypeScript-based hooks system for Claude Code automation
+- **🐙 NEW**: GitHub integration hooks (todo-tracker, pr-checker, etc.)
+- **📖 NEW**: Documentation review hooks (docs-review, jsdoc-checker)  
+- **⚡ IMPROVED**: Standards command with better search and management
+- **📚 IMPROVED**: Comprehensive JSDoc for better API documentation
 - Enhanced hook categories: Essential, Productivity, Security, and GitHub
+
+**The Game Changer:** Instead of massive, hardcoded CLAUDE.md files, Aichaku now uses modular YAML configurations that are dynamically assembled. Update one YAML file, and all your projects benefit instantly!
 
 ## 📚 Documentation Types
 
@@ -34,6 +39,7 @@ Before you start using Aichaku:
 ### 🔧 [How-to Guides](how-to/)
 **Task-oriented** - Practical guides for specific tasks
 
+- [**Configure YAML Directives**](how-to/configure-yaml-directives.md) - **REVOLUTIONARY: 96% smaller files with modular configuration** 🔧
 - [**Configure MCP Servers**](how-to/configure-mcp-servers.md) - **CRITICAL: Set up MCP for Claude Code** ⚠️
 - [Configure Your Project](how-to/configure-project.md) - Customize Aichaku with standards and methodologies
 - [Manage Custom Standards](how-to/manage-custom-standards.md) - Create and share your own coding standards

@@ -33,26 +33,26 @@ When you hear these triggers, IMMEDIATELY:
 3. Create appropriate methodology documents:
 
 **Planning Triggers** ("let's plan", "shape this", "create a pitch"):
-- Read `~/.claude/methodologies/core/PLANNING-MODE.md`
+- Read `~/.claude/methodologies/common/PLANNING-MODE.md`
 - Shape Up: Create pitch.md using `~/.claude/methodologies/shape-up/templates/pitch.md`
 - Scrum: Create sprint-planning.md using `~/.claude/methodologies/scrum/templates/sprint-planning.md`
 - Kanban: Create kanban-board.md using `~/.claude/methodologies/kanban/templates/kanban-board.md`
 
 **Execution Triggers** ("implement", "build", "start coding"):
-- Read `~/.claude/methodologies/core/EXECUTION-MODE.md`
+- Read `~/.claude/methodologies/common/EXECUTION-MODE.md`
 - Create execution-plan.md
 - WAIT for human approval before coding
 
 **Review Triggers** ("review", "retrospective", "how are we doing"):
-- Read `~/.claude/methodologies/core/IMPROVEMENT-MODE.md`
+- Read `~/.claude/methodologies/common/IMPROVEMENT-MODE.md`
 - Create metrics.md and retrospective.md
 
 ### 3. Methodology File Locations
 
 **ALWAYS read from these EXACT paths**:
-- Planning Mode: `~/.claude/methodologies/core/PLANNING-MODE.md`
-- Execution Mode: `~/.claude/methodologies/core/EXECUTION-MODE.md`  
-- Improvement Mode: `~/.claude/methodologies/core/IMPROVEMENT-MODE.md`
+- Planning Mode: `~/.claude/methodologies/common/PLANNING-MODE.md`
+- Execution Mode: `~/.claude/methodologies/common/EXECUTION-MODE.md`  
+- Improvement Mode: `~/.claude/methodologies/common/IMPROVEMENT-MODE.md`
 
 **Methodology-specific guides**:
 - Shape Up: `~/.claude/methodologies/shape-up/SHAPE-UP-AICHAKU-GUIDE.md`
@@ -172,15 +172,15 @@ Add a `.claude/commands.json` for quick triggers:
   "commands": {
     "/plan": {
       "description": "Start planning mode",
-      "action": "1. Create .claude/output/active-{YYYY-MM-DD}-{name}/ 2. Read ~/.claude/methodologies/core/PLANNING-MODE.md 3. Create STATUS.md and appropriate planning documents"
+      "action": "1. Create .claude/output/active-{YYYY-MM-DD}-{name}/ 2. Read ~/.claude/methodologies/common/PLANNING-MODE.md 3. Create STATUS.md and appropriate planning documents"
     },
     "/build": {
       "description": "Start execution mode",
-      "action": "1. Read ~/.claude/methodologies/core/EXECUTION-MODE.md 2. Create execution-plan.md 3. Wait for approval before coding"
+      "action": "1. Read ~/.claude/methodologies/common/EXECUTION-MODE.md 2. Create execution-plan.md 3. Wait for approval before coding"
     },
     "/review": {
       "description": "Start improvement mode", 
-      "action": "1. Read ~/.claude/methodologies/core/IMPROVEMENT-MODE.md 2. Create metrics.md and retrospective.md"
+      "action": "1. Read ~/.claude/methodologies/common/IMPROVEMENT-MODE.md 2. Create metrics.md and retrospective.md"
     },
     "/status": {
       "description": "Show current project status",

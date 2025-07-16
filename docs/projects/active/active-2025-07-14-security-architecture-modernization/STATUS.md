@@ -2,8 +2,8 @@
 
 ## Status Overview
 
-[**Planning**] → [Shaping] → [Betting] → [Building] → [Cool-down]
-     ▲
+[Planning] → [**Shaping**] → [Betting] → [Building] → [Cool-down]
+              ▲
 
 ```mermaid
 graph LR
@@ -55,6 +55,54 @@ Our current security approach has evolved organically with multiple tools that:
 - If custom checks become too complex, use professional tools instead
 - If gaps can't be filled cost-effectively, document and accept risk
 - If implementation takes longer than 6 weeks, ship what's working
+
+## Recent Progress
+
+### 🎯 Security Workflow Baseline Established (2025-07-15)
+**Milestone**: Successfully simplified and fixed the security.yml workflow to create a stable baseline for security checks.
+
+**What was accomplished**:
+- ✅ **Removed duplicate security-original.yml** - Eliminated confusion from multiple workflow files
+- ✅ **Simplified security checks** - Focused on basic patterns (hardcoded secrets, eval, --allow-all)
+- ✅ **Eliminated redundant checks** - Removed type checking and test coverage (handled by other workflows)
+- ✅ **Fixed workflow reliability** - Security workflow now passes consistently
+- ✅ **Reduced maintenance burden** - Timeout reduced from 30 to 15 minutes
+
+**Key insight**: The security workflow should focus purely on security patterns, not development quality checks. Type checking is already covered by preflight checks (deno check) and the publish workflow.
+
+### 🔒 CRITICAL: MCP Reviewer Blocklist Implementation (2025-07-15)
+**Milestone**: Implemented comprehensive file filtering system to protect sensitive files from review tools processing.
+
+**What was accomplished**:
+- ✅ **Complete File Filter System** - 7 new/modified files with multi-layer exclusion logic
+- ✅ **Claude Commands Protection** - Automated protection for `~/.claude/commands/` files containing `!`command`` syntax
+- ✅ **Sensitive Content Detection** - Content-based exclusions for API keys, tokens, private keys
+- ✅ **Async/Await Fixes** - Resolved all async handling issues in review engine
+- ✅ **TypeScript Compliance** - All files pass strict type checking
+- ✅ **Comprehensive Testing** - 12 test cases covering all security scenarios
+- ✅ **Configuration Support** - YAML-based configuration with validation
+- ✅ **Integration Testing** - End-to-end validation of security protections
+
+**Key insight**: The MCP reviewer was vulnerable to processing Claude command files and sensitive content. The blocklist system provides multi-layer protection with security-first design.
+
+**Security protections implemented**:
+- **File Path Exclusions**: `**/.claude/commands/**`, `**/.claude/user/**`, `**/secrets/**`
+- **Extension Exclusions**: `.secret`, `.key`, `.token`, `.env`, `.pem`, `.crt`
+- **Content-Based Exclusions**: `!`command`` syntax, `PRIVATE KEY`, `API_KEY`, `SECRET`
+- **Directory Exclusions**: `node_modules`, `.git`, `build`, `dist`, `tmp`
+- **Tool-Specific Rules**: Different exclusions for DevSkim, Semgrep, CodeQL
+- **Size-Based Filtering**: Configurable file size limits (default 1MB)
+
+**Current security coverage**:
+- **Basic patterns**: security.yml (hardcoded secrets, eval, permissions) ✅
+- **Advanced static analysis**: CodeQL workflow ✅  
+- **Microsoft patterns**: DevSkim workflow ✅
+- **Dependency vulnerabilities**: Dependabot ✅
+- **File Processing Protection**: MCP Reviewer Blocklist ✅
+
+**Next steps**: This implementation completes the security architecture modernization by protecting the review tools themselves from processing sensitive files.
+
+---
 
 ## Key Files
 - [Security Tools Analysis](security-tools-analysis.md) - Comprehensive tool capability assessment
