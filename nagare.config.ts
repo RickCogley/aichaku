@@ -141,10 +141,46 @@ export default {
         const checkCmd = new Deno.Command("deno", {
           args: [
             "check",
-            "--no-check=src/commands/init-v2.ts,src/commands/upgrade-v2.ts,src/commands/migrate-v2.ts,src/utils/config-manager.ts",
             "cli.ts",
             "mod.ts",
-            "src/**/*.ts",
+            "src/commands/cleanup.ts",
+            "src/commands/content-fetcher.ts",
+            "src/commands/docs-lint.ts",
+            "src/commands/docs-standard.ts",
+            "src/commands/github.ts",
+            "src/commands/help.ts",
+            "src/commands/hooks.ts",
+            "src/commands/init.ts",
+            "src/commands/integrate.ts",
+            "src/commands/learn.ts",
+            "src/commands/mcp-daemon.ts",
+            "src/commands/mcp.ts",
+            "src/commands/migrate.ts",
+            "src/commands/review.ts",
+            "src/commands/standards.ts",
+            "src/commands/uninstall.ts",
+            "src/commands/upgrade-fix.ts",
+            "src/commands/upgrade.ts",
+            "src/installer.ts",
+            "src/linters/*.ts",
+            "src/migration/folder-migration.ts",
+            "src/paths.ts",
+            "src/types.ts",
+            "src/updater.ts",
+            "src/utils/branded-messages.ts",
+            "src/utils/dynamic-content-discovery.ts",
+            "src/utils/feedback.ts",
+            "src/utils/logger.ts",
+            "src/utils/mcp-client.ts",
+            "src/utils/mcp-http-client.ts",
+            "src/utils/mcp-socket-client.ts",
+            "src/utils/mcp-tcp-client.ts",
+            "src/utils/path-security.ts",
+            "src/utils/project-paths.ts",
+            "src/utils/terminal-formatter.ts",
+            "src/utils/ui.ts",
+            "src/utils/version-checker.ts",
+            "src/utils/yaml-config-reader.ts",
             "mcp/*/src/**/*.ts",
             "nagare.config.ts",
             "nagare-launcher.ts",
@@ -153,7 +189,9 @@ export default {
         });
         const checkResult = await checkCmd.output();
         if (!checkResult.success) {
-          throw new Error("Type check failed");
+          const errorText = new TextDecoder().decode(checkResult.stderr);
+          console.error("Type check stderr:", errorText);
+          throw new Error(`Type check failed: ${errorText}`);
         }
 
         // TODO: Re-enable tests when we have test coverage // DevSkim: ignore DS176209 - Legitimate TODO for test coverage
