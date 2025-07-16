@@ -6,6 +6,64 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.30.0] - 2025-07-16
+
+### Added
+
+- implement dynamic learn command to replace hard-coded help (b50a837)
+- implement YAML-based configuration system (7c2f88b)
+- enhance MCP server functionality (2ac8128)
+- add YAML configuration infrastructure (0ba7b89)
+- simplify security workflow to focus on security checks only (55a6ee0)
+- add strategic documentation links to README (1b4daeb)
+- add cleanup script for migrating legacy structures (85d7185)
+- complete standards migration to /docs/standards/ (cc46889)
+
+### Changed
+
+- apply Deno formatter to source files (6643fcd)
+- add project documentation for recent work (14c0102)
+- format documentation and update configurations (863b477)
+- optimize YAML config reader for reduced CLAUDE.md size (1c4dc85)
+- update project documentation and integration (96069cd)
+- reorganize methodology documentation structure (f963bae)
+- implement new documentation architecture (4541921)
+- remove .nojekyll (ab327b7)
+- focus security workflow on security checks only (ccc79db)
+- apply deno fmt formatting fixes (e33f933)
+- update references and documentation for new structure (bc4f897)
+- remove legacy .claude files after migration (e486cdf)
+- add session checkpoint for config consolidation work (d67d6ea)
+- update source code to use simplified methodology filenames (3cda661)
+- migrate methodologies from root to /docs/methodologies/ (8088813)
+- consolidate config files into single aichaku.json (767953a)
+- migrate standards from /standards/ to /docs/standards/ (c1821f9)
+- update docs/api (4f3b637)
+- update API documentation for v0.29.0 (c5bcaf5)
+
+### Fixed
+
+- exclude config-manager.test.ts to fix type checking (9bfa2a1)
+- implement top-level deno.json exclude for type checking (113c226)
+- disable built-in type check in nagare autofix (a42eed1)
+- update nagare config to exclude v2 files from type check (49fe0d2)
+- exclude v2 files from type check in nagare config (5771486)
+- remove formatting and linting from security workflow (e3926c0)
+- resolve linting and type errors in codebase (d903ca7)
+- format security.yml to pass deno fmt checks (99ea5ac)
+- update README links to correct methodology guide filenames (b972f6e)
+- escape Jekyll syntax in Jekyll rendering guide (4c54bef)
+- liquid syntax to entities (645d5c0)
+- replace Jekyll raw tags with HTML entities for GitHub compatibility (37a2bd2)
+- remove .nojekyll file that was breaking GitHub Pages (fd03e9f)
+- add .nojekyll to prevent Jekyll processing on GitHub Pages (ad8fa7d)
+- resolve type errors and linting issues in migration code (e5afe22)
+- resolve type errors and linting issues (86ba77e)
+- update deno.json publish config to include entire docs/ directory (baae0f6)
+- update YAML files to use runtime paths (eb96227)
+- update standards path references in source files (2640bab)
+- temporarily disable Nagare docs generation due to dependency issue (242e4b3)
+
 ## [0.29.0] - 2025-07-14
 
 ### Added
