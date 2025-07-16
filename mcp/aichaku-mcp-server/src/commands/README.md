@@ -4,14 +4,17 @@ This directory contains command implementations for the Aichaku MCP server.
 
 ## Integrate YAML Command
 
-The `integrate-yaml.ts` module provides a modern approach to generating CLAUDE.md files using YAML configuration instead of embedding the full 50KB+ markdown content.
+The `integrate-yaml.ts` module provides a modern approach to generating
+CLAUDE.md files using YAML configuration instead of embedding the full 50KB+
+markdown content.
 
 ### Benefits
 
 - **Size Reduction**: Reduces CLAUDE.md from ~50KB to ~2KB (96% reduction)
 - **Machine Readable**: YAML format is easily parsed by Claude Code
 - **Selective Inclusion**: Choose specific methodologies to include
-- **Preserves Customizations**: Maintains existing content outside AICHAKU markers
+- **Preserves Customizations**: Maintains existing content outside AICHAKU
+  markers
 - **Backward Compatible**: Works with existing CLAUDE.md files
 
 ### Usage
@@ -23,7 +26,7 @@ The `integrate-yaml.ts` module provides a modern approach to generating CLAUDE.m
 await mcp.callTool("integrate_aichaku", {
   targetPath: "./my-project",
   methodologies: ["shape-up", "scrum"],
-  projectName: "My Project"
+  projectName: "My Project",
 });
 ```
 
@@ -63,16 +66,16 @@ aichaku integrate --no-preserve
 
 ### Options
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `targetPath` | string | Current directory | Target directory for CLAUDE.md |
-| `methodologies` | string[] | All methodologies | Selected methodologies to include |
-| `includeStandards` | boolean | true | Include selected standards |
-| `includeDocStandards` | boolean | true | Include documentation standards |
-| `projectName` | string | "this project" | Custom project name for header |
-| `preserveExisting` | boolean | true | Preserve content outside AICHAKU markers |
-| `force` | boolean | false | Force overwrite without backup |
-| `customizations` | object | {} | User customizations to include |
+| Option                | Type     | Default           | Description                              |
+| --------------------- | -------- | ----------------- | ---------------------------------------- |
+| `targetPath`          | string   | Current directory | Target directory for CLAUDE.md           |
+| `methodologies`       | string[] | All methodologies | Selected methodologies to include        |
+| `includeStandards`    | boolean  | true              | Include selected standards               |
+| `includeDocStandards` | boolean  | true              | Include documentation standards          |
+| `projectName`         | string   | "this project"    | Custom project name for header           |
+| `preserveExisting`    | boolean  | true              | Preserve content outside AICHAKU markers |
+| `force`               | boolean  | false             | Force overwrite without backup           |
+| `customizations`      | object   | {}                | User customizations to include           |
 
 ### Generated YAML Structure
 
@@ -120,7 +123,7 @@ diagrams:
 
 A generated CLAUDE.md file will look like:
 
-```markdown
+````markdown
 # CLAUDE.md
 
 This file provides guidance to Claude Code when working with My Project.
@@ -129,8 +132,8 @@ This file provides guidance to Claude Code when working with My Project.
 
 ## 🎯 Aichaku Methodology Integration
 
-This project uses the Aichaku methodology system. The configuration below defines
-how Claude Code should interact with this project.
+This project uses the Aichaku methodology system. The configuration below
+defines how Claude Code should interact with this project.
 
 ### Configuration
 
@@ -141,21 +144,22 @@ methodologies:
     triggers: ["shape", "pitch"]
     # ... full YAML configuration ...
 ```
+````
 
 ### Usage
 
 When Claude Code detects methodology keywords...
 
 <!-- AICHAKU:END -->
-```
 
+````
 ### Testing
 
 Run the tests with:
 
 ```bash
 deno test src/commands/integrate-yaml.test.ts --allow-read --allow-write --allow-env
-```
+````
 
 ### Examples
 
@@ -163,7 +167,8 @@ See `examples/integrate-yaml-example.ts` for comprehensive usage examples.
 
 ## Future Commands
 
-This directory is structured to support additional commands in the future, such as:
+This directory is structured to support additional commands in the future, such
+as:
 
 - `validate-yaml.ts` - Validate CLAUDE.md YAML configuration
 - `migrate-legacy.ts` - Migrate from old markdown format to YAML

@@ -14,7 +14,7 @@ function minimatch(filePath: string, pattern: string): boolean {
   if (pattern === "**") return true;
 
   // Convert glob pattern to regex - process * and ? BEFORE escaping
-  let regexPattern = pattern
+  const regexPattern = pattern
     .replace(/\*\*/g, "__DOUBLESTAR__") // Temporarily replace **
     .replace(/\*/g, "__STAR__") // Temporarily replace *
     .replace(/\?/g, "__QUESTION__") // Temporarily replace ?
@@ -183,7 +183,9 @@ export class FileFilter {
       },
     };
 
-    this.config = useDefaults ? this.mergeConfig(this.defaultExclusions, config) : config;
+    this.config = useDefaults
+      ? this.mergeConfig(this.defaultExclusions, config)
+      : config;
   }
 
   /**
@@ -201,8 +203,13 @@ export class FileFilter {
 
       // Check file extension exclusions
       if (this.config.extensions?.some((ext) => resolvedPath.endsWith(ext))) {
-        const ext = this.config.extensions.find((ext) => resolvedPath.endsWith(ext));
-        return { shouldExclude: true, reason: `File extension excluded: ${ext}` };
+        const ext = this.config.extensions.find((ext) =>
+          resolvedPath.endsWith(ext)
+        );
+        return {
+          shouldExclude: true,
+          reason: `File extension excluded: ${ext}`,
+        };
       }
 
       // Check glob pattern exclusions
@@ -219,19 +226,32 @@ export class FileFilter {
       // Check specific file exclusions
       const fileName = basename(resolvedPath);
       if (this.config.files?.includes(fileName)) {
-        return { shouldExclude: true, reason: `File name excluded: ${fileName}` };
+        return {
+          shouldExclude: true,
+          reason: `File name excluded: ${fileName}`,
+        };
       }
 
       // Check directory exclusions
-      const matchedDir = this.config.directories?.find((dir) => resolvedPath.includes(`/${dir}/`));
+      const matchedDir = this.config.directories?.find((dir) =>
+        resolvedPath.includes(`/${dir}/`)
+      );
       if (matchedDir) {
-        return { shouldExclude: true, reason: `File in excluded directory: ${matchedDir}` };
+        return {
+          shouldExclude: true,
+          reason: `File in excluded directory: ${matchedDir}`,
+        };
       }
 
       // Check path exclusions
-      const matchedPath = this.config.paths?.find((path) => resolvedPath.includes(path));
+      const matchedPath = this.config.paths?.find((path) =>
+        resolvedPath.includes(path)
+      );
       if (matchedPath) {
-        return { shouldExclude: true, reason: `File path contains excluded path: ${matchedPath}` };
+        return {
+          shouldExclude: true,
+          reason: `File path contains excluded path: ${matchedPath}`,
+        };
       }
 
       // Check content-based exclusions
@@ -376,7 +396,10 @@ export class FileFilter {
     const errors: string[] = [];
 
     // Check for potential ReDoS patterns
-    const patterns = [...(this.config.patterns || []), ...(this.config.contentTypes || [])];
+    const patterns = [
+      ...(this.config.patterns || []),
+      ...(this.config.contentTypes || []),
+    ];
     for (const pattern of patterns) {
       if (this.looksLikeReDoSPattern(pattern)) {
         errors.push(`Potentially dangerous regex pattern: ${pattern}`);
@@ -388,21 +411,35 @@ export class FileFilter {
       try {
         this.parseSize(this.config.maxFileSize);
       } catch (error) {
-        errors.push(`Invalid file size format: ${this.config.maxFileSize} - ${error}`);
+        errors.push(
+          `Invalid file size format: ${this.config.maxFileSize} - ${error}`,
+        );
       }
     }
 
     return errors;
   }
 
-  private mergeConfig(defaults: BlocklistConfig, custom: BlocklistConfig): BlocklistConfig {
+  private mergeConfig(
+    defaults: BlocklistConfig,
+    custom: BlocklistConfig,
+  ): BlocklistConfig {
     return {
-      extensions: [...(defaults.extensions || []), ...(custom.extensions || [])],
+      extensions: [
+        ...(defaults.extensions || []),
+        ...(custom.extensions || []),
+      ],
       patterns: [...(defaults.patterns || []), ...(custom.patterns || [])],
       files: [...(defaults.files || []), ...(custom.files || [])],
-      directories: [...(defaults.directories || []), ...(custom.directories || [])],
+      directories: [
+        ...(defaults.directories || []),
+        ...(custom.directories || []),
+      ],
       paths: [...(defaults.paths || []), ...(custom.paths || [])],
-      contentTypes: [...(defaults.contentTypes || []), ...(custom.contentTypes || [])],
+      contentTypes: [
+        ...(defaults.contentTypes || []),
+        ...(custom.contentTypes || []),
+      ],
       maxFileSize: custom.maxFileSize || defaults.maxFileSize,
       perToolExclusions: {
         ...defaults.perToolExclusions,
@@ -421,7 +458,9 @@ export class FileFilter {
 
     const match = sizeStr.match(/^(\d+(?:\.\d+)?)\s*(B|KB|MB|GB)$/i);
     if (!match) {
-      throw new Error(`Invalid size format: ${sizeStr}. Expected format: "1MB", "500KB", etc.`);
+      throw new Error(
+        `Invalid size format: ${sizeStr}. Expected format: "1MB", "500KB", etc.`,
+      );
     }
 
     const value = parseFloat(match[1]);

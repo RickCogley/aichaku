@@ -2,7 +2,7 @@
  * Tests for FileFilter - Blocklist functionality
  */
 
-import { assertEquals, assertRejects } from "jsr:@std/assert@1";
+import { assertEquals } from "jsr:@std/assert@1";
 import { FileFilter } from "../src/utils/file-filter.ts";
 import type { BlocklistConfig } from "../src/utils/file-filter.ts";
 
@@ -13,7 +13,7 @@ Deno.test("FileFilter - Basic exclusion patterns", async () => {
     files: ["package-lock.json"],
     directories: ["build"],
     paths: ["/.claude/commands/"],
-    contentTypes: ["!`", "PRIVATE KEY"]
+    contentTypes: ["!`", "PRIVATE KEY"],
   };
 
   const filter = new FileFilter(config, false);
@@ -23,7 +23,10 @@ Deno.test("FileFilter - Basic exclusion patterns", async () => {
   assertEquals(await filter.shouldExcludeFile("script.js"), false);
 
   // Test pattern exclusions
-  assertEquals(await filter.shouldExcludeFile("project/node_modules/lib/file.js"), true);
+  assertEquals(
+    await filter.shouldExcludeFile("project/node_modules/lib/file.js"),
+    true,
+  );
   assertEquals(await filter.shouldExcludeFile("project/dist/bundle.js"), true);
   assertEquals(await filter.shouldExcludeFile("project/src/file.js"), false);
 
@@ -36,13 +39,19 @@ Deno.test("FileFilter - Basic exclusion patterns", async () => {
   assertEquals(await filter.shouldExcludeFile("project/src/output.js"), false);
 
   // Test path exclusions
-  assertEquals(await filter.shouldExcludeFile("/home/user/.claude/commands/test.md"), true);
-  assertEquals(await filter.shouldExcludeFile("/home/user/.claude/config.json"), false);
+  assertEquals(
+    await filter.shouldExcludeFile("/home/user/.claude/commands/test.md"),
+    true,
+  );
+  assertEquals(
+    await filter.shouldExcludeFile("/home/user/.claude/config.json"),
+    false,
+  );
 });
 
 Deno.test("FileFilter - Content-based exclusions", async () => {
   const config: BlocklistConfig = {
-    contentTypes: ["!`", "PRIVATE KEY", "API_KEY"]
+    contentTypes: ["!`", "PRIVATE KEY", "API_KEY"],
   };
 
   const filter = new FileFilter(config, false);
@@ -75,17 +84,45 @@ Deno.test("FileFilter - Tool-specific exclusions", async () => {
   const config: BlocklistConfig = {
     perToolExclusions: {
       "devskim": ["**/test/**", "**/*.test.*"],
-      "semgrep": ["**/node_modules/**"]
-    }
+      "semgrep": ["**/node_modules/**"],
+    },
   };
 
   const filter = new FileFilter(config, false);
 
   // Test tool-specific exclusions
-  assertEquals(await filter.shouldExcludeFile("src/test/unit.test.js", undefined, "devskim"), true);
-  assertEquals(await filter.shouldExcludeFile("src/test/unit.test.js", undefined, "semgrep"), false);
-  assertEquals(await filter.shouldExcludeFile("node_modules/lib/index.js", undefined, "semgrep"), true);
-  assertEquals(await filter.shouldExcludeFile("node_modules/lib/index.js", undefined, "devskim"), false);
+  assertEquals(
+    await filter.shouldExcludeFile(
+      "src/test/unit.test.js",
+      undefined,
+      "devskim",
+    ),
+    true,
+  );
+  assertEquals(
+    await filter.shouldExcludeFile(
+      "src/test/unit.test.js",
+      undefined,
+      "semgrep",
+    ),
+    false,
+  );
+  assertEquals(
+    await filter.shouldExcludeFile(
+      "node_modules/lib/index.js",
+      undefined,
+      "semgrep",
+    ),
+    true,
+  );
+  assertEquals(
+    await filter.shouldExcludeFile(
+      "node_modules/lib/index.js",
+      undefined,
+      "devskim",
+    ),
+    false,
+  );
 });
 
 Deno.test("FileFilter - Default exclusions", async () => {
@@ -97,13 +134,22 @@ Deno.test("FileFilter - Default exclusions", async () => {
   assertEquals(await filter.shouldExcludeFile("source.map"), true);
 
   // Test default patterns
-  assertEquals(await filter.shouldExcludeFile("project/node_modules/lib/index.js"), true);
+  assertEquals(
+    await filter.shouldExcludeFile("project/node_modules/lib/index.js"),
+    true,
+  );
   assertEquals(await filter.shouldExcludeFile("project/.git/config"), true);
   assertEquals(await filter.shouldExcludeFile("project/dist/bundle.js"), true);
 
   // Test Claude commands protection
-  assertEquals(await filter.shouldExcludeFile("/home/user/.claude/commands/test.md"), true);
-  assertEquals(await filter.shouldExcludeFile("/home/user/.claude/user/config.json"), true);
+  assertEquals(
+    await filter.shouldExcludeFile("/home/user/.claude/commands/test.md"),
+    true,
+  );
+  assertEquals(
+    await filter.shouldExcludeFile("/home/user/.claude/user/config.json"),
+    true,
+  );
 
   // Test sensitive files
   assertEquals(await filter.shouldExcludeFile("secrets/api.key"), true);
@@ -112,7 +158,7 @@ Deno.test("FileFilter - Default exclusions", async () => {
 
 Deno.test("FileFilter - Configuration validation", () => {
   const filter = new FileFilter({
-    maxFileSize: "invalid-size"
+    maxFileSize: "invalid-size",
   }, false);
 
   const errors = filter.validateConfig();
@@ -127,7 +173,7 @@ Deno.test("FileFilter - Size-based exclusions", async () => {
   await Deno.writeTextFile(tempFile, largeContent);
 
   const config: BlocklistConfig = {
-    maxFileSize: "1MB"
+    maxFileSize: "1MB",
   };
 
   const filter = new FileFilter(config, false);
@@ -164,7 +210,7 @@ Deno.test("FileFilter - Exclusion statistics", () => {
     patterns: ["**/node_modules/**"],
     files: ["package-lock.json"],
     paths: ["/.claude/commands/"],
-    contentTypes: ["!`"]
+    contentTypes: ["!`"],
   };
 
   const filter = new FileFilter(config, false);
@@ -180,7 +226,7 @@ Deno.test("FileFilter - Exclusion statistics", () => {
 
 Deno.test("FileFilter - Security validation", () => {
   const filter = new FileFilter({
-    patterns: ["(.*)+", "([a-z]+)+"]  // Potential ReDoS patterns
+    patterns: ["(.*)+", "([a-z]+)+"], // Potential ReDoS patterns
   }, false);
 
   const errors = filter.validateConfig();
@@ -190,7 +236,7 @@ Deno.test("FileFilter - Security validation", () => {
 
 Deno.test("FileFilter - Path traversal protection", async () => {
   const config: BlocklistConfig = {
-    paths: ["/../../../etc/"]
+    paths: ["/../../../etc/"],
   };
 
   const filter = new FileFilter(config, false);
@@ -213,12 +259,12 @@ Deno.test("FileFilter - Empty configuration", async () => {
 Deno.test("FileFilter - Case sensitivity", async () => {
   const config: BlocklistConfig = {
     extensions: [".MIN.JS"],
-    patterns: ["**/NODE_MODULES/**"]
+    patterns: ["**/NODE_MODULES/**"],
   };
 
   const filter = new FileFilter(config, false);
 
   // Test case sensitivity
   assertEquals(await filter.shouldExcludeFile("script.min.js"), false); // Different case
-  assertEquals(await filter.shouldExcludeFile("script.MIN.JS"), true);  // Exact match
+  assertEquals(await filter.shouldExcludeFile("script.MIN.JS"), true); // Exact match
 });

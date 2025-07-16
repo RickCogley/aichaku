@@ -1,6 +1,6 @@
 /**
  * Integrate command with YAML configuration-as-code
- * 
+ *
  * This replaces the hardcoded METHODOLOGY_SECTION with a system that reads
  * YAML files and assembles them into compact configuration blocks.
  */
@@ -155,22 +155,27 @@ function cleanupOldSections(content: string): string {
   // Remove old methodology quick reference section if it exists
   const oldMarker = "## Methodologies Quick Reference";
   const oldIndex = content.indexOf(oldMarker);
-  
+
   if (oldIndex !== -1) {
     // Find the YAML block after this marker
     const afterOld = content.substring(oldIndex);
     const yamlStartIndex = afterOld.indexOf(YAML_CONFIG_START);
-    const yamlEndIndex = afterOld.indexOf(YAML_CONFIG_END, yamlStartIndex + YAML_CONFIG_START.length);
-    
+    const yamlEndIndex = afterOld.indexOf(
+      YAML_CONFIG_END,
+      yamlStartIndex + YAML_CONFIG_START.length,
+    );
+
     if (yamlStartIndex !== -1 && yamlEndIndex !== -1) {
       // Remove the entire section including the marker and YAML block
       const before = content.substring(0, oldIndex);
-      const after = content.substring(oldIndex + yamlEndIndex + YAML_CONFIG_END.length);
+      const after = content.substring(
+        oldIndex + yamlEndIndex + YAML_CONFIG_END.length,
+      );
       // Clean up extra newlines
       content = (before.trimEnd() + "\n\n" + after.trimStart()).trim() + "\n";
     }
   }
-  
+
   return content;
 }
 
@@ -180,17 +185,22 @@ function cleanupOldSections(content: string): string {
 function updateClaudeMd(content: string, yamlConfig: string): string {
   // First clean up old sections
   content = cleanupOldSections(content);
-  
+
   // Update Aichaku configuration section
   const configMarkerIndex = content.indexOf(AICHAKU_CONFIG_MARKER);
   if (configMarkerIndex !== -1) {
     const afterMarker = content.substring(configMarkerIndex);
     const yamlStartIndex = afterMarker.indexOf(YAML_CONFIG_START);
-    const yamlEndIndex = afterMarker.indexOf(YAML_CONFIG_END, yamlStartIndex + YAML_CONFIG_START.length);
-    
+    const yamlEndIndex = afterMarker.indexOf(
+      YAML_CONFIG_END,
+      yamlStartIndex + YAML_CONFIG_START.length,
+    );
+
     if (yamlStartIndex !== -1 && yamlEndIndex !== -1) {
       const before = content.substring(0, configMarkerIndex);
-      const afterYamlEnd = content.substring(configMarkerIndex + yamlEndIndex + YAML_CONFIG_END.length);
+      const afterYamlEnd = content.substring(
+        configMarkerIndex + yamlEndIndex + YAML_CONFIG_END.length,
+      );
       return `${before}${AICHAKU_CONFIG_MARKER}
 
 This configuration is dynamically assembled from YAML files in your ~/.claude/aichaku installation.
@@ -200,13 +210,13 @@ ${yamlConfig.trim()}
 ${YAML_CONFIG_END}${afterYamlEnd}`;
     }
   }
-  
+
   // If no configuration section exists, add both sections
-  const insertPoint = content.indexOf('## Project Overview');
+  const insertPoint = content.indexOf("## Project Overview");
   if (insertPoint !== -1) {
     const before = content.substring(0, insertPoint);
     const after = content.substring(insertPoint);
-    
+
     return `${before}${AICHAKU_CONFIG_MARKER}
 
 This configuration is dynamically assembled from YAML files in your ~/.claude/aichaku installation.
@@ -217,7 +227,7 @@ ${YAML_CONFIG_END}
 
 ${after}`;
   }
-  
+
   // Fallback: append at the end
   return `${content}
 
@@ -244,16 +254,23 @@ export async function integrate(
   // Get selected standards and methodologies
   const selectedStandards = await loadProjectStandards(projectPath);
   const selectedDocStandards = await loadProjectDocStandards(projectPath);
-  
+
   // For now, include all methodologies (could be made configurable)
-  const selectedMethodologies = ["shape-up", "scrum", "kanban", "lean", "xp", "scrumban"];
+  const selectedMethodologies = [
+    "shape-up",
+    "scrum",
+    "kanban",
+    "lean",
+    "xp",
+    "scrumban",
+  ];
 
   // Define configuration paths - use development paths for now
   const configPaths = {
     core: join("/Users/rcogley/dev/aichaku", "docs", "core"),
     methodologies: join("/Users/rcogley/dev/aichaku", "docs", "methodologies"),
     standards: join("/Users/rcogley/dev/aichaku", "docs", "standards"),
-    user: aichakuPaths.global.user.root
+    user: aichakuPaths.global.user.root,
   };
 
   // Assemble YAML configuration
@@ -261,7 +278,7 @@ export async function integrate(
     paths: configPaths,
     selectedMethodologies,
     selectedStandards,
-    selectedDocStandards
+    selectedDocStandards,
   });
 
   // Note: methodology quick reference is now included in the main yamlConfig
@@ -269,10 +286,14 @@ export async function integrate(
   if (options.dryRun) {
     const fileExists = await exists(claudeMdPath);
     console.log(
-      `[DRY RUN] Would ${fileExists ? "update" : "create"} CLAUDE.md at: ${claudeMdPath}`
+      `[DRY RUN] Would ${
+        fileExists ? "update" : "create"
+      } CLAUDE.md at: ${claudeMdPath}`,
     );
     console.log(`[DRY RUN] Would add YAML configuration with:`);
-    console.log(`  - Core directives (behavioral, visual, file organization, diagrams)`);
+    console.log(
+      `  - Core directives (behavioral, visual, file organization, diagrams)`,
+    );
     console.log(`  - ${selectedMethodologies.length} methodologies`);
     if (selectedStandards.length > 0) {
       console.log(`  - ${selectedStandards.length} development standards`);
@@ -342,7 +363,7 @@ export async function integrate(
   }
 }
 
-async function checkFileExists(path: string): Promise<boolean> {
+async function _checkFileExists(path: string): Promise<boolean> {
   try {
     // Security: Use safe stat check - path is always claudeMdPath
     // constructed from resolved projectPath and hardcoded "CLAUDE.md"

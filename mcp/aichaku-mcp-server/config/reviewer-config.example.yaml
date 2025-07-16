@@ -17,7 +17,7 @@ reviewer:
       - ".generated.js"
       - ".bundle.js"
       - ".chunk.js"
-      
+
     # Glob patterns to exclude
     patterns:
       - "**/node_modules/**"
@@ -44,7 +44,7 @@ reviewer:
       - "**/.env*"
       - "**/secrets/**"
       - "**/credentials/**"
-      
+
     # Specific filenames to exclude
     files:
       - "package-lock.json"
@@ -61,7 +61,7 @@ reviewer:
       - "settings.json"
       - "claude.json"
       - ".claude-config.json"
-      
+
     # Directory names to exclude
     directories:
       - "node_modules"
@@ -80,7 +80,7 @@ reviewer:
       # Claude directories
       - "commands"
       - "user"
-      
+
     # Path patterns to exclude
     paths:
       - "/.claude/commands/"
@@ -92,23 +92,23 @@ reviewer:
       - "/secrets/"
       - "/credentials/"
       - "/keys/"
-      
+
     # Content patterns to exclude (HIGH SECURITY)
     contentTypes:
-      - "!`"           # Claude command execution syntax
-      - "!bash"        # Bash command indicators
-      - "!sh"          # Shell command indicators
-      - "!zsh"         # Zsh command indicators
-      - "-----BEGIN"   # PEM/certificate files
-      - "PRIVATE KEY"  # Private key files
-      - "API_KEY"      # API key patterns
-      - "SECRET"       # Secret patterns
-      - "PASSWORD"     # Password patterns
-      - "TOKEN"        # Token patterns
-      
+      - "!`" # Claude command execution syntax
+      - "!bash" # Bash command indicators
+      - "!sh" # Shell command indicators
+      - "!zsh" # Zsh command indicators
+      - "-----BEGIN" # PEM/certificate files
+      - "PRIVATE KEY" # Private key files
+      - "API_KEY" # API key patterns
+      - "SECRET" # Secret patterns
+      - "PASSWORD" # Password patterns
+      - "TOKEN" # Token patterns
+
     # File size limit
     maxFileSize: "1MB"
-    
+
     # Tool-specific exclusions
     perToolExclusions:
       devskim:
@@ -129,15 +129,15 @@ reviewer:
         - "**/.claude/commands/**"
         - "**/test/**"
         - "**/mock/**"
-        
+
   # Disable default exclusions (not recommended)
   noDefaultExclusions: false
 
 # Project-specific settings
 project:
   # Override for specific project types
-  type: "typescript"  # typescript, node, python, etc.
-  
+  type: "typescript" # typescript, node, python, etc.
+
   # Custom exclusions for this project
   customExclusions:
     patterns:
@@ -147,15 +147,15 @@ project:
     files:
       - "schema.sql"
       - "database.db"
-      
+
 # Security settings
 security:
   # Enable sensitive content detection
   detectSensitiveContent: true
-  
+
   # Report excluded files
   reportExclusions: true
-  
+
   # Validate configuration for security issues
   validateConfig: true
 
@@ -163,9 +163,9 @@ security:
 performance:
   # Cache exclusion checks
   cacheExclusions: true
-  
+
   # Batch size for file processing
   batchSize: 100
-  
+
   # Maximum concurrent file checks
   maxConcurrency: 10

@@ -10,7 +10,7 @@ export async function reviewFile(
   file: string,
   content?: string,
   includeExternal = true,
-  config: ReviewerConfig = {}
+  config: ReviewerConfig = {},
 ): Promise<ReviewResult> {
   const reviewEngine = new ReviewEngine(config);
   await reviewEngine.initialize();
@@ -20,14 +20,14 @@ export async function reviewFile(
     content,
     includeExternal,
     standards: [],
-    methodologies: []
+    methodologies: [],
   };
 
   const result = await reviewEngine.review(request);
-  
+
   // Add exclusion statistics to result if file was excluded
   if (result.excluded) {
-    const filter = reviewEngine['fileFilter']; // Access private property for stats
+    const filter = reviewEngine["fileFilter"]; // Access private property for stats
     if (filter) {
       console.log(`📋 File excluded: ${file}`);
       console.log(`   Reason: ${result.excludeReason}`);
@@ -40,7 +40,7 @@ export async function reviewFile(
 
 export async function reviewFiles(
   files: string[],
-  config: ReviewerConfig = {}
+  config: ReviewerConfig = {},
 ): Promise<ReviewResult[]> {
   const results: ReviewResult[] = [];
   let excluded = 0;
@@ -49,7 +49,7 @@ export async function reviewFiles(
   for (const file of files) {
     const result = await reviewFile(file, undefined, true, config);
     results.push(result);
-    
+
     if (result.excluded) {
       excluded++;
     } else {

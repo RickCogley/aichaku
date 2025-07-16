@@ -6,7 +6,7 @@
 
 import { parse as parseYaml } from "jsr:@std/yaml@1";
 import { exists } from "jsr:@std/fs@1";
-import { join } from "jsr:@std/path@1";
+// import { join } from "jsr:@std/path@1"; // Unused import removed
 import type { ReviewerConfig } from "./file-filter.ts";
 
 export class ConfigLoader {
@@ -60,7 +60,7 @@ export class ConfigLoader {
   private static async loadConfigFile(path: string): Promise<ReviewerConfig> {
     try {
       const content = await Deno.readTextFile(path);
-      const parsed = parseYaml(content) as any;
+      const parsed = parseYaml(content) as Record<string, unknown>;
 
       // Extract reviewer configuration
       return parsed.reviewer || parsed;
@@ -95,7 +95,10 @@ export class ConfigLoader {
     return config;
   }
 
-  private static mergeConfig(base: ReviewerConfig, override: ReviewerConfig): ReviewerConfig {
+  private static mergeConfig(
+    base: ReviewerConfig,
+    override: ReviewerConfig,
+  ): ReviewerConfig {
     const merged: ReviewerConfig = {
       ...base,
       ...override,
@@ -158,7 +161,9 @@ export class ConfigLoader {
 
     for (const pattern of patterns) {
       if (this.looksLikeReDoSPattern(pattern)) {
-        console.warn(`Potentially dangerous regex pattern detected: ${pattern}`);
+        console.warn(
+          `Potentially dangerous regex pattern detected: ${pattern}`,
+        );
       }
     }
   }
@@ -179,7 +184,7 @@ export class ConfigLoader {
   /**
    * Get configuration schema for validation
    */
-  static getConfigSchema(): any {
+  static getConfigSchema(): Record<string, unknown> {
     return {
       type: "object",
       properties: {

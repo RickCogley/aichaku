@@ -22,7 +22,10 @@ export class ReviewEngine {
 
   constructor(config: ReviewerConfig = {}) {
     this.scannerController = new ScannerController();
-    this.fileFilter = new FileFilter(config.exclude || {}, !config.noDefaultExclusions);
+    this.fileFilter = new FileFilter(
+      config.exclude || {},
+      !config.noDefaultExclusions,
+    );
     this.loadPatterns();
   }
 
@@ -46,14 +49,17 @@ export class ReviewEngine {
     const content = request.content || await this.readFile(request.file);
 
     // InfoSec: Check if file should be excluded from review
-    const exclusionResult = await this.fileFilter.getExclusionReason(request.file, content);
+    const exclusionResult = await this.fileFilter.getExclusionReason(
+      request.file,
+      content,
+    );
     if (exclusionResult.shouldExclude) {
       return {
         file: request.file,
         findings: [],
         summary: { critical: 0, high: 0, medium: 0, low: 0, info: 0 },
         excluded: true,
-        excludeReason: exclusionResult.reason
+        excludeReason: exclusionResult.reason,
       };
     }
 
@@ -131,7 +137,10 @@ export class ReviewEngine {
     }
   }
 
-  private async runPatternChecks(content: string, filePath: string): Promise<Finding[]> {
+  private async runPatternChecks(
+    content: string,
+    filePath: string,
+  ): Promise<Finding[]> {
     const findings: Finding[] = [];
     const lines = content.split("\n");
 
