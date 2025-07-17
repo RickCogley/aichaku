@@ -1125,8 +1125,8 @@ function getProjectConfigPath(projectPath?: string): string {
   const _paths = getAichakuPaths();
   const base = resolve(projectPath || Deno.cwd());
 
-  // Use new path structure under .claude/aichaku/
-  const configPath = join(base, ".claude", "aichaku", "aichaku-standards.json");
+  // Use consolidated aichaku.json file
+  const configPath = join(base, ".claude", "aichaku", "aichaku.json");
   const normalized = normalize(configPath);
 
   // Security: Ensure the path is within the project directory and is safe
@@ -1145,23 +1145,35 @@ async function loadProjectConfig(path: string): Promise<ProjectConfig> {
     // Security: The path should already be validated by the caller,
     // but we'll ensure it's within the project directory
     const projectRoot = path.includes("aichaku")
-      ? resolve(path, "..", "..", "..") // Go up from .claude/aichaku/standards.json
+      ? resolve(path, "..", "..", "..") // Go up from .claude/aichaku/aichaku.json
       : resolve(path, "..", ".."); // Go up from .claude/standards.json
     const content = await safeReadTextFile(path, projectRoot);
     try {
       const parsed = JSON.parse(content);
 
-      // Validate required fields
-      if (!parsed.version || !Array.isArray(parsed.selected)) {
+      // Handle consolidated aichaku.json format
+      let standardsConfig;
+      if (parsed.standards && typeof parsed.standards === "object") {
+        // New consolidated format - standards are in a sub-object
+        standardsConfig = parsed.standards;
+      } else if (parsed.version && Array.isArray(parsed.selected)) {
+        // Old standalone standards format
+        standardsConfig = parsed;
+      } else {
         throw new Error("Invalid configuration format");
       }
 
+      // Validate required fields
+      if (!standardsConfig.version || !Array.isArray(standardsConfig.selected)) {
+        throw new Error("Invalid standards configuration format");
+      }
+
       // Sanitize selected array and normalize IDs
-      parsed.selected = parsed.selected.filter(
+      standardsConfig.selected = standardsConfig.selected.filter(
         (id: unknown) => typeof id === "string" && id.length > 0,
       ).map((id: string) => normalizeStandardId(id));
 
-      return parsed as ProjectConfig;
+      return standardsConfig as ProjectConfig;
     } catch (_error) {
       // InfoSec: Don't expose raw error messages
       console.error("Failed to parse project configuration");
@@ -1198,8 +1210,33 @@ async function saveProjectConfig(
   const dir = join(normalized, "..");
   await ensureDir(dir);
 
+  // Read existing aichaku.json file or create new one
+  let existingConfig: any = {};
+  if (await exists(path)) {
+    try {
+      const content = await Deno.readTextFile(path);
+      existingConfig = JSON.parse(content);
+    } catch {
+      // If file is corrupt, start fresh
+      existingConfig = {};
+    }
+  }
+
+  // If this is a new file, set up basic structure
+  if (!existingConfig.version) {
+    existingConfig = {
+      version: "0.32.0",
+      installedAt: new Date().toISOString(),
+      installationType: "local",
+      lastUpgrade: null,
+    };
+  }
+
+  // Update the standards section
+  existingConfig.standards = config;
+
   // Write with secure permissions (read/write for owner, read-only for others)
-  await Deno.writeTextFile(path, JSON.stringify(config, null, 2), {
+  await Deno.writeTextFile(path, JSON.stringify(existingConfig, null, 2), {
     mode: 0o644,
   });
 }
