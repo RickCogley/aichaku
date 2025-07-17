@@ -6,8 +6,9 @@
  */
 
 import { VERSION } from "../version.ts";
-import { ensureDir } from "@std/fs";
+import { ensureDir, walk } from "@std/fs";
 import { safeReadFile } from "../src/utils/path-security.ts";
+import { basename } from "@std/path";
 
 interface Platform {
   os: string;
@@ -281,18 +282,126 @@ async function runPreflightChecks(): Promise<void> {
   console.log("✅ All preflight checks passed!");
 }
 
+async function cleanupOldBinaries(): Promise<void> {
+  const KEEP_VERSIONS = 3;
+  const DIST_DIR = "./dist";
+  
+  console.log("🧹 Cleaning up old binaries...");
+  
+  // Ensure dist directory exists
+  await ensureDir(DIST_DIR);
+  
+  interface BinaryFile {
+    path: string;
+    version: string;
+    name: string;
+    size: number;
+  }
+  
+  const binaries: BinaryFile[] = [];
+  
+  // Collect all binary files
+  try {
+    for await (const entry of walk(DIST_DIR, { includeFiles: true })) {
+      const filename = basename(entry.path);
+      
+      // Match version pattern in filename
+      const versionMatch = filename.match(/(\d+\.\d+\.\d+)/);
+      if (!versionMatch) continue;
+      
+      const stat = await Deno.stat(entry.path);
+      binaries.push({
+        path: entry.path,
+        version: versionMatch[1],
+        name: filename,
+        size: stat.size
+      });
+    }
+  } catch (error) {
+    // If dist directory doesn't exist or is empty, that's fine
+    console.log("  📁 No existing binaries to clean up");
+    return;
+  }
+  
+  if (binaries.length === 0) {
+    console.log("  📁 No versioned binaries found to clean up");
+    return;
+  }
+  
+  // Group by binary type (aichaku, aichaku-code-reviewer, etc.)
+  const grouped = new Map<string, BinaryFile[]>();
+  
+  for (const binary of binaries) {
+    const baseName = binary.name.replace(/-\d+\.\d+\.\d+.*$/, '');
+    if (!grouped.has(baseName)) {
+      grouped.set(baseName, []);
+    }
+    grouped.get(baseName)!.push(binary);
+  }
+  
+  // Sort and clean up each group
+  let totalDeleted = 0;
+  let totalSize = 0;
+  
+  for (const [baseName, files] of grouped) {
+    // Sort by version (descending)
+    files.sort((a, b) => {
+      const versionA = a.version.split('.').map(Number);
+      const versionB = b.version.split('.').map(Number);
+      
+      for (let i = 0; i < 3; i++) {
+        if (versionA[i] !== versionB[i]) {
+          return versionB[i] - versionA[i];
+        }
+      }
+      return 0;
+    });
+    
+    // Keep only the most recent versions
+    const toDelete = files.slice(KEEP_VERSIONS);
+    
+    if (toDelete.length > 0) {
+      console.log(`  📦 ${baseName}: keeping ${Math.min(files.length, KEEP_VERSIONS)} versions, deleting ${toDelete.length} old ones`);
+      
+      for (const file of toDelete) {
+        try {
+          await Deno.remove(file.path);
+          totalDeleted++;
+          totalSize += file.size;
+        } catch (error) {
+          console.error(`    ❌ Failed to delete ${file.name}: ${error}`);
+        }
+      }
+    }
+  }
+  
+  if (totalDeleted > 0) {
+    const totalSizeMB = (totalSize / 1024 / 1024).toFixed(1);
+    console.log(`  ✅ Cleaned up ${totalDeleted} old binaries (${totalSizeMB}MB freed)`);
+  } else {
+    console.log("  ✅ No old binaries to clean up");
+  }
+}
+
 async function main() {
   const args = new Set(Deno.args);
   const shouldUpload = args.has("--upload");
   const cliOnly = args.has("--cli-only");
   const mcpOnly = args.has("--mcp-only");
   const skipPreflight = args.has("--skip-preflight");
+  const skipCleanup = args.has("--skip-cleanup");
 
   try {
     // Run preflight checks unless skipped
     if (!skipPreflight) {
       await runPreflightChecks();
     }
+    
+    // Clean up old binaries before building new ones
+    if (!skipCleanup) {
+      await cleanupOldBinaries();
+    }
+    
     // Compile binaries
     if (!mcpOnly) {
       await compileCLI();
@@ -344,10 +453,12 @@ Usage:
   deno run -A scripts/build-binaries.ts [options]
 
 Options:
-  --upload      Upload binaries to GitHub release after building
-  --cli-only    Only build CLI binaries
-  --mcp-only    Only build MCP server binaries
-  --help        Show this help message
+  --upload           Upload binaries to GitHub release after building
+  --cli-only         Only build CLI binaries
+  --mcp-only         Only build MCP server binaries
+  --skip-preflight   Skip preflight checks (formatting, linting, type checking)
+  --skip-cleanup     Skip cleanup of old binaries before building
+  --help             Show this help message
 
 Examples:
   # Build all binaries
