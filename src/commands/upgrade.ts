@@ -8,6 +8,12 @@ import { resolveProjectPath } from "../utils/project-paths.ts";
 import { safeRemove } from "../utils/path-security.ts";
 import { findMetadataPath, migrateMetadata } from "./upgrade-fix.ts";
 import { Brand } from "../utils/branded-messages.ts";
+// Visual guidance utilities available if needed for enhanced feedback
+// import {
+//   createInstallationDiagram,
+//   createUpgradeSummary,
+//   generateContextualFeedback,
+// } from "../utils/visual-guidance.ts";
 
 interface UpgradeOptions {
   global?: boolean;
@@ -16,6 +22,7 @@ interface UpgradeOptions {
   silent?: boolean;
   dryRun?: boolean;
   check?: boolean;
+  help?: boolean;
 }
 
 interface UpgradeResult {
@@ -43,6 +50,16 @@ interface AichakuMetadata {
 export async function upgrade(
   options: UpgradeOptions = {},
 ): Promise<UpgradeResult> {
+  // Show help if requested
+  if (options.help) {
+    showUpgradeHelp();
+    return {
+      success: true,
+      path: "",
+      message: "Help displayed",
+      action: "check",
+    };
+  }
   const isGlobal = options.global || false;
   const paths = getAichakuPaths();
 
@@ -386,4 +403,40 @@ export async function upgrade(
       action: "error",
     };
   }
+}
+
+/**
+ * Show help information for the upgrade command
+ */
+function showUpgradeHelp(): void {
+  console.log(`
+🪴 Aichaku Upgrade - Update to latest version
+
+Updates Aichaku methodologies, standards, and core functionality to the latest version.
+Automatically migrates configurations and preserves customizations.
+
+Usage:
+  aichaku upgrade [options]
+
+Options:
+  -g, --global     Upgrade global installation (~/.claude)
+  -f, --force      Force upgrade even if already at latest version
+  -s, --silent     Upgrade silently with minimal output
+  -d, --dry-run    Preview what would be upgraded without applying changes
+  -c, --check      Check for available updates without installing
+  -h, --help       Show this help message
+
+Examples:
+  aichaku upgrade                    # Upgrade current project
+  aichaku upgrade --global           # Upgrade global installation
+  aichaku upgrade --check            # Check for updates
+  aichaku upgrade --dry-run          # Preview upgrade changes
+  aichaku upgrade --force            # Force upgrade
+
+Notes:
+  • Preserves all user customizations and configurations
+  • Automatically migrates legacy file formats
+  • Updates methodology templates and standards library
+  • Creates backup before making changes
+`);
 }

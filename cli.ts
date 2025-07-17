@@ -102,7 +102,6 @@ const args = parseArgs(Deno.args, {
     "yes",
     "no-global",
     "local",
-    "remove",
   ],
   string: [
     "path",
@@ -448,7 +447,7 @@ ${
         list: args.list as boolean | undefined,
         install: args.install as string | undefined,
         validate: args.validate as boolean | undefined,
-        remove: args.remove === true ? true : undefined,
+        remove: args.remove as boolean | undefined,
         dryRun: args["dry-run"] as boolean | undefined,
         show: args.show as boolean | undefined,
         global: args.global as boolean | undefined,
@@ -627,7 +626,7 @@ ${
         help: args.help as boolean | undefined,
         // Auth
         authStatus: args.authStatus as boolean | undefined,
-        authLogin: args.authLogin as string | undefined,
+        authLogin: (typeof args.authLogin === 'string') ? args.authLogin : undefined,
         // Release
         releaseUpload: args.releaseUpload as boolean | undefined,
         releaseView: args.releaseView as boolean | undefined,
@@ -644,7 +643,7 @@ ${
         repository: args.repository as string | undefined,
         runId: args.runId ? Number(args.runId) : undefined,
         workflow: args.workflow as string | undefined,
-        status: args.status as string | undefined,
+        status: (typeof args.status === 'string') ? args.status : undefined,
         limit: args.limit ? Number(args.limit) : undefined,
         timeout: args.timeout ? Number(args.timeout) : undefined,
         pollInterval: args.pollInterval ? Number(args.pollInterval) : undefined,
