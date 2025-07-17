@@ -21,8 +21,9 @@ export async function findMetadataPath(
       join(home, ".aichaku", ".aichaku.json"), // Very old location
     ]
     : [
-      join(targetPath, ".aichaku.json"), // Project location
-      join(targetPath, ".aichaku-project"), // Old project marker
+      join(targetPath, "aichaku.json"), // Current location
+      join(targetPath, ".aichaku.json"), // Old project location
+      join(targetPath, ".aichaku-project"), // Very old project marker
     ];
 
   let foundPath: string | null = null;
