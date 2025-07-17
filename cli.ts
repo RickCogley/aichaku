@@ -626,7 +626,9 @@ ${
         help: args.help as boolean | undefined,
         // Auth
         authStatus: args.authStatus as boolean | undefined,
-        authLogin: (typeof args.authLogin === 'string') ? args.authLogin : undefined,
+        authLogin: (typeof args.authLogin === "string")
+          ? args.authLogin
+          : undefined,
         // Release
         releaseUpload: args.releaseUpload as boolean | undefined,
         releaseView: args.releaseView as boolean | undefined,
@@ -643,7 +645,7 @@ ${
         repository: args.repository as string | undefined,
         runId: args.runId ? Number(args.runId) : undefined,
         workflow: args.workflow as string | undefined,
-        status: (typeof args.status === 'string') ? args.status : undefined,
+        status: (typeof args.status === "string") ? args.status : undefined,
         limit: args.limit ? Number(args.limit) : undefined,
         timeout: args.timeout ? Number(args.timeout) : undefined,
         pollInterval: args.pollInterval ? Number(args.pollInterval) : undefined,

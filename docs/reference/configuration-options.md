@@ -577,7 +577,8 @@ Examples:
 
 ### Core Configuration Files (src/config/)
 
-**Introduced in v0.31.2+** - Configuration-as-code system for enterprise-grade maintainability.
+**Introduced in v0.31.2+** - Configuration-as-code system for enterprise-grade
+maintainability.
 
 #### methodology-fallback.ts
 
@@ -605,7 +606,14 @@ Default methodology lists for new installations and general fallbacks.
 
 ```typescript
 export const METHODOLOGY_DEFAULTS = {
-  defaultMethodologies: ["shape-up", "scrum", "kanban", "lean", "xp", "scrumban"],
+  defaultMethodologies: [
+    "shape-up",
+    "scrum",
+    "kanban",
+    "lean",
+    "xp",
+    "scrumban",
+  ],
   description: "Default methodologies for new installations and fallbacks",
   lastUpdated: "2025-07-17",
 };
@@ -613,7 +621,7 @@ export const METHODOLOGY_DEFAULTS = {
 
 **Usage**: Used by installation and initialization processes
 
-#### methodology-templates.ts  
+#### methodology-templates.ts
 
 Template file mappings for each methodology.
 
@@ -636,23 +644,30 @@ export const METHODOLOGY_TEMPLATE_CONFIG = {
 
 Identical interface to main fallback config, used by MCP server for consistency.
 
-**Purpose**: Ensures MCP server and main CLI use identical fallback methodologies
+**Purpose**: Ensures MCP server and main CLI use identical fallback
+methodologies
 
 ### Configuration Principles
 
-1. **Single Source of Truth**: Each configuration aspect has exactly one authoritative source
-2. **Type Safety**: All configurations use TypeScript interfaces for compile-time validation  
-3. **Documentation**: Each file includes purpose, reason, and last updated metadata
-4. **Version Control**: All configuration changes are tracked with git commit messages
-5. **No Hardcoding**: Business logic never contains hardcoded configuration values
+1. **Single Source of Truth**: Each configuration aspect has exactly one
+   authoritative source
+2. **Type Safety**: All configurations use TypeScript interfaces for
+   compile-time validation
+3. **Documentation**: Each file includes purpose, reason, and last updated
+   metadata
+4. **Version Control**: All configuration changes are tracked with git commit
+   messages
+5. **No Hardcoding**: Business logic never contains hardcoded configuration
+   values
 
 ### Benefits
 
 - **Maintainable**: Adding methodologies requires only config file changes
 - **Auditable**: All configuration is version controlled and documented
-- **Testable**: Configuration can be validated independently 
+- **Testable**: Configuration can be validated independently
 - **Scalable**: Easy to extend without modifying business logic
-- **Consistent**: Eliminates risk of scattered hardcoded lists getting out of sync
+- **Consistent**: Eliminates risk of scattered hardcoded lists getting out of
+  sync
 
 ### Methodology icons
 
