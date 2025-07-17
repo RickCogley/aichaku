@@ -2,11 +2,14 @@
 
 ## Project Overview
 
-This document outlines the comprehensive enhancement plan for Aichaku CLI commands, focusing on providing exceptional user experience through contextual guidance and visual aids.
+This document outlines the comprehensive enhancement plan for Aichaku CLI
+commands, focusing on providing exceptional user experience through contextual
+guidance and visual aids.
 
 ## Problem Statement
 
 Current CLI commands often leave users wondering:
+
 - "What exactly did this command do?"
 - "Where were files created or modified?"
 - "What should I do next?"
@@ -27,18 +30,21 @@ Every change-making command will provide:
 ### **Phase 1: Critical Bug Fixes**
 
 #### 1.1 Legacy File Elimination
+
 - **Issue**: `RULES-REMINDER.md` still created by `init` command
 - **Location**: `src/commands/init.ts` lines 307-308 and 586-615
 - **Fix**: Remove `getRulesReminderContent()` function calls
 - **Impact**: Complete legacy format elimination
 
 #### 1.2 Help Screen Bypassing
+
 - **Issue**: Commands execute instead of showing help with `--help`
 - **Affected**: `upgrade`, `integrate`, `cleanup` commands
 - **Fix**: Implement proper help flag handling
 - **Impact**: Consistent CLI behavior
 
 #### 1.3 Standards Command Verification
+
 - **Issue**: `standards --remove` functionality untested
 - **Fix**: Test and verify removal works correctly
 - **Impact**: Complete standards management
@@ -47,19 +53,20 @@ Every change-making command will provide:
 
 #### 2.1 Command Audit Matrix
 
-| Command | Current State | Enhancement Needed |
-|---------|---------------|-------------------|
-| `aichaku init` | Basic success message | Location context, visual diagram |
-| `aichaku init --global` | Minimal feedback | Installation location, next steps |
-| `aichaku upgrade` | Version info only | What changed, where, impact |
-| `aichaku integrate` | Simple completion | CLAUDE.md changes, methodology count |
-| `aichaku standards --add` | Good next steps | File location, configuration view |
-| `aichaku standards --remove` | Unknown | Similar to --add pattern |
-| `aichaku mcp --install` | Basic install info | Server locations, configuration |
+| Command                      | Current State         | Enhancement Needed                   |
+| ---------------------------- | --------------------- | ------------------------------------ |
+| `aichaku init`               | Basic success message | Location context, visual diagram     |
+| `aichaku init --global`      | Minimal feedback      | Installation location, next steps    |
+| `aichaku upgrade`            | Version info only     | What changed, where, impact          |
+| `aichaku integrate`          | Simple completion     | CLAUDE.md changes, methodology count |
+| `aichaku standards --add`    | Good next steps       | File location, configuration view    |
+| `aichaku standards --remove` | Unknown               | Similar to --add pattern             |
+| `aichaku mcp --install`      | Basic install info    | Server locations, configuration      |
 
 #### 2.2 Contextual Information Framework
 
 **Location Awareness Pattern:**
+
 ```
 🪴 Aichaku: [Action] completed!
 
@@ -78,6 +85,7 @@ Every change-making command will provide:
 #### 2.3 Visual Diagrams Implementation
 
 **Directory Tree Diagrams:**
+
 ```
 📁 Installation structure:
 ~/.claude/aichaku/
@@ -88,12 +96,14 @@ Every change-making command will provide:
 ```
 
 **Before/After Views:**
+
 ```
 Before:  📄 CLAUDE.md (basic)
 After:   📄 CLAUDE.md (+ 6 methodologies, 14 standards)
 ```
 
 **Process Flow Diagrams:**
+
 ```
 🔄 Integration Process:
 [Analyze] → [Discover] → [Generate] → [Update] → [Verify]
@@ -104,6 +114,7 @@ After:   📄 CLAUDE.md (+ 6 methodologies, 14 standards)
 ### **Phase 3: Command-Specific Enhancements**
 
 #### 3.1 Init Command Enhancement
+
 ```
 🪴 Aichaku: Project initialization complete!
 
@@ -125,6 +136,7 @@ After:   📄 CLAUDE.md (+ 6 methodologies, 14 standards)
 ```
 
 #### 3.2 Upgrade Command Enhancement
+
 ```
 🪴 Aichaku: Upgrade complete!
 
@@ -154,6 +166,7 @@ Project configs:
 ```
 
 #### 3.3 Standards Command Enhancement
+
 ```
 🪴 Aichaku: Standards updated!
 
@@ -183,12 +196,14 @@ Project configs:
 ### **Phase 4: Visual Aid Library**
 
 #### 4.1 ASCII Art Components
+
 - Directory tree representations
 - Progress indicators
 - Process flow diagrams
 - Before/after comparisons
 
 #### 4.2 Icon System
+
 - 🪴 Aichaku branding
 - 📁 File/directory operations
 - ✅ Success indicators
@@ -214,11 +229,11 @@ class ContextualFeedback {
   }): void {
     // Implementation for consistent feedback
   }
-  
+
   static showDirectory(path: string, description: string): string {
     // Generate directory tree visualization
   }
-  
+
   static showProgress(current: number, total: number, phase: string): string {
     // Generate progress indicators
   }
@@ -235,12 +250,14 @@ class ContextualFeedback {
 ## Success Metrics
 
 ### **User Experience Metrics**
+
 - **Spatial Awareness**: Users know exactly where changes occurred
 - **Confidence**: Clear understanding of what happened
 - **Actionability**: Structured next steps for every operation
 - **Visual Clarity**: Diagrams help understand file relationships
 
 ### **Technical Metrics**
+
 - **Zero legacy files**: Complete elimination of outdated formats
 - **100% help compliance**: All commands respect --help flag
 - **Consistent patterns**: Unified guidance across all commands
@@ -249,16 +266,19 @@ class ContextualFeedback {
 ## Timeline
 
 ### **Day 1: Critical Fixes**
+
 - Remove RULES-REMINDER.md creation
 - Fix help screen bypassing
 - Test standards --remove functionality
 
 ### **Day 2: Contextual Guidance**
+
 - Audit all change-making commands
 - Implement enhanced feedback patterns
 - Add visual diagrams
 
 ### **Day 3: Testing & Refinement**
+
 - Comprehensive testing of all enhancements
 - User experience validation
 - Documentation updates
@@ -266,15 +286,19 @@ class ContextualFeedback {
 ## Future Enhancements
 
 ### **Advanced Visual Aids**
+
 - Interactive command previews
 - Real-time configuration visualization
 - Impact analysis diagrams
 
 ### **Smart Guidance**
+
 - Context-aware next steps
 - Personalized recommendations
 - Integration with project state
 
 ---
 
-This enhancement plan will transform the Aichaku CLI from a functional tool into an exceptional user experience that provides confidence, clarity, and actionable guidance at every step.
+This enhancement plan will transform the Aichaku CLI from a functional tool into
+an exceptional user experience that provides confidence, clarity, and actionable
+guidance at every step.

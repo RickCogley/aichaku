@@ -16,6 +16,18 @@ Before you start using Aichaku:
 
 ## 🆕 Latest Updates
 
+**v0.31.2+ - Foundation Quality & Pre-flight Standards**
+
+- **🏗️ FOUNDATION**: **Configuration-as-code compliance** - All hardcoded lists eliminated for maintainability
+- **🎨 CONSISTENCY**: **Unified branding** - All commands now use consistent `🪴 Aichaku:` messaging 
+- **🧹 CLEANUP**: **Legacy file elimination** - Removed outdated RULES-REMINDER.md creation
+- **⚡ PRE-FLIGHT**: **Senior engineer standards** - Automated linting, type checking, and testing workflow
+- **🔧 VISUAL GUIDANCE**: **Contextual feedback framework** - "What did I do and where" + "What's next" patterns
+- **✅ RELIABILITY**: **Help screen compliance** - All commands properly respect --help flag
+- **🔍 TYPE SAFETY**: **Zero TypeScript errors** - Complete type checking compliance
+
+**The Quality Foundation:** This release establishes enterprise-grade code quality standards with automated pre-flight checks (format/lint/check/test) and eliminates technical debt to prepare for advanced contextual guidance features.
+
 **v0.29.0 - YAML Configuration Revolution & Enhanced Automation**
 
 - **🔧 REVOLUTIONARY**: **YAML-based "configuration as code"** - 96% reduction
