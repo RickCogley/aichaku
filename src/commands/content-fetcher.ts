@@ -23,18 +23,22 @@ export async function fetchContent(
     `https://raw.githubusercontent.com/RickCogley/aichaku/v${version}/docs/${contentType}`;
 
   // Get the appropriate structure based on content type
-  // Try to fetch structure dynamically from a manifest file on GitHub
+  // First try to fetch a manifest.json from GitHub for dynamic discovery
   let structure: Record<string, unknown>;
   try {
-    structure = await fetchGitHubContentStructure(baseUrl, contentType);
+    structure = await fetchGitHubManifest(baseUrl, contentType);
   } catch {
-    // Fallback to local structure generation or hardcoded
+    // Fallback: Generate structure dynamically from GitHub's directory listing
+    // This is the preferred approach - configuration as code
     try {
-      structure = contentType === "methodologies"
-        ? getMethodologyStructure()
-        : getStandardsStructure();
+      structure = await fetchGitHubStructureDynamically(baseUrl, contentType);
     } catch {
       // Ultimate fallback - empty structure
+      if (!options.silent) {
+        console.warn(
+          `⚠️  Could not fetch content structure for ${contentType}. The repository may be unreachable.`,
+        );
+      }
       structure = {};
     }
   }
@@ -251,32 +255,103 @@ function getStandardsStructure(): Record<string, unknown> {
  * Used when content is available locally (e.g., development mode)
  */
 /**
- * Fetch content structure from GitHub using a manifest file
+ * Fetch content structure from a pre-built manifest file
  * @param baseUrl - The base URL for the GitHub repository
  * @param contentType - Type of content to fetch
  * @returns Promise resolving to content structure
  */
-async function fetchGitHubContentStructure(
+async function fetchGitHubManifest(
   baseUrl: string,
-  contentType: ContentType,
+  _contentType: ContentType,
 ): Promise<Record<string, unknown>> {
   // Try to fetch a manifest.json file from the repository
   const manifestUrl = `${baseUrl}/manifest.json`;
 
-  try {
-    const response = await fetch(manifestUrl);
-    if (response.ok) {
-      const manifest = await response.json();
-      return manifest.structure || {};
-    }
-  } catch {
-    // Manifest doesn't exist or couldn't be fetched
+  const response = await fetch(manifestUrl);
+  if (response.ok) {
+    const manifest = await response.json();
+    return manifest.structure || manifest;
   }
 
-  // Fallback to hardcoded structure
-  return contentType === "methodologies"
-    ? getMethodologyStructure()
-    : getStandardsStructure();
+  throw new Error("Manifest not found");
+}
+
+/**
+ * Dynamically fetch content structure using GitHub API tree endpoint
+ * This implements "configuration as code" by discovering files at runtime
+ * @param baseUrl - The base URL for the GitHub repository
+ * @param contentType - Type of content to fetch
+ * @returns Promise resolving to content structure
+ */
+async function fetchGitHubStructureDynamically(
+  baseUrl: string,
+  contentType: ContentType,
+): Promise<Record<string, unknown>> {
+  // Extract repo info from baseUrl
+  // baseUrl format: https://raw.githubusercontent.com/RickCogley/aichaku/v0.30.1/docs/methodologies
+  const urlParts = baseUrl.split("/");
+  const owner = urlParts[3]; // RickCogley
+  const repo = urlParts[4]; // aichaku
+  const ref = urlParts[5]; // v0.30.1
+  const path = urlParts.slice(6).join("/"); // docs/methodologies
+
+  // Use GitHub API to get directory tree
+  const apiUrl =
+    `https://api.github.com/repos/${owner}/${repo}/git/trees/${ref}?recursive=1`;
+
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error(`GitHub API request failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const tree = data.tree || [];
+
+    // Filter files that are in our content path and build structure
+    const structure: Record<string, unknown> = {};
+
+    for (const item of tree) {
+      if (item.type === "blob" && item.path.startsWith(path + "/")) {
+        // Remove the base path to get relative path
+        const relativePath = item.path.substring(path.length + 1);
+
+        // Skip hidden files, manifest files, and README files
+        if (
+          relativePath.startsWith(".") ||
+          relativePath.includes("manifest.json") ||
+          relativePath === "README.md"
+        ) {
+          continue;
+        }
+
+        // Build nested structure
+        const pathParts = relativePath.split("/");
+        let current = structure;
+
+        // Navigate/create nested structure
+        for (let i = 0; i < pathParts.length - 1; i++) {
+          const part = pathParts[i];
+          if (!current[part]) {
+            current[part] = {};
+          }
+          current = current[part] as Record<string, unknown>;
+        }
+
+        // Set the file (empty string value for compatibility)
+        const fileName = pathParts[pathParts.length - 1];
+        current[fileName] = "";
+      }
+    }
+
+    return structure;
+  } catch (error) {
+    // If GitHub API fails, fall back to hardcoded structure
+    console.warn(`Failed to fetch dynamic structure from GitHub API: ${error}`);
+    return contentType === "methodologies"
+      ? getMethodologyStructure()
+      : getStandardsStructure();
+  }
 }
 
 // Helper function to copy a file from source to target
