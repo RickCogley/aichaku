@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.31.4] - 2025-07-17
+
+### Changed
+
+- format checkpoint markdown file (788e112)
+- add checkpoint for aichaku configuration consolidation session (1bd0a3e)
+
+### Fixed
+
+- consolidate aichaku configuration and improve upgrade system (0f0696b)
+
 ## [0.31.3] - 2025-07-17
 
 ### Changed
