@@ -9,6 +9,7 @@ summary:
     - Shaping work before betting
     - No backlogs or sprints
   cycle_length: "6 weeks"
+  best_for: "Complex features"
   templates:
     - pitch.md
     - cycle-plan.md

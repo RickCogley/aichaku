@@ -72,7 +72,11 @@ interface StandardYaml {
 export async function learn(options: LearnOptions = {}): Promise<LearnResult> {
   try {
     const paths = getAichakuPaths();
-    const basePath = paths.global.root;
+    
+    // Use development directory if running in development mode
+    const isJSR = import.meta.url.startsWith("https://jsr.io") ||
+      !import.meta.url.includes("/aichaku/");
+    const basePath = isJSR ? paths.global.root : Deno.cwd();
 
     // List all resources
     if (options.all) {

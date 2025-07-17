@@ -9,6 +9,7 @@ summary:
     - Product Owner and Scrum Master roles
     - Definition of Done
   cycle_length: "1-4 weeks"
+  best_for: "Predictable delivery"
   templates:
     - sprint-planning.md
     - sprint-retrospective.md

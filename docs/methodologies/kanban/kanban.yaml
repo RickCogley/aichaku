@@ -9,6 +9,7 @@ summary:
     - Pull-based system
     - Just-in-time decisions
   cycle_length: "Continuous"
+  best_for: "Ongoing support"
   templates:
     - kanban-board.md
     - flow-metrics.md

@@ -9,6 +9,7 @@ summary:
     - Pull-based replenishment
     - Continuous delivery
   cycle_length: "Flexible (sprint-based planning with continuous flow)"
+  best_for: "Hybrid teams"
   templates:
     - planning-trigger.md
 

@@ -9,6 +9,7 @@ summary:
     - Refactoring
     - Small releases
   cycle_length: "1-3 weeks"
+  best_for: "Code quality"
   templates: []
 
 display:
