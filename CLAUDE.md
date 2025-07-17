@@ -10,7 +10,7 @@ This configuration is dynamically assembled from YAML files in your
 
 ```yaml
 aichaku:
-  version: 0.31.3
+  version: 0.31.4
   source: configuration-as-code
 behavioral_directives:
   discussion_first:

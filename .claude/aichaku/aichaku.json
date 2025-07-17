@@ -1,10 +1,10 @@
 {
-  "version": "0.31.3",
+  "version": "0.31.4",
   "installedAt": "2025-07-17T05:45:12.083Z",
   "installationType": "local",
-  "lastUpgrade": "2025-07-17T07:03:56.314Z",
+  "lastUpgrade": "2025-07-17T09:02:25.633Z",
   "standards": {
-    "version": "1.0.0",
+    "version": "0.31.3",
     "selected": [
       "nist-csf",
       "tdd",
