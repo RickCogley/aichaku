@@ -1,0 +1,21 @@
+{
+  "version": "0.32.0",
+  "installedAt": "2025-07-17T05:45:12.083Z",
+  "installationType": "local",
+  "lastUpgrade": "2025-07-17T10:52:18.702Z",
+  "standards": {
+    "version": "0.31.3",
+    "selected": [
+      "nist-csf",
+      "tdd",
+      "test-pyramid",
+      "conventional-commits",
+      "15-factor",
+      "clean-arch",
+      "google-style",
+      "bdd",
+      "dora",
+      "diataxis-google"
+    ]
+  }
+}
