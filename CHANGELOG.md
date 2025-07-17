@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.33.0] - 2025-07-17
+
+### Added
+
+- complete architecture consolidation and legacy format purge (94d94fd)
+- add automatic binary cleanup to build script (7218efd)
+
+### Fixed
+
+- prevent creation of separate aichaku-standards.json file (cdc1164)
+- restore missing aichaku.json metadata file (9fcd606)
+
 ## [0.32.0] - 2025-07-17
 
 ### Added
