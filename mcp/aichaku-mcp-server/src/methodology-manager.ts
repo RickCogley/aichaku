@@ -6,6 +6,10 @@ import { join } from "@std/path";
 import { exists } from "@std/fs";
 import type { Finding } from "./types.ts";
 import { safeReadDir, validatePath } from "./utils/path-security.ts";
+import {
+  getFallbackConfig,
+  getFallbackMethodologies,
+} from "./config/methodology-fallback.ts";
 
 export class MethodologyManager {
   private methodologyCache = new Map<string, string[]>();
@@ -66,8 +70,13 @@ export class MethodologyManager {
       return [...new Set(methodologies)] as string[];
     } catch (error) {
       console.error("Failed to discover methodologies globally:", error);
-      // Fallback to hardcoded list if discovery fails
-      return ["shape-up", "scrum", "kanban", "lean", "xp", "scrumban"];
+
+      // Use configuration-as-code fallback instead of hardcoded list
+      const fallbackConfig = getFallbackConfig();
+      console.warn(`Using fallback methodologies: ${fallbackConfig.reason}`);
+      console.warn(`Fallback last updated: ${fallbackConfig.lastUpdated}`);
+
+      return getFallbackMethodologies();
     }
   }
 

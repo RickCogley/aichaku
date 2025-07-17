@@ -132,7 +132,12 @@
       "Bash(do echo \"=== $file ===\")",
       "Bash(./dist/aichaku-0.31.3-macos-arm64 init:*)",
       "Bash(./dist/aichaku-0.31.3-macos-arm64:*)",
-      "Bash(./aichaku-test upgrade:*)"
+      "Bash(./aichaku-test upgrade:*)",
+      "Bash(./aichaku-macos-arm64:*)",
+      "Bash(./aichaku-macos-arm64 init:*)",
+      "Bash(./dist/aichaku-0.33.0-macos-arm64:*)",
+      "Bash(./aichaku --help)",
+      "Bash(ln:*)"
     ],
     "deny": []
   }

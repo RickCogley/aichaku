@@ -10,7 +10,7 @@ This configuration is dynamically assembled from YAML files in your
 
 ```yaml
 aichaku:
-  version: 0.32.0
+  version: 0.33.0
   source: configuration-as-code
 behavioral_directives:
   discussion_first:
@@ -201,6 +201,23 @@ file_organization:
       example: done-2025-07-14-consistent-branding
       transition: Rename from active-* to done-* when complete
 methodologies:
+  scrum:
+    name: Scrum
+    triggers: []
+    best_for: Predictable delivery
+    templates:
+      sprint_planning: templates/sprint-planning.md
+      sprint_retrospective: templates/sprint-retrospective.md
+      user_story: templates/user-story.md
+    phases: {}
+    integration_url: "aichaku://methodology/scrum/guide"
+  lean:
+    name: Lean Startup
+    triggers: []
+    best_for: New products
+    templates: {}
+    phases: {}
+    integration_url: "aichaku://methodology/lean/guide"
   shape_up:
     key_concepts:
       - "Fixed time, variable scope"
@@ -216,16 +233,14 @@ methodologies:
       - execution-plan.md
       - hill-chart.md
       - change-summary.md
-  scrum:
-    name: Scrum
+  scrumban:
+    name: Scrumban
     triggers: []
-    best_for: Predictable delivery
+    best_for: Hybrid teams
     templates:
-      sprint_planning: templates/sprint-planning.md
-      sprint_retrospective: templates/sprint-retrospective.md
-      user_story: templates/user-story.md
+      planning_trigger: templates/planning-trigger.md
     phases: {}
-    integration_url: "aichaku://methodology/scrum/guide"
+    integration_url: "aichaku://methodology/scrumban/guide"
   kanban:
     name: Kanban
     triggers: []
@@ -235,13 +250,6 @@ methodologies:
       flow_metrics: templates/flow-metrics.md
     phases: {}
     integration_url: "aichaku://methodology/kanban/guide"
-  lean:
-    name: Lean Startup
-    triggers: []
-    best_for: New products
-    templates: {}
-    phases: {}
-    integration_url: "aichaku://methodology/lean/guide"
   xp:
     name: Extreme Programming
     triggers: []
@@ -249,14 +257,6 @@ methodologies:
     templates: {}
     phases: {}
     integration_url: "aichaku://methodology/xp/guide"
-  scrumban:
-    name: Scrumban
-    triggers: []
-    best_for: Hybrid teams
-    templates:
-      planning_trigger: templates/planning-trigger.md
-    phases: {}
-    integration_url: "aichaku://methodology/scrumban/guide"
   shape-up:
     name: Shape Up
     triggers: []
@@ -269,17 +269,225 @@ methodologies:
       change_summary: templates/change-summary.md
     phases: {}
     integration_url: "aichaku://methodology/shape-up/guide"
-standards: {}
+standards:
+  nist-csf:
+    name: NIST Cybersecurity Framework (CSF 2.0)
+    category: security
+    summary:
+      critical: |
+        - Govern: Establish cybersecurity governance and risk management
+        - Identify: Understand risks to systems, people, assets, data
+        - Protect: Implement safeguards for critical services
+        - Detect: Identify occurrence of cybersecurity events
+        - Respond: Take action on detected incidents
+        - Recover: Restore capabilities after incidents
+      risk_based: Focuses on risk management over compliance
+      scalable: Applicable to organizations of all sizes
+      implementation: Code-based policies and automated controls
+    integration_url: "aichaku://standard/security/nist-csf"
+  tdd:
+    name: Test-Driven Development
+    category: development
+    summary:
+      critical: |
+        - Write failing tests FIRST before any implementation
+        - Follow Red-Green-Refactor cycle strictly
+        - Test behavior, not implementation details
+        - One assertion per test for clarity
+        - Use dependency injection for testability
+      test_structure: AAA (Arrange-Act-Assert) pattern
+      naming: Descriptive test names that explain the behavior
+      coverage: Aim for 80%+ coverage with meaningful tests
+      mocking: "Mock external dependencies, not internal implementation"
+      cycle_discipline: "Tests must fail initially, minimal implementation to pass, refactor without breaking"
+      isolation_requirements: "Tests run independently, no shared state, any execution order"
+      ci_integration: "All tests pass before merge, coverage reports generated, visible in PRs"
+      test_naming_patterns: "should [behavior] when [condition], returns [result] for [scenario]"
+    integration_url: "aichaku://standard/development/tdd"
+  test-pyramid:
+    name: Test Pyramid
+    category: testing
+    summary:
+      critical: |
+        - Unit Tests (Base): Many, fast, isolated tests of individual components
+        - Integration Tests (Middle): Some, moderate speed, test component interactions
+        - E2E Tests (Top): Few, slow, comprehensive user journey tests
+        - Pyramid shape: More unit tests, fewer integration, minimal E2E
+        - Fast feedback from unit tests, confidence from E2E tests
+      distribution: "70% unit, 20% integration, 10% E2E"
+      speed: "Unit tests <1s, Integration <10s, E2E <60s"
+      maintenance: Lower levels easier to maintain and debug
+      unit_characteristics: "Pure functions, no external dependencies, milliseconds execution, deterministic"
+      integration_scope: "Database operations, API endpoints, service interactions, real test services"
+      e2e_focus: "Critical user journeys only, production-like environment, browser automation"
+      anti_patterns: >-
+        Ice cream cone (too many E2E), Hourglass (missing integration), Testing trophy
+        (integration-heavy alternative)
+      tools_by_layer: "Unit: Jest/PyTest/JUnit, Integration: Supertest/TestContainers, E2E: Playwright/Cypress"
+    integration_url: "aichaku://standard/testing/test-pyramid"
+  conventional-commits:
+    name: Conventional Commits
+    category: development
+    summary:
+      critical: |
+        - Format: <type>[optional scope]: <description>
+        - Primary types: feat, fix, docs, style, refactor, test, chore
+        - Breaking changes: Use ! or BREAKING CHANGE footer
+        - Imperative mood: "add feature" not "added feature"
+        - 50 char subject limit, 72 char body line limit
+      automation: Enables semantic versioning and changelog generation
+      version_bumping: "fix=patch, feat=minor, breaking=major"
+      infosec_comment: "Use InfoSec: prefix for security implications"
+    integration_url: "aichaku://standard/development/conventional-commits"
+  15-factor:
+    name: 15-Factor App Methodology
+    category: architecture
+    summary:
+      critical: |
+        - Store ALL config in environment variables
+        - Execute as stateless processes (no in-memory state)
+        - Treat backing services as attached resources
+        - Export services via port binding
+        - Maximize robustness with fast startup and graceful shutdown
+      additional_factors: "API first design, comprehensive telemetry, centralized auth"
+      container_ready: Designed for Kubernetes and cloud platforms
+      dev_prod_parity: Keep all environments as similar as possible
+    integration_url: "aichaku://standard/architecture/15-factor"
+  clean-arch:
+    name: Clean Architecture
+    category: architecture
+    summary:
+      critical: |
+        - Dependency Rule: Dependencies point inward toward higher-level policies
+        - Four layers: Entities, Use Cases, Interface Adapters, Frameworks/Drivers
+        - Business logic independent of frameworks, UI, and databases
+        - Testable without external dependencies
+        - Enables flexible technology choices
+      independence: "Framework, UI, Database, and External agency independence"
+      testability: Business rules testable in isolation
+      dependency_direction: Always inward toward business logic
+    integration_url: "aichaku://standard/architecture/clean-arch"
+  google-style:
+    name: Google Style Guides
+    category: development
+    summary:
+      critical: |
+        - Optimize for the reader, not the writer
+        - Be consistent with existing code
+        - Clarity over cleverness
+        - Comprehensive documentation with examples
+        - Language-specific naming conventions
+      philosophy: Code is read far more often than it's written
+      languages: "TypeScript, JavaScript, Python, Java, Go, C++"
+      documentation: "JSDoc/docstrings with Args, Returns, Raises"
+    integration_url: "aichaku://standard/development/google-style"
+  bdd:
+    name: Behavior-Driven Development
+    category: testing
+    summary:
+      critical: |
+        - Collaboration between Business, Development, and Testing
+        - Gherkin language for shared understanding
+        - Given-When-Then scenario structure
+        - Living documentation that stays current
+        - Outside-in development approach
+      three_amigos: "Business (what), Development (how), Testing (what could go wrong)"
+      gherkin_keywords: "Feature, Scenario, Given, When, Then, And, But"
+      automation: Executable specifications that verify behavior
+    integration_url: "aichaku://standard/testing/bdd"
+  dora:
+    name: DORA Metrics
+    category: devops
+    summary:
+      critical: |
+        - Deployment Frequency: How often you deploy to production
+        - Lead Time for Changes: Time from commit to production
+        - Mean Time to Recovery (MTTR): Time to restore service after incident
+        - Change Failure Rate: Percentage of deployments causing failures
+      performance_levels: "Elite, High, Medium, Low performance categories"
+      correlation: Strong correlation with organizational performance
+      automation: Automated measurement through CI/CD and monitoring
+    integration_url: "aichaku://standard/devops/dora"
+  owasp-web:
+    name: OWASP Top 10 Web Application Security
+    category: security
+    summary:
+      critical: |
+        - A01: Broken Access Control - Validate authorization on EVERY request
+        - A02: Cryptographic Failures - Use strong encryption, secure key management
+        - A03: Injection - Parameterized queries, input validation, output encoding
+        - A07: Authentication Failures - Strong auth, proper session management
+        - A09: Logging Failures - Log security events WITHOUT sensitive data
+      security_headers: "X-Content-Type-Options, X-Frame-Options, HSTS, CSP"
+      input_validation: "Never trust user input - validate, sanitize, escape"
+      error_handling: "Generic error messages, log details server-side only"
+    integration_url: "aichaku://standard/security/owasp-web"
+  solid:
+    name: SOLID Principles
+    category: development
+    summary:
+      critical: |
+        - S: Single Responsibility - One reason to change per class
+        - O: Open/Closed - Open for extension, closed for modification
+        - L: Liskov Substitution - Subtypes must be substitutable
+        - I: Interface Segregation - Many specific interfaces > one general
+        - D: Dependency Inversion - Depend on abstractions, not concretions
+      object_oriented: Core principles for maintainable OOP design
+      flexibility: Enables code extension without modification
+      testability: Promotes dependency injection and mocking
+    integration_url: "aichaku://standard/development/solid"
+  microsoft-style:
+    name: Microsoft Writing Style Guide
+    category: documentation
+    summary:
+      critical: |
+        - Global-ready: Write for international audiences
+        - Accessible: Design for all abilities and contexts
+        - Inclusive: Welcome everyone with bias-free language
+        - Clear: Prioritize clarity over cleverness
+        - Empowering: Help users succeed and feel confident
+      tone: "Warm, approachable, and encouraging"
+      structure: Step-by-step with clear outcomes and verification
+      formatting: "Use bold for UI elements, tips and warnings in callouts"
+    integration_url: "aichaku://standard/documentation/microsoft-style"
+  diataxis-google:
+    name: Diátaxis + Google Developer Documentation Style
+    category: documentation
+    summary:
+      critical: |
+        - Four documentation modes: Tutorial, How-to, Reference, Explanation
+        - Tutorial: Learning-oriented, step-by-step lessons
+        - How-to: Task-oriented, problem-solving recipes
+        - Reference: Information-oriented, complete specification
+        - Explanation: Understanding-oriented, concept clarification
+      google_style: "Second person, present tense, active voice, clear outcomes"
+      user_centered: Different modes serve different user needs and contexts
+      separation: Keep modes separate - don't mix tutorial and reference
+    integration_url: "aichaku://standard/documentation/diataxis-google"
 included:
   core: true
   methodologies:
-    - shape-up
     - scrum
-    - kanban
     - lean
-    - xp
+    - shape-up
     - scrumban
-  standards: []
-  doc_standards: []
+    - kanban
+    - xp
+  standards:
+    - nist-csf
+    - tdd
+    - test-pyramid
+    - conventional-commits
+    - 15-factor
+    - clean-arch
+    - google-style
+    - bdd
+    - dora
+    - owasp-web
+    - "custom:aichaku-test-standard"
+    - solid
+    - microsoft-style
+  doc_standards:
+    - diataxis-google
   has_user_customizations: false
 ```

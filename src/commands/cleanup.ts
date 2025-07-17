@@ -6,6 +6,7 @@ import { safeRemove } from "../utils/path-security.ts";
 interface CleanupOptions {
   dryRun?: boolean;
   silent?: boolean;
+  help?: boolean;
 }
 
 interface CleanupResult {
@@ -20,6 +21,15 @@ interface CleanupResult {
 export async function cleanup(
   options: CleanupOptions = {},
 ): Promise<CleanupResult> {
+  // Show help if requested
+  if (options.help) {
+    showCleanupHelp();
+    return {
+      success: true,
+      message: "Help displayed",
+      filesRemoved: [],
+    };
+  }
   const paths = getAichakuPaths();
   const home = Deno.env.get("HOME") || "";
   const filesRemoved: string[] = [];
@@ -87,4 +97,35 @@ export async function cleanup(
     message: `Cleaned up ${filesRemoved.length} legacy file(s)`,
     filesRemoved,
   };
+}
+
+/**
+ * Show help information for the cleanup command
+ */
+function showCleanupHelp(): void {
+  console.log(`
+🪴 Aichaku Cleanup - Remove legacy files
+
+Removes old Aichaku files from legacy locations (~/.claude/.aichaku.json and old
+methodology/standards directories) to keep your system clean.
+
+Usage:
+  aichaku cleanup [options]
+
+Options:
+  -d, --dry-run     Preview what would be cleaned up without removing files
+  -s, --silent      Clean up silently with minimal output
+  -h, --help        Show this help message
+
+Examples:
+  aichaku cleanup                # Clean up legacy files
+  aichaku cleanup --dry-run      # Preview what would be cleaned
+  aichaku cleanup --silent       # Clean up quietly
+
+Notes:
+  • Only removes files from legacy locations
+  • Does not affect current Aichaku installations
+  • Safe to run multiple times
+  • Shows detailed list of removed files
+`);
 }

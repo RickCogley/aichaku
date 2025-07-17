@@ -36,6 +36,7 @@ interface IntegrateOptions {
   force?: boolean;
   silent?: boolean;
   dryRun?: boolean;
+  help?: boolean;
 }
 
 interface IntegrateResult {
@@ -255,6 +256,15 @@ ${YAML_CONFIG_END}
 export async function integrate(
   options: IntegrateOptions = {},
 ): Promise<IntegrateResult> {
+  // Show help if requested
+  if (options.help) {
+    showIntegrateHelp();
+    return {
+      success: true,
+      path: "",
+      message: "Help displayed",
+    };
+  }
   const projectPath = resolveProjectPath(options.projectPath);
   const claudeMdPath = join(projectPath, "CLAUDE.md");
   const aichakuPaths = paths.get();
@@ -405,4 +415,38 @@ async function _checkFileExists(path: string): Promise<boolean> {
   } catch {
     return false;
   }
+}
+
+/**
+ * Show help information for the integrate command
+ */
+function showIntegrateHelp(): void {
+  console.log(`
+🪴 Aichaku Integrate - Add Aichaku to project's CLAUDE.md
+
+Integrates Aichaku configuration-as-code into your project's CLAUDE.md file,
+providing Claude Code with methodology guidance and project standards.
+
+Usage:
+  aichaku integrate [options]
+
+Options:
+  -p, --project-path <path>  Project path (default: current directory)
+  -f, --force               Force integration even if already exists
+  -s, --silent              Integrate silently with minimal output
+  -d, --dry-run             Preview what would be integrated without applying changes
+  -h, --help                Show this help message
+
+Examples:
+  aichaku integrate                       # Integrate in current project
+  aichaku integrate --project-path /path  # Integrate in specific project
+  aichaku integrate --dry-run             # Preview integration changes
+  aichaku integrate --force               # Force re-integration
+
+Notes:
+  • Automatically detects selected methodologies and standards
+  • Generates configuration-as-code YAML blocks
+  • Preserves existing CLAUDE.md content
+  • Creates backup before making changes
+`);
 }

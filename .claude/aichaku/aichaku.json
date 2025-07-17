@@ -1,8 +1,8 @@
 {
-  "version": "0.32.0",
+  "version": "0.33.0",
   "installedAt": "2025-07-17T05:45:12.083Z",
   "installationType": "local",
-  "lastUpgrade": "2025-07-17T10:52:18.702Z",
+  "lastUpgrade": "2025-07-17T12:26:52.196Z",
   "standards": {
     "version": "0.31.3",
     "selected": [
@@ -14,8 +14,12 @@
       "clean-arch",
       "google-style",
       "bdd",
-      "dora",
-      "diataxis-google"
-    ]
+      "diataxis-google",
+      "owasp-web",
+      "microsoft-style",
+      "solid",
+      "dora"
+    ],
+    "customStandards": {}
   }
 }
