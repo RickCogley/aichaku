@@ -35,7 +35,7 @@ import { hooks } from "./src/commands/hooks.ts";
 import { standards } from "./src/commands/standards.ts";
 import { docsStandard } from "./src/commands/docs-standard.ts";
 import { runMCPCommand } from "./src/commands/mcp.ts";
-import { createMigrateCommand } from "./src/commands/migrate.ts";
+import { createMigrateCommand, showMigrateHelp } from "./src/commands/migrate.ts";
 import { runReviewCommand } from "./src/commands/review.ts";
 import { runGitHubCommand } from "./src/commands/github.ts";
 import { cleanup } from "./src/commands/cleanup.ts";
@@ -281,6 +281,7 @@ const options = {
   silent: args.silent,
   dryRun: args["dry-run"],
   check: args.check,
+  help: args.help,
 };
 
 // Execute command
@@ -660,6 +661,12 @@ ${
       // Use Cliffy command for migration
       const migrateCommand = createMigrateCommand();
 
+      // Check if help is requested at the top level
+      if (args.help) {
+        showMigrateHelp();
+        break;
+      }
+
       // Parse subargs first
       const subArgs = parseArgs(args._.slice(1).map(String), {
         boolean: [
@@ -687,6 +694,7 @@ ${
       if (subArgs["no-backup"]) migrateArgs.push("--no-backup");
       if (subArgs.verbose) migrateArgs.push("--verbose");
       if (subArgs.yes) migrateArgs.push("--yes");
+      if (subArgs.help) migrateArgs.push("--help");
 
       // Parse and execute
       await migrateCommand.parse(migrateArgs);

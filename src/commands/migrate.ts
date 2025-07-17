@@ -15,6 +15,53 @@ import {
 import { getAichakuPaths } from "../paths.ts";
 import { resolveProjectPath } from "../utils/project-paths.ts";
 
+export function showMigrateHelp(): void {
+  console.log(`
+🪴 Aichaku Migrate - Migrate from old structure to new structure
+
+Usage:
+  aichaku migrate [options]
+
+Options:
+  --dry-run        Show what would be migrated without actually migrating
+  --force          Force migration even if destination exists
+  --backup         Create backup before migration (default: true)
+  --no-backup      Skip creating backup
+  --global         Migrate global installation only
+  --no-global      Skip global migration
+  --project <path> Migrate specific project (default: current directory)
+  --verbose        Show detailed migration information
+  --yes            Skip confirmation prompts
+  --help           Show this help message
+
+Examples:
+  # Preview migration
+  aichaku migrate --dry-run
+
+  # Migrate with backup
+  aichaku migrate --backup
+
+  # Migrate global installation only
+  aichaku migrate --global
+
+  # Migrate specific project
+  aichaku migrate --project /path/to/project
+
+  # Force migration without confirmation
+  aichaku migrate --force --yes
+
+Migration Process:
+  1. Backs up existing ~/.claude/ directory
+  2. Moves methodologies to ~/.claude/aichaku/docs/methodologies/
+  3. Moves standards to ~/.claude/aichaku/docs/standards/
+  4. Updates project configurations
+  5. Preserves user customizations
+
+⚠️  WARNING: This will modify your existing ~/.claude/ directory structure.
+   A backup is created by default for safety.
+`);
+}
+
 // Command options interface
 interface MigrateCommandOptions {
   dryRun?: boolean;
@@ -25,6 +72,7 @@ interface MigrateCommandOptions {
   customStandardsOnly?: boolean;
   verbose?: boolean;
   yes?: boolean;
+  help?: boolean;
 }
 
 // Temporary placeholder for CLI command
@@ -42,6 +90,12 @@ class Command {
     return this;
   }
   parse(args: string[]): void {
+    // Check if help is requested
+    if (args.includes("--help") || args.includes("-h")) {
+      showMigrateHelp();
+      return;
+    }
+    
     // Placeholder implementation
     console.log("Migration command executed with args:", args);
   }

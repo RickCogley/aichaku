@@ -8,6 +8,7 @@ interface UninstallOptions {
   force?: boolean;
   silent?: boolean;
   dryRun?: boolean;
+  help?: boolean;
 }
 
 interface UninstallResult {
@@ -23,9 +24,55 @@ interface UninstallResult {
  * @param options - Uninstall options
  * @returns Promise with uninstall result
  */
+function showUninstallHelp(): void {
+  console.log(`
+🪴 Aichaku Uninstall - Remove Aichaku from your system
+
+Usage:
+  aichaku uninstall [options]
+
+Options:
+  --global         Remove global Aichaku installation (~/.claude/aichaku)
+  --force          Force removal without confirmation
+  --dry-run        Show what would be removed without actually removing
+  --silent         Suppress output
+  --help           Show this help message
+
+Examples:
+  # Remove global Aichaku installation
+  aichaku uninstall --global
+
+  # Remove local project Aichaku configuration
+  aichaku uninstall
+
+  # Preview what would be removed
+  aichaku uninstall --dry-run --global
+
+  # Force removal without confirmation
+  aichaku uninstall --global --force
+
+⚠️  WARNING: This will permanently remove Aichaku and all user customizations.
+   Consider backing up your customizations before uninstalling.
+
+User customizations are stored in:
+  • Global: ~/.claude/aichaku/user/
+  • Project: .claude/aichaku/user/
+`);
+}
+
 export async function uninstall(
   options: UninstallOptions = {},
 ): Promise<UninstallResult> {
+  // Show help if requested
+  if (options.help) {
+    showUninstallHelp();
+    return {
+      success: true,
+      path: "",
+      message: "Help displayed",
+    };
+  }
+
   const isGlobal = options.global || false;
   const paths = getAichakuPaths();
 
