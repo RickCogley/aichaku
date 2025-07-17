@@ -6,7 +6,7 @@
  * The |> safe filter is used to output raw values without escaping.
  */
 
-export const VERSION = "0.31.1";
+export const VERSION = "0.31.0";
 
 export const BUILD_INFO = {
   buildDate: "2025-07-17T00:26:48.044Z",
@@ -15,7 +15,7 @@ export const BUILD_INFO = {
   versionComponents: {
     major: 0,
     minor: 31,
-    patch: 1,
+    patch: 0,
     prerelease: null,
   },
 } as const;
