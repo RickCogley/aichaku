@@ -96,7 +96,7 @@ export function getAichakuPaths(): AichakuPaths {
     project: {
       root: join(cwd, ".claude", "aichaku"),
       output: join(cwd, "docs", "projects"),
-      config: join(cwd, ".claude", "aichaku", "aichaku.config.json"),
+      config: join(cwd, ".claude", "aichaku", "aichaku.json"),
       active: join(cwd, "docs", "projects", "active"),
       done: join(cwd, "docs", "projects", "done"),
     },
