@@ -573,6 +573,87 @@ Examples:
 | 🚀    | Execution   |
 | 📊    | Improvement |
 
+## Configuration Architecture Files
+
+### Core Configuration Files (src/config/)
+
+**Introduced in v0.31.2+** - Configuration-as-code system for enterprise-grade maintainability.
+
+#### methodology-fallback.ts
+
+Emergency fallback configuration when dynamic methodology discovery fails.
+
+```typescript
+interface MethodologyFallbackConfig {
+  methodologies: string[];
+  reason: string;
+  lastUpdated: string;
+}
+
+export const METHODOLOGY_FALLBACK_CONFIG: MethodologyFallbackConfig = {
+  methodologies: ["shape-up", "scrum", "kanban", "lean", "xp", "scrumban"],
+  reason: "Emergency fallback when dynamic discovery fails",
+  lastUpdated: "2025-07-17",
+};
+```
+
+**Usage**: `getFallbackMethodologies()` - Returns array of methodology names
+
+#### methodology-defaults.ts
+
+Default methodology lists for new installations and general fallbacks.
+
+```typescript
+export const METHODOLOGY_DEFAULTS = {
+  defaultMethodologies: ["shape-up", "scrum", "kanban", "lean", "xp", "scrumban"],
+  description: "Default methodologies for new installations and fallbacks",
+  lastUpdated: "2025-07-17",
+};
+```
+
+**Usage**: Used by installation and initialization processes
+
+#### methodology-templates.ts  
+
+Template file mappings for each methodology.
+
+```typescript
+export const METHODOLOGY_TEMPLATE_CONFIG = {
+  templates: {
+    "shape-up": ["STATUS.md", "pitch.md", "hill-chart.md"],
+    "scrum": ["sprint-planning.md", "retrospective.md"],
+    "kanban": ["kanban-board.md", "flow-metrics.md"],
+    // ... complete mapping for all methodologies
+  },
+};
+```
+
+**Usage**: Determines which templates to create for each methodology
+
+### MCP Server Configuration Files
+
+#### mcp/aichaku-mcp-server/src/config/methodology-fallback.ts
+
+Identical interface to main fallback config, used by MCP server for consistency.
+
+**Purpose**: Ensures MCP server and main CLI use identical fallback methodologies
+
+### Configuration Principles
+
+1. **Single Source of Truth**: Each configuration aspect has exactly one authoritative source
+2. **Type Safety**: All configurations use TypeScript interfaces for compile-time validation  
+3. **Documentation**: Each file includes purpose, reason, and last updated metadata
+4. **Version Control**: All configuration changes are tracked with git commit messages
+5. **No Hardcoding**: Business logic never contains hardcoded configuration values
+
+### Benefits
+
+- **Maintainable**: Adding methodologies requires only config file changes
+- **Auditable**: All configuration is version controlled and documented
+- **Testable**: Configuration can be validated independently 
+- **Scalable**: Easy to extend without modifying business logic
+- **Consistent**: Eliminates risk of scattered hardcoded lists getting out of sync
+
 ### Methodology icons
 
 | Emoji | Methodology |

@@ -381,6 +381,52 @@ Notice how:
 - Creation happens explicitly
 - Structure appears when ready
 
+## Foundation Quality Principles
+
+Aichaku is built on enterprise-grade quality standards that ensure reliability and maintainability:
+
+### Configuration-as-Code Architecture 🏗️
+
+**Principle**: Single source of truth for all configurations
+- All hardcoded lists eliminated in favor of dedicated configuration files
+- Methodology fallbacks, defaults, and templates centrally managed
+- Changes require only configuration updates, not code modifications
+- Maintainable and auditable configuration management
+
+### Consistent User Experience 🎨
+
+**Principle**: Unified branding and messaging across all commands
+- All user-facing output uses `🪴 Aichaku:` branding consistently
+- Brand.* functions ensure coherent visual identity
+- Clear, actionable feedback for all operations
+- Professional CLI interface standards
+
+### Senior Engineer Standards ⚡
+
+**Principle**: Code quality through automated verification
+- Pre-flight checks: format, lint, type-check, test (all must pass)
+- Zero tolerance for TypeScript errors or linting violations
+- Comprehensive test coverage with 100% pass rate
+- Clean git history with logical commit groupings
+
+### Help System Compliance ✅
+
+**Principle**: Predictable CLI behavior patterns
+- All commands respect `--help` flag without execution
+- Consistent help text formatting and information architecture
+- Command discovery through standard CLI conventions
+- User confidence through reliable interface patterns
+
+### Visual Guidance Framework 🔧
+
+**Principle**: Contextual feedback for user understanding
+- "What did I do and where" explanations for all operations
+- "What's next" structured guidance with actionable steps
+- Visual diagrams for spatial awareness (directory trees, process flows)
+- Enhanced user confidence through clear communication
+
+These foundation principles ensure Aichaku provides enterprise-ready tooling with consistent quality across all features.
+
 ## Summary
 
 Aichaku's core concepts work together to create a development environment that's
