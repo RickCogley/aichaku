@@ -78,14 +78,14 @@ export interface ReleaseConfig {
       token?: string;
     };
   };
-  
+
   binaries: {
     enabled: boolean;
     platforms: Platform[];
     uploadToGitHub: boolean;
     checksums: boolean;
   };
-  
+
   validation: {
     typeCheck: boolean;
     tests: boolean;
@@ -93,14 +93,14 @@ export interface ReleaseConfig {
     security: boolean;
     coverage?: number;
   };
-  
+
   git: {
     tagPrefix: string;
     pushTags: boolean;
     requireCleanTree: boolean;
     defaultBranch: string;
   };
-  
+
   dryRun?: boolean;
   resumeFrom?: ReleasePhase;
 }
@@ -108,27 +108,27 @@ export interface ReleaseConfig {
 export const defaultConfig: ReleaseConfig = {
   registries: {
     npm: { enabled: true },
-    jsr: { enabled: true }
+    jsr: { enabled: true },
   },
   binaries: {
     enabled: true,
     platforms: ["darwin-x64", "darwin-arm64", "linux-x64", "windows-x64"],
     uploadToGitHub: true,
-    checksums: true
+    checksums: true,
   },
   validation: {
     typeCheck: true,
     tests: true,
     lint: true,
     security: true,
-    coverage: 80
+    coverage: 80,
   },
   git: {
     tagPrefix: "v",
     pushTags: true,
     requireCleanTree: true,
-    defaultBranch: "main"
-  }
+    defaultBranch: "main",
+  },
 };
 ```
 
@@ -145,7 +145,7 @@ enum ReleasePhase {
   UPLOADING_BINARIES = "uploading_binaries",
   COMPLETED = "completed",
   FAILED = "failed",
-  ROLLED_BACK = "rolled_back"
+  ROLLED_BACK = "rolled_back",
 }
 
 interface ReleaseState {
@@ -176,23 +176,23 @@ export class TypeChecker implements Validator {
       "check",
       "--unstable",
       "**/*.ts",
-      "**/*.tsx"
+      "**/*.tsx",
     ]);
-    
+
     if (result.code !== 0) {
       // Parse errors and provide actionable fixes
       const errors = parseTypeErrors(result.stderr);
       return {
         success: false,
-        errors: errors.map(e => ({
+        errors: errors.map((e) => ({
           file: e.file,
           line: e.line,
           message: e.message,
-          suggestion: getSuggestion(e)
-        }))
+          suggestion: getSuggestion(e),
+        })),
       };
     }
-    
+
     return { success: true };
   }
 }
@@ -204,21 +204,22 @@ export class TypeChecker implements Validator {
 export class NpmPublisher implements Publisher {
   async publish(version: string, config: PublishConfig): Promise<void> {
     await this.validateAuth();
-    
+
     const maxRetries = 3;
     let lastError: Error | null = null;
-    
+
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
         logger.info(`Publishing to NPM (attempt ${attempt}/${maxRetries})...`);
-        
+
         await runCommand([
           "npm",
           "publish",
-          "--access", "public",
-          ...(config.dryRun ? ["--dry-run"] : [])
+          "--access",
+          "public",
+          ...(config.dryRun ? ["--dry-run"] : []),
         ]);
-        
+
         logger.success("NPM publish successful!");
         return;
       } catch (error) {
@@ -229,7 +230,7 @@ export class NpmPublisher implements Publisher {
         }
       }
     }
-    
+
     throw new PublishError("NPM publish failed after all retries", lastError);
   }
 }
@@ -241,7 +242,7 @@ export class NpmPublisher implements Publisher {
 export class GitManager {
   async createAndPushTag(version: string, prefix: string): Promise<void> {
     const tag = `${prefix}${version}`;
-    
+
     // Create annotated tag
     await runCommand([
       "git",
@@ -249,25 +250,25 @@ export class GitManager {
       "-a",
       tag,
       "-m",
-      `Release ${version}`
+      `Release ${version}`,
     ]);
-    
+
     // Push tag to remote
     await runCommand([
       "git",
       "push",
       "origin",
-      tag
+      tag,
     ]);
-    
+
     logger.success(`Tag ${tag} created and pushed`);
   }
-  
+
   async validateCleanTree(): Promise<void> {
     const status = await runCommand(["git", "status", "--porcelain"]);
     if (status.stdout.trim()) {
       throw new ValidationError(
-        "Working tree is not clean. Commit or stash changes before release."
+        "Working tree is not clean. Commit or stash changes before release.",
       );
     }
   }
@@ -280,31 +281,33 @@ export class GitManager {
 export class BinaryBuilder {
   async buildForPlatforms(platforms: Platform[]): Promise<BuildResult[]> {
     const results: BuildResult[] = [];
-    
+
     for (const platform of platforms) {
       logger.info(`Building for ${platform}...`);
-      
+
       const [os, arch] = platform.split("-");
       const outputPath = `./dist/aichaku-${os}-${arch}`;
-      
+
       await runCommand([
         "deno",
         "compile",
         "--allow-all",
-        "--target", platform,
-        "--output", outputPath,
-        "./cli.ts"
+        "--target",
+        platform,
+        "--output",
+        outputPath,
+        "./cli.ts",
       ]);
-      
+
       const checksum = await generateChecksum(outputPath);
       results.push({
         platform,
         path: outputPath,
         checksum,
-        size: await getFileSize(outputPath)
+        size: await getFileSize(outputPath),
       });
     }
-    
+
     return results;
   }
 }
@@ -317,27 +320,30 @@ export class ReleaseErrorHandler {
   async handleError(
     error: Error,
     state: ReleaseState,
-    config: ReleaseConfig
+    config: ReleaseConfig,
   ): Promise<RecoveryAction> {
     logger.error(`Release failed in phase: ${state.phase}`);
     logger.error(error.message);
-    
+
     // Determine recovery action based on phase and error type
-    if (state.phase === ReleasePhase.PUBLISHING_NPM && state.artifacts.npmPublished) {
+    if (
+      state.phase === ReleasePhase.PUBLISHING_NPM &&
+      state.artifacts.npmPublished
+    ) {
       return {
         action: "continue",
-        message: "NPM already published, continuing with JSR..."
+        message: "NPM already published, continuing with JSR...",
       };
     }
-    
+
     if (config.resumeFrom) {
       return {
         action: "resume",
         fromPhase: config.resumeFrom,
-        message: `Resuming from ${config.resumeFrom} phase...`
+        message: `Resuming from ${config.resumeFrom} phase...`,
       };
     }
-    
+
     // Offer rollback for critical failures
     if (state.artifacts.npmPublished || state.artifacts.jsrPublished) {
       const shouldRollback = await confirm("Rollback published packages?");
@@ -345,7 +351,7 @@ export class ReleaseErrorHandler {
         return { action: "rollback" };
       }
     }
-    
+
     return { action: "abort" };
   }
 }
@@ -358,18 +364,18 @@ export class ReleaseErrorHandler {
 export async function main() {
   const args = parseArgs(Deno.args);
   const config = await loadConfig(args);
-  
+
   const orchestrator = new ReleaseOrchestrator(config);
   const ui = new ReleaseUI();
-  
+
   orchestrator.on("phase:start", (phase) => {
     ui.updateProgress(phase);
   });
-  
+
   orchestrator.on("phase:complete", (phase) => {
     ui.markComplete(phase);
   });
-  
+
   try {
     await orchestrator.run();
     ui.showSuccess("Release completed successfully!");
@@ -395,22 +401,24 @@ export class ReleaseUI {
     "Publishing NPM",
     "Publishing JSR",
     "Git Tagging",
-    "Uploading Binaries"
+    "Uploading Binaries",
   ];
-  
+
   updateProgress(phase: ReleasePhase) {
-    this.spinner.start(`${this.getPhaseEmoji(phase)} ${this.getPhaseText(phase)}`);
+    this.spinner.start(
+      `${this.getPhaseEmoji(phase)} ${this.getPhaseText(phase)}`,
+    );
   }
-  
+
   markComplete(phase: ReleasePhase) {
     this.spinner.succeed(`✅ ${this.getPhaseText(phase)} completed`);
   }
-  
+
   showSuccess(message: string) {
     console.log(chalk.green.bold(`\n🎉 ${message}`));
     this.showSummary();
   }
-  
+
   private showSummary() {
     console.log("\n📊 Release Summary:");
     console.log("  • NPM: ✅ Published");

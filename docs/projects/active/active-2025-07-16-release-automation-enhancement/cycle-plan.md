@@ -1,6 +1,7 @@
 # Cycle Plan: Release Automation Enhancement
 
 ## Cycle Overview
+
 - **Duration**: 4 days
 - **Team**: 1 developer
 - **Start Date**: 2025-07-16
@@ -9,7 +10,9 @@
 ## Day-by-Day Breakdown
 
 ### Day 1: Foundation & Validation Framework
+
 **Morning (4 hours)**
+
 - [ ] Create `scripts/release/` directory structure
 - [ ] Implement `release.config.ts` with configuration schema
 - [ ] Build pre-flight validation framework
@@ -19,6 +22,7 @@
   - [ ] Registry readiness checker
 
 **Afternoon (4 hours)**
+
 - [ ] Implement validation runners
   - [ ] Test runner with coverage check
   - [ ] Lint runner
@@ -27,7 +31,9 @@
 - [ ] Build validation CLI with progress indicators
 
 ### Day 2: Release Orchestration Core
+
 **Morning (4 hours)**
+
 - [ ] Design release state machine
 - [ ] Implement release orchestrator class
 - [ ] Build registry publishers
@@ -36,6 +42,7 @@
   - [ ] Version synchronization
 
 **Afternoon (4 hours)**
+
 - [ ] Implement git operations
   - [ ] Tag creation and verification
   - [ ] Automatic tag pushing
@@ -44,7 +51,9 @@
 - [ ] Create release state persistence
 
 ### Day 3: Binary Management & GitHub Integration
+
 **Morning (4 hours)**
+
 - [ ] Implement binary builder
   - [ ] Multi-platform compilation
   - [ ] Binary verification
@@ -54,6 +63,7 @@
   - [ ] Asset upload with progress
 
 **Afternoon (4 hours)**
+
 - [ ] Build error recovery system
   - [ ] Intelligent retry logic
   - [ ] Partial failure handling
@@ -62,7 +72,9 @@
 - [ ] Add release resumption capability
 
 ### Day 4: Integration & Polish
+
 **Morning (4 hours)**
+
 - [ ] Create unified `deno task release` command
 - [ ] Integrate all components
 - [ ] Add comprehensive logging
@@ -70,6 +82,7 @@
 - [ ] Implement progress notifications
 
 **Afternoon (4 hours)**
+
 - [ ] Testing and bug fixes
   - [ ] End-to-end release testing
   - [ ] Error scenario testing
@@ -80,6 +93,7 @@
 - [ ] Final polish and cleanup
 
 ## Success Metrics
+
 1. **Zero Manual Steps**: Complete release with single command
 2. **Fast Feedback**: All validations complete in <30 seconds
 3. **Reliable Publishing**: 100% success rate with retry logic
@@ -87,18 +101,21 @@
 5. **Backward Compatible**: Existing commands still work
 
 ## Risk Mitigation
+
 - **JSR API Changes**: Abstract registry interfaces for flexibility
 - **Type Checking Complexity**: Start with basic checks, iterate
 - **Platform Differences**: Test on all major platforms early
 - **Time Constraints**: Focus on core flow first, enhance later
 
 ## Dependencies
+
 - Existing release scripts in `scripts/`
 - Deno APIs for process management
 - GitHub CLI or API tokens for releases
 - NPM and JSR authentication tokens
 
 ## Out of Scope
+
 - Changelog generation (separate tool)
 - Version bump automation (manual for now)
 - CI/CD pipeline changes
