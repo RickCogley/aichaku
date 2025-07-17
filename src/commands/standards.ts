@@ -607,7 +607,10 @@ async function addStandards(
 
   let added = 0;
   for (const id of ids) {
-    if (config.selected.includes(id)) {
+    // Normalize the ID to handle both old and new formats
+    const normalizedId = normalizeStandardId(id);
+    
+    if (config.selected.includes(normalizedId)) {
       console.log(`⚠️  ${id} already selected`);
       continue;
     }
@@ -639,8 +642,9 @@ async function addStandards(
       continue;
     }
 
-    config.selected.push(id);
-    console.log(`✅ Added ${id}: ${standard.name}`);
+    // Store the normalized ID
+    config.selected.push(normalizedId);
+    console.log(`✅ Added ${normalizedId}: ${standard.name}`);
     added++;
   }
 
@@ -695,7 +699,10 @@ async function removeStandards(
 
   let removed = 0;
   for (const id of ids) {
-    const index = config.selected.indexOf(id);
+    // Normalize the ID to handle both old and new formats
+    const normalizedId = normalizeStandardId(id);
+    
+    const index = config.selected.indexOf(normalizedId);
     if (index === -1) {
       console.log(`⚠️  ${id} not selected`);
       continue;
@@ -1149,10 +1156,10 @@ async function loadProjectConfig(path: string): Promise<ProjectConfig> {
         throw new Error("Invalid configuration format");
       }
 
-      // Sanitize selected array
+      // Sanitize selected array and normalize IDs
       parsed.selected = parsed.selected.filter(
         (id: unknown) => typeof id === "string" && id.length > 0,
-      );
+      ).map((id: string) => normalizeStandardId(id));
 
       return parsed as ProjectConfig;
     } catch (_error) {
@@ -1200,11 +1207,22 @@ async function saveProjectConfig(
 /**
  * Helper: Find a standard by ID (handles both built-in and custom standards)
  */
+/**
+ * Normalize standard ID to handle both old format (nist-csf) and new format (nist-csf.yaml)
+ */
+function normalizeStandardId(id: string): string {
+  // Remove .yaml extension if present
+  return id.replace(/\.yaml$/, "");
+}
+
 async function findStandard(id: string): Promise<Standard | null> {
   // Handle custom standards
   if (id.startsWith("custom:")) {
     return null; // Custom standards are handled separately
   }
+
+  // Normalize the ID to handle both formats
+  const normalizedId = normalizeStandardId(id);
 
   // Get dynamically discovered standards
   const discovered = await getDiscoveredStandards();
@@ -1213,7 +1231,9 @@ async function findStandard(id: string): Promise<Standard | null> {
   for (const items of Object.values(discovered.categories)) {
     for (const item of items) {
       const standardId = item.path.split("/").pop()?.replace(".md", "") || "";
-      if (standardId === id) {
+      const normalizedStandardId = normalizeStandardId(standardId);
+      
+      if (normalizedStandardId === normalizedId) {
         return {
           name: item.name,
           description: item.description,
