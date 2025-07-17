@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.31.5] - 2025-07-17
+
+### Changed
+
+- restore test configuration and update CLAUDE.md (041a49b)
+
+### Fixed
+
+- preserve existing metadata fields during upgrade (f8fd18d)
+
 ## [0.31.4] - 2025-07-17
 
 ### Changed
