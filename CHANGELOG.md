@@ -6,6 +6,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.34.0] - 2025-07-17
+
+### Added
+
+- add enhanced contextual guidance demonstration (90baab5)
+- implement foundation fixes for senior engineer quality standards (0714218)
+
+### Changed
+
+- add comprehensive foundation quality documentation across core sections
+  (fef4663)
+- update project documentation and central docs with foundation improvements
+  (6aec75c)
+- foundation fixes completion - senior engineer quality standards (20fc5a3)
+
+### Fixed
+
+- apply deno fmt to resolve release-blocking formatting issues (5d87e36)
+- complete configuration cleanup and integration improvements (dd1548d)
+- resolve pre-flight testing issues for TypeScript compliance (313a05b)
+
 ## [0.33.0] - 2025-07-17
 
 ### Added
