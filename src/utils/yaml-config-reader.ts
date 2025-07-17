@@ -11,6 +11,7 @@ import { parse, stringify } from "jsr:@std/yaml@1";
 import { join } from "jsr:@std/path@1";
 import { exists } from "jsr:@std/fs@1";
 import { VERSION } from "../../version.ts";
+import { getDefaultMethodologies } from "../config/methodology-defaults.ts";
 
 interface YamlConfig {
   [key: string]: unknown;
@@ -230,7 +231,7 @@ export async function assembleYamlConfig(options: {
   // First, get methodology quick reference
   const allMethodologies = selectedMethodologies.length > 0
     ? selectedMethodologies
-    : ["shape-up", "scrum", "kanban", "lean", "xp", "scrumban"];
+    : getDefaultMethodologies();
   const methodologyQuickRef: YamlConfig = { methodologies: {} };
 
   for (const methodology of allMethodologies) {
@@ -296,8 +297,7 @@ export async function getMethodologyQuickReference(
   methodologiesPath: string,
   selected?: string[],
 ): Promise<string> {
-  const allMethodologies = selected ||
-    ["shape-up", "scrum", "kanban", "lean", "xp", "scrumban"];
+  const allMethodologies = selected || getDefaultMethodologies();
   const quickRef: YamlConfig = { methodologies: {} };
 
   for (const methodology of allMethodologies) {

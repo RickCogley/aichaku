@@ -304,8 +304,8 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     const aichakuBehaviorPath = join(targetPath, ".aichaku-behavior");
     await Deno.writeTextFile(aichakuBehaviorPath, getBehaviorContent());
 
-    const rulesReminderPath = join(targetPath, "RULES-REMINDER.md");
-    await Deno.writeTextFile(rulesReminderPath, getRulesReminderContent());
+    // RULES-REMINDER.md removed as part of architecture consolidation
+    // Legacy file creation eliminated per senior engineer audit
 
     if (!options.silent) {
       if (!isGlobal) {
@@ -583,33 +583,5 @@ IMPORTANT: Creating proper structure is AUTOMATIC, not optional.
 `;
 }
 
-function getRulesReminderContent(): string {
-  return `# 🚨 AICHAKU RULES REMINDER
-
-## Before creating ANY file, check:
-
-1. ✅ Is it going in \`docs/projects/active/*/\`?
-2. ✅ Does STATUS.md exist there?
-3. ✅ Have I updated STATUS.md recently?
-
-If any answer is NO → FIX IT FIRST!
-
-## Quick Fixes:
-
-### Wrong location?
-\`\`\`bash
-mv [file] docs/projects/active/[current-project]/
-\`\`\`
-
-### No STATUS.md?
-Create it immediately with project info.
-
-### Not sure where to put files?
-ALWAYS: \`docs/projects/active/YYYY-MM-DD-{project-name}/\`
-
-## Remember:
-- This is AUTOMATIC behavior
-- Users expect files in the right place
-- No asking, just doing
-`;
-}
+// getRulesReminderContent function removed as part of architecture consolidation
+// Legacy file creation eliminated per senior engineer audit

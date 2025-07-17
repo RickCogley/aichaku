@@ -7,6 +7,7 @@
 import { parseArgs } from "jsr:@std/cli@1";
 import { exists } from "jsr:@std/fs@1";
 import { join } from "jsr:@std/path@1";
+import { getMethodologyTemplateMap } from "../config/methodology-templates.ts";
 import {
   type ConfigManager,
   createProjectConfigManager,
@@ -62,8 +63,8 @@ export async function upgradeCommand(args: string[]): Promise<void> {
       await configManager.load();
     } catch (error) {
       if ((error as Error).message.includes("No Aichaku configuration found")) {
-        console.log("❌ No Aichaku installation found in current directory");
-        console.log("Run 'aichaku init' to initialize this project");
+        Brand.error("No Aichaku installation found in current directory");
+        Brand.info("Run 'aichaku init' to initialize this project");
         return;
       }
 
@@ -81,14 +82,14 @@ export async function upgradeCommand(args: string[]): Promise<void> {
           });
 
           if (!migrationResult.success) {
-            console.log("❌ Migration failed:");
+            Brand.error("Migration failed:");
             migrationResult.errors.forEach((error) =>
               console.log(`   ${error}`)
             );
             return;
           }
 
-          console.log("✅ Migration completed successfully");
+          Brand.success("Migration completed successfully");
           await configManager.load(); // Reload after migration
         } else {
           console.log(
@@ -134,7 +135,7 @@ export async function upgradeCommand(args: string[]): Promise<void> {
       console.log(`\n✅ Already at version ${targetVersion}`);
 
       if (needsMigration) {
-        console.log("   Configuration has been migrated to v2.0.0 format");
+        Brand.info("Configuration has been migrated to v2.0.0 format");
       }
 
       return;
@@ -153,7 +154,7 @@ export async function upgradeCommand(args: string[]): Promise<void> {
     if (
       !options.force && !await confirmUpgrade(currentVersion, targetVersion)
     ) {
-      console.log("❌ Upgrade cancelled");
+      Brand.error("Upgrade cancelled");
       return;
     }
 
@@ -235,13 +236,13 @@ async function performUpgrade(
 
   // Clean up legacy files if requested
   if (options.cleanup) {
-    console.log("🧹 Cleaning up legacy files...");
+    Brand.info("Cleaning up legacy files...");
     await configManager.cleanupLegacyFiles();
   }
 
   if (options.verbose) {
-    console.log("✓ Configuration updated successfully");
-    console.log("✓ Version information saved");
+    Brand.success("Configuration updated successfully");
+    Brand.success("Version information saved");
   }
 }
 
@@ -259,14 +260,14 @@ async function performVersionSpecificUpgrades(
   if (targetVersion.startsWith("0.30.")) {
     // Hypothetical v0.30.x upgrade tasks
     if (options.verbose) {
-      console.log("✓ Applied v0.30.x compatibility updates");
+      Brand.success("Applied v0.30.x compatibility updates");
     }
   }
 
   if (targetVersion.startsWith("1.0.")) {
     // Hypothetical v1.0.x upgrade tasks
     if (options.verbose) {
-      console.log("✓ Applied v1.0.x major version updates");
+      Brand.success("Applied v1.0.x major version updates");
     }
   }
 
@@ -296,12 +297,8 @@ async function updateMethodologyFiles(
   }
 
   // Update methodology templates based on new version
-  const templateUpdates = {
-    "shape-up": ["STATUS.md", "pitch.md", "hill-chart.md"],
-    "scrum": ["sprint-planning.md", "retrospective.md"],
-    "kanban": ["kanban-board.md", "flow-metrics.md"],
-    "lean": ["experiment-plan.md"],
-  };
+  // Use configuration-as-code instead of hardcoded mappings
+  const templateUpdates = getMethodologyTemplateMap();
 
   const files = templateUpdates[methodology as keyof typeof templateUpdates];
   if (files && options.verbose) {
@@ -370,7 +367,7 @@ async function confirmUpgrade(
   console.log(
     `\n⚠️  This will upgrade from ${currentVersion} to ${targetVersion}`,
   );
-  console.log("Continue? [y/N] ", { noNewLine: true });
+  Brand.info("Continue? [y/N] ", { noNewLine: true });
 
   const buf = new Uint8Array(1024);
   const n = await Deno.stdin.read(buf) ?? 0;
