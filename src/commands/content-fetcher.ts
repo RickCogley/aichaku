@@ -20,7 +20,7 @@ export async function fetchContent(
   options: FetchOptions = {},
 ): Promise<boolean> {
   const baseUrl =
-    `https://raw.githubusercontent.com/RickCogley/aichaku/v${version}/${contentType}`;
+    `https://raw.githubusercontent.com/RickCogley/aichaku/v${version}/docs/${contentType}`;
 
   // Get the appropriate structure based on content type
   // Try to fetch structure dynamically from a manifest file on GitHub
@@ -164,7 +164,7 @@ function getMethodologyStructure(): Record<string, unknown> {
     "BLENDING-GUIDE.md": "",
     "COMMANDS.md": "",
     "README.md": "",
-    "core": {
+    "common": {
       "PLANNING-MODE.md": "",
       "PLANNING-MODE-ADAPTIVE.md": "",
       "EXECUTION-MODE.md": "",
