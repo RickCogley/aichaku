@@ -8,7 +8,7 @@
  * @module
  */
 
-import { normalize, resolve } from "@std/path";
+import { normalize, resolve } from "jsr:@std/path@1";
 
 /**
  * Validates that a path stays within the allowed base directory

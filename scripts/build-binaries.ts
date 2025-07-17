@@ -285,70 +285,70 @@ async function runPreflightChecks(): Promise<void> {
 async function cleanupOldBinaries(): Promise<void> {
   const KEEP_VERSIONS = 3;
   const DIST_DIR = "./dist";
-  
+
   console.log("🧹 Cleaning up old binaries...");
-  
+
   // Ensure dist directory exists
   await ensureDir(DIST_DIR);
-  
+
   interface BinaryFile {
     path: string;
     version: string;
     name: string;
     size: number;
   }
-  
+
   const binaries: BinaryFile[] = [];
-  
+
   // Collect all binary files
   try {
     for await (const entry of walk(DIST_DIR, { includeFiles: true })) {
       const filename = basename(entry.path);
-      
+
       // Match version pattern in filename
       const versionMatch = filename.match(/(\d+\.\d+\.\d+)/);
       if (!versionMatch) continue;
-      
+
       const stat = await Deno.stat(entry.path);
       binaries.push({
         path: entry.path,
         version: versionMatch[1],
         name: filename,
-        size: stat.size
+        size: stat.size,
       });
     }
-  } catch (error) {
+  } catch (_error) {
     // If dist directory doesn't exist or is empty, that's fine
     console.log("  📁 No existing binaries to clean up");
     return;
   }
-  
+
   if (binaries.length === 0) {
     console.log("  📁 No versioned binaries found to clean up");
     return;
   }
-  
+
   // Group by binary type (aichaku, aichaku-code-reviewer, etc.)
   const grouped = new Map<string, BinaryFile[]>();
-  
+
   for (const binary of binaries) {
-    const baseName = binary.name.replace(/-\d+\.\d+\.\d+.*$/, '');
+    const baseName = binary.name.replace(/-\d+\.\d+\.\d+.*$/, "");
     if (!grouped.has(baseName)) {
       grouped.set(baseName, []);
     }
     grouped.get(baseName)!.push(binary);
   }
-  
+
   // Sort and clean up each group
   let totalDeleted = 0;
   let totalSize = 0;
-  
+
   for (const [baseName, files] of grouped) {
     // Sort by version (descending)
     files.sort((a, b) => {
-      const versionA = a.version.split('.').map(Number);
-      const versionB = b.version.split('.').map(Number);
-      
+      const versionA = a.version.split(".").map(Number);
+      const versionB = b.version.split(".").map(Number);
+
       for (let i = 0; i < 3; i++) {
         if (versionA[i] !== versionB[i]) {
           return versionB[i] - versionA[i];
@@ -356,13 +356,17 @@ async function cleanupOldBinaries(): Promise<void> {
       }
       return 0;
     });
-    
+
     // Keep only the most recent versions
     const toDelete = files.slice(KEEP_VERSIONS);
-    
+
     if (toDelete.length > 0) {
-      console.log(`  📦 ${baseName}: keeping ${Math.min(files.length, KEEP_VERSIONS)} versions, deleting ${toDelete.length} old ones`);
-      
+      console.log(
+        `  📦 ${baseName}: keeping ${
+          Math.min(files.length, KEEP_VERSIONS)
+        } versions, deleting ${toDelete.length} old ones`,
+      );
+
       for (const file of toDelete) {
         try {
           await Deno.remove(file.path);
@@ -374,10 +378,12 @@ async function cleanupOldBinaries(): Promise<void> {
       }
     }
   }
-  
+
   if (totalDeleted > 0) {
     const totalSizeMB = (totalSize / 1024 / 1024).toFixed(1);
-    console.log(`  ✅ Cleaned up ${totalDeleted} old binaries (${totalSizeMB}MB freed)`);
+    console.log(
+      `  ✅ Cleaned up ${totalDeleted} old binaries (${totalSizeMB}MB freed)`,
+    );
   } else {
     console.log("  ✅ No old binaries to clean up");
   }
@@ -396,12 +402,12 @@ async function main() {
     if (!skipPreflight) {
       await runPreflightChecks();
     }
-    
+
     // Clean up old binaries before building new ones
     if (!skipCleanup) {
       await cleanupOldBinaries();
     }
-    
+
     // Compile binaries
     if (!mcpOnly) {
       await compileCLI();

@@ -1164,7 +1164,9 @@ async function loadProjectConfig(path: string): Promise<ProjectConfig> {
       }
 
       // Validate required fields
-      if (!standardsConfig.version || !Array.isArray(standardsConfig.selected)) {
+      if (
+        !standardsConfig.version || !Array.isArray(standardsConfig.selected)
+      ) {
         throw new Error("Invalid standards configuration format");
       }
 
@@ -1211,7 +1213,7 @@ async function saveProjectConfig(
   await ensureDir(dir);
 
   // Read existing aichaku.json file or create new one
-  let existingConfig: any = {};
+  let existingConfig: Record<string, unknown> = {};
   if (await exists(path)) {
     try {
       const content = await Deno.readTextFile(path);

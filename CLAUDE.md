@@ -5,7 +5,8 @@ the Aichaku methodology library.
 
 ## Directives for Claude Code from Aichaku
 
-This configuration is dynamically assembled from YAML files in your ~/.claude/aichaku installation.
+This configuration is dynamically assembled from YAML files in your
+~/.claude/aichaku installation.
 
 ```yaml
 aichaku:
@@ -53,11 +54,11 @@ behavioral_directives:
           forbidden:
             - Do not create anything before user signals readiness
       - name: CREATE PROJECT
-        description: 'After user signals readiness, create immediately without asking'
+        description: "After user signals readiness, create immediately without asking"
         actions:
           required:
             - "Confirm name: '\U0001FAB4 Aichaku: Based on our discussion, creating project: [descriptive-name]'"
-            - 'Create ALL documents in: docs/projects/active/YYYY-MM-DD-{descriptive-name}/'
+            - "Create ALL documents in: docs/projects/active/YYYY-MM-DD-{descriptive-name}/"
             - Create STATUS.md FIRST
             - Create methodology-specific documents
             - Read guides from ~/.claude/aichaku/methodologies/
@@ -70,7 +71,7 @@ behavioral_directives:
     name: Critical Behavioral Rules
     rules:
       - name: No asking after readiness
-        description: 'Once user signals readiness, CREATE IMMEDIATELY without asking'
+        description: "Once user signals readiness, CREATE IMMEDIATELY without asking"
         examples:
           do:
             - "\U0001FAB4 Aichaku: Creating project: [descriptive-name]"
@@ -81,7 +82,7 @@ behavioral_directives:
             - Shall I create...
             - Should I go ahead and...
       - name: Discussion mode responses
-        description: 'During discussion phase, focus on understanding and refinement'
+        description: "During discussion phase, focus on understanding and refinement"
         examples:
           do:
             - "\U0001FAB4 Aichaku: I understand you're exploring [topic]. Let me help you think through this..."
@@ -138,7 +139,7 @@ behavioral_directives:
     name: Error Recovery
     description: How to handle mistakes in file placement
     steps:
-      - 'Move file immediately: mv [file] docs/projects/active/*/'
+      - "Move file immediately: mv [file] docs/projects/active/*/"
       - Update STATUS.md noting the correction
       - Continue without asking
     principle: >-
@@ -149,9 +150,9 @@ behavioral_directives:
     description: How to handle git operations when work is complete
     when: Work is confirmed complete
     commands:
-      - 'git add docs/projects/active/[current-project]/'
+      - "git add docs/projects/active/[current-project]/"
       - 'git commit -m ''[type]: [description]\n\n- [what was done]\n- [key changes]'''
-      - 'git push origin [current-branch]'
+      - "git push origin [current-branch]"
     commit_types:
       - feat
       - fix
@@ -180,9 +181,9 @@ visual_identity:
     usage: Use these indicators to show project phase in status updates
   progress_display:
     format:
-      phase_indicator: '[Phase] → [**Current**] → [Next]'
+      phase_indicator: "[Phase] → [**Current**] → [Next]"
       arrow_position: Place ▲ under current phase
-      progress_bar: 'Week X/Y ████████░░░░░░░░░░░░ XX% [emoji]'
+      progress_bar: "Week X/Y ████████░░░░░░░░░░░░ XX% [emoji]"
     example: "\U0001FAB4 Aichaku: Shape Up Progress\n[Shaping] → [**Betting**] → [Building] → [Cool-down]\n              ▲\nWeek 2/6 ████████░░░░░░░░░░░░ 33% \U0001F33F\n"
 file_organization:
   root: docs/projects/
@@ -191,18 +192,18 @@ file_organization:
     active:
       path: docs/projects/active/
       description: Currently active projects
-      naming: 'active-YYYY-MM-DD-{descriptive-kebab-case-name}'
+      naming: "active-YYYY-MM-DD-{descriptive-kebab-case-name}"
       example: active-2025-07-15-security-workflow-modernization
     done:
       path: docs/projects/done/
       description: Completed projects
-      naming: 'done-YYYY-MM-DD-{descriptive-kebab-case-name}'
+      naming: "done-YYYY-MM-DD-{descriptive-kebab-case-name}"
       example: done-2025-07-14-consistent-branding
       transition: Rename from active-* to done-* when complete
 methodologies:
   shape_up:
     key_concepts:
-      - 'Fixed time, variable scope'
+      - "Fixed time, variable scope"
       - 6-week cycles with 2-week cooldown
       - Betting table for project selection
       - Shaping work before betting
@@ -224,7 +225,7 @@ methodologies:
       sprint_retrospective: templates/sprint-retrospective.md
       user_story: templates/user-story.md
     phases: {}
-    integration_url: 'aichaku://methodology/scrum/guide'
+    integration_url: "aichaku://methodology/scrum/guide"
   kanban:
     name: Kanban
     triggers: []
@@ -233,21 +234,21 @@ methodologies:
       kanban_board: templates/kanban-board.md
       flow_metrics: templates/flow-metrics.md
     phases: {}
-    integration_url: 'aichaku://methodology/kanban/guide'
+    integration_url: "aichaku://methodology/kanban/guide"
   lean:
     name: Lean Startup
     triggers: []
     best_for: New products
     templates: {}
     phases: {}
-    integration_url: 'aichaku://methodology/lean/guide'
+    integration_url: "aichaku://methodology/lean/guide"
   xp:
     name: Extreme Programming
     triggers: []
     best_for: Code quality
     templates: {}
     phases: {}
-    integration_url: 'aichaku://methodology/xp/guide'
+    integration_url: "aichaku://methodology/xp/guide"
   scrumban:
     name: Scrumban
     triggers: []
@@ -255,7 +256,7 @@ methodologies:
     templates:
       planning_trigger: templates/planning-trigger.md
     phases: {}
-    integration_url: 'aichaku://methodology/scrumban/guide'
+    integration_url: "aichaku://methodology/scrumban/guide"
   shape-up:
     name: Shape Up
     triggers: []
@@ -267,7 +268,7 @@ methodologies:
       hill_chart: templates/hill-chart.md
       change_summary: templates/change-summary.md
     phases: {}
-    integration_url: 'aichaku://methodology/shape-up/guide'
+    integration_url: "aichaku://methodology/shape-up/guide"
 standards: {}
 included:
   core: true

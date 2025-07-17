@@ -11,6 +11,8 @@ import { paths } from "../paths.ts";
 import { resolveProjectPath } from "../utils/project-paths.ts";
 import { safeReadTextFile, safeStat } from "../utils/path-security.ts";
 import { assembleYamlConfig } from "../utils/yaml-config-reader.ts";
+import { discoverContent } from "../utils/dynamic-content-discovery.ts";
+import { getAichakuPaths } from "../paths.ts";
 
 // Type definitions
 interface ProjectStandardsConfig {
@@ -264,15 +266,8 @@ export async function integrate(
     documentationStandards: selectedDocStandards,
   } = separateStandardsByType(allSelectedStandards);
 
-  // For now, include all methodologies (could be made configurable)
-  const selectedMethodologies = [
-    "shape-up",
-    "scrum",
-    "kanban",
-    "lean",
-    "xp",
-    "scrumban",
-  ];
+  // Dynamically discover all methodologies (per spec: "all methodologies, selected standards")
+  const selectedMethodologies = await discoverAllMethodologies();
 
   // Define configuration paths - use development paths for now
   const configPaths = {
@@ -365,6 +360,38 @@ export async function integrate(
         error instanceof Error ? error.message : String(error)
       }`,
     };
+  }
+}
+
+/**
+ * Discover all available methodologies from global installation
+ * Per spec: "all methodologies, selected standards" - methodologies should be auto-discovered globally
+ */
+async function discoverAllMethodologies(): Promise<string[]> {
+  try {
+    const aichakuPaths = getAichakuPaths();
+    const discovered = await discoverContent(
+      "methodologies",
+      aichakuPaths.global.root,
+      true,
+    );
+
+    // Extract methodology names from discovered items
+    const methodologies = discovered.items.map((item) => {
+      // Extract methodology name from path like "shape-up/shape-up.yaml"
+      const pathParts = item.path.split("/");
+      return pathParts[0]; // Get directory name (methodology name)
+    });
+
+    // Remove duplicates and return
+    return [...new Set(methodologies)];
+  } catch (error) {
+    console.warn(
+      "Failed to discover methodologies dynamically, using fallback:",
+      error,
+    );
+    // Fallback to hardcoded list if discovery fails
+    return ["shape-up", "scrum", "kanban", "lean", "xp", "scrumban"];
   }
 }
 

@@ -5,11 +5,7 @@
 import { join } from "@std/path";
 import { exists } from "@std/fs";
 import type { Finding } from "./types.ts";
-import {
-  safeReadDir,
-  safeReadTextFile,
-  validatePath,
-} from "./utils/path-security.ts";
+import { safeReadDir, validatePath } from "./utils/path-security.ts";
 
 export class MethodologyManager {
   private methodologyCache = new Map<string, string[]>();
@@ -32,47 +28,47 @@ export class MethodologyManager {
       return this.methodologyCache.get(validatedProjectPath)!;
     }
 
-    // Look for .claude/aichaku/aichaku-standards.json (new path) or .claude/.aichaku-standards.json (legacy)
-    const newConfigPath = join(
-      validatedProjectPath,
-      ".claude",
-      "aichaku",
-      "aichaku-standards.json",
-    );
-    const legacyConfigPath = join(
-      validatedProjectPath,
-      ".claude",
-      ".aichaku-standards.json",
-    );
+    // According to spec: "all methodologies, selected standards"
+    // Methodologies should be auto-discovered globally, not per-project
+    const allMethodologies = await this.discoverAllMethodologies();
+    this.methodologyCache.set(validatedProjectPath, allMethodologies);
+    return allMethodologies;
+  }
 
-    // Check new path first, then legacy
-    const configPath = (await exists(newConfigPath))
-      ? newConfigPath
-      : legacyConfigPath;
+  /**
+   * Discover all available methodologies from global installation
+   * Per spec: "if a methodology is added, it should be picked up automatically"
+   */
+  private async discoverAllMethodologies(): Promise<string[]> {
+    try {
+      // Try to import from the main aichaku installation
+      // Use dynamic import to handle different installation contexts
+      const { discoverContent } = await import(
+        "../../src/utils/dynamic-content-discovery.ts"
+      );
+      const { getAichakuPaths } = await import("../../src/paths.ts");
 
-    if (await exists(configPath)) {
-      try {
-        // Security: Use safe file reading
-        const content = await safeReadTextFile(
-          configPath,
-          validatedProjectPath,
-        );
-        const config = JSON.parse(content);
-        const methodologies = config.methodologies || [];
-        this.methodologyCache.set(validatedProjectPath, methodologies);
-        return methodologies;
-      } catch (error) {
-        console.error(
-          `Failed to load methodologies from ${configPath}: ${
-            error instanceof Error ? error.message : String(error)
-          }`,
-        );
-      }
+      const paths = getAichakuPaths();
+      const discovered = await discoverContent(
+        "methodologies",
+        paths.global.root,
+        true,
+      );
+
+      // Extract methodology names from discovered items
+      const methodologies = discovered.items.map((item: { path: string }) => {
+        // Extract methodology name from path like "shape-up/shape-up.yaml"
+        const pathParts = item.path.split("/");
+        return pathParts[0]; // Get directory name (methodology name)
+      });
+
+      // Remove duplicates and return
+      return [...new Set(methodologies)] as string[];
+    } catch (error) {
+      console.error("Failed to discover methodologies globally:", error);
+      // Fallback to hardcoded list if discovery fails
+      return ["shape-up", "scrum", "kanban", "lean", "xp", "scrumban"];
     }
-
-    // Try to detect from project structure
-    const detected = await this.detectMethodology(validatedProjectPath);
-    return detected;
   }
 
   private async detectMethodology(projectPath: string): Promise<string[]> {

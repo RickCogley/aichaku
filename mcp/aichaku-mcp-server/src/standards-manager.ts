@@ -28,12 +28,12 @@ export class StandardsManager {
       return this.standardsCache.get(validatedProjectPath)!;
     }
 
-    // Look for .claude/aichaku/aichaku-standards.json (new path) or .claude/.aichaku-standards.json (legacy)
+    // Look for consolidated .claude/aichaku/aichaku.json (new path) or .claude/.aichaku-standards.json (legacy)
     const newStandardsPath = join(
       validatedProjectPath,
       ".claude",
       "aichaku",
-      "aichaku-standards.json",
+      "aichaku.json",
     );
     const legacyStandardsPath = join(
       validatedProjectPath,
@@ -53,7 +53,20 @@ export class StandardsManager {
           standardsPath,
           validatedProjectPath,
         );
-        const config = JSON.parse(content) as ProjectConfig;
+        const parsed = JSON.parse(content);
+
+        // Handle consolidated aichaku.json format
+        let config: ProjectConfig;
+        if (parsed.standards && typeof parsed.standards === "object") {
+          // New consolidated format - standards are in a sub-object
+          config = parsed.standards as ProjectConfig;
+        } else if (parsed.version && Array.isArray(parsed.selected)) {
+          // Old standalone standards format
+          config = parsed as ProjectConfig;
+        } else {
+          throw new Error("Invalid configuration format");
+        }
+
         this.standardsCache.set(validatedProjectPath, config);
         return config;
       } catch (error) {
