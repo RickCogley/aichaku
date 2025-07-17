@@ -129,7 +129,10 @@
       "Bash(./aichaku integrate)",
       "Bash(deno:*)",
       "Bash(./cli.ts learn owasp-web)",
-      "Bash(do echo \"=== $file ===\")"
+      "Bash(do echo \"=== $file ===\")",
+      "Bash(./dist/aichaku-0.31.3-macos-arm64 init:*)",
+      "Bash(./dist/aichaku-0.31.3-macos-arm64:*)",
+      "Bash(./aichaku-test upgrade:*)"
     ],
     "deny": []
   }

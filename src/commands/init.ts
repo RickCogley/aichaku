@@ -177,7 +177,8 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     // Global install: Copy all methodologies
     // Project install: Just create user dir
     // codeql[js/incomplete-url-substring-sanitization] Safe because import.meta.url is trusted and controlled by runtime
-    const isJSR = import.meta.url.startsWith("https://jsr.io");
+    const isJSR = import.meta.url.startsWith("https://jsr.io") ||
+      !import.meta.url.includes("/aichaku/");
 
     if (isGlobal) {
       // Check if methodologies already exist
@@ -189,7 +190,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
         if (isJSR) {
           // Fetch from GitHub when running from JSR - use global root path
           const fetchSuccess = await fetchMethodologies(
-            paths.global.root,
+            paths.global.methodologies,
             VERSION,
             {
               silent: options.silent,
@@ -234,7 +235,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
           }
 
           const fetchSuccess = await fetchStandards(
-            paths.global.root,
+            paths.global.standards,
             VERSION,
             {
               silent: options.silent,

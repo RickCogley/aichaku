@@ -73,8 +73,8 @@ export function getAichakuPaths(): AichakuPaths {
     // Global paths under ~/.claude/aichaku/
     global: {
       root: join(home, ".claude", "aichaku"),
-      methodologies: join(home, ".claude", "aichaku", "methodologies"),
-      standards: join(home, ".claude", "aichaku", "standards"),
+      methodologies: join(home, ".claude", "aichaku", "docs", "methodologies"),
+      standards: join(home, ".claude", "aichaku", "docs", "standards"),
       config: join(home, ".claude", "aichaku", "config.json"),
       cache: join(home, ".claude", "aichaku", "cache"),
       user: {
@@ -106,7 +106,14 @@ export function getAichakuPaths(): AichakuPaths {
       globalMethodologies: join(home, ".claude", "methodologies"),
       globalStandards: join(home, ".claude", "standards"),
       projectOutput: join(cwd, ".claude", "output"),
-      customStandards: join(home, ".claude", "aichaku", "standards", "custom"),
+      customStandards: join(
+        home,
+        ".claude",
+        "aichaku",
+        "docs",
+        "standards",
+        "custom",
+      ),
     },
   };
 }

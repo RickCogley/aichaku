@@ -18,6 +18,17 @@ interface ProjectStandardsConfig {
   selected: string[];
 }
 
+interface AichakuConfig {
+  version: string;
+  installedAt: string;
+  installationType: "global" | "local";
+  lastUpgrade: string;
+  standards?: {
+    version: string;
+    selected: string[];
+  };
+}
+
 interface IntegrateOptions {
   projectPath?: string;
   force?: boolean;
@@ -39,20 +50,42 @@ const YAML_CONFIG_END = "```";
 const AICHAKU_CONFIG_MARKER = "## Directives for Claude Code from Aichaku";
 
 /**
- * Load project standards configuration with validation
+ * Load project standards configuration from unified aichaku.json
  */
 async function loadProjectStandards(projectPath: string): Promise<string[]> {
   const aichakuPaths = paths.get();
-  // Check new path first, then legacy path
-  const newConfigPath = join(aichakuPaths.project.root, "standards.json");
+  // Check unified config first, then legacy paths
+  const unifiedConfigPath = join(aichakuPaths.project.root, "aichaku.json");
+  const legacyStandardsPath = join(aichakuPaths.project.root, "standards.json");
   const legacyConfigPath = join(
     projectPath,
     ".claude",
     ".aichaku-standards.json",
   );
 
-  let configPath = newConfigPath;
-  if (!(await exists(newConfigPath)) && (await exists(legacyConfigPath))) {
+  // Try unified config first
+  if (await exists(unifiedConfigPath)) {
+    try {
+      const content = await safeReadTextFile(unifiedConfigPath, projectPath);
+      const config = JSON.parse(content) as AichakuConfig;
+
+      if (
+        config.standards?.selected && Array.isArray(config.standards.selected)
+      ) {
+        return config.standards.selected.filter(
+          (id: unknown) => typeof id === "string" && id.length > 0,
+        );
+      }
+    } catch (_error) {
+      console.warn("Failed to load standards from unified aichaku.json");
+    }
+  }
+
+  // Fall back to legacy separate standards.json
+  let configPath = legacyStandardsPath;
+  if (
+    !(await exists(legacyStandardsPath)) && (await exists(legacyConfigPath))
+  ) {
     configPath = legacyConfigPath;
   }
 
@@ -81,49 +114,22 @@ async function loadProjectStandards(projectPath: string): Promise<string[]> {
 }
 
 /**
- * Load project documentation standards configuration with validation
+ * Separate development and documentation standards from unified list
  */
-async function loadProjectDocStandards(projectPath: string): Promise<string[]> {
-  const aichakuPaths = paths.get();
-  // Check new path first, then legacy path
-  const newConfigPath = join(aichakuPaths.project.root, "doc-standards.json");
-  const legacyConfigPath = join(
-    projectPath,
-    ".claude",
-    ".aichaku-doc-standards.json",
+function separateStandardsByType(allStandards: string[]): {
+  developmentStandards: string[];
+  documentationStandards: string[];
+} {
+  const documentationStandards = allStandards.filter((std) =>
+    std.includes("diataxis") || std.includes("documentation") ||
+    std.includes("docs")
   );
 
-  let configPath = newConfigPath;
-  if (!(await exists(newConfigPath)) && (await exists(legacyConfigPath))) {
-    configPath = legacyConfigPath;
-  }
+  const developmentStandards = allStandards.filter((std) =>
+    !documentationStandards.includes(std)
+  );
 
-  if (!(await exists(configPath))) {
-    return [];
-  }
-
-  try {
-    // Security: Use safe file reading with validated path
-    const content = await safeReadTextFile(configPath, projectPath);
-    const config = JSON.parse(content) as ProjectStandardsConfig;
-
-    // Validate and sanitize
-    if (!Array.isArray(config.selected)) {
-      console.warn(
-        "Invalid documentation standards configuration: expected array",
-      );
-      return [];
-    }
-
-    return config.selected.filter(
-      (id: unknown) => typeof id === "string" && id.length > 0,
-    );
-  } catch (_error) {
-    console.warn(
-      "Failed to load project documentation standards configuration",
-    );
-    return [];
-  }
+  return { developmentStandards, documentationStandards };
 }
 
 /**
@@ -252,8 +258,11 @@ export async function integrate(
   const aichakuPaths = paths.get();
 
   // Get selected standards and methodologies
-  const selectedStandards = await loadProjectStandards(projectPath);
-  const selectedDocStandards = await loadProjectDocStandards(projectPath);
+  const allSelectedStandards = await loadProjectStandards(projectPath);
+  const {
+    developmentStandards: selectedStandards,
+    documentationStandards: selectedDocStandards,
+  } = separateStandardsByType(allSelectedStandards);
 
   // For now, include all methodologies (could be made configurable)
   const selectedMethodologies = [
@@ -295,11 +304,10 @@ export async function integrate(
       `  - Core directives (behavioral, visual, file organization, diagrams)`,
     );
     console.log(`  - ${selectedMethodologies.length} methodologies`);
-    if (selectedStandards.length > 0) {
-      console.log(`  - ${selectedStandards.length} development standards`);
-    }
-    if (selectedDocStandards.length > 0) {
-      console.log(`  - ${selectedDocStandards.length} documentation standards`);
+    if (allSelectedStandards.length > 0) {
+      console.log(
+        `  - ${allSelectedStandards.length} total standards (${selectedStandards.length} development + ${selectedDocStandards.length} documentation)`,
+      );
     }
     return {
       success: true,
@@ -336,11 +344,8 @@ export async function integrate(
       }
     }
 
-    const standardsMsg = selectedStandards.length > 0
-      ? ` with ${selectedStandards.length} standards`
-      : "";
-    const docStandardsMsg = selectedDocStandards.length > 0
-      ? ` and ${selectedDocStandards.length} doc standards`
+    const standardsMsg = allSelectedStandards.length > 0
+      ? ` with ${allSelectedStandards.length} standards (${selectedStandards.length} development + ${selectedDocStandards.length} documentation)`
       : "";
 
     return {
@@ -348,7 +353,7 @@ export async function integrate(
       path: claudeMdPath,
       message: `${
         action === "created" ? "Created new" : "Updated"
-      } CLAUDE.md with YAML configuration${standardsMsg}${docStandardsMsg}`,
+      } CLAUDE.md with YAML configuration${standardsMsg}`,
       action,
       lineNumber,
     };

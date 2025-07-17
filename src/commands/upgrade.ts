@@ -157,7 +157,8 @@ export async function upgrade(
 
     // Update methodologies
     // codeql[js/incomplete-url-substring-sanitization] Safe because import.meta.url is trusted and controlled by runtime
-    const isJSR = import.meta.url.startsWith("https://jsr.io");
+    const isJSR = import.meta.url.startsWith("https://jsr.io") ||
+      !import.meta.url.includes("/aichaku/");
 
     if (!options.silent) {
       Brand.progress("Updating methodology files...", "active");
@@ -167,7 +168,7 @@ export async function upgrade(
       // Fetch from GitHub when running from JSR
       // First try to update in place (preserves any user modifications)
       const fetchSuccess = await fetchMethodologies(
-        paths.global.root,
+        paths.global.methodologies,
         VERSION,
         {
           silent: options.silent,
@@ -186,7 +187,7 @@ export async function upgrade(
         }
 
         const retrySuccess = await fetchMethodologies(
-          paths.global.root,
+          paths.global.methodologies,
           VERSION,
           {
             silent: options.silent,
@@ -224,10 +225,14 @@ export async function upgrade(
 
     if (isJSR) {
       // Fetch from GitHub when running from JSR
-      const fetchSuccess = await fetchStandards(paths.global.root, VERSION, {
-        silent: options.silent,
-        overwrite: true, // Always overwrite during upgrades to get latest content
-      });
+      const fetchSuccess = await fetchStandards(
+        paths.global.standards,
+        VERSION,
+        {
+          silent: options.silent,
+          overwrite: true, // Always overwrite during upgrades to get latest content
+        },
+      );
 
       if (!fetchSuccess) {
         // If fetch fails completely, try removing and re-fetching
@@ -239,10 +244,14 @@ export async function upgrade(
           });
         }
 
-        const retrySuccess = await fetchStandards(paths.global.root, VERSION, {
-          silent: options.silent,
-          overwrite: true,
-        });
+        const retrySuccess = await fetchStandards(
+          paths.global.standards,
+          VERSION,
+          {
+            silent: options.silent,
+            overwrite: true,
+          },
+        );
 
         if (!retrySuccess) {
           throw new Error(
