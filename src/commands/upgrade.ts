@@ -72,8 +72,9 @@ export async function upgrade(
     const content = await Deno.readTextFile(metadataPath);
     const rawMetadata = JSON.parse(content);
 
-    // Handle both old and new metadata formats
+    // Handle both old and new metadata formats - preserve all existing fields
     metadata = {
+      ...rawMetadata, // Preserve all existing fields (including standards)
       version: rawMetadata.version || metadataInfo.version || VERSION,
       installedAt: rawMetadata.installedAt || rawMetadata.createdAt ||
         new Date().toISOString(),
