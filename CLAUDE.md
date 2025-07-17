@@ -5,7 +5,8 @@ the Aichaku methodology library.
 
 ## Directives for Claude Code from Aichaku
 
-This configuration is dynamically assembled from YAML files in your ~/.claude/aichaku installation.
+This configuration is dynamically assembled from YAML files in your
+~/.claude/aichaku installation.
 
 ```yaml
 aichaku:
@@ -53,11 +54,11 @@ behavioral_directives:
           forbidden:
             - Do not create anything before user signals readiness
       - name: CREATE PROJECT
-        description: 'After user signals readiness, create immediately without asking'
+        description: "After user signals readiness, create immediately without asking"
         actions:
           required:
             - "Confirm name: '\U0001FAB4 Aichaku: Based on our discussion, creating project: [descriptive-name]'"
-            - 'Create ALL documents in: docs/projects/active/YYYY-MM-DD-{descriptive-name}/'
+            - "Create ALL documents in: docs/projects/active/YYYY-MM-DD-{descriptive-name}/"
             - Create STATUS.md FIRST
             - Create methodology-specific documents
             - Read guides from ~/.claude/aichaku/methodologies/
@@ -70,7 +71,7 @@ behavioral_directives:
     name: Critical Behavioral Rules
     rules:
       - name: No asking after readiness
-        description: 'Once user signals readiness, CREATE IMMEDIATELY without asking'
+        description: "Once user signals readiness, CREATE IMMEDIATELY without asking"
         examples:
           do:
             - "\U0001FAB4 Aichaku: Creating project: [descriptive-name]"
@@ -81,7 +82,7 @@ behavioral_directives:
             - Shall I create...
             - Should I go ahead and...
       - name: Discussion mode responses
-        description: 'During discussion phase, focus on understanding and refinement'
+        description: "During discussion phase, focus on understanding and refinement"
         examples:
           do:
             - "\U0001FAB4 Aichaku: I understand you're exploring [topic]. Let me help you think through this..."
@@ -138,7 +139,7 @@ behavioral_directives:
     name: Error Recovery
     description: How to handle mistakes in file placement
     steps:
-      - 'Move file immediately: mv [file] docs/projects/active/*/'
+      - "Move file immediately: mv [file] docs/projects/active/*/"
       - Update STATUS.md noting the correction
       - Continue without asking
     principle: >-
@@ -149,9 +150,9 @@ behavioral_directives:
     description: How to handle git operations when work is complete
     when: Work is confirmed complete
     commands:
-      - 'git add docs/projects/active/[current-project]/'
+      - "git add docs/projects/active/[current-project]/"
       - 'git commit -m ''[type]: [description]\n\n- [what was done]\n- [key changes]'''
-      - 'git push origin [current-branch]'
+      - "git push origin [current-branch]"
     commit_types:
       - feat
       - fix
@@ -180,9 +181,9 @@ visual_identity:
     usage: Use these indicators to show project phase in status updates
   progress_display:
     format:
-      phase_indicator: '[Phase] → [**Current**] → [Next]'
+      phase_indicator: "[Phase] → [**Current**] → [Next]"
       arrow_position: Place ▲ under current phase
-      progress_bar: 'Week X/Y ████████░░░░░░░░░░░░ XX% [emoji]'
+      progress_bar: "Week X/Y ████████░░░░░░░░░░░░ XX% [emoji]"
     example: "\U0001FAB4 Aichaku: Shape Up Progress\n[Shaping] → [**Betting**] → [Building] → [Cool-down]\n              ▲\nWeek 2/6 ████████░░░░░░░░░░░░ 33% \U0001F33F\n"
 file_organization:
   root: docs/projects/
@@ -191,18 +192,18 @@ file_organization:
     active:
       path: docs/projects/active/
       description: Currently active projects
-      naming: 'active-YYYY-MM-DD-{descriptive-kebab-case-name}'
+      naming: "active-YYYY-MM-DD-{descriptive-kebab-case-name}"
       example: active-2025-07-15-security-workflow-modernization
     done:
       path: docs/projects/done/
       description: Completed projects
-      naming: 'done-YYYY-MM-DD-{descriptive-kebab-case-name}'
+      naming: "done-YYYY-MM-DD-{descriptive-kebab-case-name}"
       example: done-2025-07-14-consistent-branding
       transition: Rename from active-* to done-* when complete
 methodologies:
   shape_up:
     key_concepts:
-      - 'Fixed time, variable scope'
+      - "Fixed time, variable scope"
       - 6-week cycles with 2-week cooldown
       - Betting table for project selection
       - Shaping work before betting
@@ -217,48 +218,48 @@ methodologies:
   scrum:
     name: Scrum
     triggers: []
-    best_for: ''
+    best_for: ""
     templates:
       sprint_planning: templates/sprint-planning.md
       sprint_retrospective: templates/sprint-retrospective.md
       user_story: templates/user-story.md
     phases: {}
-    integration_url: 'aichaku://methodology/scrum/guide'
+    integration_url: "aichaku://methodology/scrum/guide"
   kanban:
     name: Kanban
     triggers: []
-    best_for: ''
+    best_for: ""
     templates:
       kanban_board: templates/kanban-board.md
       flow_metrics: templates/flow-metrics.md
     phases: {}
-    integration_url: 'aichaku://methodology/kanban/guide'
+    integration_url: "aichaku://methodology/kanban/guide"
   lean:
     name: Lean Startup
     triggers: []
-    best_for: ''
+    best_for: ""
     templates: {}
     phases: {}
-    integration_url: 'aichaku://methodology/lean/guide'
+    integration_url: "aichaku://methodology/lean/guide"
   xp:
     name: Extreme Programming
     triggers: []
-    best_for: ''
+    best_for: ""
     templates: {}
     phases: {}
-    integration_url: 'aichaku://methodology/xp/guide'
+    integration_url: "aichaku://methodology/xp/guide"
   scrumban:
     name: Scrumban
     triggers: []
-    best_for: ''
+    best_for: ""
     templates:
       planning_trigger: templates/planning-trigger.md
     phases: {}
-    integration_url: 'aichaku://methodology/scrumban/guide'
+    integration_url: "aichaku://methodology/scrumban/guide"
   shape-up:
     name: Shape Up
     triggers: []
-    best_for: ''
+    best_for: ""
     templates:
       pitch: templates/pitch.md
       cycle_plan: templates/cycle-plan.md
@@ -266,7 +267,7 @@ methodologies:
       hill_chart: templates/hill-chart.md
       change_summary: templates/change-summary.md
     phases: {}
-    integration_url: 'aichaku://methodology/shape-up/guide'
+    integration_url: "aichaku://methodology/shape-up/guide"
 standards:
   nist-csf:
     name: NIST Cybersecurity Framework (CSF 2.0)
@@ -282,7 +283,7 @@ standards:
       risk_based: Focuses on risk management over compliance
       scalable: Applicable to organizations of all sizes
       implementation: Code-based policies and automated controls
-    integration_url: 'aichaku://standard/security/nist-csf'
+    integration_url: "aichaku://standard/security/nist-csf"
   tdd:
     name: Test-Driven Development
     category: development
@@ -296,12 +297,12 @@ standards:
       test_structure: AAA (Arrange-Act-Assert) pattern
       naming: Descriptive test names that explain the behavior
       coverage: Aim for 80%+ coverage with meaningful tests
-      mocking: 'Mock external dependencies, not internal implementation'
-      cycle_discipline: 'Tests must fail initially, minimal implementation to pass, refactor without breaking'
-      isolation_requirements: 'Tests run independently, no shared state, any execution order'
-      ci_integration: 'All tests pass before merge, coverage reports generated, visible in PRs'
-      test_naming_patterns: 'should [behavior] when [condition], returns [result] for [scenario]'
-    integration_url: 'aichaku://standard/development/tdd'
+      mocking: "Mock external dependencies, not internal implementation"
+      cycle_discipline: "Tests must fail initially, minimal implementation to pass, refactor without breaking"
+      isolation_requirements: "Tests run independently, no shared state, any execution order"
+      ci_integration: "All tests pass before merge, coverage reports generated, visible in PRs"
+      test_naming_patterns: "should [behavior] when [condition], returns [result] for [scenario]"
+    integration_url: "aichaku://standard/development/tdd"
   test-pyramid:
     name: Test Pyramid
     category: testing
@@ -312,17 +313,17 @@ standards:
         - E2E Tests (Top): Few, slow, comprehensive user journey tests
         - Pyramid shape: More unit tests, fewer integration, minimal E2E
         - Fast feedback from unit tests, confidence from E2E tests
-      distribution: '70% unit, 20% integration, 10% E2E'
-      speed: 'Unit tests <1s, Integration <10s, E2E <60s'
+      distribution: "70% unit, 20% integration, 10% E2E"
+      speed: "Unit tests <1s, Integration <10s, E2E <60s"
       maintenance: Lower levels easier to maintain and debug
-      unit_characteristics: 'Pure functions, no external dependencies, milliseconds execution, deterministic'
-      integration_scope: 'Database operations, API endpoints, service interactions, real test services'
-      e2e_focus: 'Critical user journeys only, production-like environment, browser automation'
+      unit_characteristics: "Pure functions, no external dependencies, milliseconds execution, deterministic"
+      integration_scope: "Database operations, API endpoints, service interactions, real test services"
+      e2e_focus: "Critical user journeys only, production-like environment, browser automation"
       anti_patterns: >-
         Ice cream cone (too many E2E), Hourglass (missing integration), Testing trophy
         (integration-heavy alternative)
-      tools_by_layer: 'Unit: Jest/PyTest/JUnit, Integration: Supertest/TestContainers, E2E: Playwright/Cypress'
-    integration_url: 'aichaku://standard/testing/test-pyramid'
+      tools_by_layer: "Unit: Jest/PyTest/JUnit, Integration: Supertest/TestContainers, E2E: Playwright/Cypress"
+    integration_url: "aichaku://standard/testing/test-pyramid"
   conventional-commits:
     name: Conventional Commits
     category: development
@@ -334,9 +335,9 @@ standards:
         - Imperative mood: "add feature" not "added feature"
         - 50 char subject limit, 72 char body line limit
       automation: Enables semantic versioning and changelog generation
-      version_bumping: 'fix=patch, feat=minor, breaking=major'
-      infosec_comment: 'Use InfoSec: prefix for security implications'
-    integration_url: 'aichaku://standard/development/conventional-commits'
+      version_bumping: "fix=patch, feat=minor, breaking=major"
+      infosec_comment: "Use InfoSec: prefix for security implications"
+    integration_url: "aichaku://standard/development/conventional-commits"
   15-factor:
     name: 15-Factor App Methodology
     category: architecture
@@ -347,10 +348,10 @@ standards:
         - Treat backing services as attached resources
         - Export services via port binding
         - Maximize robustness with fast startup and graceful shutdown
-      additional_factors: 'API first design, comprehensive telemetry, centralized auth'
+      additional_factors: "API first design, comprehensive telemetry, centralized auth"
       container_ready: Designed for Kubernetes and cloud platforms
       dev_prod_parity: Keep all environments as similar as possible
-    integration_url: 'aichaku://standard/architecture/15-factor'
+    integration_url: "aichaku://standard/architecture/15-factor"
   clean-arch:
     name: Clean Architecture
     category: architecture
@@ -361,10 +362,10 @@ standards:
         - Business logic independent of frameworks, UI, and databases
         - Testable without external dependencies
         - Enables flexible technology choices
-      independence: 'Framework, UI, Database, and External agency independence'
+      independence: "Framework, UI, Database, and External agency independence"
       testability: Business rules testable in isolation
       dependency_direction: Always inward toward business logic
-    integration_url: 'aichaku://standard/architecture/clean-arch'
+    integration_url: "aichaku://standard/architecture/clean-arch"
   google-style:
     name: Google Style Guides
     category: development
@@ -376,9 +377,9 @@ standards:
         - Comprehensive documentation with examples
         - Language-specific naming conventions
       philosophy: Code is read far more often than it's written
-      languages: 'TypeScript, JavaScript, Python, Java, Go, C++'
-      documentation: 'JSDoc/docstrings with Args, Returns, Raises'
-    integration_url: 'aichaku://standard/development/google-style'
+      languages: "TypeScript, JavaScript, Python, Java, Go, C++"
+      documentation: "JSDoc/docstrings with Args, Returns, Raises"
+    integration_url: "aichaku://standard/development/google-style"
   bdd:
     name: Behavior-Driven Development
     category: testing
@@ -389,10 +390,10 @@ standards:
         - Given-When-Then scenario structure
         - Living documentation that stays current
         - Outside-in development approach
-      three_amigos: 'Business (what), Development (how), Testing (what could go wrong)'
-      gherkin_keywords: 'Feature, Scenario, Given, When, Then, And, But'
+      three_amigos: "Business (what), Development (how), Testing (what could go wrong)"
+      gherkin_keywords: "Feature, Scenario, Given, When, Then, And, But"
       automation: Executable specifications that verify behavior
-    integration_url: 'aichaku://standard/testing/bdd'
+    integration_url: "aichaku://standard/testing/bdd"
   dora:
     name: DORA Metrics
     category: devops
@@ -402,10 +403,10 @@ standards:
         - Lead Time for Changes: Time from commit to production
         - Mean Time to Recovery (MTTR): Time to restore service after incident
         - Change Failure Rate: Percentage of deployments causing failures
-      performance_levels: 'Elite, High, Medium, Low performance categories'
+      performance_levels: "Elite, High, Medium, Low performance categories"
       correlation: Strong correlation with organizational performance
       automation: Automated measurement through CI/CD and monitoring
-    integration_url: 'aichaku://standard/devops/dora'
+    integration_url: "aichaku://standard/devops/dora"
   diataxis-google:
     name: Diátaxis + Google Developer Documentation Style
     category: documentation
@@ -416,10 +417,10 @@ standards:
         - How-to: Task-oriented, problem-solving recipes
         - Reference: Information-oriented, complete specification
         - Explanation: Understanding-oriented, concept clarification
-      google_style: 'Second person, present tense, active voice, clear outcomes'
+      google_style: "Second person, present tense, active voice, clear outcomes"
       user_centered: Different modes serve different user needs and contexts
       separation: Keep modes separate - don't mix tutorial and reference
-    integration_url: 'aichaku://standard/documentation/diataxis-google'
+    integration_url: "aichaku://standard/documentation/diataxis-google"
 included:
   core: true
   methodologies:

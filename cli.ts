@@ -35,7 +35,10 @@ import { hooks } from "./src/commands/hooks.ts";
 import { standards } from "./src/commands/standards.ts";
 import { docsStandard } from "./src/commands/docs-standard.ts";
 import { runMCPCommand } from "./src/commands/mcp.ts";
-import { createMigrateCommand, showMigrateHelp } from "./src/commands/migrate.ts";
+import {
+  createMigrateCommand,
+  showMigrateHelp,
+} from "./src/commands/migrate.ts";
 import { runReviewCommand } from "./src/commands/review.ts";
 import { runGitHubCommand } from "./src/commands/github.ts";
 import { cleanup } from "./src/commands/cleanup.ts";

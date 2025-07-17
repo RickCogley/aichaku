@@ -609,7 +609,7 @@ async function addStandards(
   for (const id of ids) {
     // Normalize the ID to handle both old and new formats
     const normalizedId = normalizeStandardId(id);
-    
+
     if (config.selected.includes(normalizedId)) {
       console.log(`⚠️  ${id} already selected`);
       continue;
@@ -701,7 +701,7 @@ async function removeStandards(
   for (const id of ids) {
     // Normalize the ID to handle both old and new formats
     const normalizedId = normalizeStandardId(id);
-    
+
     const index = config.selected.indexOf(normalizedId);
     if (index === -1) {
       console.log(`⚠️  ${id} not selected`);
@@ -1232,7 +1232,7 @@ async function findStandard(id: string): Promise<Standard | null> {
     for (const item of items) {
       const standardId = item.path.split("/").pop()?.replace(".md", "") || "";
       const normalizedStandardId = normalizeStandardId(standardId);
-      
+
       if (normalizedStandardId === normalizedId) {
         return {
           name: item.name,

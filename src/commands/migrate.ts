@@ -95,7 +95,7 @@ class Command {
       showMigrateHelp();
       return;
     }
-    
+
     // Placeholder implementation
     console.log("Migration command executed with args:", args);
   }
