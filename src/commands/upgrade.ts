@@ -39,6 +39,11 @@ interface AichakuMetadata {
   installedAt: string;
   installationType: "global" | "local";
   lastUpgrade: string | null;
+  standards?: {
+    version: string;
+    selected: string[];
+    customStandards: Record<string, unknown>;
+  };
 }
 
 /**
@@ -395,6 +400,59 @@ export async function upgrade(
     } else {
       // PROJECT UPGRADES: Always use aichaku.json in the project directory
       finalMetadataPath = join(targetPath, "aichaku.json");
+
+      // MIGRATE STANDARDS CONFIGURATION before cleanup
+      const legacyStandardsFiles = [
+        join(targetPath, "aichaku-standards.json"),
+        join(targetPath, "doc-standards.json"),
+      ];
+
+      for (const legacyFile of legacyStandardsFiles) {
+        if (await exists(legacyFile)) {
+          try {
+            const legacyContent = await Deno.readTextFile(legacyFile);
+            const legacyData = JSON.parse(legacyContent);
+            
+            // Migrate standards configuration
+            if (legacyData.standards || legacyData.selected) {
+              if (!metadata.standards) {
+                metadata.standards = {
+                  version: "0.31.3",
+                  selected: [],
+                  customStandards: {}
+                };
+              }
+              
+              // Merge selected standards
+              const legacySelected = legacyData.standards?.selected || legacyData.selected || [];
+              if (Array.isArray(legacySelected) && legacySelected.length > 0) {
+                metadata.standards.selected = [...new Set([
+                  ...(metadata.standards.selected || []),
+                  ...legacySelected
+                ])];
+                
+                if (!options.silent) {
+                  Brand.success(`Migrated ${legacySelected.length} standards from ${legacyFile.split("/").pop()}`);
+                }
+              }
+              
+              // Migrate custom standards if present
+              const legacyCustom = legacyData.standards?.customStandards || legacyData.customStandards || {};
+              if (Object.keys(legacyCustom).length > 0) {
+                metadata.standards.customStandards = {
+                  ...metadata.standards.customStandards,
+                  ...legacyCustom
+                };
+              }
+            }
+          } catch (error) {
+            // Don't fail upgrade if migration fails
+            if (!options.silent) {
+              console.warn(`⚠️  Could not migrate standards from ${legacyFile.split("/").pop()}: ${error instanceof Error ? error.message : String(error)}`);
+            }
+          }
+        }
+      }
 
       // Clean up legacy project files if they exist
       const legacyFiles = [
