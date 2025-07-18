@@ -101,7 +101,6 @@ export async function cleanupGlobalInstallation(options: {
       // Static files not used by CLI
       "RULES-REMINDER.md",
       "README.md", // if it exists at root
-      ".aichaku-behavior", // old file
     ];
 
     // Define what to keep (for verification)
@@ -231,7 +230,7 @@ Creates a timestamped backup by default for safety.
 What gets removed:
   - Old directories: archive/, cache/, core/, output/, standards/
   - Documentation: docs/checkpoints/, docs/projects/, docs/api/, etc.
-  - Static files: RULES-REMINDER.md, README.md, .aichaku-behavior
+  - Static files: RULES-REMINDER.md, README.md
 
 What gets kept:
   - docs/core/ (behavioral configuration)

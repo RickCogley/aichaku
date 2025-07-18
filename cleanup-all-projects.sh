@@ -52,7 +52,7 @@ cleanup_project() {
     fi
     
     # Remove duplicate files in .claude root
-    for file in ".aichaku-behavior" "RULES-REMINDER.md"; do
+    for file in "RULES-REMINDER.md"; do
         if [ -f "$project_path/.claude/$file" ] && [ -f "$project_path/.claude/aichaku/$file" ]; then
             echo "  🔄 Found duplicate $file, removing from .claude root"
             rm "$project_path/.claude/$file"
