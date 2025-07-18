@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.35.2] - 2025-07-18
+
+### Changed
+
+- update local aichaku.json from upgrade testing (119355c)
+
+### Fixed
+
+- recreate .aichaku-behavior file during project upgrades (a6af92b)
+
 ## [0.35.1] - 2025-07-18
 
 ### Fixed
