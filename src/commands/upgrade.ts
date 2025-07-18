@@ -412,43 +412,55 @@ export async function upgrade(
           try {
             const legacyContent = await Deno.readTextFile(legacyFile);
             const legacyData = JSON.parse(legacyContent);
-            
+
             // Migrate standards configuration
             if (legacyData.standards || legacyData.selected) {
               if (!metadata.standards) {
                 metadata.standards = {
                   version: "0.31.3",
                   selected: [],
-                  customStandards: {}
+                  customStandards: {},
                 };
               }
-              
+
               // Merge selected standards
-              const legacySelected = legacyData.standards?.selected || legacyData.selected || [];
+              const legacySelected = legacyData.standards?.selected ||
+                legacyData.selected || [];
               if (Array.isArray(legacySelected) && legacySelected.length > 0) {
-                metadata.standards.selected = [...new Set([
-                  ...(metadata.standards.selected || []),
-                  ...legacySelected
-                ])];
-                
+                metadata.standards.selected = [
+                  ...new Set([
+                    ...(metadata.standards.selected || []),
+                    ...legacySelected,
+                  ]),
+                ];
+
                 if (!options.silent) {
-                  Brand.success(`Migrated ${legacySelected.length} standards from ${legacyFile.split("/").pop()}`);
+                  Brand.success(
+                    `Migrated ${legacySelected.length} standards from ${
+                      legacyFile.split("/").pop()
+                    }`,
+                  );
                 }
               }
-              
+
               // Migrate custom standards if present
-              const legacyCustom = legacyData.standards?.customStandards || legacyData.customStandards || {};
+              const legacyCustom = legacyData.standards?.customStandards ||
+                legacyData.customStandards || {};
               if (Object.keys(legacyCustom).length > 0) {
                 metadata.standards.customStandards = {
                   ...metadata.standards.customStandards,
-                  ...legacyCustom
+                  ...legacyCustom,
                 };
               }
             }
           } catch (error) {
             // Don't fail upgrade if migration fails
             if (!options.silent) {
-              console.warn(`⚠️  Could not migrate standards from ${legacyFile.split("/").pop()}: ${error instanceof Error ? error.message : String(error)}`);
+              console.warn(
+                `⚠️  Could not migrate standards from ${
+                  legacyFile.split("/").pop()
+                }: ${error instanceof Error ? error.message : String(error)}`,
+              );
             }
           }
         }
