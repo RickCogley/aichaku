@@ -460,6 +460,32 @@ export async function upgrade(
           Brand.success("CLAUDE.md updated successfully");
         }
       }
+
+      // Ensure .aichaku-behavior file exists (recreate if missing)
+      const aichakuBehaviorPath = join(targetPath, ".aichaku-behavior");
+      if (!(await exists(aichakuBehaviorPath))) {
+        const behaviorContent = `# 🎯 Quick Reference for Claude Code
+
+## Before ANY work:
+1. Check docs/projects/active/ for existing project directories
+2. Create new YYYY-MM-DD-{name} directory for new work
+3. If user says methodology terms (sprint, shape, kanban), enter DISCUSSION mode
+4. Wait for explicit "create project" signal before making files
+
+## File Organization:
+- ALWAYS create in docs/projects/active/YYYY-MM-DD-{name}/
+- NEVER create in .claude/user/ (that's for user customizations only)  
+- NEVER create in project root (keep it clean)
+
+## Methodology Detection:
+- User says "plan sprint" → Create active-YYYY-MM-DD-sprint-planning/
+- User says "fix bug" → Create active-YYYY-MM-DD-fix-[bug-description]/
+`;
+        await Deno.writeTextFile(aichakuBehaviorPath, behaviorContent);
+        if (!options.silent) {
+          Brand.success("Recreated behavioral guidance file");
+        }
+      }
     }
 
     // Add location context to completion message
