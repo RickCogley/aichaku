@@ -71,7 +71,37 @@ export async function upgrade(
   // Find metadata in any of the possible locations
   const metadataInfo = await findMetadataPath(targetPath, isGlobal);
 
-  if (!metadataInfo.path) {
+  // If no metadata found but we're in a project with legacy files, create minimal metadata
+  if (!metadataInfo.path && !isGlobal) {
+    const legacyFiles = [
+      join(targetPath, "RULES-REMINDER.md"),
+      join(targetPath, "aichaku-standards.json"),
+      join(targetPath, "doc-standards.json"),
+      join(targetPath, ".aichaku-behavior"),
+      join(targetPath, "aichaku.config.json"),
+    ];
+
+    const hasLegacyFiles = await Promise.all(legacyFiles.map((f) => exists(f)));
+    const hasAnyLegacy = hasLegacyFiles.some(Boolean);
+
+    if (hasAnyLegacy) {
+      // Create minimal metadata for legacy installation
+      metadataInfo.path = join(targetPath, "aichaku.json");
+      metadataInfo.version = "0.0.0"; // Will be upgraded
+      metadataInfo.needsMigration = false;
+
+      if (!options.silent) {
+        Brand.info("Detected legacy Aichaku installation - upgrading...");
+      }
+    } else {
+      return {
+        success: false,
+        path: targetPath,
+        message:
+          `🪴 Aichaku: No installation found at ${targetPath}. Run 'aichaku init' first.`,
+      };
+    }
+  } else if (!metadataInfo.path) {
     return {
       success: false,
       path: targetPath,
@@ -85,19 +115,27 @@ export async function upgrade(
   // Read current metadata
   let metadata: AichakuMetadata;
   try {
-    // Security: metadataPath is safe - validated to be either .aichaku.json or .aichaku-project in .claude directory
-    const content = await Deno.readTextFile(metadataPath);
-    const rawMetadata = JSON.parse(content);
+    let rawMetadata: Record<string, unknown> = {};
+
+    // Check if metadata file actually exists
+    if (await exists(metadataPath)) {
+      // Security: metadataPath is safe - validated to be either .aichaku.json or .aichaku-project in .claude directory
+      const content = await Deno.readTextFile(metadataPath);
+      rawMetadata = JSON.parse(content);
+    }
+    // If file doesn't exist (legacy detection), create minimal metadata
 
     // Handle both old and new metadata formats - preserve all existing fields
     metadata = {
       ...rawMetadata, // Preserve all existing fields (including standards)
-      version: rawMetadata.version || metadataInfo.version || VERSION,
-      installedAt: rawMetadata.installedAt || rawMetadata.createdAt ||
+      version: (rawMetadata.version as string) || metadataInfo.version ||
+        "0.0.0",
+      installedAt: (rawMetadata.installedAt as string) ||
+        (rawMetadata.createdAt as string) ||
         new Date().toISOString(),
-      installationType: rawMetadata.installationType ||
+      installationType: (rawMetadata.installationType as "global" | "local") ||
         (isGlobal ? "global" : "local"),
-      lastUpgrade: rawMetadata.lastUpgrade || null,
+      lastUpgrade: (rawMetadata.lastUpgrade as string) || null,
     };
   } catch (error) {
     return {
@@ -341,20 +379,61 @@ export async function upgrade(
     metadata.version = VERSION;
     metadata.lastUpgrade = new Date().toISOString();
 
-    // Migrate metadata to new location if needed
-    if (isGlobal && metadataInfo.needsMigration) {
-      const newPath = paths.global.config;
-      await migrateMetadata(metadataPath, newPath, metadata);
-      if (!options.silent) {
-        Brand.success("Migrated configuration to new location");
+    // Determine correct metadata file location
+    let finalMetadataPath: string;
+
+    if (isGlobal) {
+      if (metadataInfo.needsMigration) {
+        const newPath = paths.global.config;
+        await migrateMetadata(metadataPath, newPath, metadata);
+        finalMetadataPath = newPath;
+        if (!options.silent) {
+          Brand.success("Migrated configuration to new location");
+        }
+      } else {
+        finalMetadataPath = metadataPath;
       }
     } else {
-      // Update existing metadata file
-      await Deno.writeTextFile(
-        metadataPath,
-        JSON.stringify(metadata, null, 2),
-      );
+      // PROJECT UPGRADES: Always use aichaku.json in the project directory
+      finalMetadataPath = join(targetPath, "aichaku.json");
+
+      // Clean up legacy project files if they exist
+      const legacyFiles = [
+        join(targetPath, "RULES-REMINDER.md"),
+        join(targetPath, "aichaku-standards.json"),
+        join(targetPath, "doc-standards.json"),
+        join(targetPath, ".aichaku-behavior"),
+        join(targetPath, "aichaku.config.json"), // Old naming
+      ];
+
+      for (const legacyFile of legacyFiles) {
+        if (await exists(legacyFile)) {
+          try {
+            await Deno.remove(legacyFile);
+            if (!options.silent) {
+              Brand.success(
+                `Cleaned up legacy file: ${legacyFile.split("/").pop()}`,
+              );
+            }
+          } catch {
+            // Don't fail upgrade if cleanup fails
+          }
+        }
+      }
+
+      if (
+        !options.silent &&
+        legacyFiles.some((f) => metadataPath.includes(f.split("/").pop() || ""))
+      ) {
+        Brand.success("Cleaned up legacy configuration files");
+      }
     }
+
+    // Write the metadata to the correct location
+    await Deno.writeTextFile(
+      finalMetadataPath,
+      JSON.stringify(metadata, null, 2),
+    );
 
     // NEW: If upgrading a project (not global), also update CLAUDE.md
     if (!isGlobal && !options.dryRun) {

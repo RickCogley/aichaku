@@ -21,7 +21,8 @@ export async function findMetadataPath(
       join(home, ".aichaku", ".aichaku.json"), // Very old location
     ]
     : [
-      join(targetPath, "aichaku.json"), // Current location
+      join(targetPath, "aichaku.json"), // Current preferred location
+      join(targetPath, "aichaku.config.json"), // Alternative naming
       join(targetPath, ".aichaku.json"), // Old project location
       join(targetPath, ".aichaku-project"), // Very old project marker
     ];
