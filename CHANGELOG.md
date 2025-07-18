@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.35.3] - 2025-07-18
+
+### Changed
+
+- format upgrade.ts code for standards migration (ff1d8ad)
+- update local aichaku project files from testing (054d108)
+
+### Fixed
+
+- standards command now discovers built-in standards correctly (fefe729)
+- migrate standards configuration during project upgrades (f516def)
+
 ## [0.35.2] - 2025-07-18
 
 ### Changed
