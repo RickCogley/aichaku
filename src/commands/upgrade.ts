@@ -469,10 +469,10 @@ export async function upgrade(
     const currentDir = Deno.cwd();
 
     const locationContext = isGlobal
-      ? `\n\n📁 **Installation location**: ${
+      ? `\n\n📁 Installation location: ${
         targetPath.replace(homePath, "~")
       }/\n   ├── methodologies/ (49 files verified/updated)\n   ├── standards/ (45 files verified/updated)\n   ├── user/ (preserved - your customizations)\n   └── config.json (metadata updated to v${VERSION})`
-      : `\n\n📁 **Project updated**: ${
+      : `\n\n📁 Project updated: ${
         targetPath.replace(currentDir, ".")
       }/\n   ├── aichaku.json (metadata updated to v${VERSION})\n   ├── user/ (preserved - your customizations)\n   └── 🔗 → ~/.claude/aichaku/ (methodologies & standards)`;
 
