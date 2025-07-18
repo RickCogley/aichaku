@@ -99,7 +99,8 @@ async function getDiscoveredStandards(
   }
 
   // Discover standards from filesystem
-  const standardsPath = basePath || Deno.cwd();
+  const paths = getAichakuPaths();
+  const standardsPath = basePath || paths.global.root;
   cachedStandards = await discoverContent("standards", standardsPath, true);
   cacheTimestamp = now;
 
