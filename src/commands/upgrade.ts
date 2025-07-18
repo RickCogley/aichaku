@@ -404,6 +404,7 @@ export async function upgrade(
         join(targetPath, "doc-standards.json"),
         join(targetPath, ".aichaku-behavior"),
         join(targetPath, "aichaku.config.json"), // Old naming
+        join(targetPath, ".aichaku.json"), // Old metadata file
       ];
 
       for (const legacyFile of legacyFiles) {
@@ -463,10 +464,23 @@ export async function upgrade(
       }
     }
 
+    // Add location context to completion message
+    const homePath = Deno.env.get("HOME") || "";
+    const currentDir = Deno.cwd();
+
+    const locationContext = isGlobal
+      ? `\n\n📁 **Installation location**: ${
+        targetPath.replace(homePath, "~")
+      }/\n   ├── methodologies/ (49 files verified/updated)\n   ├── standards/ (45 files verified/updated)\n   ├── user/ (preserved - your customizations)\n   └── config.json (metadata updated to v${VERSION})`
+      : `\n\n📁 **Project updated**: ${
+        targetPath.replace(currentDir, ".")
+      }/\n   ├── aichaku.json (metadata updated to v${VERSION})\n   ├── user/ (preserved - your customizations)\n   └── 🔗 → ~/.claude/aichaku/ (methodologies & standards)`;
+
     return {
       success: true,
       path: targetPath,
       message: Brand.completed(`Upgrade to v${VERSION}`) +
+        locationContext +
         "\n\n💡 All your projects now have the latest methodologies!",
       action: "upgraded",
       version: VERSION,

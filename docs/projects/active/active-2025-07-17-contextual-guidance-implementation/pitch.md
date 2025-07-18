@@ -25,6 +25,25 @@
 
 **Missing**: WHERE are these 49 files? What directory structure was updated?
 
+### ✅ VALIDATION UPDATE (v0.34.1 Testing)
+
+**User tested the fixed upgrade command and confirmed the exact problem:**
+
+```
+🌿 Updating methodology files...
+✨ Methodologies ready (49 files verified/updated)
+🌿 Updating standards library...  
+✨ Standards ready (45 files verified/updated)
+```
+
+**User feedback**: _"does not say WHERE the files are located. It's like a black
+box, the users gets no feedback about the folder the files have been installed
+in, which I think is really disconcerting."_
+
+**Validation confirms**: Our problem identification was 100% accurate. The
+upgrade mechanics work, but the missing location context remains the core UX
+issue.
+
 ## Appetite
 
 **6 weeks** - This is a medium-sized improvement that enhances existing

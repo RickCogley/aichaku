@@ -14,20 +14,35 @@ guidance framework to upgrade commands
 
 ## Current Focus
 
-Creating comprehensive Shape Up pitch document to address user feedback about
-upgrade command location context.
+**✅ VALIDATION COMPLETE**: User tested v0.34.1 and confirmed the exact problem
+identified in our pitch.
+
+**User Feedback on v0.34.1 Global Upgrade**:
+
+```
+🌿 Updating methodology files...
+✨ Methodologies ready (49 files verified/updated)
+🌿 Updating standards library...
+✨ Standards ready (45 files verified/updated)
+```
+
+**User Response**: "does not say WHERE the files are located. It's like a black
+box, the users gets no feedback about the folder the files have been installed
+in, which I think is really disconcerting."
 
 **What's working**:
 
-- Clear problem identification from real user feedback
-- Existing visual guidance framework provides foundation
-- Appetite estimation (6 weeks) aligns with medium-sized enhancement
+- ✅ Upgrade mechanics fixed (no more missing aichaku.json)
+- ✅ Legacy cleanup working
+- ✅ Problem validation confirmed by real user testing
+- ✅ Clear implementation path with existing visual guidance framework
 
 **Immediate tasks**:
 
-- Complete pitch document with fat marker sketches
-- Define implementation scope boundaries
-- Identify rabbit holes and no-gos
+- ✅ Pitch document complete with comprehensive problem analysis
+- ✅ User validation confirms exact problem identified
+- 🎯 **READY FOR BETTING**: Move to implementation phase
+- 🚀 **Next**: Implement visual guidance in src/commands/upgrade.ts
 
 ## Blockers
 
