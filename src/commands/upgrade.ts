@@ -389,14 +389,14 @@ export async function upgrade(
       const legacyMetadata = metadata as unknown as Record<string, unknown>;
       const legacyFields = ["globalVersion", "createdAt", "customizations"];
       let cleanedFields = 0;
-      
+
       for (const field of legacyFields) {
         if (legacyMetadata[field] !== undefined) {
           delete legacyMetadata[field];
           cleanedFields++;
         }
       }
-      
+
       if (cleanedFields > 0 && !options.silent) {
         Brand.success(`Cleaned up ${cleanedFields} legacy metadata fields`);
       }
