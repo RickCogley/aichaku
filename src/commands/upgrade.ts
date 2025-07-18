@@ -383,6 +383,25 @@ export async function upgrade(
     metadata.version = VERSION;
     metadata.lastUpgrade = new Date().toISOString();
 
+    // Clean up legacy fields that are no longer used
+    if (!isGlobal) {
+      // For project installations, remove legacy fields
+      const legacyMetadata = metadata as unknown as Record<string, unknown>;
+      const legacyFields = ["globalVersion", "createdAt", "customizations"];
+      let cleanedFields = 0;
+      
+      for (const field of legacyFields) {
+        if (legacyMetadata[field] !== undefined) {
+          delete legacyMetadata[field];
+          cleanedFields++;
+        }
+      }
+      
+      if (cleanedFields > 0 && !options.silent) {
+        Brand.success(`Cleaned up ${cleanedFields} legacy metadata fields`);
+      }
+    }
+
     // Determine correct metadata file location
     let finalMetadataPath: string;
 
