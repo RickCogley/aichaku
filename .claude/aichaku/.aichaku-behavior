@@ -1,0 +1,16 @@
+# 🎯 Quick Reference for Claude Code
+
+## Before ANY work:
+1. Check docs/projects/active/ for existing project directories
+2. Create new YYYY-MM-DD-{name} directory for new work
+3. If user says methodology terms (sprint, shape, kanban), enter DISCUSSION mode
+4. Wait for explicit "create project" signal before making files
+
+## File Organization:
+- ALWAYS create in docs/projects/active/YYYY-MM-DD-{name}/
+- NEVER create in .claude/user/ (that's for user customizations only)  
+- NEVER create in project root (keep it clean)
+
+## Methodology Detection:
+- User says "plan sprint" → Create active-YYYY-MM-DD-sprint-planning/
+- User says "fix bug" → Create active-YYYY-MM-DD-fix-[bug-description]/
