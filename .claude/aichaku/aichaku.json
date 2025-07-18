@@ -1,8 +1,8 @@
 {
-  "version": "0.35.3",
+  "version": "0.35.4",
   "installedAt": "2025-07-17T05:45:12.083Z",
   "installationType": "local",
-  "lastUpgrade": "2025-07-18T02:05:59.166Z",
+  "lastUpgrade": "2025-07-18T03:18:18.683Z",
   "standards": {
     "version": "0.31.3",
     "selected": [
