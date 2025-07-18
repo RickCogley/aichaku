@@ -77,7 +77,6 @@ export async function upgrade(
       join(targetPath, "RULES-REMINDER.md"),
       join(targetPath, "aichaku-standards.json"),
       join(targetPath, "doc-standards.json"),
-      join(targetPath, ".aichaku-behavior"),
       join(targetPath, "aichaku.config.json"),
     ];
 
@@ -402,7 +401,6 @@ export async function upgrade(
         join(targetPath, "RULES-REMINDER.md"),
         join(targetPath, "aichaku-standards.json"),
         join(targetPath, "doc-standards.json"),
-        join(targetPath, ".aichaku-behavior"),
         join(targetPath, "aichaku.config.json"), // Old naming
         join(targetPath, ".aichaku.json"), // Old metadata file
       ];
