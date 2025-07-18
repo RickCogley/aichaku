@@ -476,12 +476,17 @@ export async function upgrade(
         targetPath.replace(currentDir, ".")
       }/\n   ├── aichaku.json (metadata updated to v${VERSION})\n   ├── user/ (preserved - your customizations)\n   └── 🔗 → ~/.claude/aichaku/ (methodologies & standards)`;
 
+    // Create appropriate completion message based on upgrade type
+    const completionMessage = isGlobal
+      ? "\n\n💡 All your projects now have the latest methodologies!"
+      : "\n\n💡 Your project now uses the latest methodologies from ~/.claude/aichaku/";
+
     return {
       success: true,
       path: targetPath,
       message: Brand.completed(`Upgrade to v${VERSION}`) +
         locationContext +
-        "\n\n💡 All your projects now have the latest methodologies!",
+        completionMessage,
       action: "upgraded",
       version: VERSION,
     };
