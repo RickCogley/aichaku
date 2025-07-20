@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.35.7] - 2025-07-20
+
+### Changed
+
+- bump nagare version (fe75db4)
+
 ## [0.35.6] - 2025-07-20
 
 ### Changed
