@@ -15,9 +15,9 @@
   },
   "imports": {
     "@modelcontextprotocol/sdk": "npm:@modelcontextprotocol/sdk@1.15.1",
-    "@std/path": "jsr:@std/path@^1.0.0",
-    "@std/fs": "jsr:@std/fs@^1.0.0",
-    "@std/crypto": "jsr:@std/crypto@^1.0.0"
+    "@std/path": "jsr:@std/path@^1.1.1",
+    "@std/fs": "jsr:@std/fs@^1.0.19",
+    "@std/crypto": "jsr:@std/crypto@^1.0.5"
   },
   "exclude": [
     "dist/",
