@@ -2,22 +2,20 @@
   "version": "5",
   "specifiers": {
     "jsr:@davidbonnet/astring@1.8.6": "1.8.6",
-    "jsr:@rick/aichaku@*": "0.31.0",
-    "jsr:@rick/nagare@2.9.1": "2.9.1",
-    "jsr:@std/assert@*": "1.0.13",
+    "jsr:@rick/nagare@2.13.1": "2.13.1",
     "jsr:@std/assert@1": "1.0.13",
-    "jsr:@std/assert@1.0.0": "1.0.0",
+    "jsr:@std/assert@^1.0.13": "1.0.13",
     "jsr:@std/async@1": "1.0.13",
     "jsr:@std/cli@1": "1.0.20",
+    "jsr:@std/cli@1.0.20": "1.0.20",
+    "jsr:@std/cli@^1.0.20": "1.0.20",
     "jsr:@std/fmt@1": "1.0.8",
-    "jsr:@std/fs@*": "1.0.19",
     "jsr:@std/fs@1": "1.0.19",
     "jsr:@std/fs@1.0.0": "1.0.0",
+    "jsr:@std/fs@^1.0.19": "1.0.19",
     "jsr:@std/html@1.0.3": "1.0.3",
-    "jsr:@std/internal@^1.0.1": "1.0.9",
     "jsr:@std/internal@^1.0.6": "1.0.9",
     "jsr:@std/internal@^1.0.9": "1.0.9",
-    "jsr:@std/path@*": "1.1.1",
     "jsr:@std/path@1": "1.1.1",
     "jsr:@std/path@1.0.0": "1.0.0",
     "jsr:@std/path@1.0.8": "1.0.8",
@@ -36,33 +34,17 @@
     "@davidbonnet/astring@1.8.6": {
       "integrity": "98b4914c8863cdf8c0ff83bb5c528caa67a8dca6020ad6234113499f00583e3a"
     },
-    "@rick/aichaku@0.31.0": {
-      "integrity": "a8df9f1c556e921cc6ba60aded3a3d8ce867e3c55f7f18e056de8c769971f7f3",
-      "dependencies": [
-        "jsr:@std/assert@1",
-        "jsr:@std/cli",
-        "jsr:@std/fmt",
-        "jsr:@std/fs@1",
-        "jsr:@std/fs@1.0.0",
-        "jsr:@std/path@1",
-        "jsr:@std/path@1.0.0",
-        "jsr:@std/yaml"
-      ]
-    },
-    "@rick/nagare@2.9.1": {
-      "integrity": "a7fd87cd413b768d0e98268c7f9d3bcdbcbe1e3988da4b8b567095c25e9d06b0",
+    "@rick/nagare@2.13.1": {
+      "integrity": "1346e3f6130f1c19d06c604de78370421369bdae280ca29e27167cef1f3106fd",
       "dependencies": [
         "jsr:@std/async",
+        "jsr:@std/cli@1.0.20",
         "jsr:@std/fmt",
+        "jsr:@std/fs@1",
+        "jsr:@std/path@1",
         "jsr:@std/semver",
         "jsr:@std/yaml",
         "jsr:@vento/vento"
-      ]
-    },
-    "@std/assert@1.0.0": {
-      "integrity": "0e4f6d873f7f35e2a1e6194ceee39686c996b9e5d134948e644d35d4c4df2008",
-      "dependencies": [
-        "jsr:@std/internal@^1.0.1"
       ]
     },
     "@std/assert@1.0.13": {
@@ -830,15 +812,15 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@rick/nagare@2.9.1",
-      "jsr:@std/assert@1",
-      "jsr:@std/async@1",
-      "jsr:@std/cli@1",
-      "jsr:@std/crypto@1",
-      "jsr:@std/fs@1",
-      "jsr:@std/json@1",
-      "jsr:@std/path@1",
-      "jsr:@std/semver@^1.0.4",
+      "jsr:@rick/nagare@2.13.1",
+      "jsr:@std/assert@^1.0.13",
+      "jsr:@std/async@^1.0.13",
+      "jsr:@std/cli@^1.0.20",
+      "jsr:@std/crypto@^1.0.5",
+      "jsr:@std/fs@^1.0.19",
+      "jsr:@std/json@^1.0.2",
+      "jsr:@std/path@^1.1.1",
+      "jsr:@std/semver@^1.0.5",
       "npm:@modelcontextprotocol/sdk@1.15.1"
     ]
   }
