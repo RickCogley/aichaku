@@ -163,21 +163,21 @@ export default {
       async () => {
         console.log("🔨 Building and uploading binaries...");
 
-        // Run package-and-upload script which handles everything
-        const packageCmd = new Deno.Command("deno", {
-          args: ["run", "-A", "./scripts/package-and-upload.ts"],
+        // Run build-binaries script with --upload flag (builds + uploads)
+        const buildCmd = new Deno.Command("deno", {
+          args: ["run", "-A", "./scripts/build-binaries.ts", "--upload"],
           stdout: "inherit",
           stderr: "inherit",
         });
 
-        const packageResult = await packageCmd.output();
-        if (!packageResult.success) {
+        const buildResult = await buildCmd.output();
+        if (!buildResult.success) {
           console.error(
-            "⚠️  Binary packaging/upload failed - continuing anyway",
+            "⚠️  Binary building/upload failed - continuing anyway",
           );
           // Don't throw - this is post-release, so the release already succeeded
         } else {
-          console.log("✅ Binaries packaged and uploaded to GitHub release");
+          console.log("✅ Binaries built and uploaded to GitHub release");
         }
       },
     ],
