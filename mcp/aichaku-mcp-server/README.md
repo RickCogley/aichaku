@@ -182,11 +182,11 @@ graph TB
         SC[Scanner Controller]
         FB[Feedback Builder]
     end
-    
+
     subgraph "Claude Code"
         CC[Claude Client]
     end
-    
+
     CC -->|Review Request| API
     API --> RE
     RE --> SM

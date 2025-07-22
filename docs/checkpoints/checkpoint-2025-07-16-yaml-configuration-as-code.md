@@ -73,7 +73,7 @@
 2. **Security First** - Discovered critical security issue during implementation
    that led to comprehensive blocklist system
 3. **Less is More** - Compact YAML with references is far more maintainable than
-   verbose markdown injection
+   verbose Markdown injection
 4. **MCP Integration Potential** - Integration URLs (aichaku://) enable dynamic
    content loading without file bloat
 5. **User Understanding is Key** - Initial confusion about "configuration as

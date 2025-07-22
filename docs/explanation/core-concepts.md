@@ -65,7 +65,7 @@ Instead of complex workflows, Aichaku recognizes three natural modes of work:
 
 **Example**:
 
-```
+```text
 You: "I need to shape a solution for our authentication system"
 Claude: "🪴 Aichaku: I see you're thinking about shaping a solution. Let me help..."
 [Discussion ensues]
@@ -88,7 +88,7 @@ Claude: [Creates project with pitch.md, STATUS.md, etc.]
 
 **Example**:
 
-```
+```text
 You: "Time to start building this feature"
 Claude: "🪴 Aichaku: Switching to execution mode. Updating status..."
 ```
@@ -108,7 +108,7 @@ Claude: "🪴 Aichaku: Switching to execution mode. Updating status..."
 
 **Example**:
 
-```
+```text
 You: "Let's do a retrospective on this sprint"
 Claude: "🪴 Aichaku: Creating sprint retrospective. Let's reflect on what worked..."
 ```
@@ -360,7 +360,7 @@ Reality: Structure enables creativity by:
 
 Consider this scenario:
 
-```
+```text
 You: "We need to handle authentication for our new app"
 Claude: "🪴 Aichaku: I see you're thinking about authentication. What type of app is this?"
 You: "It's a B2B SaaS platform with enterprise customers"
@@ -400,7 +400,7 @@ and maintainability:
 **Principle**: Unified branding and messaging across all commands
 
 - All user-facing output uses `🪴 Aichaku:` branding consistently
-- Brand.* functions ensure coherent visual identity
+- Brand.\* functions ensure coherent visual identity
 - Clear, actionable feedback for all operations
 - Professional CLI interface standards
 

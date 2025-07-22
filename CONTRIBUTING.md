@@ -27,7 +27,7 @@ versioning.
 
 ### Commit Message Format
 
-```
+```text
 <type>[optional scope]: <description>
 
 [optional body]
@@ -252,9 +252,7 @@ async function copyMethodologyFiles(from: string, to: string): Promise<void>;
 ```typescript
 // Good error handling
 if (path.includes("..")) {
-  throw new Error(
-    "Invalid path: Directory traversal attempts are not allowed",
-  );
+  throw new Error("Invalid path: Directory traversal attempts are not allowed");
 }
 
 // Security-conscious error

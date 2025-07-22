@@ -59,10 +59,10 @@ class DeploymentTracker {
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - days);
 
-    const productionDeployments = this.deployments.filter((d) =>
-      d.environment === "production" &&
-      d.status === "success" &&
-      d.timestamp >= startDate
+    const productionDeployments = this.deployments.filter(
+      (d) =>
+        d.environment === "production" && d.status === "success" &&
+        d.timestamp >= startDate,
     );
 
     return productionDeployments.length / days;
@@ -125,43 +125,43 @@ from typing import List, Optional
 import statistics
 
 class LeadTimeTracker:
-    def __init__(self, git_client, deployment_client):
+    def **init**(self, git*client, deployment*client):
         self.git = git_client
         self.deployments = deployment_client
-    
-    def calculate_lead_time(self, deployment_id: str) -> Optional[float]:
+
+    def calculate*lead*time(self, deployment_id: str) -> Optional[float]:
         """Calculate lead time in hours for a specific deployment."""
-        deployment = self.deployments.get_deployment(deployment_id)
+        deployment = self.deployments.get*deployment(deployment*id)
         if not deployment:
             return None
-        
+
         # Get all commits in this deployment
-        commits = self.git.get_commits_in_range(
+        commits = self.git.get*commits*in_range(
             deployment.from_commit,
             deployment.to_commit
         )
-        
+
         if not commits:
             return None
-        
+
         # Find earliest commit time
         earliest_commit = min(commits, key=lambda c: c.timestamp)
-        
+
         # Calculate lead time
-        lead_time = deployment.deployed_at - earliest_commit.timestamp
-        return lead_time.total_seconds() / 3600  # Convert to hours
-    
-    def get_average_lead_time(self, days: int = 30) -> float:
+        lead*time = deployment.deployed*at - earliest_commit.timestamp
+        return lead*time.total*seconds() / 3600  # Convert to hours
+
+    def get*average*lead_time(self, days: int = 30) -> float:
         """Get average lead time for recent deployments."""
-        recent_deployments = self.deployments.get_recent_deployments(days)
+        recent*deployments = self.deployments.get*recent_deployments(days)
         lead_times = []
-        
+
         for deployment in recent_deployments:
-            lead_time = self.calculate_lead_time(deployment.id)
+            lead*time = self.calculate*lead_time(deployment.id)
             if lead_time:
-                lead_times.append(lead_time)
-        
-        return statistics.mean(lead_times) if lead_times else 0
+                lead*times.append(lead*time)
+
+        return statistics.mean(lead*times) if lead*times else 0
 
 # Git hook for commit tracking
 #!/usr/bin/env python
@@ -171,19 +171,19 @@ import requests
 import json
 
 def track_commit():
-    commit_hash = subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode().strip()
-    commit_time = subprocess.check_output(['git', 'show', '-s', '--format=%ci', commit_hash]).decode().strip()
-    author = subprocess.check_output(['git', 'show', '-s', '--format=%ae', commit_hash]).decode().strip()
-    
+    commit*hash = subprocess.check*output(['git', 'rev-parse', 'HEAD']).decode().strip()
+    commit*time = subprocess.check*output(['git', 'show', '-s', '--format=%ci', commit_hash]).decode().strip()
+    author = subprocess.check*output(['git', 'show', '-s', '--format=%ae', commit*hash]).decode().strip()
+
     data = {
-        'commit_hash': commit_hash,
+        'commit*hash': commit*hash,
         'timestamp': commit_time,
         'author': author
     }
-    
+
     requests.post('https://metrics.example.com/api/commits', json=data)
 
-if __name__ == '__main__':
+if **name** == '**main**':
     track_commit()
 ```
 
@@ -236,10 +236,10 @@ func (m *MTTRTracker) StartIncident(id, severity, description string) {
         Severity:    severity,
         Description: description,
     }
-    
+
     // Alert on-call
     m.alertOnCall(id, severity, description)
-    
+
     // Start incident response automation
     m.startAutomatedResponse(id)
 }
@@ -249,15 +249,15 @@ func (m *MTTRTracker) ResolveIncident(id string) error {
     if !exists {
         return fmt.Errorf("incident %s not found", id)
     }
-    
+
     now := time.Now()
     incident.EndTime = &now
     incident.Status = IncidentResolved
-    
+
     // Calculate and record MTTR
     mttr := now.Sub(incident.StartTime)
     m.recordMTTR(id, mttr)
-    
+
     return nil
 }
 
@@ -265,20 +265,20 @@ func (m *MTTRTracker) GetAverageMTTR(days int) time.Duration {
     cutoff := time.Now().AddDate(0, 0, -days)
     var totalDuration time.Duration
     count := 0
-    
+
     for _, incident := range m.incidents {
-        if incident.Status == IncidentResolved && 
-           incident.StartTime.After(cutoff) && 
+        if incident.Status == IncidentResolved &&
+           incident.StartTime.After(cutoff) &&
            incident.EndTime != nil {
             totalDuration += incident.EndTime.Sub(incident.StartTime)
             count++
         }
     }
-    
+
     if count == 0 {
         return 0
     }
-    
+
     return totalDuration / time.Duration(count)
 }
 
@@ -290,7 +290,7 @@ func (m *MTTRTracker) startAutomatedResponse(incidentID string) {
             m.escalateIncident(incidentID)
             return
         }
-        
+
         if err := m.attemptAutoRecovery(); err != nil {
             m.escalateIncident(incidentID)
             return
@@ -309,7 +309,7 @@ groups:
   - name: production_alerts
     rules:
       - alert: HighErrorRate
-        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        expr: rate(http*requests*total{status=~"5.."}[5m]) > 0.05
         for: 2m
         labels:
           severity: critical
@@ -344,13 +344,13 @@ import java.util.stream.Collectors;
 public class ChangeFailureRateTracker {
     private final List<Deployment> deployments = new ArrayList<>();
     private final List<Incident> incidents = new ArrayList<>();
-    
+
     public class Deployment {
         String id;
         Instant timestamp;
         String version;
         boolean causedIncident;
-        
+
         public Deployment(String id, String version) {
             this.id = id;
             this.timestamp = Instant.now();
@@ -358,59 +358,59 @@ public class ChangeFailureRateTracker {
             this.causedIncident = false;
         }
     }
-    
+
     public class Incident {
         String id;
         String deploymentId;
         Instant timestamp;
         String rootCause;
     }
-    
+
     public void recordDeployment(String deploymentId, String version) {
         deployments.add(new Deployment(deploymentId, version));
-        
+
         // Set up monitoring for this deployment
         schedulePostDeploymentChecks(deploymentId);
     }
-    
+
     public void recordIncident(String incidentId, String deploymentId, String rootCause) {
         // Link incident to deployment
         deployments.stream()
             .filter(d -> d.id.equals(deploymentId))
             .findFirst()
             .ifPresent(d -> d.causedIncident = true);
-        
+
         Incident incident = new Incident();
         incident.id = incidentId;
         incident.deploymentId = deploymentId;
         incident.timestamp = Instant.now();
         incident.rootCause = rootCause;
-        
+
         incidents.add(incident);
     }
-    
+
     public double getChangeFailureRate(int days) {
         Instant cutoff = Instant.now().minus(days, ChronoUnit.DAYS);
-        
+
         List<Deployment> recentDeployments = deployments.stream()
             .filter(d -> d.timestamp.isAfter(cutoff))
             .collect(Collectors.toList());
-        
+
         if (recentDeployments.isEmpty()) {
             return 0.0;
         }
-        
+
         long failedDeployments = recentDeployments.stream()
             .filter(d -> d.causedIncident)
             .count();
-        
+
         return (double) failedDeployments / recentDeployments.size() * 100;
     }
-    
+
     private void schedulePostDeploymentChecks(String deploymentId) {
         // Schedule automated checks at intervals
         Timer timer = new Timer();
-        
+
         // Check after 5 minutes
         timer.schedule(new TimerTask() {
             @Override
@@ -418,7 +418,7 @@ public class ChangeFailureRateTracker {
                 runHealthChecks(deploymentId);
             }
         }, 5 * 60 * 1000);
-        
+
         // Check after 1 hour
         timer.schedule(new TimerTask() {
             @Override
@@ -502,25 +502,25 @@ from flask import Flask, render_template, jsonify
 import pandas as pd
 from datetime import datetime, timedelta
 
-app = Flask(__name__)
+app = Flask(**name**)
 
 class DORADashboard:
-    def __init__(self, metrics_store):
+    def **init**(self, metrics_store):
         self.metrics = metrics_store
-    
-    def get_current_metrics(self):
+
+    def get*current*metrics(self):
         return {
-            'deployment_frequency': self.calculate_deployment_frequency(),
-            'lead_time': self.calculate_average_lead_time(),
+            'deployment*frequency': self.calculate*deployment_frequency(),
+            'lead*time': self.calculate*average*lead*time(),
             'mttr': self.calculate_mttr(),
-            'change_failure_rate': self.calculate_change_failure_rate(),
-            'performance_level': self.determine_performance_level()
+            'change*failure*rate': self.calculate*change*failure_rate(),
+            'performance*level': self.determine*performance_level()
         }
-    
-    def calculate_deployment_frequency(self):
+
+    def calculate*deployment*frequency(self):
         deployments = self.metrics.get_deployments(days=30)
         daily_frequency = len(deployments) / 30
-        
+
         if daily_frequency >= 3:
             return {'value': daily_frequency, 'label': 'Multiple per day', 'level': 'elite'}
         elif daily_frequency >= 0.14:  # Weekly
@@ -529,16 +529,16 @@ class DORADashboard:
             return {'value': daily_frequency, 'label': 'Monthly', 'level': 'medium'}
         else:
             return {'value': daily_frequency, 'label': 'Less than monthly', 'level': 'low'}
-    
-    def determine_performance_level(self):
-        metrics = self.get_current_metrics()
+
+    def determine*performance*level(self):
+        metrics = self.get*current*metrics()
         levels = [m['level'] for m in metrics.values() if isinstance(m, dict) and 'level' in m]
-        
+
         # Simple scoring: elite=4, high=3, medium=2, low=1
         score_map = {'elite': 4, 'high': 3, 'medium': 2, 'low': 1}
         scores = [score_map[level] for level in levels]
         avg_score = sum(scores) / len(scores)
-        
+
         if avg_score >= 3.5:
             return 'Elite Performer'
         elif avg_score >= 2.5:
@@ -551,11 +551,11 @@ class DORADashboard:
 @app.route('/api/metrics')
 def get_metrics():
     dashboard = DORADashboard(metrics_store)
-    return jsonify(dashboard.get_current_metrics())
+    return jsonify(dashboard.get*current*metrics())
 
 @app.route('/dashboard')
 def show_dashboard():
-    return render_template('dora_dashboard.html')
+    return render*template('dora*dashboard.html')
 ```
 
 ### 3. Continuous Improvement Process
@@ -582,7 +582,7 @@ jobs:
 
       - name: Analyze Trends
         run: |
-          python analyze_dora_trends.py --metrics '${{ steps.metrics.outputs.metrics }}'
+          python analyze*dora*trends.py --metrics '${{ steps.metrics.outputs.metrics }}'
 
       - name: Generate Improvement Suggestions
         id: suggestions
@@ -604,7 +604,7 @@ jobs:
             - **Deployment Frequency**: ${metrics.deployment_frequency.label}
             - **Lead Time**: ${metrics.lead_time.value} hours
             - **MTTR**: ${metrics.mttr.value} minutes
-            - **Change Failure Rate**: ${metrics.change_failure_rate.value}%
+            - **Change Failure Rate**: ${metrics.change*failure*rate.value}%
 
             ### Performance Level: ${metrics.performance_level}
 
@@ -653,17 +653,17 @@ services:
       - prometheus_data:/prometheus
     ports:
       - "9090:9090"
-  
+
   grafana:
     image: grafana/grafana:latest
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF*SECURITY*ADMIN_PASSWORD=admin
     volumes:
       - grafana_data:/var/lib/grafana
       - ./dashboards:/etc/grafana/provisioning/dashboards
     ports:
       - "3000:3000"
-  
+
   metrics-collector:
     build: ./metrics-collector
     environment:
@@ -671,13 +671,13 @@ services:
       - PROMETHEUS_URL=http://prometheus:9090
     depends_on:
       - prometheus
-  
+
   webhook-receiver:
     build: ./webhook-receiver
     ports:
       - "8080:8080"
     environment:
-      - METRICS_DB_URL=postgresql://metrics:password@postgres:5432/dora
+      - METRICS*DB*URL=postgresql://metrics:password@postgres:5432/dora
 
 volumes:
   prometheus_data:

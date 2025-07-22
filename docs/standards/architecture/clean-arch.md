@@ -139,15 +139,19 @@ export class PostgresUserRepository implements UserRepository {
   async save(user: User): Promise<void> {
     await this.db.query(
       "INSERT INTO users (id, email, name, password) VALUES ($1, $2, $3, $4)",
-      [user.id, user.email, user.name, user.hashedPassword],
+      [
+        user.id,
+        user.email,
+        user.name,
+        user.hashedPassword,
+      ],
     );
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const result = await this.db.query(
-      "SELECT * FROM users WHERE email = $1",
-      [email],
-    );
+    const result = await this.db.query("SELECT * FROM users WHERE email = $1", [
+      email,
+    ]);
 
     if (result.rows.length === 0) return null;
 
@@ -167,38 +171,38 @@ from typing import List
 from decimal import Decimal
 
 class OrderItem:
-    def __init__(self, product_id: str, quantity: int, price: Decimal):
+    def **init**(self, product_id: str, quantity: int, price: Decimal):
         if quantity <= 0:
             raise ValueError("Quantity must be positive")
         if price < 0:
             raise ValueError("Price cannot be negative")
-            
-        self.product_id = product_id
+
+        self.product*id = product*id
         self.quantity = quantity
         self.price = price
-    
+
     @property
     def total(self) -> Decimal:
         return self.price * self.quantity
 
 class Order:
-    def __init__(self, customer_id: str):
-        self.id = self._generate_id()
-        self.customer_id = customer_id
+    def **init**(self, customer_id: str):
+        self.id = self.*generate*id()
+        self.customer*id = customer*id
         self.items: List[OrderItem] = []
         self.created_at = datetime.now()
         self.status = "pending"
-    
+
     def add_item(self, item: OrderItem) -> None:
         # Business rule: cannot add items to completed orders
         if self.status == "completed":
             raise ValueError("Cannot add items to completed order")
         self.items.append(item)
-    
+
     @property
     def total(self) -> Decimal:
         return sum(item.total for item in self.items)
-    
+
     def complete(self) -> None:
         # Business rule: cannot complete empty order
         if not self.items:
@@ -206,55 +210,55 @@ class Order:
         self.status = "completed"
 
 # Use Cases Layer
-# application/use_cases/create_order.py
+# application/use*cases/create*order.py
 from abc import ABC, abstractmethod
 
 class OrderRepository(ABC):
     @abstractmethod
     async def save(self, order: Order) -> None:
         pass
-    
+
     @abstractmethod
-    async def find_by_id(self, order_id: str) -> Order:
+    async def find*by*id(self, order_id: str) -> Order:
         pass
 
 class ProductRepository(ABC):
     @abstractmethod
-    async def find_by_id(self, product_id: str) -> Product:
+    async def find*by*id(self, product_id: str) -> Product:
         pass
 
 class CreateOrderUseCase:
-    def __init__(
+    def **init**(
         self,
         order_repository: OrderRepository,
         product_repository: ProductRepository
     ):
-        self.order_repository = order_repository
-        self.product_repository = product_repository
-    
+        self.order*repository = order*repository
+        self.product*repository = product*repository
+
     async def execute(self, request: CreateOrderRequest) -> CreateOrderResponse:
         # Create order
         order = Order(request.customer_id)
-        
+
         # Add items with validation
         for item_request in request.items:
-            product = await self.product_repository.find_by_id(
-                item_request.product_id
+            product = await self.product*repository.find*by_id(
+                item*request.product*id
             )
-            
+
             if not product.is_available():
                 raise ValueError(f"Product {product.id} is not available")
-            
+
             order_item = OrderItem(
                 product.id,
                 item_request.quantity,
                 product.price
             )
-            order.add_item(order_item)
-        
+            order.add*item(order*item)
+
         # Save order
         await self.order_repository.save(order)
-        
+
         return CreateOrderResponse(
             order_id=order.id,
             total=order.total,
@@ -266,48 +270,48 @@ class CreateOrderUseCase:
 from fastapi import APIRouter, HTTPException
 
 class OrderController:
-    def __init__(self, create_order_use_case: CreateOrderUseCase):
-        self.create_order_use_case = create_order_use_case
+    def **init**(self, create*order*use_case: CreateOrderUseCase):
+        self.create*order*use*case = create*order*use*case
         self.router = APIRouter()
-        self._setup_routes()
-    
-    def _setup_routes(self):
+        self.*setup*routes()
+
+    def *setup*routes(self):
         @self.router.post("/orders")
         async def create_order(request: CreateOrderDTO):
             try:
-                use_case_request = self._map_to_use_case_request(request)
-                response = await self.create_order_use_case.execute(
-                    use_case_request
+                use*case*request = self.*map*to*use*case_request(request)
+                response = await self.create*order*use_case.execute(
+                    use*case*request
                 )
-                return self._map_to_dto(response)
+                return self.*map*to_dto(response)
             except ValueError as e:
                 raise HTTPException(status_code=400, detail=str(e))
 
 # Infrastructure Layer
-# infrastructure/repositories/sqlalchemy_order_repository.py
+# infrastructure/repositories/sqlalchemy*order*repository.py
 from sqlalchemy.orm import Session
 
 class SQLAlchemyOrderRepository(OrderRepository):
-    def __init__(self, session: Session):
+    def **init**(self, session: Session):
         self.session = session
-    
+
     async def save(self, order: Order) -> None:
         db_order = OrderModel(
             id=order.id,
-            customer_id=order.customer_id,
+            customer*id=order.customer*id,
             status=order.status,
-            created_at=order.created_at
+            created*at=order.created*at
         )
-        
+
         for item in order.items:
             db_item = OrderItemModel(
                 order_id=order.id,
-                product_id=item.product_id,
+                product*id=item.product*id,
                 quantity=item.quantity,
                 price=item.price
             )
-            db_order.items.append(db_item)
-        
+            db*order.items.append(db*item)
+
         self.session.add(db_order)
         self.session.commit()
 ```
@@ -338,15 +342,15 @@ func NewProduct(name, description string, price float64, stock int) (*Product, e
     if name == "" {
         return nil, errors.New("product name is required")
     }
-    
+
     if price < 0 {
         return nil, errors.New("price cannot be negative")
     }
-    
+
     if stock < 0 {
         return nil, errors.New("stock cannot be negative")
     }
-    
+
     return &Product{
         ID:          generateID(),
         Name:        name,
@@ -385,11 +389,11 @@ func (uc *CreateProductUseCase) Execute(input CreateProductInput) (*CreateProduc
     if err != nil {
         return nil, err
     }
-    
+
     if err := uc.repo.Save(product); err != nil {
         return nil, err
     }
-    
+
     return &CreateProductOutput{
         ID:        product.ID,
         Name:      product.Name,
@@ -412,33 +416,33 @@ func (c *ProductController) CreateProduct(w http.ResponseWriter, r *http.Request
         http.Error(w, err.Error(), http.StatusBadRequest)
         return
     }
-    
+
     input := usecase.CreateProductInput{
         Name:        request.Name,
         Description: request.Description,
         Price:       request.Price,
         Stock:       request.Stock,
     }
-    
+
     output, err := c.createProductUseCase.Execute(input)
     if err != nil {
         http.Error(w, err.Error(), http.StatusBadRequest)
         return
     }
-    
+
     response := CreateProductResponse{
         ID:        output.ID,
         Name:      output.Name,
         Price:     output.Price,
         CreatedAt: output.CreatedAt,
     }
-    
+
     w.Header().Set("Content-Type", "application/json")
     json.NewEncoder(w).Encode(response)
 }
 
 // Infrastructure Layer
-// infrastructure/repository/postgres_product_repository.go
+// infrastructure/repository/postgres*product*repository.go
 package repository
 
 type PostgresProductRepository struct {
@@ -450,7 +454,7 @@ func (r *PostgresProductRepository) Save(product *entity.Product) error {
         INSERT INTO products (id, name, description, price, stock, created_at)
         VALUES ($1, $2, $3, $4, $5, $6)
     `
-    
+
     _, err := r.db.Exec(
         query,
         product.ID,
@@ -460,7 +464,7 @@ func (r *PostgresProductRepository) Save(product *entity.Product) error {
         product.Stock,
         product.CreatedAt,
     )
-    
+
     return err
 }
 ```

@@ -50,11 +50,13 @@ graph TD
 
 ```json
 {
-  "PreToolUse": [{
-    "name": "Aichaku Path Validator",
-    "matcher": "Write",
-    "command": "aichaku validate-path '${TOOL_INPUT_FILE_PATH}'"
-  }]
+  "PreToolUse": [
+    {
+      "name": "Aichaku Path Validator",
+      "matcher": "Write",
+      "command": "aichaku validate-path '${TOOL*INPUT*FILE_PATH}'"
+    }
+  ]
 }
 ```
 
@@ -66,7 +68,7 @@ graph LR
     B -->|Planning| C[🎯 Shaper]
     B -->|Building| D[🔨 Builder]
     B -->|Review| E[📊 Reviewer]
-    
+
     F[Keywords] --> G{Perspective}
     G -->|User needs| H[👤 Customer]
     G -->|Technical| I[⚙️ Technical]
@@ -88,7 +90,7 @@ graph TD
     A --> C[Security Section]
     A --> D[Standards Section]
     A --> E[Custom Section]
-    
+
     B --> F[Shape Up, Scrum, etc.]
     C --> G[OWASP, Security Practices]
     D --> H[12-factor, ISO 27001]

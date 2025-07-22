@@ -66,7 +66,7 @@
 ```
 Triggers mapped to modes:
 - "plan", "what should we build" → Planning Mode
-- "build", "implement" → Execution Mode  
+- "build", "implement" → Execution Mode
 - "review", "metrics" → Improvement Mode
 ```
 

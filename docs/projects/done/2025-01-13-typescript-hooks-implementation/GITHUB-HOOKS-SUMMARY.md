@@ -2,7 +2,7 @@
 
 ## What Was Added
 
-I've created a new **"github"** category for hooks that provides GitHub workflow
+I've created a new **"GitHub"** category for hooks that provides GitHub workflow
 automation and best practices. This allows users to install all GitHub-related
 hooks with a single command.
 
@@ -29,7 +29,7 @@ The `github` category includes 5 hooks:
 ### 1. `todo-tracker`
 
 - **Type**: PostToolUse (Write|Edit|MultiEdit)
-- **Purpose**: Detects when you edit code/markdown files and suggests creating
+- **Purpose**: Detects when you edit code/Markdown files and suggests creating
   GitHub issues from TODOs
 - **Features**: Promotes proper TODO formatting like `TODO(#123)` or
   `TODO(security): Fix auth`
@@ -85,7 +85,7 @@ The `github` category includes 5 hooks:
 # See available hook sets
 aichaku hooks --list
 
-# Install GitHub hooks globally  
+# Install GitHub hooks globally
 aichaku hooks --install github --global
 
 # Verify installation

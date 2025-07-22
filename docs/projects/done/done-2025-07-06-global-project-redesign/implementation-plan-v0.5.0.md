@@ -187,7 +187,7 @@ Your project now has:
 
 ℹ️  Current version: v0.5.0
     Latest version:  v0.5.0
-    
+
 ✓ You're up to date!
 ```
 
@@ -246,7 +246,7 @@ Remove Aichaku from this project? [y/N]: _
 
 ℹ️  CLAUDE.md still contains Aichaku references:
     Lines 23-35: "## Methodologies"
-    
+
     Remove these manually if no longer needed.
 
 ✅ Aichaku removed from project.

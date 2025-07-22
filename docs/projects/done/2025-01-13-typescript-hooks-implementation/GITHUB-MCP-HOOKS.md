@@ -16,7 +16,7 @@ to code and suggest creating GitHub issues
 
 **Features**:
 
-- Monitors code and markdown files for TODO additions
+- Monitors code and Markdown files for TODO additions
 - Suggests creating GitHub issues with proper formatting
 - Supports linking TODOs to existing issues (e.g., `TODO(#123)`)
 - Encourages labeling (e.g., `TODO(security)`) and prioritization
@@ -56,7 +56,7 @@ changed.
 
 ### 4. Workflow Monitor (`workflow-monitor`)
 
-**Trigger**: PostToolUse on Write/Edit (.github/workflows/) **Purpose**: Provide
+**Trigger**: PostToolUse on Write/Edit (.GitHub/workflows/) **Purpose**: Provide
 guidance when modifying GitHub Actions workflows
 
 **Features**:
@@ -158,18 +158,22 @@ Add to your settings.json:
     "PostToolUse": [
       {
         "matcher": "Write|Edit|MultiEdit",
-        "hooks": [{
-          "type": "command",
-          "command": "deno run --allow-read --allow-write ~/.claude/aichaku/hooks/aichaku-hooks.ts todo-tracker"
-        }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "deno run --allow-read --allow-write ~/.claude/aichaku/hooks/aichaku-hooks.ts todo-tracker"
+          }
+        ]
       }
     ],
     "SessionStart": [
       {
-        "hooks": [{
-          "type": "command",
-          "command": "deno run --allow-read --allow-write ~/.claude/aichaku/hooks/aichaku-hooks.ts pr-checker"
-        }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "deno run --allow-read --allow-write ~/.claude/aichaku/hooks/aichaku-hooks.ts pr-checker"
+          }
+        ]
       }
     ]
   }

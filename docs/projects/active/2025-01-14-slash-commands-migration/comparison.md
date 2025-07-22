@@ -70,9 +70,9 @@ Run these before committing your changes!
 **Old**: No granular control
 **New**: Specify exactly which tools/commands are allowed
 
-### 2. Dynamic Content  
+### 2. Dynamic Content
 **Old**: Static prompt text only
-**New**: 
+**New**:
 - `$ARGUMENTS` - Pass parameters to commands
 - `!command` - Execute bash commands inline
 - `@file` - Reference file contents directly

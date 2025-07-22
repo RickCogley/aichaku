@@ -150,7 +150,7 @@ module.exports = {
     url: process.env.REDIS_URL, // Required: set via environment
   },
   features: {
-    newDashboard: process.env.FEATURE_NEW_DASHBOARD === "true",
+    newDashboard: process.env.FEATURE * NEW * DASHBOARD === "true",
   },
 };
 ```
@@ -165,7 +165,7 @@ metadata:
 data:
   PORT: "3000"
   DB_HOST: "postgres-service"
-  FEATURE_NEW_DASHBOARD: "true"
+  FEATURE*NEW*DASHBOARD: "true"
 ---
 apiVersion: v1
 kind: Secret
@@ -173,7 +173,7 @@ metadata:
   name: app-secrets
 type: Opaque
 stringData:
-  DB_PASSWORD: ${DB_PASSWORD} # Use environment variable from secret store
+  DB*PASSWORD: ${DB*PASSWORD} # Use environment variable from secret store
 ```
 
 ## Factor IV: Backing Services
@@ -459,9 +459,7 @@ const logger = winston.createLogger({
     winston.format.timestamp(),
     winston.format.json(),
   ),
-  transports: [
-    new winston.transports.Console(),
-  ],
+  transports: [new winston.transports.Console()],
 });
 
 // Usage
@@ -586,7 +584,7 @@ app.use((req, res, next) => {
 // Metrics
 const prometheus = require("prom-client");
 const httpRequestDuration = new prometheus.Histogram({
-  name: "http_request_duration_seconds",
+  name: "http*request*duration_seconds",
   help: "Duration of HTTP requests in seconds",
   labelNames: ["method", "route", "status"],
 });
@@ -676,17 +674,20 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 passport.use(
-  new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "/auth/google/callback",
-  }, async (accessToken, refreshToken, profile, done) => {
-    const user = await User.findOrCreate({
-      googleId: profile.id,
-      email: profile.emails[0].value,
-    });
-    return done(null, user);
-  }),
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE * CLIENT * ID,
+      clientSecret: process.env.GOOGLE * CLIENT * SECRET,
+      callbackURL: "/auth/google/callback",
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      const user = await User.findOrCreate({
+        googleId: profile.id,
+        email: profile.emails[0].value,
+      });
+      return done(null, user);
+    },
+  ),
 );
 ```
 

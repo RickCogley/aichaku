@@ -12,7 +12,7 @@ Before you start using Aichaku:
 - **Git repository** - A project with git initialized
 - **Basic familiarity** with development methodologies (Shape Up, Scrum, Kanban,
   or Lean)
-- **Text editor** - Any editor that supports markdown files
+- **Text editor** - Any editor that supports Markdown files
 
 ## 🆕 Latest Updates
 

@@ -111,7 +111,7 @@ directives are created and maintained through a groundbreaking YAML-based
 - **Massive files**: Traditional CLAUDE.md files can exceed 50KB of repetitive
   content
 - **Difficult maintenance**: Changes require updating multiple large files
-- **No modularity**: Everything hardcoded in monolithic markdown files
+- **No modularity**: Everything hardcoded in monolithic Markdown files
 - **Version drift**: Different projects with different versions of the same
   guidance
 
@@ -153,7 +153,7 @@ behavioral_directives:
 ~/.claude/aichaku/config/
 ├── core.yaml              # Base Aichaku behaviors
 ├── methodologies/
-│   ├── shape-up.yaml       # Shape Up specific guidance  
+│   ├── shape-up.yaml       # Shape Up specific guidance
 │   ├── scrum.yaml          # Scrum specific guidance
 │   ├── kanban.yaml         # Kanban specific guidance
 │   └── common.yaml         # Cross-methodology patterns
@@ -246,7 +246,7 @@ progress and suggests concrete improvements.
 
 ### Adaptive Blending
 
-```
+```text
 You: "Let's plan our next sprint, but I want to shape this feature properly"
 Claude: [Blends Scrum structure with Shape Up shaping]
         "I'll help you shape the feature first, then fit it into your sprint.
@@ -255,7 +255,7 @@ Claude: [Blends Scrum structure with Shape Up shaping]
 
 ### Natural Language Detection
 
-```
+```text
 You: "We need a kanban board for tracking our 6-week cycle"
 Claude: [Detects Kanban + Shape Up terminology]
         "I'll create a Kanban board structured around your Shape Up cycle.
@@ -264,7 +264,7 @@ Claude: [Detects Kanban + Shape Up terminology]
 
 ### Team Vocabulary
 
-```
+```text
 You: "Time for our daily standup to check the backlog"
 Claude: [Recognizes Scrum ceremony + general terms]
         "Let's run through the standup format:
@@ -432,7 +432,7 @@ Aichaku automatically creates structured summaries of your Claude Code sessions!
 Never lose context when conversations are compacted or ended.
 
 - ✅ **Automatic** - Runs on conversation end and compaction
-- 📄 **Structured** - Consistent markdown format with key sections
+- 📄 **Structured** - Consistent Markdown format with key sections
 - 📅 **Timestamped** - Easy to find and reference later
 - 📋 **Organized** - Saved to `docs/checkpoints/` directory
 
@@ -712,17 +712,17 @@ claude mcp list
 - `-s local`: Private to you in current project only
 - `-s project`: Shared with everyone in the project
 
-3. **Restart Claude Code**: The MCP tools will be available with `mcp__` prefix.
+3. **Restart Claude Code**: The MCP tools will be available with `mcp**` prefix.
 
 ### Example Workflows
 
 #### Complete Project Documentation
 
-```
+```text
 You: "Analyze this project and generate complete documentation"
 Claude: [Uses analyze_project] 🪴 Aichaku: Analyzing project structure...
         [Uses generate_documentation] 🪴 Aichaku: Generating documentation...
-        
+
         I've analyzed your TypeScript project and generated comprehensive documentation:
         - README with setup instructions
         - API documentation for all public methods
@@ -732,10 +732,10 @@ Claude: [Uses analyze_project] 🪴 Aichaku: Analyzing project structure...
 
 #### Methodology-Aware Documentation
 
-```
+```text
 You: "Create a Shape Up pitch document template for this feature"
 Claude: [Uses create_doc_template] 🪴 Aichaku: Creating Shape Up pitch template...
-        
+
         I've created a pitch template that includes:
         - Problem definition section
         - Appetite constraints
@@ -746,10 +746,10 @@ Claude: [Uses create_doc_template] 🪴 Aichaku: Creating Shape Up pitch templat
 
 #### Continuous Documentation Updates
 
-```
+```text
 You: "Update the API docs after adding the new authentication endpoints"
 Claude: [Uses generate_documentation] 🪴 Aichaku: Updating API documentation...
-        
+
         I've updated the documentation with:
         - New authentication endpoints
         - Request/response examples

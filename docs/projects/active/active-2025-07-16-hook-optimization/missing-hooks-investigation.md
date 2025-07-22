@@ -91,7 +91,7 @@ The hooks system uses a **dynamic generation approach**:
 ### 3. Current Architecture
 
 ```
-src/commands/hooks.ts (source) 
+src/commands/hooks.ts (source)
     ↓ (generates during installation)
 ~/.claude/aichaku/hooks/aichaku-hooks.ts (user's machine)
     ↓ (referenced by)

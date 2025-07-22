@@ -63,8 +63,11 @@ The CLI automatically detects whether a topic is a methodology or standard:
 
 ```typescript
 const isStandard = topic &&
-  (topic.includes("owasp") || topic.includes("factor") ||
-    topic === "tdd" || topic === "nist" || topic === "ddd" ||
+  (topic.includes("owasp") ||
+    topic.includes("factor") ||
+    topic === "tdd" ||
+    topic === "nist" ||
+    topic === "ddd" ||
     topic === "solid");
 ```
 

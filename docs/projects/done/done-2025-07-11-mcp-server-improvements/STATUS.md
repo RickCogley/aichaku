@@ -44,7 +44,7 @@ graph LR
 ```bash
 aichaku mcp --status         # Enhanced status with PID, version, uptime ✅
 aichaku mcp --start          # Start MCP server ✅
-aichaku mcp --stop           # Stop MCP server ✅  
+aichaku mcp --stop           # Stop MCP server ✅
 aichaku mcp --restart        # Restart MCP server ✅
 aichaku mcp --start-server   # Start HTTP/SSE server ✅
 aichaku mcp --server-status  # Show HTTP/SSE server status with PID ✅

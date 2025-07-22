@@ -20,8 +20,8 @@ Claude's internal process with current prompts:
 - How much detail needed?
 
 *Generic response*
-"I'll help you shape user authentication. In Shape Up, we start by 
-understanding the problem. Can you tell me more about what kind of 
+"I'll help you shape user authentication. In Shape Up, we start by
+understanding the problem. Can you tell me more about what kind of
 authentication you need and what problems it solves for your users?"
 ```
 
@@ -116,7 +116,7 @@ EXECUTING SHAPING PROTOCOL:
 1️⃣ **Problem** (detected: solo, quick implementation)
    Standard auth - login/logout for your app
 
-2️⃣ **Appetite** 
+2️⃣ **Appetite**
    ✓ Set to 2 weeks (small batch)
 
 3️⃣ **Quick Solution Sketch**

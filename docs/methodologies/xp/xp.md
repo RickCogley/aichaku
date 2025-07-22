@@ -32,7 +32,7 @@ challenges
 
 ### TDD Cycle
 
-```
+```javascript
 1. RED: Write failing test
    test("user can login", () => {
      expect(login(user)).toBe(true);
@@ -49,7 +49,7 @@ challenges
 
 ### Story Card
 
-```
+```text
 Story: [Feature name]
 Estimate: [1-3 days]
 Tasks:
@@ -61,7 +61,7 @@ Tasks:
 
 ### Pairing Schedule
 
-```
+```text
 Morning: Alice + Bob on Feature A
 Afternoon: Alice + Carol on Bug B
 Rule: Switch pairs daily

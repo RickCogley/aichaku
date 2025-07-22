@@ -102,7 +102,7 @@ You should see entries for both Stop and PreCompact hooks:
   {
     "hooks": [
       {
-        "type": "command", 
+        "type": "command",
         "command": "deno run --allow-read --allow-write --allow-env --allow-run ~/.claude/aichaku/hooks/aichaku-hooks.ts conversation-summary"
       }
     ]
@@ -144,16 +144,19 @@ The hook requires these Deno permissions:
 ### No Checkpoint Files Created
 
 1. **Check hook installation**:
+
    ```bash
    grep "conversation-summary" ~/.claude/settings.json
    ```
 
 2. **Verify checkpoint directory exists**:
+
    ```bash
    ls -la docs/checkpoints/
    ```
 
 3. **Check for hook errors**:
+
    ```bash
    tail -f /tmp/aichaku-hooks.log
    ```

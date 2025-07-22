@@ -258,17 +258,17 @@ Shape Up [Building ████████░░░░] Week 3.5/6 - Creating a
 // Spinner variations per methodology
 const spinners = {
   "shape-up": ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"],
-  "scrum": ["◐", "◓", "◑", "◒"],
-  "kanban": ["→", "↘", "↓", "↙", "←", "↖", "↑", "↗"],
-  "lean": ["?", "!", "→", "✓"],
-  "xp": ["🔴", "🟢", "♻️"], // Red, Green, Refactor
+  scrum: ["◐", "◓", "◑", "◒"],
+  kanban: ["→", "↘", "↓", "↙", "←", "↖", "↑", "↗"],
+  lean: ["?", "!", "→", "✓"],
+  xp: ["🔴", "🟢", "♻️"], // Red, Green, Refactor
 };
 
 // Progress animations
 const animations = {
-  "wave": "░▒▓█▓▒░",
-  "blocks": "▁▂▃▄▅▆▇█",
-  "dots": "⣾⣽⣻⢿⡿⣟⣯⣷",
+  wave: "░▒▓█▓▒░",
+  blocks: "▁▂▃▄▅▆▇█",
+  dots: "⣾⣽⣻⢿⡿⣟⣯⣷",
 };
 ```
 
@@ -278,9 +278,9 @@ const animations = {
 const colors = {
   "on-track": "\x1b[32m", // Green
   "at-risk": "\x1b[33m", // Yellow
-  "blocked": "\x1b[31m", // Red
-  "complete": "\x1b[36m", // Cyan
-  "current": "\x1b[1m", // Bold
+  blocked: "\x1b[31m", // Red
+  complete: "\x1b[36m", // Cyan
+  current: "\x1b[1m", // Bold
 };
 ```
 

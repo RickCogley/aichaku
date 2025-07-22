@@ -104,7 +104,7 @@ Created 5 new GitHub-focused hooks:
 
 ### Documentation Review Hooks
 
-- **docs-review**: Reviews markdown files against documentation standards
+- **docs-review**: Reviews Markdown files against documentation standards
 - **jsdoc-checker**: Adaptive JSDoc validation that detects project type
   (Deno/TSDoc/JSDoc/TypeDoc)
 

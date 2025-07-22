@@ -73,11 +73,11 @@ Claude: *Loads Scrum Product Owner persona*
 ```
 User: "Let's plan the next sprint"
 
-Claude: 
+Claude:
 DETECTED: Planning request + "sprint" = Scrum Planning Mode
 
 Sprint Planning Checklist:
-□ Team capacity: ___ story points
+□ Team capacity: **_ story points
 □ Priority items ready: Yes/No
 □ Dependencies cleared: Yes/No
 
@@ -181,7 +181,7 @@ Quick Setup:
 
 What would you like to start with?
 A) Set up bug flow
-B) Shape the feature  
+B) Shape the feature
 C) See both in parallel
 ```
 

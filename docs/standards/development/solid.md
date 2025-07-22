@@ -182,7 +182,10 @@ without breaking the application"**
 ```typescript
 // ✅ Good: Rectangle base class
 class Rectangle {
-  constructor(protected width: number, protected height: number) {}
+  constructor(
+    protected width: number,
+    protected height: number,
+  ) {}
 
   getWidth(): number {
     return this.width;
@@ -235,7 +238,10 @@ interface Shape {
 }
 
 class Rectangle implements Shape {
-  constructor(private width: number, private height: number) {}
+  constructor(
+    private width: number,
+    private height: number,
+  ) {}
   getArea(): number {
     return this.width * this.height;
   }
@@ -286,8 +292,12 @@ class RandomAccessFile implements Readable, Writable, Seekable {
   read(): string {
     return "data";
   }
-  write(data: string): void {/* write */}
-  seek(position: number): void {/* seek */}
+  write(data: string): void {
+    /* write */
+  }
+  seek(position: number): void {
+    /* seek */
+  }
 }
 
 // ✅ Good: Console only needs what it uses
@@ -465,19 +475,39 @@ describe("UserService", () => {
 ```typescript
 // ❌ Problem: One class doing everything
 class Application {
-  handleRequest() {/* ... */}
-  validateInput() {/* ... */}
-  saveToDatabase() {/* ... */}
-  sendEmail() {/* ... */}
-  generateReport() {/* ... */}
+  handleRequest() {
+    /* ... */
+  }
+  validateInput() {
+    /* ... */
+  }
+  saveToDatabase() {
+    /* ... */
+  }
+  sendEmail() {
+    /* ... */
+  }
+  generateReport() {
+    /* ... */
+  }
 }
 
 // ✅ Solution: Separate responsibilities
-class RequestHandler {/* ... */}
-class InputValidator {/* ... */}
-class DatabaseService {/* ... */}
-class EmailService {/* ... */}
-class ReportGenerator {/* ... */}
+class RequestHandler {
+  /* ... */
+}
+class InputValidator {
+  /* ... */
+}
+class DatabaseService {
+  /* ... */
+}
+class EmailService {
+  /* ... */
+}
+class ReportGenerator {
+  /* ... */
+}
 ```
 
 Remember: SOLID principles work together to create code that is easier to

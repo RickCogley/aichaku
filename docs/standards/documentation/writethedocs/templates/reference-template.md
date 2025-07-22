@@ -33,7 +33,7 @@ http GET api.example.com/v1/resources \
 ```javascript
 fetch("https://api.example.com/v1/resources", {
   headers: {
-    "Authorization": "Bearer YOUR_TOKEN",
+    Authorization: "Bearer YOUR_TOKEN",
   },
 })
   .then((response) => response.json())
@@ -60,7 +60,7 @@ All requests require authentication using a Bearer token in the Authorization
 header:
 
 ```
-Authorization: Bearer YOUR_API_TOKEN
+Authorization: Bearer YOUR*API*TOKEN
 ```
 
 ### Getting an API Token
@@ -366,7 +366,7 @@ All errors follow RFC 7807 (Problem Details):
   "status": 404,
   "detail": "The resource 'res_123abc' does not exist or you don't have permission to access it",
   "instance": "/v1/resources/res_123abc",
-  "request_id": "req_987zyx",
+  "request*id": "req*987zyx",
   "timestamp": "2023-10-15T16:45:00Z"
 }
 ```
@@ -523,7 +523,9 @@ POST /webhooks
   "type": "resource.created",
   "created_at": "2023-10-15T16:00:00Z",
   "data": {
-    "resource": {/* resource object */}
+    "resource": {
+      /* resource object */
+    }
   }
 }
 ```
@@ -534,10 +536,9 @@ POST /webhooks
 const crypto = require("crypto");
 
 function verifyWebhook(payload, signature, secret) {
-  const hash = crypto
-    .createHmac("sha256", secret)
-    .update(payload)
-    .digest("hex");
+  const hash = crypto.createHmac("sha256", secret).update(payload).digest(
+    "hex",
+  );
 
   return `sha256=${hash}` === signature;
 }
@@ -595,12 +596,12 @@ import time
 
 client = ApiClient(
     token=os.environ['API_TOKEN'],
-    retry_on_rate_limit=True
+    retry*on*rate_limit=True
 )
 
 # List resources
 resources = client.resources.list(
-    page=1, 
+    page=1,
     per_page=50,
     filter='status:active'
 )
@@ -631,14 +632,14 @@ import (
 
 func main() {
     client := sdk.NewClient(os.Getenv("API_TOKEN"))
-    
+
     // List resources
     resources, err := client.Resources.List(&sdk.ListOptions{
         Page: 1,
         PerPage: 50,
         Filter: "status:active",
     })
-    
+
     // Create resource
     resource, err := client.Resources.Create(&sdk.Resource{
         Name: "My Resource",

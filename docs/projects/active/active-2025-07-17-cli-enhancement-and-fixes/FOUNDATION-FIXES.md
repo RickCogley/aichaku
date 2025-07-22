@@ -28,7 +28,7 @@ maintainability principles.
 
 ```typescript
 // src/config/methodology-fallback.ts
-export const METHODOLOGY_FALLBACK_CONFIG = {
+export const METHODOLOGY*FALLBACK*CONFIG = {
   methodologies: ["shape-up", "scrum", "kanban", "lean", "xp", "scrumban"],
   reason: "Emergency fallback when dynamic discovery fails",
   lastUpdated: "2025-07-17",
@@ -49,11 +49,11 @@ export const METHODOLOGY_DEFAULTS = {
 };
 
 // src/config/methodology-templates.ts
-export const METHODOLOGY_TEMPLATE_CONFIG = {
+export const METHODOLOGY*TEMPLATE*CONFIG = {
   templates: {
     "shape-up": ["STATUS.md", "pitch.md", "hill-chart.md"],
-    "scrum": ["sprint-planning.md", "retrospective.md"],
-    "kanban": ["kanban-board.md", "flow-metrics.md"],
+    scrum: ["sprint-planning.md", "retrospective.md"],
+    kanban: ["kanban-board.md", "flow-metrics.md"],
     // ... complete mapping
   },
 };

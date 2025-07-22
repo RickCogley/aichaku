@@ -48,7 +48,7 @@ When the user says → You MUST automatically:
 - "shape" → Create Shape Up pitch in active directory
 - "sprint" → Create Scrum sprint plan in active directory
 - "kanban" → Create/update Kanban board in active directory
-- "retrospective" → Move project to done-*/ and create retrospective
+- "retrospective" → Move project to done-\*/ and create retrospective
 
 ## 3. Project Lifecycle Automation
 
@@ -57,7 +57,7 @@ YOU MUST AUTOMATICALLY:
 1. Create STATUS.md when starting ANY new work
 2. Update STATUS.md after EVERY work session
 3. Git commit with descriptive message after changes
-4. Move to done-*/ when user indicates completion
+4. Move to done-\*/ when user indicates completion
 
 ## 4. Self-Correcting Behaviors
 
@@ -80,20 +80,20 @@ async function createMagicalStructure() {
   const structure = {
     ".claude/": {
       "AICHAKU-ACTIVE.txt": "", // Tracks current project
-      "BEHAVIORAL-RULES.md": BEHAVIORAL_RULES_CONTENT,
+      "BEHAVIORAL-RULES.md": BEHAVIORAL * RULES * CONTENT,
       "output/": {
-        "README.md": OUTPUT_README_CONTENT,
+        "README.md": OUTPUT * README * CONTENT,
         "active-example-shape-up-project/": {
-          "STATUS.md": EXAMPLE_STATUS_CONTENT,
-          "pitch.md": EXAMPLE_PITCH_CONTENT,
+          "STATUS.md": EXAMPLE * STATUS * CONTENT,
+          "pitch.md": EXAMPLE * PITCH * CONTENT,
         },
         "done-example-completed-project/": {
-          "retrospective.md": EXAMPLE_RETRO_CONTENT,
+          "retrospective.md": EXAMPLE * RETRO * CONTENT,
         },
       },
       "hooks/": {
-        "pre-create-file.sh": PRE_CREATE_HOOK,
-        "post-create-file.sh": POST_CREATE_HOOK,
+        "pre-create-file.sh": PRE * CREATE * HOOK,
+        "post-create-file.sh": POST * CREATE * HOOK,
       },
     },
   };
@@ -206,14 +206,14 @@ ACTIVE_PROJECT=$(cat .claude/.aichaku-active 2>/dev/null || echo "active-$(date 
 # Check if path is correct
 if [[ ! "$FILE_PATH" =~ \.claude/output/active-.* ]]; then
   echo "🔄 Auto-correcting path..."
-  
+
   # Ensure directory exists
   mkdir -p ".claude/output/$ACTIVE_PROJECT"
-  
+
   # Update the path
   FILENAME=$(basename "$FILE_PATH")
-  CORRECTED_PATH=".claude/output/$ACTIVE_PROJECT/$FILENAME"
-  
+  CORRECTED*PATH=".claude/output/$ACTIVE*PROJECT/$FILENAME"
+
   echo "✅ Will create at: $CORRECTED_PATH"
   exit 0
 fi
@@ -256,13 +256,13 @@ export async function autoUpdateStatus(projectPath: string, action: string) {
 🎉 Aichaku is now magically active!
 
 Try these commands and watch the magic:
-  
+
   "Let's shape up a new payment feature"
   → Creates Shape Up pitch in .claude/output/active-2025-01-07-payment-feature/
-  
-  "Start sprint planning for user auth"  
+
+  "Start sprint planning for user auth"
   → Creates Sprint docs in .claude/output/active-2025-01-07-user-auth/
-  
+
   "Show me the kanban board"
   → Creates/updates board in current active project
 

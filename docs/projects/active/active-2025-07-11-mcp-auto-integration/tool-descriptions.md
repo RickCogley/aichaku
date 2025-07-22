@@ -206,9 +206,9 @@ const naturalLanguageMap = {
   "audit code": ["review_file"],
 
   // Documentation intentions
-  "generate docs": ["analyze_project", "generate_documentation"],
+  "generate docs": ["analyze*project", "generate*documentation"],
   "create documentation": ["generate_documentation"],
-  "document this": ["analyze_project", "generate_documentation"],
+  "document this": ["analyze*project", "generate*documentation"],
   "write guides": ["create_doc_template", "generate_documentation"],
 
   // Standards intentions
@@ -242,17 +242,13 @@ const autoChains = {
     steps: [
       "get_standards",
       "review_file", // For all source files
-      "generate_security_report",
+      "generate*security*report",
     ],
   },
 
   "project-setup": {
     trigger: /set.*up.*project|initialize/i,
-    steps: [
-      "get_standards",
-      "review_methodology",
-      "create_doc_template",
-    ],
+    steps: ["get*standards", "review*methodology", "create_doc_template"],
   },
 };
 ```

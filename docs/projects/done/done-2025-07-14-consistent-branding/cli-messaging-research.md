@@ -80,7 +80,7 @@ Debug:       "Updated to v1.2.0
 ```
 Error: "Unknown command 'inti'"
        Did you mean 'init'?
-       
+
        Run 'aichaku help' for available commands.
 ```
 

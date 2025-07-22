@@ -84,7 +84,7 @@ Current: Executing 🌿
 **Shape Up:**
 
 ```text
-🪴 Aichaku Shape Up: 
+🪴 Aichaku Shape Up:
 [Shaping] → [**Betting**] → [Building] → [Cool-down]
                 ▲
 Visual: 🌱→🌿→🌳→🍃 (subtle indicators)
@@ -113,9 +113,12 @@ const current = 1;
 
 console.log(
   chalk.blue("🪴 Aichaku:"),
-  phases.map((p, i) =>
-    i === current ? chalk.bgBlue.white(` ${p} `) : chalk.gray(p)
-  ).join(" → "),
+  phases.map((
+    p,
+    i,
+  ) => (i === current ? chalk.bgBlue.white(` ${p} `) : chalk.gray(p))).join(
+    " → ",
+  ),
 );
 ```
 

@@ -32,7 +32,7 @@ rhythm
 
 ### Sprint Plan
 
-```
+```text
 Sprint Goal: [One sentence]
 Capacity: [X story points]
 Committed Stories:
@@ -42,7 +42,7 @@ Committed Stories:
 
 ### Daily Standup
 
-```
+```text
 Yesterday: [What I completed]
 Today: [What I'll work on]
 Blockers: [Any impediments]
@@ -50,7 +50,7 @@ Blockers: [Any impediments]
 
 ### Sprint Summary
 
-```
+```text
 Planned: [X points]
 Completed: [Y points]
 Demo ready: [List]

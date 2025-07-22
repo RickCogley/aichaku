@@ -30,7 +30,7 @@ export type RenderStyle = "ascii" | "compact" | "minimal" | "dashboard";
 // src/progress/renderers/shape-up.ts
 export class ShapeUpRenderer implements MethodologyRenderer {
   private readonly phases = ['shaping', 'building', 'cool-down'];
-  
+
   render(metrics: ProgressMetrics, style: RenderStyle): string {
     switch (style) {
       case 'ascii':
@@ -43,12 +43,12 @@ export class ShapeUpRenderer implements MethodologyRenderer {
         return this.renderCompactLine(metrics);
     }
   }
-  
+
   private renderAsciiBox(metrics: ProgressMetrics): string {
     const { phase, percentage, timeElapsed, status } = metrics;
     const week = Math.ceil(timeElapsed / 7);
     const totalWeeks = 6;
-    
+
     return `
 ┌─ Shape Up: ${metrics.projectName} ─${'─'.repeat(40 - metrics.projectName.length)}┐
 │                                                  │
@@ -61,7 +61,7 @@ export class ShapeUpRenderer implements MethodologyRenderer {
 │  Status: ${this.getStatusDisplay(status)}                             │
 └──────────────────────────────────────────────────┘`;
   }
-  
+
   private renderPhaseBar(phaseName: string, currentPhase: string, metrics: ProgressMetrics): string {
     if (phaseName === currentPhase) {
       const filled = Math.floor(metrics.percentage / 10);
@@ -195,10 +195,10 @@ export class ProgressCommand implements Command {
 export class ProgressAnimator {
   private readonly spinners = {
     "shape-up": ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"],
-    "scrum": ["◐", "◓", "◑", "◒"],
-    "kanban": ["→", "↘", "↓", "↙", "←", "↖", "↑", "↗"],
-    "lean": ["?", "!", "→", "✓"],
-    "xp": ["🔴", "🟢", "♻️"],
+    scrum: ["◐", "◓", "◑", "◒"],
+    kanban: ["→", "↘", "↓", "↙", "←", "↖", "↑", "↗"],
+    lean: ["?", "!", "→", "✓"],
+    xp: ["🔴", "🟢", "♻️"],
   };
 
   async *animate(
@@ -279,7 +279,7 @@ export class ColorSupport {
 // Update src/commands/init.ts
 async execute() {
   // ... existing init logic ...
-  
+
   // Initialize progress tracking
   const progress = new ProgressData({
     methodology: detectedMethodology,
@@ -287,7 +287,7 @@ async execute() {
     percentage: 0,
     status: 'on-track'
   });
-  
+
   await this.statusIntegration.createInitialStatus(projectPath, progress);
 }
 ```

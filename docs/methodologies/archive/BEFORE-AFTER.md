@@ -5,9 +5,9 @@
 ### Before: 50+ Files
 
 ```
-5 methodologies × 
+5 methodologies ×
   - 4 personas each (20 files)
-  - 2 method files each (10 files)  
+  - 2 method files each (10 files)
   - 3-5 templates each (20 files)
   - 3-4 commands each (15 files)
   - README files (5 files)
@@ -52,7 +52,7 @@ Methodologies:
 
 ```
 Scrum: Product Owner, Scrum Master, Developer
-Kanban: Flow Manager, Team Member  
+Kanban: Flow Manager, Team Member
 Shape Up: Shaper, Bettor, Builder, AI Executor
 XP: XP Developer, Coach
 Lean: Startup Founder
@@ -105,15 +105,15 @@ You: "I want to add user auth"
 
 Claude: *Loads Shaper persona*
 
-"As a Shaper in the Shape Up methodology, I help transform 
-raw ideas into concrete project concepts. Shaping is a 
-closed-door, creative process where we combine interface 
-design sensibility, technical literacy, and business 
-priorities. Let me guide you through the shaping process 
+"As a Shaper in the Shape Up methodology, I help transform
+raw ideas into concrete project concepts. Shaping is a
+closed-door, creative process where we combine interface
+design sensibility, technical literacy, and business
+priorities. Let me guide you through the shaping process
 for user authentication.
 
-First, let's understand the problem. Can you tell me more 
-about why users need authentication and what specific 
+First, let's understand the problem. Can you tell me more
+about why users need authentication and what specific
 problems it would solve?"
 
 [Multiple paragraphs of explanation before action]
@@ -125,7 +125,7 @@ problems it would solve?"
 You: "I want to add user auth"
 
 Claude: Planning mode activated. Quick context:
-- Solo or team? 
+- Solo or team?
 - Timeline?
 - New or existing users?
 
@@ -143,8 +143,8 @@ Claude: *Loads Developer/Builder/Executor persona*
 *Reads through role responsibilities*
 *Considers methodology constraints*
 
-"As a Developer in the Scrum framework, I'm part of a 
-cross-functional, self-organizing team responsible for 
+"As a Developer in the Scrum framework, I'm part of a
+cross-functional, self-organizing team responsible for
 delivering a potentially shippable increment..."
 ```
 
@@ -179,7 +179,7 @@ You: "How are we doing?"
 
 Claude: Week 1 metrics:
 ✅ Completed: 5 items
-📊 Velocity: On track  
+📊 Velocity: On track
 ⚠️ Bottleneck: Code review
 🎯 Suggestion: Add reviewer or reduce WIP
 ```
@@ -191,7 +191,7 @@ Claude: Week 1 metrics:
 **Before**: Confusing persona switches
 
 ```
-"Now switching from Scrum Master to Kanban Flow Manager 
+"Now switching from Scrum Master to Kanban Flow Manager
 to handle your bug tracking needs..."
 ```
 

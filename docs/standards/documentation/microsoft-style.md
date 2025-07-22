@@ -73,11 +73,13 @@ observe].
 Now let's make it do something more interesting.
 
 1. In the code you just wrote, find the line that says:
+
    ```language
    specific line to modify
    ```
 
 2. Change it to:
+
    ```language
    modified version
    ```
@@ -147,8 +149,8 @@ The easiest way to [task] is through the [interface].
 
 1. Go to the [location] in the [interface].
 
-2. Find your [resource] in the list. 
-   
+2. Find your [resource] in the list.
+
    > [!NOTE]
    > If you don't see your [resource], make sure you selected the correct [filter/scope].
 
@@ -237,7 +239,7 @@ This usually means [explanation]. To fix it:
 ### Microsoft Style Notes for How-to Guides
 
 - **Front-load important information**: Put key details early
-- **Offer multiple methods**: GUI and command line when applicable  
+- **Offer multiple methods**: GUI and command line when applicable
 - **Use descriptive headings**: "Configure security settings" not just "Security"
 - **Include cleanup**: Help users manage resources and costs
 - **Add troubleshooting**: Address common problems proactively
@@ -496,7 +498,7 @@ Now that you understand [concept], you're ready to:
 ### Voice and Tone
 
 #### Be Warm and Approachable
-- ✅ "Let's explore how to..." 
+- ✅ "Let's explore how to..."
 - ✅ "You might wonder why..."
 - ✅ "Here's a tip that can save you time"
 - ❌ "Users must configure..."

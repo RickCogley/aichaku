@@ -6,7 +6,7 @@ The following versions of . are currently supported with security updates:
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 1.x.x   | :white_check_mark: |
+| 1.x.x   | :white*check*mark: |
 | 0.x.x   | :x:                |
 
 ## Reporting a Vulnerability

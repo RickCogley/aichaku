@@ -20,7 +20,7 @@ command [options] [arguments]
 
 **Type**: `string` | `boolean` | `number`\
 **Default**: `default-value`\
-**Environment variable**: `ENV_VAR_NAME`
+**Environment variable**: `ENV*VAR*NAME`
 
 [Description of what this option does]
 
@@ -131,7 +131,7 @@ command \
 | ------------------- | ----------------------- | ------------------------------- |
 | `PRODUCT_HOME`      | Installation directory  | `/usr/local/product`            |
 | `PRODUCT_CONFIG`    | Configuration file path | `~/.config/product/config.yaml` |
-| `PRODUCT_LOG_LEVEL` | Logging verbosity       | `info`                          |
+| `PRODUCT*LOG*LEVEL` | Logging verbosity       | `info`                          |
 
 ## Files
 

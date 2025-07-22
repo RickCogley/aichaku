@@ -261,7 +261,7 @@
 │                                                  │
 │  TDD Cycle      🔴 Red → 🟢 Green → ♻️ Refactor │
 │                                                  │
-│  Current Test: user_can_reset_password          │
+│  Current Test: user*can*reset_password          │
 │  Status: 🔴 RED - Writing failing test          │
 │                                                  │
 │  Test Progress:                                  │

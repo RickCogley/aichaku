@@ -62,7 +62,7 @@
 
 3. **YAML Syntax Error**: Invalid quotes in tdd.yaml causing integration
    failures
-   - **Solution**: Fixed quote formatting in test_naming_patterns field
+   - **Solution**: Fixed quote formatting in test*naming*patterns field
    - **Result**: Clean YAML parsing and integration
 
 4. **Import Path Error**: Incorrect version.ts import in yaml-config-reader.ts

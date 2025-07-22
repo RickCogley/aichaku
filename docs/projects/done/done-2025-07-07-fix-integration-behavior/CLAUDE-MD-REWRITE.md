@@ -132,10 +132,10 @@ echo "active-$(date +%Y-%m-%d)-[project-name]" > .claude/.aichaku-active
 
 Every time you:
 
-- Create a document → It goes in .claude/output/active-*/
+- Create a document → It goes in .claude/output/active-\*/
 - Update progress → Update STATUS.md
 - Complete work → Git commit
-- Finish project → Move to done-*/
+- Finish project → Move to done-\*/
 
 NO EXCEPTIONS. NO ASKING. JUST DO IT.
 
@@ -157,7 +157,7 @@ NO EXCEPTIONS. NO ASKING. JUST DO IT.
 # 🚨 QUICK REMINDER
 
 Before creating ANY file, ask yourself:
-1. Is it going in `.claude/output/active-*/`? 
+1. Is it going in `.claude/output/active-*/`?
 2. Does STATUS.md exist there?
 3. Have I updated STATUS.md recently?
 

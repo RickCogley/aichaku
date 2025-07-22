@@ -42,12 +42,14 @@ better organization.
 ### Source Code Changes
 
 1. **src/commands/init.ts** - Updated source path for standards installation
+
    ```diff
    - "../../../standards"
    + "../../../docs/standards"
    ```
 
 2. **src/lister.ts** - Fixed paths reference
+
    ```diff
    - paths.global.base
    + paths.global.root

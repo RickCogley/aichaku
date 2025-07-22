@@ -14,10 +14,10 @@ The Test Pyramid is a testing strategy that emphasizes:
 
 ```
     /\     ← E2E Tests (Few)
-   /  \    
+   /  \
   /    \   ← Integration Tests (Some)
- /      \  
-/________\ ← Unit Tests (Many)
+ /      \
+/********\ ← Unit Tests (Many)
 ```
 
 #### Unit Tests (Foundation)

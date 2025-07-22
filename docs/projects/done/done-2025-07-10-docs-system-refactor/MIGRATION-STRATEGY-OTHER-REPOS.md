@@ -46,6 +46,7 @@ echo "references" >> .gitignore
 **For repositories using Aichaku:**
 
 1. **Before upgrading Aichaku:**
+
    ```bash
    # Document current version
    aichaku --version > .aichaku-version
@@ -55,6 +56,7 @@ echo "references" >> .gitignore
    ```
 
 2. **Stay on current version until ready:**
+
    ```json
    // In import map or package.json
    {
@@ -65,6 +67,7 @@ echo "references" >> .gitignore
    ```
 
 3. **Prepare for migration:**
+
    ```bash
    # Create a migration script
    cat > migrate-aichaku-docs.sh << 'EOF'
@@ -83,6 +86,7 @@ echo "references" >> .gitignore
    ```
 
 4. **Execute migration:**
+
    ```bash
    # Run migration
    ./migrate-aichaku-docs.sh
@@ -163,6 +167,7 @@ aichaku migrate-docs --apply
 ## Manual Migration
 
 1. Update documentation links:
+
    ```bash
    find . -name "*.md" -exec sed -i 's|/references/|/docs/|g' {} +
    ```

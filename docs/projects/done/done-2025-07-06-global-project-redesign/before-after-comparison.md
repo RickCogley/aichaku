@@ -126,7 +126,7 @@ _Says "upgraded successfully" when nothing was upgraded_
 
 ℹ️  Current version: v0.5.0
     Latest version:  v0.5.0
-    
+
 ✓ You're up to date!
 ```
 

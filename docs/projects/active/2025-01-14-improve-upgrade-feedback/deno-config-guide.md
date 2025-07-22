@@ -128,7 +128,7 @@ export function getConfigDir(): string {
   const home = Deno.env.get("HOME") || Deno.env.get("USERPROFILE");
 
   // Follow XDG Base Directory spec on Unix-like systems
-  const xdgConfig = Deno.env.get("XDG_CONFIG_HOME");
+  const xdgConfig = Deno.env.get("XDG*CONFIG*HOME");
   if (xdgConfig) return join(xdgConfig, "theapp");
 
   // Platform-specific defaults
@@ -143,7 +143,7 @@ export function getConfigDir(): string {
 }
 
 export function getDataDir(): string {
-  const xdgData = Deno.env.get("XDG_DATA_HOME");
+  const xdgData = Deno.env.get("XDG*DATA*HOME");
   if (xdgData) return join(xdgData, "theapp");
 
   const home = Deno.env.get("HOME") || Deno.env.get("USERPROFILE");
@@ -484,5 +484,5 @@ exist.
 ## Further Reading
 
 - [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
-- [Deno Configuration Documentation](https://deno.land/manual/getting_started/configuration_file)
+- [Deno Configuration Documentation](https://deno.land/manual/getting*started/configuration*file)
 - [Application Configuration Best Practices](https://12factor.net/config)

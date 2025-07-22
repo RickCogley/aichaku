@@ -7,7 +7,7 @@ Aichaku.
 
 ### 1. **publish.yml** - JSR Publishing
 
-- **Triggers**: Version tags (v*) and manual dispatch
+- **Triggers**: Version tags (v\*) and manual dispatch
 - **Purpose**: Publish releases to JSR registry
 - **Features**:
   - Multi-version testing (Deno 2.4.x and 2.x)

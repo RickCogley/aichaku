@@ -153,9 +153,9 @@ BREAKING CHANGE: All API responses now wrapped in 'data' object
 # ✅ Good: Configuration change
 config!: update environment variable names
 
-BREAKING CHANGE: 
-- DATABASE_URL renamed to DB_CONNECTION_STRING
-- API_KEY renamed to SERVICE_API_KEY
+BREAKING CHANGE:
+- DATABASE*URL renamed to DB*CONNECTION_STRING
+- API*KEY renamed to SERVICE*API_KEY
 
 # ✅ Good: Library update
 deps!: upgrade React to version 18
@@ -323,7 +323,7 @@ git cz
 feat: implement user authentication system
 
 - Add login/logout functionality
-- Implement JWT token management  
+- Implement JWT token management
 - Add password reset flow
 - Include email verification
 
@@ -347,7 +347,7 @@ Reason: Feature causing performance issues in production
 feat: complete user management feature (#123)
 
 * feat(users): add user creation
-* feat(users): add user editing  
+* feat(users): add user editing
 * feat(users): add user deletion
 * test(users): add comprehensive test suite
 ```

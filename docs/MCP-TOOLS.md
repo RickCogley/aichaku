@@ -2,7 +2,7 @@
 
 > **Note**: This document describes planned future MCP tools for Aichaku.
 > Currently, the MCP server provides security review capabilities. The tools
-> described here (analyze_project, create_doc_template, generate_documentation)
+> described here (analyze*project, create_doc_template, generate*documentation)
 > are on the roadmap for future implementation.
 
 This reference describes the planned Model Context Protocol (MCP) tools for
@@ -176,7 +176,7 @@ Creates customized documentation templates that match your project's:
 | -------------- | -------- | -------- | ---------------------------------------------------------------------------- |
 | `projectPath`  | string   | Yes      | Path to the project                                                          |
 | `templateType` | string   | Yes      | Type of template: 'readme', 'api', 'architecture', 'contributing', 'testing' |
-| `format`       | string   | No       | Output format: 'markdown', 'asciidoc', 'rst' (default: 'markdown')           |
+| `format`       | string   | No       | Output format: 'Markdown', 'asciidoc', 'rst' (default: 'Markdown')           |
 | `analysis`     | object   | No       | Pre-computed project analysis (to avoid re-analysis)                         |
 | `standards`    | string[] | No       | Documentation standards to follow                                            |
 
@@ -282,7 +282,7 @@ This tool goes beyond templates to generate actual documentation content by:
 | `projectPath`     | string   | Yes      | Path to the project                                                 |
 | `outputPath`      | string   | No       | Where to save documentation (default: './docs')                     |
 | `types`           | string[] | No       | Documentation types to generate: ['api', 'readme', 'guides', 'all'] |
-| `format`          | string   | No       | Output format (default: 'markdown')                                 |
+| `format`          | string   | No       | Output format (default: 'Markdown')                                 |
 | `includeExamples` | boolean  | No       | Generate usage examples (default: true)                             |
 | `analysis`        | object   | No       | Pre-computed project analysis                                       |
 | `standards`       | string[] | No       | Documentation standards to follow                                   |
@@ -634,8 +634,8 @@ if (docs.summary.coverage.functions < 80) {
 
 // Check for missing sections
 const requiredSections = ["installation", "usage", "api", "contributing"];
-const missingSections = requiredSections.filter((section) =>
-  !docs.files.some((f) => f.type === section)
+const missingSections = requiredSections.filter(
+  (section) => !docs.files.some((f) => f.type === section),
 );
 
 if (missingSections.length > 0) {
@@ -656,9 +656,9 @@ try {
     types: ["all"],
   });
 } catch (error) {
-  if (error.code === "PROJECT_NOT_FOUND") {
+  if (error.code === "PROJECT*NOT*FOUND") {
     console.error("Project directory not found");
-  } else if (error.code === "NO_SOURCE_FILES") {
+  } else if (error.code === "NO*SOURCE*FILES") {
     console.error("No source files found to document");
   } else if (error.code === "PERMISSION_DENIED") {
     console.error("Cannot write to output directory");

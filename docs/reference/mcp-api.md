@@ -24,16 +24,18 @@ code quality issues.
 
 ```typescript
 // Basic file review
-await mcp__aichaku - reviewer__review_file({
-  file: "/path/to/src/auth.ts",
-});
+(await mcp**aichaku) -
+  reviewer**review_file({
+    file: "/path/to/src/auth.ts",
+  });
 
 // Review with content (useful for unsaved files)
-await mcp__aichaku - reviewer__review_file({
-  file: "untitled.js",
-  content: "const password = 'hardcoded123';",
-  includeExternal: false,
-});
+(await mcp**aichaku) -
+  reviewer**review_file({
+    file: "untitled.js",
+    content: "const password = 'hardcoded123';",
+    includeExternal: false,
+  });
 ```
 
 #### Response Format
@@ -86,10 +88,11 @@ Checks if a project follows the specified methodology patterns and practices.
 
 ```typescript
 // Check Shape Up compliance
-await mcp__aichaku - reviewer__review_methodology({
-  projectPath: "/Users/you/projects/app",
-  methodology: "shape-up",
-});
+(await mcp**aichaku) -
+  reviewer**review_methodology({
+    projectPath: "/Users/you/projects/app",
+    methodology: "shape-up",
+  });
 ```
 
 #### Response Format
@@ -124,9 +127,10 @@ Retrieves the currently selected standards for a project.
 
 ```typescript
 // Get project standards
-await mcp__aichaku - reviewer__get_standards({
-  projectPath: "/Users/you/projects/app",
-});
+(await mcp**aichaku) -
+  reviewer**get_standards({
+    projectPath: "/Users/you/projects/app",
+  });
 ```
 
 #### Response Format
@@ -230,7 +234,7 @@ Generates comprehensive documentation following selected standards.
 | `includeExamples` | boolean | No       | true             | Include code examples                                           |
 | `includeDiagrams` | boolean | No       | true             | Generate architecture diagrams                                  |
 | `overwrite`       | boolean | No       | false            | Overwrite existing documentation                                |
-| `autoChain`       | boolean | No       | true             | Run analyze_project first and review_file after                 |
+| `autoChain`       | boolean | No       | true             | Run analyze*project first and review*file after                 |
 
 #### Example Usage
 
@@ -285,12 +289,7 @@ The MCP server reads project configuration from
 ```json
 {
   "version": "1.0.0",
-  "selected": [
-    "nist-csf",
-    "owasp-web",
-    "tdd",
-    "conventional-commits"
-  ],
+  "selected": ["nist-csf", "owasp-web", "tdd", "conventional-commits"],
   "methodologies": ["shape-up"],
   "customRules": {
     "maxFileSize": 1000,
@@ -492,8 +491,8 @@ Benefits:
 
 | Error Code                | Description              | Solution                    |
 | ------------------------- | ------------------------ | --------------------------- |
-| `FILE_NOT_FOUND`          | File doesn't exist       | Check file path             |
-| `PROJECT_NOT_INITIALIZED` | No .claude directory     | Run `aichaku init`          |
+| `FILE*NOT*FOUND`          | File doesn't exist       | Check file path             |
+| `PROJECT*NOT*INITIALIZED` | No .claude directory     | Run `aichaku init`          |
 | `INVALID_METHODOLOGY`     | Unknown methodology      | Check spelling              |
 | `SCANNER_TIMEOUT`         | External scanner timeout | Increase timeout or disable |
 | `PERMISSION_DENIED`       | Can't read file          | Check file permissions      |
@@ -504,7 +503,7 @@ Benefits:
 {
   "success": false,
   "error": {
-    "code": "FILE_NOT_FOUND",
+    "code": "FILE*NOT*FOUND",
     "message": "Cannot read file: /path/to/file.ts",
     "suggestion": "Check that the file exists and is readable"
   }
@@ -539,10 +538,10 @@ When reviewing multiple files:
 
 | Variable                  | Description               | Default            |
 | ------------------------- | ------------------------- | ------------------ |
-| `AICHAKU_MCP_DEBUG`       | Enable debug logging      | `false`            |
-| `AICHAKU_MCP_TIMEOUT`     | Global timeout (ms)       | `60000`            |
-| `AICHAKU_MCP_CACHE_DIR`   | Cache directory           | `~/.aichaku/cache` |
-| `AICHAKU_MCP_NO_EXTERNAL` | Disable external scanners | `false`            |
+| `AICHAKU*MCP*DEBUG`       | Enable debug logging      | `false`            |
+| `AICHAKU*MCP*TIMEOUT`     | Global timeout (ms)       | `60000`            |
+| `AICHAKU*MCP*CACHE_DIR`   | Cache directory           | `~/.aichaku/cache` |
+| `AICHAKU*MCP*NO_EXTERNAL` | Disable external scanners | `false`            |
 
 ## Logging
 
@@ -550,7 +549,7 @@ Debug logs are written to `~/.aichaku/mcp-server/logs/` when debug mode is
 enabled:
 
 ```bash
-export AICHAKU_MCP_DEBUG=true
+export AICHAKU*MCP*DEBUG=true
 ```
 
 Log format:

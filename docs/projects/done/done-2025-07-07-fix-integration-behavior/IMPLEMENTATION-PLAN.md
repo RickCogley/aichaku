@@ -181,23 +181,23 @@ Your project now has:
 // Create commands.json
 const commandsPath = join(targetPath, "commands.json");
 const commands = {
-  "commands": {
+  commands: {
     "/plan": {
-      "description": "Start planning mode",
-      "action":
+      description: "Start planning mode",
+      action:
         "Create .claude/output/active-{date}-{name}/ and read planning mode guide",
     },
     "/build": {
-      "description": "Start execution mode",
-      "action": "Continue in current active project or create new one",
+      description: "Start execution mode",
+      action: "Continue in current active project or create new one",
     },
     "/review": {
-      "description": "Start improvement mode",
-      "action": "Review current work and create metrics",
+      description: "Start improvement mode",
+      action: "Review current work and create metrics",
     },
     "/status": {
-      "description": "Show all active projects",
-      "action": "List all active-* directories with their STATUS.md",
+      description: "Show all active projects",
+      action: "List all active-* directories with their STATUS.md",
     },
   },
 };

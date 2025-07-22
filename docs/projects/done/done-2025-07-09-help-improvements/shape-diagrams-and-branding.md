@@ -67,7 +67,7 @@ In the default `aichaku help` output:
 ```
 💡 Looking for CLI commands?
    Run 'aichaku --help' to see all available commands and options
-   
+
    This help focuses on methodology guidance.
 ```
 

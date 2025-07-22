@@ -16,7 +16,7 @@ aichaku hooks --show
 # Show only global hooks
 aichaku hooks --show --global
 
-# Show only local hooks  
+# Show only local hooks
 aichaku hooks --show --local
 ```
 
@@ -28,7 +28,7 @@ aichaku hooks --show --local
 📍 Global Hooks (~/.claude/settings.json):
   ✓ Aichaku Path Validator (PreToolUse)
   ✓ OWASP Security Checker (PreToolUse)
-  
+
 📍 Local Hooks (.claude/settings.json):
   ✓ Methodology Detector (onSessionStart)
   ✓ Status Updater (PostToolUse)
@@ -103,7 +103,7 @@ After any hook modification operation, display:
 ✅ Hooks successfully installed!
 
 ⚠️  IMPORTANT: You must restart Claude Code for these changes to take effect.
-   
+
 To restart Claude Code:
 1. Type 'exit' in your current Claude session
 2. Start a new Claude session

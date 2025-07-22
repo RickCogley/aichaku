@@ -8,16 +8,17 @@ this project.
 ```yaml
 methodologies:
   shape_up:
-    triggers: [
-      "shape",
-      "appetite",
-      "pitch",
-      "betting table",
-      "6 weeks",
-      "cycle",
-      "bet",
-      "cool-down",
-    ]
+    triggers:
+      [
+        "shape",
+        "appetite",
+        "pitch",
+        "betting table",
+        "6 weeks",
+        "cycle",
+        "bet",
+        "cool-down",
+      ]
     best_for: "Features with unclear solutions, fixed timeline projects, avoiding scope creep"
 
   scrum:
@@ -157,7 +158,7 @@ included:
   methodologies: ["shape-up", "scrum", "kanban", "lean", "xp", "scrumban"]
   standards: ["tdd"]
   doc_standards: []
-  has_user_customizations: false
+  has*user*customizations: false
 ```
 
 ## Project Overview

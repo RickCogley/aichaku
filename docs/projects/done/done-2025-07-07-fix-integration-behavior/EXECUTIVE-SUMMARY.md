@@ -52,7 +52,7 @@ Current Aichaku (v0.5.0) provides documentation but doesn't change behavior:
 
 - "shape up X" → Creates pitch in correct location
 - "sprint planning" → Creates sprint docs automatically
-- "we're done" → Moves to done-*/ with retrospective
+- "we're done" → Moves to done-\*/ with retrospective
 - No configuration or questions
 
 ### 4. **Self-Correcting Behaviors** (Auto-Magic)
@@ -79,7 +79,7 @@ Current Aichaku (v0.5.0) provides documentation but doesn't change behavior:
 
 YOU MUST FOLLOW THESE RULES WITHOUT EXCEPTION:
 
-1. ✅ Create ALL documents in .claude/output/active-*/
+1. ✅ Create ALL documents in .claude/output/active-\*/
 2. ❌ NEVER create documents elsewhere
 3. ✅ Create STATUS.md FIRST for every project
 4. ✅ Update STATUS.md after EVERY session
@@ -89,7 +89,7 @@ When user says → You MUST create:
 
 - "shape" → pitch.md
 - "sprint" → sprint-plan.md
-- "done" → retrospective.md + move to done-*/
+- "done" → retrospective.md + move to done-\*/
 ```
 
 ### 2. Update Init Command
@@ -153,7 +153,7 @@ Pre-Created Structure +
 Natural Language Detection +
 Self-Correcting Behaviors +
 Multiple Reinforcements
-= 
+=
 Truly Magical Developer Experience
 ```
 

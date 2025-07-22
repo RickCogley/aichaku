@@ -129,10 +129,10 @@ import sys
 from typing import List, Dict, Set
 
 class MermaidGenerator(ast.NodeVisitor):
-    def __init__(self):
+    def **init**(self):
         self.classes = {}
         self.relationships = []
-    
+
     def visit_ClassDef(self, node):
         class_info = {
             'name': node.name,
@@ -140,59 +140,59 @@ class MermaidGenerator(ast.NodeVisitor):
             'attributes': [],
             'bases': [base.id for base in node.bases if isinstance(base, ast.Name)]
         }
-        
+
         for item in node.body:
             if isinstance(item, ast.FunctionDef):
                 method_info = {
                     'name': item.name,
                     'params': [arg.arg for arg in item.args.args],
-                    'is_private': item.name.startswith('_')
+                    'is*private': item.name.startswith('*')
                 }
-                class_info['methods'].append(method_info)
+                class*info['methods'].append(method*info)
             elif isinstance(item, ast.Assign):
                 for target in item.targets:
                     if isinstance(target, ast.Name):
                         class_info['attributes'].append(target.id)
-        
+
         self.classes[node.name] = class_info
         self.generic_visit(node)
-    
+
     def generate_mermaid(self) -> str:
         lines = ['classDiagram']
-        
+
         # Generate class definitions
         for class_name, info in self.classes.items():
             lines.append(f'  class {class_name} {{')
-            
+
             # Add attributes
             for attr in info['attributes']:
                 lines.append(f'    {attr}')
-            
+
             # Add methods
             for method in info['methods']:
                 visibility = '-' if method['is_private'] else '+'
                 params = ', '.join(method['params'])
                 lines.append(f'    {visibility}{method["name"]}({params})')
-            
+
             lines.append('  }')
-            
+
             # Add inheritance relationships
             for base in info['bases']:
                 lines.append(f'  {base} <|-- {class_name}')
-        
+
         return '\n'.join(lines)
 
-def generate_from_file(filepath: str) -> str:
+def generate*from*file(filepath: str) -> str:
     with open(filepath, 'r') as f:
         tree = ast.parse(f.read())
-    
+
     generator = MermaidGenerator()
     generator.visit(tree)
     return generator.generate_mermaid()
 
-if __name__ == '__main__':
+if **name** == '**main**':
     if len(sys.argv) > 1:
-        diagram = generate_from_file(sys.argv[1])
+        diagram = generate*from*file(sys.argv[1])
         print(diagram)
 ```
 
@@ -238,16 +238,16 @@ func GenerateMermaidFromFile(filename string) (string, error) {
     if err != nil {
         return "", err
     }
-    
+
     structs := make(map[string]*StructInfo)
-    
+
     // Extract structs
     ast.Inspect(node, func(n ast.Node) bool {
         switch x := n.(type) {
         case *ast.TypeSpec:
             if structType, ok := x.Type.(*ast.StructType); ok {
                 info := &StructInfo{Name: x.Name.Name}
-                
+
                 for _, field := range structType.Fields.List {
                     fieldInfo := extractFieldInfo(field)
                     if fieldInfo.Name == "" {
@@ -257,7 +257,7 @@ func GenerateMermaidFromFile(filename string) (string, error) {
                         info.Fields = append(info.Fields, fieldInfo)
                     }
                 }
-                
+
                 structs[x.Name.Name] = info
             }
         case *ast.FuncDecl:
@@ -271,37 +271,37 @@ func GenerateMermaidFromFile(filename string) (string, error) {
         }
         return true
     })
-    
+
     return generateMermaid(structs), nil
 }
 
 func generateMermaid(structs map[string]*StructInfo) string {
     var builder strings.Builder
     builder.WriteString("classDiagram\n")
-    
+
     for _, info := range structs {
         builder.WriteString(fmt.Sprintf("  class %s {\n", info.Name))
-        
+
         // Fields
         for _, field := range info.Fields {
             builder.WriteString(fmt.Sprintf("    %s %s\n", field.Name, field.Type))
         }
-        
+
         // Methods
         for _, method := range info.Methods {
             params := strings.Join(method.Parameters, ", ")
             returns := strings.Join(method.Returns, ", ")
             builder.WriteString(fmt.Sprintf("    %s(%s) %s\n", method.Name, params, returns))
         }
-        
+
         builder.WriteString("  }\n\n")
-        
+
         // Embedded relationships
         for _, embed := range info.Embeds {
             builder.WriteString(fmt.Sprintf("  %s <|-- %s : embeds\n", embed, info.Name))
         }
     }
-    
+
     return builder.String()
 }
 ```
@@ -671,7 +671,7 @@ class GraphQLToMermaid {
 
     // Filter out built-in types
     const customTypes = Object.entries(types)
-      .filter(([name]) => !name.startsWith("__"))
+      .filter(([name]) => !name.startsWith("**"))
       .filter(([name]) => !["Query", "Mutation", "Subscription"].includes(name))
       .filter(([_, type]) => isObjectType(type));
 
@@ -1240,9 +1240,7 @@ class ConsistencyChecker {
     nameGroups.forEach((group, key) => {
       const names = new Set(group.map((r) => r.name));
       if (names.size > 1) {
-        issues.push(
-          `Inconsistent naming for ${key}: ${[...names].join(", ")}`,
-        );
+        issues.push(`Inconsistent naming for ${key}: ${[...names].join(", ")}`);
       }
     });
 

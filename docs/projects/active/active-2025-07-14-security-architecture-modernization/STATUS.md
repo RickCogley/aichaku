@@ -124,7 +124,7 @@ protection with security-first design.
 - **File Path Exclusions**: `**/.claude/commands/**`, `**/.claude/user/**`,
   `**/secrets/**`
 - **Extension Exclusions**: `.secret`, `.key`, `.token`, `.env`, `.pem`, `.crt`
-- **Content-Based Exclusions**: `!`command`` syntax, `PRIVATE KEY`, `API_KEY`,
+- **Content-Based Exclusions**: `!`command``syntax,`PRIVATE KEY`, `API_KEY`,
   `SECRET`
 - **Directory Exclusions**: `node_modules`, `.git`, `build`, `dist`, `tmp`
 - **Tool-Specific Rules**: Different exclusions for DevSkim, Semgrep, CodeQL

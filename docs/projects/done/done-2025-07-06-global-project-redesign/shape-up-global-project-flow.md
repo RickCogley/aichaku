@@ -54,6 +54,7 @@ aichaku init
      --global"
 
 2. Create minimal project structure:
+
    ```
    .claude/
    ├── user/              # Project-specific customizations
@@ -61,6 +62,7 @@ aichaku init
    ```
 
 3. Interactive prompt:
+
    ```
    ✓ Created project customization directory
 

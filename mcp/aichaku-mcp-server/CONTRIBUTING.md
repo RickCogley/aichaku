@@ -5,7 +5,7 @@ guidelines and instructions for contributing.
 
 ## Code of Conduct
 
-Please read and follow our [Code of Conduct](CODE_OF_CONDUCT.md).
+Please read and follow our [Code of Conduct](CODE*OF*CONDUCT.md).
 
 ## How Can I Contribute?
 
@@ -53,17 +53,20 @@ Enhancement suggestions are tracked as GitHub issues.
 ### Setup Steps
 
 1. Clone your fork:
+
    ```bash
    git clone https://github.com/your-username/..git
    cd .
    ```
 
 2. Install dependencies:
+
    ```bash
    [install command]
    ```
 
 3. Set up development environment:
+
    ```bash
    [setup command]
    ```

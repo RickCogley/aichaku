@@ -3,7 +3,7 @@
 ## Summary of Work Accomplished
 
 - Designed comprehensive YAML-based integration system to replace verbose
-  markdown injection
+  Markdown injection
 - Created Shape Up pitch document outlining 90%+ file size reduction for
   CLAUDE.md
 - Developed detailed technical implementation plan with 6-week timeline
@@ -15,7 +15,7 @@
 
 ## Key Technical Decisions
 
-1. **Compact YAML Block**: Replace 50KB+ markdown injection with ~2KB YAML
+1. **Compact YAML Block**: Replace 50KB+ Markdown injection with ~2KB YAML
    configuration
 2. **Command Unification**: Merge `docs-standard` into `standards` to eliminate
    40% code duplication

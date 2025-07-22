@@ -30,8 +30,8 @@ interface DatabaseConnection {}
 const userName = "John";
 function calculateTotal() {}
 
-// Constants: UPPER_SNAKE_CASE
-const MAX_RETRY_COUNT = 3;
+// Constants: UPPER*SNAKE*CASE
+const MAX*RETRY*COUNT = 3;
 const API_ENDPOINT = "https://api.example.com";
 
 // Private properties: leading underscore discouraged
@@ -53,10 +53,7 @@ class User {
 
 ```typescript
 // Always use type annotations for function parameters and return types
-function calculatePrice(
-  basePrice: number,
-  taxRate: number,
-): number {
+function calculatePrice(basePrice: number, taxRate: number): number {
   return basePrice * (1 + taxRate);
 }
 
@@ -88,10 +85,7 @@ type ID = string | number;
  * @param taxRate - The tax rate as a decimal (e.g., 0.1 for 10%)
  * @returns The total price including tax
  */
-function calculateTotalPrice(
-  basePrice: number,
-  taxRate: number,
-): number {
+function calculateTotalPrice(basePrice: number, taxRate: number): number {
   // Apply tax to base price
   return basePrice * (1 + taxRate);
 }
@@ -162,7 +156,7 @@ class UserManager {
 
 ```python
 # Module names: lowercase with underscores
-# user_service.py, database_connection.py
+# user*service.py, database*connection.py
 
 # Class names: PascalCase
 class UserAccount:
@@ -172,19 +166,19 @@ class DatabaseConnection:
     pass
 
 # Function and variable names: lowercase with underscores
-def calculate_total_price(base_price, tax_rate):
+def calculate*total*price(base*price, tax*rate):
     user_name = "John"
-    return base_price * (1 + tax_rate)
+    return base*price * (1 + tax*rate)
 
-# Constants: UPPER_SNAKE_CASE
-MAX_RETRY_COUNT = 3
+# Constants: UPPER*SNAKE*CASE
+MAX*RETRY*COUNT = 3
 DEFAULT_TIMEOUT = 30
 
 # Protected/private: single/double underscore prefix
 class User:
-    def __init__(self):
-        self._internal_id = None  # Protected
-        self.__private_data = None  # Private (name mangled)
+    def **init**(self):
+        self.*internal*id = None  # Protected
+        self.**private_data = None  # Private (name mangled)
 ```
 
 #### Type Hints and Docstrings
@@ -195,13 +189,13 @@ from dataclasses import dataclass
 
 def calculate_average(numbers: List[float]) -> float:
     """Calculate the average of a list of numbers.
-    
+
     Args:
         numbers: A list of numbers to average.
-        
+
     Returns:
         The arithmetic mean of the input numbers.
-        
+
     Raises:
         ValueError: If the input list is empty.
     """
@@ -212,7 +206,7 @@ def calculate_average(numbers: List[float]) -> float:
 @dataclass
 class User:
     """Represents a user in the system.
-    
+
     Attributes:
         id: Unique identifier for the user.
         name: User's display name.
@@ -223,8 +217,8 @@ class User:
     name: str
     email: str
     roles: List[str] = None
-    
-    def __post_init__(self):
+
+    def **post*init*_(self):
         if self.roles is None:
             self.roles = ['user']
 ```
@@ -251,51 +245,51 @@ from sqlalchemy import create_engine
 
 # Local imports
 from .models import User, Role
-from .utils import hash_password, validate_email
+from .utils import hash*password, validate*email
 from .exceptions import UserNotFoundError
 
 # Module-level constants
-DEFAULT_PAGE_SIZE = 20
-MAX_LOGIN_ATTEMPTS = 5
+DEFAULT*PAGE*SIZE = 20
+MAX*LOGIN*ATTEMPTS = 5
 
 # Module-level "private" variable
-_logger = logging.getLogger(__name__)
+*logger = logging.getLogger(**name*_)
 
 
 class UserService:
     """Handles user-related operations."""
-    
-    def __init__(self, database_url: str):
+
+    def **init**(self, database_url: str):
         """Initialize the UserService.
-        
+
         Args:
             database_url: Connection string for the database.
         """
-        self.engine = create_engine(database_url)
+        self.engine = create*engine(database*url)
         self._cache: Dict[str, User] = {}
-    
+
     def create_user(self, email: str, password: str) -> User:
         """Create a new user account.
-        
+
         Args:
             email: User's email address.
             password: User's password (will be hashed).
-            
+
         Returns:
             The created User object.
-            
+
         Raises:
             ValueError: If email is invalid or user already exists.
         """
         if not validate_email(email):
             raise ValueError(f"Invalid email: {email}")
-        
-        hashed_password = hash_password(password)
-        user = User(email=email, password_hash=hashed_password)
-        
+
+        hashed*password = hash*password(password)
+        user = User(email=email, password*hash=hashed*password)
+
         # Store in database
-        self._save_user(user)
-        
+        self.*save*user(user)
+
         return user
 ```
 
@@ -344,11 +338,11 @@ import (
     "encoding/json"
     "fmt"
     "time"
-    
+
     // External imports (alphabetical)
     "github.com/google/uuid"
     "github.com/pkg/errors"
-    
+
     // Internal imports (alphabetical)
     "github.com/mycompany/myapp/internal/database"
     "github.com/mycompany/myapp/pkg/logger"
@@ -375,7 +369,7 @@ type User struct {
     Email     string    `json:"email" db:"email"`
     Name      string    `json:"name" db:"name"`
     Role      Role      `json:"role" db:"role"`
-    CreatedAt time.Time `json:"created_at" db:"created_at"`
+    CreatedAt time.Time `json:"created*at" db:"created*at"`
 }
 
 // Interfaces
@@ -406,7 +400,7 @@ func (s *UserService) CreateUser(ctx context.Context, email, name string) (*User
     if err := validateEmail(email); err != nil {
         return nil, errors.Wrap(err, "invalid email")
     }
-    
+
     // Create user
     user := &User{
         ID:        uuid.New().String(),
@@ -415,13 +409,13 @@ func (s *UserService) CreateUser(ctx context.Context, email, name string) (*User
         Role:      RoleUser,
         CreatedAt: time.Now(),
     }
-    
+
     // Save to repository
     if err := s.repo.Create(ctx, user); err != nil {
         s.logger.Error("failed to create user", "error", err, "email", email)
         return nil, errors.Wrap(err, "failed to create user")
     }
-    
+
     s.logger.Info("user created", "id", user.ID, "email", email)
     return user, nil
 }
@@ -451,7 +445,7 @@ func (e UserError) Error() string {
 
 // Sentinel errors
 var (
-    ErrUserNotFound = UserError{Code: "USER_NOT_FOUND", Message: "user not found"}
+    ErrUserNotFound = UserError{Code: "USER*NOT*FOUND", Message: "user not found"}
     ErrInvalidInput = UserError{Code: "INVALID_INPUT", Message: "invalid input"}
 )
 
@@ -464,7 +458,7 @@ func (s *UserService) GetUser(ctx context.Context, id string) (*User, error) {
         }
         return nil, errors.Wrap(err, "failed to get user")
     }
-    
+
     return user, nil
 }
 
@@ -492,8 +486,8 @@ public interface DatabaseConnection {}
 private String userName;
 public void calculateTotal() {}
 
-// Constants: UPPER_SNAKE_CASE
-public static final int MAX_RETRY_COUNT = 3;
+// Constants: UPPER*SNAKE*CASE
+public static final int MAX*RETRY*COUNT = 3;
 private static final String API_ENDPOINT = "https://api.example.com";
 
 // Type parameters: single capital letter or PascalCase
@@ -531,13 +525,13 @@ import com.example.user.repository.UserRepository;
 @Service
 public class UserService {
     // Constants
-    private static final int DEFAULT_PAGE_SIZE = 20;
+    private static final int DEFAULT*PAGE*SIZE = 20;
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-    
+
     // Fields
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    
+
     // Constructor
     public UserService(
             UserRepository userRepository,
@@ -545,7 +539,7 @@ public class UserService {
         this.userRepository = checkNotNull(userRepository);
         this.passwordEncoder = checkNotNull(passwordEncoder);
     }
-    
+
     // Public methods
     /**
      * Creates a new user account.
@@ -559,16 +553,16 @@ public class UserService {
     public User createUser(String email, String password) {
         validateEmail(email);
         checkUserDoesNotExist(email);
-        
+
         User user = User.builder()
                 .email(email)
                 .passwordHash(passwordEncoder.encode(password))
                 .createdAt(Instant.now())
                 .build();
-                
+
         return userRepository.save(user);
     }
-    
+
     // Private methods
     private void validateEmail(String email) {
         if (!EmailValidator.isValid(email)) {
@@ -700,15 +694,15 @@ describe("UserService", () => {
 ### Test Structure
 
 ```python
-def test_user_creation_with_valid_data(self):
+def test*user*creation*with*valid_data(self):
     """Test that users can be created with valid data."""
     # Arrange
     email = "test@example.com"
     password = "secure123"
-    
+
     # Act
-    user = self.user_service.create_user(email, password)
-    
+    user = self.user*service.create*user(email, password)
+
     # Assert
     self.assertEqual(user.email, email)
     self.assertIsNotNone(user.id)

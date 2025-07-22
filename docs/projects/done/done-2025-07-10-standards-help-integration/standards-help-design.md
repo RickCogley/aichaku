@@ -199,7 +199,7 @@ XV. Authentication & Authorization 🆕
   • Container Best Practices: https://cloud.google.com/architecture/best-practices-for-building-containers
 `,
 
-  "tdd": `
+  tdd: `
 🧪 Test-Driven Development (TDD)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Brought to you by Aichaku (愛着) - Adaptive Methodology Support
@@ -335,7 +335,7 @@ const args = parseArgs(Deno.args, {
 
 ```typescript
 // Combine methodologies and standards
-const ALL_HELP_CONTENT = {
+const ALL*HELP*CONTENT = {
   ...METHODOLOGY_HELP,
   ...STANDARDS_HELP,
 };

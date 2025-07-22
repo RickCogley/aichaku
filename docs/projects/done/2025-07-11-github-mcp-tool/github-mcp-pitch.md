@@ -23,9 +23,9 @@ Create a dedicated MCP tool for GitHub operations that can:
 
 ### Core Tools
 
-- `mcp__github__upload_release_assets` - Upload files to GitHub releases
+- `mcp__github__upload*release*assets` - Upload files to GitHub releases
 - `mcp__github__create_release` - Create GitHub releases
-- `mcp__github__get_release_info` - Get release information
+- `mcp__github__get*release*info` - Get release information
 - `mcp__github__manage_repository` - Repository management operations
 
 ### Benefits
@@ -50,7 +50,7 @@ Create a dedicated MCP tool for GitHub operations that can:
 postRelease: [
   async () => {
     // Use MCP tool instead of shell command
-    await claude.useTool("mcp__github__upload_release_assets", {
+    await claude.useTool("mcp__github__upload*release*assets", {
       tag: `v${VERSION}`,
       assets: [
         "./dist/aichaku-*.exe",

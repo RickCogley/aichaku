@@ -58,7 +58,7 @@ jobs:
       - name: Upload to Release
         uses: actions/upload-release-asset@v1
         with:
-          upload_url: ${{ github.event.release.upload_url }}
+          upload*url: ${{ github.event.release.upload*url }}
           asset_path: ./${{ matrix.name }}
           asset_name: ${{ matrix.name }}
 ```
@@ -149,17 +149,17 @@ class ToolDetector {
 // MCP works with whatever tools are available
 async performReview(file: string): ReviewResult {
   const tools = await this.detectAvailableTools();
-  
+
   if (tools.available.length === 0) {
     // Built-in pattern matching only
     return this.basicPatternReview(file);
   }
-  
+
   // Use all available tools
   const results = await Promise.all(
     tools.available.map(tool => this.runTool(tool, file))
   );
-  
+
   return this.aggregateResults(results);
 }
 ```
@@ -222,7 +222,7 @@ Install all? [y/N]
 ```
 User: "Create a PR to fix the security issues you found"
 Claude: "I'll create a PR with the security fixes"
-  → MCP: create_fix_pr(findings, { confirmed: true })
+  → MCP: create*fix*pr(findings, { confirmed: true })
   ← MCP: "Created PR #123 with 5 security fixes"
 Claude: "Created PR #123: [Security fixes for command injection and path traversal]"
 ```
@@ -231,10 +231,12 @@ Claude: "Created PR #123: [Security fixes for command injection and path travers
 
 ```typescript
 // BAD - Would create too many PRs
-hooks: [{
-  name: "Auto PR on High Severity",
-  command: "mcp-reviewer create-pr --auto", // ❌ Don't do this
-}];
+hooks: [
+  {
+    name: "Auto PR on High Severity",
+    command: "mcp-reviewer create-pr --auto", // ❌ Don't do this
+  },
+];
 
 // GOOD - User decides
 // User explicitly asks: "Fix these security issues"

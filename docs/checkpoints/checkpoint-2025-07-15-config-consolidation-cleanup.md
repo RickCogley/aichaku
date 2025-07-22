@@ -53,7 +53,7 @@
 - `/docs/methodologies/archive/` (moved from root)
 - `/docs/methodologies/*/[methodology].yaml` (6 files moved from
   `/methodologies/yaml/`)
-- `/.claude/aichaku/rules-reminder.yaml` (converted from markdown)
+- `/.claude/aichaku/rules-reminder.yaml` (converted from Markdown)
 - `/docs/checkpoints/checkpoint-2025-07-15-config-consolidation-cleanup.md`
   (this file)
 
@@ -118,7 +118,7 @@
    is more maintainable than verbose names
 
 5. **Machine-Readable Formats**: YAML is more efficient for Claude to parse than
-   markdown for configuration/rules
+   Markdown for configuration/rules
 
 ## Next Steps
 

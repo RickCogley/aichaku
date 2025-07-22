@@ -125,7 +125,7 @@ import { logger } from "./logger";
 import { metrics } from "./metrics";
 
 export async function processOrder(order: Order) {
-  const timer = metrics.startTimer("order_processing_duration");
+  const timer = metrics.startTimer("order*processing*duration");
 
   try {
     logger.info("Processing order", {
@@ -179,8 +179,8 @@ app.get("/health/ready", async (req, res) => {
 ```typescript
 // ✅ Good: Feature flag implementation
 const featureFlags = {
-  newCheckoutFlow: process.env.FEATURE_NEW_CHECKOUT === "true",
-  enhancedLogging: process.env.FEATURE_ENHANCED_LOGGING === "true",
+  newCheckoutFlow: process.env.FEATURE * NEW * CHECKOUT === "true",
+  enhancedLogging: process.env.FEATURE * ENHANCED * LOGGING === "true",
 };
 
 export function processCheckout(order: Order) {
@@ -204,7 +204,7 @@ RUN npm ci --only=production
 
 FROM node:18-alpine AS runtime
 WORKDIR /app
-COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/node*modules ./node*modules
 COPY . .
 EXPOSE 3000
 USER node

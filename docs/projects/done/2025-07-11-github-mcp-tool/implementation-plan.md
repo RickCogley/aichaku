@@ -68,7 +68,7 @@ github-mcp-server/
 │   │   └── token-store.ts     # Secure token storage
 │   ├── tools/
 │   │   ├── release.ts         # Release operations
-│   │   ├── workflow.ts        # Workflow operations  
+│   │   ├── workflow.ts        # Workflow operations
 │   │   ├── repository.ts      # Repository operations
 │   │   └── auth.ts           # Authentication tools
 │   ├── github/
@@ -453,7 +453,7 @@ class RateLimitHandler {
     const remaining = response.headers.get("x-ratelimit-remaining");
 
     if (remaining === "0") {
-      const waitTime = (parseInt(resetTime) * 1000) - Date.now();
+      const waitTime = parseInt(resetTime) * 1000 - Date.now();
       console.log(`Rate limited. Waiting ${waitTime}ms...`);
       await new Promise((resolve) => setTimeout(resolve, waitTime));
     }

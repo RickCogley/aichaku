@@ -20,7 +20,7 @@
 ### 2025-07-07T11:38:00Z
 
 - Created project structure
-- Researched Mermaid's markdown integration
+- Researched Mermaid's Markdown integration
 - Designed three-tier approach:
   1. Standard project diagrams
   2. Methodology-specific diagrams

@@ -37,7 +37,7 @@
 
 - **Main deno.json**: Updated MCP SDK to 1.15.1
 - **aichaku-mcp-server/deno.json**: Updated from 0.5.0 to 1.15.1
-- **github-mcp-server/deno.json**: Updated to 1.15.1
+- **GitHub-mcp-server/deno.json**: Updated to 1.15.1
 - **version-check.ts**: New file enforcing Deno 2.4.0+ requirement
 
 ### 🚀 **GitHub Actions Status**

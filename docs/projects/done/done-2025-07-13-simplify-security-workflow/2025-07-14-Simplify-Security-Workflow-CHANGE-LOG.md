@@ -48,7 +48,7 @@ The security workflow was failing daily due to:
 The removed check included patterns like:
 
 ```bash
-"(Deno\.(readFile|readTextFile|open|stat|lstat|readDir|remove|rename|mkdir)|fs\.(readFile|writeFile|readdir|stat|unlink|rename|mkdir))\s*\(\s*[a-zA-Z_$][a-zA-Z0-9_$]*\s*[,)]"
+"(Deno\.(readFile|readTextFile|open|stat|lstat|readDir|remove|rename|mkdir)|fs\.(readFile|writeFile|readdir|stat|unlink|rename|mkdir))\s*\(\s*[a-zA-Z*$][a-zA-Z0-9*$]*\s*[,)]"
 ```
 
 This pattern matched **any** Deno file operation with a variable, requiring a

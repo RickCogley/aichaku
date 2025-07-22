@@ -10,6 +10,7 @@ There's an inconsistency between `aichaku --help` and `aichaku help` outputs:
   - Plain text without visual hierarchy
   - Looks "bare bones" compared to the branded experience
   - Example section shows:
+
     ```
     Examples:
       # Initialize in current project
@@ -24,6 +25,7 @@ There's an inconsistency between `aichaku --help` and `aichaku help` outputs:
   - Clear visual sections with dividers
   - Consistent with Aichaku's 🪴 branding
   - Example output:
+
     ```
     🪴 Aichaku Knowledge Base
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -41,7 +43,7 @@ Aichaku's brand identity.
 
 ### Option 1: Enhance --help output
 
-- Strip any markdown that might be leaking through
+- Strip any Markdown that might be leaking through
 - Add consistent branding elements
 - Ensure emoji and formatting match the overall Aichaku style
 

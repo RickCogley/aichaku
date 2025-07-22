@@ -2,7 +2,7 @@
 
 ## Before (Current Approach)
 
-- Full markdown injection: ~50KB
+- Full Markdown injection: ~50KB
 - Contains hardcoded METHODOLOGY_SECTION
 - Duplicates content from source files
 - Hard to maintain and update
@@ -40,9 +40,9 @@
 ### 3. Dynamic Assembly
 
 ```
-docs/core/*.yaml + 
-selected methodologies + 
-selected standards + 
+docs/core/*.yaml +
+selected methodologies +
+selected standards +
 user customizations
 = Compact CLAUDE.md YAML block
 ```

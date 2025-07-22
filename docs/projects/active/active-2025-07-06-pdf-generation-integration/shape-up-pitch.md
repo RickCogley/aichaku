@@ -14,7 +14,7 @@ suitable for:
 The PDF generation capability exists but is hidden in scripts, requiring manual
 discovery and setup.
 
-**Update**: We discovered SharePoint renders markdown files natively, which
+**Update**: We discovered SharePoint renders Markdown files natively, which
 provides an immediate solution for many business users. However, PDF generation
 is still valuable for formal documents, offline sharing, and organizations
 without SharePoint.
@@ -36,7 +36,7 @@ Make PDF generation a first-class feature:
   "pdf": {
     "enabled": true,
     "autoGenerate": ["final-summary", "change-summary"],
-    "engine": "xelatex", // or "pdflatex" 
+    "engine": "xelatex", // or "pdflatex"
     "fonts": {
       "main": "Helvetica Neue",
       "mono": "Menlo"

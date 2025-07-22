@@ -6,7 +6,7 @@ Enhanced the Aichaku MCP server to address two key user concerns:
 
 1. **MCP Usage Visibility**: Added clear console logging to show when the MCP is
    actively being used
-2. **Document Linting**: Extended MCP capabilities to lint markdown
+2. **Document Linting**: Extended MCP capabilities to lint Markdown
    documentation files
 
 ## Key Improvements
@@ -60,12 +60,12 @@ The MCP now:
 
 - Identifies document type (Tutorial, How-to, Reference, Explanation)
 - Provides document-specific feedback
-- Shows "Documentation Review Results" for markdown files
+- Shows "Documentation Review Results" for Markdown files
 - Gives actionable fix suggestions
 
 ## Example Output
 
-When reviewing a markdown file:
+When reviewing a Markdown file:
 
 ```
 🪴 Aichaku Documentation Review Results
@@ -78,7 +78,7 @@ When reviewing a markdown file:
 ----------------------------------------
   • Line 1: Tutorials should start with 'Getting Started' or 'Tutorial'
     → Fix: Start tutorials with '# Getting Started with [Product]'
-  
+
   • Line 45: Broken or placeholder link: "TODO"
     → Fix: Replace placeholder links with actual URLs
 
@@ -86,7 +86,7 @@ When reviewing a markdown file:
 ----------------------------------------
   • Line 8: Tutorials should include a Prerequisites section
     → Fix: Add a '## Prerequisites' section
-    
+
 💡 INFO (5)
 ----------------------------------------
   • Line 23: Sentence has 32 words (Google style recommends < 25)
@@ -110,26 +110,28 @@ When reviewing a markdown file:
 ### Future Enhancements
 
 1. Auto-fix capabilities for common issues
-2. Integration with `deno fmt` for markdown
+2. Integration with `deno fmt` for Markdown
 3. Additional style guides (Microsoft, Write the Docs)
 4. Performance metrics in console output
 
 ## Testing the Enhancement
 
 1. Compile the updated MCP server:
+
    ```bash
    cd mcp-server
    deno task compile
    ```
 
 2. Install the new version:
+
    ```bash
    aichaku mcp --install
    ```
 
 3. Restart Claude Code
 
-4. Ask Claude to review a markdown file - you'll see the MCP activity in the
+4. Ask Claude to review a Markdown file - you'll see the MCP activity in the
    console!
 
 ## Benefits

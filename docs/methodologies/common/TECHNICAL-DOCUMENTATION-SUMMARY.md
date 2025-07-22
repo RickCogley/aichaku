@@ -179,12 +179,12 @@ graph TD
     A[System Context] --> B[Container View]
     B --> C[Component View]
     C --> D[Code View]
-    
+
     A --> E[User Flows]
     B --> F[Data Flows]
     C --> G[State Machines]
     D --> H[Class Diagrams]
-    
+
     style A fill:#e3f2fd
     style B fill:#f3e5f5
     style C fill:#e8f5e8
@@ -199,7 +199,7 @@ sequenceDiagram
     participant A as API Gateway
     participant S as Service
     participant D as Database
-    
+
     C->>A: Request
     A->>S: Forward
     S->>D: Query
@@ -214,14 +214,14 @@ sequenceDiagram
 erDiagram
     USER ||--o{ ORDER : places
     ORDER ||--|{ LINE_ITEM : contains
-    PRODUCT ||--o{ LINE_ITEM : included_in
-    
+    PRODUCT ||--o{ LINE*ITEM : included*in
+
     USER {
         id PK
         email UK
         name
     }
-    
+
     ORDER {
         id PK
         user_id FK

@@ -12,7 +12,7 @@ Currently, Aichaku uses the `~/.claude/` directory directly:
 ```
 ~/.claude/
 ├── methodologies/    # Aichaku files
-├── standards/        # Aichaku files  
+├── standards/        # Aichaku files
 ├── user/            # Aichaku files
 ├── output/          # Aichaku files
 └── [other tools]    # Potential conflicts
@@ -112,7 +112,7 @@ export async function migrateToNewStructure(): Promise<void> {
   const newRoot = AICHAKU_PATHS.globalRoot();
 
   // Check if migration needed
-  if (!await exists(legacy) || await exists(newRoot)) {
+  if (!(await exists(legacy)) || (await exists(newRoot))) {
     return;
   }
 

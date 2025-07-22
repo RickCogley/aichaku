@@ -12,27 +12,27 @@ graph TB
         E[aichaku mcp --upgrade]
         F[aichaku mcp --config]
     end
-    
+
     subgraph "Core Components"
         G[MCPProcessManager]
         H[MCPVersionManager]
         I[MCPConfigManager]
         J[PIDManager]
     end
-    
+
     subgraph "Platform Abstraction"
         K[WindowsProcessHandler]
         L[UnixProcessHandler]
         M[CrossPlatformUtils]
     end
-    
+
     A --> G
     B --> G
     C --> G
     D --> G
     E --> H
     F --> I
-    
+
     G --> J
     G --> K
     G --> L
@@ -197,7 +197,7 @@ export class UnixPlatformHandler extends BasePlatformHandler {
 
       // Wait up to 5 seconds for graceful shutdown
       for (let i = 0; i < 50; i++) {
-        if (!await this.isProcessRunning(pid)) {
+        if (!(await this.isProcessRunning(pid))) {
           return true;
         }
         await new Promise((resolve) => setTimeout(resolve, 100));
@@ -402,13 +402,13 @@ class MCPError extends Error {
 }
 
 enum MCPErrorCode {
-  PROCESS_ALREADY_RUNNING = "PROCESS_ALREADY_RUNNING",
-  PROCESS_NOT_RUNNING = "PROCESS_NOT_RUNNING",
-  PERMISSION_DENIED = "PERMISSION_DENIED",
-  BINARY_NOT_FOUND = "BINARY_NOT_FOUND",
-  VERSION_CHECK_FAILED = "VERSION_CHECK_FAILED",
-  UPGRADE_FAILED = "UPGRADE_FAILED",
-  PLATFORM_NOT_SUPPORTED = "PLATFORM_NOT_SUPPORTED",
+  PROCESS*ALREADY*RUNNING = "PROCESS*ALREADY*RUNNING",
+  PROCESS*NOT*RUNNING = "PROCESS*NOT*RUNNING",
+  PERMISSION*DENIED = "PERMISSION*DENIED",
+  BINARY*NOT*FOUND = "BINARY*NOT*FOUND",
+  VERSION*CHECK*FAILED = "VERSION*CHECK*FAILED",
+  UPGRADE*FAILED = "UPGRADE*FAILED",
+  PLATFORM*NOT*SUPPORTED = "PLATFORM*NOT*SUPPORTED",
 }
 
 // Usage in commands
@@ -417,7 +417,7 @@ try {
 } catch (error) {
   if (error instanceof MCPError) {
     switch (error.code) {
-      case MCPErrorCode.PROCESS_ALREADY_RUNNING:
+      case MCPErrorCode.PROCESS*ALREADY*RUNNING:
         console.error("❌ MCP server is already running");
         console.error("💡 Use 'aichaku mcp --restart' to restart it");
         break;

@@ -65,12 +65,14 @@ Based on your project configuration, follow these standards:
 ### Implementation Steps
 
 1. **Load Selected Standards**
+
    ```typescript
    const standardsConfig = await loadProjectStandards(projectPath);
    const selectedStandards = standardsConfig.selected;
    ```
 
 2. **Fetch Standard Content**
+
    ```typescript
    for (const standardId of selectedStandards) {
      const content = await loadStandardContent(standardId);

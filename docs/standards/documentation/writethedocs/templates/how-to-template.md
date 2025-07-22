@@ -176,8 +176,8 @@ jobs:
 
       - name: Run [task]
         env:
-          PROJECT_ENV: &#36;&#123;&#123; secrets.PROJECT_ENV &#125;&#125;
-          API_KEY: &#36;&#123;&#123; secrets.API_KEY &#125;&#125;
+          PROJECT*ENV: &#36;&#123;&#123; secrets.PROJECT*ENV &#125;&#125;
+          API*KEY: &#36;&#123;&#123; secrets.API*KEY &#125;&#125;
         run: |
           project command --option &#36;&#123;&#123; github.event.inputs.value &#125;&#125;
 ```
@@ -238,11 +238,13 @@ project command --cloud gcp --project my-project-id
 This usually means you don't have the required access. Check:
 
 1. **Authentication status**:
+
    ```bash
    project auth status
    ```
 
 2. **Your permissions**:
+
    ```bash
    project iam check --resource [resource-name]
    ```
@@ -289,11 +291,13 @@ This usually means you don't have the required access. Check:
 **Debugging steps**:
 
 1. **Check logs**:
+
    ```bash
    project logs [resource-name] --tail 100
    ```
 
 2. **Verify configuration**:
+
    ```bash
    project describe [resource-name]
    ```
@@ -311,16 +315,19 @@ This usually means you don't have the required access. Check:
 **Optimization strategies**:
 
 1. **Enable caching**:
+
    ```bash
    project command --cache-ttl 3600
    ```
 
 2. **Batch operations**:
+
    ```bash
    project command --batch-size 100
    ```
 
 3. **Use regional endpoints**:
+
    ```bash
    project command --endpoint https://region.api.example.com
    ```

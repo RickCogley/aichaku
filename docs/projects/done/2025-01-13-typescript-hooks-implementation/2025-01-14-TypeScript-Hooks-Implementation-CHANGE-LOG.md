@@ -36,7 +36,7 @@ Added categorized hooks for easier installation:
 
 ### 4. Documentation Review Hooks
 
-- `docs-review`: Reviews markdown files against documentation standards
+- `docs-review`: Reviews Markdown files against documentation standards
 - `jsdoc-checker`: Validates JSDoc comments with project-aware style detection
   (Deno, TSDoc, JSDoc, TypeDoc)
 

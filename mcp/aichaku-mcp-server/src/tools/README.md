@@ -17,7 +17,7 @@ Analyzes a project's structure, languages, architecture, and dependencies.
 
 **Returns:**
 
-- Project type (e.g., "typescript-library", "python-app")
+- Project type (e.g., "TypeScript-library", "python-app")
 - Language breakdown with percentages
 - Directory structure with inferred purposes
 - Dependencies from package files

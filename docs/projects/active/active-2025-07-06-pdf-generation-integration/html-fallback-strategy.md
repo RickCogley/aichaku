@@ -25,8 +25,10 @@ export class OutputGenerator {
       case "html":
         return this.generateHTML(inputPath); // Always works
       case "pdf":
-        return await this.generatePDF(inputPath) ||
-          this.generateHTMLWithPDFInstructions(inputPath);
+        return (
+          (await this.generatePDF(inputPath)) ||
+          this.generateHTMLWithPDFInstructions(inputPath)
+        );
       case "auto":
         return this.generateBestAvailable(inputPath);
     }

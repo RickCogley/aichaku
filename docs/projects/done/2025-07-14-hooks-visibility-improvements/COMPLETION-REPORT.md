@@ -41,7 +41,7 @@ confirmation that the Aichaku hook system is active and working.
 
 - `🪴 Aichaku: Monitoring [filename]`
 - `📁 Project file - will track progress` (project files)
-- `📖 Markdown - will review standards` (markdown files)
+- `📖 Markdown - will review standards` (Markdown files)
 - `📚 Code - will check JSDoc` (TypeScript/JavaScript)
 - `🔒 Code - will check security` (other languages)
 - `⚙️ Workflow - will validate actions` (GitHub Actions)

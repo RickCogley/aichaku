@@ -3,11 +3,11 @@
 ## Overview
 
 This document is created to test the docs-review hook that should trigger when
-markdown files are edited.
+Markdown files are edited.
 
 ## Test Scenarios
 
-1. **Documentation Standards Review**: The hook should check this markdown file
+1. **Documentation Standards Review**: The hook should check this Markdown file
    against documentation standards
 2. **JSDoc Checker**: When we edit TypeScript files, the jsdoc-checker should
    provide guidance
@@ -16,9 +16,9 @@ markdown files are edited.
 
 When this file is created, we expect:
 
-- The docs-review hook to analyze the markdown structure
+- The docs-review hook to analyze the Markdown structure
 - Suggestions for improvements if needed
-- Validation of markdown formatting
+- Validation of Markdown formatting
 
 ## Notes
 

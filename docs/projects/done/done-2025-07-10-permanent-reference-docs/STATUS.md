@@ -63,25 +63,25 @@ graph TB
         A --> H[protocols/]
         A --> I[decisions/]
     end
-    
+
     subgraph "GitHub Integration"
         J[Root Level Files] --> K[SECURITY.md]
         J --> L[CONTRIBUTING.md]
         J --> M[SUPPORT.md]
-        J --> N[CODE_OF_CONDUCT.md]
+        J --> N[CODE*OF*CONDUCT.md]
         K --> E
         L --> F
         M --> F
         N --> F
     end
-    
+
     subgraph "Backup System"
         O[Existing Files] --> P[Timestamped Backup]
         P --> Q[.aichaku/backups/]
         Q --> R[backup-manifest.json]
         Q --> S[restore-instructions.md]
     end
-    
+
     subgraph "Standards Integration"
         T[Arc42 Templates] --> B
         U[OpenAPI Specs] --> C
@@ -89,7 +89,7 @@ graph TB
         W[NIST-CSF] --> E
         X[ADR Templates] --> I
     end
-    
+
     subgraph "Automation"
         Y[MCP Server] --> Z[Compliance Check]
         AA[Mermaid Generation] --> BB[Diagram Automation]
@@ -109,7 +109,7 @@ Instead of the original `/references` folder approach, we implemented a
 ```
 /docs/
 ├── explanation/          # Architecture, concepts, design philosophy ✅
-├── how-to/              # Practical guides and workflows ✅  
+├── how-to/              # Practical guides and workflows ✅
 ├── reference/           # Technical reference docs ✅
 ├── tutorials/           # Step-by-step learning ✅
 ├── api/                 # Auto-generated API docs ✅

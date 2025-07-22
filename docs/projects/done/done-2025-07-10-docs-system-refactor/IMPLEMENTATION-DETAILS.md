@@ -71,6 +71,7 @@ style guide, documentation standards feature, and linting tools.
 The documentation now clearly explains:
 
 1. **One Server, Many Projects**
+
    ```
    ~/.aichaku/mcp-server/        # Global installation
    ├── bin/                     # Executable

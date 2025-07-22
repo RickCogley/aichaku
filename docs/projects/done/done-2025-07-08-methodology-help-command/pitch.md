@@ -66,8 +66,8 @@ $ aichaku help kanban
 📊 Kanban - Visual Flow Management
 
 OVERVIEW:
-Kanban focuses on visualizing work, limiting work in progress, and 
-maximizing flow. It's a pull-based system that helps teams deliver 
+Kanban focuses on visualizing work, limiting work in progress, and
+maximizing flow. It's a pull-based system that helps teams deliver
 continuously without fixed iterations.
 
 KEY CONCEPTS:
@@ -111,6 +111,7 @@ For deeper insights, ask Claude Code:
    - Version with the methodologies
 
 2. **Help Module Structure**
+
    ```
    src/commands/help/
    ├── help.ts           # Main command
@@ -156,6 +157,7 @@ For deeper insights, ask Claude Code:
 ## Nice-to-Haves (if time permits)
 
 1. **Comparison Table**
+
    ```
    $ aichaku help --compare
 
@@ -169,6 +171,7 @@ For deeper insights, ask Claude Code:
    ```
 
 2. **Search/Filter**
+
    ```
    $ aichaku help --find "continuous"
    Found in: Kanban, XP, Scrumban

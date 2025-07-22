@@ -67,7 +67,7 @@ containing executable `!`command`` syntax, from being processed by review tools.
 
 - **Multi-Source Loading**: CLI args > config file > environment > defaults
 - **YAML Support**: Load configuration from `.aichaku/reviewer-config.yaml`
-- **Environment Variables**: Support for `AICHAKU_REVIEWER_EXCLUDE`
+- **Environment Variables**: Support for `AICHAKU*REVIEWER*EXCLUDE`
 - **Validation**: Secure configuration validation with ReDoS protection
 - **Merging Logic**: Intelligent configuration merging across sources
 
@@ -210,10 +210,10 @@ aichaku review --no-default-exclusions
 
 ```bash
 # Multiple patterns separated by commas
-export AICHAKU_REVIEWER_EXCLUDE="*.min.js,**/dist/**,**/node_modules/**"
+export AICHAKU*REVIEWER*EXCLUDE="*.min.js,**/dist/**,**/node_modules/**"
 
 # Disable default exclusions
-export AICHAKU_NO_DEFAULT_EXCLUSIONS=true
+export AICHAKU*NO*DEFAULT_EXCLUSIONS=true
 ```
 
 ### Configuration File

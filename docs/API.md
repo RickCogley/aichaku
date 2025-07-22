@@ -127,17 +127,19 @@ code quality issues.
 
 ```typescript
 // Basic file review
-await mcp__aichaku - reviewer__review_file({
-  file: "/path/to/src/auth.ts",
-});
+(await mcp**aichaku) -
+  reviewer**review_file({
+    file: "/path/to/src/auth.ts",
+  });
 
 // Review with content (useful for unsaved files)
-await mcp__aichaku - reviewer__review_file({
-  file: "untitled.js",
-  content:
-    "const password = process.env.DB_PASSWORD; // Use environment variables for secrets",
-  includeExternal: false,
-});
+(await mcp**aichaku) -
+  reviewer**review_file({
+    file: "untitled.js",
+    content:
+      "const password = process.env.DB_PASSWORD; // Use environment variables for secrets",
+    includeExternal: false,
+  });
 ```
 
 ##### Response Format
@@ -336,7 +338,7 @@ patterns.
 | -------------- | -------- | -------- | ---------------------------------------------------------------------------- |
 | `projectPath`  | string   | Yes      | Path to your project                                                         |
 | `templateType` | string   | Yes      | Type of template: 'readme', 'api', 'architecture', 'contributing', 'testing' |
-| `format`       | string   | No       | Output format: 'markdown', 'asciidoc', 'rst' (default: 'markdown')           |
+| `format`       | string   | No       | Output format: 'Markdown', 'asciidoc', 'rst' (default: 'Markdown')           |
 | `analysis`     | object   | No       | Pre-computed project analysis (to avoid re-analysis)                         |
 | `standards`    | string[] | No       | Documentation standards to follow                                            |
 
@@ -392,7 +394,7 @@ existing docs.
 | `projectPath`     | string   | Yes      | Path to your project                                                |
 | `outputPath`      | string   | No       | Where to save documentation (default: './docs')                     |
 | `types`           | string[] | No       | Documentation types to generate: ['api', 'readme', 'guides', 'all'] |
-| `format`          | string   | No       | Output format (default: 'markdown')                                 |
+| `format`          | string   | No       | Output format (default: 'Markdown')                                 |
 | `includeExamples` | boolean  | No       | Generate usage examples (default: true)                             |
 | `analysis`        | object   | No       | Pre-computed project analysis                                       |
 | `standards`       | string[] | No       | Documentation standards to follow                                   |
@@ -560,26 +562,30 @@ Retrieve usage statistics and analytics for your MCP tool usage.
 
 ```typescript
 // Get dashboard statistics
-const stats = await mcp__aichaku - reviewer__get_statistics({
-  type: "dashboard",
-});
+const stats = (await mcp**aichaku) -
+  reviewer**get_statistics({
+    type: "dashboard",
+  });
 
 // Get real-time performance data
-const realtime = await mcp__aichaku - reviewer__get_statistics({
-  type: "realtime",
-});
+const realtime = (await mcp**aichaku) -
+  reviewer**get_statistics({
+    type: "realtime",
+  });
 
 // Export statistics as CSV
-const csvExport = await mcp__aichaku - reviewer__get_statistics({
-  type: "export",
-  format: "csv",
-});
+const csvExport = (await mcp**aichaku) -
+  reviewer**get_statistics({
+    type: "export",
+    format: "csv",
+  });
 
 // Ask specific questions
-const answer = await mcp__aichaku - reviewer__get_statistics({
-  type: "insights",
-  question: "Which files have the most security issues?",
-});
+const answer = (await mcp**aichaku) -
+  reviewer**get_statistics({
+    type: "insights",
+    question: "Which files have the most security issues?",
+  });
 ```
 
 ## Configuration Files
@@ -592,12 +598,7 @@ You can configure project-specific settings in
 ```json
 {
   "version": "1.0.0",
-  "selected": [
-    "nist-csf",
-    "owasp-web",
-    "tdd",
-    "conventional-commits"
-  ],
+  "selected": ["nist-csf", "owasp-web", "tdd", "conventional-commits"],
   "methodologies": ["shape-up"],
   "customRules": {
     "maxFileSize": 1000,
@@ -784,13 +785,13 @@ semgrep --config=auto --json
 
 | Error Code                | Description              | Solution                    |
 | ------------------------- | ------------------------ | --------------------------- |
-| `FILE_NOT_FOUND`          | File doesn't exist       | Check file path             |
-| `PROJECT_NOT_INITIALIZED` | No .claude directory     | Run `aichaku init`          |
+| `FILE*NOT*FOUND`          | File doesn't exist       | Check file path             |
+| `PROJECT*NOT*INITIALIZED` | No .claude directory     | Run `aichaku init`          |
 | `INVALID_METHODOLOGY`     | Unknown methodology      | Check spelling              |
 | `SCANNER_TIMEOUT`         | External scanner timeout | Increase timeout or disable |
 | `PERMISSION_DENIED`       | Can't read file          | Check file permissions      |
-| `NO_SOURCE_FILES`         | No source files found    | Check project structure     |
-| `INVALID_TEMPLATE_TYPE`   | Unknown template type    | Use valid template type     |
+| `NO*SOURCE*FILES`         | No source files found    | Check project structure     |
+| `INVALID*TEMPLATE*TYPE`   | Unknown template type    | Use valid template type     |
 
 ### Error Response Format
 
@@ -798,7 +799,7 @@ semgrep --config=auto --json
 {
   "success": false,
   "error": {
-    "code": "FILE_NOT_FOUND",
+    "code": "FILE*NOT*FOUND",
     "message": "Cannot read file: /path/to/file.ts",
     "suggestion": "Check that the file exists and is readable",
     "details": {
@@ -834,12 +835,12 @@ semgrep --config=auto --json
 
 | Variable                     | Description               | Default            |
 | ---------------------------- | ------------------------- | ------------------ |
-| `AICHAKU_MCP_DEBUG`          | Enable debug logging      | `false`            |
-| `AICHAKU_MCP_TIMEOUT`        | Global timeout (ms)       | `60000`            |
-| `AICHAKU_MCP_CACHE_DIR`      | Cache directory           | `~/.aichaku/cache` |
-| `AICHAKU_MCP_NO_EXTERNAL`    | Disable external scanners | `false`            |
-| `AICHAKU_FEEDBACK_LEVEL`     | Feedback verbosity        | `standard`         |
-| `AICHAKU_PROGRESS_THRESHOLD` | Progress indicator delay  | `1500`             |
+| `AICHAKU*MCP*DEBUG`          | Enable debug logging      | `false`            |
+| `AICHAKU*MCP*TIMEOUT`        | Global timeout (ms)       | `60000`            |
+| `AICHAKU*MCP*CACHE_DIR`      | Cache directory           | `~/.aichaku/cache` |
+| `AICHAKU*MCP*NO_EXTERNAL`    | Disable external scanners | `false`            |
+| `AICHAKU*FEEDBACK*LEVEL`     | Feedback verbosity        | `standard`         |
+| `AICHAKU*PROGRESS*THRESHOLD` | Progress indicator delay  | `1500`             |
 
 ## Version Compatibility
 

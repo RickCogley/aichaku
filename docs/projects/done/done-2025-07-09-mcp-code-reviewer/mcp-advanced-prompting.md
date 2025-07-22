@@ -68,16 +68,20 @@ const typeScriptAnyGuidance: AdvancedClaudeGuidance = {
   },
 
   examples: {
-    bad: [{
-      code:
-        "const processData = (data: any) => {\n  return data.items.map((item: any) => item.name);\n}",
-      issue: "No type safety - could crash if data doesn't have items array",
-    }],
-    good: [{
-      code:
-        "interface ApiResponse {\n  items: Array<{ name: string; id: number }>;\n}\n\nconst processData = (data: ApiResponse) => {\n  return data.items.map(item => item.name);\n}",
-      benefit: "Type-safe, auto-completion works, refactoring is safe",
-    }],
+    bad: [
+      {
+        code:
+          "const processData = (data: any) => {\n  return data.items.map((item: any) => item.name);\n}",
+        issue: "No type safety - could crash if data doesn't have items array",
+      },
+    ],
+    good: [
+      {
+        code:
+          "interface ApiResponse {\n  items: Array<{ name: string; id: number }>;\n}\n\nconst processData = (data: ApiResponse) => {\n  return data.items.map(item => item.name);\n}",
+        benefit: "Type-safe, auto-completion works, refactoring is safe",
+      },
+    ],
     explanation:
       "The good example defines the exact shape of data, enabling TypeScript to catch errors before runtime.",
   },
@@ -147,14 +151,18 @@ const securityGuidance: AdvancedClaudeGuidance = {
   },
 
   examples: {
-    bad: [{
-      code: 'exec(`git commit -m "${message}"`)',
-      issue: "User input in message could include ; rm -rf /",
-    }],
-    good: [{
-      code: 'execFile("git", ["commit", "-m", message])',
-      benefit: "Arguments passed as array, no shell interpretation",
-    }],
+    bad: [
+      {
+        code: 'exec(`git commit -m "${message}"`)',
+        issue: "User input in message could include ; rm -rf /",
+      },
+    ],
+    good: [
+      {
+        code: 'execFile("git", ["commit", "-m", message])',
+        benefit: "Arguments passed as array, no shell interpretation",
+      },
+    ],
     explanation:
       "execFile with array arguments prevents shell interpretation of special characters",
   },

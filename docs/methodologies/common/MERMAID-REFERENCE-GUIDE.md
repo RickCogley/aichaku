@@ -60,10 +60,10 @@ graph TB
 graph TD
     A[Start] --> B[Process]
     B --> C[End]
-    
+
     classDef processStyle fill:#e1f5fe,stroke:#01579b,stroke-width:2px
     classDef startEndStyle fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    
+
     class A,C startEndStyle
     class B processStyle
 ```
@@ -76,18 +76,18 @@ graph TB
         A[React App]
         B[Vue App]
     end
-    
+
     subgraph "Backend"
         C[API Gateway]
         D[Microservice 1]
         E[Microservice 2]
     end
-    
+
     subgraph "Database"
         F[(PostgreSQL)]
         G[(Redis)]
     end
-    
+
     A --> C
     B --> C
     C --> D
@@ -107,7 +107,7 @@ sequenceDiagram
     participant A as Alice
     participant B as Bob
     participant C as Charlie
-    
+
     A->>B: Hello Bob
     B->>C: Hello Charlie
     C-->>B: Hi Bob
@@ -120,7 +120,7 @@ sequenceDiagram
 sequenceDiagram
     participant A as Client
     participant B as Server
-    
+
     A->>B: Solid arrow (request)
     B-->>A: Dashed arrow (response)
     A-xB: Solid arrow with X (async)
@@ -136,7 +136,7 @@ sequenceDiagram
     participant C as Client
     participant S as Server
     participant D as Database
-    
+
     C->>+S: Login request
     S->>+D: Validate user
     D-->>-S: User data
@@ -152,20 +152,20 @@ sequenceDiagram
     participant U as User
     participant S as System
     participant D as Database
-    
+
     U->>S: Request data
-    
+
     loop Every item
         S->>D: Query item
         D-->>S: Item data
     end
-    
+
     alt Success
         S-->>U: Return data
     else Error
         S-->>U: Error message
     end
-    
+
     opt Cache available
         S->>S: Use cached data
     end
@@ -177,7 +177,7 @@ sequenceDiagram
 sequenceDiagram
     participant A as Alice
     participant B as Bob
-    
+
     Note over A,B: Initial setup
     A->>B: Hello
     Note right of B: Bob thinks
@@ -227,25 +227,25 @@ classDiagram
         +name: String
         +email: String
     }
-    
+
     class Order {
         +id: String
         +total: Decimal
     }
-    
+
     class Product {
         +name: String
         +price: Decimal
     }
-    
+
     class Category {
         +name: String
     }
-    
+
     User ||--o{ Order : places
     Order ||--o{ Product : contains
     Category ||--o{ Product : categorizes
-    
+
     Order : +calculateTotal()
     Product : +applyDiscount()
 ```
@@ -259,25 +259,25 @@ classDiagram
         +name: String
         +makeSound()* void
     }
-    
+
     class Dog {
         +breed: String
         +makeSound() void
         +wagTail() void
     }
-    
+
     class Cat {
         +lives: int
         +makeSound() void
         +purr() void
     }
-    
+
     class Pet {
         <<interface>>
         +play() void
         +feed() void
     }
-    
+
     Animal <|-- Dog
     Animal <|-- Cat
     Pet <|.. Dog
@@ -292,18 +292,18 @@ classDiagram
         <<Service>>
         +processData()
     }
-    
+
     class Repository {
         <<Repository>>
         +save()
         +find()
     }
-    
+
     class Controller {
         <<Controller>>
         +handleRequest()
     }
-    
+
     class Component {
         <<Component>>
         +render()
@@ -329,21 +329,21 @@ stateDiagram-v2
 ```mermaid
 stateDiagram-v2
     [*] --> First
-    
+
     state First {
         [*] --> fir
         fir --> sec
         sec --> [*]
     }
-    
+
     First --> Second
-    
+
     state Second {
         [*] --> third
         third --> fourth
         fourth --> [*]
     }
-    
+
     Second --> [*]
 ```
 
@@ -352,7 +352,7 @@ stateDiagram-v2
 ```mermaid
 stateDiagram-v2
     [*] --> Active
-    
+
     state Active {
         [*] --> NumLockOff
         NumLockOff --> NumLockOn : EvNumLockPressed
@@ -373,17 +373,17 @@ stateDiagram-v2
 ```mermaid
 stateDiagram-v2
     [*] --> Idle
-    
+
     Idle --> Processing : start
     Processing --> Success : complete
     Processing --> Failed : error
     Success --> Idle : reset
     Failed --> Idle : reset
-    
+
     Processing : entry / initialize
     Processing : do / process data
     Processing : exit / cleanup
-    
+
     Success : entry / log success
     Failed : entry / log error
 ```
@@ -397,14 +397,14 @@ erDiagram
     CUSTOMER ||--o{ ORDER : places
     ORDER ||--|{ LINE-ITEM : contains
     CUSTOMER }|..|{ DELIVERY-ADDRESS : uses
-    
+
     CUSTOMER {
         string id PK
         string name
         string email UK
         date created_at
     }
-    
+
     ORDER {
         string id PK
         string customer_id FK
@@ -412,7 +412,7 @@ erDiagram
         date order_date
         string status
     }
-    
+
     LINE-ITEM {
         string id PK
         string order_id FK
@@ -420,7 +420,7 @@ erDiagram
         int quantity
         decimal price
     }
-    
+
     DELIVERY-ADDRESS {
         string id PK
         string customer_id FK
@@ -454,7 +454,7 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
-    
+
     PROFILE {
         bigint id PK
         bigint user_id FK "Foreign Key"
@@ -462,7 +462,7 @@ erDiagram
         varchar avatar_url
         json preferences
     }
-    
+
     POST {
         bigint id PK
         bigint user_id FK
@@ -471,7 +471,7 @@ erDiagram
         enum status "draft, published, archived"
         timestamp published_at
     }
-    
+
     USER ||--|| PROFILE : has
     USER ||--o{ POST : writes
 ```
@@ -484,16 +484,16 @@ erDiagram
 gantt
     title Project Timeline
     dateFormat YYYY-MM-DD
-    
+
     section Phase 1
     Task 1           :done,    des1, 2024-01-06, 2024-01-08
     Task 2           :active,  des2, 2024-01-09, 3d
     Task 3           :         des3, after des2, 5d
-    
+
     section Phase 2
     Task 4           :         des4, 2024-01-12, 6d
     Task 5           :         des5, after des4, 5d
-    
+
     section Phase 3
     Task 6           :         des6, after des5, 3d
     Task 7           :         des7, after des6, 2d
@@ -505,21 +505,21 @@ gantt
 gantt
     title Software Development Project
     dateFormat YYYY-MM-DD
-    
+
     section Planning
     Requirements     :done,    req, 2024-01-01, 2024-01-05
     Design           :done,    des, 2024-01-06, 2024-01-10
-    
+
     section Development
     Backend API      :active,  api, 2024-01-11, 2024-01-25
     Frontend         :         fe,  2024-01-16, 2024-01-30
     Database         :done,    db,  2024-01-11, 2024-01-20
-    
+
     section Testing
     Unit Tests       :         ut,  after api, 5d
     Integration      :         it,  after ut, 3d
     User Testing     :         uat, after fe, 5d
-    
+
     section Deployment
     Production Setup :milestone, prod, 2024-02-01, 0d
     Go Live         :milestone, live, 2024-02-05, 0d
@@ -574,33 +574,33 @@ gitGraph
     branch develop
     checkout develop
     commit id: "Dev1"
-    
+
     branch feature/login
     checkout feature/login
     commit id: "Login UI"
     commit id: "Auth logic"
-    
+
     checkout develop
     branch feature/dashboard
     checkout feature/dashboard
     commit id: "Dashboard"
-    
+
     checkout develop
     merge feature/login
     commit id: "Merge login"
-    
+
     checkout main
     branch hotfix
     checkout hotfix
     commit id: "Security fix"
-    
+
     checkout main
     merge hotfix
-    
+
     checkout develop
     merge main
     merge feature/dashboard
-    
+
     checkout main
     merge develop
     commit id: "Release v1.0"
@@ -692,7 +692,7 @@ graph TD
     A[Start] --> B{Decision}
     B -->|Yes| C[Action 1]
     B -->|No| D[Action 2]
-    
+
     click A "https://example.com" "Go to homepage"
     click B "https://example.com/decision" "Learn about decisions"
     click C callback "Action 1 callback"
@@ -709,7 +709,7 @@ graph TD
     UserRegistration[User Registration] --> ValidateInput{Validate Input}
     ValidateInput -->|Valid| CreateUser[Create User Account]
     ValidateInput -->|Invalid| ShowError[Show Error Message]
-    
+
     %% Avoid: Generic names like A, B, C
 ```
 
@@ -722,17 +722,17 @@ graph TB
         UI1[Login Form]
         UI2[Dashboard]
     end
-    
+
     subgraph "Business Logic"
         BL1[Authentication]
         BL2[User Management]
     end
-    
+
     subgraph "Data Layer"
         DL1[(User Database)]
         DL2[(Session Store)]
     end
-    
+
     UI1 --> BL1
     UI2 --> BL2
     BL1 --> DL1
@@ -747,13 +747,13 @@ graph TD
     A[Input] --> B{Process}
     B -->|Success| C[Output]
     B -->|Error| D[Handle Error]
-    
+
     %% Color coding for different types
     classDef input fill:#e3f2fd
     classDef process fill:#f3e5f5
     classDef output fill:#e8f5e8
     classDef error fill:#ffebee
-    
+
     class A input
     class B process
     class C output
@@ -764,10 +764,10 @@ graph TD
 
 ```mermaid
 graph TD
-    A["🔵 Start Process<br/>aria-label='Begin workflow'"] 
+    A["🔵 Start Process<br/>aria-label='Begin workflow'"]
     B["⚙️ Processing<br/>aria-label='System processing data'"]
     C["✅ Complete<br/>aria-label='Process completed successfully'"]
-    
+
     A --> B
     B --> C
 ```
@@ -786,13 +786,13 @@ graph TB
     subgraph "API Gateway"
         GW[Kong Gateway]
     end
-    
+
     subgraph "Services"
         US[User Service]
         OS[Order Service]
         PS[Payment Service]
     end
-    
+
     GW --> US
     GW --> OS
     GW --> PS

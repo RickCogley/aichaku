@@ -32,13 +32,13 @@ simply
 
 ### Board Setup
 
-```
+```text
 | Backlog | Ready(5) | Doing(3) | Review(2) | Done |
 ```
 
 ### Work Item
 
-```
+```text
 #123: [Title]
 Type: [Feature/Bug/Debt]
 Size: [S/M/L]
@@ -48,7 +48,7 @@ Blocked: [Yes/No]
 
 ### Flow Metrics
 
-```
+```text
 This week:
 Items completed: [X]
 Avg cycle time: [Y days]

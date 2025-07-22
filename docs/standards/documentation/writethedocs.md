@@ -121,17 +121,20 @@ work through the example.
 ### Create the Project Structure
 
 1. Create a new directory for your project:
+
    ```bash
    mkdir my-first-project
    cd my-first-project
    ```
 
 2. Initialize a new [Project] configuration:
+
    ```bash
    project init
    ```
 
    This creates a basic structure:
+
    ```
    my-first-project/
    ├── config.yaml     # Your project configuration
@@ -140,6 +143,7 @@ work through the example.
    ```
 
 3. Open `config.yaml` in your favorite editor and update it:
+
    ```yaml
    # Before
    name: my-project
@@ -246,7 +250,7 @@ Help users accomplish specific tasks efficiently, assuming basic familiarity wit
 
 This guide shows you how to [task description]. This is useful when you need to [use case/scenario].
 
-**Time:** About [X] minutes  
+**Time:** About [X] minutes
 **Difficulty:** [Beginner | Intermediate | Advanced]
 
 ## Prerequisites
@@ -260,7 +264,7 @@ Before starting, ensure you have:
 
 We'll accomplish this task by:
 1. [High-level step 1]
-2. [High-level step 2]  
+2. [High-level step 2]
 3. [High-level step 3]
 
 ## Step-by-Step Instructions
@@ -350,7 +354,7 @@ For GitHub Actions:
 ```yaml
 - name: Run [task]
   env:
-    PROJECT_ENV: ${{ secrets.PROJECT_ENV }}
+    PROJECT*ENV: ${{ secrets.PROJECT*ENV }}
   run: |
     project command --option ${{ inputs.value }}
 ```
@@ -426,8 +430,8 @@ Provide comprehensive technical details for users who need complete information.
 
 The [Component] API provides [what it does]. Use this API to [common use cases].
 
-**Base URL**: `https://api.example.com/v1`  
-**Authentication**: Bearer token required  
+**Base URL**: `https://api.example.com/v1`
+**Authentication**: Bearer token required
 **Rate Limits**: 1000 requests per hour
 
 ## Quick Start
@@ -445,7 +449,7 @@ All requests require authentication using a Bearer token in the Authorization
 header:
 
 ```
-Authorization: Bearer YOUR_API_TOKEN
+Authorization: Bearer YOUR*API*TOKEN
 ```
 
 To get an API token:
@@ -629,12 +633,12 @@ All errors follow this format:
 ```json
 {
   "error": {
-    "code": "RESOURCE_NOT_FOUND",
+    "code": "RESOURCE*NOT*FOUND",
     "message": "The requested resource does not exist",
     "details": {
-      "resource_id": "res_123abc"
+      "resource*id": "res*123abc"
     },
-    "request_id": "req_987zyx"
+    "request*id": "req*987zyx"
   }
 }
 ```
@@ -646,9 +650,9 @@ All errors follow this format:
 | `INVALID_REQUEST`    | Request validation failed | Check the `details` field       |
 | `UNAUTHORIZED`       | Invalid or missing auth   | Verify your API token           |
 | `FORBIDDEN`          | Insufficient permissions  | Check account permissions       |
-| `RESOURCE_NOT_FOUND` | Resource doesn't exist    | Verify the ID                   |
+| `RESOURCE*NOT*FOUND` | Resource doesn't exist    | Verify the ID                   |
 | `RATE_LIMITED`       | Too many requests         | Wait and retry                  |
-| `SERVER_ERROR`       | Internal error            | Contact support with request_id |
+| `SERVER*ERROR`       | Internal error            | Contact support with request*id |
 
 ## Rate Limiting
 
@@ -819,7 +823,7 @@ User sees result
    Next, [component] takes your request and [detailed explanation]. During this phase:
    - [Sub-step 1]: [What and why]
    - [Sub-step 2]: [What and why]
-   
+
 3. **Result Generation**
    Finally, [explanation of how results are created and returned].
 

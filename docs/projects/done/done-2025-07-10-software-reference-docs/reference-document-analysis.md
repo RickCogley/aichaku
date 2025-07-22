@@ -45,7 +45,7 @@ graph TB
         Cache[Redis Cache]
         Queue[Message Queue]
     end
-    
+
     UI --> API
     API --> AS
     AS --> DB
@@ -116,7 +116,7 @@ sequenceDiagram
     participant API
     participant Auth
     participant Database
-    
+
     Client->>API: POST /login
     API->>Auth: Validate credentials
     Auth-->>API: JWT Token
@@ -263,25 +263,25 @@ graph TB
             WAF[Web Application Firewall]
             LB[Load Balancer]
         end
-        
+
         subgraph "Application Zone"
             APP[Application Servers]
             API[API Services]
         end
-        
+
         subgraph "Data Zone"
             DB[(Encrypted Database)]
             FS[Secure File Storage]
         end
     end
-    
+
     Internet --> WAF
     WAF --> LB
     LB --> APP
     APP --> API
     API --> DB
     API --> FS
-    
+
     style DMZ fill:#ffcccc
     style "Application Zone" fill:#ffffcc
     style "Data Zone" fill:#ccffcc
@@ -354,7 +354,7 @@ graph LR
         Approve -->|Yes| Prod[Deploy to Production]
         Approve -->|No| Rollback[Rollback]
     end
-    
+
     Prod --> Monitor[Production Monitoring]
     Monitor --> Alerts[Alert Management]
 ```
@@ -403,23 +403,23 @@ Define how the system integrates with external systems and services.
 graph TB
     subgraph "Integration Architecture"
         System[Our System]
-        
+
         subgraph "Synchronous"
             API1[Payment API]
             API2[User Service]
         end
-        
+
         subgraph "Asynchronous"
             Queue1[Order Queue]
             Queue2[Notification Queue]
         end
-        
+
         subgraph "Batch"
             FTP[Data Export]
             ETL[ETL Pipeline]
         end
     end
-    
+
     System <--> API1
     System <--> API2
     System --> Queue1
@@ -477,7 +477,7 @@ graph TB
         TRANS[Transmitting]
         ERROR[Error State]
         CLOSE[Closed]
-        
+
         INIT -->|Connect| AUTH
         AUTH -->|Success| READY
         AUTH -->|Failure| ERROR
@@ -539,7 +539,7 @@ graph LR
         Accepted --> Superseded
         Accepted --> Deprecated
     end
-    
+
     style Accepted fill:#90EE90
     style Rejected fill:#FFB6C1
     style Deprecated fill:#D3D3D3

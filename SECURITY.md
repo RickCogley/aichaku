@@ -121,7 +121,7 @@ deno task test:security
 # Test path validation
 deno test tests/security/path-validation_test.ts
 
-# Test input sanitization  
+# Test input sanitization
 deno test tests/security/input-sanitization_test.ts
 
 # Full test suite with coverage
@@ -131,6 +131,7 @@ deno task test:coverage
 ### Manual Security Testing
 
 1. **Path Traversal Testing**:
+
    ```bash
    # Attempt directory traversal
    aichaku generate "../../../etc/passwd"
@@ -138,6 +139,7 @@ deno task test:coverage
    ```
 
 2. **Input Validation Testing**:
+
    ```bash
    # Test with special characters
    aichaku create "project'; rm -rf /"

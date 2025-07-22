@@ -57,6 +57,7 @@ provide clear feedback:
 ### Upgrade Command Improvements
 
 1. **Progress Indicators**: Show MCP server updates in real-time
+
    ```
    🌿 Updating MCP servers...
    ✨ aichaku-reviewer updated (v0.28.0 → v0.29.0)
@@ -66,6 +67,7 @@ provide clear feedback:
    ```
 
 2. **HTTP Server Version Feedback**: Show version when starting/stopping
+
    ```
    🛑 Stopping MCP HTTP/SSE Server (v0.28.0)...
    ✅ MCP HTTP/SSE Server stopped
@@ -75,6 +77,7 @@ provide clear feedback:
    ```
 
 3. **Error Handling**: Clear feedback when updates fail
+
    ```
    ⚠️  aichaku-reviewer update failed: permission denied
    ✨ github-operations updated (v0.28.0 → v0.29.0)
@@ -82,11 +85,12 @@ provide clear feedback:
    ```
 
 4. **Summary Section**: Include MCP servers in final upgrade summary
+
    ```
    ✅ 🎉 Upgrade to v0.29.0 complete!
    📊 Updated:
    • 31 methodology files
-   • 11 standards files  
+   • 11 standards files
    • 3 MCP servers
 
    ⚠️  Next step: Restart HTTP server if running
@@ -94,6 +98,7 @@ provide clear feedback:
    ```
 
 5. **README Documentation Update**: Add HTTP server restart to upgrade process
+
    ```bash
    # Step 5: Restart HTTP server (if running)
    aichaku mcp --stop-server
@@ -109,6 +114,7 @@ provide clear feedback:
 ### Cleanup Command Improvements
 
 1. **Detect All Legacy Structures**:
+
    ```
    🧹 Detecting legacy structures...
    • .claude/sessions/ → Will migrate to docs/checkpoints/
@@ -118,6 +124,7 @@ provide clear feedback:
    ```
 
 2. **Session Migration**:
+
    ```bash
    # Automatically migrate sessions
    mkdir -p docs/checkpoints
@@ -126,6 +133,7 @@ provide clear feedback:
    ```
 
 3. **Output Migration**:
+
    ```bash
    # Migrate output files to proper location
    mkdir -p docs/projects/migrated
@@ -146,6 +154,7 @@ provide clear feedback:
    - Follow modern tooling patterns (like pyproject.toml)
 
 2. **Migration path**:
+
    ```bash
    # Automatically merge old files on upgrade
    aichaku migrate --consolidate-metadata
@@ -410,7 +419,7 @@ $ aichaku standards --show tdd
 📖 Test-Driven Development (TDD)
 
 ✨ Core Principles:
-- Write tests before implementation  
+- Write tests before implementation
 - Red-Green-Refactor cycle
 - One failing test at a time
 
@@ -431,7 +440,7 @@ $ aichaku standards --remove tdd,dora
 
 🗑️  Removing standards...
 ✅ Removed 'tdd' from development standards
-✅ Removed 'dora' from documentation standards  
+✅ Removed 'dora' from documentation standards
 📝 Updated: .claude/aichaku/aichaku.json
 💡 Run 'aichaku integrate' to update CLAUDE.md
 

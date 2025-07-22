@@ -56,7 +56,7 @@ Measures and improves your process:
 **When**: You need to define features with fixed timelines **Key concept**:
 6-week cycles, appetite not estimates
 
-```
+```text
 "Let's shape a new feature" → Pitch document with 2 or 6 week appetite
 ```
 
@@ -65,7 +65,7 @@ Measures and improves your process:
 **When**: You want predictable delivery with regular rhythm **Key concept**:
 Sprints with ceremonies and roles
 
-```
+```text
 "Plan next sprint" → Sprint backlog based on velocity
 ```
 
@@ -74,7 +74,7 @@ Sprints with ceremonies and roles
 **When**: You have continuous flow work with varying priorities **Key concept**:
 Visualize work, limit WIP, optimize flow
 
-```
+```text
 "Show our kanban board" → Current state with WIP limits
 ```
 
@@ -83,7 +83,7 @@ Visualize work, limit WIP, optimize flow
 **When**: Code quality is critical **Key concept**: Technical practices like TDD
 and pairing
 
-```
+```text
 "Let's TDD this feature" → Red-green-refactor cycles
 ```
 
@@ -92,7 +92,7 @@ and pairing
 **When**: You need to validate ideas quickly **Key concept**:
 Build-measure-learn with MVPs
 
-```
+```text
 "Define an MVP" → Minimum experiment to test hypothesis
 ```
 
@@ -123,7 +123,7 @@ Claude Code automatically adjusts based on:
 
 ### Example 1: Feature Development
 
-```
+```text
 You: "I need to add user authentication"
 Claude: Detects feature work, checks context, suggests Shape Up with 2-week appetite
 Output: Pitch document with rough solution
@@ -131,7 +131,7 @@ Output: Pitch document with rough solution
 
 ### Example 2: Bug Management
 
-```
+```text
 You: "We're getting lots of bug reports"
 Claude: Detects support work, suggests Kanban board
 Output: WIP-limited board setup for bug flow
@@ -139,7 +139,7 @@ Output: WIP-limited board setup for bug flow
 
 ### Example 3: Quality Improvement
 
-```
+```text
 You: "Our code quality is slipping"
 Claude: Suggests adding XP practices to current methodology
 Output: TDD introduction plan, pairing schedule
@@ -165,7 +165,7 @@ Methodologies aren't exclusive. Common combinations:
 
 All outputs saved to:
 
-```
+```text
 .claude/output/
   └── active-YYYYMM-projectname/
       ├── plans/

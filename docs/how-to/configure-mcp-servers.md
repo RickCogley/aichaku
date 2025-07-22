@@ -24,7 +24,7 @@ Aichaku provides two types of MCP servers:
    - Passive - launched on-demand by Claude Code
    - No persistent processes running
    - Configured directly in Claude Code settings
-   - Examples: aichaku-reviewer, github-operations
+   - Examples: aichaku-reviewer, GitHub-operations
 
 2. **HTTP/SSE Bridge Server** (Optional)
    - Persistent server running on port 7182
@@ -32,7 +32,7 @@ Aichaku provides two types of MCP servers:
    - Supports multiple concurrent Claude Code instances
    - Better for high-frequency usage
    - Managed via `aichaku mcp --start-server`
-   - **Note**: github-operations uses stdio mode only
+   - **Note**: GitHub-operations uses stdio mode only
 
 ## Quick Setup (Recommended)
 
@@ -199,7 +199,7 @@ Use the mcp__github-operations__auth_status tool to check GitHub authentication
 
 ## Verify Tool Availability
 
-MCP tools appear with the `mcp__` prefix in Claude's tool usage.
+MCP tools appear with the `mcp**` prefix in Claude's tool usage.
 
 ## Troubleshooting
 
@@ -334,7 +334,7 @@ If you encounter issues:
 
 - **Stdio servers** (default): Passive, launched on-demand, no management needed
 - **HTTP/SSE server** (optional): Persistent, better for heavy usage
-- **Tools appear** with `mcp__` prefix once configured
+- **Tools appear** with `mcp**` prefix once configured
 - **Use `aichaku setup`** for automatic configuration
 - **Restart Claude Code** after configuration changes
 

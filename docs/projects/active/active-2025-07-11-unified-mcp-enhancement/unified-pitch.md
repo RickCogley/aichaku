@@ -36,7 +36,7 @@ graph TB
     D --> E[Progress Updates]
     E --> F[Results & Statistics]
     F --> G[Next Steps]
-    
+
     style B fill:#90EE90
     style E fill:#90EE90
 ```
@@ -110,8 +110,8 @@ Update tool descriptions to trigger automatically:
 
 ```
 Before: "Review a file for security compliance"
-After: "Automatically scan code for security vulnerabilities (OWASP), 
-       quality issues, and standards compliance. Triggers on: review, 
+After: "Automatically scan code for security vulnerabilities (OWASP),
+       quality issues, and standards compliance. Triggers on: review,
        audit, security, check, scan, analyze"
 ```
 
@@ -137,7 +137,7 @@ interface UsageStats {
 🪴 Development Session Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🔍 MCP Tools Used: 23 operations
-📊 Most Used: review_file (15), get_standards (5), review_methodology (3)
+📊 Most Used: review*file (15), get*standards (5), review_methodology (3)
 ⚡ Average Response: 800ms
 📚 Standards Applied: OWASP, SOLID, TDD
 ✨ Quality Score: 94% (up 12% from last session)
@@ -149,7 +149,7 @@ Enable natural language queries:
 
 ```
 User: "How often did I use security scanning this week?"
-🪴 This week you used security tools 47 times across 12 files, 
+🪴 This week you used security tools 47 times across 12 files,
     finding an average of 1.3 issues per file with 0 critical vulnerabilities.
 ```
 

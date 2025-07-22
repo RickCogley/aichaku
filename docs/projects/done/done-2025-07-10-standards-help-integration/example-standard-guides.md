@@ -128,9 +128,9 @@ ENTITY
   • Has unique identity
   • Identity persists over time
   • Mutable state
-  
+
   class User {
-    constructor(public id: UserId, 
+    constructor(public id: UserId,
                 public email: Email) {}
   }
 
@@ -138,9 +138,9 @@ VALUE OBJECT
   • No identity
   • Immutable
   • Defined by attributes
-  
+
   class Money {
-    constructor(public amount: number, 
+    constructor(public amount: number,
                 public currency: string) {}
   }
 
@@ -148,14 +148,14 @@ AGGREGATE
   • Cluster of entities/VOs
   • Transaction boundary
   • Consistency boundary
-  
+
   class Order {
     constructor(
       private id: OrderId,
       private items: OrderItem[],
       private customer: CustomerId
     ) {}
-    
+
     addItem(item: OrderItem) {
       // Business rules enforced here
     }
@@ -197,7 +197,7 @@ The foundation of clean architecture and good design.
 📋 The Principles
 
 S - Single Responsibility Principle
-O - Open/Closed Principle  
+O - Open/Closed Principle
 L - Liskov Substitution Principle
 I - Interface Segregation Principle
 D - Dependency Inversion Principle

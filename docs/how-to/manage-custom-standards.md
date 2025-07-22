@@ -79,11 +79,13 @@ This command:
 You can also create standards manually:
 
 1. Navigate to the custom standards directory:
+
    ```bash
    cd ~/.claude/aichaku/user/docs/standards/
    ```
 
 2. Create a new file using UPPER-KEBAB-CASE:
+
    ```bash
    touch SECURITY-HARDENING.md
    ```
@@ -382,6 +384,7 @@ git commit -m "Add team development standards"
 ### Choose Distribution Methods
 
 1. **Git Repository**
+
    ```bash
    # Clone team standards
    git clone https://github.com/team/standards.git
@@ -394,6 +397,7 @@ git commit -m "Add team development standards"
    - Version with dates
 
 3. **Installation Script**
+
    ```bash
    #!/bin/bash
    # install-standards.sh
@@ -496,6 +500,7 @@ aichaku migrate
 ### Use Manual Migration
 
 1. **Locate old standards**:
+
    ```bash
    # Common legacy locations
    ~/.claude/docs/standards/custom/
@@ -504,6 +509,7 @@ aichaku migrate
    ```
 
 2. **Copy to new location**:
+
    ```bash
    # Create directory if needed
    mkdir -p ~/.claude/aichaku/user/standards
@@ -514,6 +520,7 @@ aichaku migrate
    ```
 
 3. **Update names if needed**:
+
    ```bash
    # Rename to UPPER-KEBAB-CASE
    cd ~/.claude/aichaku/user/standards

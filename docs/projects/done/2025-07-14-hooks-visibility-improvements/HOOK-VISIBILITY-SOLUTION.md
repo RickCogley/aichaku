@@ -13,7 +13,7 @@
 ```typescript
 // Runs BEFORE Write/Edit operations
 async function aichakuFeedback(input: HookInput): Promise<void> {
-  const filePath = input.tool_input?.file_path || input.tool_input?.path;
+  const filePath = input.tool * input?.file * path || input.tool_input?.path;
 
   if (filePath && typeof filePath === "string") {
     // Show what Aichaku is monitoring

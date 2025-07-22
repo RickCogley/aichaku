@@ -2,7 +2,7 @@
 
 ## Problem
 
-Claude Code has introduced a new way to define slash commands using markdown
+Claude Code has introduced a new way to define slash commands using Markdown
 files in `~/.claude/commands/`, but we're still using the old JSON format in
 `settings.json`. This creates several issues:
 
@@ -45,7 +45,7 @@ aligns with Claude's new standards.
 
 ## Solution
 
-Migrate all slash commands to individual markdown files with proper metadata and
+Migrate all slash commands to individual Markdown files with proper metadata and
 organization.
 
 ### Directory Structure
@@ -97,27 +97,35 @@ Create a session checkpoint by following these steps:
    - Use descriptive name from $ARGUMENTS or generate from work done
 
 2. CHECKPOINT CONTENT (use these exact sections):
+
    # Session Checkpoint - {date} - {name}
 
    ## Summary of Work Accomplished
+
    List main tasks completed
 
    ## Key Technical Decisions
+
    Document architectural choices
 
    ## Files Created/Modified
+
    ### Created
    - New files with purpose
+
    ### Modified
    - Changed files with changes
 
    ## Problems Solved
+
    Issues resolved and solutions
 
    ## Lessons Learned
+
    Key insights discovered
 
    ## Next Steps
+
    Future work or improvements
 
 Show the checkpoint path after creation.
@@ -172,10 +180,7 @@ description: ${cmd.description}
 ${improvePrompt(cmd.prompt)}
 `;
 
-    await Deno.writeTextFile(
-      `${dir}/${cmd.name}.md`,
-      content,
-    );
+    await Deno.writeTextFile(`${dir}/${cmd.name}.md`, content);
   }
 
   // Update settings.json
@@ -276,7 +281,7 @@ Since Claude now has built-in commands, we should:
 
 ## Success Metrics
 
-- All 10 commands migrated to markdown format
+- All 10 commands migrated to Markdown format
 - Commands organized into logical categories
 - No functionality lost during migration
 - Improved command discoverability

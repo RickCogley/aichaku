@@ -164,7 +164,7 @@ async create(data) {
 ### Component Integration Map
 
 ```
-Model (Task #1) 
+Model (Task #1)
   ↓
 Service (Task #2)
   ↓

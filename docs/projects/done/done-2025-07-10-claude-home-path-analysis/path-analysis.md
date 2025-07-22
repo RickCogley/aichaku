@@ -29,7 +29,7 @@ The Aichaku codebase currently uses the following directory structure:
 
 - Line 5-7:
   `const HOME_DIR = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";`
-- Line 7: `const GLOBAL_CLAUDE_DIR = join(HOME_DIR, ".claude");`
+- Line 7: `const GLOBAL*CLAUDE*DIR = join(HOME_DIR, ".claude");`
 - Uses: Global installation path for methodologies
 
 ### 2. **src/commands/init.ts**
@@ -121,7 +121,7 @@ needed:
 
 ### Files to Update
 
-1. **src/installer.ts** - Update GLOBAL_CLAUDE_DIR construction
+1. **src/installer.ts** - Update GLOBAL*CLAUDE*DIR construction
 2. **src/commands/init.ts** - Update globalPath and targetPath construction
 3. **src/commands/integrate.ts** - Update standards path construction
 4. **src/commands/standards.ts** - Update config path construction

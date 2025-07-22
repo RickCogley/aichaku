@@ -30,7 +30,7 @@
 
 ### Hybrid Board
 
-```
+```text
 | Backlog | Ready(8) | Sprint Queue(15) | Doing(3) | Review(2) | Done |
                         ↑
                   Planning trigger
@@ -38,7 +38,7 @@
 
 ### Planning Trigger
 
-```
+```text
 Ready items: 3 of 8 (37%)
 Days of work: ~4
 Status: 🔴 Plan needed
@@ -46,7 +46,7 @@ Status: 🔴 Plan needed
 
 ### Metrics Blend
 
-```
+```text
 Velocity: 32 pts (trending)
 Cycle time: 3.2 days
 Flow efficiency: 45%

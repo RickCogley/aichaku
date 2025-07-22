@@ -22,7 +22,7 @@ projects that were still marked as active.
 ### 2. Organized Stray Files
 
 - Created `complete-2025-07-06-v0.4.2-release/` directory
-- Moved `RELEASE_NOTES_v0.4.2.md` into its proper directory
+- Moved `RELEASE*NOTES*v0.4.2.md` into its proper directory
 
 ## Current Status
 

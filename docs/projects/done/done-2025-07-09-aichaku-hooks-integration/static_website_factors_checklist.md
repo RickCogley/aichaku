@@ -108,9 +108,15 @@ speed of light and the reliability of stone.
 
 ```html
 <picture>
-  <source srcset="hero.avif" type="image/avif">
-  <source srcset="hero.webp" type="image/webp">
-  <img src="hero.jpg" alt="Hero image" loading="lazy" width="1200" height="600">
+  <source srcset="hero.avif" type="image/avif" />
+  <source srcset="hero.webp" type="image/webp" />
+  <img
+    src="hero.jpg"
+    alt="Hero image"
+    loading="lazy"
+    width="1200"
+    height="600"
+  />
 </picture>
 ```
 
@@ -155,11 +161,11 @@ performance_budget:
 ```html
 <head>
   <title>Page Title - Site Name</title>
-  <meta name="description" content="Compelling description">
-  <meta property="og:title" content="Page Title">
-  <meta property="og:description" content="Social description">
-  <meta property="og:image" content="/og-image.jpg">
-  <link rel="canonical" href="https://example.com/page">
+  <meta name="description" content="Compelling description" />
+  <meta property="og:title" content="Page Title" />
+  <meta property="og:description" content="Social description" />
+  <meta property="og:image" content="/og-image.jpg" />
+  <link rel="canonical" href="https://example.com/page" />
 </head>
 ```
 
@@ -181,9 +187,11 @@ performance_budget:
 ```html
 <!-- Good practices -->
 <nav role="navigation" aria-label="Main">
-<main role="main">
-<img src="chart.png" alt="Sales increased 40% in Q3">
-<button aria-label="Close dialog">×</button>
+  <main role="main">
+    <img src="chart.png" alt="Sales increased 40% in Q3" />
+    <button aria-label="Close dialog">×</button>
+  </main>
+</nav>
 ```
 
 ### Factor VIII: Responsive Design

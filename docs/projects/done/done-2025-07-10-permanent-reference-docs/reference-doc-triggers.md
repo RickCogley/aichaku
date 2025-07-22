@@ -47,7 +47,7 @@ aichaku references bootstrap --include-history
 # 🔍 Analyzing current codebase...
 # 📚 Extracting learnings from historical projects...
 #   ✅ done-2025-07-01-aichaku-creation (Shape Up)
-#   ✅ done-2025-07-06-aichaku-refactor (Shape Up) 
+#   ✅ done-2025-07-06-aichaku-refactor (Shape Up)
 #   ✅ test-2025-07-01-api-refactor (TDD)
 #   ✅ test-2025-07-01-marketplace-mvp (Lean)
 # 🏗️ Generating comprehensive permanent documentation...
@@ -66,16 +66,16 @@ aichaku references bootstrap --include-history
 aichaku references bootstrap --interactive
 # 🪴 Aichaku: Interactive permanent documentation generation...
 # 📂 Found 12 completed projects. Select projects to analyze:
-# 
+#
 # Shape Up Projects:
 #  [✓] done-2025-07-01-aichaku-creation
-#  [✓] done-2025-07-06-aichaku-refactor  
+#  [✓] done-2025-07-06-aichaku-refactor
 #  [ ] done-2025-07-07-visual-ux
-# 
+#
 # Lean Experiments:
 #  [✓] test-2025-07-01-marketplace-mvp
 #  [ ] test-2025-07-01-mobile-app
-# 
+#
 # Continue? [Y/n]: Y
 # 🔍 Analyzing selected projects and current codebase...
 ```

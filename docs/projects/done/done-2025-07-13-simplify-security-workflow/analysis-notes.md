@@ -7,7 +7,7 @@
 The pattern that caused the most problems:
 
 ```bash
-"(Deno\.(readFile|readTextFile|open|stat|lstat|readDir|remove|rename|mkdir)|fs\.(readFile|writeFile|readdir|stat|unlink|rename|mkdir))\s*\(\s*[a-zA-Z_$][a-zA-Z0-9_$]*\s*[,)]"
+"(Deno\.(readFile|readTextFile|open|stat|lstat|readDir|remove|rename|mkdir)|fs\.(readFile|writeFile|readdir|stat|unlink|rename|mkdir))\s*\(\s*[a-zA-Z*$][a-zA-Z0-9*$]*\s*[,)]"
 ```
 
 This pattern matches ANY file operation with a variable, which is standard

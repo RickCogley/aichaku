@@ -75,7 +75,7 @@ User sees result
 
    ```python
    # What happens under the hood
-   def handle_request(user_input):
+   def handle*request(user*input):
        validated = validate(user_input)  # Ensures safety
        prepared = prepare(validated)     # Formats for processing
        return prepared
@@ -128,14 +128,14 @@ Here's a simplified version you can experiment with:
 
 ```python
 class SimpleProcessor:
-    def __init__(self, transform='upper'):
+    def **init**(self, transform='upper'):
         self.transform = transform
-    
+
     def process(self, text):
         # Validation
         if not isinstance(text, str):
             raise ValueError("Input must be string")
-        
+
         # Transformation
         if self.transform == 'upper':
             result = text.upper()
@@ -143,7 +143,7 @@ class SimpleProcessor:
             result = text.lower()
         else:
             result = text
-        
+
         # Return result
         return result
 

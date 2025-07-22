@@ -27,11 +27,13 @@ User → Claude → MCP → Results → Claude → User
 // ~/.claude/settings.json
 {
   "hooks": {
-    "PostToolUse": [{
-      "name": "Auto Security Review",
-      "matcher": "Write|Edit|MultiEdit",
-      "command": "echo '${TOOL_INPUT_FILE_PATH}' | mcp-trigger review_file"
-    }]
+    "PostToolUse": [
+      {
+        "name": "Auto Security Review",
+        "matcher": "Write|Edit|MultiEdit",
+        "command": "echo '${TOOL*INPUT*FILE*PATH}' | mcp-trigger review*file"
+      }
+    ]
   }
 }
 ```
@@ -41,11 +43,13 @@ User → Claude → MCP → Results → Claude → User
 ```json
 {
   "hooks": {
-    "PreToolUse": [{
-      "name": "Pre-commit MCP Review",
-      "matcher": "Bash(git commit)",
-      "command": "mcp-trigger review_staged"
-    }]
+    "PreToolUse": [
+      {
+        "name": "Pre-commit MCP Review",
+        "matcher": "Bash(git commit)",
+        "command": "mcp-trigger review_staged"
+      }
+    ]
   }
 }
 ```
@@ -59,7 +63,7 @@ User → Claude → MCP → Results → Claude → User
     "PostToolUse": [{
       "name": "Security File Review",
       "matcher": "Write|Edit",
-      "command": "bash -c 'if [[ \"${TOOL_INPUT_FILE_PATH}\" =~ \\.(ts|js|py|go)$ ]]; then mcp-trigger review_file \"${TOOL_INPUT_FILE_PATH}\"; fi'"
+      "command": "bash -c 'if [[ \"${TOOL*INPUT*FILE*PATH}\" =~ \\.(ts|js|py|go)$ ]]; then mcp-trigger review*file \"${TOOL*INPUT*FILE_PATH}\"; fi'"
     }]
   }
 }
@@ -73,22 +77,22 @@ User → Claude → MCP → Results → Claude → User
 // In MCP server
 async createFixPR(findings: Finding[]): Promise<string> {
   const fixableFinding = findings.filter(f => f.autoFix);
-  
+
   if (fixableFindings.length === 0) return null;
-  
+
   // Create branch
   await exec('git checkout -b mcp-fixes-${Date.now()}');
-  
+
   // Apply fixes
   for (const finding of fixableFindings) {
     await applyFix(finding);
   }
-  
+
   // Commit and push
   await exec('git add -A');
   await exec('git commit -m "fix: MCP auto-fixes for security issues"');
   await exec('git push -u origin HEAD');
-  
+
   // Create PR
   const { stdout } = await exec('gh pr create --title "MCP Security Fixes" --body "..."');
   return extractPRUrl(stdout);
@@ -100,7 +104,7 @@ async createFixPR(findings: Finding[]): Promise<string> {
 ```
 User: "Apply security fixes"
 Claude: "I'll have MCP create fixes and review them"
-  → MCP: create_fix_pr(findings)
+  → MCP: create*fix*pr(findings)
   ← MCP: "Created PR #123"
 Claude: "I'll review the proposed fixes"
   → Reviews PR changes

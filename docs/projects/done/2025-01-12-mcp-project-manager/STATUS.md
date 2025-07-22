@@ -10,7 +10,7 @@
 
 Just created the initial pitch based on discussion about:
 
-- Redundant folder naming (active-* inside active/)
+- Redundant folder naming (active-\* inside active/)
 - Need for precise project lifecycle management
 - Automated documentation generation
 - Consistent file placement

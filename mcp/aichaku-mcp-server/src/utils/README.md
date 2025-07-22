@@ -44,7 +44,7 @@ const customYaml = await generateAichakuYAML({
   customizations: {
     user_preferences: {
       default_methodology: "shape-up",
-      auto_create_diagrams: true,
+      auto*create*diagrams: true,
     },
   },
 });
@@ -59,10 +59,11 @@ sections:
 import { generateMinimalCLAUDEmd } from "./claude-md-integration.ts";
 
 // Generate a complete CLAUDE.md file
-const claudeMd = await generateMinimalCLAUDEmd(
-  "My Project",
-  ["shape-up", "scrum", "kanban"],
-);
+const claudeMd = await generateMinimalCLAUDEmd("My Project", [
+  "shape-up",
+  "scrum",
+  "kanban",
+]);
 ```
 
 ### YAML Structure

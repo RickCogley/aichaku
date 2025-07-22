@@ -41,7 +41,7 @@ graph TB
         CC[Claude Code<br/>MCP Client]
         UI[Chat Interface]
     end
-    
+
     subgraph "MCP Server Process"
         MS[MCP Server<br/>stdio interface]
         RE[Review Engine]
@@ -50,19 +50,19 @@ graph TB
         SC[Scanner Controller]
         FB[Feedback Builder]
     end
-    
+
     subgraph "Local File System"
         PF[Project Files]
         CF[Configuration<br/>.claude/]
         STD[Standards Library<br/>~/.claude/docs/standards/]
     end
-    
+
     subgraph "External Tools (Optional)"
         CQ[CodeQL]
         DS[DevSkim]
         SG[Semgrep]
     end
-    
+
     UI -->|User Request| CC
     CC <-->|JSON-RPC<br/>over stdio| MS
     MS --> RE
@@ -217,12 +217,12 @@ graph LR
         MCP[MCP Server]
         PF[Project Files]
     end
-    
+
     subgraph "Untrusted"
         NET[Network]
         OTHER[Other Users]
     end
-    
+
     CC <--> MCP
     MCP --> PF
     MCP -.X.- NET
@@ -243,7 +243,7 @@ graph LR
 
 The MCP server optimizes startup time:
 
-```
+```text
 Process spawn:      ~10ms
 Deno runtime init:  ~30ms
 Code loading:       ~20ms
@@ -267,11 +267,11 @@ graph LR
         SC[Standards Config<br/>Until changed]
         PC[Pattern Cache<br/>Process lifetime]
     end
-    
+
     subgraph "Disk Cache"
         ER[External Results<br/>1 hour TTL]
     end
-    
+
     Review --> FC
     Review --> SC
     Review --> PC
@@ -284,11 +284,11 @@ graph LR
 
 How the MCP server finds project configuration:
 
-```
+```text
 Given: /Users/alice/projects/app/src/auth/login.ts
 
 1. Check: /Users/alice/projects/app/src/auth/.claude/ ❌
-2. Check: /Users/alice/projects/app/src/.claude/ ❌  
+2. Check: /Users/alice/projects/app/src/.claude/ ❌
 3. Check: /Users/alice/projects/app/.claude/ ✅
    Found: Project root with configuration
 ```
@@ -297,7 +297,7 @@ Given: /Users/alice/projects/app/src/auth/login.ts
 
 How standards are loaded:
 
-```
+```text
 1. Read .claude/.aichaku-standards.json
    → ["nist-csf", "tdd", "solid"]
 
@@ -321,7 +321,7 @@ sequenceDiagram
     participant SC as Scanner Controller
     participant CQ as CodeQL
     participant Cache as Result Cache
-    
+
     MCP->>SC: Review file.ts
     SC->>Cache: Check cache
     alt Cache hit

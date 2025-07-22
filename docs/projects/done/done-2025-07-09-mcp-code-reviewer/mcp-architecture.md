@@ -10,21 +10,21 @@ graph TB
         CC[Claude Code Client]
         FS[File System Monitor]
     end
-    
+
     subgraph "MCP Server"
         API[MCP API Handler]
         RE[Review Engine]
         SM[Standards Manager]
         SC[Scanner Controller]
     end
-    
+
     subgraph "Security Scanners"
         CQL[CodeQL]
         DS[DevSkim]
         SG[Semgrep]
         ES[ESLint Security]
     end
-    
+
     subgraph "Standards & Methodologies"
         OWASP[OWASP Rules]
         NIST[NIST CSF]
@@ -32,14 +32,14 @@ graph TB
         CS[Custom Standards]
         METH[Methodology Rules]
     end
-    
+
     subgraph "Methodologies"
         SU[Shape Up]
         SCR[Scrum]
         KAN[Kanban]
         LEAN[Lean/MVP]
     end
-    
+
     CC -->|Review Request| API
     FS -->|File Change Event| API
     API --> RE
@@ -109,7 +109,7 @@ sequenceDiagram
     participant MCP
     participant Scanners
     participant Standards
-    
+
     User->>Claude: Write code
     Claude->>MCP: Review request (file path, content)
     MCP->>Standards: Load applicable rules
@@ -235,14 +235,8 @@ interface CustomStandard {
 ```json
 {
   "version": "1.0.0",
-  "selected": [
-    "owasp-web",
-    "15-factor",
-    "tdd"
-  ],
-  "methodologies": [
-    "shape-up"
-  ],
+  "selected": ["owasp-web", "15-factor", "tdd"],
+  "methodologies": ["shape-up"],
   "customStandards": {}
 }
 ```
@@ -396,7 +390,7 @@ The MCP uses proven LLM prompting strategies:
 ```
 🌱 Learning Opportunity - Let's fix this properly:
 
-📖 Context: TypeScript's type system prevents runtime errors. Using 'any' 
+📖 Context: TypeScript's type system prevents runtime errors. Using 'any'
 disables this protection and makes code harder to maintain.
 
 ⚠️ Issue: Using 'any' instead of proper TypeScript types

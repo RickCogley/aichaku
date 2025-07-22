@@ -6,7 +6,7 @@ This directory contains command implementations for the Aichaku MCP server.
 
 The `integrate-yaml.ts` module provides a modern approach to generating
 CLAUDE.md files using YAML configuration instead of embedding the full 50KB+
-markdown content.
+Markdown content.
 
 ### Benefits
 
@@ -171,5 +171,5 @@ This directory is structured to support additional commands in the future, such
 as:
 
 - `validate-yaml.ts` - Validate CLAUDE.md YAML configuration
-- `migrate-legacy.ts` - Migrate from old markdown format to YAML
+- `migrate-legacy.ts` - Migrate from old Markdown format to YAML
 - `sync-methodologies.ts` - Sync methodology definitions from upstream

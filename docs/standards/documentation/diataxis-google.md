@@ -174,9 +174,9 @@ command [options] [arguments]
 
 ### `--option-name` {#option-name}
 
-**Type**: `string` | `boolean` | `number`  
-**Default**: `value`  
-**Environment variable**: `ENV_VAR_NAME`
+**Type**: `string` | `boolean` | `number`
+**Default**: `value`
+**Environment variable**: `ENV*VAR*NAME`
 
 [Description of what this option does]
 
@@ -349,7 +349,7 @@ actual --code --here
 
 - Test all code samples
 - Show both input and output when relevant
-- Use consistent placeholder names: `YOUR_PROJECT_ID`, `REGION`
+- Use consistent placeholder names: `YOUR*PROJECT*ID`, `REGION`
 
 #### Links
 

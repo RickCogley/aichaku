@@ -142,7 +142,7 @@ The `.aichaku-behavior` file:
 
 Before ANY work:
 
-1. Check .claude/output/ for existing active-* directories
+1. Check .claude/output/ for existing active-\* directories
 2. Create new active-YYYY-MM-DD-{name} for new work
 3. Always create STATUS.md first
 4. Read methodology guides from ~/.claude/methodologies/
@@ -181,7 +181,7 @@ Each project directory should contain:
 
 ## For Claude Code
 
-When users discuss new work, IMMEDIATELY create a new active-* directory here.
+When users discuss new work, IMMEDIATELY create a new active-\* directory here.
 Don't wait to be asked. This is expected behavior.
 ```
 
@@ -225,6 +225,7 @@ Add a `.claude/commands.json` for quick triggers:
 Add reminders at key points:
 
 1. **In init.ts success message**:
+
    ```
    💡 Claude Code will now automatically:
       - Create documents in .claude/output/
@@ -233,6 +234,7 @@ Add reminders at key points:
    ```
 
 2. **In CLAUDE.md footer**:
+
    ```markdown
    ---
 
@@ -251,7 +253,7 @@ Add reminders at key points:
 
 1. Fresh install in new project
 2. Say "let's shape a new feature"
-3. Verify documents created in .claude/output/active-*/
+3. Verify documents created in .claude/output/active-\*/
 4. No manual intervention needed
 
 ## Success Metrics

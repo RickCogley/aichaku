@@ -25,6 +25,7 @@ The hook script (`~/.claude/aichaku/hooks/aichaku-hooks.ts`) is **only created**
 when:
 
 1. **User runs hook installation command**:
+
    ```bash
    aichaku hooks --install essential --global
    # OR
@@ -32,6 +33,7 @@ when:
    ```
 
 2. **First hook installation triggers `ensureHookScripts()`**:
+
    ```typescript
    // In src/commands/hooks.ts
    async function installHooks() {
@@ -45,6 +47,7 @@ when:
    ```
 
 3. **The function creates the script**:
+
    ```typescript
    async function ensureHookScripts(): Promise<void> {
      const scriptPath = expandTilde("~/.claude/aichaku/hooks/aichaku-hooks.ts");
@@ -78,12 +81,12 @@ graph TD
     B --> D[Installs standards]
     B --> E[Creates ~/.claude structure]
     B -.->|NOT installed| F[Hook scripts]
-    
+
     G[User runs: aichaku hooks --install] --> H[ensureHookScripts()]
     H --> I[Creates ~/.claude/aichaku/hooks/]
     H --> J[Writes aichaku-hooks.ts]
     J --> K[Installs hook configurations]
-    
+
     style F stroke-dasharray: 5 5
 ```
 

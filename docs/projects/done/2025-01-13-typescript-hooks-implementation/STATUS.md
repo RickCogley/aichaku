@@ -24,7 +24,7 @@
 - [x] Fixed hook structure to use nested format with matcher and hooks array
 - [x] Added code-review hook for MCP integration
 - [x] Created GitHub integration hooks (todo-tracker, pr-checker, etc.)
-- [x] Added "github" hook category for easy installation
+- [x] Added "GitHub" hook category for easy installation
 
 ### In Progress 🔄
 
@@ -61,7 +61,7 @@
 
 ## GitHub Integration Features
 
-- **New "github" hook category** with 5 specialized hooks
+- **New "GitHub" hook category** with 5 specialized hooks
 - **MCP-ready** for automation with GitHub MCP servers
 - **Contextual suggestions** based on file types and commands
 - **Easy installation**: `aichaku hooks --install github --global`
@@ -72,6 +72,6 @@ graph LR
     B --> C[✅ Implementation]
     C --> D[🟡 Testing]
     D --> E[📦 Release]
-    
+
     style D fill:#FFD93D,stroke:#333
 ```

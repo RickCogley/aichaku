@@ -43,23 +43,28 @@ for Aichaku:
 1. **Move to**: `.claude/methodologies/security/SECURITY-WORKFLOWS.md`
 
 2. **Make Discoverable**:
+
    ```bash
    aichaku help security-workflows
    aichaku guidance security-workflows
    ```
 
 3. **Hook Integration**:
+
    ```json
    {
-     "PostToolUse": [{
-       "name": "Security Workflow Check",
-       "matcher": "Write",
-       "command": "if [[ '${TOOL_INPUT_FILE_PATH}' =~ \\.github/workflows/ ]]; then aichaku validate-security-workflow '${TOOL_INPUT_FILE_PATH}'; fi"
-     }]
+     "PostToolUse": [
+       {
+         "name": "Security Workflow Check",
+         "matcher": "Write",
+         "command": "if [[ '${TOOL*INPUT*FILE*PATH}' =~ \\.github/workflows/ ]]; then aichaku validate-security-workflow '${TOOL*INPUT*FILE*PATH}'; fi"
+       }
+     ]
    }
    ```
 
 4. **Module Format**:
+
    ```markdown
    ---
    id: security-workflows

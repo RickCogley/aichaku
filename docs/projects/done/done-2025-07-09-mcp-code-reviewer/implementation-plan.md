@@ -61,7 +61,7 @@ server.setRequestHandler("tools/list", async () => ({
       },
     },
     {
-      name: "list_active_standards",
+      name: "list*active*standards",
       description: "Show which standards and methodologies are active",
       inputSchema: { type: "object", properties: {} },
     },
@@ -127,9 +127,7 @@ export class DevSkimScanner extends Scanner {
       const tempFile = await this.writeTempFile(content, filePath);
 
       // Run DevSkim
-      const { stdout } = await execAsync(
-        `devskim analyze ${tempFile} -f json`,
-      );
+      const { stdout } = await execAsync(`devskim analyze ${tempFile} -f json`);
 
       const results = JSON.parse(stdout);
       const findings = this.parseResults(results);
@@ -271,7 +269,8 @@ export class ShapeUpMethodology implements Methodology {
         }
 
         // Check for scope creep in active projects
-        if (file.path.includes("/active-") && context?.projectAge > 42) { // 6 weeks
+        if (file.path.includes("/active-") && context?.projectAge > 42) {
+          // 6 weeks
           findings.push({
             severity: "high",
             rule: "shape-up-timebound",
@@ -426,27 +425,27 @@ server.setRequestHandler("tools/run", async (request) => {
 
 // 1. Review on file save
 const saveHook = {
-  "name": "MCP Auto Review on Save",
-  "type": "PostToolUse",
-  "matcher": "Write|Edit|MultiEdit",
-  "command": "mcp-reviewer-hook --file '${TOOL_INPUT_FILE_PATH}' --action save",
+  name: "MCP Auto Review on Save",
+  type: "PostToolUse",
+  matcher: "Write|Edit|MultiEdit",
+  command: "mcp-reviewer-hook --file '${TOOL*INPUT*FILE_PATH}' --action save",
 };
 
 // 2. Review before commit
 const commitHook = {
-  "name": "MCP Pre-commit Review",
-  "type": "PreToolUse",
-  "matcher": "Bash(git commit)",
-  "command": "mcp-reviewer-hook --action pre-commit --check-staged",
+  name: "MCP Pre-commit Review",
+  type: "PreToolUse",
+  matcher: "Bash(git commit)",
+  command: "mcp-reviewer-hook --action pre-commit --check-staged",
 };
 
 // 3. Smart security-only review
 const securityHook = {
-  "name": "MCP Security Focus",
-  "type": "PostToolUse",
-  "matcher": "Write|Edit",
-  "command":
-    'bash -c \'case "${TOOL_INPUT_FILE_PATH}" in *.ts|*.js|*.py|*.go) mcp-reviewer-hook --file "${TOOL_INPUT_FILE_PATH}" --security-only ;; esac\'',
+  name: "MCP Security Focus",
+  type: "PostToolUse",
+  matcher: "Write|Edit",
+  command:
+    'bash -c \'case "${TOOL*INPUT*FILE*PATH}" in *.ts|*.js|*.py|*.go) mcp-reviewer-hook --file "${TOOL*INPUT*FILE*PATH}" --security-only ;; esac\'',
 };
 ```
 
@@ -501,7 +500,7 @@ import { build } from "https://deno.land/x/dnt/mod.ts";
 // Multi-platform builds
 const platforms = [
   { os: "darwin", arch: "x86_64" },
-  { os: "darwin", arch: "aarch64" }, 
+  { os: "darwin", arch: "aarch64" },
   { os: "linux", arch: "x86_64" },
   { os: "windows", arch: "x86_64" }
 ];

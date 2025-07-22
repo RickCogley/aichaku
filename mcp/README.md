@@ -90,7 +90,7 @@ Each MCP server can be configured independently in Claude Code:
 cd mcp/aichaku-mcp-server
 deno task compile
 
-# Build GitHub MCP server  
+# Build GitHub MCP server
 cd mcp/github-mcp-server
 deno task compile
 ```
@@ -103,7 +103,7 @@ cd mcp/aichaku-mcp-server
 deno test -A
 
 # Test GitHub MCP server
-cd mcp/github-mcp-server  
+cd mcp/github-mcp-server
 deno test -A
 ```
 

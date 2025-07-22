@@ -29,14 +29,16 @@ DETECT context → APPLY methodology rules → OUTPUT actionable plan
 ## Universal Planning Flow
 
 1. **GATHER CONTEXT**
+
    ```
    ❓ Missing context? Ask:
-   - Team or solo? 
+   - Team or solo?
    - Timeline?
    - Type of work?
    ```
 
 2. **APPLY METHODOLOGY RULES**
+
    ```
    Shape Up → Create pitch (2 or 6 week appetite)
    Scrum → Build sprint backlog (velocity-limited)

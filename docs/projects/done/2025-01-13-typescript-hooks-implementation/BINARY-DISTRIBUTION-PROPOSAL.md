@@ -20,6 +20,7 @@ const downloadUrl =
    - `aichaku-code-reviewer-0.29.0-windows-x64.exe`
 
 2. **Downloaded on demand**:
+
    ```bash
    aichaku mcp --install
    # Downloads binary to ~/.claude/mcp/aichaku-code-reviewer
@@ -32,6 +33,7 @@ const downloadUrl =
 ### Same Model for Hooks:
 
 1. **Compile hook binary for each platform**:
+
    ```bash
    # Build process (in CI/CD)
    deno compile --allow-read --allow-write --allow-env \
@@ -46,6 +48,7 @@ const downloadUrl =
    - `aichaku-hooks-0.29.0-windows-x64.exe`
 
 3. **Installation process**:
+
    ```typescript
    // In ensureHookScripts() - modified approach
    async function ensureHookBinary(): Promise<void> {

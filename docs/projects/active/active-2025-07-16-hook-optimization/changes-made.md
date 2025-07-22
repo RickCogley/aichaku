@@ -6,7 +6,7 @@
 
 ### 1. Removed aichaku-feedback hook
 
-- **Was**: Running on EVERY tool use with matcher ".*"
+- **Was**: Running on EVERY tool use with matcher ".\*"
 - **Impact**: 1,719 calls eliminated (~70% reduction)
 - **Reason**: Provided minimal value (just logged "Hook system active ✓")
 
@@ -19,15 +19,15 @@
 ### 3. Removed jsdoc-checker and docs-review from PostToolUse
 
 - **Was**: Running on Write|Edit|MultiEdit (360 calls each)
-- **Reason**: Redundant with markdown-review, consolidating functionality
-- **Kept**: markdown-review as it provides MCP integration
+- **Reason**: Redundant with Markdown-review, consolidating functionality
+- **Kept**: Markdown-review as it provides MCP integration
 
 ### 4. Kept Essential Hooks
 
 - **path-validator**: Validates Aichaku file structure (PreToolUse on
   Write|MultiEdit)
 - **status-updater**: Shows project activity reminders (PostToolUse)
-- **markdown-review**: MCP integration for doc review (PostToolUse)
+- **Markdown-review**: MCP integration for doc review (PostToolUse)
 - **conversation-summary**: Creates checkpoint summaries (PreCompact)
 
 ## Files Modified

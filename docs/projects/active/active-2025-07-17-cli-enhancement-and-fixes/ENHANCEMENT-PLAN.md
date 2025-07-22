@@ -72,10 +72,10 @@ Every change-making command will provide:
 
 📁 What was modified:
    [Exact file paths and changes]
-   
+
 📊 Impact:
    [Scope of changes - global vs project]
-   
+
 ✅ What's next:
    1. [Immediate next step]
    2. [Related commands]
@@ -90,7 +90,7 @@ Every change-making command will provide:
 📁 Installation structure:
 ~/.claude/aichaku/
 ├── docs/methodologies/     (6 methodologies)
-├── docs/standards/         (14 standards)  
+├── docs/standards/         (14 standards)
 ├── user/                   (your customizations)
 └── aichaku.json           (configuration)
 ```
@@ -149,7 +149,7 @@ Global installation: ~/.claude/aichaku/
 ├── docs/standards/        (14 files updated)
 └── aichaku.json          (metadata updated)
 
-Project configs: 
+Project configs:
 ✅ .claude/aichaku/aichaku.json (metadata preserved)
 
 🔄 Migration summary:
@@ -176,10 +176,10 @@ Project configs:
 
 📁 Configuration updated:
    .claude/aichaku/aichaku.json
-   
+
 📊 Your project now has:
    [██████████] 12 standards selected
-   
+
    Security:    nist-csf, owasp-web
    Development: tdd, clean-arch, google-style
    Testing:     test-pyramid, bdd

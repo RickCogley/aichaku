@@ -41,7 +41,7 @@ The MCP server supports two operational modes:
 
 #### Process Mode Architecture
 
-```
+```text
 ┌─────────────────────────────────────────────────┐
 │                  MCP Client                     │
 │            (Claude, VS Code, etc.)              │
@@ -71,7 +71,7 @@ The MCP server supports two operational modes:
 
 #### HTTP/SSE Server Mode Architecture
 
-```
+```text
 ┌─────────────────────┐  ┌─────────────────────┐
 │   Claude Code #1    │  │   Claude Code #2    │
 └──────────┬──────────┘  └──────────┬──────────┘
@@ -535,8 +535,9 @@ async function getProjectStats(projectPath: string) {
     if (result.success) {
       stats.totalFiles++;
       stats.totalIssues += result.stats.totalIssues;
-      stats.criticalIssues += result.findings
-        .filter((f) => f.severity === "error").length;
+      stats.criticalIssues += result.findings.filter((f) =>
+        f.severity === "error"
+      ).length;
 
       // Aggregate by scanner
       Object.entries(result.stats.byScanner).forEach(([scanner, count]) => {

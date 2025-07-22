@@ -86,8 +86,10 @@ class DataProtection {
   }
 
   static enforceAccessControl(user: User, resource: Resource): boolean {
-    return user.permissions.includes(resource.requiredPermission) &&
-      user.clearanceLevel >= resource.clearanceLevel;
+    return (
+      user.permissions.includes(resource.requiredPermission) &&
+      user.clearanceLevel >= resource.clearanceLevel
+    );
   }
 }
 
@@ -109,8 +111,7 @@ class SecurityMonitoring {
   static monitorFailedLogins(attempts: LoginAttempt[]) {
     const recentFailures = attempts.filter(
       (attempt) =>
-        !attempt.successful &&
-        attempt.timestamp > Date.now() - (5 * 60 * 1000),
+        !attempt.successful && attempt.timestamp > Date.now() - 5 * 60 * 1000,
     );
 
     if (recentFailures.length > 5) {

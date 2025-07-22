@@ -56,9 +56,9 @@ metadata = {
 graph LR
     A["2024<br/>.aichaku-standards.json<br/>Original format"] --> B["Early 2025<br/>standards.json +<br/>doc-standards.json<br/>Split format"]
     B --> C["July 2025<br/>aichaku.json<br/>Unified format<br/>(Current)"]
-    
+
     style A fill:#ffcccc
-    style B fill:#ffffcc  
+    style B fill:#ffffcc
     style C fill:#ccffcc
 ```
 
@@ -118,15 +118,15 @@ return config.methodologies || [];
 private async discoverAllMethodologies(): Promise<string[]> {
   const { discoverContent } = await import("../../src/utils/dynamic-content-discovery.ts");
   const { getAichakuPaths } = await import("../../src/paths.ts");
-  
+
   const paths = getAichakuPaths();
   const discovered = await discoverContent("methodologies", paths.global.root, true);
-  
+
   const methodologies = discovered.items.map(item => {
     const pathParts = item.path.split('/');
     return pathParts[0];
   });
-  
+
   return [...new Set(methodologies)];
 }
 ```

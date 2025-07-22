@@ -64,7 +64,7 @@ methodologies/
 ```
 User: "Let's shape a new feature"
 Claude: *Loads Shaper persona*
-"You are now a Shaper following the Shape Up methodology. 
+"You are now a Shaper following the Shape Up methodology.
 Shaping is a closed-door, creative process where..."
 [Lengthy explanation before getting to work]
 ```
@@ -75,7 +75,7 @@ Shaping is a closed-door, creative process where..."
 User: "Let's shape a new feature"
 Claude: [Planning Mode + Shape Up rules]
 "Feature shaping checklist:
-□ Problem defined? 
+□ Problem defined?
 □ Appetite (2 or 6 weeks)?
 □ Solution roughed out?
 Let's start: What problem are we solving?"
@@ -95,7 +95,7 @@ Claude: *Loads Builder/Developer/AI Executor persona*
 **NEW**:
 
 ```
-User: "Start building"  
+User: "Start building"
 Claude: [Execution Mode + detected methodology]
 "Starting build with [methodology] constraints:
 - [Specific constraints]

@@ -46,11 +46,13 @@ observe].
 Now let's make it do something more interesting.
 
 1. In the code you just wrote, find the line that says:
+
    ```language
    specific line to modify
    ```
 
 2. Change it to:
+
    ```language
    modified version
    ```
@@ -69,6 +71,7 @@ You should see [expected result].
 Let's expand what your [thing] can do.
 
 1. After the existing code, add:
+
    ```language
    new code to add
    ```

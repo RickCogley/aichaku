@@ -15,7 +15,7 @@ graph TB
         B --> C[Tool Selection]
         C --> D[Tool Orchestration]
     end
-    
+
     subgraph "Enhanced MCP Server"
         E[Documentation Generator]
         F[Project Analyzer]
@@ -23,13 +23,13 @@ graph TB
         H[Review Engine]
         I[Tool Registry]
     end
-    
+
     D --> E
     D --> F
     F --> G
     E --> H
     I --> B
-    
+
     style E fill:#90EE90
     style F fill:#90EE90
 ```
@@ -121,7 +121,7 @@ class ProjectAnalyzer implements AnalyzeProjectTool {
   description =
     `Analyze project structure, dependencies, and architecture for documentation.
     Examines: file structure, dependencies, patterns, API endpoints, components.
-    Auto-invoked before: generate_documentation, create_architecture_diagram`;
+    Auto-invoked before: generate*documentation, create*architecture_diagram`;
 
   async execute(params: AnalysisParams): Promise<ProjectAnalysis> {
     return {
@@ -210,7 +210,7 @@ class MCPToolRegistry implements EnhancedToolRegistry {
   triggers: TriggerRule[] = [
     {
       pattern: /generate.*comprehensive.*documentation/i,
-      tools: ["analyze_project", "generate_documentation"],
+      tools: ["analyze*project", "generate*documentation"],
       confidence: 0.9,
     },
     {
@@ -233,7 +233,7 @@ class MCPToolRegistry implements EnhancedToolRegistry {
         { tool: "get_standards", output: "standards" },
         { tool: "analyze_project", output: "analysis" },
         { tool: "generate_documentation", inputs: ["standards", "analysis"] },
-        { tool: "review_file", forEach: "generated_files" },
+        { tool: "review*file", forEach: "generated*files" },
       ],
     },
   ];
@@ -287,7 +287,8 @@ class EnhancedMCPServer implements ToolDiscoveryEnhancement {
     }
 
     // Project just opened
-    if (context.sessionAge < 60000) { // Less than 1 minute
+    if (context.sessionAge < 60000) {
+      // Less than 1 minute
       hints.push({
         tool: "get_standards",
         reason: "New session started",
@@ -308,8 +309,7 @@ class AutoInvocationEngine {
     {
       name: "post-edit-security-review",
       condition: (ctx) =>
-        ctx.lastAction === "edit" &&
-        ctx.file.match(/auth|security|crypto/i),
+        ctx.lastAction === "edit" && ctx.file.match(/auth|security|crypto/i),
       action: (ctx) => ({
         tool: "review_file",
         params: { file: ctx.file, includeExternal: true },

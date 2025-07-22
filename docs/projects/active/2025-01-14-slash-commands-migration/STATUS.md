@@ -2,7 +2,7 @@
 
 ## Overview
 
-Migrating from JSON-based slash commands in settings.json to the new markdown
+Migrating from JSON-based slash commands in settings.json to the new Markdown
 format in ~/.claude/commands/
 
 ## Status
@@ -30,7 +30,7 @@ graph LR
 ### 2025-01-14 21:49 - Migration Completed ✅
 
 - **Created directory structure** in `~/.claude/commands/`
-- **Migrated all 10 commands** to new markdown format with enhanced features
+- **Migrated all 10 commands** to new Markdown format with enhanced features
 - **Added tool permissions** to each command's YAML frontmatter
 - **Enhanced with new features**: $ARGUMENTS, !bash execution, @file references
 - **Cleaned up settings.json** (removed 58 lines of old command definitions)
@@ -41,7 +41,7 @@ graph LR
 
 ✅ All 10 commands successfully migrated\
 ✅ Directory structure organized by category\
-✅ Enhanced with new markdown features\
+✅ Enhanced with new Markdown features\
 ✅ Settings.json cleaned up\
 ✅ Backups created for safety\
 ✅ Documentation completed

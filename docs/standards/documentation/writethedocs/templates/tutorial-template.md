@@ -102,17 +102,20 @@ work through the example.
 ### Create the Project Structure
 
 1. **Create a new directory** for your project:
+
    ```bash
    mkdir my-first-project
    cd my-first-project
    ```
 
 2. **Initialize** a new [Project] configuration:
+
    ```bash
    project init
    ```
 
    This creates a basic structure:
+
    ```
    my-first-project/
    ├── config.yaml     # Your project configuration
@@ -121,6 +124,7 @@ work through the example.
    ```
 
 3. **Open `config.yaml`** in your favorite editor and update it:
+
    ```yaml
    # Before
    name: my-project

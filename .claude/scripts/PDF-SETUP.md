@@ -7,6 +7,7 @@ The PDF generator script converts markdown documents (especially change summarie
 ## Prerequisites
 
 ### macOS
+
 ```bash
 # Install pandoc
 brew install pandoc
@@ -23,6 +24,7 @@ sudo tlmgr install collection-fontsrecommended
 ```
 
 ### Linux (Debian/Ubuntu)
+
 ```bash
 # Install pandoc and texlive
 sudo apt-get update
@@ -30,6 +32,7 @@ sudo apt-get install pandoc texlive-xetex texlive-fonts-recommended
 ```
 
 ### Windows
+
 1. Install [Pandoc](https://pandoc.org/installing.html)
 2. Install [MiKTeX](https://miktex.org/download)
 3. Packages will auto-install on first use
@@ -37,12 +40,14 @@ sudo apt-get install pandoc texlive-xetex texlive-fonts-recommended
 ## Usage
 
 ### Basic Usage
+
 ```bash
 # From project root
 .claude/scripts/generate-pdf.sh .claude/output/done-*/change-summary.md
 ```
 
 ### Global Installation (Recommended)
+
 ```bash
 # Copy to global location
 sudo cp .claude/scripts/generate-pdf.sh /usr/local/bin/claude-pdf
@@ -55,11 +60,13 @@ claude-pdf change-summary.md
 ## Integration with Claude Code
 
 Claude Code should automatically generate PDFs when:
+
 1. A project phase completes
 2. A change summary is finalized
 3. Moving from `active-*` to `done-*` status
 
 Example workflow:
+
 ```
 1. Complete project work
 2. Generate change-summary.md
@@ -71,10 +78,12 @@ Example workflow:
 ## Font Configuration
 
 The script uses system fonts for better appearance:
+
 - **Main font**: Helvetica Neue (or fallback)
 - **Monospace**: Menlo (or Courier)
 
 To use custom fonts, edit the script:
+
 ```bash
 --variable mainfont="Your Font"
 --variable monofont="Your Mono Font"
@@ -83,15 +92,19 @@ To use custom fonts, edit the script:
 ## Troubleshooting
 
 ### "pandoc: command not found"
+
 Install pandoc using the instructions above.
 
 ### "xelatex: command not found"
+
 Install BasicTeX or texlive-xetex.
 
 ### Unicode/Emoji Warnings
+
 Normal with xelatex. The PDF will still generate correctly.
 
 ### Missing LaTeX packages
+
 ```bash
 sudo tlmgr install [package-name]
 ```
@@ -110,21 +123,26 @@ sudo tlmgr install [package-name]
 
 **Date**: 2025-01-05  
 **Version**: 1.0.0  
-**Status**: Complete  
+**Status**: Complete
 
 ## Overview
+
 [Executive summary]
 
 ## Changes Implemented
+
 - [Major change 1]
 - [Major change 2]
 
 ## Technical Details
+
 [As needed]
 
 ## Next Steps
+
 [If applicable]
 
 ---
+
 Generated with Claude Code + Aichaku
 ```

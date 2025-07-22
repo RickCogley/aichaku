@@ -35,7 +35,7 @@ graph LR
         C[Project 2] --> D[Local Docs]
         E[Project 3] --> F[Local Docs]
     end
-    
+
     subgraph "Desired State"
         G[Project 1] --> H[Local Docs]
         I[Project 2] --> J[Local Docs]
@@ -65,9 +65,9 @@ document creation:
 ```
 /
 ├── SECURITY.md                    # GitHub-discoverable summary
-├── CONTRIBUTING.md                # Brief contributing guide  
+├── CONTRIBUTING.md                # Brief contributing guide
 ├── SUPPORT.md                     # Support information
-├── CODE_OF_CONDUCT.md             # Code of conduct
+├── CODE*OF*CONDUCT.md             # Code of conduct
 └── /references/
     ├── architecture/              # Arc42-based system architecture
     │   ├── 01-introduction.md
@@ -173,7 +173,7 @@ graph TB
         Claude[🤖 Claude Code]
         Git[📁 Git Repository]
     end
-    
+
     User --> System
     System --> Claude
     System --> Git
@@ -187,7 +187,7 @@ sequenceDiagram
     participant A as Aichaku CLI
     participant M as MCP Server
     participant C as Claude Code
-    
+
     U->>A: aichaku review file.ts
     A->>M: review_file(file.ts)
     M->>C: Standards check
@@ -207,7 +207,7 @@ erDiagram
         date created
         date updated
     }
-    
+
     Document {
         string id PK
         string project_id FK
@@ -215,14 +215,14 @@ erDiagram
         string path
         json metadata
     }
-    
+
     Standard {
         string id PK
         string name
         string version
         json rules
     }
-    
+
     Project ||--o{ Document : contains
     Document }o--|| Standard : follows
 ```
@@ -273,7 +273,7 @@ documentation in the `/references` folder._
 - **SECURITY.md** → `references/security/comprehensive-security-policy.md`
 - **CONTRIBUTING.md** → `references/operations/contributing-detailed.md`
 - **SUPPORT.md** → `references/operations/support-guide.md`
-- **CODE_OF_CONDUCT.md** → `references/operations/code-of-conduct.md`
+- **CODE*OF*CONDUCT.md** → `references/operations/code-of-conduct.md`
 
 #### Backup and Safety Mechanism
 
@@ -346,13 +346,13 @@ flowchart TD
     D --> E[Include Mermaid diagrams]
     E --> F[Link to existing projects]
     F --> G[✅ Ready for editing]
-    
+
     H[User: "We need API specs"] --> I{🪴 Aichaku: Detect Intent}
     I --> J[Create /references/api/]
     J --> K[Generate OpenAPI template]
     K --> L[Include sequence diagrams]
     L --> M[✅ Ready for specification]
-    
+
     N[Complete ANY Methodology] --> O{🪴 Aichaku: Extract Learnings}
     O --> P[Analyze Permanent Impact]
     P --> Q[Suggest Updates]

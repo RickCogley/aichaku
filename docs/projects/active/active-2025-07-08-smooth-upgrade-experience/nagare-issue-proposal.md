@@ -62,17 +62,17 @@ await this.validateModifiedFiles();
 ```typescript
 private async formatModifiedFiles(): Promise<void> {
   console.log("🎨 Formatting modified files...");
-  
+
   const modifiedFiles = await this.getModifiedFiles();
-  
+
   for (const file of modifiedFiles) {
-    if (file.endsWith('.ts') || file.endsWith('.js') || 
+    if (file.endsWith('.ts') || file.endsWith('.js') ||
         file.endsWith('.json') || file.endsWith('.md')) {
       const fmtCmd = new Deno.Command("deno", {
         args: ["fmt", file],
       });
       const { success } = await fmtCmd.output();
-      
+
       if (!success) {
         throw new Error(`Failed to format ${file}`);
       }
@@ -86,38 +86,38 @@ private async formatModifiedFiles(): Promise<void> {
 ```typescript
 private async validateModifiedFiles(): Promise<void> {
   console.log("🔍 Validating modified files...");
-  
+
   // Run format check
   const fmtCheck = new Deno.Command("deno", {
     args: ["fmt", "--check"],
   });
   const fmtResult = await fmtCheck.output();
-  
+
   if (!fmtResult.success) {
     throw new Error("Formatting validation failed. Run 'deno fmt' to fix.");
   }
-  
+
   // Run lint check on TypeScript files
   const tsFiles = await this.getModifiedFiles()
     .then(files => files.filter(f => f.endsWith('.ts')));
-  
+
   if (tsFiles.length > 0) {
     const lintCmd = new Deno.Command("deno", {
       args: ["lint", ...tsFiles],
     });
     const lintResult = await lintCmd.output();
-    
+
     if (!lintResult.success) {
       throw new Error("Linting failed on modified files.");
     }
   }
-  
+
   // Run type check
   const typeCmd = new Deno.Command("deno", {
     args: ["check", "**/*.ts"],
   });
   const typeResult = await typeCmd.output();
-  
+
   if (!typeResult.success) {
     throw new Error("Type checking failed.");
   }

@@ -7,7 +7,7 @@ autocomplete support and GitHub Pages visibility.
 
 ## New Structure
 
-```
+```text
 docs/
 ├── projects/
 │   ├── active/      # Active project documentation

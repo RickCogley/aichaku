@@ -29,6 +29,7 @@ MEASURE performance → IDENTIFY patterns → SUGGEST improvements
 ## Universal Improvement Flow
 
 1. **COLLECT DATA**
+
    ```
    What: Metrics for active methodology
    Period: Last sprint/week/cycle
@@ -36,6 +37,7 @@ MEASURE performance → IDENTIFY patterns → SUGGEST improvements
    ```
 
 2. **ANALYZE PATTERNS**
+
    ```
    ✅ What's working well
    ⚠️ What needs attention
@@ -56,7 +58,7 @@ MEASURE performance → IDENTIFY patterns → SUGGEST improvements
 ```
 MEASURE:
 - Cycles completed on time
-- Appetite accuracy 
+- Appetite accuracy
 - Bets won vs lost
 - Cooldown effectiveness
 
@@ -134,7 +136,7 @@ Based on data, prioritize:
 1. 🎯 [Biggest impact item]
    Why: [Data supporting this]
    Try: [Specific action]
-   
+
 2. 🔧 [Quick fix]
    Why: [Easy win]
    Try: [Simple change]
@@ -178,7 +180,7 @@ Weekly metrics check:
 
 ```
 SYMPTOM: Declining delivery
-CHECK: 
+CHECK:
 - Complexity increasing?
 - Team capacity changed?
 - Technical debt growing?

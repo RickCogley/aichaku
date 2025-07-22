@@ -139,13 +139,13 @@ enum ReleasePhase {
   INIT = "init",
   VALIDATING = "validating",
   BUILDING = "building",
-  PUBLISHING_NPM = "publishing_npm",
-  PUBLISHING_JSR = "publishing_jsr",
+  PUBLISHING*NPM = "publishing*npm",
+  PUBLISHING*JSR = "publishing*jsr",
   TAGGING = "tagging",
-  UPLOADING_BINARIES = "uploading_binaries",
+  UPLOADING*BINARIES = "uploading*binaries",
   COMPLETED = "completed",
   FAILED = "failed",
-  ROLLED_BACK = "rolled_back",
+  ROLLED*BACK = "rolled*back",
 }
 
 interface ReleaseState {
@@ -244,22 +244,10 @@ export class GitManager {
     const tag = `${prefix}${version}`;
 
     // Create annotated tag
-    await runCommand([
-      "git",
-      "tag",
-      "-a",
-      tag,
-      "-m",
-      `Release ${version}`,
-    ]);
+    await runCommand(["git", "tag", "-a", tag, "-m", `Release ${version}`]);
 
     // Push tag to remote
-    await runCommand([
-      "git",
-      "push",
-      "origin",
-      tag,
-    ]);
+    await runCommand(["git", "push", "origin", tag]);
 
     logger.success(`Tag ${tag} created and pushed`);
   }
@@ -449,9 +437,9 @@ export class ReleaseUI {
 
 ```bash
 # .env.release
-NPM_TOKEN=npm_xxx
-JSR_TOKEN=jsr_xxx
-GITHUB_TOKEN=ghp_xxx
+NPM*TOKEN=npm*xxx
+JSR*TOKEN=jsr*xxx
+GITHUB_TOKEN=ghp*xxx
 ```
 
 ## Testing Strategy

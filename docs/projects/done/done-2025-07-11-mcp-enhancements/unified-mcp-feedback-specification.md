@@ -235,11 +235,11 @@ const result = await db.query(query, [userId]);
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 📅 Date: 2025-01-11 ⏱️
 Duration: 3 hours, 45 minutes
 
-📊 MCP Tool Usage: 🔍 review_file: 23 invocations 📚 generate_documentation: 5
+📊 MCP Tool Usage: 🔍 review*file: 23 invocations 📚 generate*documentation: 5
 invocations ✅ review_methodology: 8 invocations
 
 ⚡ Performance Metrics: 🌿 Average response time: 847ms 🌸 Fastest operation:
-120ms (get_standards) 🍃 Slowest operation: 4.2s (generate_documentation)
+120ms (get*standards) 🍃 Slowest operation: 4.2s (generate*documentation)
 
 🎯 Quality Trends: ✨ Issues fixed: 15 ⚠️ New issues found: 3 📈 Code quality
 score: 94% (+12% from last session)
@@ -278,22 +278,22 @@ compliance improved ✨ All external dependencies updated
 ### 4.1 Environment Variables
 ```bash
 # Feedback verbosity
-AICHAKU_FEEDBACK_LEVEL=standard      # minimal | standard | verbose
+AICHAKU*FEEDBACK*LEVEL=standard      # minimal | standard | verbose
 
 # Timing thresholds (milliseconds)
-AICHAKU_PROGRESS_THRESHOLD=1500      # When to show progress
-AICHAKU_TIMING_THRESHOLD=3000        # When to show timing
-AICHAKU_STATS_THRESHOLD=5000         # When to show statistics
+AICHAKU*PROGRESS*THRESHOLD=1500      # When to show progress
+AICHAKU*TIMING*THRESHOLD=3000        # When to show timing
+AICHAKU*STATS*THRESHOLD=5000         # When to show statistics
 
 # Feature toggles
-AICHAKU_AUTO_START=true              # Auto-start MCP server
+AICHAKU*AUTO*START=true              # Auto-start MCP server
 AICHAKU_STATISTICS=true              # Collect usage statistics
 AICHAKU_EDUCATIONAL=true             # Show learning opportunities
-AICHAKU_TOOL_CHAINING=true           # Enable automatic tool sequences
+AICHAKU*TOOL*CHAINING=true           # Enable automatic tool sequences
 
 # Privacy settings
-AICHAKU_STATS_ANONYMOUS=true         # Anonymize file paths in stats
-AICHAKU_STATS_LOCAL_ONLY=true        # Don't send stats to external services
+AICHAKU*STATS*ANONYMOUS=true         # Anonymize file paths in stats
+AICHAKU*STATS*LOCAL_ONLY=true        # Don't send stats to external services
 ````
 
 ### 4.2 Configuration File

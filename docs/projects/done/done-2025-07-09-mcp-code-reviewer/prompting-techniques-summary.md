@@ -20,7 +20,7 @@ Claude learns by seeing the contrast.
 Explains WHY rules exist:
 
 ```
-Context: TypeScript's type system prevents runtime errors. 
+Context: TypeScript's type system prevents runtime errors.
 Using 'any' disables this protection and makes code harder to maintain.
 ```
 
@@ -83,7 +83,7 @@ When Claude uses 'any' types:
 ```
 🌱 Learning Opportunity - Let's fix this properly:
 
-📖 Context: TypeScript's type system prevents runtime errors. Using 'any' 
+📖 Context: TypeScript's type system prevents runtime errors. Using 'any'
 disables this protection and makes code harder to maintain.
 
 ⚠️ Issue: Using 'any' instead of proper TypeScript types

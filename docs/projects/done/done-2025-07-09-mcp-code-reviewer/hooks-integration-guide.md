@@ -27,12 +27,14 @@ File Save → PostToolUse Hook → MCP Review → Claude Sees Results → User I
 // ~/.claude/settings.json
 {
   "hooks": {
-    "PostToolUse": [{
-      "name": "Aichaku MCP Auto Review",
-      "description": "Automatically review files after editing",
-      "matcher": "Write|Edit|MultiEdit",
-      "command": "mcp-code-reviewer review --file \"${TOOL_INPUT_FILE_PATH}\""
-    }]
+    "PostToolUse": [
+      {
+        "name": "Aichaku MCP Auto Review",
+        "description": "Automatically review files after editing",
+        "matcher": "Write|Edit|MultiEdit",
+        "command": "mcp-code-reviewer review --file \"${TOOL*INPUT*FILE_PATH}\""
+      }
+    ]
   }
 }
 ```
@@ -72,11 +74,13 @@ fi
 ```json
 {
   "hooks": {
-    "PreToolUse": [{
-      "name": "MCP Pre-commit Review",
-      "matcher": "Bash(git commit)",
-      "command": "bash -c 'if ! mcp-code-reviewer check-staged --strict; then echo \"❌ Review failed - fix issues before committing\"; exit 1; fi'"
-    }]
+    "PreToolUse": [
+      {
+        "name": "MCP Pre-commit Review",
+        "matcher": "Bash(git commit)",
+        "command": "bash -c 'if ! mcp-code-reviewer check-staged --strict; then echo \"❌ Review failed - fix issues before committing\"; exit 1; fi'"
+      }
+    ]
   }
 }
 ```
@@ -91,14 +95,14 @@ const progressiveReviewHook = {
   name: "Progressive MCP Review",
   command: `bash -c '
     # Quick pattern scan first
-    QUICK=$(mcp-code-reviewer quick-scan "$TOOL_INPUT_FILE_PATH")
+    QUICK=$(mcp-code-reviewer quick-scan "$TOOL*INPUT*FILE_PATH")
     
     if [[ $QUICK == *"HIGH"* ]]; then
       # Full scan for high-severity issues
-      mcp-code-reviewer deep-scan "$TOOL_INPUT_FILE_PATH"
+      mcp-code-reviewer deep-scan "$TOOL*INPUT*FILE_PATH"
     elif [[ $QUICK == *"MEDIUM"* ]]; then
       # Standard scan
-      mcp-code-reviewer review "$TOOL_INPUT_FILE_PATH"
+      mcp-code-reviewer review "$TOOL*INPUT*FILE_PATH"
     fi
   '`,
 };
@@ -139,11 +143,13 @@ esac
 ```json
 {
   "hooks": {
-    "PostToolUse": [{
-      "name": "MCP Security Review with Fixes",
-      "matcher": "Write|Edit",
-      "command": "bash -c 'RESULT=$(mcp-code-reviewer review \"$TOOL_INPUT_FILE_PATH\" --suggest-fixes); if [[ $(echo $RESULT | jq \".summary.critical + .summary.high\") -gt 0 ]]; then echo \"⚠️ High severity issues found - ask Claude to create a fix PR if needed\"; fi'"
-    }]
+    "PostToolUse": [
+      {
+        "name": "MCP Security Review with Fixes",
+        "matcher": "Write|Edit",
+        "command": "bash -c 'RESULT=$(mcp-code-reviewer review \"$TOOL*INPUT*FILE_PATH\" --suggest-fixes); if [[ $(echo $RESULT | jq \".summary.critical + .summary.high\") -gt 0 ]]; then echo \"⚠️ High severity issues found - ask Claude to create a fix PR if needed\"; fi'"
+      }
+    ]
   }
 }
 ```
@@ -199,7 +205,7 @@ When you run `aichaku hooks --install mcp-review`, it creates:
   "name": "Aichaku MCP Auto Review",
   "type": "PostToolUse",
   "matcher": "Write|Edit|MultiEdit",
-  "command": "mcp-review-trigger \"${TOOL_INPUT_FILE_PATH}\" --auto"
+  "command": "mcp-review-trigger \"${TOOL*INPUT*FILE_PATH}\" --auto"
 }
 ```
 
@@ -221,7 +227,7 @@ When you run `aichaku hooks --install mcp-review`, it creates:
   "name": "Aichaku MCP Smart Review",
   "type": "PostToolUse",
   "matcher": "Write|Edit",
-  "command": "~/.claude/hooks/aichaku-smart-review.sh \"${TOOL_INPUT_FILE_PATH}\""
+  "command": "~/.claude/hooks/aichaku-smart-review.sh \"${TOOL*INPUT*FILE_PATH}\""
 }
 ```
 
@@ -233,7 +239,7 @@ When you run `aichaku hooks --install mcp-review`, it creates:
 # Prevent multiple reviews on rapid saves
 LAST_REVIEW="/tmp/mcp-last-review-$(echo $FILE | md5)"
 if [[ -f "$LAST_REVIEW" ]]; then
-  LAST_TIME=$(stat -f %m "$LAST_REVIEW" 2>/dev/null || stat -c %Y "$LAST_REVIEW")
+  LAST*TIME=$(stat -f %m "$LAST*REVIEW" 2>/dev/null || stat -c %Y "$LAST_REVIEW")
   NOW=$(date +%s)
   if (( NOW - LAST_TIME < 5 )); then
     exit 0  # Skip if reviewed within 5 seconds
@@ -272,7 +278,7 @@ mcp-code-reviewer review \
 cat ~/.claude/settings.json | jq '.hooks'
 
 # Test hook manually
-TOOL_INPUT_FILE_PATH="test.ts" bash -c 'your-hook-command'
+TOOL*INPUT*FILE_PATH="test.ts" bash -c 'your-hook-command'
 ```
 
 ### MCP Not Found

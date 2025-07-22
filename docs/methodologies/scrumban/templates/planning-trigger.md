@@ -23,7 +23,7 @@
 ```
 Backlog: ████████████████████ 45 items
 Ready:   ███ 3 items
-In Prog: █████ 5 items  
+In Prog: █████ 5 items
 Review:  ██ 2 items
 Done:    ████████████ 28 items (this cycle)
 ```
@@ -109,7 +109,7 @@ Done:    ████████████ 28 items (this cycle)
 
 ```
 Week 1: |----P----|
-Week 2: |------P--|  
+Week 2: |------P--|
 Week 3: |-P-------|
 Week 4: |----P----| ← This week
 ```

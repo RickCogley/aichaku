@@ -16,17 +16,17 @@ graph LR
         CM[CLAUDE.md]
         IC[integrate command]
     end
-    
+
     subgraph "MCP Server"
         SM[Standards Manager]
         RE[Review Engine]
     end
-    
+
     subgraph "Claude Code"
         CC[Claude Session]
         HR[Hook Runner]
     end
-    
+
     AS -->|Selected Standards| SM
     CM -->|Proactive Guidance| CC
     IC -->|Updates| CM
@@ -158,7 +158,7 @@ aichaku hooks --install mcp-review
   "hooks": {
     "PostToolUse": [{
       "name": "Aichaku MCP Review",
-      "command": "mcp-review-trigger ${TOOL_INPUT_FILE_PATH}",
+      "command": "mcp-review-trigger ${TOOL*INPUT*FILE_PATH}",
       "matcher": "Write|Edit|MultiEdit"
     }]
   }
@@ -338,10 +338,10 @@ ps aux | grep mcp-code-reviewer
 
 ```bash
 # Limit concurrent scanners
-export MCP_MAX_SCANNERS=2
+export MCP*MAX*SCANNERS=2
 
 # Disable heavy scanners
-export MCP_DISABLE_CODEQL=true
+export MCP*DISABLE*CODEQL=true
 ```
 
 ## Roadmap

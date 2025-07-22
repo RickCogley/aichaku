@@ -118,7 +118,7 @@ All tests pass successfully:
 
 ```
 ConfigManager - Load from consolidated config ... ✅ ok (5ms)
-ConfigManager - Load from legacy files ... ✅ ok (10ms) 
+ConfigManager - Load from legacy files ... ✅ ok (10ms)
 ConfigManager - Migrate from legacy to consolidated ... ✅ ok (12ms)
 ConfigManager - Update configuration ... ✅ ok (4ms)
 ConfigManager - Handle non-Aichaku project ... ✅ ok (1ms)

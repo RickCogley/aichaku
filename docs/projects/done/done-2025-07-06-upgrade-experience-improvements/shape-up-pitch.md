@@ -62,7 +62,7 @@ $ aichaku status
 Aichaku Status:
   CLI Version:         v0.5.0 ✓
   Global Methods:      v0.4.0 ⚠️  (update available)
-  
+
 Run 'aichaku init --global --force' to update methodologies
 ```
 

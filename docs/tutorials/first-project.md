@@ -412,8 +412,8 @@ Watch Claude seamlessly blend the methodologies.
 
 ```
 "I need to [action] for [feature/problem]"
-→ Discussion mode → 
-"Create a project" → 
+→ Discussion mode →
+"Create a project" →
 Project created
 ```
 

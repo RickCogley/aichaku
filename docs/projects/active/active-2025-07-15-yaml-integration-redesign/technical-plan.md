@@ -70,9 +70,9 @@ async function migrateStandardsConfig(config: AichakuConfig): Promise<void> {
   const oldStandardsPath = join(config.basePath, "standards.json");
   const oldDocStandardsPath = join(config.basePath, "doc-standards.json");
 
-  if (await exists(oldStandardsPath) || await exists(oldDocStandardsPath)) {
-    const standards = await safeReadJson(oldStandardsPath) || [];
-    const docStandards = await safeReadJson(oldDocStandardsPath) || [];
+  if ((await exists(oldStandardsPath)) || (await exists(oldDocStandardsPath))) {
+    const standards = (await safeReadJson(oldStandardsPath)) || [];
+    const docStandards = (await safeReadJson(oldDocStandardsPath)) || [];
 
     // Merge into unified config
     config.standards.selected = [...standards, ...docStandards];
@@ -117,22 +117,22 @@ interface AichakuYamlConfig {
 ### 2.2 YAML Block Detection and Replacement
 
 ````typescript
-const YAML_BLOCK_START = "```yaml\n# Aichaku Configuration";
-const YAML_BLOCK_END = "```";
+const YAML*BLOCK*START = "```yaml\n# Aichaku Configuration";
+const YAML*BLOCK*END = "```";
 
 function findYamlBlock(content: string): { start: number; end: number } | null {
-  const startIdx = content.indexOf(YAML_BLOCK_START);
+  const startIdx = content.indexOf(YAML*BLOCK*START);
   if (startIdx === -1) return null;
 
   const endIdx = content.indexOf(
-    YAML_BLOCK_END,
-    startIdx + YAML_BLOCK_START.length,
+    YAML*BLOCK*END,
+    startIdx + YAML*BLOCK*START.length,
   );
   if (endIdx === -1) return null;
 
   return {
     start: startIdx,
-    end: endIdx + YAML_BLOCK_END.length,
+    end: endIdx + YAML*BLOCK*END.length,
   };
 }
 
@@ -145,8 +145,7 @@ function replaceYamlBlock(
 
   if (block) {
     // Replace existing block
-    return content.slice(0, block.start) +
-      yamlString +
+    return content.slice(0, block.start) + yamlString +
       content.slice(block.end);
   } else {
     // Append new block
@@ -191,9 +190,11 @@ async function loadStandardMetadata(
 
 ```typescript
 function hasOldFormat(content: string): boolean {
-  return content.includes("<!-- AICHAKU:METHODOLOGY:START -->") ||
+  return (
+    content.includes("<!-- AICHAKU:METHODOLOGY:START -->") ||
     content.includes("<!-- AICHAKU:STANDARDS:START -->") ||
-    content.includes("<!-- AICHAKU:DOC-STANDARDS:START -->");
+    content.includes("<!-- AICHAKU:DOC-STANDARDS:START -->")
+  );
 }
 
 function extractCustomContent(content: string): string {
@@ -380,7 +381,7 @@ async function buildLearnContent(basePath: string): Promise<LearnContent> {
     const metadata = await loadYamlMetadata(yamlPath);
     content.methodologies.set(item.name, {
       triggers: metadata.triggers,
-      best_for: metadata.best_for,
+      best*for: metadata.best*for,
       description: metadata.description,
     });
   }
@@ -502,7 +503,9 @@ Your custom content will be preserved.
 
 CLAUDE.md updated with compact YAML configuration.
 - Size: ${formatBytes(before)} → ${formatBytes(after)} (${
-    Math.round((1 - after / before) * 100)
+    Math.round(
+      (1 - after / before) * 100,
+    )
   }% reduction)
 - Format: Single YAML block
 - Standards: ${getSelectedCount()} selected

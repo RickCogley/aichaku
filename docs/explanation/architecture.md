@@ -101,7 +101,7 @@ The file system serves as Aichaku's database:
 
 **Directory structure as schema**:
 
-```
+```text
 .claude/
 ├── methodologies/    # Bulk resources (complete packages)
 ├── standards/        # Selective resources (individual files)
@@ -141,7 +141,7 @@ This respects user autonomy while providing structure.
 
 The Model Context Protocol server provides real-time analysis:
 
-```
+```text
 Claude <-> MCP Server <-> Review Engine
                       <-> Standards Manager
                       <-> Methodology Manager
@@ -222,7 +222,7 @@ The system automatically discovers and integrates new methodologies.
 Standards are even simpler:
 
 1. Choose appropriate category directory
-2. Create markdown file with standard content
+2. Create Markdown file with standard content
 3. Follow the established template format
 
 No registration or configuration needed.

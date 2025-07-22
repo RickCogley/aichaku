@@ -4,10 +4,10 @@ This directory is yours to customize Aichaku's behavior. Files here are never mo
 
 ## Directory Structure
 
-```
+```text
 user/
 ├── prompts/      # Custom AI prompts
-├── templates/    # Custom document templates  
+├── templates/    # Custom document templates
 └── methods/      # Custom methodology extensions
 ```
 
@@ -18,6 +18,7 @@ user/
 Add files that extend or override default prompts:
 
 **Example: prompts/standup-casual.md**
+
 ```markdown
 When conducting daily standups, use a more casual tone.
 Focus on blockers and collaboration opportunities.
@@ -29,12 +30,13 @@ Keep updates brief and action-oriented.
 Add document templates for your organization:
 
 **Example: templates/change-control.md**
+
 ```markdown
 # Change Control Document
 
 **Change ID**: CC-{date}-{number}
-**Requestor**: 
-**Date**: 
+**Requestor**:
+**Date**:
 **Impact**: Low | Medium | High
 
 ## Change Description
@@ -46,6 +48,7 @@ Add document templates for your organization:
 ## Rollback Plan
 
 ## Approvals
+
 - [ ] Technical Lead
 - [ ] Product Owner
 - [ ] Operations
@@ -56,10 +59,12 @@ Add document templates for your organization:
 Extend methodologies with your practices:
 
 **Example: methods/code-review-checklist.md**
+
 ```markdown
 ## Code Review Checklist
 
 Before marking PR as ready:
+
 - [ ] Tests pass locally
 - [ ] Documentation updated
 - [ ] Security considerations noted
@@ -72,6 +77,7 @@ Before marking PR as ready:
 You can influence how Aichaku blends methodologies:
 
 **Example: methods/blending-preferences.md**
+
 ```markdown
 ## Our Methodology Preferences
 
@@ -86,6 +92,7 @@ You can influence how Aichaku blends methodologies:
 Define your organization's vocabulary:
 
 **Example: methods/vocabulary.md**
+
 ```markdown
 ## Our Terms
 

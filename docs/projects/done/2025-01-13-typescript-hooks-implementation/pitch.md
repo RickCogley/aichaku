@@ -77,7 +77,7 @@ Following Anthropic's three key pieces of advice:
 - **Validate inputs**: Never trust input data blindly
 - **Use absolute paths**: Always use full paths to scripts
 - **Set explicit timeouts**: 5-30 seconds max
-- **Check stop_hook_active**: In Stop hooks to prevent loops
+- **Check stop*hook*active**: In Stop hooks to prevent loops
 - **Test manually first**: Before adding to hooks system
 
 ### 4. Implementation Details
@@ -200,7 +200,7 @@ graph TD
     B --> C[Single Hook Runner]
     C --> D[Compile to Binary]
     D --> E[Safe Hook Execution]
-    
+
     F[Claude Code] --> G[Hook Trigger]
     G --> H[JSON via stdin]
     H --> I[aichaku-hooks binary]
@@ -208,7 +208,7 @@ graph TD
     J --> K[Execute Hook Logic]
     K --> L[Output to stdout]
     L --> F
-    
+
     style A fill:#ff6b6b
     style E fill:#51cf66
 ```

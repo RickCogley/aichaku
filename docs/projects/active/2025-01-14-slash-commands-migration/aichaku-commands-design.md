@@ -2,7 +2,7 @@
 
 ## Overview
 
-After successfully migrating personal slash commands to the new markdown format,
+After successfully migrating personal slash commands to the new Markdown format,
 we should consider adding slash command management to Aichaku itself. This would
 allow users to install, manage, and share slash commands through the Aichaku
 CLI.
@@ -11,7 +11,7 @@ CLI.
 
 ### What Works Well
 
-- Individual markdown files are easy to edit and version
+- Individual Markdown files are easy to edit and version
 - YAML frontmatter provides structure and permissions
 - Directory organization by category makes sense
 - File-based approach allows git versioning
@@ -128,16 +128,16 @@ description: OWASP security checklist
 aichaku:
   version: "1.0.0"
   category: "security"
-  methodology: ["shape-up", "scrum"]  # Which methodologies this applies to
+  methodology: ["shape-up", "scrum"] # Which methodologies this applies to
   author: "Rick Cogley"
   source: "https://github.com/RickCogley/aichaku-commands"
-  dependencies: ["aichaku:memin"]  # Commands this depends on
+  dependencies: ["aichaku:memin"] # Commands this depends on
   keywords: ["security", "owasp", "checklist"]
   license: "MIT"
-  
+
 # Installation metadata
 install:
-  scope: "global"  # global, user, project
+  scope: "global" # global, user, project
   auto-update: true
   conflicts: ["old-security-check"]
 ---

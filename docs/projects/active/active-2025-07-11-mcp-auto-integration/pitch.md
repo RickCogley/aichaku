@@ -43,13 +43,13 @@ Create new MCP tools that align with documentation generation requests:
 
 // Supporting tools
 {
-  name: "analyze_project_structure",
+  name: "analyze*project*structure",
   description: "Analyze project structure, dependencies, and architecture to generate comprehensive documentation. Use before generating docs.",
   // ...
 }
 
 {
-  name: "create_documentation_outline", 
+  name: "create*documentation*outline",
   description: "Create a documentation outline based on Diátaxis or other selected standards. Use to plan comprehensive docs.",
   // ...
 }
@@ -62,8 +62,8 @@ Enable Claude Code to automatically chain tools for complex tasks:
 ```mermaid
 graph LR
     A[User Request:<br/>"Generate docs"] --> B[get_standards]
-    B --> C[analyze_project_structure]
-    C --> D[create_documentation_outline]
+    B --> C[analyze*project*structure]
+    C --> D[create*documentation*outline]
     D --> E[generate_documentation]
     E --> F[review_file<br/>(for each generated file)]
 ```
@@ -102,7 +102,7 @@ interface MCPTool {
   description: "...",
   metadata: {
     triggers: ["review", "check", "lint", "validate"],
-    chainAfter: ["generate_documentation", "create_*"],
+    chainAfter: ["generate*documentation", "create**"],
     autoInvoke: true
   }
 }
@@ -140,7 +140,7 @@ The `generate_documentation` tool would:
 
 1. **Building a full static site generator** - Focus on content generation, not
    publishing
-2. **Complex template engines** - Use simple markdown templates
+2. **Complex template engines** - Use simple Markdown templates
 3. **Trying to understand every codebase pattern** - Start with common
    architectures
 4. **Perfect diagram generation** - Simple, clear diagrams are better than
@@ -150,7 +150,7 @@ The `generate_documentation` tool would:
 
 ### Keep It Simple
 
-- Generate markdown files organized by Diátaxis or selected standard
+- Generate Markdown files organized by Diátaxis or selected standard
 - Use existing code analysis tools where possible
 - Focus on readability over completeness
 - Let Claude Code handle the actual writing
@@ -168,8 +168,8 @@ The `generate_documentation` tool would:
 ### Phase 1: Core Tools (Day 1-2)
 
 - [ ] Create `generate_documentation` tool
-- [ ] Create `analyze_project_structure` tool
-- [ ] Create `create_documentation_outline` tool
+- [ ] Create `analyze*project*structure` tool
+- [ ] Create `create*documentation*outline` tool
 - [ ] Update tool descriptions with keywords
 
 ### Phase 2: Integration (Day 2-3)
@@ -211,8 +211,8 @@ Claude: [Uses review_file tool]
 User: "Generate comprehensive project documentation"
 Claude: [Automatically uses MCP tools in sequence]
   → get_standards
-  → analyze_project_structure  
-  → create_documentation_outline
+  → analyze*project*structure
+  → create*documentation*outline
   → generate_documentation
   → review_file (for each generated file)
 Result: High-quality, standards-compliant documentation

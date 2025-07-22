@@ -41,7 +41,7 @@ graph LR
     A[User Request] --> B[Component 1]
     B --> C[Component 2]
     C --> D[Result]
-    
+
     style A fill:#e1f5fe
     style D fill:#c8e6c9
 ```
@@ -91,18 +91,18 @@ graph TB
         A[Application]
         B[SDK/API]
     end
-    
+
     subgraph "Service Layer"
         C[Load Balancer]
         D[Service 1]
         E[Service 2]
     end
-    
+
     subgraph "Data Layer"
         F[Cache]
         G[Database]
     end
-    
+
     A --> B
     B --> C
     C --> D

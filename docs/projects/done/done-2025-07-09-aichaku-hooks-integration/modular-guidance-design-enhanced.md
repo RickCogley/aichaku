@@ -412,7 +412,7 @@ aichaku integrate --phase=essential
 # Includes: Basic security, conventional commits, README
 
 # Phase 2: Professional (Week 2-3)
-aichaku integrate --phase=professional  
+aichaku integrate --phase=professional
 # Adds: Architecture patterns, testing strategies, API standards
 
 # Phase 3: Advanced (Week 4+)
@@ -432,19 +432,19 @@ aichaku integrate --phase=expert
     {
       "name": "NIST SSDF Compliance Check",
       "matcher": "Write|Edit",
-      "command": "aichaku check-compliance --standard=nist-ssdf '${TOOL_INPUT_FILE_PATH}'"
+      "command": "aichaku check-compliance --standard=nist-ssdf '${TOOL*INPUT*FILE_PATH}'"
     },
     {
       "name": "API Standards Validation",
       "matcher": "Write",
-      "command": "if [[ '${TOOL_INPUT_FILE_PATH}' =~ \\.openapi\\.(yaml|json)$ ]]; then aichaku validate-api '${TOOL_INPUT_FILE_PATH}'; fi"
+      "command": "if [[ '${TOOL*INPUT*FILE*PATH}' =~ \\.openapi\\.(yaml|json)$ ]]; then aichaku validate-api '${TOOL*INPUT*FILE*PATH}'; fi"
     }
   ],
   "PostToolUse": [
     {
       "name": "Style Guide Enforcement",
       "matcher": "Write|Edit",
-      "command": "aichaku check-style --guide=google '${TOOL_INPUT_FILE_PATH}'"
+      "command": "aichaku check-style --guide=google '${TOOL*INPUT*FILE_PATH}'"
     }
   ]
 }

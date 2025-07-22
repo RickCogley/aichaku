@@ -63,15 +63,10 @@ async function updateUser(userId: string, data: UserData) {
 
 ```typescript
 // ✅ Good: Parameterized queries
-const user = await db.query(
-  "SELECT * FROM users WHERE email = $1",
-  [email],
-);
+const user = await db.query("SELECT * FROM users WHERE email = $1", [email]);
 
 // ❌ Bad: String concatenation (SQL injection risk)
-const user = await db.query(
-  `SELECT * FROM users WHERE email = '${email}'`,
-);
+const user = await db.query(`SELECT * FROM users WHERE email = '${email}'`);
 ```
 
 ### Security Headers

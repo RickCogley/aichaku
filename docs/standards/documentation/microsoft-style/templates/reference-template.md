@@ -148,7 +148,7 @@ logging:
 | ------------------- | -------------------------- | ------------------------------- |
 | `PRODUCT_HOME`      | Installation directory     | `/usr/local/product`            |
 | `PRODUCT_CONFIG`    | Configuration file path    | `~/.config/product/config.yaml` |
-| `PRODUCT_LOG_LEVEL` | Logging verbosity          | `info`                          |
+| `PRODUCT*LOG*LEVEL` | Logging verbosity          | `info`                          |
 | `PRODUCT_TIMEOUT`   | Default timeout in seconds | `60`                            |
 
 ### Return values

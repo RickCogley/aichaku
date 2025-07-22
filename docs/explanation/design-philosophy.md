@@ -64,7 +64,7 @@ context
 
 Example:
 
-```
+```text
 Traditional: aichaku create project --type=shape-up --name=auth --template=pitch
 Aichaku: "I need to shape a solution for authentication"
 ```

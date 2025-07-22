@@ -57,8 +57,8 @@ aichaku:
           triggers: ["let's create", "I'm ready", "set up the project"]
           actions:
             - "create_immediately": true
-            - "no_permission_asking": true
-            - "use_descriptive_names": true
+            - "no*permission*asking": true
+            - "use*descriptive*names": true
 
     visual_identity:
       prefix: "🪴 Aichaku:"
@@ -120,7 +120,7 @@ aichaku:
 
 - **Size**: 50KB+
 - **Lines**: 1,500+
-- **Content**: Full markdown guides duplicated inline
+- **Content**: Full Markdown guides duplicated inline
 - **Maintenance**: Edit multiple places for updates
 
 ### After (YAML Integration)

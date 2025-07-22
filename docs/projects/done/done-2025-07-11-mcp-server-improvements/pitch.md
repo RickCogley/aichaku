@@ -28,7 +28,7 @@ significantly improve user experience.
 ```
 aichaku mcp --status     # Enhanced status with version, location, PID
 aichaku mcp --start      # Start the MCP server
-aichaku mcp --stop       # Stop the MCP server  
+aichaku mcp --stop       # Stop the MCP server
 aichaku mcp --restart    # Restart the MCP server
 aichaku mcp --upgrade    # Check for and install updates
 aichaku mcp --config     # Show proper claude mcp add command

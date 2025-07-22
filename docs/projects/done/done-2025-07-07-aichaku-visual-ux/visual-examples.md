@@ -109,7 +109,7 @@ Minimal: 5/8✓ TDD:✅ CI:🔄
 ```
 🪴 Aichaku Status - 3 active projects:
   • payment-gateway (Sprint 15, Day 6/10) 🌿
-  • auth-redesign (Shaping, Day 2/2) 🌱 ⚠️ 
+  • auth-redesign (Shaping, Day 2/2) 🌱 ⚠️
   • mobile-mvp (Building, 75%) 🌳
 💡 Say "continue auth-redesign" or "show all projects"
 ```
@@ -158,7 +158,7 @@ Status: Betting Phase 🌿 - ON TRACK ✅
 ### 4. Completion
 
 ```
-🪴 Aichaku: Project Complete! 
+🪴 Aichaku: Project Complete!
            Moving payment-flow-redesign to done-2025-07-21/
            Total time: 14 days | Methodology: Shape Up
 ```
@@ -185,7 +185,7 @@ Status: Betting Phase 🌿 - ON TRACK ✅
 🪴 Aichaku Dashboard - 2025-07-07
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Active Projects (3):
-  
+
 1. payment-gateway     [Sprint 6/10] ██████░░░░ 60% 🌿
 2. auth-redesign       [Shaping 2/2] ████████ 100% 🌱 ⚠️
 3. mobile-mvp          [Build 75%]   ███████░░░ 75% 🌳

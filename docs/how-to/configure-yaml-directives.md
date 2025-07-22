@@ -3,12 +3,12 @@
 ## Overview
 
 Aichaku uses a YAML-based configuration system that allows you to customize how
-Claude Code works with your projects. Instead of large static markdown files,
+Claude Code works with your projects. Instead of large static Markdown files,
 directives are now modular YAML configurations that can be mixed and matched.
 
 ## Key Benefits
 
-- **96% smaller files**: From 50KB+ markdown to ~2KB YAML
+- **96% smaller files**: From 50KB+ Markdown to ~2KB YAML
 - **Modular updates**: Change specific behaviors without rewriting everything
 - **Single source of truth**: One place to update behavior across all projects
 - **Customizable**: Override defaults for your specific needs
@@ -241,7 +241,7 @@ aichaku integrate
 
 ## Migration from Static Files
 
-If you were using older versions of Aichaku with large markdown files:
+If you were using older versions of Aichaku with large Markdown files:
 
 1. **Your customizations are preserved** in `.claude/user/`
 2. **No manual migration needed** - just run `aichaku upgrade`

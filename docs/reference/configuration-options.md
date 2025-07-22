@@ -84,11 +84,7 @@ interface StandardsConfig {
 
 ```json
 {
-  "selectedStandards": [
-    "nist-csf",
-    "tdd",
-    "conventional-commits"
-  ],
+  "selectedStandards": ["nist-csf", "tdd", "conventional-commits"],
   "customStandards": {
     "team-guidelines": {
       "name": "Team Development Guidelines",
@@ -144,12 +140,7 @@ This command will:
 
 ```json
 {
-  "selectedStandards": [
-    "nist-csf",
-    "tdd",
-    "conventional-commits",
-    "solid"
-  ],
+  "selectedStandards": ["nist-csf", "tdd", "conventional-commits", "solid"],
   "methodology": "shape-up",
   "team": {
     "name": "Platform Team",
@@ -340,7 +331,7 @@ aichaku uninstall [options]
 | Variable                      | Description                          | Example             |
 | ----------------------------- | ------------------------------------ | ------------------- |
 | `AICHAKU_HOME`                | Override ~/.claude location          | `/opt/aichaku`      |
-| `AICHAKU_DEFAULT_METHODOLOGY` | Default methodology for new projects | `scrum`             |
+| `AICHAKU*DEFAULT*METHODOLOGY` | Default methodology for new projects | `scrum`             |
 | `AICHAKU_DEBUG`               | Enable debug output                  | `true`              |
 | `AICHAKU_TEMPLATES`           | Custom templates directory           | `/shared/templates` |
 | `AICHAKU_SILENT`              | Suppress all output                  | `true`              |
@@ -480,7 +471,7 @@ aichaku standards --show custom:my-standard
 
 #### Custom standard file format
 
-Custom standards follow the same markdown format as built-in standards:
+Custom standards follow the same Markdown format as built-in standards:
 
 ```markdown
 ## My Custom Standard
@@ -591,7 +582,7 @@ interface MethodologyFallbackConfig {
   lastUpdated: string;
 }
 
-export const METHODOLOGY_FALLBACK_CONFIG: MethodologyFallbackConfig = {
+export const METHODOLOGY*FALLBACK*CONFIG: MethodologyFallbackConfig = {
   methodologies: ["shape-up", "scrum", "kanban", "lean", "xp", "scrumban"],
   reason: "Emergency fallback when dynamic discovery fails",
   lastUpdated: "2025-07-17",
@@ -626,11 +617,11 @@ export const METHODOLOGY_DEFAULTS = {
 Template file mappings for each methodology.
 
 ```typescript
-export const METHODOLOGY_TEMPLATE_CONFIG = {
+export const METHODOLOGY*TEMPLATE*CONFIG = {
   templates: {
     "shape-up": ["STATUS.md", "pitch.md", "hill-chart.md"],
-    "scrum": ["sprint-planning.md", "retrospective.md"],
-    "kanban": ["kanban-board.md", "flow-metrics.md"],
+    scrum: ["sprint-planning.md", "retrospective.md"],
+    kanban: ["kanban-board.md", "flow-metrics.md"],
     // ... complete mapping for all methodologies
   },
 };

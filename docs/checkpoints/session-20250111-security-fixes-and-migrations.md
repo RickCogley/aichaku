@@ -86,7 +86,7 @@ placeholder implementation.
 
 ### New Directory Structure
 
-```
+```text
 .claude/
 ├── aichaku/           # New aichaku-specific files
 │   ├── standards.json

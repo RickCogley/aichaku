@@ -31,18 +31,18 @@ graph TB
         SC[Scanner Controller]
         FB[Feedback Builder]
     end
-    
+
     subgraph "External Tools"
         CQL[CodeQL ❓]
         DS[DevSkim ❓]
         SG[Semgrep ❓]
     end
-    
+
     subgraph "Claude Code"
         CC[Claude Client]
         HOOKS[Aichaku Hooks]
     end
-    
+
     CC -->|Review Request| API
     HOOKS -->|Auto Trigger| API
     API --> RE

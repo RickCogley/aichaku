@@ -22,4 +22,4 @@ Each checkpoint follows this structure:
 - [2025-07-10-standards-help-integration](./2025-07-10-standards-help-integration.md)
 - [checkpoint-2025-01-11-mcp-enhancements](./checkpoint-2025-01-11-mcp-enhancements.md)
 - [session-20250111-security-fixes-and-migrations](./session-20250111-security-fixes-and-migrations.md)
-- [session-20250710_160259-mcp-setup](./session-20250710_160259-mcp-setup.md)
+- [session-20250710*160259-mcp-setup](./session-20250710*160259-mcp-setup.md)

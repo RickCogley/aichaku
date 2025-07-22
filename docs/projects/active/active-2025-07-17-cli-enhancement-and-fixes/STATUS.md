@@ -27,7 +27,7 @@ exceptional user experience.
 - ✅ Remove RULES-REMINDER.md creation from init command
 - ✅ Fix help screen bypassing in upgrade, integrate, cleanup commands
 - ✅ Test and verify standards --remove functionality
-- ✅ Verify advanced commands (github, hooks, review)
+- ✅ Verify advanced commands (GitHub, hooks, review)
 
 ### 2. **Enhanced Contextual Guidance**
 
@@ -41,7 +41,7 @@ exceptional user experience.
 ### **Foundation Complete** ✅
 
 - **Configuration-as-Code**: All hardcoded lists eliminated
-- **Branding Consistency**: All console.log calls fixed to use Brand.*
+- **Branding Consistency**: All console.log calls fixed to use Brand.\*
 - **Legacy File Elimination**: RULES-REMINDER.md creation completely removed
 - **Test Data Cleanup**: Production config cleaned of test artifacts
 

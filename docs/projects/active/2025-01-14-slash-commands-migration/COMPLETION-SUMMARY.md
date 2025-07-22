@@ -79,4 +79,4 @@ Your slash commands are now ready! Try:
 - `/utils:commands` to see all available commands
 
 The migration is complete and your slash commands are now using Claude's modern
-markdown-based system! 🎉
+Markdown-based system! 🎉

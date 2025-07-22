@@ -30,19 +30,19 @@ systems.
 graph TB
     User[fa:fa-user User]
     Admin[fa:fa-user-shield Admin]
-    
+
     System[Your System<br/>Main application]
-    
+
     ExtAPI[External API<br/>Third-party service]
     Database[(Database<br/>PostgreSQL)]
     Queue[Message Queue<br/>RabbitMQ]
-    
+
     User -->|Uses| System
     Admin -->|Manages| System
     System -->|Calls| ExtAPI
     System -->|Reads/Writes| Database
     System -->|Publishes/Consumes| Queue
-    
+
     style System fill:#1168bd,stroke:#0b4884,color:#ffffff
     style Database fill:#2e7d32,stroke:#1b5e20,color:#ffffff
     style Queue fill:#ff6f00,stroke:#e65100,color:#ffffff
@@ -58,25 +58,25 @@ graph TB
     subgraph "Web Browser"
         SPA[Single Page App<br/>React + TypeScript]
     end
-    
+
     subgraph "Application Server"
         API[REST API<br/>Node.js + Express]
         Worker[Background Worker<br/>Node.js]
     end
-    
+
     subgraph "Data Storage"
         DB[(PostgreSQL<br/>Database)]
         Cache[(Redis<br/>Cache)]
         S3[S3 Compatible<br/>Object Storage]
     end
-    
+
     SPA -->|HTTPS/JSON| API
     API -->|SQL| DB
     API -->|Key-Value| Cache
     API -->|Objects| S3
     Worker -->|SQL| DB
     Worker -->|Objects| S3
-    
+
     style API fill:#1168bd,stroke:#0b4884,color:#ffffff
     style Worker fill:#1168bd,stroke:#0b4884,color:#ffffff
     style DB fill:#2e7d32,stroke:#1b5e20,color:#ffffff
@@ -93,27 +93,27 @@ graph TB
         AuthCtrl[Authentication<br/>Controller]
         UserCtrl[User<br/>Controller]
         OrderCtrl[Order<br/>Controller]
-        
+
         AuthSvc[Authentication<br/>Service]
         UserSvc[User<br/>Service]
         OrderSvc[Order<br/>Service]
-        
+
         UserRepo[User<br/>Repository]
         OrderRepo[Order<br/>Repository]
     end
-    
+
     AuthCtrl --> AuthSvc
     UserCtrl --> UserSvc
     OrderCtrl --> OrderSvc
-    
+
     AuthSvc --> UserRepo
     UserSvc --> UserRepo
     OrderSvc --> OrderRepo
     OrderSvc --> UserRepo
-    
+
     UserRepo -->|SQL| DB[(Database)]
     OrderRepo -->|SQL| DB
-    
+
     style AuthCtrl fill:#ff9800,stroke:#f57c00
     style UserCtrl fill:#ff9800,stroke:#f57c00
     style OrderCtrl fill:#ff9800,stroke:#f57c00
@@ -132,7 +132,7 @@ classDiagram
         +updateUser(id: string, data: UserData): User
         +deleteUser(id: string): void
     }
-    
+
     class UserService {
         -userRepository: UserRepository
         -validator: UserValidator
@@ -141,7 +141,7 @@ classDiagram
         +update(id: string, data: UserData): User
         +delete(id: string): void
     }
-    
+
     class UserRepository {
         -db: Database
         +findOne(id: string): User
@@ -149,7 +149,7 @@ classDiagram
         +update(id: string, data: Partial~User~): User
         +remove(id: string): void
     }
-    
+
     class User {
         +id: string
         +email: string
@@ -157,7 +157,7 @@ classDiagram
         +createdAt: Date
         +updatedAt: Date
     }
-    
+
     UserController --> UserService : uses
     UserService --> UserRepository : uses
     UserRepository --> User : manages
@@ -174,12 +174,12 @@ graph LR
     Input[User Input] --> Validate{Validate}
     Validate -->|Valid| Process[Process Data]
     Validate -->|Invalid| Error[Return Error]
-    
+
     Process --> Transform[Transform]
     Transform --> Store[(Store in DB)]
     Store --> Notify[Notify Services]
     Notify --> Response[Return Response]
-    
+
     style Validate fill:#ffd54f,stroke:#f9a825
     style Process fill:#81c784,stroke:#388e3c
     style Error fill:#e57373,stroke:#c62828
@@ -192,26 +192,26 @@ graph LR
 ```mermaid
 graph TD
     Raw[Raw Data Source] --> Ingest[Data Ingestion]
-    
+
     Ingest --> Validate{Validation}
     Validate -->|Pass| Clean[Data Cleaning]
     Validate -->|Fail| Quarantine[Quarantine]
-    
+
     Clean --> Enrich[Data Enrichment]
     Enrich --> Transform[Transform]
-    
+
     Transform --> Analytics[(Analytics DB)]
     Transform --> Operational[(Operational DB)]
     Transform --> Archive[(Archive Storage)]
-    
+
     Analytics --> Dashboard[Dashboards]
     Operational --> API[API Services]
     Archive --> Compliance[Compliance Reports]
-    
+
     Quarantine --> Review[Manual Review]
     Review -->|Fixed| Clean
     Review -->|Reject| Discard[Discard]
-    
+
     style Validate fill:#ffd54f,stroke:#f9a825
     style Clean fill:#81c784,stroke:#388e3c
     style Quarantine fill:#ff8a65,stroke:#d84315
@@ -234,7 +234,7 @@ stateDiagram-v2
     Published --> Archived: Archive
     Rejected --> [*]
     Archived --> [*]
-    
+
     Draft: Draft State\n- Can edit\n- Can delete
     Review: Review State\n- Read only\n- Awaiting approval
     Approved: Approved State\n- Ready to publish\n- Cannot edit
@@ -248,35 +248,35 @@ stateDiagram-v2
 ```mermaid
 stateDiagram-v2
     [*] --> Order_Placed
-    
+
     state Order_Placed {
         [*] --> Payment_Pending
-        Payment_Pending --> Payment_Processing: Process payment
-        Payment_Processing --> Payment_Complete: Success
-        Payment_Processing --> Payment_Failed: Failure
-        Payment_Failed --> Payment_Pending: Retry
+        Payment*Pending --> Payment*Processing: Process payment
+        Payment*Processing --> Payment*Complete: Success
+        Payment*Processing --> Payment*Failed: Failure
+        Payment*Failed --> Payment*Pending: Retry
         Payment_Complete --> [*]
     }
-    
-    Order_Placed --> Order_Confirmed: Payment complete
-    
+
+    Order*Placed --> Order*Confirmed: Payment complete
+
     state Order_Confirmed {
         [*] --> Preparing
-        Preparing --> Ready_for_Shipping
-        Ready_for_Shipping --> [*]
+        Preparing --> Ready*for*Shipping
+        Ready*for*Shipping --> [*]
     }
-    
-    Order_Confirmed --> In_Transit: Ship order
-    
+
+    Order*Confirmed --> In*Transit: Ship order
+
     state In_Transit {
         [*] --> Shipped
-        Shipped --> Out_for_Delivery
-        Out_for_Delivery --> [*]
+        Shipped --> Out*for*Delivery
+        Out*for*Delivery --> [*]
     }
-    
+
     In_Transit --> Delivered: Deliver
-    In_Transit --> Failed_Delivery: Delivery failed
-    Failed_Delivery --> In_Transit: Retry delivery
+    In*Transit --> Failed*Delivery: Delivery failed
+    Failed*Delivery --> In*Transit: Retry delivery
     Delivered --> [*]
 ```
 
@@ -294,24 +294,24 @@ sequenceDiagram
     participant Auth as Auth Service
     participant DB as Database
     participant Cache as Redis Cache
-    
+
     C->>+LB: POST /api/users
     LB->>+API: Forward request
-    
+
     API->>+Auth: Validate token
     Auth->>+Cache: Check token cache
     Cache-->>-Auth: Token data
     Auth-->>-API: Token valid
-    
+
     API->>+DB: Insert user
     DB-->>-API: User created
-    
+
     API->>+Cache: Cache user data
     Cache-->>-API: Cached
-    
+
     API-->>-LB: 201 Created
     LB-->>-C: Response
-    
+
     Note over C,DB: Successful user creation flow
 ```
 
@@ -327,11 +327,11 @@ sequenceDiagram
     participant C2 as Consumer 2
     participant DB as Database
     participant N as Notification Service
-    
+
     P->>Q: Publish message
     activate Q
     Note over Q: Message queued
-    
+
     par Consumer 1 Processing
         Q->>C1: Deliver message
         activate C1
@@ -345,7 +345,7 @@ sequenceDiagram
         C2->>Q: Acknowledge
         deactivate C2
     end
-    
+
     deactivate Q
     Note over P,N: Parallel processing complete
 ```
@@ -367,7 +367,7 @@ erDiagram
         datetime created_at
         datetime updated_at
     }
-    
+
     ORDER ||--|{ ORDER_ITEM : contains
     ORDER {
         string id PK
@@ -377,7 +377,7 @@ erDiagram
         datetime created_at
         datetime shipped_at
     }
-    
+
     ORDER_ITEM }o--|| PRODUCT : references
     ORDER_ITEM {
         string id PK
@@ -386,7 +386,7 @@ erDiagram
         int quantity
         decimal unit_price
     }
-    
+
     PRODUCT {
         string id PK
         string name
@@ -395,7 +395,7 @@ erDiagram
         int stock_quantity
         string category_id FK
     }
-    
+
     CATEGORY ||--o{ PRODUCT : categorizes
     CATEGORY {
         string id PK
@@ -412,13 +412,13 @@ erDiagram
 erDiagram
     Customer ||--o{ Account : owns
     Customer ||--o{ Transaction : makes
-    
+
     Account ||--o{ Transaction : has
     Account ||--|| AccountType : is
-    
+
     Transaction ||--|| TransactionType : is
     Transaction ||--o{ TransactionDetail : contains
-    
+
     Customer {
         id customerId
         string name
@@ -426,7 +426,7 @@ erDiagram
         date dateJoined
         enum status
     }
-    
+
     Account {
         id accountId
         id customerId FK
@@ -435,7 +435,7 @@ erDiagram
         date openedDate
         enum status
     }
-    
+
     Transaction {
         id transactionId
         id accountId FK
@@ -456,34 +456,34 @@ graph TB
     subgraph "Internet"
         Users[fa:fa-users Users]
     end
-    
+
     subgraph "CDN Layer"
         CF[CloudFlare<br/>CDN & WAF]
     end
-    
+
     subgraph "AWS Region"
         subgraph "Public Subnet"
             ALB[Application<br/>Load Balancer]
             NAT[NAT Gateway]
         end
-        
+
         subgraph "Private Subnet A"
             EC2A[EC2 Instance<br/>App Server 1]
             ECS1[ECS Task<br/>API Service]
         end
-        
+
         subgraph "Private Subnet B"
             EC2B[EC2 Instance<br/>App Server 2]
             ECS2[ECS Task<br/>API Service]
         end
-        
+
         subgraph "Data Layer"
             RDS[(RDS<br/>PostgreSQL<br/>Multi-AZ)]
             REDIS[(ElastiCache<br/>Redis Cluster)]
             S3[S3 Bucket<br/>Static Assets]
         end
     end
-    
+
     Users -->|HTTPS| CF
     CF -->|HTTPS| ALB
     ALB -->|HTTP| EC2A
@@ -495,7 +495,7 @@ graph TB
     EC2A --> NAT
     EC2B --> NAT
     NAT -->|External APIs| Internet
-    
+
     style ALB fill:#ff9800,stroke:#f57c00
     style RDS fill:#1976d2,stroke:#0d47a1,color:#ffffff
     style REDIS fill:#d32f2f,stroke:#b71c1c,color:#ffffff
@@ -511,56 +511,56 @@ graph TB
         subgraph "Ingress"
             ING[Nginx Ingress<br/>Controller]
         end
-        
+
         subgraph "Application Namespace"
             subgraph "Frontend Pods"
                 FE1[Frontend<br/>Pod 1]
                 FE2[Frontend<br/>Pod 2]
                 FE3[Frontend<br/>Pod 3]
             end
-            
+
             subgraph "Backend Pods"
                 BE1[Backend<br/>Pod 1]
                 BE2[Backend<br/>Pod 2]
             end
-            
+
             subgraph "Worker Pods"
                 W1[Worker<br/>Pod 1]
                 W2[Worker<br/>Pod 2]
             end
         end
-        
+
         subgraph "System Namespace"
             PROM[Prometheus]
             GRAF[Grafana]
             EFK[EFK Stack]
         end
-        
+
         subgraph "Data Namespace"
             PG[PostgreSQL<br/>StatefulSet]
             REDIS[Redis<br/>StatefulSet]
         end
     end
-    
+
     ING --> FE1
     ING --> FE2
     ING --> FE3
-    
+
     FE1 --> BE1
     FE1 --> BE2
     FE2 --> BE1
     FE2 --> BE2
     FE3 --> BE1
     FE3 --> BE2
-    
+
     BE1 --> PG
     BE1 --> REDIS
     BE2 --> PG
     BE2 --> REDIS
-    
+
     W1 --> PG
     W2 --> PG
-    
+
     PROM -.->|Metrics| FE1
     PROM -.->|Metrics| BE1
     PROM -.->|Metrics| W1
@@ -579,57 +579,57 @@ graph TB
         Mobile[Mobile App]
         Web[Web App]
     end
-    
+
     subgraph "API Gateway"
         Gateway[Kong/AWS API GW<br/>- Rate Limiting<br/>- Authentication<br/>- Routing]
     end
-    
+
     subgraph "Service Mesh"
         subgraph "User Service"
             US[User Service<br/>- User CRUD<br/>- Profile Management]
             USD[(User DB)]
         end
-        
+
         subgraph "Order Service"
             OS[Order Service<br/>- Order Processing<br/>- Order History]
             OSD[(Order DB)]
         end
-        
+
         subgraph "Payment Service"
             PS[Payment Service<br/>- Payment Processing<br/>- Refunds]
             PSD[(Payment DB)]
         end
-        
+
         subgraph "Notification Service"
             NS[Notification Service<br/>- Email<br/>- SMS<br/>- Push]
         end
-        
+
         subgraph "Inventory Service"
             IS[Inventory Service<br/>- Stock Management<br/>- Availability]
             ISD[(Inventory DB)]
         end
     end
-    
+
     Client --> Gateway
     Mobile --> Gateway
     Web --> Gateway
-    
+
     Gateway --> US
     Gateway --> OS
     Gateway --> PS
-    
+
     OS --> US
     OS --> PS
     OS --> IS
     OS --> NS
-    
+
     PS --> NS
-    
+
     US --> USD
     OS --> OSD
     PS --> PSD
     IS --> ISD
-    
+
     style Gateway fill:#ff9800,stroke:#f57c00
 ```
 
@@ -644,17 +644,17 @@ graph LR
         Worker[Background Worker]
         Scheduler[Scheduled Jobs]
     end
-    
+
     subgraph "Event Bus"
         EB[Event Bus<br/>Kafka/RabbitMQ]
-        
+
         subgraph "Topics/Exchanges"
             UserEvents[user.events]
             OrderEvents[order.events]
             PaymentEvents[payment.events]
         end
     end
-    
+
     subgraph "Event Consumers"
         Analytics[Analytics Service]
         Notification[Notification Service]
@@ -662,24 +662,24 @@ graph LR
         Search[Search Indexer]
         Cache[Cache Updater]
     end
-    
+
     API -->|Publish| UserEvents
     API -->|Publish| OrderEvents
     Worker -->|Publish| PaymentEvents
     Scheduler -->|Publish| UserEvents
-    
+
     UserEvents -->|Subscribe| Analytics
     UserEvents -->|Subscribe| Audit
     UserEvents -->|Subscribe| Search
-    
+
     OrderEvents -->|Subscribe| Notification
     OrderEvents -->|Subscribe| Analytics
     OrderEvents -->|Subscribe| Search
-    
+
     PaymentEvents -->|Subscribe| Notification
     PaymentEvents -->|Subscribe| Audit
     PaymentEvents -->|Subscribe| Analytics
-    
+
     style EB fill:#4caf50,stroke:#2e7d32
 ```
 
@@ -692,31 +692,31 @@ graph LR
 ```mermaid
 graph TD
     Start[Order Received] --> CheckStock{In Stock?}
-    
+
     CheckStock -->|Yes| CheckPayment{Payment Method}
     CheckStock -->|No| BackOrder{Accept Backorder?}
-    
+
     BackOrder -->|Yes| CheckPayment
     BackOrder -->|No| CancelOrder[Cancel Order]
-    
+
     CheckPayment -->|Credit Card| ProcessCC{Process Payment}
     CheckPayment -->|PayPal| ProcessPP{Process PayPal}
     CheckPayment -->|Invoice| CheckCredit{Check Credit}
-    
+
     ProcessCC -->|Success| FulfillOrder[Fulfill Order]
     ProcessCC -->|Declined| RetryPayment{Retry?}
-    
+
     ProcessPP -->|Success| FulfillOrder
     ProcessPP -->|Failed| RetryPayment
-    
+
     CheckCredit -->|Approved| FulfillOrder
     CheckCredit -->|Denied| RequestPayment[Request Prepayment]
-    
+
     RetryPayment -->|Yes| CheckPayment
     RetryPayment -->|No| CancelOrder
-    
+
     FulfillOrder --> ShipOrder[Ship Order]
-    
+
     style CheckStock fill:#ffd54f,stroke:#f9a825
     style CheckPayment fill:#ffd54f,stroke:#f9a825
     style ProcessCC fill:#64b5f6,stroke:#1976d2
@@ -731,32 +731,32 @@ graph TD
 ```mermaid
 graph TD
     Request[User Request] --> CheckFlag{Feature Flag Enabled?}
-    
+
     CheckFlag -->|No| OldPath[Use Old Implementation]
     CheckFlag -->|Yes| CheckUser{Check User Criteria}
-    
+
     CheckUser --> CheckPercentage{In Rollout %?}
     CheckPercentage -->|No| OldPath
     CheckPercentage -->|Yes| CheckRegion{Allowed Region?}
-    
+
     CheckRegion -->|No| OldPath
     CheckRegion -->|Yes| CheckPlan{Premium Plan?}
-    
+
     CheckPlan -->|No| CheckBeta{Beta User?}
     CheckPlan -->|Yes| NewPath[Use New Implementation]
-    
+
     CheckBeta -->|No| OldPath
     CheckBeta -->|Yes| NewPath
-    
+
     NewPath --> Monitor[Monitor Performance]
     OldPath --> StandardPath[Standard Processing]
-    
+
     Monitor --> Success{Success?}
     Success -->|Yes| Complete[Complete Request]
     Success -->|No| Fallback[Fallback to Old]
     Fallback --> StandardPath
     StandardPath --> Complete
-    
+
     style CheckFlag fill:#ffd54f,stroke:#f9a825
     style NewPath fill:#81c784,stroke:#388e3c
     style OldPath fill:#90caf9,stroke:#1976d2
@@ -882,15 +882,11 @@ jobs:
 // Using mermaid CLI
 const mermaid = require("@mermaid-js/mermaid-cli");
 
-await mermaid.run(
-  "input.mmd",
-  "output.svg",
-  {
-    puppeteerConfig: { headless: true },
-    svgId: "diagram-id",
-    outputFormat: "svg",
-  },
-);
+await mermaid.run("input.mmd", "output.svg", {
+  puppeteerConfig: { headless: true },
+  svgId: "diagram-id",
+  outputFormat: "svg",
+});
 ```
 
 #### 2. **PNG Export (For Presentations)**
@@ -944,7 +940,7 @@ graph LR
 graph TD
     A[Start] --> B[Process]
     B --> C[End]
-    
+
     style A fill:#81c784,stroke:#388e3c
     style B fill:#64b5f6,stroke:#1976d2
     style C fill:#e57373,stroke:#c62828
@@ -967,10 +963,10 @@ Start with high-level overview diagrams and link to detailed diagrams:
 
 ```mermaid
 graph LR
-    A[Start<br/>aria-label='Process start'] 
+    A[Start<br/>aria-label='Process start']
     B[Process Data<br/>aria-label='Main processing step']
     C[Complete<br/>aria-label='Process complete']
-    
+
     A -->|Step 1| B
     B -->|Step 2| C
 ```
@@ -988,7 +984,7 @@ sequenceDiagram
     participant F as Frontend
     participant A as API
     participant D as Database
-    
+
     U->>F: Fill registration form
     F->>A: POST /api/register
     A->>D: Check email exists
@@ -1026,12 +1022,12 @@ graph TD
         A1 --> A2
         A2 --> A3
     end
-    
+
     subgraph "Group Related Items"
         B1 --> B2
         B2 --> B3
     end
-    
+
     A3 --> B1
 ````
 
@@ -1049,7 +1045,7 @@ graph TD
     Retry --> Fail
     Success --> End
     Fail --> End
-    
+
     style Error fill:#ffcdd2,stroke:#d32f2f
     style Fail fill:#ef5350,stroke:#c62828,color:#fff
     style Success fill:#c8e6c9,stroke:#388e3c
@@ -1065,14 +1061,14 @@ sequenceDiagram
     participant App
     participant Auth
     participant DB
-    
+
     User->>App: Login request
     App->>Auth: Validate credentials
     Auth->>DB: Check user
     DB-->>Auth: User data
     Auth-->>App: Generate token
     App-->>User: Return token
-    
+
     User->>App: API request + token
     App->>Auth: Validate token
     Auth-->>App: Token valid
@@ -1085,22 +1081,22 @@ sequenceDiagram
 graph LR
     Dev[Developer] --> Git[Git Push]
     Git --> CI{CI Pipeline}
-    
+
     CI --> Test[Run Tests]
     CI --> Lint[Lint Code]
     CI --> Build[Build App]
-    
+
     Test --> Quality{Quality Gate}
     Lint --> Quality
     Build --> Quality
-    
+
     Quality -->|Pass| Deploy[Deploy to Staging]
     Quality -->|Fail| Notify[Notify Developer]
-    
+
     Deploy --> E2E[E2E Tests]
     E2E -->|Pass| Prod[Deploy to Production]
     E2E -->|Fail| Rollback[Rollback]
-    
+
     style Quality fill:#ffd54f,stroke:#f9a825
     style Prod fill:#81c784,stroke:#388e3c
     style Rollback fill:#e57373,stroke:#c62828

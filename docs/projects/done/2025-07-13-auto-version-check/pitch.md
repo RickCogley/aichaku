@@ -23,6 +23,7 @@ Add automatic version checking when the CLI starts:
 
 1. **On every CLI command**, check if global files version matches CLI version
 2. **If mismatch detected**, show a friendly warning:
+
    ```
    ⚠️  Version mismatch detected:
    CLI version: v0.27.0
@@ -30,6 +31,7 @@ Add automatic version checking when the CLI starts:
 
    Run 'aichaku upgrade --global' to sync versions
    ```
+
 3. **Optional**: Add a `--check-versions` flag to see all version info
 4. **Future**: Consider auto-upgrading with user confirmation
 

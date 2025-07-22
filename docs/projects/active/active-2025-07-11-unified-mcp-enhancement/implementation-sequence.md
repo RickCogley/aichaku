@@ -16,7 +16,7 @@ gantt
     Process Management    :p1, 2025-07-11, 2d
     Feedback System      :p2, after p1, 1d
     Auto-Integration     :p3, after p2, 2d
-    
+
     section Week 2: Features
     Doc Generation       :p4, after p3, 2d
     Statistics System    :p5, after p4, 2d
@@ -34,6 +34,7 @@ gantt
 **URGENT Tasks**:
 
 1. **Implement Missing Feedback System**
+
    ```typescript
    // mcp-server/src/feedback-system.ts (SHOULD EXIST BUT MISSING)
    class AichakuFeedbackSystem {
@@ -44,6 +45,7 @@ gantt
    ```
 
 2. **Add Console Output to MCP Server**
+
    ```typescript
    // Update server.ts to output to stderr
    console.error("🪴 [Aichaku] 🔍 Tool invoked: review_file");
@@ -54,8 +56,9 @@ gantt
    ```
 
 3. **Integrate with Existing Tools**
+
    ```typescript
-   // Update review_file, get_standards, review_methodology
+   // Update review*file, get*standards, review_methodology
    // Add feedback calls to all tool handlers
    ```
 
@@ -74,6 +77,7 @@ gantt
 **Tasks**:
 
 1. **Create Process Management Layer**
+
    ```typescript
    // utils/mcp/process-manager.ts
    class MCPProcessManager {
@@ -85,6 +89,7 @@ gantt
    ```
 
 2. **Implement PID File Management**
+
    ```typescript
    // utils/mcp/pid-manager.ts
    class PIDManager {
@@ -95,6 +100,7 @@ gantt
    ```
 
 3. **Cross-Platform Handlers**
+
    ```typescript
    // utils/mcp/platform/unix.ts
    // utils/mcp/platform/windows.ts
@@ -117,6 +123,7 @@ gantt
 **Tasks**:
 
 1. **Create Feedback System**
+
    ```typescript
    // mcp-server/src/feedback-system.ts
    class FeedbackSystem {
@@ -127,6 +134,7 @@ gantt
    ```
 
 2. **Aichaku Branding Implementation**
+
    ```typescript
    // Brand identity system
    const AICHAKU_BRAND = {
@@ -142,6 +150,7 @@ gantt
    ```
 
 3. **Console Output Formatting**
+
    ```typescript
    // Rich console output with progress indicators
    // Timing-based disclosure (0ms, 1.5s, 2s thresholds)
@@ -163,6 +172,7 @@ gantt
 **Tasks**:
 
 1. **Enhanced Tool Registry**
+
    ```typescript
    // mcp-server/src/tool-registry.ts
    interface EnhancedMCPTool {
@@ -177,6 +187,7 @@ gantt
    ```
 
 2. **Intent Detection System**
+
    ```typescript
    // Natural language pattern matching
    const intentPatterns = {
@@ -187,6 +198,7 @@ gantt
    ```
 
 3. **Tool Chaining Engine**
+
    ```typescript
    // Auto-execute tool sequences for complex tasks
    class ToolChain {
@@ -211,6 +223,7 @@ gantt
 **Tasks**:
 
 1. **Project Analysis Tool**
+
    ```typescript
    // mcp-server/src/tools/analyze-project.ts
    export async function analyzeProject(
@@ -226,6 +239,7 @@ gantt
    ```
 
 2. **Documentation Generator**
+
    ```typescript
    // mcp-server/src/tools/generate-documentation.ts
    export async function generateDocumentation(
@@ -236,6 +250,7 @@ gantt
    ```
 
 3. **Template Creator**
+
    ```typescript
    // mcp-server/src/tools/create-doc-template.ts
    // Diátaxis-compliant templates (tutorial, how-to, reference, explanation)
@@ -263,18 +278,21 @@ gantt
 **Tasks**:
 
 1. **End-to-End Testing**
+
    ```typescript
    // Test: "Generate comprehensive project documentation"
    // Should auto-trigger: analyze → generate → review workflow
    ```
 
 2. **Standards Compliance**
+
    ```typescript
    // Ensure generated docs follow selected standards
    // Test with different standard combinations
    ```
 
 3. **Error Handling**
+
    ```typescript
    // Graceful failure handling
    // Partial generation recovery
@@ -299,6 +317,7 @@ gantt
 **Tasks**:
 
 1. **Statistics Collection System**
+
    ```typescript
    // mcp-server/src/statistics/collector.ts
    class StatisticsCollector {
@@ -309,6 +328,7 @@ gantt
    ```
 
 2. **Storage Abstraction**
+
    ```typescript
    // mcp-server/src/statistics/storage.ts
    interface StatisticsStorage {
@@ -319,6 +339,7 @@ gantt
    ```
 
 3. **Privacy Layer**
+
    ```typescript
    // mcp-server/src/statistics/privacy.ts
    class PrivacyManager {
@@ -343,6 +364,7 @@ gantt
 **Tasks**:
 
 1. **Dashboard Generator**
+
    ```typescript
    // mcp-server/src/statistics/dashboard.ts
    interface DashboardData {
@@ -354,6 +376,7 @@ gantt
    ```
 
 2. **Q&A Interface**
+
    ```typescript
    // Natural language question answering
    // "How often did I use security scanning?"
@@ -361,6 +384,7 @@ gantt
    ```
 
 3. **Export Capabilities**
+
    ```typescript
    // JSON and CSV export
    // Integration with external analytics tools
@@ -383,12 +407,14 @@ gantt
 **Tasks**:
 
 1. **Version Detection**
+
    ```typescript
    // Embed version in MCP binary
    // Check GitHub releases for updates
    ```
 
 2. **Upgrade Command**
+
    ```bash
    aichaku mcp --upgrade  # Check and install updates
    ```
@@ -408,6 +434,7 @@ gantt
 **Tasks**:
 
 1. **Update `/docs` Structure**
+
    ```
    docs/
    ├── tutorials/
@@ -426,6 +453,7 @@ gantt
    ```
 
 2. **Tool Documentation**
+
    ```typescript
    // Document all MCP tools with examples
    // Usage patterns and best practices
@@ -446,12 +474,14 @@ gantt
 **Tasks**:
 
 1. **Cross-Platform Testing**
+
    ```bash
    # Test on macOS, Linux, Windows
    # Verify all commands work correctly
    ```
 
 2. **Performance Testing**
+
    ```typescript
    // Large project documentation generation
    // Statistics system performance
@@ -459,6 +489,7 @@ gantt
    ```
 
 3. **Completion Statistics Display**
+
    ```typescript
    // Add MCP statistics to work completion summaries
    // Example: Show tool usage, timing, quality scores when finishing projects
@@ -468,7 +499,7 @@ gantt
    🪴 MCP Session Summary
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    🔍 Tools Used: ${stats.toolsUsed} operations
-   📊 Most Active: review_file (${stats.reviewCount}), get_standards (${stats.standardsCount})
+   📊 Most Active: review*file (${stats.reviewCount}), get*standards (${stats.standardsCount})
    ⚡ Avg Response: ${stats.avgResponseTime}ms
    ✨ Quality Score: ${stats.qualityScore}% (${
          stats.improvement > 0 ? "+" : ""
@@ -480,6 +511,7 @@ gantt
    ```
 
 4. **User Experience Testing**
+
    ```typescript
    // Complete workflows from user perspective
    // Feedback system usability

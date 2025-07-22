@@ -102,16 +102,17 @@ aichaku:
     shape_up:
       name: "Shape Up"
       description: "Basecamp's product development methodology with fixed time, variable scope"
-      triggers: [
-        "shape",
-        "appetite",
-        "pitch",
-        "betting table",
-        "6 weeks",
-        "cycle",
-        "bet",
-        "cool-down",
-      ]
+      triggers:
+        [
+          "shape",
+          "appetite",
+          "pitch",
+          "betting table",
+          "6 weeks",
+          "cycle",
+          "bet",
+          "cool-down",
+        ]
       best_for: "Features with unclear solutions, fixed timeline projects, avoiding scope creep"
       key_concepts:
         appetite: "Time willing to spend (not estimate)"
@@ -130,15 +131,16 @@ aichaku:
     scrum:
       name: "Scrum"
       description: "Iterative development with fixed-length sprints and defined roles"
-      triggers: [
-        "sprint",
-        "scrum",
-        "velocity",
-        "standup",
-        "product owner",
-        "backlog",
-        "retrospective",
-      ]
+      triggers:
+        [
+          "sprint",
+          "scrum",
+          "velocity",
+          "standup",
+          "product owner",
+          "backlog",
+          "retrospective",
+        ]
       best_for: "Teams needing predictable delivery, client visibility, regular rhythm"
       key_concepts:
         sprint: "Fixed time iteration (1-4 weeks)"
@@ -201,14 +203,15 @@ aichaku:
     xp:
       name: "Extreme Programming"
       description: "Engineering practices for high-quality software"
-      triggers: [
-        "TDD",
-        "test first",
-        "pair programming",
-        "refactor",
-        "XP",
-        "continuous integration",
-      ]
+      triggers:
+        [
+          "TDD",
+          "test first",
+          "pair programming",
+          "refactor",
+          "XP",
+          "continuous integration",
+        ]
       best_for: "Quality-critical code, learning teams, complex technical challenges"
       key_practices:
         - "Test-Driven Development"
@@ -282,7 +285,7 @@ aichaku:
 
 ## Size Comparison
 
-- **Old approach**: Full markdown content = 50KB+
+- **Old approach**: Full Markdown content = 50KB+
 - **New approach**: Rich YAML metadata = ~3-4KB
 - **Reduction**: ~92% while maintaining all essential information
 

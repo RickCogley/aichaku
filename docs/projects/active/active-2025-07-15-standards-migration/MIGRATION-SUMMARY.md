@@ -54,7 +54,7 @@ The new `/docs/standards/` structure contains:
 ├── architecture/          # Software architecture standards
 │   ├── 15-factor.md       # 15-Factor App methodology
 │   ├── 15-factor.yaml     # Metadata
-│   ├── clean-arch.md      # Clean Architecture principles  
+│   ├── clean-arch.md      # Clean Architecture principles
 │   ├── clean-arch.yaml    # Metadata
 │   └── metadata.yaml      # Category metadata
 ├── development/           # Development practices

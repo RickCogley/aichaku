@@ -14,18 +14,18 @@ legacy configuration formats to a unified system.
 graph TD
     A[Global Installation] --> B[Methodologies Auto-Discovery]
     A --> C[Project-Specific Standards Selection]
-    
+
     B --> D[shape-up]
-    B --> E[scrum] 
+    B --> E[scrum]
     B --> F[kanban]
     B --> G[lean]
     B --> H[xp]
     B --> I[scrumban]
-    
+
     C --> J[aichaku.json]
     J --> K[standards.selected]
     J --> L[standards.customStandards]
-    
+
     style B fill:#e1f5fe
     style C fill:#f3e5f5
     style J fill:#e8f5e8
@@ -98,7 +98,7 @@ interface AichakuConfig {
 ```json
 // standards.json (development standards)
 {
-  "version": "1.0.0", 
+  "version": "1.0.0",
   "selected": ["nist-csf", "tdd", "clean-arch"]
 }
 
@@ -466,7 +466,10 @@ assertEquals(jsonFiles, ["./.claude/aichaku/aichaku.json"]);
 
 // Verify no legacy files created
 const legacyFiles = await findFiles(".", "*standards*.json");
-assertEquals(legacyFiles.filter((f) => !f.includes("aichaku.json")), []);
+assertEquals(
+  legacyFiles.filter((f) => !f.includes("aichaku.json")),
+  [],
+);
 ```
 
 ### Dynamic Discovery Testing
@@ -587,10 +590,18 @@ async function collectConfigMetrics(): Promise<ConfigFormatMetrics> {
 ```typescript
 // Future: Programmatic API for configuration management
 export class AichakuConfigAPI {
-  async getUnifiedConfig(): Promise<AichakuConfig> {/* */}
-  async updateStandards(standards: string[]): Promise<void> {/* */}
-  async discoverMethodologies(): Promise<string[]> {/* */}
-  async validateConfiguration(): Promise<ValidationResult> {/* */}
+  async getUnifiedConfig(): Promise<AichakuConfig> {
+    /* */
+  }
+  async updateStandards(standards: string[]): Promise<void> {
+    /* */
+  }
+  async discoverMethodologies(): Promise<string[]> {
+    /* */
+  }
+  async validateConfiguration(): Promise<ValidationResult> {
+    /* */
+  }
 }
 ```
 

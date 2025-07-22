@@ -62,7 +62,7 @@ A `jsdoc-checker` hook could:
 
 ```typescript
 async function jsdocChecker(input: HookInput): Promise<void> {
-  const filePath = input.tool_input?.file_path;
+  const filePath = input.tool * input?.file * path;
 
   if (filePath && filePath.endsWith(".ts")) {
     // Parse TypeScript file for exported items

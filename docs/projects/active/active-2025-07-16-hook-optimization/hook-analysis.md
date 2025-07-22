@@ -11,7 +11,7 @@ API usage cutoff likely due to excessive hook invocations.
 Based on log analysis from `/tmp/aichaku-hooks.log`:
 
 1. **aichaku-feedback**: 1,719 calls ⚠️ CRITICAL
-   - Runs on EVERY tool use (matcher: ".*")
+   - Runs on EVERY tool use (matcher: ".\*")
    - Provides minimal value (just logs "Hook system active ✓")
    - Primary culprit for API overuse
 
@@ -23,7 +23,7 @@ Based on log analysis from `/tmp/aichaku-hooks.log`:
    - Runs on Write/Edit/MultiEdit operations
    - Shows project activity reminders
 
-4. **markdown-review**: 360 calls
+4. **Markdown-review**: 360 calls
    - Runs on Write/Edit/MultiEdit operations
    - Calls MCP integration
 
@@ -52,7 +52,7 @@ Based on log analysis from `/tmp/aichaku-hooks.log`:
 2. **REFINE commit-validator** - Should only run on actual git commands, not all
    bash commands
 3. **CONSOLIDATE PostToolUse hooks** - Combine docs-review, jsdoc-checker, and
-   markdown-review into one
+   Markdown-review into one
 
 ### Hook Configuration Changes
 
@@ -61,10 +61,12 @@ Current problematic configuration:
 ```json
 {
   "matcher": ".*",
-  "hooks": [{
-    "type": "command",
-    "command": "deno run ... aichaku-feedback"
-  }]
+  "hooks": [
+    {
+      "type": "command",
+      "command": "deno run ... aichaku-feedback"
+    }
+  ]
 }
 ```
 

@@ -163,53 +163,53 @@ from pages.registration_page import RegistrationPage
 from services.email_service import EmailService
 
 @given('I am on the registration page')
-def step_on_registration_page(context):
+def step*on*registration_page(context):
     context.browser = webdriver.Chrome()
     context.page = RegistrationPage(context.browser)
     context.page.navigate()
 
 @when('I fill in the registration form with')
-def step_fill_registration_form(context):
+def step*fill*registration_form(context):
     for row in context.table:
         field = row['Field']
         value = row['Value']
         context.page.fill_field(field, value)
-        
+
     # Store email for later verification
     context.user_email = context.table[1]['Value']
 
 @when('I submit the registration form')
-def step_submit_form(context):
+def step*submit*form(context):
     context.page.submit_form()
 
 @then('I should see "{message}"')
-def step_verify_message(context, message):
+def step*verify*message(context, message):
     assert context.page.has_message(message), \
         f"Expected to see '{message}' but it was not found"
 
 @then('I should receive a welcome email at "{email}"')
-def step_verify_email(context, email):
+def step*verify*email(context, email):
     email_service = EmailService()
-    assert email_service.has_email_for(email), \
+    assert email*service.has*email_for(email), \
         f"No welcome email found for {email}"
 
 # pages/registration_page.py
 class RegistrationPage:
-    def __init__(self, browser):
+    def **init**(self, browser):
         self.browser = browser
         self.url = "https://example.com/register"
-        
+
     def navigate(self):
         self.browser.get(self.url)
-        
-    def fill_field(self, field_name, value):
-        field = self.browser.find_element_by_name(field_name.lower())
+
+    def fill*field(self, field*name, value):
+        field = self.browser.find*element*by*name(field*name.lower())
         field.send_keys(value)
-        
+
     def submit_form(self):
-        submit_button = self.browser.find_element_by_id("submit")
+        submit*button = self.browser.find*element*by*id("submit")
         submit_button.click()
-        
+
     def has_message(self, message):
         return message in self.browser.page_source
 ```
@@ -219,10 +219,10 @@ class RegistrationPage:
 ```java
 // src/test/resources/features/payment.feature
 Feature: Payment Processing
-  
+
   Background:
     Given the payment service is available
-    
+
   Scenario: Process valid credit card payment
     Given a customer with a valid credit card
     When they make a payment of $100.00
@@ -238,30 +238,30 @@ public class PaymentSteps {
     private PaymentService paymentService;
     private Customer customer;
     private PaymentResult result;
-    
+
     @Given("the payment service is available")
     public void thePaymentServiceIsAvailable() {
         paymentService = new PaymentService();
         assertTrue(paymentService.isAvailable());
     }
-    
+
     @Given("a customer with a valid credit card")
     public void aCustomerWithValidCreditCard() {
         customer = new Customer("John Doe");
         customer.setCreditCard(new CreditCard("4111111111111111", "12/25", "123"));
     }
-    
+
     @When("they make a payment of ${double}")
     public void theyMakePayment(double amount) {
         PaymentRequest request = new PaymentRequest(customer, amount);
         result = paymentService.processPayment(request);
     }
-    
+
     @Then("the payment should be approved")
     public void thePaymentShouldBeApproved() {
         assertEquals(PaymentStatus.APPROVED, result.getStatus());
     }
-    
+
     @Then("the transaction ID should be generated")
     public void theTransactionIdShouldBeGenerated() {
         assertNotNull(result.getTransactionId());
@@ -273,28 +273,28 @@ public class PaymentSteps {
 public class PaymentService {
     private final PaymentGateway gateway;
     private final EmailService emailService;
-    
+
     public PaymentService() {
         this.gateway = new PaymentGateway();
         this.emailService = new EmailService();
     }
-    
+
     public PaymentResult processPayment(PaymentRequest request) {
         // Validate request
         validatePaymentRequest(request);
-        
+
         // Process payment through gateway
         GatewayResponse response = gateway.charge(
             request.getCustomer().getCreditCard(),
             request.getAmount()
         );
-        
+
         // Create result
         PaymentResult result = new PaymentResult(
             response.isApproved() ? PaymentStatus.APPROVED : PaymentStatus.DECLINED,
             response.getTransactionId()
         );
-        
+
         // Send confirmation if approved
         if (result.getStatus() == PaymentStatus.APPROVED) {
             emailService.sendPaymentConfirmation(
@@ -302,7 +302,7 @@ public class PaymentService {
                 result
             );
         }
-        
+
         return result;
     }
 }
@@ -313,7 +313,7 @@ public class PaymentService {
 ```go
 // features/api.feature
 Feature: User API
-  
+
   Scenario: Create new user via API
     Given the API is running
     When I send a POST request to "/users" with:
@@ -343,7 +343,7 @@ import (
     "fmt"
     "net/http"
     "strings"
-    
+
     "github.com/cucumber/godog"
 )
 
@@ -367,18 +367,18 @@ func (a *apiFeature) iSendARequestToWith(method, path string, body *godog.DocStr
     if err != nil {
         return err
     }
-    
+
     req.Header.Set("Content-Type", "application/json")
-    
+
     client := &http.Client{}
     resp, err := client.Do(req)
     if err != nil {
         return err
     }
-    
+
     a.resp = httptest.NewRecorder()
     a.resp.WriteHeader(resp.StatusCode)
-    
+
     return nil
 }
 
@@ -391,7 +391,7 @@ func (a *apiFeature) theResponseStatusShouldBe(expectedStatus int) error {
 
 func InitializeScenario(ctx *godog.ScenarioContext) {
     api := &apiFeature{}
-    
+
     ctx.Step(`^the API is running$`, api.theAPIIsRunning)
     ctx.Step(`^I send a (GET|POST|PUT|DELETE) request to "([^"]*)" with:$`, api.iSendARequestToWith)
     ctx.Step(`^the response status should be (\d+)$`, api.theResponseStatusShouldBe)
@@ -472,12 +472,12 @@ When("I submit the form", function () {
 ```python
 # ❌ Bad: UI-specific
 @when('I click the button with id "submit-btn"')
-def step_click_button_by_id(context, button_id):
-    context.browser.find_element_by_id(button_id).click()
+def step*click*button*by*id(context, button_id):
+    context.browser.find*element*by*id(button*id).click()
 
 # ✅ Good: Action-focused
 @when('I submit my application')
-def step_submit_application(context):
+def step*submit*application(context):
     context.application_page.submit()
 ```
 
@@ -510,7 +510,7 @@ When("I log in as {string}", async function (email: string) {
 
 ```gherkin
 Feature: User Management API
-  
+
   Scenario: Retrieve user information
     Given a user exists with id "12345"
     When I request user details for id "12345"
@@ -526,7 +526,7 @@ Feature: User Management API
 
 ```gherkin
 Feature: Mobile Shopping
-  
+
   Scenario: Browse products offline
     Given I have previously viewed the "Electronics" category
     And I am now offline
@@ -539,7 +539,7 @@ Feature: Mobile Shopping
 
 ```gherkin
 Feature: Order Processing Service
-  
+
   Scenario: Process order with inventory check
     Given the Inventory Service has 10 units of "SKU-123"
     And the Payment Service is available

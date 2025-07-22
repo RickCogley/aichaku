@@ -19,7 +19,7 @@ aichaku/
 ├── CHANGELOG.md                # Release history
 ├── CONTRIBUTING.md             # Contribution guide
 ├── SECURITY.md                 # Security policy
-├── CODE_OF_CONDUCT.md          # Community guidelines
+├── CODE*OF*CONDUCT.md          # Community guidelines
 │
 ├── src/                        # Source code
 │   ├── commands/               # CLI commands
@@ -235,7 +235,7 @@ kanban/
 
 ## Standards structure
 
-Each standard is a single markdown file:
+Each standard is a single Markdown file:
 
 ```
 standards/
@@ -399,7 +399,7 @@ archived-2025-01-15-legacy-migration/ └── [old project files]
 | Type | Convention | Example |
 |------|------------|---------|
 | Commands | lowercase | `init.ts` |
-| Tests | append _test | `init_test.ts` |
+| Tests | append *test | `init*test.ts` |
 | Types | types.ts | `types.ts` |
 | Config | .config.ts | `nagare.config.ts` |
 

@@ -64,17 +64,20 @@ The existing script accepts:
 ### Implementation Plan
 
 1. **Create hooks directory during Aichaku install**
+
    ```bash
    mkdir -p ~/.claude/aichaku/hooks
    ```
 
 2. **Install script with proper permissions**
+
    ```bash
    cp summarize-conversation.ts ~/.claude/aichaku/hooks/
    chmod +x ~/.claude/aichaku/hooks/summarize-conversation.ts
    ```
 
 3. **Add to Aichaku hooks command**
+
    ```bash
    # New hook template
    "conversation-summary": {
@@ -86,7 +89,7 @@ The existing script accepts:
          command: "deno run --allow-read --allow-run ~/.claude/aichaku/hooks/summarize-conversation.ts"
        },
        {
-         type: "PreCompact", 
+         type: "PreCompact",
          command: "deno run --allow-read --allow-run ~/.claude/aichaku/hooks/summarize-conversation.ts"
        }
      ]

@@ -36,9 +36,9 @@ metadata = {
 
 **Legacy File Evolution Timeline**:
 
-```
+```text
 2024: .aichaku-standards.json          # Original format
-2025: .aichaku-standards.json → standards.json + doc-standards.json  # Split format  
+2025: .aichaku-standards.json → standards.json + doc-standards.json  # Split format
 2025: All formats → aichaku.json       # Unified format (current)
 ```
 
@@ -152,9 +152,9 @@ proper build:upload task from deno.json
 
 ### Test Environment Verification
 
-```bash
+````bash
 # Clean test in /tmp/aichaku-test
-$ aichaku standards --add "custom:company-style"  
+$ aichaku standards --add "custom:company-style"
 ✅ Added custom standard custom:company-style
 ✅ Updated project configuration (1 standards)
 
@@ -166,9 +166,11 @@ $ aichaku integrate
 📚 Methodologies available: 6  # Auto-discovered globally
 
 $ cat ./.claude/aichaku/aichaku.json
+
+```json
 {
   "version": "0.32.0",
-  "installedAt": "2025-07-17T12:06:16.049Z", 
+  "installedAt": "2025-07-17T12:06:16.049Z",
   "installationType": "local",
   "lastUpgrade": null,
   "standards": {
@@ -177,7 +179,7 @@ $ cat ./.claude/aichaku/aichaku.json
     "customStandards": { ... }
   }
 }
-```
+````
 
 ### Legacy File Prevention
 

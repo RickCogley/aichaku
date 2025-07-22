@@ -84,11 +84,11 @@ This educational approach is completely missing from today's plan.
 
 Yesterday specifies configuration options:
 
-- `AICHAKU_FEEDBACK_LEVEL`: Control feedback verbosity (minimal, standard,
+- `AICHAKU*FEEDBACK*LEVEL`: Control feedback verbosity (minimal, standard,
   verbose)
-- `AICHAKU_PROGRESS_THRESHOLD`: Milliseconds before showing progress
+- `AICHAKU*PROGRESS*THRESHOLD`: Milliseconds before showing progress
   (default: 1500)
-- `AICHAKU_TIMING_THRESHOLD`: Milliseconds before showing timing (default: 3000)
+- `AICHAKU*TIMING*THRESHOLD`: Milliseconds before showing timing (default: 3000)
 
 Today's plan doesn't mention these configuration options.
 

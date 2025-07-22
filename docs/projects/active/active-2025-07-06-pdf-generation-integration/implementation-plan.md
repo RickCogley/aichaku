@@ -102,7 +102,7 @@ export interface Settings {
 
 ```typescript
 // src/config/defaults.ts
-export const DEFAULT_PDF_SETTINGS: PDFSettings = {
+export const DEFAULT*PDF*SETTINGS: PDFSettings = {
   enabled: true,
   autoGenerate: ["final-summary", "change-summary"],
   engine: "auto",

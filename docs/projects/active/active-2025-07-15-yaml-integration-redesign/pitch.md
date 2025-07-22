@@ -8,7 +8,7 @@ several pain points:
 ### 1. CLAUDE.md File Bloat
 
 Currently, when a user selects standards like OWASP, TDD, and Diataxis, the
-entire markdown content of each standard is injected into CLAUDE.md. This
+entire Markdown content of each standard is injected into CLAUDE.md. This
 creates files that are:
 
 - **10KB-50KB+** in size for moderate selections
@@ -43,7 +43,7 @@ summary:
 rules: [...]
 ```
 
-But integration just dumps the entire markdown file instead of leveraging this
+But integration just dumps the entire Markdown file instead of leveraging this
 structure.
 
 ### 4. Inflexible Integration
@@ -80,16 +80,17 @@ aichaku:
   # All methodologies always available (for reference)
   methodologies:
     shape_up:
-      triggers: [
-        "shape",
-        "appetite",
-        "pitch",
-        "betting table",
-        "6 weeks",
-        "cycle",
-        "bet",
-        "cool-down",
-      ]
+      triggers:
+        [
+          "shape",
+          "appetite",
+          "pitch",
+          "betting table",
+          "6 weeks",
+          "cycle",
+          "bet",
+          "cool-down",
+        ]
       best_for: "Features with unclear solutions, fixed timeline projects, avoiding scope creep"
     scrum:
       triggers: ["sprint", "scrum", "velocity", "standup", "product owner"]
@@ -151,7 +152,7 @@ graph TD
     E --> F[Load selected standards metadata]
     F --> G[Generate YAML block]
     G --> H[Replace in CLAUDE.md]
-    
+
     I[Claude reads CLAUDE.md] --> J[Sees compact YAML]
     J --> K[Knows triggers/focus]
     K --> L[Can load full content via integration_url if needed]

@@ -10,7 +10,7 @@
 - [x] Identify completed projects still marked as active
 - [x] Rename active-2025-07-07-fix-integration-behavior to complete-
 - [x] Rename active-2025-07-06-aichaku-refactor to complete-
-- [x] Move stray RELEASE_NOTES_v0.4.2.md to its own folder
+- [x] Move stray RELEASE*NOTES*v0.4.2.md to its own folder
 - [x] Verify all documents are properly organized
 
 ## Updates

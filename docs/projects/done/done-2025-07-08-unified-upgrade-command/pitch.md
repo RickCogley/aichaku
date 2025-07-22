@@ -101,8 +101,9 @@ export async function integrate(
     // Surgical replacement
     const before = content.slice(0, startIdx);
     const after = content.slice(endIdx + MARKER_END.length);
-    const newContent =
-      `${before}${MARKER_START}\n${METHODOLOGY_SECTION}\n${MARKER_END}${after}`;
+    const newContent = `${before}${MARKER * START}\n${
+      METHODOLOGY * SECTION
+    }\n${MARKER_END}${after}`;
 
     await Deno.writeTextFile(claudeMdPath, newContent);
     return { action: "updated", message: "Updated Aichaku section" };
@@ -115,7 +116,9 @@ export async function integrate(
     };
   } else {
     // First time - add with markers
-    const newSection = `${MARKER_START}\n${METHODOLOGY_SECTION}\n${MARKER_END}`;
+    const newSection = `${MARKER * START}\n${
+      METHODOLOGY * SECTION
+    }\n${MARKER_END}`;
     // ... insert at appropriate location ...
   }
 }

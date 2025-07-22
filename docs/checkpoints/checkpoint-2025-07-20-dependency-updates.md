@@ -12,7 +12,7 @@
 
 ## Key Technical Decisions
 
-- Applied all available patch and minor version updates for @std/* packages as
+- Applied all available patch and minor version updates for @std/\* packages as
   they are considered safe
 - Maintained semantic versioning constraints (^x.y.z) to allow future patch
   updates
@@ -20,7 +20,7 @@
   postRelease hook functionality
 - Kept MCP SDK at current version as it was already latest
 - Updated all three project components (main, aichaku-mcp-server,
-  github-mcp-server) in sync
+  GitHub-mcp-server) in sync
 
 ## Files Created/Modified
 
@@ -30,9 +30,9 @@
 
 ### Modified
 
-- `deno.json` - Updated nagare to 2.13.1 and all @std/* imports to latest
+- `deno.json` - Updated nagare to 2.13.1 and all @std/\* imports to latest
   versions
-- `mcp/aichaku-mcp-server/deno.json` - Updated @std/* dependencies including
+- `mcp/aichaku-mcp-server/deno.json` - Updated @std/\* dependencies including
   @std/yaml
 - `mcp/github-mcp-server/deno.json` - Updated @std/path, @std/fs, @std/crypto
 - `deno.lock` - Automatically updated to reflect new dependency versions

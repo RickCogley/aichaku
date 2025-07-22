@@ -31,7 +31,7 @@
 
 ### Experiment Plan
 
-```
+```text
 Hypothesis: [What we believe]
 Test: [Minimum way to validate]
 Measure: [Key metric]
@@ -41,7 +41,7 @@ Timeline: [Days not months]
 
 ### MVP Definition
 
-```
+```text
 Problem: [User pain point]
 Riskiest assumption: [What might be wrong]
 MVP features:
@@ -52,7 +52,7 @@ NOT doing: [Everything else]
 
 ### Learning Report
 
-```
+```text
 Tested: [What we tried]
 Result: [What happened]
 Learning: [What we now know]

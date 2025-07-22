@@ -44,15 +44,18 @@ class AichakuMCPServer {
   private globalMethodologiesPath = "~/.claude/methodologies";
 
   async initialize() {
-    const server = new Server({
-      name: "aichaku-reviewer",
-      version: "1.0.0",
-    }, {
-      capabilities: {
-        tools: {},
-        resources: {},
+    const server = new Server(
+      {
+        name: "aichaku-reviewer",
+        version: "1.0.0",
       },
-    });
+      {
+        capabilities: {
+          tools: {},
+          resources: {},
+        },
+      },
+    );
 
     // Register tools
     server.setRequestHandler(ListToolsRequestSchema, async () => ({
@@ -70,7 +73,7 @@ class AichakuMCPServer {
           },
         },
         {
-          name: "list_active_standards",
+          name: "list*active*standards",
           description: "Show which standards are active for this project",
           inputSchema: { type: "object", properties: {} },
         },
@@ -93,7 +96,7 @@ class AichakuMCPServer {
       switch (request.params.name) {
         case "review_code":
           return await this.reviewCode(request.params.arguments);
-        case "list_active_standards":
+        case "list*active*standards":
           return await this.listActiveStandards();
         case "configure_standards":
           return await this.configureStandards(request.params.arguments);
@@ -127,10 +130,12 @@ class AichakuMCPServer {
 
     // 5. Return structured review
     return {
-      content: [{
-        type: "text",
-        text: await this.performReview(prompt, args),
-      }],
+      content: [
+        {
+          type: "text",
+          text: await this.performReview(prompt, args),
+        },
+      ],
     };
   }
 
@@ -159,19 +164,11 @@ class AichakuMCPServer {
 // .aichaku-review.json (in project root)
 {
   "methodologies": ["shape-up"],
-  "standards": [
-    "owasp-web",
-    "nist-csf",
-    "google-typescript",
-    "15-factor-apps"
-  ],
+  "standards": ["owasp-web", "nist-csf", "google-typescript", "15-factor-apps"],
   "strictness": "strict",
-  "exclude": [
-    "**/*.test.ts",
-    "**/vendor/**"
-  ],
+  "exclude": ["**/*.test.ts", "**/vendor/**"],
   "custom_rules": {
-    "max_file_size": 1000,
+    "max*file*size": 1000,
     "require_tests": true
   }
 }
@@ -202,30 +199,34 @@ class AichakuMCPServer {
       {
         "name": "Aichaku Review on Write",
         "matcher": "Write|Edit",
-        "hooks": [{
-          "type": "mcp",
-          "server": "aichaku-reviewer",
-          "tool": "review_code",
-          "params": {
-            "files": ["${TOOL_INPUT_FILE_PATH}"],
-            "context": "pre-write"
+        "hooks": [
+          {
+            "type": "mcp",
+            "server": "aichaku-reviewer",
+            "tool": "review_code",
+            "params": {
+              "files": ["${TOOL*INPUT*FILE_PATH}"],
+              "context": "pre-write"
+            }
           }
-        }]
+        ]
       }
     ],
     "PostToolUse": [
       {
         "name": "Aichaku Review on Commit",
         "matcher": "Bash(git commit)",
-        "hooks": [{
-          "type": "mcp",
-          "server": "aichaku-reviewer",
-          "tool": "review_code",
-          "params": {
-            "diff": "${git diff --cached}",
-            "context": "pre-commit"
+        "hooks": [
+          {
+            "type": "mcp",
+            "server": "aichaku-reviewer",
+            "tool": "review_code",
+            "params": {
+              "diff": "${git diff --cached}",
+              "context": "pre-commit"
+            }
           }
-        }]
+        ]
       }
     ]
   }

@@ -99,11 +99,11 @@ Claude: I see there are some type issues
 ```
 Claude: Here's the code you requested
 MCP: Found 5 issues + guidance
-Claude: I apologize - I used 'any' types despite your CLAUDE.md 
+Claude: I apologize - I used 'any' types despite your CLAUDE.md
         explicitly forbidding them. Let me fix these and remember
         to use proper types going forward:
         [Shows fixes]
-        
+
         I'll be more careful to follow your TypeScript standards.
 [Claude adjusts behavior for rest of session]
 ```
@@ -125,8 +125,9 @@ class PatternTracker {
   }
 
   getMostCommonViolation(): string {
-    return Array.from(this.violations.entries())
-      .sort((a, b) => b[1].count - a[1].count)[0][0];
+    return Array.from(this.violations.entries()).sort((a, b) =>
+      b[1].count - a[1].count
+    )[0][0];
   }
 }
 ```
@@ -137,13 +138,13 @@ class PatternTracker {
 generateContextualGuidance(violations: Map<string, ViolationInfo>): string {
   const topViolation = this.getMostCommonViolation(violations);
   const count = violations.get(topViolation).count;
-  
+
   if (count > 5) {
     return `CRITICAL PATTERN: You've made the same ${topViolation} mistake ${count} times. ` +
            `This suggests you may have misunderstood the requirement. ` +
            `Please re-read the ${this.getRelevantSection(topViolation)} section of CLAUDE.md`;
   }
-  
+
   return this.getStandardGuidance(topViolation);
 }
 ```

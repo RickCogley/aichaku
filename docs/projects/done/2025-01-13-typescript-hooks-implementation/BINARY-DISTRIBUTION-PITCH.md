@@ -31,6 +31,7 @@ distribution system**:
    - Same download and installation logic
 
 2. **Binary Compilation**
+
    ```bash
    # Add to build process
    deno compile --allow-read --allow-write --allow-env \
@@ -39,6 +40,7 @@ distribution system**:
    ```
 
 3. **Automatic Installation During Init**
+
    ```typescript
    // In init.ts - add after standards installation
    if (isGlobal) {
@@ -49,6 +51,7 @@ distribution system**:
    ```
 
 4. **Update Hook Commands**
+
    ```typescript
    // Before: Requires Deno
    command: `deno run --allow-read --allow-write ~/.claude/aichaku/hooks/aichaku-hooks.ts path-validator`;

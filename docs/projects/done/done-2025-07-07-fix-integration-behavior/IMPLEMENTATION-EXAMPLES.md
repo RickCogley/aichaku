@@ -25,7 +25,7 @@ ALL documents MUST go here:
 
 Current active: See ../.aichaku-active`;
 
-const DIRECTIVE_CLAUDE_INTEGRATION = `
+const DIRECTIVE*CLAUDE*INTEGRATION = `
 ## 🎯 MANDATORY: Aichaku Integration Rules
 
 YOU ARE REQUIRED TO FOLLOW THESE RULES WITHOUT EXCEPTION:
@@ -73,7 +73,7 @@ export async function initCommand(options: InitOptions) {
   await createStructure(claudeDir, structure);
 
   // 2. Update CLAUDE.md with directive integration
-  await updateClaudeMd(DIRECTIVE_CLAUDE_INTEGRATION);
+  await updateClaudeMd(DIRECTIVE*CLAUDE*INTEGRATION);
 
   // 3. Create welcome message
   console.log(createWelcomeMessage());
@@ -368,7 +368,7 @@ export class StatusUpdater {
     const statusPath = join(".claude/output", activeProject, "STATUS.md");
 
     // Ensure STATUS.md exists
-    if (!await exists(statusPath)) {
+    if (!(await exists(statusPath))) {
       await this.createStatus(activeProject);
     }
 
@@ -458,14 +458,14 @@ if [ ! -z "$WRONG_LOCATIONS" ]; then
   echo "$WRONG_LOCATIONS"
   echo ""
   echo "Moving to correct location..."
-  
+
   ACTIVE=$(cat .claude/.aichaku-active 2>/dev/null || echo "active-$(date +%Y-%m-%d)-fixing")
-  
+
   for file in $WRONG_LOCATIONS; do
     mkdir -p ".claude/output/$ACTIVE"
     git mv "$file" ".claude/output/$ACTIVE/" || true
   done
-  
+
   echo "✅ Files moved to .claude/output/$ACTIVE/"
   echo "Please commit again."
   exit 1
@@ -527,7 +527,7 @@ Deno.test("Files in wrong location get auto-corrected", async () => {
 
   // Should be moved
   assert(corrected?.includes(".claude/output/active-"));
-  assert(!await exists("./wrong-location.md"));
+  assert(!(await exists("./wrong-location.md")));
   assert(await exists(corrected!));
 });
 ```

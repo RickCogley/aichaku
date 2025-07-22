@@ -85,28 +85,28 @@ export function myFunction(param: string): Promise<Result> {
 ````typescript
 /**
  * Manages Claude Code hooks for the Aichaku CLI
- * 
+ *
  * @module
  */
 
 /**
  * Configure and manage Claude Code hooks
- * 
+ *
  * Hooks allow you to run custom scripts at various points in Claude Code's lifecycle.
  * This command helps install, uninstall, and list available hooks.
- * 
+ *
  * @param {HooksOptions} options - Configuration options for hook management
  * @returns {Promise<void>}
- * 
+ *
  * @example
  * ```ts
  * // Install essential hooks globally
  * await hooks({ install: ["essential"], global: true });
- * 
+ *
  * // List installed hooks
  * await hooks({ list: true });
  * ```
- * 
+ *
  * @public
  */
 export async function hooks(options: HooksOptions = {}): Promise<void> {

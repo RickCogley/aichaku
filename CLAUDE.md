@@ -39,7 +39,7 @@ behavioral_directives:
           forbidden:
             - DO NOT create any project folders yet
             - DO NOT create any documents yet
-            - 'NEVER say: ''Would you like me to create documents for this?'''
+            - "NEVER say: 'Would you like me to create documents for this?'"
       - name: WAIT FOR READINESS
         description: Only create documents when user signals explicit readiness
         triggers:
@@ -129,7 +129,7 @@ behavioral_directives:
           - pivot
         discussion_approach: Discuss Lean experiments
         creates: experiment-plan.md
-    discussion_mode_actions:
+    discussion*mode*actions:
       - "Acknowledge: '\U0001FAB4 Aichaku: I see you're interested in [methodology]'"
       - Read the appropriate guide SILENTLY
       - Ask clarifying questions based on the methodology
@@ -302,7 +302,7 @@ standards:
       cycle_discipline: "Tests must fail initially, minimal implementation to pass, refactor without breaking"
       isolation_requirements: "Tests run independently, no shared state, any execution order"
       ci_integration: "All tests pass before merge, coverage reports generated, visible in PRs"
-      test_naming_patterns: "should [behavior] when [condition], returns [result] for [scenario]"
+      test*naming*patterns: "should [behavior] when [condition], returns [result] for [scenario]"
     integration_url: "aichaku://standard/development/tdd"
   test-pyramid:
     name: Test Pyramid
@@ -323,7 +323,7 @@ standards:
       anti_patterns: >-
         Ice cream cone (too many E2E), Hourglass (missing integration), Testing trophy
         (integration-heavy alternative)
-      tools_by_layer: "Unit: Jest/PyTest/JUnit, Integration: Supertest/TestContainers, E2E: Playwright/Cypress"
+      tools*by*layer: "Unit: Jest/PyTest/JUnit, Integration: Supertest/TestContainers, E2E: Playwright/Cypress"
     integration_url: "aichaku://standard/testing/test-pyramid"
   conventional-commits:
     name: Conventional Commits
@@ -351,7 +351,7 @@ standards:
         - Maximize robustness with fast startup and graceful shutdown
       additional_factors: "API first design, comprehensive telemetry, centralized auth"
       container_ready: Designed for Kubernetes and cloud platforms
-      dev_prod_parity: Keep all environments as similar as possible
+      dev*prod*parity: Keep all environments as similar as possible
     integration_url: "aichaku://standard/architecture/15-factor"
   clean-arch:
     name: Clean Architecture
@@ -489,5 +489,5 @@ included:
     - microsoft-style
   doc_standards:
     - diataxis-google
-  has_user_customizations: false
+  has*user*customizations: false
 ```

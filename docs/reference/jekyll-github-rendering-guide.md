@@ -2,7 +2,7 @@
 
 ## The Problem
 
-When publishing markdown docs on GitHub Pages (which uses Jekyll), code samples
+When publishing Markdown docs on GitHub Pages (which uses Jekyll), code samples
 containing template syntax (like `&#123;&#123; &#125;&#125;` or
 `&#123;&#37; &#37;&#125;`) can cause issues with Jekyll's Liquid template
 processor.
@@ -10,7 +10,7 @@ processor.
 ## The Short Answer
 
 **Yes**, adding `&#123;&#37; raw &#37;&#125;` tags will impact GitHub's native
-markdown rendering - these tags will appear as literal text when viewing the
+Markdown rendering - these tags will appear as literal text when viewing the
 files directly on GitHub.
 
 ## Visual Example
@@ -86,7 +86,7 @@ exclude:
 When possible, use different syntax in examples:
 
 ```markdown
-Here's a template example: [[ message ]] # Document that you're using alternate
+Here's a template example: [[message]] # Document that you're using alternate
 syntax
 ```
 
@@ -99,7 +99,7 @@ Create an includes file:
 &#123;&#37; raw &#37;&#125;&#123;&#123; include.code &#125;&#125;&#123;&#37; endraw &#37;&#125;
 ```
 
-Then in your markdown:
+Then in your Markdown:
 
 ```markdown
 &#123;&#37; include raw-code.html code="&#123;&#123; message &#125;&#125;"

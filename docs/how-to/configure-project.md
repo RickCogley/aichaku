@@ -22,12 +22,7 @@ Edit your project's settings in `.claude/settings.local.json`:
 
 ```json
 {
-  "selectedStandards": [
-    "owasp-web",
-    "solid",
-    "tdd",
-    "conventional-commits"
-  ],
+  "selectedStandards": ["owasp-web", "solid", "tdd", "conventional-commits"],
   "methodology": "shape-up",
   "customPaths": {
     "output": ".claude/output",
@@ -245,7 +240,7 @@ git config core.hooksPath .githooks
 export AICHAKU_HOME="$HOME/.config/aichaku"
 
 # Set default methodology
-export AICHAKU_DEFAULT_METHODOLOGY="scrum"
+export AICHAKU*DEFAULT*METHODOLOGY="scrum"
 
 # Enable debug output
 export AICHAKU_DEBUG="true"
@@ -258,7 +253,7 @@ export AICHAKU_TEMPLATES="/path/to/custom/templates"
 
 ```bash
 # Add to ~/.zshrc or ~/.bashrc
-echo 'export AICHAKU_DEFAULT_METHODOLOGY="shape-up"' >> ~/.zshrc
+echo 'export AICHAKU*DEFAULT*METHODOLOGY="shape-up"' >> ~/.zshrc
 echo 'export AICHAKU_DEBUG="false"' >> ~/.zshrc
 source ~/.zshrc
 ```

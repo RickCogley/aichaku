@@ -32,7 +32,7 @@
 ```
 🌿 Updating methodology files...
 ✨ Methodologies ready (49 files verified/updated)
-🌿 Updating standards library...  
+🌿 Updating standards library...
 ✨ Standards ready (45 files verified/updated)
 ```
 
@@ -80,7 +80,7 @@ Transform upgrade output from "what happened" to "what happened and where":
 📁 **What was updated:**
 Global installation: ~/.claude/aichaku/
 ├── methodologies/    (49 files verified/updated)
-├── standards/        (45 files verified/updated)  
+├── standards/        (45 files verified/updated)
 ├── user/            (preserved - your customizations)
 └── aichaku.json     (metadata updated to v0.34.0)
 
@@ -194,9 +194,9 @@ Leverage `createDirectoryTree()` from visual guidance framework:
 
 ```typescript
 const structure = {
-  "methodologies": [`${methodologyCount} files verified/updated`],
-  "standards": [`${standardsCount} files verified/updated`],
-  "user": ["preserved - your customizations"],
+  methodologies: [`${methodologyCount} files verified/updated`],
+  standards: [`${standardsCount} files verified/updated`],
+  user: ["preserved - your customizations"],
   "": [`aichaku.json (metadata updated to v${VERSION})`],
 };
 
@@ -215,7 +215,7 @@ createDirectoryTree("~/.claude/aichaku", structure, {
 📁 Global installation updated:
 ~/.claude/aichaku/
 ├── 📂✨ methodologies/     (49 files)
-├── 📂✨ standards/         (45 files)  
+├── 📂✨ standards/         (45 files)
 ├── 📂 user/               (preserved)
 └── 📄 aichaku.json        (→ v0.34.0)
 

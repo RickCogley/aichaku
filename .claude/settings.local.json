@@ -137,7 +137,10 @@
       "Bash(./aichaku-macos-arm64 init:*)",
       "Bash(./dist/aichaku-0.33.0-macos-arm64:*)",
       "Bash(./aichaku --help)",
-      "Bash(ln:*)"
+      "Bash(ln:*)",
+      "Bash(.githooks/hooks.d/20-lint-markdown:*)",
+      "Bash(markdownlint-cli2:*)",
+      "Bash(npx markdownlint-cli2:*)"
     ],
     "deny": []
   }

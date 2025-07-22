@@ -29,7 +29,7 @@ Each project directory should contain:
 
 ## For Claude Code
 
-When users discuss new work, IMMEDIATELY create a new active-* directory here.
+When users discuss new work, IMMEDIATELY create a new active-\* directory here.
 Don't wait to be asked. This is expected behavior.
 
 ### Quick Reference

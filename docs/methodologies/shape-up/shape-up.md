@@ -32,7 +32,7 @@ scope creep
 
 ### Pitch (Planning Output)
 
-```
+```text
 Problem: [User problem]
 Appetite: [2/6 weeks]
 Solution: [Rough sketch]
@@ -42,7 +42,7 @@ No-gos: [What we're NOT doing]
 
 ### Cycle Plan (After Betting)
 
-```
+```text
 Bet 1: [Feature] - [Team] - [Appetite]
 Bet 2: [Feature] - [Team] - [Appetite]
 Not betting: [What we're letting go]
@@ -50,7 +50,7 @@ Not betting: [What we're letting go]
 
 ### Progress Check
 
-```
+```text
 Day [X] of [Appetite]:
 Done: [Completed]
 Now: [In progress]

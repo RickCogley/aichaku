@@ -86,8 +86,9 @@ static async validate(token) {
 it("should throw error for invalid token", async () => {
   const invalidToken = "invalid.token.here";
 
-  await expect(TokenService.validate(invalidToken))
-    .rejects.toThrow("Invalid token");
+  await expect(TokenService.validate(invalidToken)).rejects.toThrow(
+    "Invalid token",
+  );
 });
 // FAIL: Expected error not thrown
 ```
@@ -123,7 +124,7 @@ static async validate(token) {
 
 ```
 TokenService.js        100%
-- generate()           100%  
+- generate()           100%
 - validate()           100%
 - Error paths          100%
 ```

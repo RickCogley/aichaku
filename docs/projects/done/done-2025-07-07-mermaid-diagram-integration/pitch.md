@@ -18,9 +18,9 @@ a glance.
 Integrate Mermaid diagram generation into Aichaku's document creation workflow.
 Mermaid is ideal because:
 
-- **Markdown-native**: Diagrams defined in markdown code blocks
+- **Markdown-native**: Diagrams defined in Markdown code blocks
 - **Version control friendly**: Text-based diagram definitions
-- **Wide support**: GitHub, GitLab, many markdown viewers render automatically
+- **Wide support**: GitHub, GitLab, many Markdown viewers render automatically
 - **No external files**: Diagrams embedded directly in documents
 
 ## Implementation Approach
@@ -81,7 +81,7 @@ For specific efforts, generate relevant diagrams:
 **Option A: Embedded SVG (Recommended)**
 
 - When generating PDFs, pre-render Mermaid to SVG
-- Embed SVG directly in markdown
+- Embed SVG directly in Markdown
 - Pandoc handles SVG in PDF generation
 
 **Option B: Dual Format**

@@ -9,7 +9,7 @@ Phase: Implementation complete, documenting results 🍃
 ## Project Summary
 
 Successfully designed a compact YAML-based integration system to replace the
-verbose markdown injection approach. The solution reduces CLAUDE.md size from
+verbose Markdown injection approach. The solution reduces CLAUDE.md size from
 50KB+ to ~2KB while maintaining all behavioral directives.
 
 ## Key Achievements ✅
@@ -45,7 +45,7 @@ verbose markdown injection approach. The solution reduces CLAUDE.md size from
 
 ### Before (Current System)
 
-- CLAUDE.md: 50KB+ with full markdown injection
+- CLAUDE.md: 50KB+ with full Markdown injection
 - Maintenance: Manual updates to multiple locations
 - Duplication: Same content in multiple files
 - Static: Fixed content regardless of context

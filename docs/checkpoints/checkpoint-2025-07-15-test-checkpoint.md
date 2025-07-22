@@ -52,7 +52,7 @@
 
 - **Test with actual session data** - Use the checkpoint command for real work
   sessions
-- **Consider MCP integration** - Monitor if markdown review MCP affects command
+- **Consider MCP integration** - Monitor if Markdown review MCP affects command
   files
 - **Validate across scenarios** - Test with different argument patterns and
   longer descriptive names

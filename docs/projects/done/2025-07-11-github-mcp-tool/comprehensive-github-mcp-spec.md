@@ -38,10 +38,10 @@ mcp__github__repo_list; // List repositories
 mcp__github__repo_sync; // Sync forked repository
 
 // Repository settings
-mcp__github__repo_set_description; // Set repository description
-mcp__github__repo_set_topics; // Set repository topics
-mcp__github__repo_set_visibility; // Set repository visibility
-mcp__github__repo_set_default_branch; // Set default branch
+mcp__github__repo * set * description; // Set repository description
+mcp__github__repo * set * topics; // Set repository topics
+mcp__github__repo * set * visibility; // Set repository visibility
+mcp__github__repo * set * default_branch; // Set default branch
 ```
 
 ### Issue Management
@@ -63,9 +63,9 @@ mcp__github__issue_unpin; // Unpin issue
 // Issue assignment and labels
 mcp__github__issue_assign; // Assign issue to user
 mcp__github__issue_unassign; // Unassign issue from user
-mcp__github__issue_add_label; // Add label to issue
-mcp__github__issue_remove_label; // Remove label from issue
-mcp__github__issue_set_milestone; // Set issue milestone
+mcp__github__issue * add * label; // Add label to issue
+mcp__github__issue * remove * label; // Remove label from issue
+mcp__github__issue * set * milestone; // Set issue milestone
 ```
 
 ### Pull Request Management
@@ -105,14 +105,14 @@ mcp__github__release_download; // Download release assets
 
 // Release assets
 mcp__github__release_upload; // Upload assets to release
-mcp__github__release_delete_asset; // Delete release asset
-mcp__github__release_list_assets; // List release assets
+mcp__github__release*delete*asset; // Delete release asset
+mcp__github__release*list*assets; // List release assets
 
 // Release publishing
 mcp__github__release_publish; // Publish draft release
 mcp__github__release_unpublish; // Unpublish release
-mcp__github__release_mark_latest; // Mark release as latest
-mcp__github__release_mark_prerelease; // Mark as prerelease
+mcp__github__release*mark*latest; // Mark release as latest
+mcp__github__release*mark*prerelease; // Mark as prerelease
 ```
 
 ### GitHub Actions
@@ -158,10 +158,10 @@ mcp__github__project_view; // View project details
 mcp__github__project_list; // List projects
 
 // Project items
-mcp__github__project_item_add; // Add item to project
-mcp__github__project_item_remove; // Remove item from project
-mcp__github__project_item_edit; // Edit project item
-mcp__github__project_item_move; // Move item between columns
+mcp__github__project * item * add; // Add item to project
+mcp__github__project * item * remove; // Remove item from project
+mcp__github__project * item * edit; // Edit project item
+mcp__github__project * item * move; // Move item between columns
 ```
 
 ### Search & Discovery
@@ -199,8 +199,8 @@ mcp__github__team_create; // Create team
 mcp__github__team_edit; // Edit team
 mcp__github__team_delete; // Delete team
 mcp__github__team_members; // List team members
-mcp__github__team_add_member; // Add member to team
-mcp__github__team_remove_member; // Remove member from team
+mcp__github__team * add * member; // Add member to team
+mcp__github__team * remove * member; // Remove member from team
 ```
 
 ### Gist Management
@@ -226,12 +226,12 @@ mcp__github__security_enable; // Enable security features
 mcp__github__security_disable; // Disable security features
 
 // SSH and GPG keys
-mcp__github__ssh_key_list; // List SSH keys
-mcp__github__ssh_key_add; // Add SSH key
-mcp__github__ssh_key_delete; // Delete SSH key
-mcp__github__gpg_key_list; // List GPG keys
-mcp__github__gpg_key_add; // Add GPG key
-mcp__github__gpg_key_delete; // Delete GPG key
+mcp__github__ssh*key*list; // List SSH keys
+mcp__github__ssh*key*add; // Add SSH key
+mcp__github__ssh*key*delete; // Delete SSH key
+mcp__github__gpg*key*list; // List GPG keys
+mcp__github__gpg*key*add; // Add GPG key
+mcp__github__gpg*key*delete; // Delete GPG key
 
 // Repository rulesets
 mcp__github__ruleset_list; // List repository rulesets
@@ -280,7 +280,7 @@ mcp__github__monitor_issues; // Monitor issue activity
 // API operations
 mcp__github__api_request; // Make authenticated API request
 mcp__github__api_graphql; // Make GraphQL API request
-mcp__github__api_rate_limit; // Check API rate limit
+mcp__github__api * rate * limit; // Check API rate limit
 mcp__github__api_user; // Get authenticated user info
 
 // Extension management
@@ -424,7 +424,7 @@ postRelease: [
     });
 
     // Update project board
-    await mcp__github__project_item_move({
+    await mcp__github__project * item * move({
       projectId: "123",
       itemId: "456",
       columnId: "completed",

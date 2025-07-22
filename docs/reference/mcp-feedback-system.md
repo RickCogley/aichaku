@@ -240,11 +240,11 @@ When external security scanners are used:
 
 ### Environment Variables
 
-- `AICHAKU_FEEDBACK_LEVEL`: Control feedback verbosity (minimal, standard,
+- `AICHAKU*FEEDBACK*LEVEL`: Control feedback verbosity (minimal, standard,
   verbose)
-- `AICHAKU_PROGRESS_THRESHOLD`: Milliseconds before showing progress
+- `AICHAKU*PROGRESS*THRESHOLD`: Milliseconds before showing progress
   (default: 1500)
-- `AICHAKU_TIMING_THRESHOLD`: Milliseconds before showing timing (default: 3000)
+- `AICHAKU*TIMING*THRESHOLD`: Milliseconds before showing timing (default: 3000)
 
 ### Customization
 
@@ -290,7 +290,7 @@ output:
 2. **Metric tracking**: Operation performance monitoring
 3. **Custom themes**: Alternative visual styles
 4. **Integration hooks**: Webhook notifications for CI/CD
-5. **Rich formatting**: HTML/markdown output for reports
+5. **Rich formatting**: HTML/Markdown output for reports
 
 ### Extensibility
 
@@ -315,13 +315,13 @@ The system is designed to be extensible:
 Enable verbose logging:
 
 ```bash
-AICHAKU_FEEDBACK_LEVEL=verbose aichaku mcp
+AICHAKU*FEEDBACK*LEVEL=verbose aichaku mcp
 ```
 
 Monitor timing:
 
 ```bash
-AICHAKU_TIMING_THRESHOLD=1000 aichaku mcp
+AICHAKU*TIMING*THRESHOLD=1000 aichaku mcp
 ```
 
 ## Related Documentation

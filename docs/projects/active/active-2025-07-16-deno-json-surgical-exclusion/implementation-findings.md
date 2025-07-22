@@ -102,11 +102,13 @@ had to exclude:
 For projects experiencing similar issues:
 
 1. **Identify problematic files**:
+
    ```bash
    deno check 2>&1 | grep "error:"
    ```
 
 2. **Add top-level exclude**:
+
    ```json
    {
      "exclude": ["path/to/problematic/files"]
@@ -116,6 +118,7 @@ For projects experiencing similar issues:
 3. **Update pre-release hooks** to use `deno check` without arguments
 
 4. **Test thoroughly**:
+
    ```bash
    deno check && echo "SUCCESS" || echo "FAILED"
    ```

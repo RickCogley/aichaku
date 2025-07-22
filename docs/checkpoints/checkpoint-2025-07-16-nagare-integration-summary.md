@@ -52,7 +52,7 @@ Re-enabled type checking in nagare's autofix configuration:
 ```typescript
 types: [
   "lint",
-  "format", 
+  "format",
   "security-scan",
   "type-check", // Re-enabled: deno check now respects top-level exclude
   "version-conflict",

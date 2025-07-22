@@ -125,7 +125,7 @@ aichaku:
       "pattern": "CLAUDE.md",
       "script": "~/.claude/aichaku/hooks/yaml-expander.js",
       "config": {
-        "max_expansion_size": "100KB",
+        "max*expansion*size": "100KB",
         "cache_enabled": true,
         "fallback_mode": "graceful"
       }
@@ -195,6 +195,7 @@ async function contextAwareLoader(context: ConversationContext) {
 1. **User Message**: "I need to implement authentication following OWASP"
 
 2. **Hook Activation**:
+
    ```
    - Detect "OWASP" keyword
    - Check YAML for owasp_web reference

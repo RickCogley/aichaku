@@ -40,6 +40,7 @@ _Source: Claude.ai research on Unicode emoji support in LaTeX_
 Based on this research, our PDF generator should:
 
 1. **Auto-detect best engine**:
+
    ```typescript
    async detectBestEngine(): Promise<PDFEngine> {
      if (await this.hasLuaHBTeX()) return 'lualatex';
@@ -50,6 +51,7 @@ Based on this research, our PDF generator should:
    ```
 
 2. **Configure based on engine**:
+
    ```latex
    % For LuaLaTeX
    \usepackage{emoji}

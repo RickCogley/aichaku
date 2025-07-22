@@ -5,7 +5,7 @@
 ANALYZE user input for methodology indicators:
 
 ```
-IF explicit_methodology_mentioned:
+IF explicit*methodology*mentioned:
   USE specified methodology
 ELSE:
   PROCEED to context analysis
@@ -47,23 +47,23 @@ ELIF contains(["quality", "testing", "refactor", "technical debt"]):
 ### Team Context Detection
 
 ```
-team_size = detect_team_size()
+team*size = detect*team_size()
 
 IF team_size == 1:
   EXCLUDE: [Scrum]  # Too much ceremony
   PREFER: [Kanban, Shape Up, Lean]
-  
+
 ELIF team_size <= 3:
   SUITABLE: [All methodologies]
   OPTIMIZE: Reduce ceremonies
-  
+
 ELIF team_size <= 9:
   IDEAL: [Scrum, Shape Up]
   GOOD: [Kanban, Scrumban]
-  
+
 ELSE:  # team_size > 9
   RECOMMEND: "Consider splitting into smaller teams"
-  IF must_stay_together:
+  IF must*stay*together:
     USE: Scaled versions (SAFe, LeSS)
 ```
 
@@ -75,7 +75,7 @@ IF contains(["starting", "new project", "greenfield"]):
   RECOMMEND: Shape Up for initial shaping, then choose execution method
 
 ELIF contains(["maintaining", "established", "legacy"]):
-  Stage = "maintenance"  
+  Stage = "maintenance"
   RECOMMEND: Kanban with XP practices
 
 ELIF contains(["scaling", "growing", "expanding team"]):
@@ -96,7 +96,7 @@ PRIMARY: Shape Up
 ADD: XP practices during build phase
 USE: "Shape features, build with TDD"
 
-PRIMARY: Scrum  
+PRIMARY: Scrum
 ADD: Kanban for bug tracking
 USE: "Sprint for features, flow for fixes"
 
@@ -105,7 +105,7 @@ ADD: XP practices for quality
 USE: "Flow with engineering excellence"
 
 PRIMARY: Lean
-ADD: Shape Up for feature definition  
+ADD: Shape Up for feature definition
 USE: "Experiment with shaped bets"
 ```
 
@@ -115,11 +115,11 @@ USE: "Experiment with shaped bets"
 FROM Scrum TO Kanban:
   SUGGEST: Scrumban as transition
   TIMELINE: 2-3 months
-  
+
 FROM Nothing TO Agile:
   START: Kanban (least disruptive)
   EVOLVE: Based on pain points
-  
+
 FROM Waterfall TO Agile:
   START: Scrum (familiar structure)
   GRADUALLY: Reduce documentation
@@ -209,7 +209,7 @@ AFTER methodology selection:
 ```
 SELECTED: [Methodology]
 RATIONALE: [Why this fits]
-QUICK START: 
+QUICK START:
   1. [First action]
   2. [Second action]
   3. [Third action]

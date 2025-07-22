@@ -82,16 +82,19 @@ aichaku uninstall          # Remove installation
 #### For Existing Users (v0.2.x → v0.3.0)
 
 1. **Update Aichaku**:
+
    ```bash
    deno install -g -A -n aichaku --force jsr:@rick/aichaku@0.3.0/cli
    ```
 
 2. **Backup existing installation** (recommended):
+
    ```bash
    cp -r ~/.claude ~/.claude.backup
    ```
 
 3. **Run upgrade**:
+
    ```bash
    # For global installation
    aichaku upgrade --global

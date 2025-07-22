@@ -2,7 +2,7 @@
 
 ## How Mermaid Works
 
-Mermaid diagrams are created using markdown code blocks with the `mermaid`
+Mermaid diagrams are created using Markdown code blocks with the `mermaid`
 language identifier:
 
 ````markdown
@@ -22,11 +22,11 @@ graph TB
     User[User Message] --> Detect{Detect Methodology Keywords}
     Detect -->|Found| Discuss[Discussion Phase]
     Detect -->|Not Found| Normal[Normal Response]
-    
+
     Discuss --> Ready{User Ready?}
     Ready -->|No| Discuss
     Ready -->|Yes| Create[Create Project]
-    
+
     Create --> Folder[Named Folder]
     Folder --> Docs[Generate Documents]
     Docs --> Diagram[Include Diagrams]
@@ -41,7 +41,7 @@ flowchart LR
     Keywords -->|"shape"| ShapeUp[Shape Up Mode]
     Keywords -->|"kanban"| Kanban[Kanban Mode]
     Keywords -->|"MVP"| Lean[Lean Mode]
-    
+
     Scrum --> Output[Tailored Output]
     ShapeUp --> Output
     Kanban --> Output
@@ -56,7 +56,7 @@ sequenceDiagram
     participant Claude
     participant Aichaku
     participant FileSystem
-    
+
     User->>Claude: "Let's shape up this feature"
     Claude->>Claude: Discuss and refine
     User->>Claude: "Create the project"

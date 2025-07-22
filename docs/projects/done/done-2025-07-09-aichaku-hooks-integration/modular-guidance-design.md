@@ -33,14 +33,14 @@ modular, reusable guidance sections.
 
 #### 15-Factor Apps (Cloud-Native)
 
-- **Source**: fifteen_factor_claude_code_guide.md
+- **Source**: fifteen*factor*claude*code*guide.md
 - **Covers**: Modern cloud-native application patterns
 - **Implementation Phases**: 4 phases over 8 weeks
 - **Best For**: SaaS, microservices, containerized apps
 
 #### 15-Factor Static Sites
 
-- **Source**: static_website_factors_checklist.md
+- **Source**: static*website*factors_checklist.md
 - **Covers**: Static site best practices
 - **Implementation Phases**: 5 weeks
 - **Best For**: Documentation sites, marketing sites, blogs
@@ -114,8 +114,8 @@ Each guidance module follows this structure:
 id: owasp-webapp
 title: OWASP Top 10 for Web Applications
 tags: [security, webapp, compliance]
-methodologies: [all]  # or specific ones
-requires: []  # dependencies on other modules
+methodologies: [all] # or specific ones
+requires: [] # dependencies on other modules
 ---
 
 <!-- MODULE:START -->
@@ -165,7 +165,7 @@ aichaku integrate
 # With security
 aichaku integrate --with-security
 
-# With architecture standards  
+# With architecture standards
 aichaku integrate --with-architecture
 
 # Custom selection
@@ -223,14 +223,14 @@ Hooks can enforce these standards:
     {
       "name": "Security Check",
       "matcher": "Write|Edit",
-      "command": "aichaku check-security '${TOOL_INPUT_FILE_PATH}'"
+      "command": "aichaku check-security '${TOOL*INPUT*FILE_PATH}'"
     }
   ],
   "PostToolUse": [
     {
       "name": "15-Factor Compliance",
       "matcher": "Write",
-      "command": "aichaku check-factors '${TOOL_INPUT_FILE_PATH}'"
+      "command": "aichaku check-factors '${TOOL*INPUT*FILE_PATH}'"
     }
   ]
 }

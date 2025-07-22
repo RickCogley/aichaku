@@ -45,10 +45,11 @@ simple init/upgrade/uninstall lifecycle.
 ### Phase 3: User Customization & Adaptive Behavior (1.5 hours)
 
 1. **Create user/ structure**
+
    ```
    user/
    ├── README.md          # How to customize
-   ├── prompts/          
+   ├── prompts/
    │   └── .gitkeep
    ├── templates/
    │   └── .gitkeep

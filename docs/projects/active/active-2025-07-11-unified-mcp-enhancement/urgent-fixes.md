@@ -76,7 +76,7 @@ aichaku mcp --restart
 
 # Test in Claude Code - you should now see:
 🪴 [Aichaku] 🔍 Tool invoked: review_file
-🪴 [Aichaku] ⚙️ Processing: src/example.ts  
+🪴 [Aichaku] ⚙️ Processing: src/example.ts
 🪴 [Aichaku] ✨ Review complete: 3 findings (1200ms)
 ```
 

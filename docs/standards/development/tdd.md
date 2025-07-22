@@ -95,7 +95,7 @@ class Order {
 
   calculateTotal(taxRate: number): number {
     const subtotal = this.items.reduce(
-      (sum, item) => sum + (item.price * item.quantity),
+      (sum, item) => sum + item.price * item.quantity,
       0,
     );
     return subtotal * (1 + taxRate);
@@ -117,7 +117,7 @@ class Order {
 
   private calculateSubtotal(): number {
     return this.items.reduce(
-      (sum, item) => sum + (item.price * item.quantity),
+      (sum, item) => sum + item.price * item.quantity,
       0,
     );
   }

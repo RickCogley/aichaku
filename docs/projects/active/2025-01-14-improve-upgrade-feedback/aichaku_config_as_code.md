@@ -138,7 +138,7 @@ security:
       description: "Never commit API keys, passwords, or tokens"
       examples:
         violation: "const API_KEY = 'sk-1234567890'"
-        correct: "const API_KEY = process.env.API_KEY"
+        correct: "const API*KEY = process.env.API*KEY"
 ```
 
 ### Integration Through MCP
@@ -170,7 +170,7 @@ Combine the benefits of both formats:
    both formats
 
 This provides Claude Code consistency through structured rules while maintaining
-developer comprehension through markdown explanations.
+developer comprehension through Markdown explanations.
 
 ### Project Structure
 

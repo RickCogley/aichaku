@@ -39,7 +39,7 @@ export class PIDManager {
 
   async lockPID(): Promise<boolean> {
     const existingPID = await this.readPID();
-    if (existingPID && await this.isProcessRunning(existingPID)) {
+    if (existingPID && (await this.isProcessRunning(existingPID))) {
       return false; // Another instance is running
     }
 
@@ -134,7 +134,7 @@ export class MCPProcessManager {
   async start(): Promise<ProcessResult> {
     // Check if already running
     const pid = await this.pidManager.readPID();
-    if (pid && await this.isRunning()) {
+    if (pid && (await this.isRunning())) {
       return {
         success: false,
         message: "MCP server is already running",
@@ -144,7 +144,7 @@ export class MCPProcessManager {
 
     // Get binary path
     const binaryPath = join(this.mcpDir, this.binaryName);
-    if (!await exists(binaryPath)) {
+    if (!(await exists(binaryPath))) {
       return {
         success: false,
         message:
@@ -257,7 +257,7 @@ export class MCPProcessManager {
 
     // Wait up to 5 seconds
     for (let i = 0; i < 50; i++) {
-      if (!await this.isProcessRunningUnix(pid)) {
+      if (!(await this.isProcessRunningUnix(pid))) {
         return;
       }
       await new Promise((resolve) => setTimeout(resolve, 100));

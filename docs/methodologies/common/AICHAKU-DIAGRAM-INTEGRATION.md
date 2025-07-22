@@ -21,7 +21,7 @@ graph TD
     Appetite --> Solution[Solution Outline]
     Solution --> Boundaries[Set Boundaries]
     Boundaries --> Pitch[Write Pitch]
-    
+
     style Problem fill:#ff9800,stroke:#f57c00
     style Appetite fill:#2196f3,stroke:#1976d2
     style Solution fill:#4caf50,stroke:#388e3c
@@ -44,7 +44,7 @@ graph LR
     Daily --> Review[Sprint Review]
     Review --> Retro[Retrospective]
     Retro --> PB
-    
+
     style Daily fill:#90EE90
     style Review fill:#FFB6C1
     style Retro fill:#DDA0DD
@@ -64,10 +64,10 @@ graph LR
     Todo --> Progress[🔄 In Progress]
     Progress --> Review[👀 Review]
     Review --> Done[✅ Done]
-    
+
     Progress --> Blocked[🚫 Blocked]
     Blocked --> Progress
-    
+
     style Progress fill:#FFA500
     style Blocked fill:#FF6B6B
     style Done fill:#4ECDC4
@@ -91,7 +91,7 @@ sequenceDiagram
     participant Git as Git Hook
     participant Gen as Diagram Generator
     participant Docs as Documentation
-    
+
     Dev->>Git: Commit Code
     Git->>Gen: Trigger Generation
     Gen->>Gen: Analyze Code Changes
@@ -108,7 +108,7 @@ graph TD
     Migration --> Generate[Generate ER Diagram]
     Generate --> Review[Review Changes]
     Review --> Commit[Commit Updates]
-    
+
     style Schema fill:#1976d2,stroke:#0d47a1,color:#ffffff
     style Generate fill:#388e3c,stroke:#2e7d32,color:#ffffff
 ```
@@ -146,7 +146,7 @@ graph TD
     Test --> Validate{Improved?}
     Validate -->|Yes| Document[Document Changes]
     Validate -->|No| Identify
-    
+
     style Measure fill:#64b5f6,stroke:#1976d2
     style Validate fill:#ffd54f,stroke:#f9a825
     style Document fill:#81c784,stroke:#388e3c
@@ -178,7 +178,7 @@ graph TD
 graph TD
     A[Current State] --> B[Proposed Solution]
     B --> C[Expected Outcome]
-    
+
     style A fill:#ffcdd2,stroke:#d32f2f
     style B fill:#fff3e0,stroke:#f57c00
     style C fill:#c8e6c9,stroke:#388e3c
@@ -201,7 +201,7 @@ sequenceDiagram
     participant F as Frontend
     participant A as API
     participant D as Database
-    
+
     U->>F: [User action]
     F->>A: [API call]
     A->>D: [Data operation]
@@ -220,15 +220,15 @@ sequenceDiagram
 ```mermaid
 graph LR
     Problem[Problem<br/>Solving] --> Building[Building<br/>Solution]
-    
+
     subgraph "Problem Solving (Figuring Things Out)"
         A[Point A<br/>🔴 Stuck] --> B[Point B<br/>🟡 Progress]
     end
-    
+
     subgraph "Building Solution (Execution)"
         C[Point C<br/>🟢 Rolling] --> D[Point D<br/>✅ Done]
     end
-    
+
     style A fill:#ffcdd2,stroke:#d32f2f
     style B fill:#fff3e0,stroke:#f57c00
     style C fill:#c8e6c9,stroke:#388e3c
@@ -263,13 +263,13 @@ graph TD
     Goal[Sprint Goal] --> US1[User Story 1]
     Goal --> US2[User Story 2]
     Goal --> US3[User Story 3]
-    
+
     US1 --> T1[Task 1.1]
     US1 --> T2[Task 1.2]
     US2 --> T3[Task 2.1]
     US2 --> T4[Task 2.2]
     US3 --> T5[Task 3.1]
-    
+
     style Goal fill:#2196f3,stroke:#1976d2,color:#ffffff
     style US1 fill:#4caf50,stroke:#388e3c,color:#ffffff
     style US2 fill:#4caf50,stroke:#388e3c,color:#ffffff
@@ -282,13 +282,13 @@ graph TD
 gantt
     title Sprint [Number] Timeline
     dateFormat YYYY-MM-DD
-    
+
     section Sprint Events
     Sprint Planning    :done, planning, 2024-01-08, 1d
     Daily Standups     :active, daily, 2024-01-09, 9d
     Sprint Review      :review, 2024-01-18, 1d
     Sprint Retrospective :retro, 2024-01-18, 1d
-    
+
     section Development
     User Story 1       :us1, 2024-01-09, 3d
     User Story 2       :us2, 2024-01-10, 5d
@@ -319,7 +319,7 @@ graph TD
     Error --> Input
     Process --> Success[Show success]
     Success --> End[Task complete]
-    
+
     style Start fill:#e3f2fd,stroke:#1976d2
     style Success fill:#e8f5e8,stroke:#388e3c
     style Error fill:#ffebee,stroke:#d32f2f
@@ -334,7 +334,7 @@ sequenceDiagram
     participant C as Controller
     participant S as Service
     participant DB as Database
-    
+
     U->>UI: [User action]
     UI->>C: [Request]
     C->>S: [Business logic]
@@ -365,7 +365,7 @@ stateDiagram-v2
     InProgress --> Blocked : Impediment
     Blocked --> InProgress : Impediment resolved
     Done --> [*]
-    
+
     Backlog : New items<br/>Not yet prioritized
     Todo : Ready for work<br/>Prioritized
     InProgress : Active development<br/>WIP limit: 3
@@ -401,7 +401,7 @@ graph LR
         W2 --> W3[Week 3<br/>6 items]
         W3 --> W4[Week 4<br/>8 items]
     end
-    
+
     style W1 fill:#e3f2fd
     style W2 fill:#e8f5e8
     style W3 fill:#fff3e0
@@ -426,7 +426,7 @@ graph TD
         A[Average: 5.2 days] --> B[Trend: Decreasing]
         B --> C[Target: <5 days]
     end
-    
+
     style A fill:#e3f2fd
     style B fill:#e8f5e8
     style C fill:#fff3e0
@@ -451,39 +451,39 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    
+
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '18'
-    
+
     - name: Install Mermaid CLI
       run: npm install -g @mermaid-js/mermaid-cli
-    
+
     - name: Generate Architecture Diagrams
       run: |
         # Find active Aichaku projects
         for project in .claude/output/active-*; do
           if [[ -d "$project" ]]; then
             echo "Processing $project"
-            
+
             # Generate class diagrams from code
             if [[ -f "$project/CODE_ANALYSIS.md" ]]; then
               node scripts/generate-class-diagrams.js "$project"
             fi
-            
+
             # Generate sequence diagrams from API specs
             if [[ -f "$project/API_SPEC.yaml" ]]; then
               node scripts/generate-sequence-diagrams.js "$project"
             fi
-            
+
             # Generate ER diagrams from database schema
             if [[ -f "$project/DATABASE_SCHEMA.sql" ]]; then
               node scripts/generate-er-diagrams.js "$project"
             fi
           fi
         done
-    
+
     - name: Render Mermaid Diagrams
       run: |
         for file in .claude/output/active-*/**/*.mmd; do
@@ -492,7 +492,7 @@ jobs:
             mmdc -i "$file" -o "$output" -t dark -b transparent
           fi
         done
-    
+
     - name: Commit Generated Diagrams
       run: |
         git config user.name "github-actions[bot]"
@@ -508,11 +508,7 @@ jobs:
 {
   "aichaku.diagramGeneration": {
     "autoGenerate": true,
-    "triggers": [
-      "pitch.md",
-      "sprint-planning.md",
-      "kanban-board.md"
-    ],
+    "triggers": ["pitch.md", "sprint-planning.md", "kanban-board.md"],
     "outputFormat": ["svg", "png"],
     "theme": "dark"
   },

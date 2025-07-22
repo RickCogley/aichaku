@@ -27,6 +27,7 @@ LOAD plan → APPLY constraints → EXECUTE work → REPORT progress
 ## Universal Execution Flow
 
 1. **LOAD CONTEXT**
+
    ```
    What: [From plan or user]
    How: [Methodology constraints]
@@ -34,6 +35,7 @@ LOAD plan → APPLY constraints → EXECUTE work → REPORT progress
    ```
 
 2. **EXECUTE WITH CONSTRAINTS**
+
    ```
    Shape Up → Respect appetite, no scope creep
    Scrum → Stay within sprint, update board
@@ -207,7 +209,7 @@ Action: [Pull/Queue/Defer]
 ```
 Sprint Progress: Day 3 of 10
 - Completed: 5 points
-- In Progress: 8 points  
+- In Progress: 8 points
 - Remaining: 21 points
 - Velocity: On track
 ```

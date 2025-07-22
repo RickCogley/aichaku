@@ -43,7 +43,7 @@ Enable complex workflows that chain multiple tools:
 
 ```
 User: "Generate comprehensive documentation"
-System: get_standards → analyze_project → generate_documentation → review_file
+System: get*standards → analyze*project → generate*documentation → review*file
 ```
 
 ### 4. Natural Language Triggers

@@ -39,7 +39,7 @@ Aichaku's philosophy of thoughtful development.
 ⏱️  Uptime:     2h 15m
 🔧 Platform:   macOS arm64
 📦 Latest:     ✅ Up to date
-✨ Tools:      review_file, get_standards, generate_documentation
+✨ Tools:      review*file, get*standards, generate_documentation
 ```
 
 ### Transparent Operations
@@ -61,7 +61,7 @@ User: "Generate comprehensive project documentation"
 
 System automatically:
 1. Gets project standards
-2. Analyzes codebase structure  
+2. Analyzes codebase structure
 3. Generates complete documentation
 4. Reviews all files for compliance
 5. Reports results and statistics
@@ -73,7 +73,7 @@ System automatically:
 🪴 Development Session Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🔍 Operations:    23 total
-📊 Most Used:     review_file (15), get_standards (5)
+📊 Most Used:     review*file (15), get*standards (5)
 ⚡ Performance:   avg 800ms response time
 ✨ Quality:       94% compliance score
 ```

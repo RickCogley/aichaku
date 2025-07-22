@@ -4,7 +4,7 @@
 
 - **Fixed critical nagare postRelease hook failure** - Binary upload automation
   was broken during releases
-- **Updated all project dependencies** - Synchronized @std/* packages across
+- **Updated all project dependencies** - Synchronized @std/\* packages across
   main project and MCP servers
 - **Completed comprehensive preflight validation** - All formatting, type
   checking, linting, and tests passed
@@ -19,7 +19,7 @@
   block the main release (continues anyway)
 - **Preserved build-then-upload sequence** - Ensured binaries are built fresh
   before packaging and uploading
-- **Updated to latest stable dependencies** - All @std/* packages updated to
+- **Updated to latest stable dependencies** - All @std/\* packages updated to
   current versions for improved JSR publishing
 
 ## Files Created/Modified
@@ -31,11 +31,11 @@
 
 ### Modified
 
-- `deno.json` - Updated @std/* dependencies to latest versions (semver 1.0.5,
+- `deno.json` - Updated @std/\* dependencies to latest versions (semver 1.0.5,
   cli 1.0.20, fs 1.0.19, etc.)
-- `mcp/aichaku-mcp-server/deno.json` - Updated @std/* dependencies including
+- `mcp/aichaku-mcp-server/deno.json` - Updated @std/\* dependencies including
   yaml 1.0.8
-- `mcp/github-mcp-server/deno.json` - Updated @std/* dependencies for GitHub
+- `mcp/github-mcp-server/deno.json` - Updated @std/\* dependencies for GitHub
   integration
 - `nagare.config.ts` - **Critical fix**: Changed postRelease hook from
   `package-and-upload.ts` to `build-binaries.ts --upload`
@@ -49,7 +49,7 @@
     packages existing files
   - **Solution**: Changed to `scripts/build-binaries.ts --upload` which builds
     then uploads
-- **Dependency version drift** - Multiple @std/* packages were outdated across
+- **Dependency version drift** - Multiple @std/\* packages were outdated across
   project components
   - **Solution**: Systematically updated all packages to latest compatible
     versions
@@ -63,7 +63,7 @@
   build context, not just final steps
 - **Manual testing validates automation** - The working `deno task build:upload`
   revealed the correct process
-- **Dependency synchronization matters** - MCP servers needed same @std/*
+- **Dependency synchronization matters** - MCP servers needed same @std/\*
   versions as main project for consistency
 - **Error analysis through comparison** - Comparing working vs failing processes
   quickly identified the discrepancy

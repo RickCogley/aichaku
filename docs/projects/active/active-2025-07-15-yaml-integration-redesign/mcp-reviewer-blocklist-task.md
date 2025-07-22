@@ -13,7 +13,7 @@ The blocklist should be configurable through:
 
 - Command-line options: `--exclude` or `--ignore`
 - Configuration file: `.aichaku/reviewer-config.yaml`
-- Environment variables: `AICHAKU_REVIEWER_EXCLUDE`
+- Environment variables: `AICHAKU*REVIEWER*EXCLUDE`
 
 ### 2. Pattern Types to Support
 
@@ -43,7 +43,7 @@ reviewer:
       - "poetry.lock"
 
     # Size-based exclusions
-    max_file_size: "1MB" # Skip files larger than this
+    max*file*size: "1MB" # Skip files larger than this
 ```
 
 ### 3. Implementation Details
@@ -75,9 +75,9 @@ async function shouldReviewFile(
   }
 
   // Check file size
-  if (config.exclude?.max_file_size) {
+  if (config.exclude?.max * file * size) {
     const stats = await Deno.stat(filePath);
-    if (stats.size > parseSize(config.exclude.max_file_size)) {
+    if (stats.size > parseSize(config.exclude.max * file * size)) {
       return false;
     }
   }
@@ -102,7 +102,7 @@ const DEFAULT_EXCLUSIONS = {
     "**/*.generated.*",
   ],
   files: ["package-lock.json", "yarn.lock", "poetry.lock", "Gemfile.lock"],
-  max_file_size: "500KB",
+  max*file*size: "500KB",
 };
 ```
 

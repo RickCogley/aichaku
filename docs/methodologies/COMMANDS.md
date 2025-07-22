@@ -16,7 +16,7 @@ Claude Code responds best to natural descriptions:
 
 Activate planning mode with optional methodology
 
-```
+```bash
 /plan - Auto-detect best methodology
 /plan shape-up - Use Shape Up specifically
 /plan scrum - Sprint planning
@@ -26,7 +26,7 @@ Activate planning mode with optional methodology
 
 Start execution with current plan
 
-```
+```bash
 /build - Continue from existing plan
 /build task-name - Jump to specific task
 ```
@@ -35,7 +35,7 @@ Start execution with current plan
 
 Check metrics and improvements
 
-```
+```bash
 /review - Current period metrics
 /review week - Last week's data
 /review sprint - Sprint metrics
@@ -47,7 +47,7 @@ Check metrics and improvements
 
 Quick Shape Up shaping session
 
-```
+```bash
 /shape feature-name
 → Creates pitch with 2/6 week appetite
 ```
@@ -56,7 +56,7 @@ Quick Shape Up shaping session
 
 Scrum sprint operations
 
-```
+```bash
 /sprint plan - Plan next sprint
 /sprint status - Current progress
 /sprint review - Prep for review
@@ -66,7 +66,7 @@ Scrum sprint operations
 
 Kanban board operations
 
-```
+```bash
 /kanban - Show current board
 /kanban metrics - Flow metrics
 /kanban wip - Check WIP limits
@@ -76,7 +76,7 @@ Kanban board operations
 
 Start TDD cycle
 
-```
+```bash
 /tdd feature-name
 → Guides through red-green-refactor
 ```
@@ -85,7 +85,7 @@ Start TDD cycle
 
 Define lean MVP
 
-```
+```bash
 /mvp idea
 → Creates minimal experiment plan
 ```
@@ -96,7 +96,7 @@ Define lean MVP
 
 Universal status check
 
-```
+```text
 Shows:
 - Active methodology
 - Current mode
@@ -108,7 +108,7 @@ Shows:
 
 Change active methodology
 
-```
+```bash
 /switch kanban - Move to Kanban
 /switch scrum - Move to Scrum
 Warns about work in progress
@@ -118,7 +118,7 @@ Warns about work in progress
 
 Get specific help
 
-```
+```bash
 /help - General guidance
 /help shape-up - Methodology details
 /help planning - Mode explanation
@@ -137,16 +137,16 @@ Even with commands, Claude Code:
 
 ### Natural Language
 
-```
+```text
 You: "We have too many bugs"
-Claude: *Detects problem* 
+Claude: *Detects problem*
         *Suggests Kanban for bug flow*
         *Creates WIP-limited board*
 ```
 
 ### With Commands
 
-```
+```text
 You: "/kanban"
 Claude: *Shows current board state*
         *Highlights bottlenecks*
@@ -155,8 +155,8 @@ Claude: *Shows current board state*
 
 ### Mixed Approach
 
-```
-You: "Let's plan" 
+```text
+You: "Let's plan"
 Claude: "What type of work?"
 You: "/sprint plan"
 Claude: *Sprint planning mode*

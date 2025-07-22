@@ -38,7 +38,7 @@ Example output:
 ```
 🪴 [Aichaku MCP] Code Reviewer Server v0.1.0 started
 🪴 [Aichaku MCP] Ready to review code and documentation
-🪴 [Aichaku MCP] Available tools: review_file, review_methodology, get_standards
+🪴 [Aichaku MCP] Available tools: review*file, review*methodology, get_standards
 🪴 [Aichaku MCP] Tool invoked: review_file
 🪴 [Aichaku MCP] Reviewing file: /path/to/document.md
 🪴 [Aichaku MCP] Using standards: diataxis, google-style
@@ -47,7 +47,7 @@ Example output:
 
 ### 2. ✅ Added Document Linting Capabilities
 
-Created comprehensive documentation patterns for the MCP to lint markdown files:
+Created comprehensive documentation patterns for the MCP to lint Markdown files:
 
 #### Diátaxis Patterns
 
@@ -74,7 +74,7 @@ Created comprehensive documentation patterns for the MCP to lint markdown files:
 ### 3. ✅ Improved Review Output
 
 - Differentiates between "Code Review" and "Documentation Review"
-- Shows document type for markdown files
+- Shows document type for Markdown files
 - Provides specific guidance for documentation issues
 
 ## File Changes
@@ -101,7 +101,7 @@ Created comprehensive documentation patterns for the MCP to lint markdown files:
 
 5. **Pattern Files Updated**
    - Fixed security-patterns.ts to match new interface
-   - Fixed typescript-patterns.ts to match new interface
+   - Fixed TypeScript-patterns.ts to match new interface
 
 ## Technical Details
 
@@ -144,4 +144,4 @@ The MCP will now:
 - Monitor user feedback on visibility
 - Add more documentation standards (Microsoft Style, Write the Docs)
 - Consider adding formatting auto-fix capabilities
-- Integrate with `deno fmt` for markdown formatting
+- Integrate with `deno fmt` for Markdown formatting
