@@ -1,0 +1,55 @@
+---
+id: markdown-standards
+name: Markdown Standards
+category: documentation
+description: Universal formatting standards for all markdown documentation in the Aichaku ecosystem
+version: "1.0.0"
+tags:
+  - formatting
+  - consistency
+  - professional
+  - universal
+  - mandatory
+
+summary:
+  critical: |
+    Mandatory formatting rules that ensure professional, consistent, and maintainable
+    documentation across all Aichaku projects, methodologies, and standards.
+
+    Key Requirements:
+    - Code blocks must have language specifications (```bash, ```text, etc.)
+    - Proper name capitalization (GitHub, TypeScript, Aichaku)
+    - Emphasis uses underscores (_text_) to match Prettier formatting
+    - Headings and lists surrounded by blank lines
+    - Fenced code blocks preferred over indented
+    - Files end with single newline
+
+  automation: |
+    Fully automated through pre-commit hooks, editor integration,
+    and linting tools. Compliance is enforced automatically.
+
+  universality: |
+    Applies to ALL markdown content regardless of methodology.
+    Not optional - mandatory for professional appearance.
+
+integration_url: "aichaku://standard/documentation/markdown-standards"
+enforcement: mandatory
+applies_to:
+  - all_markdown_files
+  - all_methodologies
+  - all_projects
+  - all_templates
+
+tools:
+  linter: markdownlint-cli2
+  formatter: prettier
+  editor_config: .editorconfig
+  vscode_settings: .vscode/settings.json
+
+validation_rules:
+  MD040: "Code blocks must have language specified"
+  MD044: "Proper names must be capitalized correctly"
+  MD049: "Use underscore emphasis style (matches Prettier)"
+  MD022: "Headings must be surrounded by blank lines"
+  MD032: "Lists must be surrounded by blank lines"
+  MD046: "Use fenced code blocks, not indented"
