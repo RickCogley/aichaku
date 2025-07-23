@@ -1,0 +1,97 @@
+name: 📚 Documentation Issue
+description: Report issues with documentation or suggest improvements
+title: "[Docs]: "
+labels: ["documentation", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve Aichaku's documentation! Clear docs are essential for a good developer experience.
+
+  - type: dropdown
+    id: doc-type
+    attributes:
+      label: Documentation Type
+      description: What type of documentation issue is this?
+      options:
+        - "Missing documentation"
+        - "Unclear or confusing content"
+        - "Outdated information"
+        - "Broken links or formatting"
+        - "Typo or grammar error"
+        - "Improvement suggestion"
+    validations:
+      required: true
+
+  - type: textarea
+    id: location
+    attributes:
+      label: Document Location
+      description: Where is the documentation issue located?
+      placeholder: |
+        - URL: https://docs.aichaku.com/path/to/page
+        - File: docs/how-to/setup.md
+        - Section: "Getting Started" section
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: Current Documentation
+      description: What does the current documentation say? (copy/paste the relevant section)
+      render: markdown
+    validations:
+      required: false
+
+  - type: textarea
+    id: issue
+    attributes:
+      label: Issue Description
+      description: What's wrong or confusing about the current documentation?
+      placeholder: "The current documentation is unclear because..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested
+    attributes:
+      label: Suggested Improvement
+      description: How should the documentation be improved?
+      placeholder: "The documentation should explain..."
+      render: markdown
+    validations:
+      required: false
+
+  - type: dropdown
+    id: audience
+    attributes:
+      label: Target Audience
+      description: Who is this documentation intended for?
+      options:
+        - "New users (first time setup)"
+        - "Regular users (daily workflow)"
+        - "Advanced users (customization)"
+        - "Contributors (development)"
+        - "All users"
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Any other context that would help improve the documentation
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: help
+    attributes:
+      label: Contributing
+      description: Would you like to help improve this documentation?
+      options:
+        - label: I would be willing to submit a PR to fix this documentation
+          required: false

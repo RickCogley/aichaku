@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🗣️ GitHub Discussions
+    url: https://github.com/rcogley/aichaku/discussions
+    about: Ask questions and discuss ideas with the community
+  - name: 📖 Documentation
+    url: https://docs.aichaku.com
+    about: Check the official documentation for guides and references
+  - name: 💬 Community Chat
+    url: https://discord.gg/aichaku
+    about: Join our Discord community for real-time help and discussions

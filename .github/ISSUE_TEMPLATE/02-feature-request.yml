@@ -1,0 +1,108 @@
+name: ✨ Feature Request
+description: Suggest a new feature or enhancement for Aichaku
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature! Please provide details about what you'd like to see added to Aichaku.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Pre-flight Checklist
+      description: Please confirm you've completed these steps
+      options:
+        - label: I have searched existing issues to ensure this feature hasn't been requested
+          required: true
+        - label: I have checked the documentation to see if this feature already exists
+          required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem does this feature solve? What use case does it address?
+      placeholder: "As a [user type], I want [goal] so that [benefit]"
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the solution you'd like to see
+      placeholder: "I would like Aichaku to..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Describe any alternative solutions or workarounds you've considered
+      placeholder: "I considered using... but it doesn't work because..."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: methodology
+    attributes:
+      label: Related Methodology
+      description: Which methodology is this feature most relevant to?
+      options:
+        - "All methodologies"
+        - "Shape Up"
+        - "Scrum"
+        - "Kanban"
+        - "Lean"
+        - "XP (Extreme Programming)"
+        - "Not methodology-specific"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority Level
+      description: How important is this feature to your workflow?
+      options:
+        - "Nice to have"
+        - "Would improve my workflow"
+        - "Important for my use case"
+        - "Critical/blocking"
+    validations:
+      required: true
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Example Usage
+      description: Provide examples of how this feature would be used
+      placeholder: |
+        ```bash
+        aichaku new-command --option value
+        ```
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context, mockups, or examples about the feature request
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: help
+    attributes:
+      label: Contributing
+      description: Would you like to help implement this feature?
+      options:
+        - label: I would be willing to submit a PR to implement this feature
+          required: false

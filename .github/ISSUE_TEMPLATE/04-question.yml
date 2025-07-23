@@ -1,0 +1,77 @@
+name: ❓ Question
+description: Ask a question about using Aichaku
+title: "[Question]: "
+labels: ["question", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a question about using Aichaku? We're here to help! Please provide as much context as possible.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Pre-flight Checklist
+      description: Please confirm you've completed these steps
+      options:
+        - label: I have searched existing issues and discussions
+          required: true
+        - label: I have checked the documentation
+          required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What would you like to know?
+      placeholder: "How do I..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Provide context about what you're trying to accomplish
+      placeholder: |
+        - What methodology are you using?
+        - What's your current setup?
+        - What have you tried so far?
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment (if relevant)
+      description: Your setup details
+      value: |
+        - **Aichaku Version**:
+        - **Operating System**:
+        - **Project Type**:
+      render: markdown
+    validations:
+      required: false
+
+  - type: textarea
+    id: attempted
+    attributes:
+      label: What I've Tried
+      description: What have you already attempted?
+      placeholder: "I tried... but..."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: urgency
+    attributes:
+      label: Urgency
+      description: How urgent is this question?
+      options:
+        - "Just curious"
+        - "Would help my workflow"
+        - "Blocking my work"
+    validations:
+      required: false
