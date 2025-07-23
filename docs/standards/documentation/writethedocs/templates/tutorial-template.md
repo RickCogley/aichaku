@@ -11,7 +11,9 @@ This tutorial takes about [time] to complete.
 ### What You'll Need
 
 - **[Requirement]**: [Why it's needed]
+
 - **[Requirement]**: [Version required and why]
+
 - **Basic familiarity with [prerequisite knowledge]**
 
 > 💡 **New to [prerequisite]?** Check out [this gentle introduction](link)
@@ -25,7 +27,9 @@ In this tutorial, we'll create [description of the end result]. This will teach
 you:
 
 - How [Project] handles [concept 1]
+
 - The basics of [concept 2]
+
 - Why [concept 3] matters
 
 ## Step 1: Set Up Your Environment
@@ -36,13 +40,13 @@ First, let's make sure everything is installed correctly.
 
 Open your terminal and run:
 
-```bash
+````bash
 # For macOS/Linux
 curl -sSL https://install.example.com | sh
 
 # For Windows
 iwr -useb https://install.example.com | iex
-```
+```text
 
 <details>
 <summary>🔧 Troubleshooting installation issues</summary>
@@ -51,18 +55,19 @@ iwr -useb https://install.example.com | iex
 
 ```bash
 sudo curl -sSL https://install.example.com | sh
-```
+```text
 
 **Behind a proxy?** Set your proxy environment variables first:
 
 ```bash
 export HTTP_PROXY=http://proxy.example.com:8080
 export HTTPS_PROXY=http://proxy.example.com:8080
-```
+```text
 
 **Still having issues?**
 
 - Check our [installation guide](link) for your specific OS
+
 - Ask for help in our [community chat](link)
 
 </details>
@@ -73,14 +78,14 @@ Check that everything is working:
 
 ```bash
 project --version
-```
+```text
 
 You should see something like:
 
-```
+```text
 Project version 1.2.3
 Built: 2023-10-15
-```
+```text
 
 ✅ **Checkpoint**: You now have [Project] installed and ready to use!
 
@@ -93,7 +98,9 @@ Now for the fun part - let's create something!
 Before we dive in, here's a quick overview:
 
 - **[Term 1]**: [Plain English explanation]
+
 - **[Term 2]**: [Another clear explanation]
+
 - **[Term 3]**: [One more explanation]
 
 Don't worry if this doesn't all make sense yet - it will become clearer as we
@@ -106,7 +113,7 @@ work through the example.
    ```bash
    mkdir my-first-project
    cd my-first-project
-   ```
+````
 
 2. **Initialize** a new [Project] configuration:
 
@@ -116,7 +123,7 @@ work through the example.
 
    This creates a basic structure:
 
-   ```
+   ```text
    my-first-project/
    ├── config.yaml     # Your project configuration
    ├── src/           # Your source files go here
@@ -141,17 +148,19 @@ work through the example.
 
 Create a new file `src/hello.ext`:
 
-```language
+````language
 // This is your first [component]
 // It demonstrates [what it shows]
 
 [actual code here with line numbers or clear structure]
-```
+```text
 
 Let's break down what this does:
 
 - **Line 1-2**: Comments explaining the purpose
+
 - **Line 4**: [Explanation of key line]
+
 - **Line 5**: [Explanation of another important part]
 
 ### Run Your Code
@@ -160,14 +169,14 @@ Time to see it in action:
 
 ```bash
 project run src/hello.ext
-```
+```text
 
 You should see:
 
-```
+```text
 [Expected output]
 Success! Your first [component] is working.
-```
+```text
 
 🎉 **Congratulations!** You just created and ran your first [Project] program!
 
@@ -177,16 +186,22 @@ Success! Your first [component] is working.
 **Common issues**:
 
 1. **Error: file not found**
+
    - Make sure you're in the right directory: `pwd` should show
      `.../my-first-project`
+
    - Check the file exists: `ls src/`
 
 2. **Error: syntax error**
+
    - Double-check your code matches the example exactly
+
    - [Language-specific] common issues
 
 3. **No output**
+
    - Some systems buffer output; try adding a newline at the end
+
    - Check you saved the file before running
 
 </details>
@@ -201,11 +216,12 @@ Modify your `src/hello.ext` file:
 
 ```language
 [Updated code with input handling]
-```
+```text
 
 **What's new:**
 
 - [Explanation of new lines]
+
 - [Why this approach]
 
 ### Test the Interaction
@@ -214,14 +230,14 @@ Run it again:
 
 ```bash
 project run src/hello.ext
-```
+```text
 
 Try entering different inputs:
 
-```
+```text
 Enter your name: Alice
 Hello, Alice! Welcome to [Project].
-```
+```text
 
 ✅ **Checkpoint**: Your program can now interact with users!
 
@@ -235,7 +251,7 @@ Create `src/calculator.ext`:
 
 ```language
 [Calculator code example]
-```
+```text
 
 ### Import and Use the Module
 
@@ -243,31 +259,35 @@ Update your main file:
 
 ```language
 [Updated main file using the module]
-```
+```text
 
 ### See It in Action
 
 ```bash
 project run src/hello.ext
-```
+```text
 
 Play with different operations:
 
-```
+```text
 Enter first number: 10
 Enter second number: 5
 Choose operation (+, -, *, /): +
 Result: 15
-```
+```text
 
 ## What You've Learned
 
 You've successfully:
 
 - ✅ Installed [Project] and verified it works
+
 - ✅ Created your first [component]
+
 - ✅ Added user interaction
+
 - ✅ Built a modular program with multiple files
+
 - ✅ Learned about [key concept 1], [key concept 2], and [key concept 3]
 
 ### Quick Reference
@@ -284,7 +304,9 @@ Here are the commands you learned:
 ### Key Concepts
 
 - **[Concept 1]**: [One-line summary]
+
 - **[Concept 2]**: [One-line summary]
+
 - **[Concept 3]**: [One-line summary]
 
 ## What's Next?
@@ -292,15 +314,21 @@ Here are the commands you learned:
 You're ready to explore more:
 
 1. **[How-to: Connect to a Database]** - Add persistence to your project
+
 2. **[How-to: Deploy Your Project]** - Share your creation with the world
+
 3. **[Understanding [Core Concept]]** - Deep dive into how [Project] works
+
 4. **[Build a Real App Tutorial]** - Create something production-ready
 
 ### Join the Community
 
 - 💬 **[Discord/Slack/Forum]** - Get help and share what you build
+
 - 🐛 **[Issue Tracker]** - Report bugs or request features
+
 - 📚 **[Documentation]** - Explore all features in detail
+
 - 🌟 **[GitHub]** - Star the project and contribute
 
 Remember: everyone started where you are now. Don't hesitate to ask questions!
@@ -312,5 +340,8 @@ Remember: everyone started where you are now. Don't hesitate to ask questions!
 Found something confusing? Have a better explanation? We'd love your help!
 
 - 📝 [Edit this page](github-edit-link)
+
 - 💬 [Discuss improvements](discussion-link)
+
 - 🐛 [Report issues](issue-link)
+````

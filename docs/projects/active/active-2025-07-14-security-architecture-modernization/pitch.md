@@ -36,20 +36,27 @@ complete protection.
 **Layer 1: Professional Tools (Foundation)**
 
 - **CodeQL**: Semantic analysis, path traversal, injection vulnerabilities
+
 - **DevSkim**: Security anti-patterns, hardcoded secrets
+
 - **Dependabot**: Dependency vulnerability alerts
+
 - **Aichaku Hooks**: Real-time secret detection during development
 
 **Layer 2: Gap-Filling Checks (Targeted)**
 
 - **Deno-specific security**: Permission escalation, runtime API misuse
+
 - **Contextual vulnerabilities**: Insecure randomness in security contexts
+
 - **Runtime patterns**: Dynamic imports, eval usage validation
 
 **Layer 3: Monitoring & Response (Future)**
 
 - Runtime security monitoring
+
 - Security event correlation
+
 - Incident response automation
 
 ### Implementation Phases
@@ -57,25 +64,33 @@ complete protection.
 **Phase 1: Tool Capability Mapping (Week 1)**
 
 - Complete audit of what each tool actually catches
+
 - Document overlaps and gaps with concrete examples
+
 - Test tools against known vulnerability patterns
 
 **Phase 2: Architecture Design (Week 2)**
 
 - Design layered security strategy
+
 - Define clear tool responsibilities
+
 - Create security coverage matrix
 
 **Phase 3: Custom Check Redesign (Weeks 3-4)**
 
 - Remove redundant custom checks
+
 - Implement focused gap-filling checks
+
 - Eliminate complex exclusion patterns
 
 **Phase 4: Validation & Documentation (Weeks 5-6)**
 
 - Test against known vulnerabilities
+
 - Create security scanning guide
+
 - Team training and documentation
 
 ## Rabbit Holes
@@ -92,16 +107,23 @@ too expensive
 ## No-gos
 
 - Reducing overall security coverage
+
 - Disabling professional security tools
+
 - Creating more complex custom checks than we remove
+
 - Ignoring Deno-specific security concerns unique to our stack
 
 ## Success Metrics
 
 - **Zero false positives** blocking releases in CI/CD
+
 - **50% reduction** in security check maintenance overhead
+
 - **Complete coverage documentation** - clear map of what each tool covers
+
 - **Faster CI/CD** - security checks complete in under 5 minutes
+
 - **Team confidence** - developers understand and trust the security process
 
 ## Risk Mitigation

@@ -14,16 +14,23 @@
 **Why we're betting on this**:
 
 - High user demand for simpler methodology support
+
 - Current persona system too complex (70+ files)
+
 - Natural language approach aligns with Claude Code strengths
+
 - Can revolutionize how developers adopt good practices
 
 **Success looks like**:
 
 - [x] Three-mode system implemented
+
 - [x] 5 methodologies converted to simple format
+
 - [x] 80% reduction in file count
+
 - [x] Natural language detection working
+
 - [x] Documentation and examples complete
 
 ---
@@ -52,14 +59,19 @@ These were considered but didn't make the cut:
 **Team A**: Rick (Product/Direction) + Claude Code (Implementation)
 
 - Working on: Entire Aichaku system
+
 - Capacity: Full dedication
 
 ## Important Dates
 
 - **Cycle Start**: 2025-01-04
+
 - **Mid-cycle Check**: 2025-01-04 PM
+
 - **Cycle End**: 2025-01-05
+
 - **Cool-down Start**: 2025-01-06
+
 - **Next Betting Table**: After launch feedback
 
 ## Notes
@@ -71,8 +83,11 @@ methodology in action while delivering real value.
 Key constraints:
 
 - Must work with existing Claude Code
+
 - Cannot break current Shape Up users
+
 - Must be genuinely simpler
+
 - Documentation is part of shipping
 
 ---

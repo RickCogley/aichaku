@@ -17,8 +17,11 @@ to code and suggest creating GitHub issues
 **Features**:
 
 - Monitors code and Markdown files for TODO additions
+
 - Suggests creating GitHub issues with proper formatting
+
 - Supports linking TODOs to existing issues (e.g., `TODO(#123)`)
+
 - Encourages labeling (e.g., `TODO(security)`) and prioritization
 
 **MCP Integration**: Could automatically create draft issues from TODOs with
@@ -32,8 +35,11 @@ Claude session
 **Features**:
 
 - Reminds you of active pull requests
+
 - Suggests checking CI status before making changes
+
 - Encourages updating PR descriptions as work progresses
+
 - Links commits to the active PR
 
 **MCP Integration**: Could fetch and display current PR status, CI results, and
@@ -47,8 +53,11 @@ link commits to GitHub issues
 **Features**:
 
 - Detects git commit commands
+
 - Shows proper issue linking syntax (Fixes #123, Closes #123)
+
 - Supports multiple issue references
+
 - Explains the difference between closing and referencing
 
 **MCP Integration**: Could suggest relevant open issues based on the files being
@@ -62,8 +71,11 @@ guidance when modifying GitHub Actions workflows
 **Features**:
 
 - Detects changes to workflow files
+
 - Suggests testing locally with `act`
+
 - Reminds about security best practices
+
 - Shows commands to check workflow status
 
 **MCP Integration**: Could validate workflow syntax and check for security
@@ -77,8 +89,11 @@ through release process when version bumps are detected
 **Features**:
 
 - Detects version changes in package.json, Cargo.toml, etc.
+
 - Provides release checklist
+
 - Explains semantic versioning
+
 - Shows release creation commands
 
 **MCP Integration**: Could auto-generate release notes from commit history and
@@ -90,11 +105,11 @@ create draft releases.
 
 **Purpose**: Check CODEOWNERS file and notify about required reviews
 
-```typescript
+````typescript
 // When editing files, check who owns them
 // Suggest adding them as PR reviewers
 // Show their GitHub status (available/busy)
-```
+```text
 
 ### 7. Security Advisory Checker
 
@@ -104,7 +119,7 @@ create draft releases.
 // On package.json changes, check GitHub Advisory Database
 // Show CVEs for dependencies
 // Suggest safer alternatives
-```
+```text
 
 ### 8. Branch Protection Reminder
 
@@ -114,7 +129,7 @@ create draft releases.
 // Before force pushes or direct main commits
 // Check branch protection rules
 // Suggest proper workflow (PR instead of direct push)
-```
+```text
 
 ### 9. Issue Template Filler
 
@@ -124,7 +139,7 @@ create draft releases.
 // When creating issues, parse .github/ISSUE_TEMPLATE
 // Guide through required fields
 // Validate against template requirements
-```
+```text
 
 ### 10. PR Size Monitor
 
@@ -134,7 +149,7 @@ create draft releases.
 // Track lines changed in session
 // Suggest splitting into smaller PRs
 // Show best practices for PR size
-```
+```text
 
 ## Installation Examples
 
@@ -146,7 +161,7 @@ aichaku hooks --install todo-tracker --global
 
 # Or add as a set
 aichaku hooks --install github-integration --global
-```
+```text
 
 ## Hook Configuration
 
@@ -178,52 +193,75 @@ Add to your settings.json:
     ]
   }
 }
-```
+```text
 
 ## MCP Server Integration
 
 These hooks work best when paired with a GitHub MCP server that can:
 
 1. **Read Operations**:
+
    - Fetch issue lists
+
    - Get PR status
+
    - Check workflow runs
+
    - Read CODEOWNERS
 
 2. **Write Operations**:
+
    - Create issues from TODOs
+
    - Update PR descriptions
+
    - Add comments
+
    - Create releases
 
 3. **Smart Features**:
+
    - AI-powered issue descriptions
+
    - Automatic PR categorization
+
    - Smart issue assignment
+
    - Release note generation
 
 ## Benefits
 
 1. **Reduced Context Switching**: Stay in Claude Code while managing GitHub
+
 2. **Automated Workflows**: Let hooks handle repetitive GitHub tasks
+
 3. **Better Practices**: Gentle reminders for GitHub best practices
+
 4. **AI Enhancement**: Use Claude's intelligence for GitHub operations
 
 ## Security Considerations
 
 - Hooks only provide suggestions and reminders
+
 - Actual GitHub operations require explicit MCP server calls
+
 - No credentials are stored in hooks
+
 - All GitHub operations use secure MCP channels
 
 ## Future Possibilities
 
 - **Git History Analysis**: Suggest code owners based on git blame
+
 - **Smart PR Reviews**: Auto-request reviews from relevant contributors
+
 - **Issue Prediction**: Suggest creating issues before problems arise
+
 - **Workflow Optimization**: Analyze and suggest workflow improvements
+
 - **Team Notifications**: Notify team members through GitHub when appropriate
 
 The combination of Aichaku hooks and GitHub MCP creates a powerful development
 environment where GitHub operations are seamlessly integrated into your coding
 workflow!
+````

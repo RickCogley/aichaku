@@ -12,8 +12,11 @@ entire Markdown content of each standard is injected into CLAUDE.md. This
 creates files that are:
 
 - **10KB-50KB+** in size for moderate selections
+
 - **Difficult to scan** visually
+
 - **Slow for Claude to parse** repeatedly
+
 - **Problematic for version control** (large diffs)
 
 ### 2. Duplicate Command Systems
@@ -21,27 +24,31 @@ creates files that are:
 We maintain two parallel systems:
 
 - `aichaku standards` - for development standards
+
 - `aichaku docs-standard` - for documentation standards
 
 This duplication:
 
 - **Confuses users** ("which command do I use?")
+
 - **Doubles maintenance** (bug fixes needed in both places)
+
 - **Creates inconsistent experiences** (different features in each)
 
 ### 3. Underutilized YAML Metadata
 
 Rich YAML files exist with metadata but are only used for display:
 
-```yaml
+````yaml
 # Current YAML has all this useful data
 name: "OWASP Top 10"
 triggers: ["OWASP", "security check", "vulnerability"]
 summary:
+
   overview: "Essential security checks"
   key_points: [...]
 rules: [...]
-```
+```text
 
 But integration just dumps the entire Markdown file instead of leveraging this
 structure.
@@ -51,8 +58,11 @@ structure.
 Users can't choose how standards appear in CLAUDE.md:
 
 - Always get full content
+
 - No summary mode
+
 - No checklist mode
+
 - No way to customize
 
 ## Appetite
@@ -60,9 +70,13 @@ Users can't choose how standards appear in CLAUDE.md:
 **6 weeks** - This is a significant architectural change that affects:
 
 - Core CLI commands
+
 - Configuration management
+
 - Integration engine
+
 - User migration
+
 - Documentation updates
 
 ## Solution
@@ -75,6 +89,7 @@ block in CLAUDE.md:
 ```yaml
 # Aichaku Configuration
 aichaku:
+
   version: "3.0.0"
 
   # All methodologies always available (for reference)
@@ -130,15 +145,19 @@ aichaku:
         "Explanation",
       ]
       integration_url: "~/.claude/aichaku/standards/documentation/diataxis.md"
-```
+```text
 
 ### Key Benefits
 
 1. **Tiny Footprint**: ~2KB instead of 50KB+
+
 2. **Fast Parsing**: YAML is structured data
+
 3. **Smart Integration**: Claude gets triggers and can load full content on
    demand
+
 4. **User Editable**: Users can add custom fields
+
 5. **Clean Diffs**: Version control friendly
 
 ### Implementation Architecture
@@ -156,7 +175,7 @@ graph TD
     I[Claude reads CLAUDE.md] --> J[Sees compact YAML]
     J --> K[Knows triggers/focus]
     K --> L[Can load full content via integration_url if needed]
-```
+```text
 
 ### Command Unification
 
@@ -171,13 +190,16 @@ aichaku docs-standard --add diataxis
 aichaku standards --add tdd,diataxis
 aichaku standards --list --category documentation
 aichaku standards --remove diataxis
-```
+```text
 
 ### Migration Strategy
 
 1. **Auto-detect old format** when running `integrate`
+
 2. **Convert to new format** automatically
+
 3. **Preserve custom content** outside YAML block
+
 4. **Show clear migration message** explaining changes
 
 ### Advanced Features (Future Compatible)
@@ -186,17 +208,18 @@ The YAML structure enables future enhancements:
 
 ```yaml
 standards:
+
   owasp_web:
     integration_mode: "summary" # or "full", "checklist", "custom"
     custom_template: "path/to/template"
     enabled_rules: ["A01", "A02", "A07"] # Selective rules
-```
+```text
 
 ## Technical Details
 
 ### File Structure Changes
 
-```
+```text
 ~/.claude/aichaku/
 ├── docs/
 │   └── standards/
@@ -205,7 +228,7 @@ standards:
 │       ├── documentation/   # ← Move docs standards here
 │       ├── testing/
 │       └── architecture/
-```
+```text
 
 ### Configuration Consolidation
 
@@ -221,7 +244,7 @@ aichaku.json {
     custom: {...}
   }
 }
-```
+```text
 
 ### Integration Algorithm
 
@@ -249,7 +272,7 @@ function integrate() {
   // 5. Write back
   await writeFile("CLAUDE.md", updated);
 }
-```
+```text
 
 ## Rabbit Holes
 
@@ -283,11 +306,17 @@ categories, allow multiple categories per standard
 ### What We're NOT Doing
 
 1. **Breaking existing installations** - Migration must be automatic
+
 2. **Removing offline support** - Everything still works without internet
+
 3. **Creating new file formats** - Stick with YAML/Markdown
+
 4. **Adding network dependencies** - No remote loading of standards
+
 5. **Complicating the basic flow** - `add` → `integrate` stays simple
+
 6. **Forcing YAML-only** - Users can still edit CLAUDE.md manually
+
 7. **Removing methodology content** - Still copy all /docs for reference
 
 ### Scope Boundaries
@@ -295,23 +324,33 @@ categories, allow multiple categories per standard
 This project is ONLY about:
 
 - Merging standards commands
+
 - Creating compact YAML integration
+
 - Migrating existing users
+
 - Updating documentation
 
 NOT about:
 
 - Changing how methodologies work
+
 - Adding new standards
+
 - Building template systems
+
 - Creating web interfaces
 
 ## Success Criteria
 
 1. **Size Reduction**: CLAUDE.md reduced by 90%+ for typical usage
+
 2. **Command Simplification**: Single `standards` command
+
 3. **Clean Migration**: Existing users auto-migrated without data loss
+
 4. **Performance**: Claude parses CLAUDE.md faster
+
 5. **Maintainability**: 40% less code to maintain
 
 ## Working Approach
@@ -319,25 +358,33 @@ NOT about:
 ### Week 1-2: Foundation
 
 - Merge commands into unified system
+
 - Update ConfigManager for single config
+
 - Create YAML generation engine
 
 ### Week 3-4: Integration
 
 - Build new integration system
+
 - Create migration logic
+
 - Test with various scenarios
 
 ### Week 5: Polish
 
 - Update all documentation
+
 - Add comprehensive tests
+
 - Handle edge cases
 
 ### Week 6: Release
 
 - Beta test with users
+
 - Fix final issues
+
 - Release with migration guide
 
 ## Risk Mitigation
@@ -347,7 +394,9 @@ NOT about:
 **Mitigation**:
 
 - Clear migration messages
+
 - Updated help command
+
 - Example CLAUDE.md files
 
 ### Risk: Claude Can't Use New Format
@@ -355,7 +404,9 @@ NOT about:
 **Mitigation**:
 
 - Test extensively with Claude
+
 - Keep integration_url for full content access
+
 - Maintain trigger keywords
 
 ### Risk: Complex Migration Bugs
@@ -363,7 +414,9 @@ NOT about:
 **Mitigation**:
 
 - Backup original CLAUDE.md
+
 - Dry-run mode for testing
+
 - Clear rollback instructions
 
 ## Summary
@@ -371,9 +424,13 @@ NOT about:
 This shapes a solution that:
 
 - **Reduces CLAUDE.md size by 90%+** through compact YAML
+
 - **Eliminates code duplication** by merging commands
+
 - **Improves performance** for Claude
+
 - **Maintains flexibility** for future enhancements
+
 - **Respects existing users** through automatic migration
 
 The appetite of 6 weeks is appropriate for this architectural change that will
@@ -386,11 +443,17 @@ Are we ready to bet 6 weeks on this compact YAML integration system?
 ### Key Trade-offs
 
 - ✅ Much smaller CLAUDE.md files
+
 - ✅ Unified command system
+
 - ✅ Better performance
+
 - ✅ Future flexibility
+
 - ❌ One-time migration complexity
+
 - ❌ Documentation rewrite needed
 
 The benefits clearly outweigh the costs. This positions Aichaku for sustainable
 growth while improving the user experience.
+````

@@ -86,12 +86,12 @@ Creates specific documentation template files.
 
 ### Basic Documentation Generation
 
-```typescript
+````typescript
 // Generate documentation for current project
 await generateDocumentationTool.execute({
   projectPath: ".",
 });
-```
+```text
 
 ### Custom Standard with Diagrams
 
@@ -102,7 +102,7 @@ await generateDocumentationTool.execute({
   standard: "google",
   includeDiagrams: true,
 });
-```
+```text
 
 ### Create Specific Template
 
@@ -114,7 +114,7 @@ await createDocTemplateTool.execute({
   title: "Advanced Features",
   projectName: "MyProject",
 });
-```
+```text
 
 ### Full Workflow with Auto-Chain
 
@@ -131,7 +131,7 @@ if (result.success && result.generatedFiles) {
     await reviewFile({ file });
   }
 }
-```
+```text
 
 ## Integration with Aichaku Standards
 
@@ -189,7 +189,7 @@ Run tests for the documentation tools:
 deno test mcp-server/src/generation/
 deno test mcp-server/src/analysis/
 deno test mcp-server/src/tools/
-```
+```text
 
 ## Future Enhancements
 
@@ -198,3 +198,4 @@ deno test mcp-server/src/tools/
 - Multi-language documentation generation
 - Interactive documentation features
 - Documentation coverage metrics
+````

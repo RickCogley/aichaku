@@ -2,7 +2,7 @@
 
 ## 1. Enhanced Init Command with Behavioral Setup
 
-```typescript
+````typescript
 // cli/commands/init.ts
 
 import { ensureDir } from "@std/fs";
@@ -20,7 +20,9 @@ IF NOT → Create proper structure FIRST!`;
 const OUTPUT_README = `# 📁 Output Directory
 
 ALL documents MUST go here:
+
 - active-[date]-[project]/ → Current work
+
 - done-[date]-[project]/ → Completed work
 
 Current active: See ../.aichaku-active`;
@@ -31,13 +33,18 @@ const DIRECTIVE*CLAUDE*INTEGRATION = `
 YOU ARE REQUIRED TO FOLLOW THESE RULES WITHOUT EXCEPTION:
 
 ### Document Creation
+
 ✅ ALL documents go in: .claude/output/active-[date]-[project]/
 ❌ NEVER in project root or .claude/user/
 
 ### Automatic Behaviors
+
 When user says → You MUST create:
+
 - "shape" → pitch.md in active directory
+
 - "sprint" → sprint-plan.md in active directory  
+
 - "done" → Move to done-*/ with retrospective.md
 
 NO EXCEPTIONS. NO ASKING. JUST DO IT.`;
@@ -115,7 +122,9 @@ if [[ ! "$FILE_PATH" =~ \\.claude/output/active-.* ]]; then
 
 ## Updates
 ### $(date -u +%Y-%m-%dT%H:%M:%SZ)
+
 - Created project structure
+
 - Working on: $FILENAME
 EOF
   fi
@@ -145,7 +154,7 @@ Just start talking naturally:
 
 No configuration. No questions. Just magic. ✨`;
 }
-```
+```text
 
 ## 2. Natural Language Detection System
 
@@ -235,7 +244,7 @@ ${
 
 echo "${projectDir}" > .claude/.aichaku-active`;
 }
-```
+```text
 
 ## 3. Self-Correcting File System Monitor
 
@@ -311,7 +320,9 @@ export class AichakuFileMonitor {
       `git commit -m "fix: move document to Aichaku location
 
 - Moved from: ${oldPath}
+
 - Moved to: ${newPath}
+
 - Following Aichaku conventions" || true`,
     ];
 
@@ -355,7 +366,7 @@ export async function startFileMonitor() {
     }
   }
 }
-```
+```text
 
 ## 4. Status Auto-Updater
 
@@ -376,6 +387,7 @@ export class StatusUpdater {
     const timestamp = new Date().toISOString();
     const update = `
 ### ${timestamp}
+
 - ${action}${details ? "\n" + this.formatDetails(details) : ""}
 `;
 
@@ -421,6 +433,7 @@ export class StatusUpdater {
     await exec(`git commit -m "complete: ${projectName} moved to done
 
 - Created retrospective
+
 - Project completed successfully"`);
   }
 }
@@ -442,7 +455,7 @@ export function installStatusHooks() {
     return result;
   };
 }
-```
+```text
 
 ## 5. Git Integration Hooks
 
@@ -470,7 +483,7 @@ if [ ! -z "$WRONG_LOCATIONS" ]; then
   echo "Please commit again."
   exit 1
 fi
-```
+```text
 
 ## 6. Testing the Magic
 
@@ -530,4 +543,5 @@ Deno.test("Files in wrong location get auto-corrected", async () => {
   assert(!(await exists("./wrong-location.md")));
   assert(await exists(corrected!));
 });
-```
+```text
+````

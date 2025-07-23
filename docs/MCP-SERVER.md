@@ -12,10 +12,13 @@ followed correctly.
 
 - **Security Review**: Automated security scanning using multiple tools
   (Semgrep, ESLint security plugin, Bandit)
+
 - **Standards Compliance**: Check code against various coding standards (OWASP,
   NIST-CSF, Clean Architecture, etc.)
+
 - **Methodology Verification**: Validate project structure against methodologies
   (Shape Up, Scrum, Kanban, etc.)
+
 - **Extensible Architecture**: Easy to add new security scanners and standards
 
 ## Architecture
@@ -24,11 +27,15 @@ followed correctly.
 
 1. **TypeScript Implementation**: Chosen for type safety and excellent tooling
    support
+
 2. **Modular Scanner System**: Each security scanner is a separate module for
    maintainability
+
 3. **Plugin Architecture**: Standards and methodologies are loaded dynamically
+
 4. **Async/Await Pattern**: All operations are asynchronous for better
    performance
+
 5. **Error Resilience**: Graceful handling of missing tools or failed scans
 
 ### System Architecture
@@ -36,12 +43,13 @@ followed correctly.
 The MCP server supports two operational modes:
 
 1. **Process Mode** (Default): Each request spawns a new MCP server process
+
 2. **HTTP/SSE Server Mode**: A persistent HTTP server handles multiple clients
    via Server-Sent Events
 
 #### Process Mode Architecture
 
-```text
+`````text
 ┌─────────────────────────────────────────────────┐
 │                  MCP Client                     │
 │            (Claude, VS Code, etc.)              │
@@ -67,7 +75,7 @@ The MCP server supports two operational modes:
 │  │ Semgrep │ ESLint │ Bandit │ Custom      │   │
 │  └──────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────┘
-```
+```text
 
 #### HTTP/SSE Server Mode Architecture
 
@@ -108,7 +116,7 @@ The MCP server supports two operational modes:
 │  3. MCP → Process and return via stdout         │
 │  4. Server → Push via SSE to client             │
 └─────────────────────────────────────────────────┘
-```
+```text
 
 ### Server Modes
 
@@ -117,7 +125,9 @@ The MCP server supports two operational modes:
 In process mode, the MCP server is spawned as a new process for each request:
 
 - **Pros**: Simple, isolated, no persistent state
+
 - **Cons**: Higher overhead, slower for frequent requests
+
 - **Use When**: Running occasional reviews or in single-user environments
 
 #### HTTP/SSE Server Mode
@@ -125,11 +135,17 @@ In process mode, the MCP server is spawned as a new process for each request:
 In HTTP/SSE mode, a persistent server handles multiple clients:
 
 - **Pros**:
+
   - Efficient resource usage
+
   - Faster response times (no process startup)
+
   - Supports multiple concurrent Claude Code instances
+
   - Cross-platform (Windows, macOS, Linux)
+
 - **Cons**: Requires manual server management
+
 - **Use When**: Multiple Claude Code instances or frequent requests
 
 **Starting the HTTP/SSE Server:**
@@ -143,13 +159,16 @@ aichaku mcp --server-status
 
 # Stop the server
 aichaku mcp --stop-server
-```
+```text
 
 The server runs on port 7182 (AICHAKU on phone keypad) and provides:
 
 - `POST /rpc` - JSON-RPC request endpoint
+
 - `GET /sse` - Server-Sent Events for responses
+
 - `GET /health` - Health check endpoint
+
 - `DELETE /session` - Close session endpoint
 
 ### Core Components
@@ -157,25 +176,33 @@ The server runs on port 7182 (AICHAKU on phone keypad) and provides:
 #### 1. MCP Server (`src/mcp-server.ts`)
 
 - Initializes the MCP server with stdio transport
+
 - Registers all available tools
+
 - Handles lifecycle management
 
 #### 2. Security Service (`src/services/security-service.ts`)
 
 - Orchestrates security scans
+
 - Aggregates results from multiple scanners
+
 - Formats findings for consistent output
 
 #### 3. Standards Service (`src/services/standards-service.ts`)
 
 - Loads and manages coding standards
+
 - Provides standard selection and retrieval
+
 - Handles custom standards from user directory
 
 #### 4. Methodology Service (`src/services/methodology-service.ts`)
 
 - Checks project structure against methodologies
+
 - Validates required files and patterns
+
 - Provides compliance reporting
 
 ## API Documentation
@@ -189,7 +216,9 @@ Reviews a file for security vulnerabilities and code quality issues.
 **Parameters:**
 
 - `file` (string, required): Path to the file to review
+
 - `content` (string, optional): File content (if not provided, reads from disk)
+
 - `includeExternal` (boolean, optional): Include external security scanners
   (default: true)
 
@@ -215,7 +244,7 @@ Reviews a file for security vulnerabilities and code quality issues.
     byScanner: Record<string, number>;
   }
 }
-```
+```text
 
 **Example Usage:**
 
@@ -232,7 +261,7 @@ const result = await mcp.callTool("review_file", {
   content: 'const password = "hardcoded123";',
   includeExternal: false,
 });
-```
+```text
 
 #### 2. `review_methodology` - Methodology Compliance Tool
 
@@ -241,6 +270,7 @@ Checks if a project follows selected methodology patterns.
 **Parameters:**
 
 - `projectPath` (string, required): Path to the project root
+
 - `methodology` (string, optional): Specific methodology to check (e.g.,
   'shape-up', 'scrum')
 
@@ -259,7 +289,7 @@ Checks if a project follows selected methodology patterns.
   }>;
   recommendations: string[];
 }
-```
+```text
 
 **Example Usage:**
 
@@ -274,7 +304,7 @@ const result = await mcp.callTool("review_methodology", {
 const result = await mcp.callTool("review_methodology", {
   projectPath: "/Users/dev/my-project",
 });
-```
+```text
 
 #### 3. `get_standards` - Standards Retrieval Tool
 
@@ -289,6 +319,7 @@ feedback to users.
 **Parameters:**
 
 - `message` (string, required): The feedback message to display
+
 - `level` (string, optional): The feedback level/type ("info", "success",
   "warning", "error", default: "info")
 
@@ -301,7 +332,7 @@ feedback to users.
     text: string; // Formatted feedback message with emoji/icon
   }];
 }
-```
+```text
 
 **Example Usage:**
 
@@ -329,7 +360,7 @@ const result = await mcp.callTool("send_feedback", {
   message: "Critical vulnerability found - immediate action required",
   level: "error",
 });
-```
+```text
 
 **Hook Integration Example:**
 
@@ -341,7 +372,7 @@ const result = await mcp.callTool("send_feedback", {
 deno run -A examples/send-feedback-example.ts message \
   "🔍 Hook triggered: Starting security review" \
   "info"
-```
+```text
 
 #### 5. `get_standards` - Standards Retrieval Tool (Continued)
 
@@ -367,7 +398,7 @@ deno run -A examples/send-feedback-example.ts message \
     path: string;
   }>;
 }
-```
+```text
 
 **Example Usage:**
 
@@ -375,38 +406,56 @@ deno run -A examples/send-feedback-example.ts message \
 const result = await mcp.callTool("get_standards", {
   projectPath: "/Users/dev/my-project",
 });
-```
+```text
 
 ### Scanner Modules
 
 #### Semgrep Scanner
 
 - **Purpose**: Static analysis for security patterns
+
 - **Languages**: Multi-language support
+
 - **Configuration**: `.semgrep.yml` or default rules
+
 - **Key Features**:
+
   - OWASP Top 10 detection
+
   - Custom rule support
+
   - Auto-fix suggestions
 
 #### ESLint Security Plugin
 
 - **Purpose**: JavaScript/TypeScript security linting
+
 - **Configuration**: `.eslintrc` with security rules
+
 - **Key Rules**:
+
   - `no-eval`: Detects eval usage
+
   - `no-implied-eval`: Detects implied eval
+
   - `detect-non-literal-regexp`: RegExp injection
+
   - `detect-buffer-noassert`: Buffer security
 
 #### Bandit Scanner
 
 - **Purpose**: Python security linting
+
 - **Configuration**: `.bandit` or command line
+
 - **Key Checks**:
+
   - Hardcoded passwords
+
   - SQL injection
+
   - Insecure randomness
+
   - Shell injection
 
 ## Usage Examples
@@ -429,7 +478,7 @@ aichaku review file1.ts
 
 # Terminal 2 (simultaneously):
 aichaku review file2.ts
-```
+```text
 
 ### Basic Security Review
 
@@ -448,7 +497,7 @@ console.log(`Found ${reviewResult.stats.totalIssues} issues`);
 reviewResult.findings.forEach((finding) => {
   console.log(`[${finding.severity}] ${finding.message} (${finding.scanner})`);
 });
-```
+```text
 
 ### Project-Wide Security Scan
 
@@ -467,7 +516,7 @@ const results = await Promise.all(
 // Aggregate results
 const totalIssues = results.reduce((sum, r) => sum + r.stats.totalIssues, 0);
 console.log(`Total issues across project: ${totalIssues}`);
-```
+```text
 
 ### Methodology Compliance Check
 
@@ -489,7 +538,7 @@ if (!methodologyResult.compliant) {
     console.log(`- ${r}`);
   });
 }
-```
+```text
 
 ### Custom Standards Integration
 
@@ -505,7 +554,7 @@ const standards = await mcp.callTool("get_standards", {
 const customReview = await mcp.callTool("review_file", {
   file: "./src/critical-service.ts",
 });
-```
+```text
 
 ## Statistics and Analytics
 
@@ -548,7 +597,7 @@ async function getProjectStats(projectPath: string) {
 
   return stats;
 }
-```
+```text
 
 ### Generating Reports
 
@@ -577,7 +626,7 @@ async function generateSecurityReport(projectPath: string) {
 
   return report;
 }
-```
+```text
 
 ## Troubleshooting
 
@@ -597,7 +646,7 @@ pip install bandit      # For Bandit
 # Verify installation
 semgrep --version
 bandit --version
-```
+```text
 
 #### 2. Permission Denied
 
@@ -606,7 +655,9 @@ bandit --version
 **Solution**:
 
 - Check file permissions: `ls -la <file>`
+
 - Ensure MCP server has read access
+
 - Run with appropriate permissions
 
 #### 3. Timeout Issues
@@ -620,7 +671,7 @@ bandit --version
 const result = await runScanner(file, {
   timeout: 60000, // 60 seconds
 });
-```
+```text
 
 #### 4. False Positives
 
@@ -629,7 +680,9 @@ const result = await runScanner(file, {
 **Solution**:
 
 - Configure scanner rules appropriately
+
 - Use `.semgrepignore` or similar ignore files
+
 - Add inline suppressions for known safe code
 
 ### Debug Mode
@@ -643,7 +696,7 @@ process.env.AICHAKU_DEBUG = "true";
 // Or in code
 import { logger } from "./logger";
 logger.setLevel("debug");
-```
+```text
 
 ### Performance Optimization
 
@@ -658,7 +711,7 @@ const limit = pLimit(5); // Max 5 concurrent scans
 const results = await Promise.all(
   files.map((file) => limit(() => mcp.callTool("review_file", { file }))),
 );
-```
+```text
 
 ## Development Guide
 
@@ -700,14 +753,14 @@ export class MyScanner implements SecurityScanner {
     };
   }
 }
-```
+```text
 
 2. Register scanner in `security-service.ts`:
 
 ```typescript
 // Add to scanner initialization
 this.scanners.push(new MyScanner());
-```
+```text
 
 ### Adding a New Standard
 
@@ -721,12 +774,13 @@ this.scanners.push(new MyScanner());
 ### Rules
 
 1. **Rule 1**: Description
+
 2. **Rule 2**: Description
 
 ### Implementation
 
 \```typescript // Example implementation \```
-````
+````text
 
 2. The standard will be automatically detected and available for use.
 
@@ -743,23 +797,32 @@ npm run test:integration
 
 # Test specific scanner
 npm test -- --grep "Semgrep"
-```
+```text
 
 ### Contributing
 
 1. **Code Style**: Follow TypeScript best practices
+
 2. **Error Handling**: Always handle errors gracefully
+
 3. **Documentation**: Update docs for new features
+
 4. **Tests**: Add tests for new functionality
+
 5. **Performance**: Consider impact on large projects
 
 ### Release Process
 
 1. Update version in `package.json`
+
 2. Update CHANGELOG.md
+
 3. Run tests: `npm test`
+
 4. Build: `npm run build`
+
 5. Tag release: `git tag v1.x.x`
+
 6. Push tags: `git push --tags`
 
 ## Best Practices
@@ -785,7 +848,7 @@ const fullScan = await mcp.callTool("review_file", {
 const compliance = await mcp.callTool("review_methodology", {
   projectPath: ".",
 });
-```
+```text
 
 ### 2. CI/CD Integration
 
@@ -793,13 +856,14 @@ Integrate MCP server into your CI/CD pipeline:
 
 ```yaml
 # GitHub Actions example
+
 - name: Security Review
   run: |
     npx @aichaku/mcp-server review-project \
       --path . \
       --fail-on-critical \
       --output report.json
-```
+```text
 
 ### 3. Custom Rules
 
@@ -808,13 +872,15 @@ Create project-specific security rules:
 ```yaml
 # .semgrep/rules/custom.yml
 rules:
+
   - id: company-no-console-log
     patterns:
+
       - pattern: console.log(...)
     message: "Console.log not allowed in production code"
     languages: [javascript, typescript]
     severity: WARNING
-```
+```text
 
 ### 4. Regular Updates
 
@@ -827,7 +893,7 @@ pip install --upgrade bandit
 
 # Update MCP server
 npm update @aichaku/mcp-server
-```
+```text
 
 ### 5. Security Baseline
 
@@ -846,7 +912,7 @@ const baseline = {
 if (stats.criticalIssues > baseline.maxCriticalIssues) {
   throw new Error("Security baseline exceeded");
 }
-```
+```text
 
 ## Upgrading MCP Servers
 
@@ -866,7 +932,7 @@ npm update -g @aichaku/cli
 
 # Verify MCP servers are updated
 aichaku mcp --tools
-```
+```text
 
 ### Manual MCP Server Management
 
@@ -878,7 +944,7 @@ aichaku mcp
 
 # View available MCP tools
 aichaku mcp --tools
-```
+```text
 
 #### Reinstall Specific MCP Server
 
@@ -895,7 +961,7 @@ aichaku mcp --install-reviewer
 # Or remove and reinstall GitHub MCP server
 rm -rf ~/.claude/mcp/github-operations/
 aichaku mcp --install-github
-```
+```text
 
 #### Complete MCP Reset
 
@@ -910,7 +976,7 @@ rm -rf ~/.claude/mcp/
 
 # Reinstall all MCP servers
 aichaku setup --force
-```
+```text
 
 ### Upgrade Process After Aichaku Release
 
@@ -921,7 +987,7 @@ After a new Aichaku release, follow these steps:
 ```bash
 # Stop the HTTP/SSE server if running
 aichaku mcp --stop-server
-```
+```text
 
 #### 2. Upgrade Aichaku
 
@@ -931,7 +997,7 @@ npm update -g @aichaku/cli
 
 # Verify new version
 aichaku --version
-```
+```text
 
 #### 3. Verify MCP Installation
 
@@ -941,7 +1007,7 @@ aichaku mcp
 
 # Verify tools are available
 aichaku mcp --tools
-```
+```text
 
 #### 4. Restart Services (Optional)
 
@@ -951,7 +1017,7 @@ aichaku mcp --start-server
 
 # Verify server is running
 aichaku mcp --server-status
-```
+```text
 
 ### Troubleshooting Upgrades
 
@@ -968,7 +1034,7 @@ aichaku setup --force
 # Or install specific server
 aichaku mcp --install-reviewer
 aichaku mcp --install-github
-```
+```text
 
 #### Permission Issues
 
@@ -982,7 +1048,7 @@ sudo npm update -g @aichaku/cli
 
 # Or use npx for one-time execution
 npx @aichaku/cli@latest mcp
-```
+```text
 
 #### HTTP/SSE Server Issues
 
@@ -999,7 +1065,7 @@ pkill -f aichaku
 
 # Start fresh server
 aichaku mcp --start-server
-```
+```text
 
 #### Claude Code Integration Issues
 
@@ -1016,7 +1082,7 @@ aichaku mcp
 
 # Restart Claude Code completely
 # (Close all Claude Code instances and reopen)
-```
+```text
 
 ### Version Compatibility
 
@@ -1028,13 +1094,16 @@ aichaku --version
 
 # Check MCP server versions
 aichaku mcp --tools | grep -i version
-```
+```text
 
 #### Supported Versions
 
 - **Aichaku CLI**: Latest version recommended
+
 - **Claude Code**: v0.8.0 or higher
+
 - **Node.js**: v18.0.0 or higher
+
 - **MCP Protocol**: v0.3.0 or higher
 
 ### Backup and Recovery
@@ -1049,7 +1118,7 @@ cp ~/.claude/settings.json ~/.claude/settings.json.backup
 
 # Backup custom standards (if any)
 cp -r ~/.claude/aichaku/user/ ~/.claude/aichaku/user.backup/
-```
+```text
 
 #### Recovery
 
@@ -1064,15 +1133,20 @@ cp -r ~/.claude/aichaku/user.backup/ ~/.claude/aichaku/user/
 
 # Reinstall MCP servers
 aichaku setup --force
-```
+```text
 
 ### Best Practices for Upgrades
 
 1. **Always stop MCP services before upgrading**
+
 2. **Test in development environment first**
+
 3. **Backup configuration before major upgrades**
+
 4. **Verify functionality after upgrade**
+
 5. **Update documentation if custom standards changed**
+
 6. **Check release notes for breaking changes**
 
 ### Getting Help
@@ -1080,14 +1154,23 @@ aichaku setup --force
 If you encounter issues during upgrade:
 
 1. **Check the troubleshooting section above**
+
 2. **Review GitHub issues**:
+
    [Aichaku Issues](https://github.com/RickCogley/aichaku/issues)
+
 3. **Check Claude Code documentation**:
+
    [Claude Code Docs](https://docs.anthropic.com/en/docs/claude-code)
+
 4. **File a bug report** with:
+
    - Aichaku version (`aichaku --version`)
+
    - Operating system
+
    - Error messages
+
    - Steps to reproduce
 
 ## Conclusion
@@ -1100,3 +1183,4 @@ maintain high code quality standards.
 For additional support or feature requests, please visit the
 [Aichaku repository](https://github.com/RickCogley/aichaku) or contact the
 maintainers.
+`````

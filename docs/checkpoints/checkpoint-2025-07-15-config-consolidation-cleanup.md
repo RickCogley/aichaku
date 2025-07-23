@@ -3,30 +3,43 @@
 ## Summary of Work Accomplished
 
 1. **Completed Methodology Migration**
+
    - Moved all methodology files from `/methodologies/` to
      `/docs/methodologies/`
+
    - Distributed YAML files to sit alongside their corresponding MD files
+
    - Removed empty `/methodologies/` directory from root
 
 2. **Renamed Methodology Guide Files**
+
    - Changed verbose names like `KANBAN-AICHAKU-GUIDE.md` to simple `kanban.md`
+
    - Updated all references in YAML files, source code, and documentation
+
    - Achieved consistent naming convention across all methodologies
 
 3. **Fixed Runtime Paths in YAML Files**
+
    - Updated all standards YAML files to use
      `~/.claude/aichaku/docs/standards/...`
+
    - Updated all methodology YAML files to use
      `~/.claude/aichaku/docs/methodologies/...`
+
    - Added proper `learn_more` sections with both docs URLs and local paths
 
 4. **Cleaned Up Configuration Files**
+
    - Removed old config files: `aichaku-standards.json`, `aichaku.config.json`,
      `standards.json`
+
    - Removed hidden redundant files: `.aichaku-project`, `.aichaku.json`,
      `.aichaku-behavior`
+
    - Converted `RULES-REMINDER.md` to `rules-reminder.yaml` for efficient
      machine reading
+
    - Kept only essential files: `aichaku.json` and `rules-reminder.yaml`
 
 ## Key Technical Decisions
@@ -51,39 +64,58 @@
 ### Created
 
 - `/docs/methodologies/archive/` (moved from root)
+
 - `/docs/methodologies/*/[methodology].yaml` (6 files moved from
   `/methodologies/yaml/`)
+
 - `/.claude/aichaku/rules-reminder.yaml` (converted from Markdown)
+
 - `/docs/checkpoints/checkpoint-2025-07-15-config-consolidation-cleanup.md`
   (this file)
 
 ### Modified
 
 - All standards YAML files (updated runtime paths)
+
 - All methodology YAML files (updated runtime paths and added learn_more
   sections)
+
 - `src/lister.ts` (updated to use simplified filenames)
+
 - `src/commands/integrate.ts` (updated reference in comments)
+
 - `src/commands/content-fetcher.ts` (updated hardcoded filenames)
 
 ### Renamed
 
 - `KANBAN-AICHAKU-GUIDE.md` → `kanban.md`
+
 - `LEAN-AICHAKU-GUIDE.md` → `lean.md`
+
 - `SCRUM-AICHAKU-GUIDE.md` → `scrum.md`
+
 - `SCRUMBAN-AICHAKU-GUIDE.md` → `scrumban.md`
+
 - `SHAPE-UP-AICHAKU-GUIDE.md` → `shape-up.md`
+
 - `XP-AICHAKU-GUIDE.md` → `xp.md`
 
 ### Deleted
 
 - `/methodologies/` directory (entire tree)
+
 - `/.claude/aichaku/aichaku-standards.json`
+
 - `/.claude/aichaku/aichaku.config.json`
+
 - `/.claude/aichaku/standards.json`
+
 - `/.claude/aichaku/.aichaku-project`
+
 - `/.claude/aichaku/.aichaku.json`
+
 - `/.claude/aichaku/.aichaku-behavior`
+
 - `/.claude/aichaku/RULES-REMINDER.md`
 
 ## Problems Solved
@@ -126,7 +158,9 @@
    pulls from YAML files to reduce token pressure
 
 2. **Fix Broken Commands**:
+
    - Fix `--remove` command for standards (currently gives no feedback)
+
    - Implement new `--show` command for displaying standard details
 
 3. **Update Upgrade Process**: Ensure YAML files are distributed during

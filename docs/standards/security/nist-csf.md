@@ -6,14 +6,19 @@ The NIST CSF organizes cybersecurity activities into six core functions:
 
 1. **🎯 Govern** - Establish cybersecurity governance and enterprise risk
    management
+
 2. **🔍 Identify** - Understand cybersecurity risks to systems, people, assets,
    data, and capabilities
+
 3. **🛡️ Protect** - Implement appropriate safeguards to ensure delivery of
    critical services
+
 4. **🔍 Detect** - Implement activities to identify the occurrence of
    cybersecurity events
+
 5. **🚨 Respond** - Implement activities to take action regarding detected
    cybersecurity incidents
+
 6. **🔄 Recover** - Implement activities to restore capabilities impaired by
    cybersecurity incidents
 
@@ -21,7 +26,7 @@ The NIST CSF organizes cybersecurity activities into six core functions:
 
 #### Govern (GV)
 
-```typescript
+````typescript
 // ✅ Good: Governance through code
 const securityPolicy = {
   dataRetention: "7 years",
@@ -46,7 +51,7 @@ class SecurityDecisionLog {
     });
   }
 }
-```
+```text
 
 #### Identify (ID)
 
@@ -71,7 +76,7 @@ class RiskAssessment {
     return "medium";
   }
 }
-```
+```text
 
 #### Protect (PR)
 
@@ -101,7 +106,7 @@ const secureDefaults = {
   httpsOnly: true,
   secureCookies: true,
 };
-```
+```text
 
 #### Detect (DE)
 
@@ -129,7 +134,7 @@ class SecurityMonitoring {
     }
   }
 }
-```
+```text
 
 #### Respond (RS)
 
@@ -161,7 +166,7 @@ class IncidentResponse {
     };
   }
 }
-```
+```text
 
 #### Recover (RC)
 
@@ -189,7 +194,7 @@ class RecoveryManager {
     });
   }
 }
-```
+```text
 
 ### CSF Implementation Tiers
 
@@ -202,7 +207,7 @@ const basicSecurity = {
   logging: "error logs only",
   updates: "manual, irregular",
 };
-```
+```text
 
 #### Tier 2: Risk Informed
 
@@ -214,7 +219,7 @@ const riskInformedSecurity = {
   updates: "regular, risk-prioritized patches",
   riskAssessment: "annual assessments",
 };
-```
+```text
 
 #### Tier 3: Repeatable
 
@@ -226,7 +231,7 @@ const repeatableSecurity = {
   training: "regular security awareness",
   metrics: "security KPIs tracked",
 };
-```
+```text
 
 #### Tier 4: Adaptive
 
@@ -238,7 +243,7 @@ const adaptiveSecurity = {
   learning: "lessons learned incorporated",
   innovation: "proactive security measures",
 };
-```
+```text
 
 ### Development Integration
 
@@ -264,7 +269,7 @@ class SecureSDLC {
     await this.validateSecurityConfiguration(artifact);
   }
 }
-```
+```text
 
 #### Security Metrics
 
@@ -289,22 +294,28 @@ class SecurityMetricsCollector {
     };
   }
 }
-```
+```text
 
 ### CSF Profile for Software Development
 
 #### Core Requirements
 
 - **Data Protection**: Encrypt sensitive data at rest and in transit
+
 - **Access Control**: Implement role-based access with least privilege
+
 - **Vulnerability Management**: Regular scanning and patching
+
 - **Incident Response**: Documented procedures and contact information
+
 - **Security Testing**: Integrate security testing into CI/CD pipeline
 
 #### Risk-Based Priorities
 
 1. **High Priority**: Authentication, encryption, input validation
+
 2. **Medium Priority**: Logging, monitoring, backup procedures
+
 3. **Low Priority**: Advanced threat detection, security automation
 
 ### Compliance Considerations
@@ -324,7 +335,7 @@ class ComplianceDocumentation {
     };
   }
 }
-```
+```text
 
 #### Audit Trail
 
@@ -345,8 +356,9 @@ class AuditLogger {
     this.writeToAuditLog(auditEntry);
   }
 }
-```
+```text
 
 Remember: The NIST CSF is a risk-based approach to cybersecurity. Focus on
 implementing controls that address your specific risks and business
 requirements, starting with the most critical assets and highest-risk scenarios.
+````

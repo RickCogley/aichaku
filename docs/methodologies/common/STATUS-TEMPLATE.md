@@ -12,22 +12,31 @@
 ### Planning
 
 - [ ] Problem defined
+
 - [ ] Solution shaped/designed
+
 - [ ] Approach decided
+
 - [ ] Resources identified
 
 ### Execution
 
 - [ ] Implementation started
+
 - [ ] Core functionality complete
+
 - [ ] Edge cases handled
+
 - [ ] Tests written
 
 ### Improvement
 
 - [ ] Code reviewed
+
 - [ ] Performance optimized
+
 - [ ] Documentation updated
+
 - [ ] Deployment ready
 
 ## 📝 Notes
@@ -41,7 +50,9 @@
 ## 🔗 References
 
 - {Related files}
+
 - {Documentation links}
+
 - {Discussion threads}
 
 ---

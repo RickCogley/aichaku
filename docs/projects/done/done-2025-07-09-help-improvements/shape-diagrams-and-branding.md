@@ -3,7 +3,9 @@
 ## Problem
 
 1. Branding is missing from lean, xp, and scrumban help pages
+
 2. No visual diagrams to make methodologies clearer
+
 3. Potential confusion between `aichaku help` and `aichaku --help`
 
 ## Appetite
@@ -16,11 +18,11 @@ Small batch - 1 hour
 
 Add the Aichaku header to all methodology help pages:
 
-```
+````text
 🎯 Methodology Name
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Brought to you by Aichaku (愛着) - Adaptive Methodology Support
-```
+```text
 
 ### 2. Add ASCII Diagrams
 
@@ -28,7 +30,7 @@ Simple, clear diagrams for each methodology:
 
 **Shape Up Cycle:**
 
-```
+```text
 ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
 │   Shaping   │→ │   Betting   │→ │   Building  │
 │  (ongoing)  │  │  (1 week)   │  │  (6 weeks)  │
@@ -38,19 +40,19 @@ Simple, clear diagrams for each methodology:
 │  Cool-down  │←──────────────────│   Ship It!  │
 │  (2 weeks)  │                   │             │
 └─────────────┘                   └─────────────┘
-```
+```text
 
 **Scrum Flow:**
 
-```
+```text
 Product Backlog → Sprint Planning → Sprint Backlog
        ↑                                  ↓
    Retrospective ← Review ← Daily Scrum ← Development
-```
+```text
 
 **Kanban Board:**
 
-```
+```text
 ┌─────────┬─────────┬─────────┬─────────┬─────────┐
 │ Backlog │  To Do  │  Doing  │ Testing │  Done   │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤
@@ -58,27 +60,32 @@ Product Backlog → Sprint Planning → Sprint Backlog
 │ Story B │ Story D │  [WIP:2]│ Story H │ Story J │
 │   ...   │  [WIP:3]│ Story F │  [WIP:1]│   ...   │
 └─────────┴─────────┴─────────┴─────────┴─────────┘
-```
+```text
 
 ### 3. Clarify Help vs --help
 
 In the default `aichaku help` output:
 
-```
+```text
 💡 Looking for CLI commands?
    Run 'aichaku --help' to see all available commands and options
 
    This help focuses on methodology guidance.
-```
+```text
 
 ## Rabbit Holes
 
 - Don't make diagrams too complex
+
 - Keep ASCII art simple and readable
+
 - Don't duplicate full CLI help
 
 ## No-gos
 
 - No Unicode box drawing (compatibility issues)
+
 - No colored output (terminal compatibility)
+
 - No interactive diagrams
+````

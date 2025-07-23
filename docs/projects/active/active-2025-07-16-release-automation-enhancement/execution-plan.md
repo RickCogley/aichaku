@@ -4,7 +4,7 @@
 
 ### Component Overview
 
-```
+````text
 ┌─────────────────────────────────────────────────────────────┐
 │                    Release CLI Command                        │
 │                  (deno task release)                          │
@@ -21,11 +21,11 @@
 │   Validation   │ │  Registry   │ │      Git       │ │   Binary    │
 │   Framework    │ │ Publishers  │ │   Operations   │ │  Manager    │
 └────────────────┘ └─────────────┘ └────────────────┘ └─────────────┘
-```
+```text
 
 ### Directory Structure
 
-```
+```text
 scripts/
 └── release/
     ├── mod.ts                    # Main entry point
@@ -59,7 +59,7 @@ scripts/
         ├── logger.ts            # Logging with progress
         ├── error-handler.ts     # Error recovery
         └── cli-ui.ts            # Terminal UI helpers
-```
+```text
 
 ## Implementation Details
 
@@ -130,7 +130,7 @@ export const defaultConfig: ReleaseConfig = {
     defaultBranch: "main",
   },
 };
-```
+```text
 
 ### 2. State Machine Design
 
@@ -163,7 +163,7 @@ interface ReleaseState {
     binariesUploaded: boolean;
   };
 }
-```
+```text
 
 ### 3. Validation Framework
 
@@ -196,7 +196,7 @@ export class TypeChecker implements Validator {
     return { success: true };
   }
 }
-```
+```text
 
 ### 4. Registry Publishers with Retry
 
@@ -234,7 +234,7 @@ export class NpmPublisher implements Publisher {
     throw new PublishError("NPM publish failed after all retries", lastError);
   }
 }
-```
+```text
 
 ### 5. Git Operations
 
@@ -261,7 +261,7 @@ export class GitManager {
     }
   }
 }
-```
+```text
 
 ### 6. Binary Builder Integration
 
@@ -299,7 +299,7 @@ export class BinaryBuilder {
     return results;
   }
 }
-```
+```text
 
 ### 7. Error Recovery System
 
@@ -343,7 +343,7 @@ export class ReleaseErrorHandler {
     return { action: "abort" };
   }
 }
-```
+```text
 
 ### 8. CLI Entry Point
 
@@ -376,7 +376,7 @@ export async function main() {
 if (import.meta.main) {
   await main();
 }
-```
+```text
 
 ### 9. Progress UI
 
@@ -416,7 +416,7 @@ export class ReleaseUI {
     console.log("  • Duration: 2m 34s");
   }
 }
-```
+```text
 
 ## Integration Points
 
@@ -431,7 +431,7 @@ export class ReleaseUI {
     "release:no-binaries": "deno run -A scripts/release/mod.ts --no-binaries"
   }
 }
-```
+```text
 
 ### Environment Variables
 
@@ -440,27 +440,39 @@ export class ReleaseUI {
 NPM*TOKEN=npm*xxx
 JSR*TOKEN=jsr*xxx
 GITHUB_TOKEN=ghp*xxx
-```
+```text
 
 ## Testing Strategy
 
 1. **Unit Tests**: Each component tested in isolation
+
 2. **Integration Tests**: Full release flow with mocked registries
+
 3. **Dry Run Mode**: Safe testing of complete process
+
 4. **Platform Testing**: CI matrix for all target platforms
 
 ## Migration Path
 
 1. Keep existing scripts functional during development
+
 2. Add new `release` task alongside existing ones
+
 3. Gradual migration with feature flags
+
 4. Deprecate old scripts after validation period
 
 ## Success Criteria
 
 - [ ] Single command releases without manual intervention
+
 - [ ] All validations complete in <30 seconds
+
 - [ ] Clear error messages with actionable fixes
+
 - [ ] Successful recovery from transient failures
+
 - [ ] Binary uploads integrated with version release
+
 - [ ] Complete rollback capability for failed releases
+````

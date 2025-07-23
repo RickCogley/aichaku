@@ -6,8 +6,11 @@ The GitHub CLI (`gh`) receives regular updates through package managers like
 Homebrew. The GitHub MCP tool needs to be aware of:
 
 1. **Which `gh` version was used as reference** during MCP development
+
 2. **Current `gh` version** on the system (if any)
+
 3. **API compatibility changes** that might affect MCP behavior
+
 4. **Feature parity** between MCP tools and current `gh` capabilities
 
 ## Version Tracking Architecture
@@ -16,7 +19,7 @@ Homebrew. The GitHub MCP tool needs to be aware of:
 
 Record the reference `gh` version during MCP server compilation:
 
-```typescript
+````typescript
 // src/version-info.ts
 export interface GitHubCLIVersionInfo {
   compiledAgainst: string; // gh version used as reference
@@ -37,7 +40,7 @@ export const GH*VERSION*INFO: GitHubCLIVersionInfo = {
     // ... complete feature list
   ],
 };
-```
+```text
 
 ### 2. Runtime Version Detection
 
@@ -165,7 +168,7 @@ interface CompatibilityStatus {
   status: VersionStatus;
   recommendations: string[];
 }
-```
+```text
 
 ### 3. Version Awareness Tools
 
@@ -197,7 +200,7 @@ Add MCP tools for version checking:
     additionalProperties: false,
   },
 }
-```
+```text
 
 ### 4. Build Process Integration
 
@@ -279,7 +282,7 @@ async function getSupportedFeatures(): Promise<string[]> {
 
   return features;
 }
-```
+```text
 
 ### 5. User Interface Integration
 
@@ -346,7 +349,7 @@ async function displayVersionAwareness() {
 // 📋 Recommendations:
 //    ⚠️  Major gh upgrade available - MCP may be missing new features
 //    Consider updating GitHub MCP server to latest version
-```
+```text
 
 ### 6. Integration with Aichaku CLI
 
@@ -357,14 +360,16 @@ Add version checking to aichaku MCP commands:
 aichaku mcp --status          # Shows version compatibility
 aichaku mcp --version-check   # Detailed version analysis
 aichaku mcp --upgrade-check   # Check for MCP updates
-```
+```text
 
 ## API Stability Considerations
 
 ### GitHub API Versioning
 
 - Track GitHub API version used by MCP
+
 - Monitor for API deprecation notices
+
 - Provide migration paths for API changes
 
 ### Feature Parity Matrix
@@ -385,14 +390,16 @@ export const FEATURE_MATRIX = {
   },
   // ... more features
 } as const;
-```
+```text
 
 ## Migration Strategy
 
 ### When gh CLI Updates
 
 1. **Patch Updates**: Usually safe, no MCP changes needed
+
 2. **Minor Updates**: May add new features, consider MCP enhancement
+
 3. **Major Updates**: Review for breaking changes, may require MCP update
 
 ### Automated Monitoring
@@ -410,16 +417,21 @@ setInterval(
   },
   24 * 60 * 60 * 1000,
 ); // Daily check
-```
+```text
 
 ## Benefits
 
 1. **Proactive Awareness**: Know when system and MCP are out of sync
+
 2. **Debugging Aid**: Version mismatches often cause issues
+
 3. **Migration Planning**: Plan MCP updates based on gh CLI changes
+
 4. **User Confidence**: Clear status of compatibility
+
 5. **Support Information**: Easy to provide version info for troubleshooting
 
 This version compatibility strategy ensures that the GitHub MCP tool remains
 robust and provides clear visibility into any potential issues caused by version
 mismatches.
+````

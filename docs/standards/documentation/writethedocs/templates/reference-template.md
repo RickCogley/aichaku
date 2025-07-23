@@ -11,12 +11,12 @@ The [Component] API provides [what it does]. Use this API to [common use cases].
 
 ## Quick Start
 
-```bash
+````bash
 # Minimal working example
 curl -X GET \
   -H "Authorization: Bearer YOUR_TOKEN" \
   https://api.example.com/v1/resources
-```
+```text
 
 <details>
 <summary>Using different tools</summary>
@@ -26,7 +26,7 @@ curl -X GET \
 ```bash
 http GET api.example.com/v1/resources \
   "Authorization: Bearer YOUR_TOKEN"
-```
+```text
 
 **JavaScript (fetch)**:
 
@@ -38,7 +38,7 @@ fetch("https://api.example.com/v1/resources", {
 })
   .then((response) => response.json())
   .then((data) => console.log(data));
-```
+```text
 
 **Python (requests)**:
 
@@ -50,7 +50,7 @@ response = requests.get(
     headers={'Authorization': 'Bearer YOUR_TOKEN'}
 )
 data = response.json()
-```
+```text
 
 </details>
 
@@ -59,16 +59,20 @@ data = response.json()
 All requests require authentication using a Bearer token in the Authorization
 header:
 
-```
+```text
 Authorization: Bearer YOUR*API*TOKEN
-```
+```text
 
 ### Getting an API Token
 
 1. Log in to your account at [https://example.com](https://example.com)
+
 2. Navigate to **Settings** > **API Tokens**
+
 3. Click **Generate New Token**
+
 4. Set token permissions and expiration
+
 5. Copy the token (you won't see it again)
 
 ### Token Permissions
@@ -90,7 +94,7 @@ Tokens can have different permission levels:
 
 ```http
 GET /resources
-```
+```text
 
 Returns a paginated list of resources in your account.
 
@@ -111,7 +115,7 @@ Returns a paginated list of resources in your account.
 curl -X GET \
   -H "Authorization: Bearer YOUR_TOKEN" \
   "https://api.example.com/v1/resources?page=2&per_page=50&sort=created&include=metadata"
-```
+```text
 
 **Response** (`200 OK`):
 
@@ -141,13 +145,13 @@ curl -X GET \
     "prev": "https://api.example.com/v1/resources?page=1&per_page=50"
   }
 }
-```
+```text
 
 #### Get Resource
 
 ```http
 GET /resources/{id}
-```
+```text
 
 Retrieve a specific resource by ID.
 
@@ -183,13 +187,13 @@ Retrieve a specific resource by ID.
     "metrics": "https://api.example.com/v1/resources/res_123abc/metrics"
   }
 }
-```
+```text
 
 #### Create Resource
 
 ```http
 POST /resources
-```
+```text
 
 Create a new resource.
 
@@ -209,7 +213,7 @@ Create a new resource.
     "owner": "team@example.com"
   }
 }
-```
+```text
 
 **Field Descriptions**:
 
@@ -234,20 +238,20 @@ Create a new resource.
     "status": "https://api.example.com/v1/resources/res_789xyz/status"
   }
 }
-```
+```text
 
 **Response Headers**:
 
-```
+```text
 Location: https://api.example.com/v1/resources/res_789xyz
 X-Request-ID: req_abc123
-```
+```text
 
 #### Update Resource
 
 ```http
 PATCH /resources/{id}
-```
+```text
 
 Update an existing resource. Only include fields you want to change.
 
@@ -260,7 +264,7 @@ Update an existing resource. Only include fields you want to change.
     "backup_enabled": false
   }
 }
-```
+```text
 
 **Response** (`200 OK`):
 
@@ -270,7 +274,7 @@ Returns the updated resource object.
 
 ```http
 DELETE /resources/{id}
-```
+```text
 
 Delete a resource.
 
@@ -284,7 +288,9 @@ Delete a resource.
 **Response**:
 
 - `204 No Content` - Resource deleted successfully
+
 - `404 Not Found` - Resource doesn't exist
+
 - `409 Conflict` - Resource has dependencies (use `force=true` to override)
 
 ### Resource Operations
@@ -293,7 +299,7 @@ Delete a resource.
 
 ```http
 GET /resources/{id}/status
-```
+```text
 
 Get detailed status information.
 
@@ -316,7 +322,7 @@ Get detailed status information.
     "disk_usage": 34.1
   }
 }
-```
+```text
 
 ## Data Types
 
@@ -353,7 +359,7 @@ interface Links {
   self: string; // This resource
   [rel: string]: string; // Related resources
 }
-```
+```text
 
 ## Error Handling
 
@@ -369,7 +375,7 @@ All errors follow RFC 7807 (Problem Details):
   "request*id": "req*987zyx",
   "timestamp": "2023-10-15T16:45:00Z"
 }
-```
+```text
 
 ### Error Types
 
@@ -404,7 +410,7 @@ All errors follow RFC 7807 (Problem Details):
     }
   ]
 }
-```
+```text
 
 ## Rate Limiting
 
@@ -419,13 +425,13 @@ Rate limits are applied per API token:
 
 **Response Headers**:
 
-```
+```text
 X-RateLimit-Limit: 1000
 X-RateLimit-Remaining: 942
 X-RateLimit-Reset: 1697382000
 X-RateLimit-Reset-After: 3245
 Retry-After: 3245
-```
+```text
 
 ### Handling Rate Limits
 
@@ -448,7 +454,7 @@ async function makeRequest(url, options, retries = 3) {
 
   throw new Error("Rate limit exceeded after retries");
 }
-```
+```text
 
 ## Filtering
 
@@ -456,7 +462,7 @@ Use the `filter` parameter for advanced queries:
 
 ### Simple Filters
 
-```
+```text
 # Equality
 filter=status:active
 
@@ -465,11 +471,11 @@ filter=status:active,type:premium
 
 # OR conditions
 filter=status:active|status:provisioning
-```
+```text
 
 ### Advanced Filters
 
-```
+```text
 # Pattern matching
 filter=name:prod*
 
@@ -481,7 +487,7 @@ filter=metadata.tags:@production
 
 # Nested fields
 filter=configuration.region:us-east-1
-```
+```text
 
 ### Filter Operators
 
@@ -504,7 +510,7 @@ Configure webhooks to receive real-time notifications:
 
 ```http
 POST /webhooks
-```
+```text
 
 ```json
 {
@@ -513,7 +519,7 @@ POST /webhooks
   "secret": "your-webhook-secret",
   "active": true
 }
-```
+```text
 
 ### Webhook Payload
 
@@ -528,7 +534,7 @@ POST /webhooks
     }
   }
 }
-```
+```text
 
 ### Verifying Webhooks
 
@@ -542,7 +548,7 @@ function verifyWebhook(payload, signature, secret) {
 
   return `sha256=${hash}` === signature;
 }
-```
+```text
 
 ## SDK Examples
 
@@ -585,7 +591,7 @@ await client.resources.update(newResource.id, {
 
 // Delete resource
 await client.resources.delete(newResource.id);
-```
+```text
 
 ### Python
 
@@ -608,6 +614,7 @@ resources = client.resources.list(
 
 # Create with error handling
 try:
+
     new_resource = client.resources.create(
         name='My Resource',
         type='standard',
@@ -617,9 +624,10 @@ try:
         }
     )
 except RateLimitError as e:
+
     time.sleep(e.retry_after)
     new_resource = client.resources.create(...)
-```
+```text
 
 ### Go
 
@@ -650,26 +658,32 @@ func main() {
         },
     })
 }
-```
+```text
 
 ## Changelog
 
 ### v1.2.3 (Current)
 
 - Added `include` parameter for related data
+
 - Improved filter syntax with new operators
+
 - Added webhook signature verification
 
 ### v1.2.0
 
 - Added webhook support
+
 - New filtering operators
+
 - Pagination links in responses
 
 ### v1.1.0
 
 - Rate limiting headers
+
 - Batch operations endpoint
+
 - Async job support
 
 [View full changelog](https://api.example.com/changelog)
@@ -677,8 +691,11 @@ func main() {
 ## Support
 
 - 📧 Email: api-support@example.com
+
 - 💬 Chat: [Developer Discord](https://discord.gg/example)
+
 - 📚 Docs: [Full Documentation](https://docs.example.com)
+
 - 🐛 Issues: [GitHub Issues](https://github.com/example/api/issues)
 
 ---
@@ -686,3 +703,4 @@ func main() {
 **API Status**: [status.example.com](https://status.example.com)\
 **Last Updated**: 2023-10-15\
 **API Version**: v1.2.3
+````

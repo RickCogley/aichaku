@@ -15,26 +15,31 @@ better organization.
 
 ### Standards Moved (with git mv)
 
-```
+````text
 /standards/architecture/      → /docs/standards/architecture/
 /standards/development/       → /docs/standards/development/
 /standards/devops/           → /docs/standards/devops/
 /standards/documentation/    → /docs/standards/documentation/
 /standards/security/         → /docs/standards/security/
 /standards/testing/          → /docs/standards/testing/
-```
+```text
 
 ### Files Migrated
 
 - **15 core standards** (.md files)
+
 - **12 template files** (in documentation subdirectories)
+
 - **9 YAML metadata files** (newly created and existing)
 
 ### Directory Structure Preserved
 
 - ✅ All subdirectories maintained
+
 - ✅ Template directories intact
+
 - ✅ YAML metadata files moved
+
 - ✅ Git history preserved using `git mv`
 
 ## Code Updates
@@ -44,20 +49,24 @@ better organization.
 1. **src/commands/init.ts** - Updated source path for standards installation
 
    ```diff
+
    - "../../../standards"
+
    + "../../../docs/standards"
-   ```
+````
 
 2. **src/lister.ts** - Fixed paths reference
 
    ```diff
    - paths.global.base
+
    + paths.global.root
    ```
 
 3. **docs/standards/development/tdd.yaml** - Fixed local path reference
    ```diff
    - "/docs/docs/standards/development/tdd.md"
+
    + "/docs/standards/development/tdd.md"
    ```
 
@@ -65,7 +74,9 @@ better organization.
 
 - Updated all references from `/standards/` to `/docs/standards/` in
   documentation
+
 - Fixed YAML file links to use new path structure
+
 - Updated tutorial and how-to guides with new paths
 
 ## Scripts Created
@@ -73,13 +84,19 @@ better organization.
 ### Migration Scripts
 
 1. **scripts/migrate-standards.sh** - Main migration script
+
    - Uses `git mv` to preserve history
+
    - Handles all subdirectories
+
    - Provides colored output and error handling
 
 2. **scripts/update-standards-references.sh** - Reference update script
+
    - Updates documentation links
+
    - Fixes YAML file references
+
    - Checks for remaining references
 
 ## Testing & Validation
@@ -87,12 +104,14 @@ better organization.
 ### Tests Passed
 
 - ✅ `deno test src/commands/init_test.ts` - All 3 tests passing
+
 - ✅ `deno check` - Type checking successful
+
 - ✅ `deno fmt` - Code formatting complete
 
 ### Directory Structure Verified
 
-```
+````text
 /docs/standards/
 ├── architecture/
 │   ├── 15-factor.md
@@ -128,14 +147,18 @@ better organization.
     ├── bdd.md
     ├── test-pyramid.md
     └── metadata.yaml
-```
+```text
 
 ## Benefits of Migration
 
 1. **Consistency** - All documentation now under `/docs/`
+
 2. **Organization** - Standards grouped with other documentation
+
 3. **Maintainability** - Single documentation root directory
+
 4. **Git History** - Preserved using `git mv` operations
+
 5. **Backward Compatibility** - All existing functionality maintained
 
 ## Potential Impact
@@ -144,27 +167,37 @@ better organization.
 
 - **Minimal Impact** - Standards are installed to user's
   `~/.claude/aichaku/standards/` (unchanged)
+
 - **Installation Works** - Source path updated, installation process unchanged
+
 - **Documentation Access** - All guides and templates still accessible
 
 ### For Developers
 
 - **Source Location** - Standards source now in `/docs/standards/`
+
 - **Build Process** - Installation copies from new location
+
 - **Documentation** - Easier to find and maintain standards
 
 ## Security Considerations
 
 - ✅ **InfoSec**: No security impact - code organization only
+
 - ✅ All paths validated and secured
+
 - ✅ No external dependencies affected
+
 - ✅ Installation process maintains same security model
 
 ## Next Steps
 
 1. **Commit Changes** - Commit all migration changes
+
 2. **Update CI/CD** - Ensure any build processes use new paths
+
 3. **Documentation** - Update any external references if needed
+
 4. **Monitor** - Watch for any issues in upcoming releases
 
 ## Files Changed
@@ -172,14 +205,19 @@ better organization.
 ### Added/Moved
 
 - `docs/standards/` (entire directory structure)
+
 - `scripts/migrate-standards.sh`
+
 - `scripts/update-standards-references.sh`
 
 ### Modified
 
 - `src/commands/init.ts`
+
 - `src/lister.ts`
+
 - `docs/standards/development/tdd.yaml`
+
 - Various documentation files with path references
 
 ### Removed
@@ -189,3 +227,4 @@ better organization.
 **Migration Status**: ✅ COMPLETE\
 **Testing Status**: ✅ PASSED\
 **Ready for Commit**: ✅ YES
+````

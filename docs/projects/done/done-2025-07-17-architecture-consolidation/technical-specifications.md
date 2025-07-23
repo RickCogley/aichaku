@@ -10,7 +10,7 @@ legacy configuration formats to a unified system.
 
 ### Core Principle: "All Methodologies, Selected Standards"
 
-```mermaid
+````mermaid
 graph TD
     A[Global Installation] --> B[Methodologies Auto-Discovery]
     A --> C[Project-Specific Standards Selection]
@@ -29,7 +29,7 @@ graph TD
     style B fill:#e1f5fe
     style C fill:#f3e5f5
     style J fill:#e8f5e8
-```
+```text
 
 ### Implementation Architecture
 
@@ -60,7 +60,7 @@ class MethodologyManager {
     return [...new Set(methodologies)];
   }
 }
-```
+```text
 
 #### Per-Project Standards Selection
 
@@ -77,7 +77,7 @@ interface AichakuConfig {
     customStandards: Record<string, StandardMetadata>;
   };
 }
-```
+```text
 
 ## Configuration File Evolution
 
@@ -91,7 +91,7 @@ interface AichakuConfig {
   "version": "1.0.0",
   "selected": ["nist-csf", "tdd"]
 }
-```
+```text
 
 #### Phase 2: Split Format (Early 2025)
 
@@ -107,7 +107,7 @@ interface AichakuConfig {
   "version": "1.0.0",
   "selected": ["diataxis-google", "google-style"]
 }
-```
+```text
 
 #### Phase 3: Unified Format (Current)
 
@@ -137,13 +137,13 @@ interface AichakuConfig {
     }
   }
 }
-```
+```text
 
 ## File System Architecture
 
 ### Directory Structure
 
-```
+```text
 ~/.claude/aichaku/                          # Global installation
 ├── docs/
 │   ├── methodologies/                      # Auto-discovered globally
@@ -166,7 +166,7 @@ interface AichakuConfig {
 
 .claude/aichaku/                            # Project-specific
 └── aichaku.json                            # Unified configuration
-```
+```text
 
 ### Path Resolution Logic
 
@@ -190,7 +190,7 @@ export function getAichakuPaths(): AichakuPaths {
     },
   };
 }
-```
+```text
 
 ## Dynamic Content Discovery
 
@@ -238,7 +238,7 @@ export async function discoverContent(
     count: items.length,
   };
 }
-```
+```text
 
 ## Migration and Backward Compatibility
 
@@ -293,7 +293,7 @@ class ConfigManager {
     ];
   }
 }
-```
+```text
 
 ## Standards ID Normalization
 
@@ -324,7 +324,7 @@ async function addStandards(
     // Process normalized ID...
   }
 }
-```
+```text
 
 ### Supported Input Formats
 
@@ -360,7 +360,7 @@ export async function safeReadTextFile(
   const validatedPath = validatePath(filePath, baseDir);
   return await Deno.readTextFile(validatedPath);
 }
-```
+```text
 
 ### File Permissions
 
@@ -375,7 +375,7 @@ async function saveProjectConfig(
     mode: 0o644,
   });
 }
-```
+```text
 
 ## Performance Optimizations
 
@@ -417,7 +417,7 @@ async function cleanupOldBinaries(): Promise<void> {
     console.log(`🗑️  Removed old binary: ${file.name}`);
   }
 }
-```
+```text
 
 ### Discovery Caching
 
@@ -437,7 +437,7 @@ export class MethodologyManager {
     return allMethodologies;
   }
 }
-```
+```text
 
 ## Testing Specifications
 
@@ -470,7 +470,7 @@ assertEquals(
   legacyFiles.filter((f) => !f.includes("aichaku.json")),
   [],
 );
-```
+```text
 
 ### Dynamic Discovery Testing
 
@@ -489,7 +489,7 @@ console.log('Total count:', discovered.count);
 `;
 
 // Expected output: 6 methodologies (scrum, lean, shape-up, scrumban, kanban, xp)
-```
+```text
 
 ## Error Handling Specifications
 
@@ -526,7 +526,7 @@ async function loadProjectConfig(path: string): Promise<ProjectConfig> {
     throw error;
   }
 }
-```
+```text
 
 ### Graceful Degradation
 
@@ -544,7 +544,7 @@ private async discoverAllMethodologies(): Promise<string[]> {
     return ["shape-up", "scrum", "kanban", "lean", "xp", "scrumban"];
   }
 }
-```
+```text
 
 ## Monitoring and Observability
 
@@ -563,7 +563,7 @@ async function collectConfigMetrics(): Promise<ConfigFormatMetrics> {
   // Collect anonymized metrics about configuration usage
   // to understand adoption of unified format
 }
-```
+```text
 
 ### Performance Metrics
 
@@ -580,8 +580,11 @@ async function collectConfigMetrics(): Promise<ConfigFormatMetrics> {
 
 1. **Custom Methodology Discovery**: Plugin system for user-defined
    methodologies
+
 2. **Standards Validation**: Real-time validation of standards compliance
+
 3. **Configuration Sync**: Multi-project configuration synchronization
+
 4. **Template Evolution**: Dynamic template generation from methodology
    definitions
 
@@ -603,7 +606,7 @@ export class AichakuConfigAPI {
     /* */
   }
 }
-```
+```text
 
 ---
 
@@ -611,3 +614,4 @@ This technical specification provides the foundation for understanding and
 maintaining the unified Aichaku architecture. The consolidation from multiple
 legacy formats to a single, coherent system significantly improves
 maintainability while preserving all user functionality and data.
+````

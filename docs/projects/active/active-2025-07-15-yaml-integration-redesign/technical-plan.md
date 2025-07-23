@@ -12,20 +12,25 @@ compact YAML integration system.
 **Current State:**
 
 - `src/commands/docs-standard.ts` - Hardcoded standards
+
 - `src/commands/standards.ts` - Dynamic discovery
+
 - `src/utils/dynamic-content-discovery.ts` - Already supports dynamic category
   discovery!
 
 **Actions:**
 
 1. Move documentation standards to `/docs/standards/documentation/`
+
 2. Remove hardcoded categories - use dynamic discovery from filesystem
+
 3. Remove `docs-standard.ts` command entirely
+
 4. Update CLI router to deprecate `docs-standard` with helpful message
 
 **Code Changes:**
 
-```typescript
+`````typescript
 // In standards.ts - Remove hardcoded categories, use dynamic discovery
 import { discoverContent } from "../utils/dynamic-content-discovery.ts";
 
@@ -37,10 +42,11 @@ async function getAvailableCategories(basePath: string): Promise<string[]> {
 
 // Add deprecation handler in cli.ts
 case "docs-standard":
+
   console.log("⚠️  'docs-standard' is deprecated. Use 'standards --category documentation' instead.");
   await standardsCommand.parse(["--category", "documentation", ...args]);
   break;
-```
+```text
 
 ### 1.2 Configuration Migration
 
@@ -50,7 +56,7 @@ case "docs-standard":
 // Multiple files
 .claude/aichaku/standards.json
 .claude/aichaku/doc-standards.json
-```
+```text
 
 **New Structure in aichaku.json:**
 
@@ -61,7 +67,7 @@ case "docs-standard":
     "custom": { ... }
   }
 }
-```
+```text
 
 **Migration Function:**
 
@@ -84,7 +90,7 @@ async function migrateStandardsConfig(config: AichakuConfig): Promise<void> {
     console.log("✅ Migrated to unified standards configuration");
   }
 }
-```
+```text
 
 ## Phase 2: YAML Integration Engine (Week 3-4)
 
@@ -112,7 +118,7 @@ interface AichakuYamlConfig {
     };
   };
 }
-```
+```text
 
 ### 2.2 YAML Block Detection and Replacement
 
@@ -152,7 +158,7 @@ function replaceYamlBlock(
     return content + "\n\n" + yamlString;
   }
 }
-````
+````text
 
 ### 2.3 Metadata Loading from YAML Files
 
@@ -182,7 +188,7 @@ async function loadStandardMetadata(
   // Fallback for standards without YAML
   return generateBasicMetadata(standardId, standardPath);
 }
-```
+```text
 
 ## Phase 3: Migration System (Week 4)
 
@@ -228,7 +234,7 @@ function extractCustomContent(content: string): string {
 
   return customContent.trim();
 }
-```
+```text
 
 ### 3.2 Migration Process
 
@@ -266,13 +272,15 @@ async function migrateClaudeMd(filePath: string): Promise<void> {
 - Reduced size from ${formatBytes(content.length)} to ${
     formatBytes(newContent.length)
   }
+
 - Preserved your custom content
+
 - Selected standards: ${selectedStandards.join(", ")}
 
 Your original file is backed up at ${filePath}.backup
   `);
 }
-```
+```text
 
 ## Phase 4: Testing Strategy (Week 5)
 
@@ -296,7 +304,7 @@ Deno.test("migrateClaudeMd preserves custom content", async () => {
   assert(result.includes("# My Custom Footer"));
   assert(!result.includes("<!-- AICHAKU:START -->"));
 });
-```
+```text
 
 ### 4.2 Integration Tests
 
@@ -318,15 +326,20 @@ Deno.test("integration: add standards and integrate", async () => {
   assert(claudeMd.includes("owasp_web:"));
   assert(claudeMd.includes("tdd:"));
 });
-```
+```text
 
 ### 4.3 Claude Compatibility Testing
 
 1. **Create test CLAUDE.md files** with new format
+
 2. **Test with Claude** to verify:
+
    - Trigger recognition works
+
    - YAML parsing is successful
+
    - integration_url concept works
+
 3. **Performance testing** - measure parse time improvement
 
 ## Phase 5: Learn Command Redesign (Week 5)
@@ -336,7 +349,9 @@ Deno.test("integration: add standards and integrate", async () => {
 **Rationale:**
 
 - Avoid confusion with `--help` flag
+
 - Better represents the command's purpose (educational content)
+
 - Clearer user intent
 
 **Implementation:**
@@ -344,12 +359,14 @@ Deno.test("integration: add standards and integrate", async () => {
 ```typescript
 // In cli.ts - Update command routing
 case "help":
+
   console.log("⚠️  'help' command renamed to 'learn' to avoid confusion with --help");
   // Fall through to learn
 case "learn":
+
   await learnCommand.execute(args);
   break;
-```
+```text
 
 ### 5.2 YAML-Driven Learn Content
 
@@ -399,7 +416,7 @@ async function buildLearnContent(basePath: string): Promise<LearnContent> {
 
   return content;
 }
-```
+```text
 
 ### 5.3 Path Access Considerations
 
@@ -416,7 +433,7 @@ integration_url: "~/.claude/aichaku/docs/standards/security/owasp-web.md";
 integration_url: "aichaku://standards/security/owasp-web";
 // or
 integration_url: "@standards/security/owasp-web";
-```
+```text
 
 This allows Claude to request content through a protocol it understands, rather
 than assuming file system access.
@@ -426,6 +443,7 @@ than assuming file system access.
 ### Current Usage Analysis
 
 - **`.yaml`**: 26 files - All Aichaku content (standards, methodologies)
+
 - **`.yml`**: 7 files - All GitHub workflows/configs
 
 ### Recommendation: Use `.yaml` for Aichaku
@@ -433,15 +451,21 @@ than assuming file system access.
 **Rationale:**
 
 1. **Consistency**: All existing Aichaku content already uses `.yaml`
+
 2. **Official spec**: YAML officially recommends `.yaml` extension
+
 3. **Code compatibility**: `dynamic-content-discovery.ts` already handles both
+
 4. **Clear separation**: `.yaml` for Aichaku content, `.yml` for GitHub
 
 **Implementation:**
 
 - All new Aichaku files: `.yaml`
+
 - Configuration files: `reviewer-config.yaml`, `aichaku.yaml`
+
 - Keep GitHub workflows as `.yml` (GitHub convention)
+
 - Update docs to consistently use `.yaml` in examples
 
 ## Phase 6: Documentation Updates (Week 5-6)
@@ -455,20 +479,24 @@ const standardsHelp = `
 Manage development and documentation standards for your project.
 
 Usage:
+
   aichaku standards [options]
   aichaku standards <subcommand> [args]
 
 Options:
+
   --list              List all available standards
   --category <cat>    Filter by category (security, development, documentation, etc.)
   --search <query>    Search standards by name or description
 
 Subcommands:
+
   add <ids>          Add standards (comma-separated)
   remove <ids>       Remove standards
   show               Show currently selected standards
 
 Examples:
+
   aichaku standards --list
   aichaku standards --category documentation
   aichaku standards add owasp-web,tdd,diataxis
@@ -477,7 +505,7 @@ Examples:
 Note: 'docs-standard' command has been merged into 'standards'.
       Use '--category documentation' to see documentation standards.
 `;
-```
+```text
 
 ### 5.2 Update Integration Messages
 
@@ -502,12 +530,15 @@ Your custom content will be preserved.
 ✅ Integration Complete!
 
 CLAUDE.md updated with compact YAML configuration.
+
 - Size: ${formatBytes(before)} → ${formatBytes(after)} (${
     Math.round(
       (1 - after / before) * 100,
     )
   }% reduction)
+
 - Format: Single YAML block
+
 - Standards: ${getSelectedCount()} selected
 
 Claude will now recognize your selected methodologies and standards.
@@ -520,56 +551,85 @@ I've created a compact YAML configuration in your CLAUDE.md.
 This new format is much smaller and faster than the old marker system.
 
 Next steps:
+
 1. Select your standards: aichaku standards add <ids>
+
 2. Run integrate again: aichaku integrate
+
 3. Start coding with Claude!
 `,
 };
-```
+```text
 
 ## Implementation Checklist
 
 ### Week 1-2: Foundation
 
 - [ ] Create unified standards discovery using dynamic-content-discovery.ts
+
 - [ ] Remove hardcoded category lists
+
 - [ ] Merge docs-standard into standards command
+
 - [ ] Update ConfigManager for single config
+
 - [ ] Add migration for old config files
+
 - [ ] Update CLI router with deprecation
 
 ### Week 3-4: Integration
 
 - [ ] Implement YAML block detection
+
 - [ ] Create YAML generation from metadata
+
 - [ ] Build metadata loading from YAML files
+
 - [ ] Implement block replacement logic
+
 - [ ] Create migration detection and process
 
 ### Week 5: Polish & Learn Command
 
 - [ ] Rename `help` command to `learn`
+
 - [ ] Build YAML-driven learn content system
+
 - [ ] Implement integration URL scheme (aichaku://)
+
 - [ ] Write comprehensive tests
+
 - [ ] Test with Claude
+
 - [ ] Update all documentation
+
 - [ ] Create migration guide
+
 - [ ] Handle edge cases
 
 ### Week 6: Release
 
 - [ ] Beta test with users
+
 - [ ] Test Claude's access to integration URLs
+
 - [ ] Fix reported issues
+
 - [ ] Update changelog
+
 - [ ] Create release notes
+
 - [ ] Publish new version
 
 ## Success Metrics
 
 1. **File Size**: CLAUDE.md < 3KB for typical usage (vs 30KB+ currently)
+
 2. **Performance**: Integration completes in < 1 second
+
 3. **Migration**: 100% of users auto-migrated without data loss
+
 4. **Simplicity**: Single command for all standards
+
 5. **Compatibility**: Claude recognizes all triggers correctly
+`````

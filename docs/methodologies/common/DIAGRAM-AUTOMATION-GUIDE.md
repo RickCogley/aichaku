@@ -9,12 +9,19 @@ workflows.
 ## Table of Contents
 
 1. [Code to Diagram Generation](#code-to-diagram-generation)
+
 2. [Database Schema Visualization](#database-schema-visualization)
+
 3. [API Documentation Integration](#api-documentation-integration)
+
 4. [Architecture Documentation as Code](#architecture-documentation-as-code)
+
 5. [CI/CD Integration](#cicd-integration)
+
 6. [Diagram Testing and Validation](#diagram-testing-and-validation)
+
 7. [Version Control Strategies](#version-control-strategies)
+
 8. [Export and Publishing](#export-and-publishing)
 
 ## Code to Diagram Generation
@@ -23,7 +30,7 @@ workflows.
 
 #### Using tplant
 
-```bash
+````bash
 # Install
 npm install -g tplant
 
@@ -37,7 +44,7 @@ tplant \
   --exclude "**/*.test.ts" \
   --associations \
   --show-inheritance
-```
+```text
 
 #### Custom TypeScript Parser
 
@@ -116,7 +123,7 @@ class MermaidClassDiagramGenerator {
     return mermaid;
   }
 }
-```
+```text
 
 ### Python Class Diagrams
 
@@ -129,6 +136,7 @@ import sys
 from typing import List, Dict, Set
 
 class MermaidGenerator(ast.NodeVisitor):
+
     def **init**(self):
         self.classes = {}
         self.relationships = []
@@ -183,6 +191,7 @@ class MermaidGenerator(ast.NodeVisitor):
         return '\n'.join(lines)
 
 def generate*from*file(filepath: str) -> str:
+
     with open(filepath, 'r') as f:
         tree = ast.parse(f.read())
 
@@ -191,10 +200,11 @@ def generate*from*file(filepath: str) -> str:
     return generator.generate_mermaid()
 
 if **name** == '**main**':
+
     if len(sys.argv) > 1:
         diagram = generate*from*file(sys.argv[1])
         print(diagram)
-```
+```text
 
 {% endraw %}
 
@@ -304,7 +314,7 @@ func generateMermaid(structs map[string]*StructInfo) string {
 
     return builder.String()
 }
-```
+```text
 
 ## Database Schema Visualization
 
@@ -417,7 +427,7 @@ CREATE TABLE orders (
 
 const converter = new SQLToMermaid();
 console.log(converter.parseSQL(sql));
-```
+```text
 
 ### Prisma Schema to Mermaid
 
@@ -544,7 +554,7 @@ class PrismaToMermaid {
     return mermaid;
   }
 }
-```
+```text
 
 ## API Documentation Integration
 
@@ -649,7 +659,7 @@ class OpenAPIToSequence {
     return schema.type || "data";
   }
 }
-```
+```text
 
 ### GraphQL Schema to Diagram
 
@@ -758,7 +768,7 @@ class GraphQLToMermaid {
     return false;
   }
 }
-```
+```text
 
 ## Architecture Documentation as Code
 
@@ -885,7 +895,7 @@ config.systems.forEach((system) => {
     });
   }
 });
-```
+```text
 
 ## CI/CD Integration
 
@@ -898,21 +908,29 @@ config.systems.forEach((system) => {
 name: Generate and Update Diagrams
 
 on:
+
   push:
     paths:
+
       - "src/**/*.ts"
+
       - "docs/diagrams/**/*.mmd"
+
       - "architecture.yaml"
   pull_request:
     paths:
+
       - "src/**/*.ts"
+
       - "docs/diagrams/**/*.mmd"
 
 jobs:
+
   generate-diagrams:
     runs-on: ubuntu-latest
 
     steps:
+
       - uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -964,7 +982,7 @@ jobs:
           git add docs/diagrams
           git commit -m "chore: update generated diagrams [skip ci]"
           git push
-```
+```text
 
 {% endraw %}
 
@@ -973,21 +991,30 @@ jobs:
 ```yaml
 # .gitlab-ci.yml
 stages:
+
   - generate
+
   - validate
+
   - publish
 
 variables:
+
   DIAGRAMS_PATH: "docs/diagrams"
 
 generate-diagrams:
+
   stage: generate
   image: node:18
   before_script:
+
     - npm install -g @mermaid-js/mermaid-cli
+
     - npm install -g tplant
+
     - npm ci
   script:
+
     - |
         # Generate class diagrams
         tplant --input "src/**/*.ts" \
@@ -1000,33 +1027,43 @@ generate-diagrams:
         node scripts/sql-to-mermaid.js schema.sql > "$DIAGRAMS_PATH/generated/database.mmd"
   artifacts:
     paths:
+
       - $DIAGRAMS_PATH/generated/
     expire_in: 1 week
 
 validate-diagrams:
+
   stage: validate
   image: node:18
   dependencies:
+
     - generate-diagrams
   script:
+
     - npm install -g @mermaid-js/mermaid-cli
+
     - |
         # Validate all Mermaid syntax
         for file in $DIAGRAMS_PATH/**/*.mmd; do
           echo "Validating $file"
           mmdc -i "$file" -o /tmp/test.svg || exit 1
         done
+
     - |
         # Check diagram consistency
         node scripts/validate-diagram-consistency.js
 
 render-diagrams:
+
   stage: publish
   image: node:18
   dependencies:
+
     - generate-diagrams
   script:
+
     - npm install -g @mermaid-js/mermaid-cli
+
     - |
         # Render all diagrams
         for file in $DIAGRAMS_PATH/**/*.mmd; do
@@ -1039,10 +1076,12 @@ render-diagrams:
         done
   artifacts:
     paths:
+
       - $DIAGRAMS_PATH/**/*.svg
+
       - $DIAGRAMS_PATH/**/*.png
     expire_in: 1 month
-```
+```text
 
 ## Diagram Testing and Validation
 
@@ -1190,7 +1229,7 @@ if (require.main === module) {
     console.log(`✓ All ${results.length} diagrams are valid`);
   }
 }
-```
+```text
 
 ### Diagram Consistency Checker
 
@@ -1247,7 +1286,7 @@ class ConsistencyChecker {
     return issues;
   }
 }
-```
+```text
 
 ## Version Control Strategies
 
@@ -1268,7 +1307,7 @@ cat > .git/config << EOF
     textconv = cat
     wordRegex = "[A-Za-z0-9_]+|[^[:space:]]"
 EOF
-```
+```text
 
 ### Pre-commit Hook
 
@@ -1292,7 +1331,7 @@ for file in $(git diff --cached --name-only | grep -E '\.(mmd|mermaid)$'); do
 done
 
 echo "✓ All diagrams validated successfully"
-```
+```text
 
 ## Export and Publishing
 
@@ -1392,7 +1431,7 @@ const exporter = new DiagramExporter({
 });
 
 exporter.exportAll("./docs/diagrams", "./docs/images");
-```
+```text
 
 ### Documentation Site Integration
 
@@ -1418,7 +1457,7 @@ module.exports = {
     },
   ],
 };
-```
+```text
 
 ```javascript
 // vitepress config (for VitePress)
@@ -1434,23 +1473,33 @@ export default {
     },
   }),
 };
-```
+```text
 
 ## Summary
 
 This comprehensive guide covers:
 
 1. **Automated Generation** - Convert code, schemas, and APIs to diagrams
+
 2. **CI/CD Integration** - Automate diagram updates with your pipeline
+
 3. **Validation** - Ensure diagram syntax and consistency
+
 4. **Version Control** - Track and review diagram changes effectively
+
 5. **Export Options** - Generate diagrams in multiple formats and themes
 
 Key best practices:
 
 - Store diagram sources (.mmd files) in version control
+
 - Automate diagram generation from code when possible
+
 - Validate diagrams in CI/CD pipeline
+
 - Generate multiple formats for different use cases
+
 - Keep diagrams close to the code they document
+
 - Use consistent naming and styling conventions
+````

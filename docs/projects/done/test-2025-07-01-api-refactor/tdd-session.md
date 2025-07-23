@@ -10,7 +10,7 @@
 
 #### 🔴 RED (2:15 PM)
 
-```javascript
+````javascript
 describe("TokenService", () => {
   it("should generate a valid JWT token", () => {
     const user = { id: 123, email: "test@example.com" };
@@ -21,7 +21,7 @@ describe("TokenService", () => {
   });
 });
 // FAIL: TokenService is not defined
-```
+```text
 
 #### 🟢 GREEN (2:18 PM)
 
@@ -32,7 +32,7 @@ class TokenService {
   }
 }
 // PASS: Test passes with minimal implementation
-```
+```text
 
 #### 🔵 REFACTOR (2:25 PM)
 
@@ -51,7 +51,7 @@ class TokenService {
   }
 }
 // PASS: Real implementation, tests still green
-```
+```text
 
 ### Cycle 2: Token Validation
 
@@ -67,7 +67,7 @@ it("should validate a correct token", async () => {
   expect(decoded.email).toBe("test@example.com");
 });
 // FAIL: TokenService.validate is not a function
-```
+```text
 
 #### 🟢 GREEN (2:33 PM)
 
@@ -76,7 +76,7 @@ static async validate(token) {
   return jwt.verify(token, process.env.JWT_SECRET);
 }
 // PASS: Simple implementation
-```
+```text
 
 ### Cycle 3: Invalid Token Handling
 
@@ -91,7 +91,7 @@ it("should throw error for invalid token", async () => {
   );
 });
 // FAIL: Expected error not thrown
-```
+```text
 
 #### 🟢 GREEN (2:43 PM)
 
@@ -104,45 +104,58 @@ static async validate(token) {
   }
 }
 // PASS: Error handling added
-```
+```text
 
 ## Pairing Notes
 
 **Driver (Alice)**:
 
 - Focused on syntax and test structure
+
 - Caught typo in test description
+
 - Suggested better variable names
 
 **Navigator (Bob)**:
 
 - Spotted missing edge cases
+
 - Suggested refactoring to async/await
+
 - Kept focus on one test at a time
 
 ## Code Coverage
 
-```
+```text
 TokenService.js        100%
+
 - generate()           100%
+
 - validate()           100%
+
 - Error paths          100%
-```
+```text
 
 ## Next Session Plan
 
 Tomorrow: Integrate TokenService into authentication middleware
 
 - Test middleware integration
+
 - Add refresh token support
+
 - Test expiration handling
 
 ## Reflections
 
 - TDD forced us to think about interface first
+
 - Small cycles kept us focused
+
 - Pairing caught issues early
+
 - 100% coverage achieved naturally
 
 **Quote of the session**: "Make it fail, make it pass, make it beautiful" -
 Uncle Bob
+````

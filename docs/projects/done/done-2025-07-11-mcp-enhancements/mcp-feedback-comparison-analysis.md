@@ -17,9 +17,13 @@ are absent from today's plan:
 #### Growth Phase Indicators (Missing in Today's Plan)
 
 - 🌱 **Seed**: Starting/initializing operations
+
 - 🌿 **Growing**: Active processing, ongoing work
+
 - 🌸 **Blooming**: Success states, positive outcomes
+
 - 🌳 **Mature**: Established/stable systems
+
 - 🍃 **Harvest**: Results and outputs
 
 #### Activity-Specific Icons (Partially Missing)
@@ -27,11 +31,17 @@ are absent from today's plan:
 Yesterday's spec has detailed icon mappings:
 
 - 🔍 **Scanning**: File analysis, security scanning
+
 - ⚙️ **Analyzing**: Processing and evaluation
+
 - ✅ **Validating**: Compliance checking
+
 - 📚 **Learning**: Educational content, guidance
+
 - ⚠️ **Warning**: Issues requiring attention
+
 - ❌ **Error**: Critical problems
+
 - ✨ **Success**: Positive outcomes
 
 Today's plan only shows limited icon usage without the comprehensive mapping.
@@ -41,8 +51,11 @@ Today's plan only shows limited icon usage without the comprehensive mapping.
 Yesterday's implementation has precise timing strategy:
 
 - **Immediate feedback**: Tool invocation acknowledgment
+
 - **1.5 second delay**: Progress indicators for longer operations
+
 - **2 second threshold**: Progress updates for extended operations
+
 - **3 second threshold**: Completion timing information
 
 Today's plan mentions "smart timing" but lacks these specific thresholds.
@@ -51,14 +64,14 @@ Today's plan mentions "smart timing" but lacks these specific thresholds.
 
 Yesterday provides complete formatting examples:
 
-```
+````text
 🪴 Aichaku TypeScript/JavaScript Review Results
 💻 File: src/example.ts
 🍃 Completed: 2025-01-11 14:30:00
 
 ⚠️ Summary: 1 high, 2 medium
 🌿 Review Status: ⚠️ Review recommended
-```
+```text
 
 Today's plan shows simpler examples without the structured format.
 
@@ -66,7 +79,7 @@ Today's plan shows simpler examples without the structured format.
 
 Yesterday's spec includes educational formatting:
 
-```
+```text
 📚 LEARNING OPPORTUNITY
 Issue: 🌸 Using 'any' type instead of proper TypeScript types
 Solution: 🍃 Define proper interfaces or use 'unknown' with type guards
@@ -76,7 +89,7 @@ Solution: 🍃 Define proper interfaces or use 'unknown' with type guards
 ✅ Recommended Pattern:
 🌿 Step-by-Step Fix:
 🌱 Reflection: What prevented you from defining a proper type?
-```
+```text
 
 This educational approach is completely missing from today's plan.
 
@@ -86,8 +99,10 @@ Yesterday specifies configuration options:
 
 - `AICHAKU*FEEDBACK*LEVEL`: Control feedback verbosity (minimal, standard,
   verbose)
+
 - `AICHAKU*PROGRESS*THRESHOLD`: Milliseconds before showing progress
   (default: 1500)
+
 - `AICHAKU*TIMING*THRESHOLD`: Milliseconds before showing timing (default: 3000)
 
 Today's plan doesn't mention these configuration options.
@@ -99,8 +114,11 @@ Today's plan doesn't mention these configuration options.
 Yesterday's approach reveals information in stages:
 
 1. **Initial**: Tool invocation and basic context
+
 2. **Progress**: For operations taking longer than expected
+
 3. **Completion**: Results summary and timing
+
 4. **Detailed**: Full analysis in formatted output
 
 This prevents information overload while keeping users informed.
@@ -109,20 +127,20 @@ This prevents information overload while keeping users informed.
 
 Yesterday's spec handles external tools elegantly:
 
-```
+```text
 🪴 [Aichaku] 🔍 External security scanners enabled
 🪴 [Aichaku] 🔍 Checking external security scanners...
 🪴 [Aichaku] ✨ External scanner CodeQL: active
 🪴 [Aichaku] ⚠️ External scanner DevSkim: not available
-```
+```text
 
 ### C. Consistent Branding Structure
 
 Yesterday uses consistent prefix format:
 
-```
+```text
 🪴 [Aichaku] [icon] [message]
-```
+```text
 
 Today's examples are less consistent with branding placement.
 
@@ -131,7 +149,9 @@ Today's examples are less consistent with branding placement.
 Yesterday emphasizes:
 
 - Graceful error handling
+
 - Clear error messages
+
 - Helpful suggestions for resolution
 
 ## 3. Integration Recommendations
@@ -141,7 +161,9 @@ Yesterday emphasizes:
 Combine both approaches:
 
 1. Use yesterday's comprehensive icon system as the foundation
+
 2. Apply it to today's enhanced features (documentation generation, statistics)
+
 3. Maintain growth metaphor throughout all new features
 
 ### B. Implement Precise Timing Controls
@@ -149,7 +171,9 @@ Combine both approaches:
 Apply yesterday's timing thresholds to today's features:
 
 - Documentation generation: Show progress after 1.5s
+
 - Statistics collection: Use 3s threshold for completion timing
+
 - Tool chaining: Apply progressive disclosure to multi-step operations
 
 ### C. Enhance Educational Feedback
@@ -157,7 +181,9 @@ Apply yesterday's timing thresholds to today's features:
 Extend yesterday's learning opportunity format to new features:
 
 - Documentation generation: Explain why certain standards are applied
+
 - Statistics insights: Provide actionable improvement suggestions
+
 - Tool chaining: Educate users about workflow optimization
 
 ### D. Unified Configuration System
@@ -179,7 +205,7 @@ interface AichakuMCPConfig {
     standardsCompliance: boolean;
   };
 }
-```
+```text
 
 ## 4. Conflicts and Resolutions
 
@@ -214,37 +240,53 @@ statistics formatting
 #### 1. Visual Identity
 
 - Primary branding: 🪴 Aichaku
+
 - Growth phase indicators (seed → growing → blooming → mature → harvest)
+
 - Activity icons (comprehensive mapping from yesterday)
+
 - Consistent prefix format: `🪴 Aichaku: [icon] [message]`
 
 #### 2. Timing & Progressive Disclosure
 
 - Immediate acknowledgment
+
 - 1.5s threshold for progress indicators
+
 - 2s threshold for detailed progress
+
 - 3s threshold for timing information
+
 - Smart batching for multi-step operations
 
 #### 3. Enhanced Features
 
 - **Process Management**: Status, restart, upgrade with branded feedback
+
 - **Documentation Generation**: Progress tracking with educational context
+
 - **Statistics & Analytics**: Formatted insights using growth metaphors
+
 - **Tool Chaining**: Step-by-step visibility with learning opportunities
 
 #### 4. Configuration
 
 - Environment variables for all thresholds
+
 - Verbosity levels (minimal, standard, verbose)
+
 - Feature toggles for new capabilities
+
 - Privacy controls for statistics
 
 #### 5. Output Formats
 
 - Structured results (boxes for final output)
+
 - Line-based updates (real-time progress)
+
 - Educational sections (learning opportunities)
+
 - Statistics summaries (development insights)
 
 ## 6. Implementation Priority
@@ -252,19 +294,25 @@ statistics formatting
 ### Phase 1: Foundation (Preserve Yesterday's Work)
 
 1. Implement complete visual language system
+
 2. Add timing thresholds and progressive disclosure
+
 3. Create consistent branding throughout
 
 ### Phase 2: Enhancements (Add Today's Features)
 
 1. Process management with feedback
+
 2. Documentation generation with progress
+
 3. Statistics collection and display
 
 ### Phase 3: Integration (Merge Best of Both)
 
 1. Educational feedback for all features
+
 2. Unified configuration system
+
 3. Comprehensive testing and polish
 
 ## Conclusion
@@ -272,10 +320,15 @@ statistics formatting
 The merged specification should:
 
 1. **Preserve** yesterday's detailed visual language and timing implementation
+
 2. **Enhance** with today's new features (auto-start, documentation, statistics)
+
 3. **Unify** under consistent branding and user experience principles
+
 4. **Educate** users throughout all interactions
+
 5. **Configure** flexibly while maintaining sensible defaults
 
 This creates a cohesive MCP experience that's both powerful and approachable,
 maintaining Aichaku's philosophy of thoughtful, visible development.
+````

@@ -6,9 +6,9 @@
 
 ### Syntax
 
-```
+````text
 command-name [--option] <required-argument> [optional-argument]
-```
+```text
 
 ### Parameters
 
@@ -17,7 +17,9 @@ command-name [--option] <required-argument> [optional-argument]
 _Required_. [Description of the argument and its purpose].
 
 - **Type**: String | Integer | Boolean
+
 - **Valid values**: [List specific values or describe format]
+
 - **Default**: None (required)
 
 **Examples**:
@@ -25,14 +27,16 @@ _Required_. [Description of the argument and its purpose].
 ```bash
 command-name "example-value"
 command-name 123
-```
+```text
 
 #### `[optional-argument]`
 
 _Optional_. [Description and when to use it].
 
 - **Type**: String
+
 - **Valid values**: [List or describe]
+
 - **Default**: `default-value`
 
 ### Options
@@ -42,36 +46,43 @@ _Optional_. [Description and when to use it].
 [Description of what this option does].
 
 - **Type**: String
+
 - **Valid values**: `value1` | `value2` | `value3`
+
 - **Default**: `value1`
+
 - **Required**: No
 
 **Example**:
 
 ```bash
 command-name --option value2 my-argument
-```
+```text
 
 #### `--verbose`, `-v`
 
 Increase logging verbosity. Use up to three times for more detail.
 
 - **Type**: Flag (can be repeated)
+
 - **Default**: Normal verbosity
+
 - **Required**: No
 
 **Example**:
 
 ```bash
 command-name -vvv my-argument  # Maximum verbosity
-```
+```text
 
 #### `--config`, `-c`
 
 Specify a custom configuration file.
 
 - **Type**: String (file path)
+
 - **Default**: `~/.config/product/config.yaml`
+
 - **Required**: No
 
 ### Examples
@@ -82,15 +93,15 @@ Create a simple [thing]:
 
 ```bash
 command-name my-thing
-```
+```text
 
 **Output**:
 
-```
+```text
 Created [thing] 'my-thing' successfully.
 ID: 12345
 Status: Active
-```
+```text
 
 #### Use with options
 
@@ -98,11 +109,11 @@ Create a [thing] with custom settings:
 
 ```bash
 command-name --option value2 --verbose my-custom-thing
-```
+```text
 
 **Output**:
 
-```
+```text
 [VERBOSE] Starting creation process...
 [VERBOSE] Validating arguments...
 [VERBOSE] Creating resource...
@@ -110,7 +121,7 @@ Created [thing] 'my-custom-thing' successfully.
 ID: 67890
 Status: Active
 Configuration: Custom (value2)
-```
+```text
 
 #### Advanced usage
 
@@ -122,7 +133,7 @@ command-name my-advanced-thing \
   --config ./custom.json \
   --timeout 300 \
   --retry 3
-```
+```text
 
 ### Configuration file
 
@@ -138,9 +149,10 @@ option: value2
 timeout: 300
 retry_count: 3
 logging:
+
   level: verbose
   file: ~/.logs/product.log
-```
+```text
 
 ### Environment variables
 
@@ -167,7 +179,9 @@ logging:
 This command requires:
 
 - Read access to configuration files
+
 - Write access to the target directory
+
 - Network access for remote operations
 
 ### Notes
@@ -184,12 +198,18 @@ This command requires:
 ### Related commands
 
 - [`list-command`](link) - List all [things]
+
 - [`delete-command`](link) - Remove a [thing]
+
 - [`update-command`](link) - Modify an existing [thing]
 
 ### See also
 
 - [Conceptual overview of [topic]](link)
+
 - [How to use [command] in common scenarios](link)
+
 - [Best practices for [component]](link)
+
 - [Troubleshooting guide](link)
+````

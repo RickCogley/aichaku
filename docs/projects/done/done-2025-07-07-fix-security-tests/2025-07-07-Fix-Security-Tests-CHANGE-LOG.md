@@ -20,12 +20,15 @@ Ran `deno fmt CLAUDE.md` to automatically fix all formatting issues.
 ## Changes Made
 
 - Formatted CLAUDE.md to fix line breaks and whitespace
+
 - No content changes, only formatting adjustments
 
 ## Impact
 
 - Security Tests should now pass
+
 - All GitHub Actions workflows should be green
+
 - No functional changes to the code or documentation
 
 ## Technical Details
@@ -33,7 +36,9 @@ Ran `deno fmt CLAUDE.md` to automatically fix all formatting issues.
 The formatter was complaining about:
 
 - Lines being split incorrectly with trailing whitespace
+
 - Inconsistent line breaks in the methodology section
+
 - Multiple short lines that should be combined
 
 The `deno fmt` command automatically fixed all these issues.

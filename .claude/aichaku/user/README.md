@@ -9,7 +9,7 @@ user/
 ├── prompts/      # Custom AI prompts
 ├── templates/    # Custom document templates
 └── methods/      # Custom methodology extensions
-```
+```text
 
 ## How to Customize
 
@@ -23,7 +23,7 @@ Add files that extend or override default prompts:
 When conducting daily standups, use a more casual tone.
 Focus on blockers and collaboration opportunities.
 Keep updates brief and action-oriented.
-```
+```text
 
 ### 2. Custom Templates (templates/)
 
@@ -52,7 +52,7 @@ Add document templates for your organization:
 - [ ] Technical Lead
 - [ ] Product Owner
 - [ ] Operations
-```
+```text
 
 ### 3. Custom Methods (methods/)
 
@@ -70,7 +70,7 @@ Before marking PR as ready:
 - [ ] Security considerations noted
 - [ ] Performance impact assessed
 - [ ] Breaking changes documented
-```
+```text
 
 ## Methodology Blending
 
@@ -85,7 +85,7 @@ You can influence how Aichaku blends methodologies:
 - Use Shape Up for feature planning
 - Apply XP practices for development
 - Kanban for operational work
-```
+```text
 
 ## Organization-Specific Terms
 
@@ -100,7 +100,7 @@ Define your organization's vocabulary:
 - "Epic" = Major feature (3-6 sprints)
 - "Spike" = Research task (timeboxed)
 - "Ship It Day" = Our hack day (monthly)
-```
+```text
 
 ## Tips
 

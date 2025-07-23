@@ -7,7 +7,7 @@ _Source:
 
 ### Option 1: Minimal Setup (Recommended)
 
-```bash
+````bash
 # Install BasicTeX (smaller, faster)
 brew install --cask basictex
 
@@ -22,7 +22,7 @@ sudo tlmgr install emoji collection-fontsrecommended
 
 # Install pandoc for markdown conversion
 brew install pandoc
-```
+```text
 
 ### Option 2: Full Setup (Complete TeX)
 
@@ -41,7 +41,7 @@ sudo tlmgr update --self --all
 
 # Set paper size to A4 (optional)
 sudo tlmgr paper a4
-```
+```text
 
 ### Verification
 
@@ -54,7 +54,7 @@ echo "# Test\nHello 👋 emoji!" > test.md
 pandoc --pdf-engine=lualatex test.md -o test.pdf
 
 # Should create test.pdf with emoji support
-```
+```text
 
 ### Font Setup for Emojis
 
@@ -63,14 +63,16 @@ pandoc --pdf-engine=lualatex test.md -o test.pdf
 # For cross-platform compatibility, install Noto:
 brew tap homebrew/cask-fonts
 brew install --cask font-noto-color-emoji
-```
+```text
 
 ### Integration with Aichaku
 
 Once installed, Aichaku will automatically:
 
 1. Detect LuaLaTeX availability
+
 2. Use it for PDF generation with emoji support
+
 3. Fall back to HTML if not available
 
 ### Troubleshooting
@@ -83,7 +85,7 @@ sudo chown -R $(whoami) /usr/local/texlive/
 
 # Or use sudo for all tlmgr commands
 sudo tlmgr update --self --all
-```
+```text
 
 If PATH not found:
 
@@ -91,11 +93,15 @@ If PATH not found:
 # Add to ~/.zshrc or ~/.bash_profile
 echo 'export PATH="/Library/TeX/texbin:$PATH"' >> ~/.zshrc
 source ~/.zshrc
-```
+```text
 
 ### Notes
 
 - BasicTeX (~300MB) vs MacTeX (3.8GB)
+
 - BasicTeX sufficient for Aichaku's needs
+
 - LuaLaTeX included in both distributions
+
 - Recent versions include Japanese font support ("Harano Aji" fonts)
+````

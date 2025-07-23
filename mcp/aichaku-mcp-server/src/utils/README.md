@@ -27,7 +27,7 @@ in a compact, machine-readable format.
 
 ### Usage
 
-```typescript
+````typescript
 import { generateAichakuYAML } from "./yaml-generator.ts";
 
 // Generate full YAML with all methodologies
@@ -48,7 +48,7 @@ const customYaml = await generateAichakuYAML({
     },
   },
 });
-```
+```text
 
 ### Integration with CLAUDE.md
 
@@ -64,7 +64,7 @@ const claudeMd = await generateMinimalCLAUDEmd("My Project", [
   "scrum",
   "kanban",
 ]);
-```
+```text
 
 ### YAML Structure
 
@@ -110,7 +110,7 @@ diagrams:
     - document: "STATUS.md"
       type: "graph LR"
       template: "A[🌱 Started] --> B[🌿 Active]"
-```
+```text
 
 ### Testing
 
@@ -118,7 +118,7 @@ Run the tests with:
 
 ```bash
 deno test src/utils/yaml-generator.test.ts --allow-read --allow-env
-```
+```text
 
 ### Example
 
@@ -139,3 +139,4 @@ size, and content type.
 ### path-security.ts
 
 Path validation and security utilities to prevent directory traversal attacks.
+````

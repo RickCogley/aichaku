@@ -8,7 +8,7 @@ appropriate.
 
 ## Architecture Changes
 
-```mermaid
+````mermaid
 graph TB
     subgraph "Claude Code"
         A[User Request] --> B[Intent Detection]
@@ -32,7 +32,7 @@ graph TB
 
     style E fill:#90EE90
     style F fill:#90EE90
-```
+```text
 
 ## New MCP Tools
 
@@ -103,7 +103,7 @@ class DocumentationGenerator implements GenerateDocumentationTool {
     };
   }
 }
-```
+```text
 
 ### 2. Project Analysis Tool
 
@@ -155,7 +155,7 @@ class ProjectAnalyzer implements AnalyzeProjectTool {
     return { type: "modular", layers: [] };
   }
 }
-```
+```text
 
 ### 3. Documentation Template Tool
 
@@ -185,7 +185,7 @@ class DocTemplateCreator implements CreateDocTemplateTool {
     };
   }
 }
-```
+```text
 
 ## Enhanced Tool Registry
 
@@ -238,7 +238,7 @@ class MCPToolRegistry implements EnhancedToolRegistry {
     },
   ];
 }
-```
+```text
 
 ## Tool Discovery Enhancement
 
@@ -299,7 +299,7 @@ class EnhancedMCPServer implements ToolDiscoveryEnhancement {
     return hints;
   }
 }
-```
+```text
 
 ## Auto-Invocation Engine
 
@@ -342,42 +342,59 @@ class AutoInvocationEngine {
     return invocations;
   }
 }
-```
+```text
 
 ## Implementation Phases
 
 ### Phase 1: Core Documentation Tools (Day 1)
 
 1. Implement `generate_documentation` tool
+
 2. Implement `analyze_project` tool
+
 3. Create basic templates
+
 4. Test with simple projects
 
 ### Phase 2: Enhanced Discovery (Day 2)
 
 1. Update tool descriptions and metadata
+
 2. Implement alias system
+
 3. Add trigger patterns
+
 4. Create tool registry
 
 ### Phase 3: Auto-Invocation (Day 3)
 
 1. Build invocation engine
+
 2. Add context detection
+
 3. Implement tool chaining
+
 4. Test automatic workflows
 
 ### Phase 4: Integration & Polish (Day 4)
 
 1. Update MCP server protocol handlers
+
 2. Add comprehensive logging
+
 3. Performance optimization
+
 4. Documentation and examples
 
 ## Success Criteria
 
 1. **Zero-Touch Documentation**: User asks once, gets complete docs
+
 2. **Automatic Quality Checks**: Every generated file is reviewed
+
 3. **Standards Compliance**: Output follows selected standards
+
 4. **Natural Language**: Tools respond to natural requests
+
 5. **Predictable Behavior**: Consistent automatic invocations
+````

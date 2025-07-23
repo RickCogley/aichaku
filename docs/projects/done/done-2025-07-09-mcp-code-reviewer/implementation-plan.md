@@ -6,14 +6,14 @@
 
 ### 1.1 Project Setup
 
-```bash
+````bash
 # Create MCP server project
 mkdir mcp-code-reviewer
 cd mcp-code-reviewer
 npm init -y
 npm install @modelcontextprotocol/sdk
 npm install -D typescript @types/node
-```
+```text
 
 ### 1.2 Basic MCP Server
 
@@ -78,7 +78,7 @@ server.setRequestHandler("tools/list", async () => ({
     },
   ],
 }));
-```
+```text
 
 ## Phase 2: Scanner Integration (Week 1-2)
 
@@ -106,7 +106,7 @@ export abstract class Scanner {
   abstract name: string;
   abstract scan(filePath: string, content: string): Promise<ScanResult>;
 }
-```
+```text
 
 ### 2.2 DevSkim Integration
 
@@ -143,7 +143,7 @@ export class DevSkimScanner extends Scanner {
     }
   }
 }
-```
+```text
 
 ### 2.3 CodeQL Integration
 
@@ -157,7 +157,7 @@ export class CodeQLScanner extends Scanner {
     // Use local CodeQL database and queries
   }
 }
-```
+```text
 
 ## Phase 3: Standards & Methodology Engine (Week 2)
 
@@ -220,7 +220,7 @@ export class StandardsManager {
     return rules;
   }
 }
-```
+```text
 
 ### 3.2 Methodology Implementation
 
@@ -284,7 +284,7 @@ export class ShapeUpMethodology implements Methodology {
     },
   ];
 }
-```
+```text
 
 ### 3.3 OWASP Implementation
 
@@ -319,7 +319,7 @@ export class OWASPStandard implements Standard {
     // More OWASP rules...
   ];
 }
-```
+```text
 
 ## Phase 4: Review Engine (Week 2-3)
 
@@ -357,7 +357,7 @@ export class ReviewEngine {
     };
   }
 }
-```
+```text
 
 ### 4.2 Result Formatting
 
@@ -390,7 +390,7 @@ export class ReviewFormatter {
     return output.join("\n");
   }
 }
-```
+```text
 
 ## Phase 5: MCP Integration (Week 3)
 
@@ -416,7 +416,7 @@ server.setRequestHandler("tools/run", async (request) => {
     };
   }
 });
-```
+```text
 
 ### 5.2 Hook-Based Automation
 
@@ -447,7 +447,7 @@ const securityHook = {
   command:
     'bash -c \'case "${TOOL*INPUT*FILE*PATH}" in *.ts|*.js|*.py|*.go) mcp-reviewer-hook --file "${TOOL*INPUT*FILE*PATH}" --security-only ;; esac\'',
 };
-```
+```text
 
 ### 5.3 Configuration
 
@@ -481,7 +481,7 @@ export class ConfigLoader {
     };
   }
 }
-```
+```text
 
 ## Phase 6: Compilation & Distribution (Week 3-4)
 
@@ -519,7 +519,7 @@ for (const platform of platforms) {
     ]
   }).status();
 }
-```
+```text
 
 ## Phase 7: Testing & Deployment (Week 4)
 
@@ -546,7 +546,7 @@ describe("Review Engine", () => {
     );
   });
 });
-```
+```text
 
 ### 7.2 Installation Script
 
@@ -586,38 +586,51 @@ echo "💡 Optional: Install security tools for enhanced scanning:"
 echo "   npm install -g @microsoft/devskim-cli"
 echo "   brew install codeql"
 echo "   pip install semgrep"
-```
+```text
 
 ## Milestones & Deliverables
 
 ### Week 1
 
 - [ ] Basic MCP server running
+
 - [ ] DevSkim integration working
+
 - [ ] Simple file review capability
 
 ### Week 2
 
 - [ ] All scanners integrated
+
 - [ ] Standards engine loading Aichaku config
+
 - [ ] OWASP rules implemented
 
 ### Week 3
 
 - [ ] Review engine complete
+
 - [ ] MCP handlers polished
+
 - [ ] Performance optimizations
 
 ### Week 4
 
 - [ ] Comprehensive test suite
+
 - [ ] Documentation complete
+
 - [ ] Published to npm/JSR
 
 ## Success Metrics
 
 1. **Performance**: Review completes in <5s for typical file
+
 2. **Accuracy**: <5% false positive rate
+
 3. **Coverage**: Detects 80%+ of OWASP Top 10 patterns
+
 4. **Usability**: Zero-config for Aichaku users
+
 5. **Reliability**: 99%+ uptime during coding sessions
+````

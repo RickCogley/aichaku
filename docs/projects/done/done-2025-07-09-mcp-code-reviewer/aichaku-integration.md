@@ -9,7 +9,7 @@ standards review based on the standards you've selected for your project.
 
 ## Integration Points
 
-```mermaid
+````mermaid
 graph LR
     subgraph "Aichaku"
         AS[.aichaku-standards.json]
@@ -33,7 +33,7 @@ graph LR
     SM -->|Review Rules| RE
     RE -->|Findings| CC
     HR -->|Triggers| RE
-```
+```text
 
 ## Configuration Flow
 
@@ -48,7 +48,7 @@ aichaku standards --show
 
 # Integrate into CLAUDE.md
 aichaku integrate
-```
+```text
 
 ### 2. Methodology Selection (Future Enhancement)
 
@@ -60,7 +60,7 @@ aichaku integrate
   "methodologies": ["shape-up"], // Future: explicit methodology selection
   "customStandards": {}
 }
-```
+```text
 
 ### 3. MCP Reads Configuration
 
@@ -74,7 +74,7 @@ const methodologyRules = detectMethodologyRules(projectPath);
 
 // Combines both types of review
 const allRules = [...securityRules, ...methodologyRules];
-```
+```text
 
 ### 4. Automatic Review Activation
 
@@ -91,7 +91,7 @@ const allRules = [...securityRules, ...methodologyRules];
     }
   }
 }
-```
+```text
 
 ## Usage Scenarios
 
@@ -107,7 +107,7 @@ function getUserData(userId: string) {
 // 🔴 CRITICAL: OWASP-A03 SQL Injection
 // Line 2: Use parameterized queries
 // Fix: db.query('SELECT * FROM users WHERE id = ?', [userId])
-```
+```text
 
 ### Scenario 2: Methodology Compliance Check
 
@@ -125,7 +125,7 @@ Build a mobile app with AI categorization.
 // MCP reviews and suggests: // ⚠️ Shape Up Compliance: WARNINGS // - Missing
 appetite definition // - Missing "Rabbit holes" section // - Missing "No-gos"
 section
-```
+```text
 
 ### Scenario 3: On-Demand Review
 
@@ -134,7 +134,7 @@ section
 "Review this file for security issues";
 
 // MCP responds with comprehensive analysis
-```
+```text
 
 ### Scenario 4: Project-Wide Scan
 
@@ -143,7 +143,7 @@ section
 claude-code> review project
 
 # MCP scans all files and provides summary
-```
+```text
 
 ## Aichaku Command Extensions
 
@@ -163,7 +163,7 @@ aichaku hooks --install mcp-review
     }]
   }
 }
-```
+```text
 
 ### Standards Sync Command
 
@@ -172,7 +172,7 @@ aichaku hooks --install mcp-review
 aichaku standards --sync-mcp
 
 # Ensures MCP has latest standard definitions
-```
+```text
 
 ## Review Types
 
@@ -183,9 +183,13 @@ aichaku standards --sync-mcp
 When `owasp-web` is selected:
 
 - A01: Broken Access Control checks
+
 - A02: Cryptographic failure detection
+
 - A03: Injection vulnerability scanning
+
 - A04: Insecure design patterns
+
 - ... all Top 10 categories
 
 #### 15-Factor Apps
@@ -193,9 +197,13 @@ When `owasp-web` is selected:
 When `15-factor` is selected:
 
 - Codebase: Single repo checks
+
 - Dependencies: Explicit declaration
+
 - Config: Environment variable usage
+
 - Backing services: Resource binding
+
 - ... all 15 factors
 
 #### Test-Driven Development
@@ -203,8 +211,11 @@ When `15-factor` is selected:
 When `tdd` is selected:
 
 - Test coverage analysis
+
 - Test-first indicators
+
 - Assertion quality
+
 - Mock usage patterns
 
 ### Methodology Reviews
@@ -214,8 +225,11 @@ When `tdd` is selected:
 Automatically activated when pitch.md or Shape Up patterns detected:
 
 - Appetite boundaries (6-week limit)
+
 - Pitch completeness (all sections present)
+
 - Hill chart progress tracking
+
 - Cool-down period compliance
 
 #### Scrum
@@ -223,8 +237,11 @@ Automatically activated when pitch.md or Shape Up patterns detected:
 Activated for sprint-planning.md or Scrum artifacts:
 
 - Sprint goal clarity
+
 - Story point completeness
+
 - Velocity tracking
+
 - Ceremony compliance
 
 #### General
@@ -232,14 +249,19 @@ Activated for sprint-planning.md or Scrum artifacts:
 Always active:
 
 - TODO/FIXME tracking
+
 - Documentation completeness
+
 - Code complexity metrics
 
 ## Benefits of Integration
 
 1. **Consistency**: Same standards for generation AND review
+
 2. **Context**: MCP knows your project's specific needs
+
 3. **Efficiency**: No separate configuration needed
+
 4. **Evolution**: Standards evolve with your project
 
 ## Implementation in Aichaku
@@ -269,7 +291,7 @@ export async function standards(options: StandardsOptions): Promise<void> {
     }
   }
 }
-```
+```text
 
 ### 2. Add MCP Status to Integrate
 
@@ -290,7 +312,7 @@ export async function integrate(
     );
   }
 }
-```
+```text
 
 ### 3. Future: MCP Management Commands
 
@@ -303,13 +325,16 @@ aichaku mcp --install
 
 # Configure MCP settings
 aichaku mcp --configure
-```
+```text
 
 ## Security Considerations
 
 1. **Local-Only**: All scanning happens locally
+
 2. **No Code Transmission**: Code never leaves your machine
+
 3. **Sandboxed Execution**: Scanners run in isolation
+
 4. **Resource Limits**: Prevents runaway scans
 
 ## Troubleshooting
@@ -322,7 +347,7 @@ ls -la .claude/.aichaku-standards.json
 
 # Check MCP can read it
 mcp-code-reviewer validate-config
-```
+```text
 
 ### Reviews Not Triggering
 
@@ -332,7 +357,7 @@ claude code config show
 
 # Verify MCP is running
 ps aux | grep mcp-code-reviewer
-```
+```text
 
 ### Performance Issues
 
@@ -342,12 +367,17 @@ export MCP*MAX*SCANNERS=2
 
 # Disable heavy scanners
 export MCP*DISABLE*CODEQL=true
-```
+```text
 
 ## Roadmap
 
 1. **Phase 1**: Basic integration (current)
+
 2. **Phase 2**: Bi-directional sync
+
 3. **Phase 3**: Custom rule builder
+
 4. **Phase 4**: AI-powered rule suggestions
+
 5. **Phase 5**: Team standards sharing
+````

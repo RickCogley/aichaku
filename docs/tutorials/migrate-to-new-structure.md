@@ -12,9 +12,12 @@ structure.
 The new structure provides:
 
 - **Clear ownership**: Aichaku files live in `aichaku/` subdirectories
+
 - **Better organization**: Custom standards have a dedicated location
+
 - **Easier updates**: Core files can be updated without affecting your
   customizations
+
 - **Cleaner root**: The `~/.claude/` directory stays organized for multiple
   tools
 
@@ -22,7 +25,7 @@ The new structure provides:
 
 **Before (v0.19.0 and earlier):**
 
-```
+````text
 ~/.claude/
 ├── methodologies/         # Aichaku's methodologies
 ├── standards/            # Aichaku's standards
@@ -33,11 +36,11 @@ The new structure provides:
 project/.claude/
 ├── .aichaku-standards.json  # Standards config
 └── output/                  # Your work
-```
+```text
 
 **After (v0.20.0+):**
 
-```
+```text
 ~/.claude/
 └── aichaku/             # All Aichaku files
     ├── methodologies/   # Core methodologies
@@ -53,15 +56,18 @@ project/.claude/
 ├── output/            # Your work (stays here)
 ├── user/              # Your content (stays here)
 └── CLAUDE.md          # AI instructions (stays here)
-```
+```text
 
 ## Pre-Migration Checklist
 
 Before you begin, make sure you:
 
 - [ ] Back up your current `~/.claude/` directory
+
 - [ ] Note any custom standards in `~/.claude/docs/standards/custom/`
+
 - [ ] Commit any uncommitted work in your projects
+
 - [ ] Update Aichaku to the latest version
 
 ### Creating a Backup
@@ -72,7 +78,7 @@ cp -r ~/.claude ~/.claude-backup-$(date +%Y%m%d-%H%M%S)
 
 # Verify backup was created
 ls -la ~/.claude-backup-*
-```
+```text
 
 ## Step 1: Check Migration Status
 
@@ -87,27 +93,30 @@ aichaku --version
 
 # Check if migration is needed
 aichaku migrate --dry-run
-```
+```text
 
 The dry run will show you:
 
 - What files will be moved
+
 - What backups will be created
+
 - Any potential issues
 
 Example output:
 
-```
+```text
 🪴 Aichaku Migration Analysis
 
 Global migration needed:
+
   ✓ Will move: ~/.claude/methodologies/ → ~/.claude/aichaku/methodologies/
   ✓ Will move: ~/.claude/docs/standards/ → ~/.claude/aichaku/docs/standards/
   ✓ Will move: custom standards → ~/.claude/aichaku/user/docs/standards/
   ✓ Will create backup: ~/.claude-backup-20250711-143022
 
 No issues detected. Ready to migrate.
-```
+```text
 
 ## Step 2: Perform Global Migration
 
@@ -116,18 +125,21 @@ Once you're ready, run the global migration:
 ```bash
 # Migrate global Aichaku files
 aichaku migrate --global
-```
+```text
 
 This command will:
 
 1. Create a backup of your current `~/.claude/` directory
+
 2. Move core Aichaku files to `~/.claude/aichaku/`
+
 3. Move custom standards to the new location
+
 4. Update internal references
 
 Example output:
 
-```
+```text
 🪴 Aichaku Global Migration
 
 Creating backup... ✓
@@ -142,7 +154,7 @@ Moving custom standards... ✓
   Moved to: aichaku/user/docs/standards/
 
 Migration complete! ✓
-```
+```text
 
 ## Step 3: Migrate Your Projects
 
@@ -156,12 +168,14 @@ aichaku migrate --project . --dry-run
 
 # Perform the migration
 aichaku migrate --project .
-```
+```text
 
 This will:
 
 - Move `.claude/.aichaku-standards.json` → `.claude/aichaku/standards.json`
+
 - Update any path references in the configuration
+
 - Create the new directory structure
 
 Example for multiple projects:
@@ -175,7 +189,7 @@ for project in ~/projects/*; do
     aichaku migrate --project .
   fi
 done
-```
+```text
 
 ## Step 4: Migrate Custom Standards Only
 
@@ -184,17 +198,20 @@ If you've already partially migrated or only need to move custom standards:
 ```bash
 # Migrate just custom standards
 aichaku migrate --custom-standards-only
-```
+```text
 
 This is useful if:
 
 - You manually moved some files
+
 - You're upgrading from a partial migration
+
 - You only use custom standards
 
 The command will check both old locations:
 
 - `~/.claude/docs/standards/custom/*`
+
 - `~/.claude/aichaku/docs/standards/custom/*`
 
 And consolidate them in the new location:
@@ -215,27 +232,31 @@ tree ~/.claude/aichaku/ -L 3
 # Verify a specific project
 cd /path/to/project
 aichaku standards --show
-```
+```text
 
 Expected output:
 
-```
+```text
 🪴 Aichaku Standards
 
 Core Standards:
+
   ✓ OWASP-TOP-10
   ✓ ISO-27001
   ✓ NIST-CSF
 
 Custom Standards:
+
   ✓ my-company-guidelines
   ✓ project-conventions
   ✓ team-standards
 
 Project Standards (./project-name):
+
   - OWASP-TOP-10 (core)
+
   - my-company-guidelines (custom)
-```
+```text
 
 ## Step 6: Update Your Workflow
 
@@ -247,7 +268,7 @@ The old manual method:
 # ❌ Don't use this anymore
 mkdir -p ~/.claude/docs/standards/custom
 echo "# My Standard" > ~/.claude/docs/standards/custom/my-standard.md
-```
+```text
 
 The new recommended method:
 
@@ -257,7 +278,7 @@ aichaku standards --create-custom "My Standard Name"
 
 # Or create from a template
 aichaku standards --create-custom "API Guidelines" --template rest-api
-```
+```text
 
 ### Adding Custom Standards to Projects
 
@@ -272,7 +293,7 @@ aichaku standards --add custom:my-standard
 
 # Add multiple standards
 aichaku standards --add OWASP-TOP-10,custom:my-standard,ISO-27001
-```
+```text
 
 ### Listing Standards
 
@@ -284,7 +305,7 @@ aichaku standards --list --categories
 
 # Search for specific standards
 aichaku standards --search "security"
-```
+```text
 
 ## Troubleshooting
 
@@ -296,7 +317,7 @@ This can happen if migration was partially completed.
 
 ```bash
 aichaku migrate --force --backup
-```
+```text
 
 **Manual verification:**
 
@@ -304,7 +325,7 @@ aichaku migrate --force --backup
 # Check both locations
 ls -la ~/.claude/methodologies/        # Old
 ls -la ~/.claude/aichaku/methodologies/ # New
-```
+```text
 
 ### Issue: Custom standards not showing up
 
@@ -319,7 +340,7 @@ ls -la ~/.claude/aichaku/user/docs/standards/
 # Old locations (need migration)
 ls -la ~/.claude/docs/standards/custom/
 ls -la ~/.claude/aichaku/docs/standards/custom/
-```
+```text
 
 **Manual fix if needed:**
 
@@ -330,7 +351,7 @@ mkdir -p ~/.claude/aichaku/user/docs/standards/
 # Move from old locations
 mv ~/.claude/docs/standards/custom/* ~/.claude/aichaku/user/docs/standards/ 2>/dev/null
 mv ~/.claude/aichaku/docs/standards/custom/* ~/.claude/aichaku/user/docs/standards/ 2>/dev/null
-```
+```text
 
 ### Issue: Project standards file not found
 
@@ -344,7 +365,7 @@ ls -la .claude/.aichaku-standards.json
 
 # New location and name
 ls -la .claude/aichaku/standards.json
-```
+```text
 
 **Manual fix:**
 
@@ -354,7 +375,7 @@ mkdir -p .claude/aichaku
 
 # Move and rename
 mv .claude/.aichaku-standards.json .claude/aichaku/standards.json
-```
+```text
 
 ### Issue: Permission denied during migration
 
@@ -366,7 +387,7 @@ ls -la ~/.claude/
 
 # Fix permissions if needed
 chmod -R u+rwX ~/.claude/
-```
+```text
 
 ## Rollback (If Needed)
 
@@ -381,7 +402,7 @@ BACKUP_DIR=~/.claude-backup-20250711-143022
 
 # Rollback using Aichaku
 aichaku migrate --rollback $BACKUP_DIR
-```
+```text
 
 **Manual rollback:**
 
@@ -391,7 +412,7 @@ rm -rf ~/.claude/aichaku
 
 # Restore from backup
 cp -r ~/.claude-backup-20250711-143022/* ~/.claude/
-```
+```text
 
 ## What Stays the Same
 
@@ -409,9 +430,13 @@ These important locations don't change:
 After completing migration:
 
 - [ ] Verify all standards are accessible
+
 - [ ] Test creating a new project with methodologies
+
 - [ ] Check that custom standards work correctly
+
 - [ ] Update any personal scripts that reference old paths
+
 - [ ] Remove old backup directories once verified
 
 ### Updating Scripts
@@ -426,7 +451,7 @@ If you have scripts that reference the old structure:
 
 # Project files to update
 .claude/.aichaku-standards.json → .claude/aichaku/standards.json
-```
+```text
 
 ## Next Steps
 
@@ -434,7 +459,9 @@ Now that you've migrated:
 
 1. **Learn about custom standards**: See
    [Managing Custom Standards](/docs/how-to/manage-custom-standards.md)
+
 2. **Explore new features**: Check [What's New](/docs/reference/changelog.md)
+
 3. **Share with your team**: Use this guide to help others migrate
 
 ## Getting Help
@@ -442,10 +469,15 @@ Now that you've migrated:
 If you encounter issues not covered here:
 
 - Check the [Troubleshooting Guide](/docs/reference/troubleshooting.md)
+
 - Search [GitHub Issues](https://github.com/RickCogley/aichaku/issues)
+
 - Open a new issue with:
+
   - Your Aichaku version (`aichaku --version`)
+
   - Error messages
+
   - Directory structure (`ls -la ~/.claude/`)
 
 ## Summary
@@ -453,9 +485,13 @@ If you encounter issues not covered here:
 The migration process is designed to be safe and reversible:
 
 1. **Always creates backups** before making changes
+
 2. **Preserves your work** in `.claude/output/` and `.claude/user/`
+
 3. **Updates automatically** when you run commands
+
 4. **Can be rolled back** if needed
 
 Remember: This is a one-time migration. Once completed, Aichaku will use the new
 structure going forward, providing better organization and easier maintenance.
+````

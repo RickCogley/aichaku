@@ -4,19 +4,22 @@
 
 Conventional Commits provide a standardized format for commit messages:
 
-```
+````text
 <type>[optional scope]: <description>
 
 [optional body]
 
 [optional footer(s)]
-```
+```text
 
 **Examples:**
 
 - `feat: add user authentication`
+
 - `fix(auth): resolve login validation issue`
+
 - `docs: update installation guide`
+
 - `refactor!: restructure database schema`
 
 ### Commit Types
@@ -24,18 +27,27 @@ Conventional Commits provide a standardized format for commit messages:
 #### Primary Types
 
 - **feat**: A new feature for the user
+
 - **fix**: A bug fix for the user
+
 - **docs**: Documentation changes
+
 - **style**: Code style changes (formatting, semicolons, etc.)
+
 - **refactor**: Code refactoring without feature changes or bug fixes
+
 - **test**: Adding or updating tests
+
 - **chore**: Build process or auxiliary tool changes
 
 #### Additional Types
 
 - **perf**: Performance improvements
+
 - **ci**: CI/CD configuration changes
+
 - **build**: Build system or dependency changes
+
 - **revert**: Reverting a previous commit
 
 ### Examples by Type
@@ -53,7 +65,7 @@ feat(auth): implement two-factor authentication
 feat!: change API response format
 
 BREAKING CHANGE: API now returns data in 'result' field instead of root level
-```
+```text
 
 #### Bug Fix Commits
 
@@ -70,7 +82,7 @@ Closes #123
 fix: prevent SQL injection in user search
 
 InfoSec: Sanitize user input to prevent database attacks
-```
+```text
 
 #### Documentation Commits
 
@@ -83,7 +95,7 @@ docs(readme): update installation instructions for Windows
 
 # ✅ Good: Code documentation
 docs: add JSDoc comments to utility functions
-```
+```text
 
 #### Refactoring Commits
 
@@ -98,15 +110,18 @@ refactor(database): optimize query performance
 refactor!: rename getUserData to fetchUserProfile
 
 BREAKING CHANGE: Method name changed from getUserData to fetchUserProfile
-```
+```text
 
 ### Scope Guidelines
 
 #### Common Scopes
 
 - **Component names**: `feat(header): add navigation menu`
+
 - **Feature areas**: `fix(auth): resolve login issues`
+
 - **File/Module names**: `refactor(utils): simplify date formatting`
+
 - **Technology**: `ci(docker): update base image`
 
 #### Scope Examples
@@ -126,7 +141,7 @@ perf(cache): implement Redis caching
 ci(github): add automated testing workflow
 build(webpack): update configuration for production
 chore(deps): update dependencies to latest versions
-```
+```text
 
 ### Breaking Changes
 
@@ -140,7 +155,7 @@ feat!: change user API response format
 feat: update user authentication
 
 BREAKING CHANGE: Authentication now requires API key in header
-```
+```text
 
 #### Breaking Change Examples
 
@@ -154,14 +169,16 @@ BREAKING CHANGE: All API responses now wrapped in 'data' object
 config!: update environment variable names
 
 BREAKING CHANGE:
+
 - DATABASE*URL renamed to DB*CONNECTION_STRING
+
 - API*KEY renamed to SERVICE*API_KEY
 
 # ✅ Good: Library update
 deps!: upgrade React to version 18
 
 BREAKING CHANGE: React 18 requires Node.js 16 or higher
-```
+```text
 
 ### Body and Footer Guidelines
 
@@ -183,7 +200,7 @@ to improve testability and maintainability.
 
 This change affects all authentication-related components
 and requires updating import statements in affected files.
-```
+```text
 
 #### Footer Examples
 
@@ -205,7 +222,7 @@ fix: patch XSS vulnerability in comments
 
 InfoSec: Sanitize HTML input to prevent script injection attacks
 CVE-2023-12345
-```
+```text
 
 ### Integration with Tools
 
@@ -223,12 +240,14 @@ CVE-2023-12345
     ]
   }
 }
-```
+```text
 
 #### Version Bumping Rules
 
 - **fix**: Patch version (1.0.0 → 1.0.1)
+
 - **feat**: Minor version (1.0.0 → 1.1.0)
+
 - **BREAKING CHANGE**: Major version (1.0.0 → 2.0.0)
 
 #### Changelog Generation
@@ -241,17 +260,19 @@ CVE-2023-12345
 ### Features
 
 - **auth**: implement two-factor authentication (#123)
+
 - **dashboard**: add user analytics widget (#124)
 
 ### Bug Fixes
 
 - **payment**: handle timeout errors properly (#125)
+
 - resolve memory leak in file upload (#126)
 
 ### BREAKING CHANGES
 
 - **api**: change response format for user endpoints
-```
+```text
 
 ### Git Hooks Integration
 
@@ -272,7 +293,7 @@ if ! grep -qE "$commit_regex" "$1"; then
     echo "  docs: update README"
     exit 1
 fi
-```
+```text
 
 #### Commitizen Integration
 
@@ -285,20 +306,24 @@ echo '{ "path": "cz-conventional-changelog" }' > ~/.czrc
 
 # Use interactive commit
 git cz
-```
+```text
 
 ### Team Guidelines
 
 #### Commit Message Length
 
 - **Subject line**: 50 characters or less
+
 - **Body lines**: 72 characters or less
+
 - **Clear and concise**: Focus on what and why, not how
 
 #### Language Standards
 
 - **Use imperative mood**: "Add feature" not "Added feature"
+
 - **No trailing punctuation**: Don't end subject with period
+
 - **Capitalize first letter**: "Add feature" not "add feature"
 
 #### Review Checklist
@@ -307,13 +332,19 @@ git cz
 ## Commit Message Review
 
 - [ ] Follows conventional format
+
 - [ ] Type is appropriate (feat, fix, docs, etc.)
+
 - [ ] Scope is relevant and consistent
+
 - [ ] Description is clear and concise
+
 - [ ] Breaking changes are properly indicated
+
 - [ ] Issue references are included
+
 - [ ] Security implications are noted
-```
+```text
 
 ### Advanced Features
 
@@ -323,12 +354,15 @@ git cz
 feat: implement user authentication system
 
 - Add login/logout functionality
+
 - Implement JWT token management
+
 - Add password reset flow
+
 - Include email verification
 
 Closes #100, #101, #102
-```
+```text
 
 #### Revert Commits
 
@@ -338,7 +372,7 @@ revert: "feat: add user preferences"
 This reverts commit abc123def456.
 
 Reason: Feature causing performance issues in production
-```
+```text
 
 #### Merge Commits
 
@@ -347,17 +381,24 @@ Reason: Feature causing performance issues in production
 feat: complete user management feature (#123)
 
 * feat(users): add user creation
+
 * feat(users): add user editing
+
 * feat(users): add user deletion
+
 * test(users): add comprehensive test suite
-```
+```text
 
 ### Benefits
 
 1. **Automated Versioning**: Tools can automatically determine version bumps
+
 2. **Changelog Generation**: Automatically generate release notes
+
 3. **Better Collaboration**: Consistent format improves team communication
+
 4. **Issue Tracking**: Easy to link commits to issues and pull requests
+
 5. **Release Automation**: Enable automated releases based on commit types
 
 ### Common Mistakes
@@ -374,7 +415,7 @@ docs: update docs
 fix: resolve null pointer exception in user search
 feat: add real-time notifications for new messages
 docs: add authentication examples to API guide
-```
+```text
 
 #### Wrong Types
 
@@ -386,7 +427,8 @@ fix: add new user registration form
 # ✅ Good: Correct type usage
 docs: fix typo in README
 feat: add new user registration form
-```
+```text
 
 Remember: Conventional Commits create a shared language for your team and enable
 powerful automation tools that can streamline your development workflow.
+````

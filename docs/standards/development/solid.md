@@ -5,9 +5,13 @@
 SOLID principles guide object-oriented design for maintainable, flexible code:
 
 1. **🔒 S**ingle Responsibility Principle (SRP)
+
 2. **🔓 O**pen/Closed Principle (OCP)
+
 3. **🔄 L**iskov Substitution Principle (LSP)
+
 4. **🎯 I**nterface Segregation Principle (ISP)
+
 5. **🔀 D**ependency Inversion Principle (DIP)
 
 ### Single Responsibility Principle (SRP)
@@ -16,7 +20,7 @@ SOLID principles guide object-oriented design for maintainable, flexible code:
 
 #### ✅ Good: Single Responsibility
 
-```typescript
+````typescript
 // ✅ Good: User class only handles user data
 class User {
   constructor(
@@ -67,7 +71,7 @@ class EmailService {
     });
   }
 }
-```
+```text
 
 #### ❌ Bad: Multiple Responsibilities
 
@@ -104,7 +108,7 @@ class User {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email);
   }
 }
-```
+```text
 
 ### Open/Closed Principle (OCP)
 
@@ -151,7 +155,7 @@ class PaymentService {
     return await this.processor.chargeCustomer(order.total);
   }
 }
-```
+```text
 
 #### ❌ Bad: Modification Required for Extension
 
@@ -170,7 +174,7 @@ class PaymentService {
     throw new Error("Unsupported payment type");
   }
 }
-```
+```text
 
 ### Liskov Substitution Principle (LSP)
 
@@ -227,7 +231,7 @@ class Square extends Rectangle {
 function calculateArea(rectangle: Rectangle): number {
   return rectangle.getArea(); // Works correctly for both types
 }
-```
+```text
 
 #### Better: Composition over Inheritance
 
@@ -253,7 +257,7 @@ class Square implements Shape {
     return this.side * this.side;
   }
 }
-```
+```text
 
 ### Interface Segregation Principle (ISP)
 
@@ -307,7 +311,7 @@ class Console implements Writable {
   }
   // No need to implement read() or seek()
 }
-```
+```text
 
 #### ❌ Bad: Fat Interface
 
@@ -339,7 +343,7 @@ class Console implements FileHandler {
     throw new Error("Not supported");
   }
 }
-```
+```text
 
 ### Dependency Inversion Principle (DIP)
 
@@ -384,7 +388,7 @@ class UserService {
 // ✅ Good: Dependency injection at runtime
 const emailNotifier = new EmailNotificationService();
 const userService = new UserService(emailNotifier);
-```
+```text
 
 #### ❌ Bad: Direct Dependencies
 
@@ -403,7 +407,7 @@ class UserService {
     return user;
   }
 }
-```
+```text
 
 ### SOLID in Practice
 
@@ -436,7 +440,7 @@ const userService = new UserService(
   container.resolve<NotificationService>("notification"),
   container.resolve<UserRepository>("userRepo"),
 );
-```
+```text
 
 #### Testing Benefits
 
@@ -458,14 +462,18 @@ describe("UserService", () => {
     );
   });
 });
-```
+```text
 
 ### Benefits of SOLID
 
 1. **Maintainability**: Changes are localized and predictable
+
 2. **Testability**: Easy to mock dependencies and test in isolation
+
 3. **Flexibility**: New features can be added without modifying existing code
+
 4. **Reusability**: Components can be reused in different contexts
+
 5. **Understandability**: Each class has a clear, single purpose
 
 ### Common Violations and Solutions
@@ -508,8 +516,9 @@ class EmailService {
 class ReportGenerator {
   /* ... */
 }
-```
+```text
 
 Remember: SOLID principles work together to create code that is easier to
 maintain, test, and extend. Apply them thoughtfully to avoid over-engineering
 while ensuring your code remains flexible and robust.
+````

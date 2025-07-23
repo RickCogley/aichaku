@@ -8,7 +8,9 @@ to [use case].
 Ensure you have:
 
 - [Prerequisite 1]
+
 - [Prerequisite 2]
+
 - Access to [required resource]
 
 ## Overview
@@ -16,7 +18,9 @@ Ensure you have:
 This guide covers:
 
 - [Subtask 1]
+
 - [Subtask 2]
+
 - [Subtask 3]
 
 ## Solution
@@ -52,15 +56,15 @@ Use this approach when [different condition].
 
 Test your setup:
 
-```bash
+````bash
 test-command
-```
+```text
 
 Expected output:
 
-```
+```text
 [Success indicators]
-```
+```text
 
 ## Troubleshooting
 
@@ -71,6 +75,7 @@ Expected output:
 **Solution**:
 
 1. [Fix step 1]
+
 2. [Fix step 2]
 
 ### Problem: [Another common issue]
@@ -82,5 +87,8 @@ Expected output:
 ## Related tasks
 
 - [How to do related task 1](link)
+
 - [How to do related task 2](link)
+
 - [Reference for this feature](link)
+````

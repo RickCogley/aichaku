@@ -11,18 +11,21 @@ reviews code against chosen standards.
 
 ### Recommended: **Hybrid Approach**
 
-```
+````text
 System-Wide Aichaku MCP (User Scope)
 ├── Reads standards from ~/.claude/methodologies/
 ├── Discovers project-specific selections from .aichaku-review.json
 └── Provides review services to all Claude Code instances
-```
+```text
 
 **Why Hybrid?**
 
 - **One MCP instance** serves all projects (efficiency)
+
 - **Per-project configuration** for selected standards (flexibility)
+
 - **Shared methodology knowledge** from global Aichaku installation
+
 - **Project isolation** through configuration files
 
 ## Core Design
@@ -156,7 +159,7 @@ class AichakuMCPServer {
     };
   }
 }
-```
+```text
 
 ### 2. Project Configuration File
 
@@ -172,7 +175,7 @@ class AichakuMCPServer {
     "require_tests": true
   }
 }
-```
+```text
 
 ### 3. Claude Code Integration
 
@@ -188,7 +191,7 @@ class AichakuMCPServer {
     }
   }
 }
-```
+```text
 
 #### Hook Integration
 
@@ -231,13 +234,13 @@ class AichakuMCPServer {
     ]
   }
 }
-```
+```text
 
 ### 4. Usage Patterns
 
 #### Interactive Review
 
-```
+```text
 You: Review my authentication implementation
 Claude: I'll review your authentication code using Aichaku standards.
 
@@ -246,42 +249,55 @@ Claude: I'll review your authentication code using Aichaku standards.
 🪴 Aichaku Review Results:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅ Shape Up Compliance: PASSED
+
    - Implementation fits within 6-week appetite
+
    - No scope creep detected
 
 ⚠️  OWASP Security: WARNINGS
+
    - A02: Weak password hashing algorithm (use bcrypt/scrypt)
+
    - A07: Missing rate limiting on login endpoint
 
 ✅ Google TypeScript Style: PASSED
+
    - Clean code structure
+
    - Proper type annotations
 
 ❌ 15-Factor Apps: FAILED
+
    - Config not externalized (hardcoded values)
+
    - Missing health check endpoint
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
+```text
 
 #### Hook-Based Automatic Review
 
 When saving a file, the hook triggers:
 
-```
+```text
 🪴 Aichaku: Pre-write review detected 2 issues:
+
 - Missing input validation on user email
+
 - Function exceeds complexity threshold (cyclomatic: 12)
 
 Proceed with write? (Issues logged for later review)
-```
+```text
 
 ### 5. State Management
 
 The MCP maintains minimal state:
 
 - **No conversation history** (follows MCP principles)
+
 - **Project detection** via working directory
+
 - **Configuration caching** for performance
+
 - **Standards loaded on-demand** from global Aichaku
 
 ### 6. Multi-Project Support
@@ -303,7 +319,7 @@ class ProjectContextManager {
     return this.projectConfigs.get(projectRoot)!;
   }
 }
-```
+```text
 
 ### 7. Installation & Distribution
 
@@ -321,15 +337,20 @@ aichaku install-mcp
 cd my-project
 aichaku review init
 # Creates .aichaku-review.json with selected standards
-```
+```text
 
 ## Key Benefits
 
 1. **One MCP, Many Projects**: System efficiency with project flexibility
+
 2. **User Control**: Explicit standard selection per project
+
 3. **Hook Integration**: Automatic reviews at key moments
+
 4. **Passive + Active**: Aichaku guides (passive) + MCP reviews (active)
+
 5. **Stateless Operation**: Follows MCP best practices
+
 6. **Deno Alignment**: Same runtime as Aichaku for consistency
 
 ## Implementation Phases
@@ -337,24 +358,34 @@ aichaku review init
 ### Phase 1: Core MCP (Week 1)
 
 - Basic server structure
+
 - Code review tool
+
 - Project configuration loading
+
 - Standard methodology reviews
 
 ### Phase 2: Standards Integration (Week 2)
 
 - Load modular standards from Aichaku
+
 - Multi-standard review aggregation
+
 - Configurable strictness levels
+
 - Custom rule support
 
 ### Phase 3: Polish & Distribution (Week 3)
 
 - Deno compilation
+
 - Installation automation
+
 - Hook templates
+
 - Documentation
 
 This design provides a clean, efficient architecture that complements Aichaku's
 passive guidance with active review capabilities, all while respecting user
 choice and project boundaries.
+````

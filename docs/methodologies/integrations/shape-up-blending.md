@@ -12,69 +12,94 @@ scope creep
 
 **When user mentions**: "sprint", "standup", "backlog", "story points"
 
-```
+````text
 ## Hybrid Approach
+
 - Use Shape Up for feature definition (shaping)
+
 - Use Scrum for team coordination (ceremonies)
+
 - Map appetites to sprints:
+
   - 2-week appetite = 1 sprint
+
   - 6-week appetite = 3 sprints with checkpoints
 
 Example:
 "Let's shape this for our next sprint" →
+
 1. Shape the work (Shape Up)
+
 2. Set appetite that fits sprint boundaries
+
 3. Present at sprint planning (Scrum)
+
 4. Run daily standups during build (Scrum)
-```
+```text
 
 ### Shape Up + Kanban
 
 **When user mentions**: "board", "flow", "WIP", "continuous"
 
-```
+```text
 ## Visual Cycle Management
 | Shaping | Betting | Building | Cool-down |
 |---------|---------|----------|-----------|
 | [Ideas] | [Pitches] | [Bets] | [Cleanup] |
 
 - Use Kanban board to visualize cycle phases
+
 - WIP limit = number of bets per cycle
+
 - Cool-down work flows continuously
-```
+```text
 
 ### Shape Up + Lean
 
 **When user mentions**: "MVP", "experiment", "validate", "hypothesis"
 
-```
+```text
 ## Learning-Focused Cycles
+
 - Treat each bet as an experiment
+
 - Define success metrics during shaping
+
 - 2-week appetite for MVP/experiments
+
 - 6-week appetite for validated features
 
 Shaping becomes:
+
 1. Hypothesis: [What we believe]
+
 2. Experiment: [How we'll test]
+
 3. Appetite: [Time to learn]
+
 4. Success: [What validates it]
-```
+```text
 
 ### Shape Up + XP
 
 **When user mentions**: "TDD", "pairing", "refactoring", "continuous
 integration"
 
-```
+```text
 ## Quality-Driven Cycles
+
 - Shape Up defines what to build
+
 - XP practices define how to build
+
 - During 6-week cycle:
+
   - Week 1-2: Spike and design
+
   - Week 3-5: TDD implementation
+
   - Week 6: Refactor and ship
-```
+```text
 
 ## Vocabulary Mapping
 
@@ -109,7 +134,7 @@ integration"
 
 These shaped items are ready for sprint planning. Each has a clear problem,
 solution approach, and fits within a sprint.
-```
+```text
 
 ### Progressive Disclosure
 
@@ -129,20 +154,27 @@ pitches and decide what gets this cycle's capacity."
 ### Organizational Maturity
 
 - **Startup**: Emphasize speed, skip formal betting
+
 - **Scale-up**: Full Shape Up with light ceremonies
+
 - **Enterprise**: Blend with existing Scrum/SAFe
 
 ### Team Signals
 
 - **"Our PM says..."**: More formal pitches needed
+
 - **"Let's just build..."**: Emphasize shaping value
+
 - **"In our retrospective..."**: Blend with Scrum patterns
 
 ### Project Types
 
 - **New Product**: Full 6-week cycles
+
 - **Feature Addition**: 2-week appetites
+
 - **Bug Fixes**: Use Kanban, not Shape Up
+
 - **Tech Debt**: Cool-down period focus
 
 ## Anti-Patterns to Recognize
@@ -173,8 +205,12 @@ Shape Up's strength is solving problems with fixed time and variable scope. When
 blending:
 
 - Keep the appetite concept central
+
 - Maintain shaping before building
+
 - Preserve team autonomy
+
 - Add other practices as supporting tools, not replacements
 
 The goal is getting the benefits of Shape Up while fitting the user's context.
+````

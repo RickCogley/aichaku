@@ -66,7 +66,7 @@ The system is designed with privacy as a core principle:
 
 ### Basic Usage Questions
 
-```typescript
+````typescript
 // Ask natural language questions
 const answer = await statsManager.answerQuestion(
   "How many times was the MCP server used?",
@@ -77,7 +77,7 @@ const mostUsed = await statsManager.answerQuestion(
 const avgTime = await statsManager.answerQuestion(
   "What are the average operation times?",
 );
-```
+```text
 
 ### Generate Reports
 
@@ -94,7 +94,7 @@ const insights = await statsManager.getInsights();
 // Export data
 const jsonData = await statsManager.exportData("json");
 const csvData = await statsManager.exportData("csv");
-```
+```text
 
 ### MCP Tool Integration
 
@@ -112,7 +112,7 @@ claude-mcp get_statistics --question "What files are reviewed most often?"
 
 # Export usage data
 claude-mcp get_statistics --type export --format csv
-```
+```text
 
 ## 🔧 Configuration
 
@@ -151,7 +151,7 @@ const prodConfig = {
     compression: true,
   },
 };
-```
+```text
 
 ### Custom Configuration
 
@@ -179,13 +179,13 @@ const customConfig = {
 };
 
 const statsManager = new StatisticsManager(customConfig);
-```
+```text
 
 ## 📈 Sample Reports
 
 ### Dashboard Overview
 
-```
+```text
 🪴 Aichaku MCP Statistics Dashboard
 Generated: 2025-01-11, 2:30:45 PM
 Time Range: 2025-01-04 - 2025-01-11
@@ -217,11 +217,11 @@ Time Range: 2025-01-04 - 2025-01-11
 • Consider optimizing review_methodology - average duration is over 5 seconds
 • Address critical security issues - 12 critical findings detected
 • Consider using get_standards tool for more comprehensive analysis
-```
+```text
 
 ### Question Answering
 
-```
+```text
 Q: "How many times was the MCP server used during development sessions?"
 A: 🪴 MCP Server Usage:
    • Total operations: 127
@@ -239,7 +239,7 @@ A: ⚙️ Most Reviewed Files:
    • <user-a1b2c3d4>/src/server.ts: 12 reviews
    • <user-a1b2c3d4>/src/types.ts: 8 reviews
    • <user-a1b2c3d4>/src/utils.ts: 7 reviews
-```
+```text
 
 ## 🏗️ Architecture
 
@@ -374,7 +374,7 @@ await statsManager.updateConfig({ retentionDays: 60 });
 // Cleanup
 await statsManager.cleanup();
 await statsManager.close();
-```
+```text
 
 ## 🔧 Advanced Configuration
 
@@ -387,7 +387,7 @@ const config = {
     location: "/custom/path/stats.db",
   },
 };
-```
+```text
 
 ### Privacy Settings
 
@@ -399,7 +399,7 @@ const config = {
     hashUserIdentifiers: true,
   },
 };
-```
+```text
 
 ### Reporting Options
 
@@ -411,7 +411,7 @@ const config = {
     enableRealtimeMetrics: true,
   },
 };
-```
+```text
 
 ## 🤝 Contributing
 
@@ -455,9 +455,10 @@ const config = {
     type: "memory", // Use memory storage for testing
   },
 };
-```
+```text
 
 ## 📄 License
 
 Part of the Aichaku methodology-driven development system. See the main project
 license for details.
+````

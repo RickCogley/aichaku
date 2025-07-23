@@ -36,7 +36,9 @@ betting
 This is a [Small/Big] Batch project because:
 
 - [Reason 1 related to scope]
+
 - [Reason 2 related to value]
+
 - [Reason 3 related to constraints]
 
 ---
@@ -55,23 +57,26 @@ This is a [Small/Big] Batch project because:
 
 #### Breadboard
 
-```
+````text
 Places:     [Screen A]    →    [Screen B]    →    [Screen C]
               ↓                   ↓                 ↓
 Affordances: • Button X         • Field Y        • Action Z
              • Link W           • Option Q       • Submit
 
 Flow:
+
 1. User starts at [Screen A] and clicks [Button X]
+
 2. This takes them to [Screen B] where they [action]
+
 3. Finally, they reach [Screen C] and [complete goal]
-```
+```text
 
 <!-- Use fat marker sketches for layout-focused solutions -->
 
 #### Fat Marker Sketch
 
-```
+```text
 ┌─────────────────────────┐
 │ ┌─────────────────────┐ │
 │ │    Header Area      │ │
@@ -86,11 +91,12 @@ Flow:
 │                         │
 │ [Primary Action Button] │
 └─────────────────────────┘
-```
+```text
 
 ### Key Flows
 
 1. **[Flow name]**: User does X → System shows Y → User completes Z
+
 2. **[Flow name]**: Starting from A → Navigate to B → Achieve outcome C
 
 ---
@@ -102,16 +108,19 @@ Flow:
 ### ⚠️ Technical Risks
 
 - **[Risk 1]**: [What could go wrong] → [How we'll avoid it]
+
 - **[Risk 2]**: [Complex part] → [Our simplification]
 
 ### ⚠️ Design Complexity
 
 - **[Complexity 1]**: [What we're NOT trying to solve]
+
 - **[Complexity 2]**: [Scope we're avoiding]
 
 ### ⚠️ Integration Concerns
 
 - **[System 1]**: [What we assume works and won't touch]
+
 - **[System 2]**: [External dependency we're working around]
 
 ---
@@ -123,15 +132,21 @@ Flow:
 We are **NOT**:
 
 - ❌ Building [feature/functionality that's out of scope]
+
 - ❌ Supporting [use case we're explicitly excluding]
+
 - ❌ Solving [related but separate problem]
+
 - ❌ Integrating with [system/service we're avoiding]
+
 - ❌ Handling [edge case we're accepting as limitation]
 
 These are out of scope because:
 
 - [Reason these would add too much complexity]
+
 - [Reason these aren't essential to core problem]
+
 - [Reason these can be addressed later if needed]
 
 ---
@@ -141,11 +156,16 @@ These are out of scope because:
 **Before moving to BETTING phase, verify:**
 
 - [ ] Problem is clearly defined with evidence
+
 - [ ] Appetite is set and justified
+
 - [ ] Solution is sketched at the right level of detail
+
 - [ ] All major rabbit holes are identified and patched
+
 - [ ] No-gos explicitly state what we're NOT doing
 
 **Claude Code Reminder**: This pitch should be saved to
 `.claude/output/[status-YYYYMM-projectname]/pitch.md`. Only proceed to betting
 when all sections are complete.
+````

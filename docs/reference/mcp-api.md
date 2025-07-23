@@ -22,7 +22,7 @@ code quality issues.
 
 #### Example Usage
 
-```typescript
+````typescript
 // Basic file review
 (await mcp**aichaku) -
   reviewer**review_file({
@@ -36,7 +36,7 @@ code quality issues.
     content: "const password = 'hardcoded123';",
     includeExternal: false,
   });
-```
+```text
 
 #### Response Format
 
@@ -62,7 +62,7 @@ code quality issues.
     };
   };
 }
-```
+```text
 
 ### `review_methodology`
 
@@ -78,10 +78,15 @@ Checks if a project follows the specified methodology patterns and practices.
 #### Supported Methodologies
 
 - `shape-up` - Shape Up (6-week cycles, betting table, etc.)
+
 - `scrum` - Scrum (sprints, ceremonies, artifacts)
+
 - `kanban` - Kanban (WIP limits, flow metrics)
+
 - `lean` - Lean (experiments, validated learning)
+
 - `xp` - Extreme Programming (pair programming, TDD)
+
 - `scrumban` - Hybrid Scrum/Kanban
 
 #### Example Usage
@@ -93,7 +98,7 @@ Checks if a project follows the specified methodology patterns and practices.
     projectPath: "/Users/you/projects/app",
     methodology: "shape-up",
   });
-```
+```text
 
 #### Response Format
 
@@ -111,7 +116,7 @@ Checks if a project follows the specified methodology patterns and practices.
     suggestions: string[]; // Improvements
   };
 }
-```
+```text
 
 ### `get_standards`
 
@@ -131,7 +136,7 @@ Retrieves the currently selected standards for a project.
   reviewer**get_standards({
     projectPath: "/Users/you/projects/app",
   });
-```
+```text
 
 #### Response Format
 
@@ -145,7 +150,7 @@ Retrieves the currently selected standards for a project.
   };
   methodologies: string[];   // Detected methodologies
 }
-```
+```text
 
 ### `get_statistics`
 
@@ -178,7 +183,7 @@ Gets usage statistics and analytics for MCP tool usage.
     "question": "What are the most common security issues?"
   }
 }
-```
+```text
 
 #### Response Format
 
@@ -194,7 +199,7 @@ Gets usage statistics and analytics for MCP tool usage.
     // ... other metrics
   };
 }
-```
+```text
 
 ### `analyze_project`
 
@@ -218,7 +223,7 @@ Analyzes project structure, languages, architecture, and dependencies.
     "detailed": true
   }
 }
-```
+```text
 
 ### `generate_documentation`
 
@@ -248,7 +253,7 @@ Generates comprehensive documentation following selected standards.
     "includeDiagrams": true
   }
 }
-```
+```text
 
 ### `create_doc_template`
 
@@ -277,7 +282,7 @@ Creates a documentation template file for tutorials, how-tos, references, etc.
     "projectName": "MyApp"
   }
 }
-```
+```text
 
 ## Configuration Files
 
@@ -296,7 +301,7 @@ The MCP server reads project configuration from
     "requireTests": true
   }
 }
-```
+```text
 
 ### Global Configuration
 
@@ -324,7 +329,7 @@ Global MCP settings can be placed in `~/.aichaku/mcp-config.json`:
     "parallel": true
   }
 }
-```
+```text
 
 ## Security Patterns
 
@@ -351,34 +356,49 @@ The MCP server includes built-in patterns for detecting:
 
 ```typescript
 // Detected patterns:
+
 - eval() and Function() usage
+
 - Unvalidated user input in exec()
+
 - DOM XSS vulnerabilities
+
 - Prototype pollution
+
 - Insecure randomness
-```
+```text
 
 #### Python
 
 ```python
 # Detected patterns:
+
 - pickle deserialization
+
 - SQL string formatting
+
 - Command injection via subprocess
+
 - Path traversal in file operations
+
 - Weak cryptography usage
-```
+```text
 
 #### Go
 
 ```go
 // Detected patterns:
+
 - SQL query building
+
 - Command execution
+
 - Path cleaning issues
+
 - Integer overflow
+
 - Race conditions
-```
+```text
 
 ## External Scanner Integration
 
@@ -388,13 +408,16 @@ When CodeQL is available, the MCP server runs:
 
 ```bash
 codeql database analyze --format=sarif-latest
-```
+```text
 
 Supports:
 
 - JavaScript/TypeScript security queries
+
 - Python security queries
+
 - Go security queries
+
 - Custom query packs
 
 ### DevSkim
@@ -403,12 +426,14 @@ When DevSkim is available:
 
 ```bash
 devskim analyze -f sarif -o results.sarif
-```
+```text
 
 Features:
 
 - IDE-focused security rules
+
 - Low false positive rate
+
 - Cross-language support
 
 ### Semgrep
@@ -417,12 +442,14 @@ When Semgrep is available:
 
 ```bash
 semgrep --config=auto --json
-```
+```text
 
 Benefits:
 
 - Community rules
+
 - Custom patterns
+
 - Fast scanning
 
 ## Response Examples
@@ -456,7 +483,7 @@ Benefits:
     }
   }
 }
-```
+```text
 
 ### Standards Violation
 
@@ -483,7 +510,7 @@ Benefits:
     }
   }
 }
-```
+```text
 
 ## Error Handling
 
@@ -508,14 +535,16 @@ Benefits:
     "suggestion": "Check that the file exists and is readable"
   }
 }
-```
+```text
 
 ## Performance Considerations
 
 ### File Size Limits
 
 - Default: 5MB per file
+
 - Configurable in `mcp-config.json`
+
 - Large files may timeout
 
 ### Caching
@@ -523,7 +552,9 @@ Benefits:
 The MCP server implements smart caching:
 
 - File content cache (5 minute TTL)
+
 - Standards configuration cache
+
 - External scanner results cache
 
 ### Parallel Processing
@@ -531,7 +562,9 @@ The MCP server implements smart caching:
 When reviewing multiple files:
 
 - Runs security patterns in parallel
+
 - External scanners run sequentially
+
 - Results aggregated asynchronously
 
 ## Environment Variables
@@ -550,15 +583,15 @@ enabled:
 
 ```bash
 export AICHAKU*MCP*DEBUG=true
-```
+```text
 
 Log format:
 
-```
+```text
 [2024-07-10T15:30:45Z] [INFO] Starting file review: /path/to/file.ts
 [2024-07-10T15:30:45Z] [DEBUG] Loading standards: ["nist-csf", "tdd"]
 [2024-07-10T15:30:46Z] [INFO] Review complete: 3 issues found
-```
+```text
 
 ## Version Compatibility
 
@@ -572,6 +605,9 @@ Always use matching Aichaku and MCP server versions for best results.
 ## See Also
 
 - [Setup MCP Server](../tutorials/setup-mcp-server.md) - Installation guide
+
 - [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md) -
   Multi-project setup
+
 - [MCP Architecture](../explanation/mcp-architecture.md) - Technical deep dive
+````

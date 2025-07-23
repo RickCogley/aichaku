@@ -9,16 +9,20 @@
 **Why not?**
 
 1. **Different languages**: DevSkim (C#), CodeQL (Java), Semgrep (Python)
+
 2. **Different runtimes**: Each needs its own runtime environment
+
 3. **Licensing**: Each has its own license terms
+
 4. **Size**: Would make our binary huge (100s of MB)
+
 5. **Updates**: They update independently
 
 ## How It Works Instead
 
 ### 1. Smart Detection
 
-```typescript
+````typescript
 // MCP detects what's available
 Available tools:
 ✅ Built-in patterns (always)
@@ -27,12 +31,14 @@ Available tools:
 ❌ CodeQL (not installed)
 
 → Review uses built-in + ESLint
-```
+```text
 
 ### 2. Progressive Enhancement
 
 - **No tools**: Still works with built-in patterns
+
 - **Some tools**: Better coverage
+
 - **All tools**: Maximum security coverage
 
 ### 3. Easy Installation
@@ -42,7 +48,7 @@ Available tools:
 npm install -g @microsoft/devskim-cli
 brew install codeql
 pip install semgrep
-```
+```text
 
 ## What We CAN Bundle
 
@@ -52,7 +58,7 @@ security scans** - No dependencies
 
 ## Distribution Approach
 
-```
+```text
 mcp-code-reviewer (5-10MB compiled)
 ├── Built-in security patterns
 ├── Methodology compliance rules
@@ -60,13 +66,13 @@ mcp-code-reviewer (5-10MB compiled)
 └── External tool integration
     ├── Detects: devskim, codeql, semgrep
     └── Uses if available
-```
+```text
 
 ## User Experience
 
 ### First Run
 
-```
+```text
 $ mcp-code-reviewer
 🪴 MCP Code Reviewer
 
@@ -77,11 +83,11 @@ Detected tools:
 
 You can use MCP now with built-in scanning, or install
 optional tools for enhanced coverage.
-```
+```text
 
 ### With Tools
 
-```
+```text
 $ mcp-code-reviewer
 🪴 MCP Code Reviewer
 
@@ -92,14 +98,18 @@ Detected tools:
 • Semgrep ✅
 
 Maximum security coverage enabled!
-```
+```text
 
 ## Why This Is Better
 
 1. **Smaller binary**: 5-10MB vs 500MB+
+
 2. **User choice**: Install only what you need
+
 3. **Independent updates**: Tools update separately
+
 4. **Legal clarity**: No bundled license conflicts
+
 5. **Flexibility**: Add new tools anytime
 
 ## Installation Priority
@@ -107,8 +117,12 @@ Maximum security coverage enabled!
 For most users:
 
 1. **Start with MCP only** (built-in patterns)
+
 2. **Add DevSkim** if doing general development
+
 3. **Add Semgrep** for custom rules
+
 4. **Add CodeQL** for deep analysis (larger projects)
 
 The MCP works great even with zero external tools!
+````

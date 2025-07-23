@@ -6,23 +6,26 @@ The `aichaku init` command output lacks the distinctive 🪴 Aichaku branding th
 appears in other parts of the system. This is particularly important because:
 
 - It's often the first screen new users see
+
 - It sets the tone for the entire experience
+
 - Brand consistency builds trust and recognition
+
 - The current output feels generic
 
 Current output:
 
-```
+````text
 🔍 Checking requirements...
 ✓ Global Aichaku found (v0.28.0)
-```
+```text
 
 Should be:
 
-```
+```text
 🪴 Aichaku: Setting up your adaptive methodology system...
 ✓ Global installation found (v0.28.0)
-```
+```text
 
 ## Appetite
 
@@ -79,20 +82,26 @@ import { AichakuBrand as Brand } from "./utils/branded-messages.ts";
 Brand.log("Setting up your project...");
 Brand.success("Project initialized!");
 Brand.error("Oops! Let me help you fix this...");
-```
+```text
 
 This approach ensures:
 
 1. **Zero effort** - Developers just use Brand.log() instead of console.log()
+
 2. **Consistency** - Branding is automatic, not manual
+
 3. **Maintainability** - Change branding in one place
+
 4. **Extensibility** - Easy to add new message types
 
 ### Branding Guidelines
 
 - **Primary**: `🪴 Aichaku:` prefix for major operations
+
 - **Secondary**: Use growth phases where appropriate (🌱→🌿→🌳→🍃)
+
 - **Tone**: Friendly, adaptive, growing with you
+
 - **Consistency**: Same format across all commands
 
 ### CLI Messaging Standards
@@ -107,7 +116,7 @@ Brand.log("Processing...");
 
 // ✅ Good: Specific
 Brand.log("Fetching methodologies from GitHub...");
-```
+```text
 
 #### 2. **User-Focused** (Google Style)
 
@@ -117,7 +126,7 @@ Brand.error("ENOENT: stat() failed on path");
 
 // ✅ Good: Helpful
 Brand.error("Can't find that file. Did you mean 'init' instead of 'upgrade'?");
-```
+```text
 
 #### 3. **Progressive Disclosure** (CLI Best Practice)
 
@@ -132,7 +141,7 @@ Brand.log("Upgraded to v0.29.0 (31 files updated, 2.3s)");
 Brand.debug(
   "Upgraded to v0.29.0\n  Files: 31 updated, 0 failed\n  Time: 2.3s\n  From: v0.28.0",
 );
-```
+```text
 
 #### 4. **Actionable Errors** (12-Factor CLI Apps)
 
@@ -144,12 +153,14 @@ Brand.error("Permission denied");
 Brand.error(
   "Permission denied. Try:\n  sudo aichaku init --global\n  or check file ownership",
 );
-```
+```text
 
 #### 5. **Consistent Voice** (Content Strategy)
 
 - **Active voice**: "Creating project..." not "Project is being created..."
+
 - **Present tense**: "Create" not "Created" for ongoing actions
+
 - **You/Your**: "Your project is ready" not "The project is ready"
 
 ### Examples
@@ -166,20 +177,26 @@ console.log("🪴 Aichaku: Here's how I can help you grow...");
 
 // Error handling
 console.error("🪴 Aichaku: Oops! Let me help you fix this...");
-```
+```text
 
 ## Rabbit Holes
 
 - **Not** redesigning the entire CLI output
+
 - **Not** adding ASCII art or complex visuals
+
 - **Not** changing command functionality
+
 - **Not** creating a brand guide (just fixing inconsistency)
 
 ## No-gos
 
 - Breaking existing scripts that parse output
+
 - Overusing emojis (keep it tasteful)
+
 - Making output harder to read
+
 - Adding delays for "brand experience"
 
 ## Implementation Benefits
@@ -187,14 +204,19 @@ console.error("🪴 Aichaku: Oops! Let me help you fix this...");
 ### For Developers
 
 - **Drop-in replacement** - Just change `console.log` to `Brand.log`
+
 - **Type safety** - TypeScript ensures correct usage
+
 - **No learning curve** - Familiar console API
+
 - **Automatic compliance** - Can't forget branding
 
 ### For Users
 
 - **Consistent experience** - Every interaction feels cohesive
+
 - **Clear source** - Always know messages are from Aichaku
+
 - **Professional feel** - Polished, thoughtful interface
 
 ## Standards References
@@ -202,26 +224,41 @@ console.error("🪴 Aichaku: Oops! Let me help you fix this...");
 ### Established CLI Guidelines We'll Follow
 
 1. **Command Line Interface Guidelines** (by Aanand Prasad & contributors)
+
    - Be human-friendly
+
    - Make errors helpful
+
    - Use color purposefully
+
    - Support --quiet and --verbose
 
 2. **12-Factor CLI Apps** (Heroku)
+
    - Explicit error codes
+
    - Machine-parseable output options
+
    - Respect environment variables
+
    - Clean separation of concerns
 
 3. **Google Developer Documentation Style Guide**
+
    - Write for the user, not the system
+
    - Use present tense
+
    - Be concise but complete
+
    - Include examples
 
 4. **Microsoft's Command-Line Syntax Standards**
+
    - Consistent parameter naming
+
    - Clear help text
+
    - Predictable behavior
 
 ### Message Categories and Standards
@@ -258,21 +295,31 @@ interface MessageStandards {
     example: "📦 Downloading methodology files... (22/31)";
   };
 }
-```
+```text
 
 ## Migration Strategy
 
 1. Create the branded-messages module with standards built-in
+
 2. Create a style guide document for contributors
+
 3. Add a lint rule to flag direct console.log usage
+
 4. Gradually migrate existing commands
+
 5. Set up automated testing for message standards
 
 ## Nice-to-haves
 
 - Colored output for better visibility (if terminal supports it)
+
 - Contextual messages based on methodology being used
+
 - Celebration messages for milestones (first init, 10th project, etc.)
+
 - Brand consistency in generated documentation
+
 - Integration with existing terminal-formatter.ts
+
 - Branded progress bars and spinners
+````

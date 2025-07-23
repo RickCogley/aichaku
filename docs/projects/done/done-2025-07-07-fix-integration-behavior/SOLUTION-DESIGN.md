@@ -11,7 +11,7 @@ than **directs** behavior.
 
 Replace the passive information with active commands:
 
-```markdown
+`````markdown
 ## Methodologies - REQUIRED BEHAVIOR
 
 This project uses Aichaku. When working on this project, you MUST:
@@ -24,7 +24,9 @@ This project uses Aichaku. When working on this project, you MUST:
 **NEVER create documents in**:
 
 - Project root (/)
+
 - .claude/user/ (that's for user customizations)
+
 - Random locations
 
 ### 2. Automatic Document Creation
@@ -32,29 +34,38 @@ This project uses Aichaku. When working on this project, you MUST:
 When you hear these triggers, IMMEDIATELY:
 
 1. Create project structure:
+
    `.claude/output/active-YYYY-MM-DD-{descriptive-name}/`
+
 2. Create STATUS.md with current status
+
 3. Create appropriate methodology documents:
 
 **Planning Triggers** ("let's plan", "shape this", "create a pitch"):
 
 - Read `~/.claude/methodologies/common/PLANNING-MODE.md`
+
 - Shape Up: Create pitch.md using
   `~/.claude/methodologies/shape-up/templates/pitch.md`
+
 - Scrum: Create sprint-planning.md using
   `~/.claude/methodologies/scrum/templates/sprint-planning.md`
+
 - Kanban: Create kanban-board.md using
   `~/.claude/methodologies/kanban/templates/kanban-board.md`
 
 **Execution Triggers** ("implement", "build", "start coding"):
 
 - Read `~/.claude/methodologies/common/EXECUTION-MODE.md`
+
 - Create execution-plan.md
+
 - WAIT for human approval before coding
 
 **Review Triggers** ("review", "retrospective", "how are we doing"):
 
 - Read `~/.claude/methodologies/common/IMPROVEMENT-MODE.md`
+
 - Create metrics.md and retrospective.md
 
 ### 3. Methodology File Locations
@@ -62,15 +73,21 @@ When you hear these triggers, IMMEDIATELY:
 **ALWAYS read from these EXACT paths**:
 
 - Planning Mode: `~/.claude/methodologies/common/PLANNING-MODE.md`
+
 - Execution Mode: `~/.claude/methodologies/common/EXECUTION-MODE.md`
+
 - Improvement Mode: `~/.claude/methodologies/common/IMPROVEMENT-MODE.md`
 
 **Methodology-specific guides**:
 
 - Shape Up: `~/.claude/methodologies/shape-up/SHAPE-UP-AICHAKU-GUIDE.md`
+
 - Scrum: `~/.claude/methodologies/scrum/SCRUM-AICHAKU-GUIDE.md`
+
 - Kanban: `~/.claude/methodologies/kanban/KANBAN-AICHAKU-GUIDE.md`
+
 - Lean: `~/.claude/methodologies/lean/LEAN-AICHAKU-GUIDE.md`
+
 - XP: `~/.claude/methodologies/xp/XP-AICHAKU-GUIDE.md`
 
 ### 4. Status Management
@@ -78,14 +95,19 @@ When you hear these triggers, IMMEDIATELY:
 **ALWAYS update folder names** as work progresses:
 
 - `active-*` → Work in progress
+
 - `complete-*` → Finished successfully (rename when done)
+
 - `cancelled-*` → Work stopped (rename if cancelled)
+
 - `paused-*` → Temporarily on hold
 
 **When completing work**:
 
 1. Create CHANGE-LOG.md summarizing all changes
+
 2. Rename folder from active- to complete-
+
 3. Ask user: "Work appears complete. Shall I commit and push?"
 
 ### 5. Progress Communication
@@ -93,9 +115,12 @@ When you hear these triggers, IMMEDIATELY:
 **ALWAYS keep user informed**:
 
 - Update STATUS.md after each significant action
+
 - Start responses with current status: "📍 Currently in [mode] working on
   [task]"
+
 - End planning with: "📋 Planning complete. Ready to proceed?"
+
 - Never start implementation without explicit approval
 
 ### 6. Git Automation
@@ -103,11 +128,17 @@ When you hear these triggers, IMMEDIATELY:
 **When work is complete and confirmed**:
 
 1. Stage all changes: `git add .claude/output/[current-project]/`
+
 2. Create conventional commit:
+
    - feat: New features
+
    - fix: Bug fixes
+
    - docs: Documentation only
+
    - refactor: Code changes without feature change
+
 3. Push to origin: `git push origin [current-branch]`
 
 **For large efforts**: Ask "Should I create multiple commits for better
@@ -120,20 +151,20 @@ create** supporting documents as needed (diagrams, notes, research). **FREELY
 organize** with subdirectories as appropriate.
 
 CRITICAL: This is all AUTOMATIC behavior. Users expect a magical experience.
-```
 
+````text
 ### Layer 2: Pre-created Structure
 
 During `aichaku init`, create:
 
-```
+```text
 .claude/
 ├── output/
 │   └── README.md         # Explains the active-*/done-* convention
 ├── user/
 │   └── README.md         # Already created
 └── .aichaku-behavior     # Quick reference for Claude Code
-```
+```text
 
 The `.aichaku-behavior` file:
 
@@ -143,10 +174,13 @@ The `.aichaku-behavior` file:
 Before ANY work:
 
 1. Check .claude/output/ for existing active-\* directories
+
 2. Create new active-YYYY-MM-DD-{name} for new work
+
 3. Always create STATUS.md first
+
 4. Read methodology guides from ~/.claude/methodologies/
-```
+```text
 
 ### Layer 3: Output Directory README
 
@@ -158,6 +192,7 @@ This directory contains all project documentation organized by status and date.
 ## Structure
 
 - `active-*` - Currently ongoing work
+
 - `done-*` - Completed projects (rename from active- when done)
 
 ## Naming Convention
@@ -167,7 +202,9 @@ This directory contains all project documentation organized by status and date.
 Examples:
 
 - active-2025-01-07-user-authentication
+
 - active-2025-01-07-fix-performance-issues
+
 - done-2025-01-06-global-project-redesign
 
 ## What Goes Here
@@ -175,15 +212,18 @@ Examples:
 Each project directory should contain:
 
 - STATUS.md - Current status and progress
+
 - Planning documents (pitches, specs, backlogs)
+
 - Progress updates
+
 - Metrics and reviews
 
 ## For Claude Code
 
 When users discuss new work, IMMEDIATELY create a new active-\* directory here.
 Don't wait to be asked. This is expected behavior.
-```
+```text
 
 ### Layer 4: Enhanced Commands.json
 
@@ -218,7 +258,7 @@ Add a `.claude/commands.json` for quick triggers:
     }
   }
 }
-```
+```text
 
 ### Layer 5: Behavioral Reinforcement
 
@@ -226,12 +266,16 @@ Add reminders at key points:
 
 1. **In init.ts success message**:
 
-   ```
+   ```text
    💡 Claude Code will now automatically:
-      - Create documents in .claude/output/
-      - Follow methodology patterns
-      - Respond to keywords like "shape", "sprint", "kanban"
-   ```
+
+   - Create documents in .claude/output/
+
+   - Follow methodology patterns
+
+   - Respond to keywords like "shape", "sprint", "kanban"
+````
+`````
 
 2. **In CLAUDE.md footer**:
 
@@ -244,21 +288,31 @@ Add reminders at key points:
 ## Implementation Priority
 
 1. **CRITICAL**: Rewrite CLAUDE.md integration to be directive
+
 2. **HIGH**: Pre-create output directory with README
+
 3. **HIGH**: Add .aichaku-behavior quick reference
+
 4. **MEDIUM**: Add behavioral reinforcement messages
+
 5. **LOW**: Add commands.json for shortcuts
 
 ## Testing Plan
 
 1. Fresh install in new project
+
 2. Say "let's shape a new feature"
+
 3. Verify documents created in .claude/output/active-\*/
+
 4. No manual intervention needed
 
 ## Success Metrics
 
 - Zero manual directory creation
+
 - Documents always in correct location
+
 - Natural language triggers work immediately
+
 - Users report "magical" experience

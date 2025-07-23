@@ -31,13 +31,17 @@ So that [benefit]
 **Acceptance Criteria**:
 
 - [ ] [Criterion 1]
+
 - [ ] [Criterion 2]
+
 - [ ] [Criterion 3]
 
 **Tasks**:
 
 - [ ] [Task description] - [Estimate]
+
 - [ ] [Task description] - [Estimate]
+
 - [ ] [Task description] - [Estimate]
 
 ---
@@ -60,28 +64,39 @@ So that [benefit]
 ### Dependencies
 
 - [External dependency and mitigation plan]
+
 - [Team dependency and coordination approach]
 
 ### Risks
 
 - [Risk description and mitigation strategy]
+
 - [Risk description and mitigation strategy]
 
 ## Definition of Done Reminder
 
 - [ ] Code complete and reviewed
+
 - [ ] Unit tests written and passing
+
 - [ ] Integration tests passing
+
 - [ ] Documentation updated
+
 - [ ] Deployed to staging environment
+
 - [ ] Acceptance criteria verified
+
 - [ ] Product Owner approval
 
 ## Team Agreements for This Sprint
 
 - Daily standup at [time]
+
 - Core hours: [time range]
+
 - Communication channel: [tool]
+
 - Pair programming for: [specific areas]
 
 ## Notes
@@ -93,8 +108,11 @@ So that [benefit]
 **Next Steps**:
 
 1. Update sprint board with all tasks
+
 2. Set up sprint tracking/burndown
+
 3. Schedule sprint review and retrospective
+
 4. Begin daily standups
 
 **Sprint Commitment**: The team commits to completing the above stories to the

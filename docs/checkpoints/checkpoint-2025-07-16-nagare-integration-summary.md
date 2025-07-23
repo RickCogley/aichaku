@@ -6,7 +6,9 @@ The nagare release process was failing due to type checking errors in excluded
 files (v2 files and config-manager.ts). The issue was complex because:
 
 1. Pre-release hooks and nagare's autofix were checking different sets of files
+
 2. `deno check` behavior with exclusions was not well understood
+
 3. Nagare's built-in type checking may not be using the optimal command
 
 ## Solution Implemented
@@ -16,10 +18,12 @@ files (v2 files and config-manager.ts). The issue was complex because:
 Added a top-level `"exclude"` array that is respected by:
 
 - `deno fmt` (via the fmt section)
+
 - `deno lint` (via the lint section)
+
 - `deno check` (when run WITHOUT arguments)
 
-```json
+````json
 {
   "exclude": [
     ".claude/",
@@ -33,7 +37,7 @@ Added a top-level `"exclude"` array that is respected by:
     "src/utils/migration-helper.ts"
   ]
 }
-```
+```text
 
 ### 2. Updated Pre-Release Hook
 
@@ -43,7 +47,7 @@ Changed the pre-release hook to run `deno check` without arguments:
 const checkCmd = new Deno.Command("deno", {
   args: ["check"], // No args = respects top-level exclude
 });
-```
+```text
 
 ### 3. Re-enabled Nagare Type Checking
 
@@ -57,13 +61,16 @@ types: [
   "type-check", // Re-enabled: deno check now respects top-level exclude
   "version-conflict",
 ],
-```
+```text
 
 ## Key Learnings
 
 1. **Deno Check Behavior**: As of Deno v2.3.1+:
+
    - `deno check` → Respects top-level exclude ✅
+
    - `deno check .` → Ignores exclusions ❌
+
    - `deno check **/*.ts` → Ignores exclusions ❌
 
 2. **Configuration Hierarchy**: Top-level exclude works for all tools, but each
@@ -88,10 +95,14 @@ testing an actual release.
 ## Next Steps
 
 1. Run a test release to verify everything works
+
 2. If nagare's autofix still fails, may need to:
+
    - Submit PR to nagare to use `deno check` without arguments
+
    - Or keep type-check disabled in nagare autofix and rely on pre-release hooks
 
 ---
 
-_Checkpoint created: 2025-07-16T10:15:00Z_
+*Checkpoint created: 2025-07-16T10:15:00Z*
+````

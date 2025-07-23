@@ -2,7 +2,7 @@
 
 ## Architecture Overview
 
-```mermaid
+````mermaid
 graph TB
     subgraph "CLI Commands"
         A[aichaku mcp --status]
@@ -37,7 +37,7 @@ graph TB
     G --> K
     G --> L
     H --> M
-```
+```text
 
 ## Component Design
 
@@ -70,7 +70,7 @@ interface ProcessResult {
   message: string;
   pid?: number;
 }
-```
+```text
 
 ### 2. MCPVersionManager
 
@@ -96,7 +96,7 @@ interface UpgradeResult {
   newVersion: string;
   message: string;
 }
-```
+```text
 
 ### 3. PIDManager
 
@@ -108,7 +108,7 @@ interface PIDManager {
   lockPID(): Promise<boolean>;
   isProcessRunning(pid: number): Promise<boolean>;
 }
-```
+```text
 
 ### 4. Platform Handlers
 
@@ -132,11 +132,11 @@ interface ProcessDetails {
   memoryUsage?: number;
   cpuUsage?: number;
 }
-```
+```text
 
 ## File Structure
 
-```
+```text
 src/
 ├── commands/
 │   └── mcp.ts                    # Enhanced MCP command
@@ -151,7 +151,7 @@ src/
 │   │       ├── unix.ts           # Unix/Linux/macOS handler
 │   │       └── windows.ts        # Windows handler
 │   └── ...
-```
+```text
 
 ## Implementation Details
 
@@ -239,7 +239,7 @@ export class WindowsPlatformHandler extends BasePlatformHandler {
     return success;
   }
 }
-```
+```text
 
 ### Version Management
 
@@ -314,7 +314,7 @@ export class MCPVersionManager {
     };
   }
 }
-```
+```text
 
 ### Enhanced Status Display
 
@@ -355,7 +355,7 @@ async function displayStatus(status: ProcessStatus): Promise<void> {
     console.log("\n💡 To start: aichaku mcp --start");
   }
 }
-```
+```text
 
 ### Configuration Instructions
 
@@ -385,7 +385,7 @@ function displayConfigInstructions(): void {
   console.log("   • TypeScript best practices");
   console.log("   • Educational feedback");
 }
-```
+```text
 
 ## Error Handling
 
@@ -432,23 +432,35 @@ try {
     console.error("❌ Unexpected error:", error);
   }
 }
-```
+```text
 
 ## Testing Strategy
 
 1. **Unit Tests**: Test each component in isolation
+
 2. **Integration Tests**: Test full command flows
+
 3. **Platform Tests**: Test on Windows, macOS, Linux
+
 4. **Edge Cases**:
+
    - Multiple start attempts
+
    - Killing hung processes
+
    - Upgrading while running
+
    - Missing binaries
+
    - Network failures during upgrade
 
 ## Migration Path
 
 1. Keep existing commands working during transition
+
 2. Add deprecation warnings to old JSON output
+
 3. Update documentation gradually
+
 4. Provide clear upgrade instructions
+````

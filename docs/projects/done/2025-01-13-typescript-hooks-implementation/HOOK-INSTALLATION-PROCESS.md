@@ -8,7 +8,7 @@ When someone installs Aichaku CLI globally or locally, **the hook scripts
 (`aichaku-hooks.ts`) are NOT automatically installed**. This is what currently
 happens:
 
-```bash
+````bash
 # User installs Aichaku
 deno install -g -A -n aichaku jsr:@rick/aichaku/cli
 
@@ -17,7 +17,7 @@ aichaku init --global  # Installs methodologies and standards
 aichaku init          # Creates project structure
 
 # Hook scripts are NOT installed at this point!
-```
+```text
 
 ### When Hook Scripts Get Installed
 
@@ -30,7 +30,7 @@ when:
    aichaku hooks --install essential --global
    # OR
    aichaku hooks --install github --local
-   ```
+````
 
 2. **First hook installation triggers `ensureHookScripts()`**:
 
@@ -74,7 +74,7 @@ when:
 
 ## Current Installation Flow
 
-```mermaid
+````mermaid
 graph TD
     A[User installs Aichaku CLI] --> B[aichaku init --global]
     B --> C[Installs methodologies]
@@ -88,15 +88,18 @@ graph TD
     J --> K[Installs hook configurations]
 
     style F stroke-dasharray: 5 5
-```
+```text
 
 ## The Problem
 
 1. **Hook script is embedded in source code** - The entire `aichaku-hooks.ts`
    content is stored as a string literal in `hooks.ts`
+
 2. **Not included in distribution** - The hook script is not part of the JSR
    package files
+
 3. **Created on-demand** - Only created when user actually installs hooks
+
 4. **Version mismatch risk** - If user updates Aichaku but doesn't reinstall
    hooks, the script might be outdated
 
@@ -116,24 +119,30 @@ export async function init(options: InitOptions = {}) {
     await ensureHookScripts();
   }
 }
-```
+```text
 
 ### Option 2: Include as Package File
 
 - Add `aichaku-hooks.ts` to the package files
+
 - Copy it during init like methodologies
+
 - Keep it in sync with source
 
 ### Option 3: Download from GitHub
 
 - Similar to how methodologies are fetched
+
 - Ensures latest version
+
 - Requires network access
 
 ### Option 4: Compile to Binary
 
 - Pre-compile `aichaku-hooks` binary
+
 - Distribute with package
+
 - No Deno required for execution
 
 ## Current Workaround
@@ -151,14 +160,17 @@ aichaku hooks --install essential --global
 # Step 3: Verify
 ls ~/.claude/aichaku/hooks/
 # Should see: aichaku-hooks.ts
-```
+```text
 
 ## Implications
 
 1. **Documentation needs update** - Should mention hook installation step
+
 2. **User experience gap** - Users might expect hooks to work immediately
+
 3. **Upgrade considerations** - Hook script won't update automatically with
    Aichaku upgrades
+
 4. **Testing challenges** - Hook script is generated, not distributed
 
 ## Recommendation
@@ -166,9 +178,13 @@ ls ~/.claude/aichaku/hooks/
 The hook script should be installed during `aichaku init --global` to ensure:
 
 - Complete installation in one step
+
 - Hook infrastructure ready for use
+
 - Consistent version with installed Aichaku
+
 - Better user experience
 
 This would make the installation truly "one-time setup, works everywhere" as
 advertised.
+````

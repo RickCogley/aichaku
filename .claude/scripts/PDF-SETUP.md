@@ -21,7 +21,7 @@ export PATH="/Library/TeX/texbin:$PATH"
 # Install required LaTeX packages
 sudo tlmgr update --self
 sudo tlmgr install collection-fontsrecommended
-```
+```text
 
 ### Linux (Debian/Ubuntu)
 
@@ -29,7 +29,7 @@ sudo tlmgr install collection-fontsrecommended
 # Install pandoc and texlive
 sudo apt-get update
 sudo apt-get install pandoc texlive-xetex texlive-fonts-recommended
-```
+```text
 
 ### Windows
 
@@ -44,7 +44,7 @@ sudo apt-get install pandoc texlive-xetex texlive-fonts-recommended
 ```bash
 # From project root
 .claude/scripts/generate-pdf.sh .claude/output/done-*/change-summary.md
-```
+```text
 
 ### Global Installation (Recommended)
 
@@ -55,7 +55,7 @@ sudo chmod +x /usr/local/bin/claude-pdf
 
 # Now use from anywhere
 claude-pdf change-summary.md
-```
+```text
 
 ## Integration with Claude Code
 
@@ -67,13 +67,13 @@ Claude Code should automatically generate PDFs when:
 
 Example workflow:
 
-```
+```text
 1. Complete project work
 2. Generate change-summary.md
 3. Review with stakeholder
 4. Run: claude-pdf change-summary.md
 5. Archive PDF with project
-```
+```text
 
 ## Font Configuration
 
@@ -87,7 +87,7 @@ To use custom fonts, edit the script:
 ```bash
 --variable mainfont="Your Font"
 --variable monofont="Your Mono Font"
-```
+```text
 
 ## Troubleshooting
 
@@ -107,7 +107,7 @@ Normal with xelatex. The PDF will still generate correctly.
 
 ```bash
 sudo tlmgr install [package-name]
-```
+```text
 
 ## Best Practices
 
@@ -145,4 +145,4 @@ sudo tlmgr install [package-name]
 ---
 
 Generated with Claude Code + Aichaku
-```
+```text

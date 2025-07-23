@@ -22,7 +22,7 @@ migrated **Location**: `/Users/rcogley/.claude/commands/`
 
 ### 📁 Directory Structure Created
 
-```
+````text
 ~/.claude/commands/
 ├── aichaku/           # Aichaku methodology commands
 │   ├── memin.md
@@ -38,26 +38,34 @@ migrated **Location**: `/Users/rcogley/.claude/commands/`
 └── utils/            # Utility commands
     ├── commands.md
     └── addglobal.md
-```
+```text
 
 ### 🔧 Enhanced Features Added
 
 1. **Tool Permissions**: Each command specifies allowed tools
+
 2. **Dynamic Arguments**: Use `$ARGUMENTS` for parameters
+
 3. **Bash Execution**: Use `!command` for shell operations
+
 4. **File References**: Use `@file` to include content
+
 5. **Namespacing**: Commands organized by category
 
 ### 📋 Backup Files Created
 
 - `~/.claude/commands/BACKUP-slash-commands-20250714-214851.json`
+
 - `~/.claude/commands/BACKUP-slash-commands.json`
+
 - `~/.claude/commands/MIGRATION-SUMMARY.md`
 
 ### 🧹 Cleanup Completed
 
 - Removed `slashCommands` section from `~/.claude/settings.json`
+
 - Updated settings.json reduced from 228 lines to 170 lines
+
 - All commands now version-controlled as individual files
 
 ## Next Steps Completed
@@ -74,9 +82,13 @@ migrated **Location**: `/Users/rcogley/.claude/commands/`
 Your slash commands are now ready! Try:
 
 - `/aichaku:memin` to load memory files
+
 - `/security:owasp` for security checklist
+
 - `/dev:preflight` for project checks
+
 - `/utils:commands` to see all available commands
 
 The migration is complete and your slash commands are now using Claude's modern
 Markdown-based system! 🎉
+````

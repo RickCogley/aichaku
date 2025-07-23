@@ -10,7 +10,7 @@ Project-specific configuration file located at `.claude/settings.local.json`.
 
 #### Schema
 
-```typescript
+````typescript
 interface AichakuSettings {
   // Selected coding standards
   selectedStandards?: string[];
@@ -52,7 +52,7 @@ interface AichakuSettings {
     }>;
   };
 }
-```
+```text
 
 ### standards.json
 
@@ -78,7 +78,7 @@ interface StandardsConfig {
     };
   };
 }
-```
+```text
 
 #### Example standards.json
 
@@ -102,7 +102,7 @@ interface StandardsConfig {
     }
   }
 }
-```
+```text
 
 ### Migration Notes
 
@@ -117,13 +117,16 @@ Run the migration command to update:
 
 ```bash
 aichaku migrate
-```
+```text
 
 This command will:
 
 1. Move standards configuration to the new location
+
 2. Update file paths in the configuration
+
 3. Create the new directory structure
+
 4. Preserve all existing settings
 
 ### Example configurations
@@ -134,7 +137,7 @@ This command will:
 {
   "selectedStandards": ["conventional-commits"]
 }
-```
+```text
 
 #### Standard team configuration
 
@@ -147,7 +150,7 @@ This command will:
     "cycleLength": 6
   }
 }
-```
+```text
 
 #### Advanced configuration with custom standards
 
@@ -193,7 +196,7 @@ This command will:
     ]
   }
 }
-```
+```text
 
 ## Command-line options
 
@@ -217,7 +220,7 @@ Initialize Aichaku in a project or globally.
 
 ```bash
 aichaku init [options]
-```
+```text
 
 | Option      | Description                     | Default |
 | ----------- | ------------------------------- | ------- |
@@ -232,7 +235,7 @@ Integrate Aichaku rules into CLAUDE.md.
 
 ```bash
 aichaku integrate [options]
-```
+```text
 
 | Option           | Description                     | Default           |
 | ---------------- | ------------------------------- | ----------------- |
@@ -247,7 +250,7 @@ Manage coding standards.
 
 ```bash
 aichaku standards [options]
-```
+```text
 
 | Option            | Description                     | Example                                                  |
 | ----------------- | ------------------------------- | -------------------------------------------------------- |
@@ -274,7 +277,7 @@ aichaku standards --add custom:my-standard
 # Create and add in one command
 aichaku standards --create-custom team-guidelines
 aichaku standards --add custom:team-guidelines
-```
+```text
 
 ### help command
 
@@ -282,7 +285,7 @@ Get help for commands and methodologies.
 
 ```bash
 aichaku help [topic]
-```
+```text
 
 | Topic           | Description                   |
 | --------------- | ----------------------------- |
@@ -296,7 +299,7 @@ Examples:
 aichaku help
 aichaku help init
 aichaku help shape-up
-```
+```text
 
 ### upgrade command
 
@@ -304,7 +307,7 @@ Upgrade Aichaku installation.
 
 ```bash
 aichaku upgrade [options]
-```
+```text
 
 | Option     | Description                      | Default |
 | ---------- | -------------------------------- | ------- |
@@ -318,7 +321,7 @@ Remove Aichaku from projects.
 
 ```bash
 aichaku uninstall [options]
-```
+```text
 
 | Option           | Description              | Default           |
 | ---------------- | ------------------------ | ----------------- |
@@ -394,7 +397,7 @@ aichaku uninstall [options]
     "coolDownLength": 2
   }
 }
-```
+```text
 
 #### Scrum
 
@@ -407,7 +410,7 @@ aichaku uninstall [options]
     "ceremonies": ["planning", "daily", "review", "retro"]
   }
 }
-```
+```text
 
 #### Kanban
 
@@ -422,7 +425,7 @@ aichaku uninstall [options]
     }
   }
 }
-```
+```text
 
 ## Standards categories
 
@@ -467,7 +470,7 @@ aichaku standards --add custom:my-standard
 
 # Show custom standard content
 aichaku standards --show custom:my-standard
-```
+```text
 
 #### Custom standard file format
 
@@ -483,7 +486,9 @@ Brief overview of the standard...
 ### Core Principles
 
 1. First principle
+
 2. Second principle
+
 3. Third principle
 
 ### Implementation Guidelines
@@ -493,7 +498,7 @@ Detailed implementation instructions...
 ### Examples
 
 Code examples demonstrating the standard...
-```
+```text
 
 #### Custom standard metadata
 
@@ -510,7 +515,7 @@ Each custom standard has associated metadata stored in `standards.json`:
     "updatedAt": "2025-07-11T10:00:00Z"
   }
 }
-```
+```text
 
 ## CLAUDE.md markers
 
@@ -534,6 +539,7 @@ Format: `{status}-YYYY-MM-DD-{descriptive-name}`
 Examples:
 
 - `active-2025-07-10-authentication-redesign`
+
 - `done-2025-07-09-payment-integration`
 
 ### Status prefixes
@@ -587,7 +593,7 @@ export const METHODOLOGY*FALLBACK*CONFIG: MethodologyFallbackConfig = {
   reason: "Emergency fallback when dynamic discovery fails",
   lastUpdated: "2025-07-17",
 };
-```
+```text
 
 **Usage**: `getFallbackMethodologies()` - Returns array of methodology names
 
@@ -608,7 +614,7 @@ export const METHODOLOGY_DEFAULTS = {
   description: "Default methodologies for new installations and fallbacks",
   lastUpdated: "2025-07-17",
 };
-```
+```text
 
 **Usage**: Used by installation and initialization processes
 
@@ -625,7 +631,7 @@ export const METHODOLOGY*TEMPLATE*CONFIG = {
     // ... complete mapping for all methodologies
   },
 };
-```
+```text
 
 **Usage**: Determines which templates to create for each methodology
 
@@ -642,21 +648,29 @@ methodologies
 
 1. **Single Source of Truth**: Each configuration aspect has exactly one
    authoritative source
+
 2. **Type Safety**: All configurations use TypeScript interfaces for
    compile-time validation
+
 3. **Documentation**: Each file includes purpose, reason, and last updated
    metadata
+
 4. **Version Control**: All configuration changes are tracked with git commit
    messages
+
 5. **No Hardcoding**: Business logic never contains hardcoded configuration
    values
 
 ### Benefits
 
 - **Maintainable**: Adding methodologies requires only config file changes
+
 - **Auditable**: All configuration is version controlled and documented
+
 - **Testable**: Configuration can be validated independently
+
 - **Scalable**: Easy to extend without modifying business logic
+
 - **Consistent**: Eliminates risk of scattered hardcoded lists getting out of
   sync
 
@@ -690,3 +704,4 @@ methodologies
 | `*.md` files    | 644         |
 | `settings.json` | 644         |
 | Git hooks       | 755         |
+````

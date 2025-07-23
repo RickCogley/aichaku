@@ -6,9 +6,9 @@
 
 ## Synopsis
 
-```
+````text
 command [options] [arguments]
-```
+```text
 
 ## Description
 
@@ -28,7 +28,7 @@ command [options] [arguments]
 
 ```bash
 command --option-name=value
-```
+```text
 
 ### `--another-option` {#another-option}
 
@@ -44,7 +44,7 @@ command --option-name=value
 command --another-option item1 --another-option item2
 # Or using the alias
 command -a item1 -a item2
-```
+```text
 
 ## Arguments
 
@@ -61,7 +61,7 @@ command -a item1 -a item2
 
 ```bash
 command argument-value
-```
+```text
 
 ## Configuration file
 
@@ -75,9 +75,11 @@ arguments.
 ```yaml
 option_name: value
 another_option:
+
   - item1
+
   - item2
-```
+```text
 
 ## Examples
 
@@ -85,25 +87,25 @@ another_option:
 
 ```bash
 command basic-argument
-```
+```text
 
 **Output**:
 
-```
+```text
 [Expected output]
-```
+```text
 
 ### Using multiple options
 
 ```bash
 command --option1=value --option2 argument
-```
+```text
 
 **Output**:
 
-```
+```text
 [Expected output]
-```
+```text
 
 ### Advanced example
 
@@ -113,7 +115,7 @@ command \
   --config=/path/to/config.yaml \
   --timeout=300 \
   complex-argument
-```
+```text
 
 ## Exit codes
 
@@ -136,12 +138,18 @@ command \
 ## Files
 
 - `~/.config/product/config.yaml` - User configuration
+
 - `/etc/product/config.yaml` - System configuration
+
 - `~/.product/cache/` - Cache directory
+
 - `~/.product/logs/` - Log files
 
 ## See also
 
 - [`related-command`](link) - Brief description
+
 - [Configuration guide](link)
+
 - [Troubleshooting guide](link)
+````

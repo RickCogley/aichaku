@@ -27,7 +27,7 @@ and guides
 
 ### Phase 1: Rewrite CLAUDE.md Integration Section
 
-```markdown
+``````markdown
 # 🎯 MANDATORY: Aichaku Automatic Behaviors
 
 When working on this project, Claude Code MUST AUTOMATICALLY:
@@ -37,8 +37,11 @@ When working on this project, Claude Code MUST AUTOMATICALLY:
 YOU MUST:
 
 - ✅ Create ALL documents in `.claude/output/active-[date]-[project-name]/`
+
 - ❌ NEVER create documents in the project root
+
 - ❌ NEVER create documents in `.claude/user/`
+
 - ❌ NEVER ask where to put files - ALWAYS use the active directory
 
 ## 2. Automatic Methodology Detection
@@ -46,8 +49,11 @@ YOU MUST:
 When the user says → You MUST automatically:
 
 - "shape" → Create Shape Up pitch in active directory
+
 - "sprint" → Create Scrum sprint plan in active directory
+
 - "kanban" → Create/update Kanban board in active directory
+
 - "retrospective" → Move project to done-\*/ and create retrospective
 
 ## 3. Project Lifecycle Automation
@@ -55,8 +61,11 @@ When the user says → You MUST automatically:
 YOU MUST AUTOMATICALLY:
 
 1. Create STATUS.md when starting ANY new work
+
 2. Update STATUS.md after EVERY work session
+
 3. Git commit with descriptive message after changes
+
 4. Move to done-\*/ when user indicates completion
 
 ## 4. Self-Correcting Behaviors
@@ -64,12 +73,14 @@ YOU MUST AUTOMATICALLY:
 IF you accidentally create a file in the wrong location:
 
 1. IMMEDIATELY move it to `.claude/output/active-*/`
+
 2. Update any references
+
 3. Commit the correction
 
 Remember: This is AUTOMATIC behavior, not optional guidance.
-```
 
+`````text
 ### Phase 2: Create Behavioral Hook System
 
 #### A. Directory Structure Pre-creation
@@ -100,7 +111,7 @@ async function createMagicalStructure() {
 
   await createStructure(structure);
 }
-```
+```text
 
 #### B. Behavioral Rules File
 
@@ -112,13 +123,17 @@ async function createMagicalStructure() {
 STOP! Check these THREE things:
 
 1. ✅ Is the path `.claude/output/active-*`?
+
 2. ✅ Does the active project directory exist?
+
 3. ✅ Is there a STATUS.md in that directory?
 
 If ANY answer is NO, you MUST:
 
 1. Create the proper directory structure
+
 2. Create STATUS.md first
+
 3. THEN create your intended file
 
 ## 🎯 Quick Reference
@@ -134,10 +149,10 @@ If you created a file in the wrong place:
 mv wrong/path/file.md .claude/output/active-*/
 git add -A
 git commit -m "fix: move document to correct Aichaku location"
-```
-````
+```text
+````text
 
-````
+````text
 ### Phase 3: Context-Aware Triggers
 
 #### A. Enhanced commands.json
@@ -170,7 +185,7 @@ git commit -m "fix: move document to correct Aichaku location"
     }
   }
 }
-````
+````text
 
 #### B. Active Project Tracking
 
@@ -190,7 +205,7 @@ export function getCurrentProject(): string {
   Deno.writeTextFileSync(activePath, projectName);
   return projectName;
 }
-```
+```text
 
 ### Phase 4: Self-Healing Mechanisms
 
@@ -217,7 +232,7 @@ if [[ ! "$FILE_PATH" =~ \.claude/output/active-.* ]]; then
   echo "✅ Will create at: $CORRECTED_PATH"
   exit 0
 fi
-```
+```text
 
 #### B. Status Auto-updater
 
@@ -241,18 +256,19 @@ export async function autoUpdateStatus(projectPath: string, action: string) {
 **Status**: Active
 
 ## Updates
+
 - ${action}
 `;
     await Deno.writeTextFile(statusPath, content);
   }
 }
-```
+```text
 
 ### Phase 5: Delightful Developer Experience
 
 #### A. Welcome Message (shown after init)
 
-```
+```text
 🎉 Aichaku is now magically active!
 
 Try these commands and watch the magic:
@@ -267,7 +283,7 @@ Try these commands and watch the magic:
   → Creates/updates board in current active project
 
 No configuration needed - just start talking naturally!
-```
+```text
 
 #### B. Smart Defaults
 
@@ -292,14 +308,18 @@ export function detectIntent(input: string): IntentResult {
     }
   }
 }
-```
+```text
 
 ## Success Metrics
 
 1. **Zero Manual Path Decisions**: Claude Code never asks where to put files
+
 2. **Automatic Status Updates**: STATUS.md always current without reminders
+
 3. **Natural Language Just Works**: "shape this" → correct documents appear
+
 4. **Self-Healing**: Wrong locations auto-corrected
+
 5. **Delightful Surprises**: Features that "just work" without explanation
 
 ## Testing Strategy
@@ -322,21 +342,32 @@ touch ./random-file.md
 # Test 4: Status automation
 echo "Completed the search feature" | test-claude-code
 # Should move to done-*/ with retrospective
-```
+```text
 
 ## Implementation Priority
 
 1. **Immediate (v0.5.1)**:
+
    - Rewrite CLAUDE.md integration section
+
    - Add pre-creation of output structure
+
    - Create BEHAVIORAL-RULES.md
 
 2. **Next (v0.6.0)**:
+
    - Implement hook system
+
    - Add active project tracking
+
    - Create auto-correction scripts
 
 3. **Future (v0.7.0)**:
+
    - Natural language intent detection
+
    - Smart defaults and suggestions
+
    - Advanced self-healing behaviors
+`````
+``````

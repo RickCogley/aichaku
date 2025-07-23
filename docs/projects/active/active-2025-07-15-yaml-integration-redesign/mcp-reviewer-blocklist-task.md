@@ -12,39 +12,54 @@ exclude certain file types or patterns from review processing.
 The blocklist should be configurable through:
 
 - Command-line options: `--exclude` or `--ignore`
+
 - Configuration file: `.aichaku/reviewer-config.yaml`
+
 - Environment variables: `AICHAKU*REVIEWER*EXCLUDE`
 
 ### 2. Pattern Types to Support
 
-```yaml
+````yaml
 # Example configuration
 reviewer:
+
   exclude:
     # File extensions
     extensions:
+
       - ".min.js"
+
       - ".min.css"
+
       - ".map"
+
       - ".lock"
 
     # Glob patterns
     patterns:
+
       - "**/node_modules/**"
+
       - "**/dist/**"
+
       - "**/build/**"
+
       - "**/*.generated.*"
+
       - "**/vendor/**"
 
     # Specific files
     files:
+
       - "package-lock.json"
+
       - "yarn.lock"
+
       - "poetry.lock"
 
     # Size-based exclusions
     max*file*size: "1MB" # Skip files larger than this
-```
+```text
 
 ### 3. Implementation Details
 
@@ -84,7 +99,7 @@ async function shouldReviewFile(
 
   return true;
 }
-```
+```text
 
 #### 3.2 Default Exclusions
 
@@ -104,7 +119,7 @@ const DEFAULT_EXCLUSIONS = {
   files: ["package-lock.json", "yarn.lock", "poetry.lock", "Gemfile.lock"],
   max*file*size: "500KB",
 };
-```
+```text
 
 #### 3.3 CLI Options
 
@@ -117,40 +132,49 @@ aichaku review --config .aichaku/reviewer-config.yaml
 
 # Disable default exclusions
 aichaku review --no-default-exclusions
-```
+```text
 
 ### 4. User Feedback
 
 When files are excluded, provide clear feedback:
 
-```
+```text
 🔍 MCP Reviewer Analysis
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Files reviewed: 42
 Files excluded: 18
+
   - 12 files in node_modules/
+
   - 4 minified files (*.min.js)
+
   - 2 lock files
 
 Exclusion rules applied:
+
   ✓ Default exclusions
   ✓ Custom pattern: **/*.test.js
-```
+```text
 
 ### 5. Integration with Existing Features
 
 The blocklist should work seamlessly with:
 
 - File selection (`--files`)
+
 - Category filtering (`--category`)
+
 - External tool integration
+
 - Batch processing
 
 ### 6. Performance Considerations
 
 - Apply exclusions early in the pipeline to avoid unnecessary file reads
+
 - Cache exclusion checks for repeated runs
+
 - Use efficient pattern matching libraries
 
 ### 7. Error Handling
@@ -158,8 +182,11 @@ The blocklist should work seamlessly with:
 Handle edge cases gracefully:
 
 - Invalid glob patterns
+
 - Conflicting inclusion/exclusion rules
+
 - Missing configuration files
+
 - Invalid size specifications
 
 ## Implementation Priority
@@ -170,14 +197,19 @@ While not critical for core functionality, this feature will significantly
 improve user experience by:
 
 - Reducing noise from irrelevant files
+
 - Speeding up review processes
+
 - Allowing project-specific customization
 
 ## Testing Requirements
 
 1. Unit tests for pattern matching logic
+
 2. Integration tests with various file structures
+
 3. Performance tests with large codebases
+
 4. Configuration validation tests
 
 ## Documentation Updates
@@ -185,15 +217,21 @@ improve user experience by:
 Update the following documentation:
 
 - CLI help text for review command
+
 - Configuration file examples
+
 - User guide with common exclusion patterns
+
 - API documentation for programmatic usage
 
 ## Estimated Effort
 
 - Implementation: 2-3 days
+
 - Testing: 1 day
+
 - Documentation: 0.5 days
+
 - **Total: 3.5-4.5 days**
 
 ## Related to YAML Integration Project
@@ -202,5 +240,8 @@ This feature is separate from the YAML integration redesign but should be kept
 in mind for:
 
 - Consistent configuration approaches
+
 - Potential shared configuration file structure
+
 - Similar pattern matching needs
+````

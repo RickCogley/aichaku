@@ -5,14 +5,16 @@
 TDD follows a simple three-step cycle:
 
 1. **🔴 Red** - Write a failing test
+
 2. **🟢 Green** - Write minimal code to make it pass
+
 3. **🔵 Refactor** - Improve the code while keeping tests green
 
 ### Core Principles
 
 #### Write Tests First
 
-```typescript
+````typescript
 // ✅ Good: Test first approach
 describe("UserService", () => {
   it("should create a user with valid data", async () => {
@@ -37,7 +39,7 @@ class UserService {
     };
   }
 }
-```
+```text
 
 #### Test Behavior, Not Implementation
 
@@ -63,7 +65,7 @@ describe("Calculator", () => {
     expect(spy).toHaveBeenCalled();
   });
 });
-```
+```text
 
 ### The TDD Cycle in Practice
 
@@ -84,7 +86,7 @@ describe("Order", () => {
 });
 
 // This will fail because Order class doesn't exist yet
-```
+```text
 
 #### 2. Green Phase - Make It Pass
 
@@ -101,7 +103,7 @@ class Order {
     return subtotal * (1 + taxRate);
   }
 }
-```
+```text
 
 #### 3. Refactor Phase - Improve the Code
 
@@ -126,7 +128,7 @@ class Order {
     return amount * (1 + rate);
   }
 }
-```
+```text
 
 ### TDD Best Practices
 
@@ -147,7 +149,7 @@ describe("UserValidator", () => {
     expect(result.error).toBe("Invalid email format");
   });
 });
-```
+```text
 
 #### One Assert Per Test
 
@@ -170,7 +172,7 @@ it("should create user correctly", () => {
   expect(user.id).toBeDefined();
   expect(user.createdAt).toBeInstanceOf(Date);
 });
-```
+```text
 
 #### Test Naming Convention
 
@@ -183,7 +185,7 @@ describe("EmailService", () => {
     it("should retry sending on temporary failure", () => {});
   });
 });
-```
+```text
 
 ### Testing Different Scenarios
 
@@ -197,7 +199,7 @@ it("should successfully process valid order", async () => {
   expect(result.status).toBe("processed");
   expect(result.orderId).toBeDefined();
 });
-```
+```text
 
 #### Edge Cases
 
@@ -216,7 +218,7 @@ it("should handle extremely large orders", async () => {
 
   expect(result.status).toBe("processed");
 });
-```
+```text
 
 #### Error Conditions
 
@@ -232,7 +234,7 @@ it("should handle payment failure gracefully", async () => {
   expect(result.status).toBe("payment_failed");
   expect(result.error).toBe("Payment processing failed");
 });
-```
+```text
 
 ### Mocking and Test Doubles
 
@@ -269,15 +271,20 @@ describe("OrderService", () => {
     );
   });
 });
-```
+```text
 
 ### TDD Benefits
 
 1. **Better Design** - Forces you to think about interfaces first
+
 2. **Faster Feedback** - Catch issues immediately
+
 3. **Higher Confidence** - Comprehensive test coverage
+
 4. **Refactoring Safety** - Tests catch regressions
+
 5. **Documentation** - Tests serve as living documentation
+
 6. **Reduced Debugging** - Failures are caught early
 
 ### Common TDD Antipatterns
@@ -291,7 +298,7 @@ it("should call private validation method", () => {
   service.process(data);
   expect(spy).toHaveBeenCalled();
 });
-```
+```text
 
 #### Writing Tests After Code
 
@@ -299,7 +306,7 @@ it("should call private validation method", () => {
 // ❌ Bad: Tests written after implementation
 // This often results in tests that just confirm what the code does,
 // not what it should do
-```
+```text
 
 #### Over-Mocking
 
@@ -315,7 +322,7 @@ it("should process order", () => {
   expect(result).resolves.toBe(mockResult);
   // This test doesn't verify any real behavior
 });
-```
+```text
 
 ### Integration with CI/CD
 
@@ -329,7 +336,8 @@ it("should process order", () => {
     "test:ci": "jest --ci --coverage --watchAll=false"
   }
 }
-```
+```text
 
 Remember: TDD is not just about testing - it's a design methodology that leads
 to better, more maintainable code through the discipline of writing tests first.
+````

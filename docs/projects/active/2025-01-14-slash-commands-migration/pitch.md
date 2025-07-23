@@ -8,12 +8,16 @@ files in `~/.claude/commands/`, but we're still using the old JSON format in
 
 1. **Outdated approach**: Our 10 slash commands are defined in a 228-line JSON
    file, making them hard to maintain
+
 2. **No version control**: Individual commands can't be tracked separately in
    git
+
 3. **Limited capabilities**: The new format supports YAML frontmatter with tool
    permissions
+
 4. **Potential conflicts**: Claude now has built-in GitHub commands that may
    overlap with our MCP
+
 5. **Poor discoverability**: Commands buried in JSON are hard to find and
    understand
 
@@ -22,20 +26,31 @@ files in `~/.claude/commands/`, but we're still using the old JSON format in
 **Current commands in settings.json**:
 
 - `/memin` - Load memory files
+
 - `/security-rules` - DevSkim/CodeQL syntax
+
 - `/preflight` - Project-specific checks
+
 - `/owasp` - Security checklist
+
 - `/commit-style` - Conventional commits
+
 - `/directory-structure` - Project organization
+
 - `/checkpoint` - Save session summary
+
 - `/project` - Manage project memory
+
 - `/commands` - List all commands
+
 - `/addglobal` - Add global config
 
 **New built-in commands** (potential overlaps):
 
 - `/review` - Code review (overlaps with our MCP reviewer?)
+
 - `/init` - Initialize project (overlaps with Aichaku init?)
+
 - `/config` - View/modify config (overlaps with our settings?)
 
 ## Appetite
@@ -50,7 +65,7 @@ organization.
 
 ### Directory Structure
 
-```
+````text
 ~/.claude/commands/
 ├── aichaku/
 │   ├── memin.md          # Memory loading
@@ -66,7 +81,7 @@ organization.
 └── utils/
     ├── commands.md       # List all commands
     └── addglobal.md      # Quick global config add
-```
+```text
 
 ### Example Migration: `/checkpoint` Command
 
@@ -78,7 +93,7 @@ organization.
   "description": "Save session summary to docs/checkpoints/checkpoint-YYYY-MM-DD-{descriptive-name}.md",
   "prompt": "Create a session checkpoint by following these steps..."
 }
-```
+```text
 
 **After** (`~/.claude/commands/aichaku/checkpoint.md`):
 
@@ -91,9 +106,13 @@ description: Save session summary to docs/checkpoints with timestamp
 Create a session checkpoint by following these steps:
 
 1. CREATE CHECKPOINT FILE:
+
    - Get today's date: !date +%Y-%m-%d
+
    - Path: `docs/checkpoints/checkpoint-$ARGUMENTS.md`
+
    - Create directory if needed: !mkdir -p docs/checkpoints
+
    - Use descriptive name from $ARGUMENTS or generate from work done
 
 2. CHECKPOINT CONTENT (use these exact sections):
@@ -111,9 +130,11 @@ Create a session checkpoint by following these steps:
    ## Files Created/Modified
 
    ### Created
+
    - New files with purpose
 
    ### Modified
+
    - Changed files with changes
 
    ## Problems Solved
@@ -129,7 +150,7 @@ Create a session checkpoint by following these steps:
    Future work or improvements
 
 Show the checkpoint path after creation.
-```
+```text
 
 ### Migration Script
 
@@ -190,7 +211,7 @@ ${improvePrompt(cmd.prompt)}
     JSON.stringify(settings, null, 2),
   );
 }
-```
+```text
 
 ### Enhanced Commands with New Features
 
@@ -207,7 +228,7 @@ Search for "$ARGUMENTS" across the codebase:
 !grep -r "$ARGUMENTS" --include="_.ts" --include="_.js"
 
 Show the first 5 matches with context.
-```
+```text
 
 #### 2. **Bash Execution** (`!command`)
 
@@ -222,7 +243,7 @@ Current git status: !git status --porcelain
 Current branch: !git branch --show-current
 
 Recent commits: !git log --oneline -5
-```
+```text
 
 #### 3. **File References** (`@file`)
 
@@ -235,54 +256,77 @@ description: Load project configuration files
 Load key project files:
 
 1. Project memory: @CLAUDE.md
+
 2. Package config: @package.json or @deno.json
+
 3. TypeScript config: @tsconfig.json
 
 Summarize the project setup based on these files.
-```
+```text
 
 ### Deduplication Strategy
 
 Since Claude now has built-in commands, we should:
 
 1. **Remove duplicates**:
+
    - Our `/commands` → Use Claude's `/help` instead
+
    - Consider if `/review` replaces our MCP reviewer
 
 2. **Namespace our commands**:
+
    - `/aichaku:checkpoint` instead of `/checkpoint`
+
    - `/aichaku:memin` instead of `/memin`
 
 3. **Focus on Aichaku-specific needs**:
+
    - Keep security-focused commands (OWASP, InfoSec)
+
    - Keep Aichaku workflow commands (checkpoint, project)
+
    - Remove generic dev commands covered by Claude
 
 ### Benefits
 
 1. **Version Control**: Each command is a separate file, easy to track changes
+
 2. **Discoverability**: Browse commands in filesystem, better organization
+
 3. **Modularity**: Share command sets between projects
+
 4. **Tool Permissions**: Fine-grained control over what each command can do
+
 5. **Dynamic Content**: Use `$ARGUMENTS`, `!bash`, and `@files` for flexibility
 
 ## Rabbit Holes
 
 - **Over-engineering permissions**: Start with simple tool lists, refine later
+
 - **Complex command logic**: Keep commands focused on single tasks
+
 - **Trying to preserve all commands**: Some may be better as documentation
 
 ## No-Gos
 
 - **Breaking existing workflows**: Keep command names the same during migration
+
 - **Losing command history**: Archive the old settings.json section
+
 - **Auto-migration without review**: Each command should be manually verified
+
 - **Mixing concerns**: Keep security, dev, and Aichaku commands separate
 
 ## Success Metrics
 
 - All 10 commands migrated to Markdown format
+
 - Commands organized into logical categories
+
 - No functionality lost during migration
+
 - Improved command discoverability
+
 - Easier to add new commands going forward
+````

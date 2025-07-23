@@ -7,18 +7,27 @@
 ## Metadata
 
 - **Source Pitch**: [Link to pitch]
+
 - **Complexity**: Simple / Moderate / Complex
+
 - **Estimated Tasks**: [Number]
+
 - **AI Execution Mode**: Zero-shot
+
 - **Created**: [Date]
+
 - **Translator**: [Who translated this]
 
 ## Pre-Execution Checklist
 
 - [ ] All dependencies available
+
 - [ ] Code patterns identified
+
 - [ ] File paths verified
+
 - [ ] Tests approach defined
+
 - [ ] No blockers identified
 
 ## Execution Order
@@ -59,15 +68,18 @@ Unit and integration tests.
 
 **Current State**:
 
-```javascript
+````text
 // File doesn't exist yet
-```
+```text
 
 **Implementation Steps**:
 
 1. Create the file at specified path
+
 2. Add required imports
+
 3. Define the model class
+
 4. Export the module
 
 **Code Pattern**:
@@ -92,13 +104,16 @@ export class Example extends Model {
     validateRequired(this, ["field1"]);
   }
 }
-```
+```text
 
 **Success Criteria**:
 
 - File exists at correct location
+
 - Follows existing model pattern
+
 - Exports correctly
+
 - No syntax errors
 
 **Test Approach**: Create `test/models/Example.test.js` with basic instantiation
@@ -122,12 +137,14 @@ export class ExampleService {
     return this.db.query("SELECT * FROM examples");
   }
 }
-```
+```text
 
 **Implementation Steps**:
 
 1. Add import for new model
+
 2. Add new method after getAll()
+
 3. Implement business logic
 
 **Code Changes**:
@@ -142,13 +159,16 @@ async create(data) {
   const result = await this.db.insert('examples', example.toJSON());
   return new Example(result);
 }
-```
+```text
 
 **Success Criteria**:
 
 - Method added in correct location
+
 - Uses the new model
+
 - Handles errors appropriately
+
 - Returns expected type
 
 ---
@@ -163,7 +183,7 @@ async create(data) {
 
 ### Component Integration Map
 
-```
+```text
 Model (Task #1)
   ↓
 Service (Task #2)
@@ -171,12 +191,14 @@ Service (Task #2)
 API Route (Task #3)
   ↓
 UI Component (Task #4)
-```
+```text
 
 ### Shared Dependencies
 
 - Database connection: `src/lib/db.js`
+
 - Auth middleware: `src/middleware/auth.js`
+
 - Validation utils: `src/utils/validation.js`
 
 ---
@@ -186,17 +208,20 @@ UI Component (Task #4)
 ### Unit Tests
 
 - Each model: Basic instantiation, validation
+
 - Each service: Mock DB, test business logic
+
 - Each component: Render, user interactions
 
 ### Integration Tests
 
 - API endpoints: Full request/response cycle
+
 - UI flows: User can complete full feature
 
 ### Test File Locations
 
-```
+```text
 test/
   models/
     Example.test.js (Task #6)
@@ -206,7 +231,7 @@ test/
     example.test.js (Task #8)
   components/
     ExampleComponent.test.js (Task #9)
-```
+```text
 
 ---
 
@@ -215,8 +240,11 @@ test/
 ### Expected Edge Cases
 
 1. **Empty data**: Validate required fields
+
 2. **Duplicate entries**: Return appropriate error
+
 3. **Missing auth**: Return 401
+
 4. **Invalid format**: Validate and sanitize
 
 ### Error Response Format
@@ -228,7 +256,7 @@ test/
   code: "ERROR_CODE",
   details: {} // Optional
 }
-```
+```text
 
 ---
 
@@ -237,8 +265,11 @@ test/
 If execution fails:
 
 1. Identify which task failed
+
 2. Revert any partial changes
+
 3. Document the blocker
+
 4. Create targeted fix plan
 
 ---
@@ -248,10 +279,15 @@ If execution fails:
 After execution, verify:
 
 - [ ] All tasks completed
+
 - [ ] No syntax errors
+
 - [ ] Tests pass
+
 - [ ] Feature works end-to-end
+
 - [ ] Code follows patterns
+
 - [ ] No regressions
 
 ---
@@ -259,9 +295,13 @@ After execution, verify:
 ## Notes for AI Executor
 
 - Start with Task #1 and proceed sequentially
+
 - Each task builds on previous ones
+
 - Don't skip tasks even if they seem simple
+
 - If blocked, stop and report immediately
+
 - Success means ALL tasks complete
 
 ---
@@ -271,18 +311,26 @@ After execution, verify:
 **DURING BUILDING phase:**
 
 - [ ] Execute tasks in specified order
+
 - [ ] Report progress after each task
+
 - [ ] Stop immediately if blocked
+
 - [ ] No architecture changes or feature additions
+
 - [ ] Focus only on implementation
 
 **Moving to COOLDOWN phase requires:**
 
 - [ ] All tasks completed successfully
+
 - [ ] Tests passing
+
 - [ ] Feature working end-to-end
+
 - [ ] Execution report generated
 
 **Claude Code Reminder**: Save execution reports to
 `.claude/output/[status-YYYYMM-projectname]/execution-report.md`. Focus on
 DOING, not discussing. Execute the plan exactly as written.
+````

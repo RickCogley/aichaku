@@ -11,7 +11,7 @@ which is why you're not seeing any output from the MCP server interactions.
 
 Let's check what's actually missing in the MCP server:
 
-```bash
+````bash
 # Check if feedback system exists
 ls -la mcp-server/src/feedback-system.ts
 
@@ -20,7 +20,7 @@ grep -n "console\|stderr" mcp-server/src/server.ts
 
 # Check if tools are providing any output
 grep -n "console\|log" mcp-server/src/*
-```
+```text
 
 ### 2. Quick Implementation (30 minutes)
 
@@ -66,7 +66,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
   // Similar for other tools...
 });
-```
+```text
 
 ### 3. Test Immediately
 
@@ -78,7 +78,7 @@ aichaku mcp --restart
 🪴 [Aichaku] 🔍 Tool invoked: review_file
 🪴 [Aichaku] ⚙️ Processing: src/example.ts
 🪴 [Aichaku] ✨ Review complete: 3 findings (1200ms)
-```
+```text
 
 ## Completion Statistics Feature
 
@@ -121,13 +121,16 @@ async function showCompletion() {
     console.log(mcpSummary);
   }
 }
-```
+```text
 
 ## Priority Actions
 
 1. **IMMEDIATE** (today): Implement basic feedback in MCP server
+
 2. **DAY 1** (tomorrow): Full feedback system with branding
+
 3. **DAY 10**: Completion statistics integration
 
 This will restore the missing feedback loop and add the statistics feature you
 requested.
+````

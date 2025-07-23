@@ -12,22 +12,28 @@ CLI.
 ### What Works Well
 
 - Individual Markdown files are easy to edit and version
+
 - YAML frontmatter provides structure and permissions
+
 - Directory organization by category makes sense
+
 - File-based approach allows git versioning
 
 ### Gaps for Aichaku Integration
 
 - No installation mechanism for shared commands
+
 - No version management for command updates
+
 - No way to distribute commands with methodologies
+
 - No conflict resolution between user and global commands
 
 ## Proposed Aichaku Commands System
 
 ### Command Locations Hierarchy
 
-```
+````text
 ~/.claude/commands/                    # User's personal commands
 ├── aichaku/                          # Aichaku-provided commands
 ├── security/                         # User's security commands
@@ -45,7 +51,7 @@ CLI.
 {project}/.claude/aichaku/commands/   # Project-specific commands
 ├── project-specific/
 └── team-shared/
-```
+```text
 
 ### CLI Commands
 
@@ -63,7 +69,7 @@ aichaku commands list --category security
 aichaku commands list --scope global
 aichaku commands list --scope user
 aichaku commands list --scope project
-```
+```text
 
 #### `aichaku commands install`
 
@@ -76,7 +82,7 @@ aichaku commands install https://github.com/user/repo/commands/my-command.md
 
 # Install from local file
 aichaku commands install ./my-command.md --category custom
-```
+```text
 
 #### `aichaku commands create`
 
@@ -89,7 +95,7 @@ aichaku commands create my-command --template methodology
 
 # Create in specific category
 aichaku commands create my-command --category security --scope user
-```
+```text
 
 #### `aichaku commands remove`
 
@@ -99,7 +105,7 @@ aichaku commands remove my-command
 
 # Remove from specific category
 aichaku commands remove security/my-security-check
-```
+```text
 
 #### `aichaku commands update`
 
@@ -112,7 +118,7 @@ aichaku commands update security/owasp-check
 
 # Update from source
 aichaku commands update my-command --source https://...
-```
+```text
 
 ### Command Metadata Format
 
@@ -126,6 +132,7 @@ description: OWASP security checklist
 
 # Aichaku-specific fields
 aichaku:
+
   version: "1.0.0"
   category: "security"
   methodology: ["shape-up", "scrum"] # Which methodologies this applies to
@@ -137,11 +144,12 @@ aichaku:
 
 # Installation metadata
 install:
+
   scope: "global" # global, user, project
   auto-update: true
   conflicts: ["old-security-check"]
 ---
-```
+```text
 
 ### Built-in Aichaku Commands
 
@@ -149,35 +157,35 @@ Commands that ship with Aichaku:
 
 #### Methodology Commands
 
-```
+```text
 /aichaku:shape-up    # Create Shape Up pitch
 /aichaku:scrum       # Create sprint planning
 /aichaku:kanban      # Create kanban board
 /aichaku:checkpoint  # Create session checkpoint
-```
+```text
 
 #### Project Commands
 
-```
+```text
 /aichaku:init        # Initialize Aichaku project
 /aichaku:status      # Show project status
 /aichaku:review      # Review project structure
 /aichaku:cleanup     # Clean legacy files
-```
+```text
 
 #### Memory Commands
 
-```
+```text
 /aichaku:memin       # Load memory files
 /aichaku:standards   # Show selected standards
 /aichaku:config      # Show configuration
-```
+```text
 
 ### Command Registry
 
 Create a simple registry for sharing commands:
 
-```
+```text
 ~/.claude/aichaku/registry/
 ├── index.json                 # Command catalog
 ├── security/
@@ -189,7 +197,7 @@ Create a simple registry for sharing commands:
 └── development/
     ├── preflight.md
     └── git-hooks.md
-```
+```text
 
 ### Integration with Methodologies
 
@@ -206,25 +214,34 @@ Commands can be bundled with methodology installations:
     "project/cool-down.md"
   ]
 }
-```
+```text
 
 ### Conflict Resolution
 
 Handle conflicts between command sources:
 
 1. **Precedence Order**:
+
    - Project-specific commands (highest)
+
    - User commands
+
    - Aichaku global commands (lowest)
 
 2. **Namespace Resolution**:
+
    - `/user:command` - Force user version
+
    - `/global:command` - Force global version
+
    - `/project:command` - Force project version
 
 3. **Version Management**:
+
    - Track command versions
+
    - Show when updates available
+
    - Allow pinning specific versions
 
 ### Command Sharing
@@ -240,36 +257,48 @@ aichaku commands import team-commands.zip --scope project
 
 # Sync with git repository
 aichaku commands sync --repo https://github.com/team/aichaku-commands
-```
+```text
 
 ### Implementation Phases
 
 #### Phase 1: Basic Command Management (v0.30.0)
 
 - `aichaku commands list`
+
 - `aichaku commands create`
+
 - Basic command metadata support
+
 - Install built-in Aichaku commands
 
 #### Phase 2: Installation & Updates (v0.31.0)
 
 - `aichaku commands install`
+
 - `aichaku commands update`
+
 - Command registry system
+
 - Conflict resolution
 
 #### Phase 3: Sharing & Collaboration (v0.32.0)
 
 - `aichaku commands export/import`
+
 - Git-based command sharing
+
 - Team command synchronization
+
 - Command dependencies
 
 #### Phase 4: Advanced Features (v1.0.0)
 
 - Command templates
+
 - Interactive command builder
+
 - Command analytics
+
 - Marketplace/registry
 
 ### Configuration
@@ -287,23 +316,32 @@ Add to `aichaku.json`:
     "defaultCategory": "custom"
   }
 }
-```
+```text
 
 ## Benefits
 
 1. **Standardization**: Consistent command format across users
+
 2. **Sharing**: Easy distribution of useful commands
+
 3. **Methodology Integration**: Commands bundled with methodologies
+
 4. **Version Management**: Track and update commands
+
 5. **Team Collaboration**: Share project-specific commands
+
 6. **Discoverability**: Central registry of available commands
 
 ## Challenges
 
 1. **Complexity**: More complex than simple file-based approach
+
 2. **Maintenance**: Need to maintain command registry
+
 3. **Security**: Need to validate command content
+
 4. **Compatibility**: Ensure commands work across Claude versions
+
 5. **User Experience**: Balance simplicity with power
 
 ## Recommendation
@@ -312,9 +350,13 @@ Start with Phase 1 in Aichaku v0.30.0 to provide basic command management. This
 would:
 
 - Install built-in Aichaku commands during `aichaku init`
+
 - Provide `aichaku commands list` for discovery
+
 - Allow `aichaku commands create` for custom commands
+
 - Set foundation for future sharing features
 
 The file-based approach works well, but adding Aichaku management would make
 commands more discoverable and shareable across the community.
+````

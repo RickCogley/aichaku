@@ -8,7 +8,7 @@ and analytics into one cohesive development effort.
 
 ## Phase Structure
 
-```mermaid
+````mermaid
 gantt
     title Unified MCP Enhancement Timeline
     dateFormat  YYYY-MM-DD
@@ -21,7 +21,7 @@ gantt
     Doc Generation       :p4, after p3, 2d
     Statistics System    :p5, after p4, 2d
     Documentation       :p6, after p5, 1d
-```
+```text
 
 ## Detailed Implementation Plan
 
@@ -42,7 +42,7 @@ gantt
      logProgress(message: string): void;
      logCompletion(result: any, timing: number): void;
    }
-   ```
+````
 
 2. **Add Console Output to MCP Server**
 
@@ -435,7 +435,7 @@ gantt
 
 1. **Update `/docs` Structure**
 
-   ```
+   ```text
    docs/
    ├── tutorials/
    │   ├── mcp-setup.md
@@ -533,22 +533,31 @@ statistics
 ### Week 1 Milestones
 
 - [ ] MCP server management works reliably across platforms
+
 - [ ] Feedback system provides clear, branded progress updates
+
 - [ ] Tools trigger automatically on natural language requests
+
 - [ ] Documentation generation creates standards-compliant output
 
 ### Week 2 Milestones
 
 - [ ] Statistics system tracks usage without privacy concerns
+
 - [ ] Complete documentation reflects all new capabilities
+
 - [ ] User experience is smooth and professional
+
 - [ ] All edge cases are handled gracefully
 
 ### Final Validation
 
 - [ ] Zero manual MCP management required
+
 - [ ] "Generate comprehensive documentation" works end-to-end
+
 - [ ] All operations provide clear feedback and statistics
+
 - [ ] Documentation is complete and accurate
 
 This sequence ensures each phase builds logically on the previous one, with

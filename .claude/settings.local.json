@@ -140,7 +140,13 @@
       "Bash(ln:*)",
       "Bash(.githooks/hooks.d/20-lint-markdown:*)",
       "Bash(markdownlint-cli2:*)",
-      "Bash(npx markdownlint-cli2:*)"
+      "Bash(npx markdownlint-cli2:*)",
+      "Bash(npx markdownlint:*)",
+      "Bash(markdownlint:*)",
+      "Bash(./node_modules/.bin/markdownlint-cli2:*)",
+      "Bash(./scripts/new-doc.sh:*)",
+      "Bash(./cli.ts standards --list)",
+      "WebFetch(domain:docs.github.com)"
     ],
     "deny": []
   }

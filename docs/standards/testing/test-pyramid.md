@@ -5,20 +5,22 @@
 The Test Pyramid is a testing strategy that emphasizes:
 
 1. **🔺 Unit Tests** (Base) - Fast, isolated, numerous
+
 2. **🔧 Integration Tests** (Middle) - Moderate speed, fewer than unit tests
+
 3. **🌐 E2E Tests** (Top) - Slow, comprehensive, minimal
 
 ### Core Principles
 
 #### Layer Distribution
 
-```
+````text
     /\     ← E2E Tests (Few)
    /  \
   /    \   ← Integration Tests (Some)
  /      \
 /********\ ← Unit Tests (Many)
-```
+```text
 
 #### Unit Tests (Foundation)
 
@@ -39,7 +41,7 @@ describe("calculateDiscount", () => {
     expect(calculateDiscount(50, 0.2)).toBe(40);
   });
 });
-```
+```text
 
 #### Integration Tests (Middle Layer)
 
@@ -70,7 +72,7 @@ describe("POST /api/users", () => {
     expect(response.body.email).toBe("test@example.com");
   });
 });
-```
+```text
 
 #### End-to-End Tests (Peak)
 
@@ -99,20 +101,24 @@ describe("User Registration Flow", () => {
     );
   });
 });
-```
+```text
 
 ### Test Distribution Guidelines
 
 #### Recommended Ratios
 
 - **Unit Tests**: 70-80% of total tests
+
 - **Integration Tests**: 15-25% of total tests
+
 - **E2E Tests**: 5-10% of total tests
 
 #### Speed Targets
 
 - **Unit Tests**: < 10ms per test
+
 - **Integration Tests**: < 1 second per test
+
 - **E2E Tests**: < 30 seconds per test
 
 ### Anti-Patterns to Avoid
@@ -130,7 +136,7 @@ describe("Every possible user interaction", () => {
     // This should be a unit test
   });
 });
-```
+```text
 
 #### Testing Trophy (No Strategy)
 
@@ -138,7 +144,7 @@ describe("Every possible user interaction", () => {
 // ❌ Bad: Random test distribution without strategy
 // No clear boundaries between test types
 // Overlapping responsibilities
-```
+```text
 
 ### Implementation Strategy
 
@@ -159,7 +165,7 @@ it("should calculate total with tax", () => {
   const items = [{ price: 100 }, { price: 50 }];
   expect(calculator.calculateTotal(items, 0.1)).toBe(165);
 });
-```
+```text
 
 #### Add Integration Tests
 
@@ -176,7 +182,7 @@ describe("Order Processing", () => {
     expect(shipment.estimatedDelivery).toBeDefined();
   });
 });
-```
+```text
 
 #### Minimal E2E Tests
 
@@ -190,27 +196,34 @@ describe("Critical Business Flows", () => {
     await verifyEmailNotification();
   });
 });
-```
+```text
 
 ### Tool Recommendations
 
 #### Unit Testing
 
 - **JavaScript/TypeScript**: Jest, Vitest, Deno Test
+
 - **Python**: pytest, unittest
+
 - **Java**: JUnit 5, TestNG
+
 - **C#**: xUnit, NUnit
 
 #### Integration Testing
 
 - **API Testing**: Supertest, Postman, Insomnia
+
 - **Database Testing**: TestContainers, in-memory databases
+
 - **Service Testing**: Docker Compose test environments
 
 #### E2E Testing
 
 - **Browser Testing**: Playwright, Cypress, Selenium
+
 - **Mobile Testing**: Appium, Detox
+
 - **API E2E**: Postman Collections, Newman
 
 ### Metrics and Monitoring
@@ -224,7 +237,7 @@ const coverageTargets = {
   integrationTests: "80%+",
   e2eTests: "Critical paths only",
 };
-```
+```text
 
 #### Test Performance
 
@@ -235,7 +248,7 @@ const performanceTargets = {
   integrationTestSuite: "< 5 minutes",
   e2eTestSuite: "< 30 minutes",
 };
-```
+```text
 
 ### CI/CD Integration
 
@@ -244,12 +257,17 @@ const performanceTargets = {
 ```yaml
 # Run in order of speed and reliability
 stages:
+
   - unit-tests # Fast feedback
+
   - integration # Moderate feedback
+
   - e2e-critical # Slow but comprehensive
+
   - e2e-full # Complete coverage (scheduled)
-```
+```text
 
 Remember: The Test Pyramid ensures fast feedback while maintaining confidence in
 your system. Focus on a solid foundation of unit tests, supported by targeted
 integration tests, topped with minimal but comprehensive E2E tests.
+````

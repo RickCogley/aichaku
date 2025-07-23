@@ -10,12 +10,16 @@ independence of business logic from external frameworks, databases, and UI.
 
 1. **Independence of Frameworks**: The architecture doesn't depend on the
    existence of some library of feature-laden software
+
 2. **Testability**: Business rules can be tested without the UI, database, web
    server, or any external element
+
 3. **Independence of UI**: The UI can change easily without changing the rest of
    the system
+
 4. **Independence of Database**: You can swap out Oracle or SQL Server for
    MongoDB, BigTable, CouchDB, or something else
+
 5. **Independence of External Agency**: Business rules don't know anything about
    the outside world
 
@@ -28,15 +32,18 @@ The overriding rule that makes this architecture work is The Dependency Rule:
 ### Layers (from outside to inside)
 
 1. **Frameworks and Drivers** (Blue)
+
 2. **Interface Adapters** (Green)
+
 3. **Application Business Rules** (Red)
+
 4. **Enterprise Business Rules** (Yellow)
 
 ## Implementation Examples
 
 ### TypeScript/JavaScript Implementation
 
-```typescript
+````typescript
 // Domain Layer (Enterprise Business Rules)
 // entities/User.ts
 export class User {
@@ -159,7 +166,7 @@ export class PostgresUserRepository implements UserRepository {
     return new User(row.id, row.email, row.name, row.password);
   }
 }
-```
+```text
 
 ### Python Implementation
 
@@ -171,6 +178,7 @@ from typing import List
 from decimal import Decimal
 
 class OrderItem:
+
     def **init**(self, product_id: str, quantity: int, price: Decimal):
         if quantity <= 0:
             raise ValueError("Quantity must be positive")
@@ -186,6 +194,7 @@ class OrderItem:
         return self.price * self.quantity
 
 class Order:
+
     def **init**(self, customer_id: str):
         self.id = self.*generate*id()
         self.customer*id = customer*id
@@ -214,6 +223,7 @@ class Order:
 from abc import ABC, abstractmethod
 
 class OrderRepository(ABC):
+
     @abstractmethod
     async def save(self, order: Order) -> None:
         pass
@@ -223,11 +233,13 @@ class OrderRepository(ABC):
         pass
 
 class ProductRepository(ABC):
+
     @abstractmethod
     async def find*by*id(self, product_id: str) -> Product:
         pass
 
 class CreateOrderUseCase:
+
     def **init**(
         self,
         order_repository: OrderRepository,
@@ -270,6 +282,7 @@ class CreateOrderUseCase:
 from fastapi import APIRouter, HTTPException
 
 class OrderController:
+
     def **init**(self, create*order*use_case: CreateOrderUseCase):
         self.create*order*use*case = create*order*use*case
         self.router = APIRouter()
@@ -292,6 +305,7 @@ class OrderController:
 from sqlalchemy.orm import Session
 
 class SQLAlchemyOrderRepository(OrderRepository):
+
     def **init**(self, session: Session):
         self.session = session
 
@@ -314,7 +328,7 @@ class SQLAlchemyOrderRepository(OrderRepository):
 
         self.session.add(db_order)
         self.session.commit()
-```
+```text
 
 ### Go Implementation
 
@@ -467,7 +481,7 @@ func (r *PostgresProductRepository) Save(product *entity.Product) error {
 
     return err
 }
-```
+```text
 
 ## Testing in Clean Architecture
 
@@ -524,18 +538,22 @@ describe("CreateUserUseCase", () => {
     expect(result.email).toBe("new@example.com");
   });
 });
-```
+```text
 
 ## Clean Architecture Benefits
 
 1. **Independent of Frameworks**: Can change frameworks without changing
    business logic
+
 2. **Testable**: Business rules can be tested without UI, database, or external
    elements
+
 3. **Independent of UI**: Can change from web to console to mobile without
    changing business rules
+
 4. **Independent of Database**: Can switch from SQL to NoSQL without changing
    business rules
+
 5. **Independent of External Agency**: Business rules don't know about the
    outside world
 
@@ -562,7 +580,7 @@ class User {
     }
   }
 }
-```
+```text
 
 ### 2. Framework Dependencies in Domain
 
@@ -580,7 +598,7 @@ class User {
 class User {
   constructor(public email: string) {}
 }
-```
+```text
 
 ### 3. Violating Dependency Rule
 
@@ -596,53 +614,77 @@ class CreateUserUseCase {
 class CreateUserUseCase {
   constructor(private repo: UserRepository) {} // Interface dependency
 }
-```
+```text
 
 ## Applying Clean Architecture to Different Project Types
 
 ### Web Applications
 
 - Controllers handle HTTP requests/responses
+
 - Use cases contain application logic
+
 - Entities contain business rules
+
 - Repositories handle data persistence
 
 ### CLI Applications
 
 - Commands replace controllers
+
 - Use cases remain the same
+
 - Entities remain the same
+
 - File system or database for persistence
 
 ### Microservices
 
 - Each service follows clean architecture
+
 - Shared domain concepts in separate packages
+
 - Inter-service communication through interfaces
+
 - Event-driven architecture at boundaries
 
 ## Migration Strategy
 
 1. **Start with Use Cases**: Identify and extract business operations
+
 2. **Extract Entities**: Move business rules to domain entities
+
 3. **Define Interfaces**: Create repository and service interfaces
+
 4. **Implement Adapters**: Create concrete implementations
+
 5. **Refactor Controllers**: Make them thin, delegating to use cases
+
 6. **Add Tests**: Test each layer independently
 
 ## Clean Architecture Checklist
 
 - [ ] Dependencies point inward only
+
 - [ ] Business rules are independent of frameworks
+
 - [ ] Use cases are independent of delivery mechanism
+
 - [ ] Entities have no dependencies on external layers
+
 - [ ] All external dependencies are behind interfaces
+
 - [ ] Tests can run without external systems
+
 - [ ] Business logic can be understood without framework knowledge
+
 - [ ] Can change database without changing business rules
+
 - [ ] Can change UI without changing business rules
+
 - [ ] Clear separation between layers
 
 Remember: The goal is to make the business rules the most important part of your
 application, with everything else being a detail that can be changed without
 affecting the core business logic.
+````

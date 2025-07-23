@@ -11,10 +11,13 @@ Based on our grep analysis, we have **385 JSDoc blocks** across 44 files in the
 
 ✅ Excellent JSDoc coverage with proper Deno-style documentation:
 
-```typescript
+````typescript
 /**
+
  * Represents a project methodology that can be installed by aichaku
+
  *
+
  * @public
  */
 export interface Methodology {
@@ -24,13 +27,16 @@ export interface Methodology {
   description: string;
   // ...
 }
-```
+```text
 
 ### Key Deno JSDoc Differences
 
 1. **@public tag**: Used instead of @export for public APIs
+
 2. **@module tag**: For file-level documentation
+
 3. **Built-in generation**: Uses `deno doc` instead of external tools
+
 4. **Type inference**: Better integration with TypeScript types
 
 ## Files Needing Improvement
@@ -40,13 +46,17 @@ Let me check a few files that might need better coverage:
 ### init.ts
 
 - Has some function documentation
+
 - Could use more @param and @returns tags
+
 - Interface definitions need @public tags
 
 ### commands/hooks.ts
 
 - Complex file with many functions
+
 - Some JSDoc present but inconsistent
+
 - Hook templates could use better documentation
 
 ## JSDoc Checker Hook Proposal
@@ -54,8 +64,11 @@ Let me check a few files that might need better coverage:
 A `jsdoc-checker` hook could:
 
 1. **Trigger**: PostToolUse on .ts files
+
 2. **Check**: Missing documentation on exported functions/classes
+
 3. **Validate**: Proper Deno JSDoc tags
+
 4. **Report**: Coverage statistics
 
 ### Implementation Approach
@@ -74,12 +87,15 @@ async function jsdocChecker(input: HookInput): Promise<void> {
     console.log("   - Include @param and @returns tags");
   }
 }
-```
+```text
 
 This would help maintain documentation quality as we develop!
 
 ## Next Steps
 
 1. Add JSDoc to any poorly documented functions we encounter
+
 2. Consider implementing the jsdoc-checker hook
+
 3. Run `deno doc` to generate API documentation and check coverage
+````

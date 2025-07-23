@@ -39,7 +39,7 @@ Migration is triggered if either file exists and the new structure doesn't.
 
 When showing the migration plan, users now see:
 
-```
+```text
 - .aichaku-standards.json → standards.json (if exists)
 ```
 

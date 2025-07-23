@@ -4,7 +4,7 @@ Complete reference of Aichaku's file structure and organization.
 
 ## Repository structure
 
-```
+`````text
 aichaku/
 ├── cli.ts                      # CLI entry point
 ├── mod.ts                      # Library exports
@@ -110,13 +110,13 @@ aichaku/
 ├── test-installations/        # Test scenarios
 ├── coverage/                  # Test coverage
 └── dist/                      # Build output
-```
+```text
 
 ## Global installation structure
 
 Location: `~/.claude/aichaku/`
 
-```
+```text
 ~/.claude/
 └── aichaku/                   # All Aichaku files
     ├── methodologies/         # Core methodology files
@@ -142,20 +142,23 @@ Location: `~/.claude/aichaku/`
     │   └── config/            # User configuration (future)
     │
     └── cache/                 # Performance cache
-```
+```text
 
 Note: User-specific files remain in the root `~/.claude/` directory:
 
 - `CLAUDE.md` - Global AI instructions
+
 - `output/` - User's work outside of projects
+
 - `settings.json` - Global settings
+
 - `commands.json` - Custom commands
 
 ## Project installation structure
 
 Location: `project/.claude/`
 
-```
+```text
 [project]/
 └── .claude/
     ├── aichaku/                # Aichaku project files
@@ -169,7 +172,7 @@ Location: `project/.claude/`
     ├── user/                   # User customizations (stays here)
     ├── CLAUDE.md              # AI instructions (stays here)
     └── settings.local.json    # Claude Code settings (stays here)
-```
+```text
 
 Note: The `.aichaku-project` marker file is no longer needed. Aichaku detects
 projects by the presence of `.claude/aichaku/` directory.
@@ -178,7 +181,7 @@ projects by the presence of `.claude/aichaku/` directory.
 
 Each methodology contains:
 
-```
+```text
 methodology-name/
 ├── [METHODOLOGY]-AICHAKU-GUIDE.md    # Main guide
 ├── templates/                        # Document templates
@@ -187,11 +190,11 @@ methodology-name/
 │   └── review-doc.md                # Review phase
 └── scripts/                         # Optional tools
     └── helper-script.sh
-```
+```text
 
 ### Shape Up structure
 
-```
+```text
 shape-up/
 ├── SHAPE-UP-AICHAKU-GUIDE.md
 ├── templates/
@@ -202,11 +205,11 @@ shape-up/
 │   └── betting-table.md       # Project selection
 └── scripts/
     └── generate-pitch-pdf.sh
-```
+```text
 
 ### Scrum structure
 
-```
+```text
 scrum/
 ├── SCRUM-AICHAKU-GUIDE.md
 ├── templates/
@@ -217,11 +220,11 @@ scrum/
 │   └── retrospective.md       # Team reflection
 └── scripts/
     └── velocity-calculator.sh
-```
+```text
 
 ### Kanban structure
 
-```
+```text
 kanban/
 ├── KANBAN-AICHAKU-GUIDE.md
 ├── templates/
@@ -231,17 +234,17 @@ kanban/
 │   └── service-classes.md     # Priority classes
 └── scripts/
     └── metrics-dashboard.sh
-```
+```text
 
 ## Standards structure
 
 Each standard is a single Markdown file:
 
-```
+```text
 standards/
 ├── category/
 │   └── standard-name.md       # Complete standard
-```
+```text
 
 ### Standard file format
 
@@ -267,7 +270,7 @@ standards/
 ## Anti-patterns
 
 [What to avoid]
-```
+```text
 
 ## Custom standards structure
 
@@ -280,7 +283,9 @@ Custom standards must be placed in: `~/.claude/aichaku/user/docs/standards/`
 ### File naming
 
 - Use UPPERCASE-KEBAB-CASE: `MY-CUSTOM-STANDARD.md`
+
 - Must end with `.md` extension
+
 - Names should be descriptive and unique
 
 ### Required frontmatter format
@@ -291,12 +296,14 @@ title: "My Custom Standard"
 description: "Brief description of what this standard covers"
 tags: ["category", "subcategory", "custom"]
 ---
-```
+```text
 
 ### Auto-discovery
 
 - Aichaku automatically discovers custom standards on startup
+
 - No registration required - just add the file
+
 - Standards appear in the selection list with "(Custom)" suffix
 
 ### Example custom standard
@@ -317,40 +324,48 @@ Our company follows specific conventions...
 ## Rules
 
 1. All functions must be documented
+
 2. Use 4-space indentation
+
 3. Maximum line length: 100 characters
 
 ## Examples
 
 ```typescript
 /**
+
  * Calculates the sum of two numbers
+
  * @param a First number
+
  * @param b Second number
+
  * @returns The sum of a and b
  */
 function add(a: number, b: number): number {
   return a + b;
 }
-```
-````
+```text
+````text
 
-```
+```text
 ## Legacy structure migration
 
 Aichaku v2.0+ uses a new organized structure to avoid cluttering `~/.claude/`:
 
 ### Old structure (v1.x)
-```
+
+```text
 
 ~/.claude/ ├── methodologies/ # Aichaku files mixed with user files ├──
 standards/ # Aichaku files mixed with user files ├── output/ # User work ├──
 CLAUDE.md # User's global instructions ├── settings.json # User settings └──
 commands.json # User commands
 
-```
+```text
 ### New structure (v2.0+)
-```
+
+```text
 
 ~/.claude/ ├── aichaku/ # All Aichaku files contained here │ ├── methodologies/
 
@@ -361,17 +376,21 @@ User customizations │ └── cache/ # Performance cache │ ├── outpu
 original location) ├── settings.json # User settings (stays in original
 location) └── commands.json # User commands (stays in original location)
 
-```
+```text
 ### Migration notes
+
 - The installer automatically migrates existing installations
+
 - User files in `~/.claude/` are preserved in their original locations
+
 - Only Aichaku-specific files are moved to `~/.claude/aichaku/`
+
 - Custom standards should be moved to `~/.claude/aichaku/user/docs/standards/`
 
 ## Output directory structure
 
 Work organization:
-```
+```text
 
 output/ ├── active-2025-07-10-authentication-system/ │ ├── STATUS.md # Current
 progress │ ├── pitch.md # Initial pitch │ ├── cycle-plan.md # Execution plan │
@@ -382,10 +401,12 @@ Final status │ ├── findings.md # Audit results │ ├── remediation
 plan │ └── 2025-07-09-Security-Audit-CHANGE-LOG.md │ └──
 archived-2025-01-15-legacy-migration/ └── [old project files]
 
-````
+````text
+
 ## File naming conventions
 
 ### Markdown files
+
 | Type | Convention | Example |
 |------|------------|---------|
 | Guides | UPPERCASE-HYPHEN | `SHAPE-UP-AICHAKU-GUIDE.md` |
@@ -396,6 +417,7 @@ archived-2025-01-15-legacy-migration/ └── [old project files]
 | User docs | flexible | `notes.md`, `ToDo.md` |
 
 ### TypeScript files
+
 | Type | Convention | Example |
 |------|------------|---------|
 | Commands | lowercase | `init.ts` |
@@ -404,6 +426,7 @@ archived-2025-01-15-legacy-migration/ └── [old project files]
 | Config | .config.ts | `nagare.config.ts` |
 
 ### Directories
+
 | Type | Convention | Example |
 |------|------------|---------|
 | Categories | lowercase | `security/`, `testing/` |
@@ -413,6 +436,7 @@ archived-2025-01-15-legacy-migration/ └── [old project files]
 ## Special files
 
 ### Marker files
+
 | File | Purpose |
 |------|---------|
 | `.claude/aichaku/` | Directory presence identifies Aichaku project |
@@ -421,6 +445,7 @@ archived-2025-01-15-legacy-migration/ └── [old project files]
 | `.claude/settings.local.json` | Claude Code project configuration |
 
 ### Generated files
+
 | File | Generated by | Purpose |
 |------|--------------|---------|
 | `version.ts` | Nagare | Version information |
@@ -428,6 +453,7 @@ archived-2025-01-15-legacy-migration/ └── [old project files]
 | `STATUS.md` | Aichaku | Project tracking |
 
 ### Configuration files
+
 | File | Purpose |
 |------|---------|
 | `deno.json` | Deno configuration |
@@ -448,6 +474,7 @@ Default permissions:
 ## Git integration
 
 ### Files to commit
+
 ```gitignore
 # Commit these
 .claude/aichaku/standards.json
@@ -463,7 +490,7 @@ Default permissions:
 .claude/aichaku/methodologies/
 .claude/aichaku/docs/standards/
 .claude/aichaku/cache/
-````
+````text
 
 ### Recommended .gitignore
 
@@ -483,7 +510,7 @@ Default permissions:
 # User files (optional to commit)
 .claude/output/
 .claude/user/
-```
+```text
 
 ## File size guidelines
 
@@ -504,3 +531,4 @@ Default permissions:
 | All methodologies | ~300 KB |
 | All standards     | ~200 KB |
 | Total typical     | ~1 MB   |
+`````

@@ -15,7 +15,9 @@ experience when the CLI and global files have different versions.
 Users can have mismatched versions:
 
 - CLI at v0.27.0
+
 - Global files at v0.25.0
+
 - No warning about the mismatch
 
 ## Proposed Solution
@@ -26,5 +28,7 @@ Check versions on CLI startup and warn users if they need to run
 ## Next Steps
 
 1. Review and refine the pitch
+
 2. Decide on implementation approach
+
 3. Consider if this should be part of a larger "health check" feature

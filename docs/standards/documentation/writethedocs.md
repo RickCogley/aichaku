@@ -9,9 +9,13 @@ helpful, accessible, and maintainable.
 ### Core Values
 
 1. **👥 Community-Driven** - Documentation is a community effort
+
 2. **📝 Docs as Code** - Treat documentation like source code
+
 3. **🔄 Iterative** - Documentation is never "done"
+
 4. **🎯 User-Focused** - Write for your reader's success
+
 5. **🌈 Inclusive** - Welcome all contributors and readers
 
 ## Tutorial Guidelines
@@ -22,7 +26,7 @@ Guide newcomers through their first successful experience with your project.
 
 ### Structure
 
-````markdown
+``````markdown
 # Getting Started with {{Project Name}}
 
 Welcome! This tutorial walks you through using {{Project}} for the first time.
@@ -36,7 +40,9 @@ This tutorial takes about [time] to complete.
 ### What You'll Need
 
 - [Requirement]: [Why it's needed]
+
 - [Requirement]: [Version required and why]
+
 - Basic familiarity with [prerequisite knowledge]
 
 > 💡 **New to [prerequisite]?** Check out [this gentle introduction](link)
@@ -50,7 +56,9 @@ In this tutorial, we'll create [description of the end result]. This will teach
 you:
 
 - How [Project] handles [concept 1]
+
 - The basics of [concept 2]
+
 - Why [concept 3] matters
 
 ## Step 1: Set Up Your Environment
@@ -61,14 +69,14 @@ First, let's make sure everything is installed correctly.
 
 Open your terminal and run:
 
-```bash
+`````bash
 # For macOS/Linux
 curl -sSL https://install.example.com | sh
 
 # For Windows
 iwr -useb https://install.example.com | iex
-```
-````
+```text
+````text
 
 <details>
 <summary>🔧 Troubleshooting installation issues</summary>
@@ -77,14 +85,14 @@ iwr -useb https://install.example.com | iex
 
 ```bash
 sudo curl -sSL https://install.example.com | sh
-```
+```text
 
 **Behind a proxy?** Set your proxy environment variables first:
 
 ```bash
 export HTTP_PROXY=http://proxy.example.com:8080
 export HTTPS_PROXY=http://proxy.example.com:8080
-```
+```text
 
 </details>
 
@@ -94,13 +102,13 @@ Check that everything is working:
 
 ```bash
 project --version
-```
+```text
 
 You should see something like:
 
-```
+```text
 Project version 1.2.3
-```
+```text
 
 ✅ **Checkpoint**: You now have [Project] installed and ready to use!
 
@@ -113,6 +121,7 @@ Now for the fun part - let's create something!
 Before we dive in, here's a quick overview:
 
 - **[Term 1]**: [Plain English explanation]
+
 - **[Term 2]**: [Another clear explanation]
 
 Don't worry if this doesn't all make sense yet - it will become clearer as we
@@ -125,7 +134,7 @@ work through the example.
    ```bash
    mkdir my-first-project
    cd my-first-project
-   ```
+`````
 
 2. Initialize a new [Project] configuration:
 
@@ -159,17 +168,19 @@ work through the example.
 
 Create a new file `src/hello.ext`:
 
-```language
+`````language
 // This is your first [component]
 // It demonstrates [what it shows]
 
 [actual code here]
-```
+```text
 
 Let's break down what this does:
 
 - **Line 1-2**: Comments explaining the purpose
+
 - **Line 4**: [Explanation of key line]
+
 - **Line 5**: [Explanation of another important part]
 
 ### Run Your Code
@@ -178,14 +189,14 @@ Time to see it in action:
 
 ```bash
 project run src/hello.ext
-```
+```text
 
 You should see:
 
-```
+```text
 [Expected output]
 Success! Your first [component] is working.
-```
+```text
 
 🎉 **Congratulations!** You just created and ran your first [Project] program!
 
@@ -200,8 +211,11 @@ Let's enhance our program to do something more interesting.
 You've successfully:
 
 - ✅ Installed [Project] and verified it works
+
 - ✅ Created your first [component]
+
 - ✅ Learned about [key concept 1] and [key concept 2]
+
 - ✅ Built a working [description]
 
 ### Quick Reference
@@ -219,32 +233,43 @@ Here are the commands you learned:
 You're ready to explore more:
 
 1. **[How-to: Connect to a Database]** - Add persistence to your project
+
 2. **[How-to: Deploy Your Project]** - Share your creation with the world
+
 3. **[Understanding [Core Concept]]** - Deep dive into how [Project] works
 
 ### Join the Community
 
 - 💬 [Discord/Slack/Forum] - Get help and share what you build
+
 - 🐛 [Issue Tracker] - Report bugs or request features
+
 - 📚 [Documentation] - Explore all features in detail
 
 Remember: everyone started where you are now. Don't hesitate to ask questions!
 
-````
+````text
+
 ### Write the Docs Notes for Tutorials
 
 - **Progressive disclosure**: Introduce concepts as needed, not all upfront
+
 - **Checkpoints**: Help readers verify they're on track
+
 - **Troubleshooting inline**: Address problems where they might occur
+
 - **Celebrate success**: Acknowledge accomplishments along the way
+
 - **Community connection**: Show readers they're not alone
 
 ## How-to Guide Guidelines
 
 ### Purpose
+
 Help users accomplish specific tasks efficiently, assuming basic familiarity with the project.
 
 ### Structure
+
 ```markdown
 # How to [Specific Task]
 
@@ -256,15 +281,21 @@ This guide shows you how to [task description]. This is useful when you need to 
 ## Prerequisites
 
 Before starting, ensure you have:
+
 - [ ] [Prerequisite 1] ([how to verify])
+
 - [ ] [Prerequisite 2] ([link to setup guide])
+
 - [ ] [Required permission or access]
 
 ## Overview
 
 We'll accomplish this task by:
+
 1. [High-level step 1]
+
 2. [High-level step 2]
+
 3. [High-level step 3]
 
 ## Step-by-Step Instructions
@@ -277,7 +308,7 @@ First, we need to set up [what and why]:
 # Set necessary environment variables
 export PROJECT_ENV=production
 export API_KEY=your-api-key-here
-````
+````text
 
 > 📝 **Note**: Store sensitive values like API keys in a `.env` file. See
 > [Managing Secrets](link) for details.
@@ -290,12 +321,14 @@ Now we'll [what you're doing and why]:
 project command --option value \
   --another-option \
   --verbose
-```
+```text
 
 **What's happening here:**
 
 - `--option value`: [Explanation]
+
 - `--another-option`: [Why you need this]
+
 - `--verbose`: Shows detailed output (helpful for debugging)
 
 <details>
@@ -306,16 +339,17 @@ Instead of command-line options, you can use a configuration file:
 ```yaml
 # config.yaml
 options:
+
   option: value
   another_option: true
   verbose: true
-```
+```text
 
 Then run:
 
 ```bash
 project command --config config.yaml
-```
+```text
 
 </details>
 
@@ -325,15 +359,15 @@ Check that your [task] completed successfully:
 
 ```bash
 project status --check [thing-you-created]
-```
+```text
 
 Expected output:
 
-```
+```text
 Status: Active
 Health: Healthy
 Last Updated: 2023-10-15 14:30:00
-```
+```text
 
 ## Common Variations
 
@@ -345,19 +379,20 @@ If you're running [Project] in Docker:
 FROM project:latest
 COPY config.yaml /app/
 RUN project command --config /app/config.yaml
-```
+```text
 
 ### Automating with CI/CD
 
 For GitHub Actions:
 
 ```yaml
+
 - name: Run [task]
   env:
     PROJECT*ENV: ${{ secrets.PROJECT*ENV }}
   run: |
     project command --option ${{ inputs.value }}
-```
+```text
 
 ## Troubleshooting
 
@@ -367,7 +402,9 @@ For GitHub Actions:
 This usually means you don't have the required access. Check:
 
 1. You're authenticated: `project auth status`
+
 2. You have the right role: `project iam check`
+
 3. The resource exists: `project list resources`
 
 </details>
@@ -378,7 +415,9 @@ This usually means you don't have the required access. Check:
 Verify:
 
 - The resource name is spelled correctly
+
 - You're in the right project/namespace
+
 - The resource hasn't been deleted
 
 Run `project list resources --all` to see available resources.
@@ -391,7 +430,9 @@ Run `project list resources --all` to see available resources.
 Common causes:
 
 1. **Caching**: Try clearing cache with `project cache clear`
+
 2. **Timing**: Some changes take a few minutes to propagate
+
 3. **Configuration**: Double-check your settings match the examples
 
 </details>
@@ -399,30 +440,41 @@ Common causes:
 ## Related Tasks
 
 - [How to Update [Thing]](link) - Modify existing resources
+
 - [How to Delete [Thing]](link) - Clean up when done
+
 - [How to Monitor [Thing]](link) - Track performance and health
 
 ## Further Reading
 
 - [Architecture Overview](link) - Understand how this fits in the bigger picture
+
 - [Best Practices for [Topic]](link) - Optimize your approach
+
 - [API Reference](link) - Complete options and parameters
 
-````
+````text
+
 ### Write the Docs Notes for How-to Guides
 
 - **Scannable structure**: Users should quickly find what they need
+
 - **Copy-paste friendly**: Code blocks should work as-is
+
 - **Multiple approaches**: Show different ways when they exist
+
 - **Troubleshooting**: Anticipate and address common problems
+
 - **Time estimates**: Help users plan their work
 
 ## Reference Guidelines
 
 ### Purpose
+
 Provide comprehensive technical details for users who need complete information.
 
 ### Structure
+
 ```markdown
 # [Component] API Reference
 
@@ -441,22 +493,25 @@ The [Component] API provides [what it does]. Use this API to [common use cases].
 curl -X GET \
   -H "Authorization: Bearer YOUR_TOKEN" \
   https://api.example.com/v1/resources
-````
+````text
 
 ## Authentication
 
 All requests require authentication using a Bearer token in the Authorization
 header:
 
-```
+```text
 Authorization: Bearer YOUR*API*TOKEN
-```
+```text
 
 To get an API token:
 
 1. Log in to your account
+
 2. Navigate to Settings > API Tokens
+
 3. Click "Generate New Token"
+
 4. Copy the token (you won't see it again)
 
 ## Endpoints
@@ -481,7 +536,7 @@ List all resources in your account.
 curl -X GET \
   -H "Authorization: Bearer YOUR_TOKEN" \
   "https://api.example.com/v1/resources?page=2&per_page=50&sort=created"
-```
+```text
 
 #### Response
 
@@ -508,7 +563,7 @@ curl -X GET \
     "pages": 5
   }
 }
-```
+```text
 
 #### Response Codes
 
@@ -538,23 +593,30 @@ Create a new resource.
     "tags": ["production"]
   }
 }
-```
+```text
 
 #### Field Descriptions
 
 - `name` (string, required): Display name for the resource
+
   - Constraints: 1-255 characters, unique within account
+
   - Example: `"Production Database"`
 
 - `type` (string, required): Resource type
+
   - Valid values: `"standard"`, `"premium"`, `"enterprise"`
+
   - Default: `"standard"`
 
 - `configuration` (object, optional): Type-specific settings
+
   - See [Configuration Options](#configuration-options) for details
 
 - `metadata` (object, optional): Additional metadata
+
   - `tags` (array of strings): Labels for organization
+
   - Custom fields allowed
 
 #### Response
@@ -571,7 +633,7 @@ Create a new resource.
     "status": "https://api.example.com/v1/resources/res_789xyz/status"
   }
 }
-```
+```text
 
 ### `DELETE /resources/{id}`
 
@@ -587,12 +649,14 @@ Delete a resource.
 curl -X DELETE \
   -H "Authorization: Bearer YOUR_TOKEN" \
   https://api.example.com/v1/resources/res_123abc
-```
+```text
 
 #### Response
 
 - **204 No Content**: Resource deleted successfully
+
 - **404 Not Found**: Resource doesn't exist
+
 - **409 Conflict**: Resource has dependencies that must be removed first
 
 ## Data Types
@@ -610,7 +674,7 @@ interface Resource {
   configuration?: Configuration;
   metadata?: Record<string, any>;
 }
-```
+```text
 
 ### Configuration Object
 
@@ -624,7 +688,7 @@ interface StandardConfiguration {
   region: string;
   backup_enabled: boolean;
 }
-```
+```text
 
 ## Error Handling
 
@@ -641,7 +705,7 @@ All errors follow this format:
     "request*id": "req*987zyx"
   }
 }
-```
+```text
 
 ### Error Codes
 
@@ -659,22 +723,24 @@ All errors follow this format:
 Rate limits are applied per API token:
 
 - **Standard tier**: 1,000 requests/hour
+
 - **Premium tier**: 10,000 requests/hour
+
 - **Enterprise tier**: Custom limits
 
 Rate limit information is included in response headers:
 
-```
+```text
 X-RateLimit-Limit: 1000
 X-RateLimit-Remaining: 942
 X-RateLimit-Reset: 1697382000
-```
+```text
 
 ## Filtering
 
 Use the `filter` parameter to search resources:
 
-```
+```text
 # Simple equality
 filter=status:active
 
@@ -686,7 +752,7 @@ filter=name:prod*
 
 # Metadata filtering
 filter=metadata.tags:production
-```
+```text
 
 ## Webhooks
 
@@ -698,7 +764,7 @@ Configure webhooks to receive real-time notifications:
   "events": ["resource.created", "resource.deleted"],
   "secret": "your-webhook-secret"
 }
-```
+```text
 
 See [Webhook Events](link) for the complete list of available events.
 
@@ -724,7 +790,7 @@ const newResource = await client.resources.create({
   name: "My Resource",
   type: "standard",
 });
-```
+```text
 
 ### Python
 
@@ -741,39 +807,50 @@ new_resource = client.resources.create(
     name='My Resource',
     type='standard'
 )
-```
+```text
 
 ## Changelog
 
 ### v1.2.0 (2023-10-01)
 
 - Added filtering support
+
 - Improved error messages
+
 - New `metadata` field on resources
 
 ### v1.1.0 (2023-07-15)
 
 - Webhook support
+
 - Pagination headers
+
 - Rate limit increase for premium
 
 See [Full Changelog](link) for complete history.
 
-````
+````text
+
 ### Write the Docs Notes for References
 
 - **Completeness**: Document every parameter, response, and error
+
 - **Examples everywhere**: Show actual requests and responses
+
 - **Progressive detail**: Start with common use cases, add complexity
+
 - **Code samples**: Include multiple languages when possible
+
 - **Versioning**: Track changes that affect users
 
 ## Explanation Guidelines
 
 ### Purpose
+
 Help users understand the why behind the what - concepts, architecture, and design decisions.
 
 ### Structure
+
 ```markdown
 # Understanding [Concept/System]
 
@@ -784,8 +861,11 @@ Help users understand the why behind the what - concepts, architecture, and desi
 Before diving into how [concept] works, let's understand the problem it solves.
 
 Imagine you're building [relatable scenario]. You need to:
+
 - [Requirement 1 that seems simple]
+
 - [Requirement 2 that adds complexity]
+
 - [Requirement 3 that makes it challenging]
 
 Traditional approaches like [alternative] fall short because [specific limitations]. This is where [concept] comes in.
@@ -807,13 +887,13 @@ Think of it like [analogy]. When you [action in analogy], you [result]. Similarl
 ## How It Works
 
 Let's trace through what happens when you [common user action]:
-````
+````text
 
 User Action ↓ [Component 1] → "Validates and prepares request" ↓ [Component 2] →
 "Processes according to rules" ↓ [Component 3] → "Returns formatted result" ↓
 User sees result
 
-````
+````text
 ### Step-by-Step Breakdown
 
 1. **Initial Request**
@@ -821,7 +901,9 @@ User sees result
 
 2. **Processing Phase**
    Next, [component] takes your request and [detailed explanation]. During this phase:
+
    - [Sub-step 1]: [What and why]
+
    - [Sub-step 2]: [What and why]
 
 3. **Result Generation**
@@ -840,7 +922,7 @@ result = system.process("Hello, World!")
 # 2. Transformation: Applies configured rules
 # 3. Caching: Stores for future use
 # 4. Return: Sends back processed result
-````
+````text
 
 ## Design Decisions
 
@@ -852,12 +934,15 @@ thinking:
 **Option 1: [The alternative]**
 
 - ✅ Pro: [Advantage]
+
 - ❌ Con: [Disadvantage that matters for our use case]
 
 **Option 2: [Our choice]**
 
 - ✅ Pro: [Advantage that addresses the con above]
+
 - ✅ Pro: [Additional benefit]
+
 - ⚠️ Trade-off: [Honest acknowledgment of any downsides]
 
 We chose Option 2 because [reasoning tied to user needs].
@@ -867,12 +952,15 @@ We chose Option 2 because [reasoning tied to user needs].
 [Concept] is optimized for [specific use case]. This means:
 
 - **Fast**: [Specific performance characteristic]
+
 - **Efficient**: [Resource usage explanation]
+
 - **Scalable**: [How it handles growth]
 
 However, this optimization comes with trade-offs:
 
 - [Trade-off 1]: [Impact and when it matters]
+
 - [Trade-off 2]: [How to work around if needed]
 
 ## Common Patterns
@@ -883,9 +971,9 @@ However, this optimization comes with trade-offs:
 
 **How it works**:
 
-```
+```text
 [Visual representation or code example]
-```
+```text
 
 **Why it's effective**: [Benefits in this context]
 
@@ -909,13 +997,17 @@ Let's compare [concept] with similar approaches:
 Choose [concept] when:
 
 - ✅ Your priority is [specific need]
+
 - ✅ You need [specific capability]
+
 - ✅ Your team is comfortable with [specific requirement]
 
 Consider alternatives when:
 
 - 🤔 You need [different priority]
+
 - 🤔 Your constraints include [specific limitation]
+
 - 🤔 You're already using [conflicting technology]
 
 ## Real-World Example
@@ -927,12 +1019,15 @@ Let's look at how [Example Company] uses [concept] in production:
 **Solution**: They implemented [concept] with these customizations:
 
 - [Customization 1]: To handle [specific requirement]
+
 - [Customization 2]: To integrate with [existing system]
 
 **Results**:
 
 - [Quantified improvement 1]
+
 - [Quantified improvement 2]
+
 - [Qualitative benefit]
 
 **Lessons Learned**:
@@ -946,7 +1041,9 @@ Let's look at how [Example Company] uses [concept] in production:
 If you want to understand the internals:
 
 1. **[Internal Component 1]**: [Link to deep dive]
+
 2. **[Algorithm/Approach]**: [Link to technical paper]
+
 3. **[Implementation Details]**: [Link to source code]
 
 ### Related Concepts
@@ -954,7 +1051,9 @@ If you want to understand the internals:
 To fully understand [concept], it helps to know about:
 
 - **[Related Concept 1]**: [Brief description and link]
+
 - **[Related Concept 2]**: [How it connects]
+
 - **[Related Concept 3]**: [Why it matters]
 
 ## Summary
@@ -963,7 +1062,9 @@ To fully understand [concept], it helps to know about:
 to remember:
 
 1. **[Main takeaway 1]**
+
 2. **[Main takeaway 2]**
+
 3. **[Main takeaway 3]**
 
 Whether you're [use case 1] or [use case 2], understanding these principles will
@@ -972,17 +1073,25 @@ help you [benefit].
 ## Further Reading
 
 - 📖 [Academic Paper]: Original research behind [concept]
+
 - 🛠️ [Implementation Guide]: Step-by-step deployment
+
 - 💬 [Community Discussion]: Real experiences and tips
+
 - 📹 [Video Explanation]: Visual walkthrough of concepts
 
-````
+````text
+
 ### Write the Docs Notes for Explanations
 
 - **Start with why**: Connect to real problems users face
+
 - **Build understanding gradually**: Layer complexity appropriately
+
 - **Use multiple formats**: Text, diagrams, code, tables
+
 - **Be honest**: Acknowledge limitations and trade-offs
+
 - **Provide paths**: Different readers need different depths
 
 ## General Write the Docs Guidelines
@@ -990,8 +1099,11 @@ help you [benefit].
 ### Documentation as Code
 
 #### Version Control
+
 - Keep docs in the same repo as code
+
 - Review docs changes like code changes
+
 - Tag documentation versions with releases
 
 #### Automation
@@ -999,30 +1111,41 @@ help you [benefit].
 # Example CI/CD for docs
 name: Documentation
 on:
+
   push:
     branches: [main]
     paths:
+
       - 'docs/**'
+
       - 'src/**'
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
     steps:
+
       - uses: actions/checkout@v3
+
       - name: Build docs
         run: make docs
+
       - name: Test links
         run: make test-links
+
       - name: Deploy
         run: make deploy-docs
-````
+````text
 
 #### Testing Documentation
 
 - Validate all links
+
 - Test code examples
+
 - Check for outdated information
+
 - Verify screenshots are current
 
 ### Community Contributions
@@ -1039,25 +1162,34 @@ jobs:
 Notice something wrong? Have a better explanation? We'd love your help!
 
 - 📝 [Edit this page](github-edit-link)
+
 - 💬 [Discuss improvements](discussion-link)
+
 - 🐛 [Report issues](issue-link)
 
 ### Contributor Notes
 
 - Keep the same friendly, helpful tone
+
 - Test any code examples you add
+
 - Update the "Last Updated" date
+
 - Add yourself to contributors if you'd like
-```
+```text
 
 #### Review Guidelines
 
 When reviewing documentation PRs:
 
 1. **Accuracy**: Is the information correct?
+
 2. **Clarity**: Will readers understand?
+
 3. **Completeness**: Is anything missing?
+
 4. **Consistency**: Does it match our style?
+
 5. **Currency**: Is it up-to-date?
 
 ### Inclusive Documentation
@@ -1065,22 +1197,31 @@ When reviewing documentation PRs:
 #### Language Choices
 
 - Use "they" as singular pronoun
+
 - Avoid idioms and cultural references
+
 - Choose descriptive, neutral terms
+
 - Welcome all skill levels
 
 #### Global Audience
 
 - Spell out abbreviations first time
+
 - Include timezone info for times
+
 - Use ISO date formats (2023-10-15)
+
 - Provide multiple examples with diverse names/locations
 
 #### Accessibility
 
 - Alt text for all images
+
 - Descriptive link text
+
 - Consistent structure
+
 - Keyboard navigation friendly
 
 ### Maintenance
@@ -1094,13 +1235,16 @@ When reviewing documentation PRs:
 
 > ⚠️ **Version Note**: This guide is for version 2.3+. For earlier versions, see
 > [archived docs](link).
-```
+```text
 
 #### Regular Reviews
 
 - Quarterly doc audits
+
 - Post-release updates
+
 - Community feedback integration
+
 - Analytics-driven improvements
 
 ### Documentation Ecosystem
@@ -1108,14 +1252,23 @@ When reviewing documentation PRs:
 #### Types of Documentation
 
 1. **README**: Project overview and quick start
+
 2. **Tutorials**: Hand-holding walkthroughs
+
 3. **How-to Guides**: Task-focused instructions
+
 4. **References**: Complete technical details
+
 5. **Explanations**: Conceptual understanding
+
 6. **Examples**: Working code samples
+
 7. **Troubleshooting**: Problem-solving guides
+
 8. **FAQ**: Common questions
+
 9. **Glossary**: Term definitions
+
 10. **Contributing**: How to help
 
 #### Information Architecture
@@ -1123,8 +1276,11 @@ When reviewing documentation PRs:
 Organize by:
 
 - User journey (beginner → advanced)
+
 - Use cases (scenarios)
+
 - Features (functionality)
+
 - Tasks (what users do)
 
 ### Metrics and Feedback
@@ -1132,9 +1288,13 @@ Organize by:
 #### What to Measure
 
 - Page views and time on page
+
 - Search queries (what can't they find?)
+
 - Feedback ratings
+
 - Support ticket themes
+
 - Documentation coverage
 
 #### Gathering Feedback
@@ -1151,17 +1311,23 @@ Organize by:
 </feedback-widget>
 
 Questions? Ask in our [community forum](link) or [chat](link).
-```
+```text
 
 ## Summary
 
 Write the Docs principles emphasize:
 
 1. **Documentation is everyone's job** - Not just technical writers
+
 2. **Iterate based on feedback** - Docs are never "done"
+
 3. **Lower barriers to contribution** - Make it easy to help
+
 4. **Focus on user success** - Measure by user outcomes
+
 5. **Build community** - Documentation connects people
 
 Remember: The best documentation is the one that helps your users succeed at
 their goals. Everything else is implementation details.
+`````
+``````

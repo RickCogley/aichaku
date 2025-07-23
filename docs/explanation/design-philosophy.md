@@ -10,6 +10,7 @@ work, but consistency in what they produce. This creates tension between:
 
 - **Process flexibility**: Teams must adapt their workflow to changing
   circumstances
+
 - **Quality consistency**: Code standards can't vary from sprint to sprint
 
 Aichaku resolves this tension by treating methodologies and standards as
@@ -21,7 +22,9 @@ Think of methodologies like different styles of cooking:
 
 - **French cuisine** (Shape Up): Careful preparation, precise timing, elegant
   presentation
+
 - **Stir-fry** (Kanban): Continuous flow, quick adjustments, immediate serving
+
 - **Baking** (Scrum): Fixed time boxes, specific ingredients, predictable
   results
 
@@ -38,15 +41,20 @@ While cooking techniques vary, food safety standards remain constant. You
 always:
 
 - Wash your hands
+
 - Keep ingredients at safe temperatures
+
 - Avoid cross-contamination
+
 - Check expiration dates
 
 Similarly, coding standards provide consistent quality regardless of
 methodology:
 
 - OWASP security practices apply whether you're in a sprint or a cycle
+
 - TDD works with any planning approach
+
 - SOLID principles transcend process boundaries
 
 This is why standards are selectively integrated - you choose your quality
@@ -64,10 +72,10 @@ context
 
 Example:
 
-```text
+````text
 Traditional: aichaku create project --type=shape-up --name=auth --template=pitch
 Aichaku: "I need to shape a solution for authentication"
-```
+```text
 
 The natural approach reduces cognitive load and makes the tool disappear into
 the workflow.
@@ -102,7 +110,9 @@ flexible. Like a garden with defined beds but diverse plants.
 When moving from planning to execution, both user and Claude see:
 
 - Status update in STATUS.md
+
 - Visual indicator change (🌱 → 🌿)
+
 - Appropriate document templates
 
 ### 5. Documentation as artifact
@@ -114,7 +124,9 @@ When moving from planning to execution, both user and Claude see:
 Every Aichaku interaction produces tangible artifacts:
 
 - Plans become pitch.md
+
 - Progress lives in STATUS.md
+
 - Decisions recorded in documents
 
 This ensures knowledge persistence across time and team members.
@@ -128,8 +140,11 @@ Aichaku uses gardening metaphors thoughtfully:
 Gardens represent:
 
 - **Organic growth**: Projects evolve naturally, not mechanically
+
 - **Careful tending**: Success requires attention, not just process
+
 - **Seasonal cycles**: Different phases need different care
+
 - **Diversity**: Many approaches can coexist harmoniously
 
 ### Why NOT gardens?
@@ -137,7 +152,9 @@ Gardens represent:
 We avoid overdoing the metaphor:
 
 - No "planting seeds of ideas"
+
 - No "harvesting results"
+
 - No "cross-pollinating concepts"
 
 The metaphor provides visual indicators and mental models, not purple prose.
@@ -153,8 +170,11 @@ The metaphor provides visual indicators and mental models, not purple prose.
 **We chose B because**:
 
 - Teams rarely know which methodologies they'll need
+
 - Disk space is cheap (300KB total)
+
 - Friction prevents experimentation
+
 - Offline work requires local copies
 
 **Downside**: More files in every project
@@ -170,9 +190,13 @@ The metaphor provides visual indicators and mental models, not purple prose.
 **We chose B because**:
 
 - Complete transparency
+
 - Git versioning works naturally
+
 - No corruption issues
+
 - Zero dependencies
+
 - Claude can read/write directly
 
 **Downside**: No complex queries
@@ -188,8 +212,11 @@ The metaphor provides visual indicators and mental models, not purple prose.
 **We chose B because**:
 
 - Single file for Claude to read
+
 - Faster performance
+
 - Users can customize
+
 - Clear what's active
 
 **Downside**: Larger CLAUDE.md files
@@ -235,25 +262,37 @@ As Aichaku evolves, these principles will guide decisions:
 ### What we'll always do
 
 - Keep the core simple
+
 - Respect user autonomy
+
 - Work offline first
+
 - Use open standards
+
 - Maintain transparency
 
 ### What we'll never do
 
 - Require accounts or registration
+
 - Track user behavior
+
 - Break backward compatibility
+
 - Hide functionality behind paywalls
+
 - Complicate the basic workflow
 
 ### What we might do
 
 - Add optional enhancements (like MCP)
+
 - Support new methodologies
+
 - Provide team features
+
 - Enable plugin systems
+
 - Offer cloud sync (optional)
 
 ## The philosophy in practice
@@ -264,15 +303,21 @@ into Scrum, then maturing to Shape Up.
 **Without Aichaku**: Each transition requires:
 
 - Learning new tools
+
 - Migrating data
+
 - Retraining team
+
 - Lost context
 
 **With Aichaku**: Transitions are natural:
 
 - All methodologies already available
+
 - Same file structure throughout
+
 - Historical work preserved
+
 - Mix approaches as needed
 
 The startup's OWASP security standards and TDD practices remain constant
@@ -284,9 +329,13 @@ Software development is fundamentally about managing complexity. Aichaku's
 philosophy reduces complexity through:
 
 1. **Clear conceptual models**: Methodologies vs. standards
+
 2. **Predictable behavior**: No surprises or magic
+
 3. **Natural workflows**: Work how you think
+
 4. **Progressive learning**: Complexity when needed
+
 5. **Flexible structure**: Freedom within boundaries
 
 ## Summary
@@ -301,10 +350,15 @@ Every design decision flows from this principle. When faced with choices, we
 ask:
 
 - Does this respect the methodology/standards distinction?
+
 - Does this feel natural to use?
+
 - Does this work offline?
+
 - Does this increase transparency?
+
 - Does this preserve flexibility?
 
 The result is a tool that enhances human-AI collaboration without getting in the
 way - structure that enables rather than constrains.
+````

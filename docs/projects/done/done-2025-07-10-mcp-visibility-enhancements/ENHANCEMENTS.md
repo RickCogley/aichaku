@@ -6,6 +6,7 @@ Enhanced the Aichaku MCP server to address two key user concerns:
 
 1. **MCP Usage Visibility**: Added clear console logging to show when the MCP is
    actively being used
+
 2. **Document Linting**: Extended MCP capabilities to lint Markdown
    documentation files
 
@@ -15,19 +16,22 @@ Enhanced the Aichaku MCP server to address two key user concerns:
 
 The MCP now logs to stderr (visible in Claude Code console) with clear prefixes:
 
-```
+````text
 🪴 [Aichaku MCP] Tool invoked: review_file
 🪴 [Aichaku MCP] Reviewing file: /Users/rcogley/dev/aichaku/README.md
 🪴 [Aichaku MCP] Using standards: diataxis, google-style
 🪴 [Aichaku MCP] Using methodologies: shape-up
 🪴 [Aichaku MCP] Review complete: 3 findings
-```
+```text
 
 This makes it immediately apparent when the MCP is:
 
 - Starting up
+
 - Being invoked by Claude
+
 - Processing files
+
 - Using specific standards/methodologies
 
 ### 2. Documentation Linting
@@ -37,21 +41,29 @@ Added comprehensive documentation patterns that check for:
 #### Diátaxis Framework Compliance
 
 - Tutorial structure (prerequisites, learning objectives)
+
 - How-to guide structure (before you begin, solution sections)
+
 - Proper document type identification
 
 #### Google Developer Style Guide
 
 - Sentence length (< 25 words)
+
 - Present tense usage
+
 - Second person pronouns (you, your)
+
 - Active voice preference
 
 #### General Quality
 
 - Broken or placeholder links
+
 - Missing code block languages
+
 - Inconsistent header levels
+
 - Formatting issues
 
 ### 3. Enhanced Output
@@ -59,15 +71,18 @@ Added comprehensive documentation patterns that check for:
 The MCP now:
 
 - Identifies document type (Tutorial, How-to, Reference, Explanation)
+
 - Provides document-specific feedback
+
 - Shows "Documentation Review Results" for Markdown files
+
 - Gives actionable fix suggestions
 
 ## Example Output
 
 When reviewing a Markdown file:
 
-```
+```text
 🪴 Aichaku Documentation Review Results
 
 📄 File: /docs/tutorial.md
@@ -91,27 +106,34 @@ When reviewing a Markdown file:
 ----------------------------------------
   • Line 23: Sentence has 32 words (Google style recommends < 25)
     → Fix: Break long sentences into shorter statements
-```
+```text
 
 ## Implementation Notes
 
 ### Type Safety
 
 - Updated all pattern interfaces to match new SecurityPattern type
+
 - Added proper typing for checkFn functions
+
 - Fixed compilation errors across all pattern files
 
 ### Pattern Architecture
 
 - Patterns can use regex OR custom check functions
+
 - Line-specific error reporting
+
 - Framework-specific patterns (only apply to relevant standards)
 
 ### Future Enhancements
 
 1. Auto-fix capabilities for common issues
+
 2. Integration with `deno fmt` for Markdown
+
 3. Additional style guides (Microsoft, Write the Docs)
+
 4. Performance metrics in console output
 
 ## Testing the Enhancement
@@ -121,7 +143,7 @@ When reviewing a Markdown file:
    ```bash
    cd mcp-server
    deno task compile
-   ```
+````
 
 2. Install the new version:
 
@@ -137,6 +159,9 @@ When reviewing a Markdown file:
 ## Benefits
 
 1. **Transparency**: No more wondering if MCP is working
+
 2. **Documentation Quality**: Automatic enforcement of doc standards
+
 3. **Consistency**: Same tooling for code and docs
+
 4. **Education**: Learn documentation best practices through feedback

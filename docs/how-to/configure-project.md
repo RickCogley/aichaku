@@ -5,7 +5,9 @@
 Ensure you have Aichaku installed and initialized in your project. You need:
 
 - Basic understanding of JSON configuration files
+
 - Access to your project's `.claude` directory
+
 - Text editor or command-line access
 
 This guide shows you how to configure Aichaku for your specific needs. Each
@@ -20,7 +22,7 @@ Each provides step-by-step instructions for specific configuration tasks.
 
 Edit your project's settings in `.claude/settings.local.json`:
 
-```json
+`````json
 {
   "selectedStandards": ["owasp-web", "solid", "tdd", "conventional-commits"],
   "methodology": "shape-up",
@@ -29,13 +31,16 @@ Edit your project's settings in `.claude/settings.local.json`:
     "templates": ".claude/templates"
   }
 }
-```
+```text
 
 This file controls:
 
 - Which coding standards Claude follows (including custom standards)
+
 - Your primary methodology (for documentation)
+
 - Where you create files
+
 - Custom standards metadata that you configure at
   `~/.claude/aichaku/standards.json`
 
@@ -49,7 +54,7 @@ aichaku standards --add owasp-web,tdd,test-pyramid
 
 # Add development practices
 aichaku standards --add solid,conventional-commits
-```
+```text
 
 ## Remove standards you don't need
 
@@ -59,7 +64,7 @@ aichaku standards --remove test-pyramid
 
 # Remove multiple standards
 aichaku standards --remove solid,bdd
-```
+```text
 
 ## View your active standards
 
@@ -69,7 +74,7 @@ aichaku standards --list --selected
 
 # Show all available standards
 aichaku standards --list
-```
+```text
 
 Example output with source paths:
 
@@ -80,15 +85,21 @@ Selected Standards:
 ✅ custom:api-design 📁 ~/.claude/aichaku/custom-standards
 
 Available Standards:
+
   Security:
+
     - nist-csf (NIST Cybersecurity Framework)
+
     - owasp-web (OWASP Web Security) ✅
   Architecture:
+
     - solid (SOLID Principles) ✅
+
     - clean-architecture (Clean Architecture)
   Custom:
+
     - api-design (My Organization API Design) ✅
-```
+```text
 
 ## Customize methodology templates
 
@@ -98,7 +109,7 @@ Navigate to your methodology's template directory:
 
 ```bash
 cd .claude/methodologies/scrum/templates/
-```
+```text
 
 Edit any template to match your team's needs:
 
@@ -117,7 +128,7 @@ points** <!-- Your team's actual velocity -->
 ## Selected Items
 
 [Your custom backlog format]
-```
+```text
 
 ## Add custom templates
 
@@ -131,17 +142,22 @@ cat > .claude/methodologies/scrum/templates/daily-standup.md << 'EOF'
 ## Team Updates
 
 ### ${TEAM_MEMBER}
+
 - Yesterday:
+
 - Today:
+
 - Blockers:
 
 ## Action Items
+
 - [ ]
 
 ## Parking Lot
+
 -
 EOF
-```
+```text
 
 ## Use templates from multiple methodologies
 
@@ -155,7 +171,7 @@ cp "$HOME/.claude/methodologies/shape-up/templates/pitch.md" \
 # Use Kanban's flow metrics in Shape Up
 cp "$HOME/.claude/methodologies/kanban/templates/flow-metrics.md" \
    ".claude/methodologies/shape-up/templates/"
-```
+```text
 
 ## Set up custom commands
 
@@ -171,14 +187,14 @@ Create quick-access commands in `.claude/commands.json`:
     "metrics": "npm run metrics && open coverage/index.html"
   }
 }
-```
+```text
 
 Use these in Claude:
 
 ```text
 "Run the deploy command"
 "Show me the test coverage"
-```
+```text
 
 ## Configure git hooks
 
@@ -214,7 +230,7 @@ chmod +x .githooks/pre-commit
 
 # Configure git to use the hooks
 git config core.hooksPath .githooks
-```
+```text
 
 ## Add to your project documentation
 
@@ -227,10 +243,12 @@ Enable git hooks for automatic formatting:
 
 ```bash
 git config core.hooksPath .githooks
-```
-````
+```text
 
-````
+```markdown
+```text
+````text
+
 ## Use environment variables
 
 ## Set Aichaku environment variables
@@ -247,7 +265,7 @@ export AICHAKU_DEBUG="true"
 
 # Custom templates directory
 export AICHAKU_TEMPLATES="/path/to/custom/templates"
-````
+```text
 
 ## Add to your shell configuration
 
@@ -256,7 +274,7 @@ export AICHAKU_TEMPLATES="/path/to/custom/templates"
 echo 'export AICHAKU*DEFAULT*METHODOLOGY="shape-up"' >> ~/.zshrc
 echo 'export AICHAKU_DEBUG="false"' >> ~/.zshrc
 source ~/.zshrc
-```
+```text
 
 ## Working with custom standards
 
@@ -274,7 +292,7 @@ aichaku standards --edit-custom my-organization-api-design
 
 # Add to your project
 aichaku standards --add custom:my-organization-api-design
-```
+```text
 
 ## Example: Mixed standards configuration
 
@@ -284,7 +302,7 @@ aichaku standards --add owasp-web,solid,custom:my-organization-api-design
 
 # View current configuration
 aichaku standards --list --selected
-```
+```text
 
 Output shows both types:
 
@@ -292,13 +310,16 @@ Output shows both types:
 ✅ owasp-web (OWASP Web Security) 📁 ~/.claude/aichaku/docs/standards/security
 ✅ solid (SOLID Principles) 📁 ~/.claude/aichaku/docs/standards/architecture
 ✅ custom:my-organization-api-design 📁 ~/.claude/aichaku/custom-standards
-```
+```text
 
 ## Quick overview
 
 1. **Create** - Generate template with `--create-custom`
+
 2. **Edit** - Modify content with `--edit-custom`
+
 3. **Add** - Include in project with `--add custom:name`
+
 4. **Share** - Export and import across teams
 
 For detailed instructions, see
@@ -314,7 +335,7 @@ migrate them:
 aichaku standards --migrate-custom
 
 # Old standards are automatically converted to new format
-```
+```text
 
 See [Migration Guide](../guides/migration-guide.md) for details.
 
@@ -348,7 +369,7 @@ echo "✅ Team configuration installed"
 EOF
 
 chmod +x setup.sh
-```
+```text
 
 Team members run:
 
@@ -356,7 +377,7 @@ Team members run:
 git clone team-config-repo
 cd team-config-repo
 ./setup.sh
-```
+```text
 
 ## Configure MCP server
 
@@ -368,7 +389,7 @@ cd ~/.claude/aichaku
 git clone https://github.com/RickCogley/aichaku.git
 cd aichaku/mcp-server
 deno cache src/server.ts
-```
+```text
 
 ## Add to Claude Desktop settings
 
@@ -388,7 +409,7 @@ Edit Claude Desktop's configuration:
     }
   }
 }
-```
+```text
 
 ## Debug configuration issues
 
@@ -400,7 +421,7 @@ aichaku doctor
 
 # Show current settings
 cat .claude/settings.local.json
-```
+```text
 
 Example output with custom standards:
 
@@ -420,7 +441,7 @@ Example output with custom standards:
     }
   }
 }
-```
+```text
 
 ```bash
 # List all methodology files
@@ -428,7 +449,7 @@ find .claude/methodologies -name "*.md" | head -20
 
 # Check which standards you have configured
 grep -A 5 "Selected Standards" .claude/CLAUDE.md
-```
+```text
 
 ## Reset configuration
 
@@ -443,7 +464,7 @@ aichaku standards --add [your-standards]
 # Reset global configuration
 aichaku uninstall --global
 aichaku init --global
-```
+```text
 
 ## Common configuration patterns
 
@@ -457,7 +478,7 @@ aichaku standards --add nist-csf,owasp-web,solid,tdd
 # Add custom security templates
 mkdir -p .claude/methodologies/security-review/templates
 # Add threat modeling templates
-```
+```text
 
 ## For startups
 
@@ -468,7 +489,7 @@ aichaku standards --add conventional-commits,tdd
 
 # Use lean methodology
 echo '{"methodology": "lean"}' > .claude/settings.local.json
-```
+```text
 
 ## For open source projects
 
@@ -479,12 +500,15 @@ aichaku standards --add conventional-commits,solid,google-style
 
 # Add contributing templates
 cp templates/CONTRIBUTING.md .claude/methodologies/common/templates/
-```
+```text
 
 ## Next steps
 
 - Read the [Configuration Reference](../reference/configuration-options.md) for
   all options
+
 - Learn about
   [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md)
+
 - Explore [Core Concepts](../explanation/core-concepts.md)
+`````

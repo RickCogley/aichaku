@@ -10,21 +10,33 @@ development workflow.
 Before you begin this tutorial, ensure you have:
 
 - **Deno 2.4.0+** or **Node.js 18+** installed
+
 - **Claude Code** or another MCP-compatible client
+
 - Basic familiarity with command-line interfaces
+
 - A development project where you want to apply methodologies
 
 ## Table of Contents
 
 - [CLI Commands](#cli-commands)
+
 - [MCP Tools](#mcp-tools)
+
   - [Code Review Tools](#code-review-tools)
+
   - [Documentation Tools](#documentation-tools)
+
   - [Statistics API](#statistics-api)
+
 - [Configuration Files](#configuration-files)
+
 - [Programmatic API](#programmatic-api)
+
 - [Security Patterns](#security-patterns)
+
 - [External Scanner Integration](#external-scanner-integration)
+
 - [Error Handling](#error-handling)
 
 ## CLI Commands
@@ -35,15 +47,16 @@ Before you begin this tutorial, ensure you have:
 
 Initialize a new Aichaku project in your current directory.
 
-```bash
+````bash
 aichaku init [options]
 
 Options:
+
   --methodology, -m    Methodology to use (shape-up, scrum, kanban, lean, xp)
   --standards, -s      Comma-separated list of standards to enable
   --silent             Skip interactive prompts
   --force              Overwrite existing configuration
-```
+```text
 
 #### `aichaku install`
 
@@ -53,11 +66,12 @@ Install a methodology in your current project or globally.
 aichaku install <methodology> [options]
 
 Options:
+
   --global, -g         Install globally in ~/.claude/methodologies
   --force, -f          Force installation even if already exists
   --symlink            Create symlink instead of copying
   --project-path       Specify project path (default: current directory)
-```
+```text
 
 #### `aichaku list`
 
@@ -67,10 +81,11 @@ View available and installed methodologies.
 aichaku list [options]
 
 Options:
+
   --installed          Show only installed methodologies
   --available          Show only available methodologies
   --global             List global methodologies
-```
+```text
 
 #### `aichaku standards`
 
@@ -80,14 +95,16 @@ Manage documentation standards for your project.
 aichaku standards [action] [options]
 
 Actions:
+
   list                 List all available standards
   add <standard>       Add a standard to the project
   remove <standard>    Remove a standard from the project
   show                 Show currently selected standards
 
 Options:
+
   --project-path       Specify project path (default: current directory)
-```
+```text
 
 #### `aichaku mcp`
 
@@ -97,10 +114,11 @@ Start the MCP server for Claude Code integration.
 aichaku mcp [options]
 
 Options:
+
   --debug              Enable debug logging
   --no-external        Disable external security scanners
   --statistics         Enable statistics collection
-```
+```text
 
 ## MCP Tools
 
@@ -140,7 +158,7 @@ code quality issues.
       "const password = process.env.DB_PASSWORD; // Use environment variables for secrets",
     includeExternal: false,
   });
-```
+```text
 
 ##### Response Format
 
@@ -190,7 +208,7 @@ code quality issues.
     };
   };
 }
-```
+```text
 
 #### `review_methodology`
 
@@ -206,10 +224,15 @@ Check if your project follows the specified methodology patterns and practices.
 ##### Supported Methodologies
 
 - `shape-up` - Shape Up (6-week cycles, betting table, etc.)
+
 - `scrum` - Scrum (sprints, ceremonies, artifacts)
+
 - `kanban` - Kanban (WIP limits, flow metrics)
+
 - `lean` - Lean (experiments, validated learning)
+
 - `xp` - Extreme Programming (pair programming, TDD)
+
 - `scrumban` - Hybrid Scrum/Kanban
 
 ##### Response Format
@@ -228,7 +251,7 @@ Check if your project follows the specified methodology patterns and practices.
     suggestions: string[]; // Improvements
   };
 }
-```
+```text
 
 #### `get_standards`
 
@@ -252,7 +275,7 @@ Retrieve the currently selected standards for your project.
   };
   methodologies: string[];   // Detected methodologies
 }
-```
+```text
 
 ### Documentation Tools
 
@@ -307,7 +330,7 @@ patterns.
     testCoverage?: number;
   };
 }
-```
+```text
 
 ##### Example Usage
 
@@ -325,7 +348,7 @@ const deepAnalysis = await mcp__aichaku__analyze_project({
   includeTests: true,
   includeDocs: true,
 });
-```
+```text
 
 #### `create_doc_template`
 
@@ -362,7 +385,7 @@ patterns.
     standards: string[];
   };
 }
-```
+```text
 
 ##### Example Usage
 
@@ -380,7 +403,7 @@ const apiDocs = await mcp__aichaku__create_doc_template({
   templateType: "api",
   format: "markdown",
 });
-```
+```text
 
 #### `generate_documentation`
 
@@ -424,7 +447,7 @@ existing docs.
   };
   warnings: string[];
 }
-```
+```text
 
 ##### Example Usage
 
@@ -450,7 +473,7 @@ const shapeUpDocs = await mcp__aichaku__generate_documentation({
   types: ["guides", "readme"],
   methodology: "shape-up",
 });
-```
+```text
 
 ### Statistics API
 
@@ -512,7 +535,7 @@ Retrieve usage statistics and analytics for your MCP tool usage.
   }>;
   recommendations: string[];
 }
-```
+```text
 
 ###### Real-time Statistics
 
@@ -534,7 +557,7 @@ Retrieve usage statistics and analytics for your MCP tool usage.
     successRate: number;
   }>;
 }
-```
+```text
 
 ###### Insights Report
 
@@ -556,7 +579,7 @@ Retrieve usage statistics and analytics for your MCP tool usage.
   trend: string;
   recommendations: string[];
 }
-```
+```text
 
 ##### Example Usage
 
@@ -586,7 +609,7 @@ const answer = (await mcp**aichaku) -
     type: "insights",
     question: "Which files have the most security issues?",
   });
-```
+```text
 
 ## Configuration Files
 
@@ -605,7 +628,7 @@ You can configure project-specific settings in
     "requireTests": true
   }
 }
-```
+```text
 
 ### Global Configuration
 
@@ -647,7 +670,7 @@ You can set up global defaults in `~/.aichaku/mcp-config.json`:
     }
   }
 }
-```
+```text
 
 ## Programmatic API
 
@@ -680,7 +703,7 @@ const methodologies = await aichaku.list();
 await aichaku.standards.add("conventional-commits");
 await aichaku.standards.remove("owasp-web");
 const current = await aichaku.standards.list();
-```
+```text
 
 ### Deno Module
 
@@ -705,7 +728,7 @@ await install("lean", {
 
 // Get available standards
 const availableStandards = await standards.list();
-```
+```text
 
 ## Security Patterns
 
@@ -732,25 +755,37 @@ vulnerabilities:
 #### TypeScript/JavaScript
 
 - Dynamic code execution with user input (use JSON.parse() instead)
+
 - Unvalidated user input in child processes
+
 - DOM-based cross-site scripting vulnerabilities
+
 - Prototype pollution attacks
+
 - Cryptographically weak random values
 
 #### Python
 
 - `pickle` deserialization
+
 - SQL string formatting
+
 - Command injection via `subprocess`
+
 - Path traversal in file operations
+
 - Weak cryptography usage
 
 #### Go
 
 - SQL query building
+
 - Command execution
+
 - Path cleaning issues
+
 - Integer overflow
+
 - Race conditions
 
 ## External Scanner Integration
@@ -761,7 +796,7 @@ When CodeQL is available, the MCP server runs:
 
 ```bash
 codeql database analyze --format=sarif-latest
-```
+```text
 
 ### DevSkim
 
@@ -769,7 +804,7 @@ When DevSkim is available:
 
 ```bash
 devskim analyze -f sarif -o results.sarif
-```
+```text
 
 ### Semgrep
 
@@ -777,7 +812,7 @@ When Semgrep is available:
 
 ```bash
 semgrep --config=auto --json
-```
+```text
 
 ## Error Handling
 
@@ -808,27 +843,34 @@ semgrep --config=auto --json
     }
   }
 }
-```
+```text
 
 ## Performance Considerations
 
 ### File Size Limits
 
 - Default: 5MB per file
+
 - You can configure this in `mcp-config.json`
+
 - Large files may timeout
 
 ### Caching
 
 - File content cache (5 minute TTL)
+
 - Standards configuration cache
+
 - External scanner results cache
+
 - Project analysis cache
 
 ### Parallel Processing
 
 - Security patterns run in parallel
+
 - External scanners run sequentially
+
 - Results aggregated asynchronously
 
 ## Environment Variables
@@ -854,7 +896,12 @@ You should always use matching Aichaku and MCP server versions for best results.
 ## See Also
 
 - [MCP Server Setup](./tutorials/setup-mcp-server.md)
+
 - [MCP Tools Documentation](./MCP-TOOLS.md)
+
 - [MCP Feedback System](./reference/mcp-feedback-system.md)
+
 - [Project Configuration](./reference/configuration-options.md)
+
 - [Security Standards](./explanation/security-standards.md)
+````

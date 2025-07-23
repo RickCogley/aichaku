@@ -9,7 +9,7 @@ the session.
 
 ## How It Works
 
-```typescript
+````typescript
 interface ReviewResult {
   findings: Finding[];
   summary: Summary;
@@ -21,7 +21,7 @@ interface ReviewResult {
     example: string; // Correct example
   };
 }
-```
+```text
 
 ## Example Implementation
 
@@ -60,7 +60,7 @@ class ReviewEngine {
     return this.buildGuidance(patterns);
   }
 }
-```
+```text
 
 ### MCP Response Structure
 
@@ -81,22 +81,22 @@ class ReviewEngine {
     }
   }
 }
-```
+```text
 
 ## Claude's Response Flow
 
 ### Before (Without Guidance)
 
-```
+```text
 Claude: Here's the code you requested
 MCP: Found 5 issues with 'any' types
 Claude: I see there are some type issues
 [Claude might make the same mistake again]
-```
+```text
 
 ### After (With Guidance)
 
-```
+```text
 Claude: Here's the code you requested
 MCP: Found 5 issues + guidance
 Claude: I apologize - I used 'any' types despite your CLAUDE.md
@@ -106,7 +106,7 @@ Claude: I apologize - I used 'any' types despite your CLAUDE.md
 
         I'll be more careful to follow your TypeScript standards.
 [Claude adjusts behavior for rest of session]
-```
+```text
 
 ## Advanced Pattern Learning
 
@@ -130,7 +130,7 @@ class PatternTracker {
     )[0][0];
   }
 }
-```
+```text
 
 ### 2. Contextual Guidance
 
@@ -147,7 +147,7 @@ generateContextualGuidance(violations: Map<string, ViolationInfo>): string {
 
   return this.getStandardGuidance(topViolation);
 }
-```
+```text
 
 ## Implementation in MCP Tools
 
@@ -170,7 +170,7 @@ server.setRequestHandler("tools/run", async (request) => {
     return { toolResult: result };
   }
 });
-```
+```text
 
 ## Guidance Templates
 
@@ -193,7 +193,7 @@ const SECURITY_GUIDANCE = {
       "Use parameterized queries: query('SELECT * FROM users WHERE id = ?', [id])",
   },
 };
-```
+```text
 
 ### Methodology Violations
 
@@ -210,14 +210,18 @@ const METHODOLOGY_GUIDANCE = {
     correction: "Add story points to each story (1, 2, 3, 5, 8, 13)",
   },
 };
-```
+```text
 
 ## Benefits
 
 1. **In-Session Learning**: Claude adjusts behavior immediately
+
 2. **Reduced Repetition**: Same mistakes less likely
+
 3. **Educational**: Claude explains what it learned
+
 4. **Project Alignment**: Reinforces CLAUDE.md requirements
+
 5. **Pattern Recognition**: Identifies systematic issues
 
 ## Example Full Response
@@ -250,15 +254,20 @@ const METHODOLOGY_GUIDANCE = {
     }
   }
 }
-```
+```text
 
 ## Future Enhancements
 
 1. **Persistent Learning**: Save patterns between sessions
+
 2. **Team Patterns**: Share common violations across team
+
 3. **Adaptive Guidance**: Adjust tone based on repetition
+
 4. **Positive Reinforcement**: Praise when standards followed
+
 5. **Learning Metrics**: Track improvement over time
 
 This creates a true feedback loop where the MCP doesn't just find problems but
 actively helps Claude learn and improve within the session!
+````

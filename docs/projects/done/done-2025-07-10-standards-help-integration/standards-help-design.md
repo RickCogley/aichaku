@@ -11,11 +11,11 @@ creating a valuable knowledge base for developers.
 
 ### Current
 
-```bash
+````bash
 aichaku help                    # General help
 aichaku help shape-up          # Methodology help
 aichaku help --list            # List methodologies
-```
+```text
 
 ### Enhanced
 
@@ -27,7 +27,7 @@ aichaku help --list            # List methodologies
 aichaku help --standards       # List all standards
 aichaku help --security        # List security standards
 aichaku help --all             # Everything available
-```
+```text
 
 ## Standard Help Format
 
@@ -78,9 +78,11 @@ A03. Injection
 💻 Code Examples
 
 ❌ Vulnerable (SQL Injection):
+
   const query = \`SELECT * FROM users WHERE id = \${userId}\`;
 
 ✅ Secure (Parameterized):
+
   const query = 'SELECT * FROM users WHERE id = ?';
   db.query(query, [userId]);
 
@@ -173,6 +175,7 @@ XV. Authentication & Authorization 🆕
 💻 Implementation Examples
 
 ✅ Config (Factor III):
+
   // Good: Environment variables
   const dbUrl = process.env.DATABASE_URL;
   
@@ -180,6 +183,7 @@ XV. Authentication & Authorization 🆕
   const dbUrl = "postgres://localhost/myapp";
 
 ✅ Logs (Factor XI):
+
   // Good: Write to stdout
   console.log(JSON.stringify({
     timestamp: new Date().toISOString(),
@@ -307,7 +311,7 @@ class Calculator {
   • Delete redundant tests
 `,
 };
-```
+```text
 
 ## Implementation Plan
 
@@ -329,7 +333,7 @@ const args = parseArgs(Deno.args, {
   ],
   string: ["methodology", "standard"],
 });
-```
+```text
 
 ### 2. Create Help Content Map
 
@@ -339,7 +343,7 @@ const ALL*HELP*CONTENT = {
   ...METHODOLOGY_HELP,
   ...STANDARDS_HELP,
 };
-```
+```text
 
 ### 3. Add Category Filtering
 
@@ -354,7 +358,7 @@ function listStandardsByCategory(category: string) {
     console.log(`    ${standard.description}`);
   }
 }
-```
+```text
 
 ### 4. Enhanced Help Display
 
@@ -387,26 +391,36 @@ function showGeneralHelp() {
   • solid        - Object-oriented principles
 
 Usage:
+
   aichaku help <topic>        # Detailed help
   aichaku help --list         # List methodologies
   aichaku help --standards    # List all standards
   aichaku help --security     # Security standards
 `);
 }
-```
+```text
 
 ## Benefits
 
 1. **Unified Knowledge Base**: One place for all development guidance
+
 2. **Quick Reference**: Developers can learn standards without leaving terminal
+
 3. **Visual Learning**: ASCII diagrams make concepts memorable
+
 4. **Practical Examples**: Real code snippets for each standard
+
 5. **Integration Tips**: How to use with Claude Code
 
 ## Future Enhancements
 
 1. **Interactive Mode**: Browse standards with arrow keys
+
 2. **Search**: Find standards by keyword
+
 3. **Export**: Generate PDF reference guides
+
 4. **Updates**: Pull latest standards from online sources
+
 5. **Custom Standards**: Add organization-specific guides
+````

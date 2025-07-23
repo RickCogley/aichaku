@@ -8,7 +8,9 @@ For ANY new work, feature, or change, IMMEDIATELY create: 📁
 This happens AUTOMATICALLY when users say:
 
 - "Let's..." / "I want to..." / "Can we..."
+
 - "Help me..." / "We need to..." / "Fix..."
+
 - "Add..." / "Improve..." / "Change..."
 
 Users should NEVER need to ask for this structure!
@@ -38,38 +40,48 @@ how to combine methodologies based on context.
 
 Users often want familiar ceremonies with new methods:
 
-```
+````text
 User: "Let's do our daily standup and check the bets"
 AI: Combines Scrum ceremony with Shape Up concepts
+
 - Run standup format (Scrum)
+
 - Focus on bet progress (Shape Up)
+
 - Keep it brief (both)
-```
+```text
 
 ### 2. Planning Blending
 
 Different planning approaches can complement each other:
 
-```
+```text
 User: "We need to shape our backlog"
 AI: Merges Shape Up shaping with Scrum backlog
+
 - Shape problems into pitches (Shape Up)
+
 - Organize as backlog items (Scrum)
+
 - Prioritize by value (both)
-```
+```text
 
 ### 3. Tracking Blending
 
 Visual management crosses all methodologies:
 
-```
+```text
 User: "Show our sprint progress on the kanban board"
 AI: Creates hybrid visualization
+
 - Sprint swimlane (Scrum)
+
 - Flow columns (Kanban)
+
 - WIP limits (Kanban)
+
 - Sprint boundary (Scrum)
-```
+```text
 
 ## Language Detection
 
@@ -100,20 +112,27 @@ AI: Creates hybrid visualization
 **Formal Context** (enterprise, compliance, governance):
 
 - Add more documentation
+
 - Include stakeholder sections
+
 - Formal templates
 
 **Startup Context** (move fast, ship, iterate):
 
 - Simplify processes
+
 - Focus on core value
+
 - Minimal documentation
 
 **Team Size Context**:
 
 - Solo: Skip coordination overhead
+
 - Small (2-5): Light process
+
 - Medium (6-15): Full ceremonies
+
 - Large (15+): Add structure
 
 ## Blending Examples
@@ -124,17 +143,24 @@ AI: Creates hybrid visualization
 
 **Blend**: Shape Up shaping + Scrum planning
 
-```
+```text
+
 1. Pre-Sprint Shaping Session
+
    - Shape problems into clear pitches
+
    - Set appetite (maps to sprint capacity)
+
    - Identify rabbit holes
 
 2. Sprint Planning
+
    - Present shaped work
+
    - Team estimates complexity
+
    - Commit to sprint goal
-```
+```text
 
 ### Example 2: Shape Up Team Needing More Visibility
 
@@ -142,14 +168,16 @@ AI: Creates hybrid visualization
 
 **Blend**: Shape Up cycles + Kanban visualization
 
-```
+```text
 Cycle Kanban Board:
 | Shaping | Ready to Bet | Week 1-2 | Week 3-4 | Week 5-6 | Shipped |
 
 - Maintain Shape Up autonomy
+
 - Add visual progress
+
 - No daily standups unless team wants
-```
+```text
 
 ### Example 3: Kanban Team Wanting Improvement Rhythm
 
@@ -157,12 +185,16 @@ Cycle Kanban Board:
 
 **Blend**: Kanban flow + Scrum retrospectives
 
-```
+```text
+
 - Continue Kanban flow
+
 - Add bi-weekly retrospectives
+
 - Focus on flow metrics
+
 - Identify improvement experiments
-```
+```text
 
 ## Common Patterns
 
@@ -170,40 +202,52 @@ Cycle Kanban Board:
 
 Large organizations often have existing process:
 
-```
+```text
 User vocabulary: "SAFe", "PI planning", "epics"
 Aichaku approach:
+
 - Map cycles to PIs
+
 - Treat epics as shaped work
+
 - Maintain existing ceremonies
+
 - Add Aichaku practices gradually
-```
+```text
 
 ### The "Startup Pivot" Pattern
 
 Fast-moving teams needing structure:
 
-```
+```text
 User vocabulary: "ship it", "MVP", "iterate"
 Aichaku approach:
+
 - Ultra-light Shape Up (2-week appetites)
+
 - Kanban for daily work
+
 - Lean for experiments
+
 - Skip heavy process
-```
+```text
 
 ### The "Quality Focus" Pattern
 
 Teams emphasizing technical excellence:
 
-```
+```text
 User vocabulary: "technical debt", "refactoring", "testing"
 Aichaku approach:
+
 - XP practices as base
+
 - Shape Up for feature work
+
 - Kanban for debt/bugs
+
 - Regular improvement cycles
-```
+```text
 
 ## Adaptive Responses
 
@@ -238,10 +282,15 @@ explanation of all methodologies] Right: "What kind of work are you planning?"
 ## Remember
 
 1. **User's language is the guide** - Mirror their terms
+
 2. **Blend gradually** - Don't change everything at once
+
 3. **Value over methodology** - Focus on what helps
+
 4. **Context is king** - Adapt to their situation
+
 5. **Natural combinations** - Some methods blend better
 
 The goal is to be helpful, not methodologically pure. Aichaku adapts to users,
 not the other way around.
+````

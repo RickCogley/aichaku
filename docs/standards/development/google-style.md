@@ -10,8 +10,11 @@ while providing specific guidance for multiple programming languages.
 
 1. **Optimize for the reader, not the writer**: Code is read far more often than
    it's written
+
 2. **Be consistent**: When in doubt, be consistent with existing code
+
 3. **Use common sense**: Rules can be broken if there's a good reason
+
 4. **Clarity over cleverness**: Avoid clever tricks that make code harder to
    understand
 
@@ -21,7 +24,7 @@ while providing specific guidance for multiple programming languages.
 
 #### Naming Conventions
 
-```typescript
+````typescript
 // Classes and interfaces: PascalCase
 class UserAccount {}
 interface DatabaseConnection {}
@@ -47,7 +50,7 @@ class User {
 
 // File names: lowercase with hyphens or underscores
 // user-service.ts or user_service.ts
-```
+```text
 
 #### Type Annotations
 
@@ -74,15 +77,19 @@ interface Point {
 // Use type for unions, intersections, and aliases
 type Status = "pending" | "active" | "completed";
 type ID = string | number;
-```
+```text
 
 #### Comments and Documentation
 
 ```typescript
 /**
+
  * Calculates the total price including tax.
+
  * @param basePrice - The base price before tax
+
  * @param taxRate - The tax rate as a decimal (e.g., 0.1 for 10%)
+
  * @returns The total price including tax
  */
 function calculateTotalPrice(basePrice: number, taxRate: number): number {
@@ -99,7 +106,7 @@ let count = 0; // Set count to 0
 
 // ✅ Good - explains why, not what
 let retryCount = 0; // Reset counter for exponential backoff
-```
+```text
 
 #### Code Organization
 
@@ -148,7 +155,7 @@ class UserManager {
     // ...
   }
 }
-```
+```text
 
 ### Python Style Guide (Based on Google's Python Style Guide)
 
@@ -160,13 +167,16 @@ class UserManager {
 
 # Class names: PascalCase
 class UserAccount:
+
     pass
 
 class DatabaseConnection:
+
     pass
 
 # Function and variable names: lowercase with underscores
 def calculate*total*price(base*price, tax*rate):
+
     user_name = "John"
     return base*price * (1 + tax*rate)
 
@@ -176,10 +186,11 @@ DEFAULT_TIMEOUT = 30
 
 # Protected/private: single/double underscore prefix
 class User:
+
     def **init**(self):
         self.*internal*id = None  # Protected
         self.**private_data = None  # Private (name mangled)
-```
+```text
 
 #### Type Hints and Docstrings
 
@@ -188,6 +199,7 @@ from typing import List, Dict, Optional, Union
 from dataclasses import dataclass
 
 def calculate_average(numbers: List[float]) -> float:
+
     """Calculate the average of a list of numbers.
 
     Args:
@@ -205,6 +217,7 @@ def calculate_average(numbers: List[float]) -> float:
 
 @dataclass
 class User:
+
     """Represents a user in the system.
 
     Attributes:
@@ -221,7 +234,7 @@ class User:
     def **post*init*_(self):
         if self.roles is None:
             self.roles = ['user']
-```
+```text
 
 #### Code Organization
 
@@ -257,6 +270,7 @@ MAX*LOGIN*ATTEMPTS = 5
 
 
 class UserService:
+
     """Handles user-related operations."""
 
     def **init**(self, database_url: str):
@@ -291,7 +305,7 @@ class UserService:
         self.*save*user(user)
 
         return user
-```
+```text
 
 ### Go Style Guide
 
@@ -325,7 +339,7 @@ type urlParser struct {}
 type Reader interface {}
 type UserRepository interface {}
 type Validator interface {}
-```
+```text
 
 #### Code Organization
 
@@ -428,7 +442,7 @@ func validateEmail(email string) error {
     // Additional validation...
     return nil
 }
-```
+```text
 
 #### Error Handling
 
@@ -468,7 +482,7 @@ if err != nil {
     return nil, err
 }
 // Use user...
-```
+```text
 
 ### Java Style Guide
 
@@ -493,7 +507,7 @@ private static final String API_ENDPOINT = "https://api.example.com";
 // Type parameters: single capital letter or PascalCase
 public class Cache<T> {}
 public interface Converter<InputType, OutputType> {}
-```
+```text
 
 #### Class Structure
 
@@ -517,9 +531,13 @@ import com.example.user.model.User;
 import com.example.user.repository.UserRepository;
 
 /**
+
  * Service for managing user operations.
+
  *
+
  * <p>This service handles user creation, authentication, and role management.
+
  * All operations are transactional and thread-safe.
  */
 @Service
@@ -542,12 +560,19 @@ public class UserService {
 
     // Public methods
     /**
+
      * Creates a new user account.
+
      *
+
      * @param email the user's email address
+
      * @param password the user's password (will be encrypted)
+
      * @return the created user
+
      * @throws IllegalArgumentException if email is invalid
+
      * @throws DuplicateUserException if user already exists
      */
     public User createUser(String email, String password) {
@@ -570,20 +595,24 @@ public class UserService {
         }
     }
 }
-```
+```text
 
 ## Common Best Practices Across Languages
 
 ### Line Length
 
 - Maximum 80-100 characters (language-dependent)
+
 - Break long lines at logical points
+
 - Indent continuation lines appropriately
 
 ### Indentation
 
 - **Spaces preferred**: 2 spaces (JavaScript/TypeScript), 4 spaces (Python)
+
 - **Tabs**: Avoid in most Google style guides
+
 - **Consistency**: Never mix tabs and spaces
 
 ### Whitespace
@@ -603,7 +632,7 @@ doSomething();
 
 // Space after commas
 function example(a, b, c) {}
-```
+```text
 
 ### Braces and Brackets
 
@@ -622,19 +651,24 @@ if (condition) doSomething();
 if (condition) {
   doSomething();
 }
-```
+```text
 
 ### Function Length
 
 - Keep functions short and focused (typically < 40 lines)
+
 - Extract complex logic into helper functions
+
 - One function should do one thing well
 
 ### Comments Best Practices
 
 1. **Why, not what**: Explain reasoning, not obvious code
+
 2. **Keep updated**: Outdated comments are worse than no comments
+
 3. **Use standard formats**: JSDoc, docstrings, godoc
+
 4. **Avoid commented-out code**: Use version control instead
 
 ### Error Handling
@@ -651,21 +685,25 @@ try {
   logger.error("Failed to process user", { userId, error });
   throw new UserProcessingError(`Failed to process user ${userId}`, error);
 }
-```
+```text
 
 ## Code Review Guidelines
 
 ### What to Look For
 
 1. **Correctness**: Does the code do what it's supposed to?
+
 2. **Clarity**: Is the code easy to understand?
+
 3. **Consistency**: Does it follow team conventions?
+
 4. **Completeness**: Are there tests? Documentation?
+
 5. **Complexity**: Can it be simplified?
 
 ### Review Comments
 
-```
+```text
 // Constructive feedback
 "Consider extracting this logic into a separate function for better testability"
 
@@ -674,7 +712,7 @@ try {
 
 // Specific suggestions
 "This could be simplified using Array.reduce()"
-```
+```text
 
 ## Testing Standards
 
@@ -689,12 +727,13 @@ describe("UserService", () => {
     it("should prevent duplicate emails", () => {});
   });
 });
-```
+```text
 
 ### Test Structure
 
 ```python
 def test*user*creation*with*valid_data(self):
+
     """Test that users can be created with valid data."""
     # Arrange
     email = "test@example.com"
@@ -707,15 +746,18 @@ def test*user*creation*with*valid_data(self):
     self.assertEqual(user.email, email)
     self.assertIsNotNone(user.id)
     self.assertTrue(user.is_active)
-```
+```text
 
 ## Migration to Google Style
 
 ### Gradual Adoption
 
 1. **New code first**: Apply to new files immediately
+
 2. **Boy Scout Rule**: Leave code better than you found it
+
 3. **Refactoring sprints**: Dedicated time for style updates
+
 4. **Automated tools**: Use linters and formatters
 
 ### Tooling
@@ -730,7 +772,7 @@ def test*user*creation*with*valid_data(self):
     "quotes": ["error", "single"]
   }
 }
-```
+```text
 
 ```yaml
 # Example .pylintrc for Google Style
@@ -742,8 +784,9 @@ indent-string='    '
 function-naming-style=snake_case
 class-naming-style=PascalCase
 const-naming-style=UPPER_CASE
-```
+```text
 
 Remember: The goal of style guides is to improve code readability and
 maintainability. When in doubt, optimize for clarity and consistency with your
 team's existing code.
+````

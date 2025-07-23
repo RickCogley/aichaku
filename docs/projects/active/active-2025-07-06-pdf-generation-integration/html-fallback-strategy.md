@@ -6,15 +6,18 @@ While PDF is ideal for formal documents, HTML provides an excellent intermediate
 format that:
 
 - Works immediately without dependencies
+
 - Renders beautifully in browsers
+
 - Can be converted to PDF via browser print
+
 - **Renders natively in SharePoint** (discovered capability!)
 
 ## Implementation Strategy
 
 ### 1. Progressive Enhancement Approach
 
-```typescript
+````typescript
 // src/output/generator.ts
 export class OutputGenerator {
   async generate(
@@ -34,7 +37,7 @@ export class OutputGenerator {
     }
   }
 }
-```
+```text
 
 ### 2. HTML Generation (Zero Dependencies)
 
@@ -111,7 +114,7 @@ export class HTMLGenerator {
     `;
   }
 }
-```
+```text
 
 ### 3. SharePoint Integration Documentation
 
@@ -121,21 +124,27 @@ export class HTMLGenerator {
 Aichaku-generated markdown files render beautifully in SharePoint:
 
 1. **Upload directly**: Drag your .md files to SharePoint
+
 2. **Automatic rendering**: SharePoint displays formatted content
+
 3. **Sharing**: Send SharePoint links to stakeholders
+
 4. **Version control**: SharePoint tracks document versions
 
 ### Benefits
 
 - No conversion needed
+
 - Maintains formatting
+
 - Searchable content
+
 - Mobile-friendly viewing
-```
+```text
 
 ### 4. Graceful Degradation Flow
 
-```
+```text
 ┌─────────────────┐
 │ Generate Output │
 └────────┬────────┘
@@ -157,7 +166,7 @@ Aichaku-generated markdown files render beautifully in SharePoint:
 │ • SharePoint Upload │
 │ • Install LaTeX     │
 └─────────────────────┘
-```
+```text
 
 ### 5. Updated Settings
 
@@ -180,18 +189,25 @@ export interface OutputSettings {
     uploadInstructions: boolean;
   };
 }
-```
+```text
 
 ## Implementation Priority
 
 1. **Phase 1**: HTML generation (immediate value)
+
 2. **Phase 2**: SharePoint documentation
+
 3. **Phase 3**: PDF with HTML fallback
+
 4. **Phase 4**: Advanced features (templates, styles)
 
 ## Success Metrics
 
 - 100% success rate for output generation
+
 - < 1 second for HTML generation
+
 - Clear instructions for PDF alternatives
+
 - Business-ready output without dependencies
+````

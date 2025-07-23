@@ -4,7 +4,7 @@
 
 <!-- Hill charts show work progress from unknown to known to done -->
 
-```
+````text
         Figuring it out →              ← Just execution
                 ▲                              ▼
                ╱ ╲                          ╱     ╲
@@ -17,25 +17,30 @@
  ╱***************************╲╱*******************************╲
 
  ◉ A         ◉ B              ◉ C           ◉ D          ◉ E
-```
+```text
 
 ## Understanding the Hill
 
 **Left side (Uphill)**: Problem-solving mode
 
 - "I'm still working out the approach"
+
 - "I need to understand how this fits together"
+
 - "Exploring different options"
 
 **Top (Peak)**: The "aha" moment
 
 - "Now I see how to do this"
+
 - "The approach is clear"
 
 **Right side (Downhill)**: Execution mode
 
 - "I know what to do, just need to build it"
+
 - "It's just a matter of time now"
+
 - "Wiring up the implementation"
 
 ---
@@ -49,12 +54,15 @@
 Currently figuring out:
 
 - How to approach [specific unknown]
+
 - Best way to handle [technical challenge]
+
 - Understanding existing [system/code]
 
 Next steps:
 
 - Spike on [technical approach]
+
 - Validate assumptions about [concern]
 
 ---
@@ -66,11 +74,13 @@ Next steps:
 Currently figuring out:
 
 - [Specific challenge being solved]
+
 - [Design decision being made]
 
 Next steps:
 
 - Finalize approach for [component]
+
 - Start basic implementation
 
 ---
@@ -82,12 +92,15 @@ Next steps:
 The solution:
 
 - [Clear approach decided]
+
 - [Key insight gained]
 
 Execution plan:
 
 - [ ] Build [component 1]
+
 - [ ] Wire up [component 2]
+
 - [ ] Test [integration]
 
 ---
@@ -99,8 +112,11 @@ Execution plan:
 Building:
 
 - [x] Core functionality complete
+
 - [ ] Polish UI elements
+
 - [ ] Add error handling
+
 - [ ] Write tests
 
 ---
@@ -112,7 +128,9 @@ Building:
 Completed:
 
 - All functionality working
+
 - Tests passing
+
 - Integrated with other scopes
 
 ---
@@ -124,16 +142,19 @@ Completed:
 **Key Risks**:
 
 - ⚠️ [Scope that's stuck uphill]
+
 - ⚠️ [External dependency]
 
 **Potential Cuts** (if needed):
 
 - Could simplify [scope] by [approach]
+
 - Could defer [nice-to-have feature]
 
 **Integration Notes**:
 
 - [How scopes connect]
+
 - [Order dependencies]
 
 ---
@@ -142,4 +163,5 @@ Completed:
 
 [Any additional context, blockers, or decisions that affect progress]
 
-_Last updated: [Date/Time]_
+*Last updated: [Date/Time]*
+````

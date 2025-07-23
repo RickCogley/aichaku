@@ -10,28 +10,46 @@ cloud platforms.
 Before implementing these patterns, ensure you have:
 
 - **Basic understanding** of cloud-native concepts and containerization
+
 - **Development environment** with Docker and your chosen programming language
+
 - **Access to cloud platform** (AWS, GCP, Azure) or local Kubernetes cluster
+
 - **CI/CD pipeline** setup (GitHub Actions, GitLab CI, or similar)
+
 - **Monitoring tools** for observability (Prometheus, Grafana, or cloud
   equivalents)
 
 ## Quick Reference Checklist
 
 - [ ] **One codebase** tracked in Git per deployable app
+
 - [ ] **All dependencies** explicitly declared and isolated
+
 - [ ] **Configuration** stored in environment variables
+
 - [ ] **Backing services** treated as attached resources
+
 - [ ] **Strict separation** of build, release, and run stages
+
 - [ ] **Stateless processes** with no local persistent state
+
 - [ ] **Services export** via port binding (where applicable)
+
 - [ ] **Horizontal scaling** through process model
+
 - [ ] **Fast startup** and graceful shutdown
+
 - [ ] **Minimal gap** between development and production
+
 - [ ] **Logs as event streams** to stdout/stderr
+
 - [ ] **Admin tasks** automated and version-controlled
+
 - [ ] **API-first design** with clear contracts
+
 - [ ] **Comprehensive telemetry** for observability
+
 - [ ] **Security built-in** with authentication/authorization
 
 ## Factor I: Codebase
@@ -40,7 +58,7 @@ Before implementing these patterns, ensure you have:
 
 ### Implementation Pattern
 
-```bash
+````bash
 # Repository structure for microservices
 /my-service
 ├── .git/
@@ -53,15 +71,18 @@ Before implementing these patterns, ensure you have:
 │   ├── service.yaml
 │   └── configmap.yaml
 └── .github/workflows/
-```
+```text
 
 ## Implementation Guidelines
 
 ### Key Practices
 
 - Single repository per deployable service
+
 - Multiple environments (dev/staging/prod) from same codebase
+
 - Environment-specific behavior via configuration, not code branches
+
 - Monorepo acceptable if services are independently deployable
 
 ## Factor II: Dependencies
@@ -84,7 +105,7 @@ Before implementing these patterns, ensure you have:
     "postgres": "^3.3.5"
   }
 }
-```
+```text
 
 **Python:**
 
@@ -93,7 +114,7 @@ Before implementing these patterns, ensure you have:
 fastapi==0.104.1
 psycopg2-binary==2.9.9
 pydantic==2.5.0
-```
+```text
 
 **Go:**
 
@@ -107,7 +128,7 @@ require (
     github.com/gorilla/mux v1.8.1
     github.com/lib/pq v1.10.9
 )
-```
+```text
 
 ## Container Strategy
 
@@ -127,7 +148,7 @@ CMD ["npm", "run", "dev"]
 FROM base AS production
 COPY . .
 CMD ["node", "server.js"]
-```
+```text
 
 ## Factor III: Config
 
@@ -153,7 +174,7 @@ module.exports = {
     newDashboard: process.env.FEATURE * NEW * DASHBOARD === "true",
   },
 };
-```
+```text
 
 ### Kubernetes ConfigMap/Secret Pattern
 
@@ -161,8 +182,10 @@ module.exports = {
 apiVersion: v1
 kind: ConfigMap
 metadata:
+
   name: app-config
 data:
+
   PORT: "3000"
   DB_HOST: "postgres-service"
   FEATURE*NEW*DASHBOARD: "true"
@@ -170,11 +193,13 @@ data:
 apiVersion: v1
 kind: Secret
 metadata:
+
   name: app-secrets
 type: Opaque
 stringData:
+
   DB*PASSWORD: ${DB*PASSWORD} # Use environment variable from secret store
-```
+```text
 
 ## Factor IV: Backing Services
 
@@ -204,7 +229,7 @@ class DatabaseService {
 
 // Usage with environment-based configuration
 const dbService = new DatabaseService(process.env.DATABASE_URL);
-```
+```text
 
 ### Service Discovery Pattern
 
@@ -213,13 +238,16 @@ const dbService = new DatabaseService(process.env.DATABASE_URL);
 apiVersion: v1
 kind: Service
 metadata:
+
   name: redis-service
 spec:
+
   selector:
     app: redis
   ports:
+
     - port: 6379
-```
+```text
 
 ## Factor V: Build, Release, Run
 
@@ -231,14 +259,18 @@ spec:
 # .github/workflows/deploy.yml
 name: Build and Deploy
 on:
+
   push:
     branches: [main]
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
     steps:
+
       - uses: actions/checkout@v3
+
       - name: Build Docker image
         run: |
           docker build -t myapp:${{ github.sha }} .
@@ -248,6 +280,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+
       - name: Push to registry
         run: |
           docker push myregistry/myapp:${{ github.sha }}
@@ -257,10 +290,11 @@ jobs:
     needs: release
     runs-on: ubuntu-latest
     steps:
+
       - name: Deploy to Kubernetes
         run: |
           kubectl set image deployment/myapp myapp=myregistry/myapp:${{ github.sha }}
-```
+```text
 
 ## Factor VI: Processes
 
@@ -289,7 +323,7 @@ app.post("/login", async (req, res) => {
   );
   res.cookie("session", sessionId);
 });
-```
+```text
 
 ## Factor VII: Port Binding
 
@@ -310,7 +344,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-```
+```text
 
 ### Note for Serverless
 
@@ -326,7 +360,7 @@ exports.handler = async (event) => {
     body: JSON.stringify({ message: "Hello from Lambda" }),
   };
 };
-```
+```text
 
 ## Factor VIII: Concurrency
 
@@ -339,8 +373,10 @@ exports.handler = async (event) => {
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
+
   name: myapp-hpa
 spec:
+
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
@@ -348,13 +384,14 @@ spec:
   minReplicas: 2
   maxReplicas: 10
   metrics:
+
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
           averageUtilization: 70
-```
+```text
 
 ## Process Management
 
@@ -364,10 +401,12 @@ spec:
 # docker-compose.yml for local development
 version: "3.8"
 services:
+
   web:
     build: .
     command: node server.js
     ports:
+
       - "3000:3000"
     scale: 3
 
@@ -379,7 +418,7 @@ services:
   scheduler:
     build: .
     command: node scheduler.js
-```
+```text
 
 ## Factor IX: Disposability
 
@@ -414,7 +453,7 @@ const shutdown = async () => {
 
 process.on("SIGTERM", shutdown);
 process.on("SIGINT", shutdown);
-```
+```text
 
 ## Factor X: Dev/Prod Parity
 
@@ -426,13 +465,18 @@ process.on("SIGINT", shutdown);
 # docker-compose.yml
 version: "3.8"
 services:
+
   app:
     build: .
     environment:
+
       - NODE_ENV=development
+
       - DB_HOST=postgres
     depends_on:
+
       - postgres
+
       - redis
 
   postgres:
@@ -443,7 +487,7 @@ services:
 
   redis:
     image: redis:7-alpine
-```
+```text
 
 ## Factor XI: Logs
 
@@ -469,7 +513,7 @@ logger.info("Request received", {
   userId: req.user?.id,
   duration: responseTime,
 });
-```
+```text
 
 ## Factor XII: Admin Processes
 
@@ -494,7 +538,7 @@ async function runMigrations() {
 }
 
 runMigrations();
-```
+```text
 
 ### Kubernetes Job Pattern
 
@@ -502,22 +546,26 @@ runMigrations();
 apiVersion: batch/v1
 kind: Job
 metadata:
+
   name: db-migrate
 spec:
+
   template:
     spec:
       containers:
+
         - name: migrate
           image: myapp:latest
           command: ["node", "scripts/migrate.js"]
           env:
+
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
                   name: app-secrets
                   key: database-url
       restartPolicy: Never
-```
+```text
 
 ## Factor XIII: API First
 
@@ -529,13 +577,16 @@ spec:
 # openapi.yaml
 openapi: 3.0.0
 info:
+
   title: User Service API
   version: 1.0.0
 paths:
+
   /users:
     get:
       summary: List users
       parameters:
+
         - name: page
           in: query
           schema:
@@ -553,7 +604,7 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/User"
-```
+```text
 
 ## API Design
 
@@ -572,7 +623,7 @@ app.use((req, res, next) => {
   req.apiVersion = version;
   next();
 });
-```
+```text
 
 ## Factor XIV: Telemetry
 
@@ -600,7 +651,7 @@ logger.info("Order processed", {
   amount: order.total,
   traceId: span.spanContext().traceId,
 });
-```
+```text
 
 ## Observability Implementation
 
@@ -625,7 +676,7 @@ app.get("/ready", async (req, res) => {
     res.status(503).json({ status: "not ready", error: error.message });
   }
 });
-```
+```text
 
 ## Factor XV: Authentication and Authorization
 
@@ -665,7 +716,7 @@ const authorize = (...roles) => {
 
 // Usage
 app.get("/admin/users", authenticate, authorize("admin"), getUsers);
-```
+```text
 
 ### OAuth2/OIDC Pattern
 
@@ -689,7 +740,7 @@ passport.use(
     },
   ),
 );
-```
+```text
 
 ## Platform-Specific Adaptations
 
@@ -700,8 +751,10 @@ passport.use(
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+
   name: myapp
 spec:
+
   replicas: 3 # Factor VIII: Concurrency
   selector:
     matchLabels:
@@ -712,13 +765,17 @@ spec:
         app: myapp
     spec:
       containers:
+
         - name: myapp
           image: myregistry/myapp:v1.0.0 # Factor V: Build/Release
           ports:
+
             - containerPort: 3000 # Factor VII: Port Binding
           env: # Factor III: Config
+
             - name: PORT
               value: "3000"
+
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
@@ -739,15 +796,18 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
-```
+```text
 
 ## Cloud Platform Adaptations
 
 ### Serverless Adaptations
 
 - **Port Binding**: Not applicable - focus on event-driven handlers
+
 - **Processes**: Each invocation is inherently stateless
+
 - **Concurrency**: Platform manages scaling automatically
+
 - **Admin Processes**: Use scheduled functions or step functions
 
 ## Implementation Priority Guide
@@ -755,41 +815,60 @@ spec:
 ### Phase 1: Foundation (Weeks 1-2)
 
 1. **Codebase**: Set up Git repository with branching strategy
+
 2. **Dependencies**: Establish dependency management
+
 3. **Config**: Implement environment-based configuration
+
 4. **Logs**: Set up structured logging
 
 ### Phase 2: Development Practices (Weeks 3-4)
 
 5. **Dev/Prod Parity**: Create Docker environments
+
 6. **Build/Release/Run**: Set up CI/CD pipeline
+
 7. **Backing Services**: Abstract database/cache connections
+
 8. **API First**: Define OpenAPI specifications
 
 ### Phase 3: Production Readiness (Weeks 5-6)
 
 9. **Processes**: Ensure stateless design
+
 10. **Port Binding**: Implement health checks
+
 11. **Disposability**: Add graceful shutdown
+
 12. **Admin Processes**: Automate migrations/tasks
 
 ### Phase 4: Scale & Security (Weeks 7-8)
 
 13. **Concurrency**: Implement horizontal scaling
+
 14. **Telemetry**: Add metrics, traces, alerts
+
 15. **Auth**: Implement authentication/authorization
 
 ## Common Pitfalls to Avoid
 
 1. **Storing sessions in memory** - Use Redis/database
+
 2. **Hardcoding configuration** - Use environment variables
+
 3. **Manual production changes** - Automate everything
+
 4. **Ignoring health checks** - Essential for orchestration
+
 5. **Mixing concerns in one service** - Keep services focused
+
 6. **Skipping API documentation** - API-first means documentation-first
+
 7. **Basic console.log only** - Implement structured logging
+
 8. **Security as afterthought** - Build it in from the start
 
 Remember: These factors are guidelines, not rigid rules. Adapt them thoughtfully
 to your specific architecture and requirements while maintaining their core
 principles of portability, scalability, and maintainability.
+````

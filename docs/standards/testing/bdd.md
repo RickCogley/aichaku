@@ -11,9 +11,13 @@ shared language that everyone can understand.
 
 1. **Shared Understanding**: Create a common language between technical and
    non-technical team members
+
 2. **Living Documentation**: Tests serve as documentation that stays up-to-date
+
 3. **Outside-In Development**: Start from user behavior and work inward
+
 4. **Examples Drive Design**: Concrete examples guide implementation
+
 5. **Continuous Communication**: Ongoing dialogue about requirements
 
 ## The Three Amigos
@@ -21,7 +25,9 @@ shared language that everyone can understand.
 BDD encourages collaboration between three key perspectives:
 
 1. **Business** (Product Owner/BA): What problem are we solving?
+
 2. **Development** (Developer): How might we solve this?
+
 3. **Testing** (QA/Tester): What could go wrong?
 
 ## Gherkin Language
@@ -30,7 +36,7 @@ Gherkin is the business-readable language used to describe software behavior.
 
 ### Basic Structure
 
-```gherkin
+````gherkin
 Feature: Shopping Cart
   As a customer
   I want to add items to my shopping cart
@@ -66,17 +72,24 @@ Feature: Shopping Cart
       | $100.00  | SAVE10   | $10.00   | $90.00 |
       | $50.00   | SAVE10   | $5.00    | $45.00 |
       | $200.00  | SAVE20   | $40.00   | $160.00 |
-```
+```text
 
 ### Gherkin Keywords
 
 - **Feature**: High-level description of functionality
+
 - **Scenario**: A specific example of behavior
+
 - **Given**: Preconditions/context
+
 - **When**: Action/event
+
 - **Then**: Expected outcome
+
 - **And/But**: Additional steps
+
 - **Background**: Common setup for scenarios
+
 - **Scenario Outline**: Parameterized scenarios
 
 ## Implementation Examples
@@ -134,7 +147,7 @@ export class ShoppingCart {
     return this.items.reduce((sum, item) => sum + item.price, 0);
   }
 }
-```
+```text
 
 ### Python with Behave
 
@@ -164,12 +177,14 @@ from services.email_service import EmailService
 
 @given('I am on the registration page')
 def step*on*registration_page(context):
+
     context.browser = webdriver.Chrome()
     context.page = RegistrationPage(context.browser)
     context.page.navigate()
 
 @when('I fill in the registration form with')
 def step*fill*registration_form(context):
+
     for row in context.table:
         field = row['Field']
         value = row['Value']
@@ -180,21 +195,25 @@ def step*fill*registration_form(context):
 
 @when('I submit the registration form')
 def step*submit*form(context):
+
     context.page.submit_form()
 
 @then('I should see "{message}"')
 def step*verify*message(context, message):
+
     assert context.page.has_message(message), \
         f"Expected to see '{message}' but it was not found"
 
 @then('I should receive a welcome email at "{email}"')
 def step*verify*email(context, email):
+
     email_service = EmailService()
     assert email*service.has*email_for(email), \
         f"No welcome email found for {email}"
 
 # pages/registration_page.py
 class RegistrationPage:
+
     def **init**(self, browser):
         self.browser = browser
         self.url = "https://example.com/register"
@@ -212,7 +231,7 @@ class RegistrationPage:
 
     def has_message(self, message):
         return message in self.browser.page_source
-```
+```text
 
 ### Java with Cucumber-JVM
 
@@ -306,7 +325,7 @@ public class PaymentService {
         return result;
     }
 }
-```
+```text
 
 ### Go with Godog
 
@@ -396,7 +415,7 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
     ctx.Step(`^I send a (GET|POST|PUT|DELETE) request to "([^"]*)" with:$`, api.iSendARequestToWith)
     ctx.Step(`^the response status should be (\d+)$`, api.theResponseStatusShouldBe)
 }
-```
+```text
 
 ## BDD Best Practices
 
@@ -416,7 +435,7 @@ Scenario: New user registration
   Given I am a new visitor
   When I register with valid details
   Then I should have access to my account
-```
+```text
 
 #### 2. Keep Scenarios Independent
 
@@ -432,7 +451,7 @@ Scenario: Successful login
   Given I have a registered account with email "user@example.com"
   When I log in with valid credentials
   Then I should see the dashboard
-```
+```text
 
 #### 3. Use Domain Language
 
@@ -448,7 +467,7 @@ Scenario: Place an order
   When I place an order for 2 items
   Then my order should be confirmed
   And I should receive an order number
-```
+```text
 
 ### Step Definition Best Practices
 
@@ -465,7 +484,7 @@ When("I click the blue submit button in the top right", function () {
 When("I submit the form", function () {
   this.currentPage.submitForm();
 });
-```
+```text
 
 #### 2. Avoid UI Details in Steps
 
@@ -473,13 +492,15 @@ When("I submit the form", function () {
 # ❌ Bad: UI-specific
 @when('I click the button with id "submit-btn"')
 def step*click*button*by*id(context, button_id):
+
     context.browser.find*element*by*id(button*id).click()
 
 # ✅ Good: Action-focused
 @when('I submit my application')
 def step*submit*application(context):
+
     context.application_page.submit()
-```
+```text
 
 #### 3. Use Page Object Pattern
 
@@ -502,7 +523,7 @@ When("I log in as {string}", async function (email: string) {
   const loginPage = new LoginPage();
   await loginPage.login(email, "password123");
 });
-```
+```text
 
 ## BDD in Different Contexts
 
@@ -520,7 +541,7 @@ Feature: User Management API
       | id    | 12345           |
       | name  | John Doe        |
       | email | john@example.com |
-```
+```text
 
 ### Mobile App BDD
 
@@ -533,7 +554,7 @@ Feature: Mobile Shopping
     When I open the app
     Then I should see cached products from "Electronics"
     But I should see an "Offline mode" indicator
-```
+```text
 
 ### Microservices BDD
 
@@ -547,25 +568,34 @@ Feature: Order Processing Service
     Then the order should be confirmed
     And the Inventory Service should show 5 units remaining
     And the Payment Service should process the payment
-```
+```text
 
 ## BDD Tools and Frameworks
 
 ### Language-Specific Tools
 
 - **JavaScript/TypeScript**: Cucumber.js, Jest-Cucumber, CodeceptJS
+
 - **Java**: Cucumber-JVM, JBehave, Concordion
+
 - **Python**: Behave, pytest-bdd, Lettuce
+
 - **Ruby**: Cucumber (original), RSpec
+
 - **C#**: SpecFlow, NBehave
+
 - **Go**: Godog, Ginkgo
+
 - **PHP**: Behat, Codeception
 
 ### Supporting Tools
 
 - **IDE Plugins**: Gherkin syntax highlighting and step navigation
+
 - **Living Documentation**: Pickles, Cukedoctor
+
 - **Reporting**: Allure, ExtentReports, Serenity BDD
+
 - **CI/CD Integration**: Parallel execution, test filtering
 
 ## Common Anti-Patterns
@@ -589,7 +619,7 @@ Scenario: User registration
   Given I am on the registration page
   When I register as "John Doe" with email "john@example.com"
   Then I should see a success message
-```
+```text
 
 ### 2. Scenarios as Test Scripts
 
@@ -605,7 +635,7 @@ Scenario: Successful login
   Given I am a registered user
   When I log in with valid credentials
   Then I should have access to my account
-```
+```text
 
 ### 3. Technical Scenarios
 
@@ -622,24 +652,32 @@ Scenario: Save customer information
   Given I have customer details
   When I save the customer
   Then the customer should be retrievable
-```
+```text
 
 ## BDD Metrics and Benefits
 
 ### Metrics to Track
 
 1. **Scenario Coverage**: Percentage of features with BDD scenarios
+
 2. **Step Reusability**: Average number of scenarios per step definition
+
 3. **Execution Time**: Time to run all BDD tests
+
 4. **Failure Rate**: Percentage of failing scenarios
+
 5. **Documentation Currency**: How up-to-date scenarios are
 
 ### Benefits
 
 1. **Shared Understanding**: Common language reduces misunderstandings
+
 2. **Living Documentation**: Always current documentation
+
 3. **Test Automation**: Scenarios become automated tests
+
 4. **Early Bug Detection**: Issues found during specification
+
 5. **Better Requirements**: Concrete examples clarify requirements
 
 ## Getting Started with BDD
@@ -647,29 +685,41 @@ Scenario: Save customer information
 ### 1. Start Small
 
 - Choose one feature or user story
+
 - Write 3-5 scenarios
+
 - Implement step definitions
+
 - Run and refine
 
 ### 2. Three Amigos Sessions
 
 - Include business, development, and testing perspectives
+
 - Use example mapping to explore scenarios
+
 - Focus on edge cases and unhappy paths
 
 ### 3. Build Gradually
 
 - Add scenarios for new features
+
 - Refactor existing tests to BDD
+
 - Create reusable step libraries
+
 - Generate living documentation
 
 ### 4. Integration
 
 - Add to CI/CD pipeline
+
 - Generate reports for stakeholders
+
 - Use for acceptance criteria
+
 - Include in definition of done
 
 Remember: BDD is about collaboration and communication. The tools and syntax are
 just means to achieve better understanding between all team members.
+````

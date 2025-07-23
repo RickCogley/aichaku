@@ -6,87 +6,87 @@
 
 **Current:**
 
-```
+````text
 Review a file for security, standards, and methodology compliance
-```
+```text
 
 **Enhanced:**
 
-```
+```text
 Automatically review code files for security vulnerabilities, coding standards, and best practices.
 Detects: OWASP vulnerabilities, SQL injection, XSS, hardcoded secrets, code quality issues.
 Standards: Checks compliance with SOLID, TDD, Clean Code, and your project's selected standards.
 Auto-runs: After file edits, before commits, when security concerns are mentioned.
 Keywords: review, audit, security, check, scan, vulnerabilities, quality, standards, compliance
 Examples: "review this file", "check for security issues", "audit my code"
-```
+```text
 
 ### 2. get_standards
 
 **Current:**
 
-```
+```text
 Get currently selected standards for the project
-```
+```text
 
 **Enhanced:**
 
-```
+```text
 Get the coding and documentation standards configured for your project (OWASP, SOLID, TDD, etc).
 Use this to: understand project requirements, ensure compliance, generate compliant code.
 Auto-runs: When opening a project, before generating documentation, when standards are mentioned.
 Keywords: standards, guidelines, requirements, conventions, style, configuration, rules
 Examples: "what standards does this project use", "show coding guidelines"
-```
+```text
 
 ### 3. review_methodology
 
 **Current:**
 
-```
+```text
 Check if project follows selected methodology patterns
-```
+```text
 
 **Enhanced:**
 
-```
+```text
 Verify your project follows Shape Up, Scrum, Kanban, or other methodologies correctly.
 Checks for: Required artifacts (pitches, sprints, boards), proper structure, process compliance.
 Auto-runs: When methodology terms are used, during project planning, status checks.
 Keywords: shape up, scrum, kanban, agile, methodology, process, pitch, sprint, workflow
 Examples: "are we following shape up", "check scrum compliance", "review our process"
-```
+```text
 
 ### 4. generate_documentation (NEW)
 
-```
+```text
 Generate comprehensive project documentation in /docs based on your selected standards.
 Creates: Architecture diagrams, API documentation, user guides, concept explanations.
 Follows: Diátaxis framework, Google style guide, or your configured documentation standards.
 Auto-runs: When asked to document, create docs, generate guides, or explain the project.
 Keywords: generate, create, write, documentation, docs, architecture, API, guide, comprehensive
 Examples: "generate project documentation", "create docs in /docs", "document this codebase"
-```
+```text
 
 ### 5. analyze_project (NEW)
 
-```
+```text
 Analyze your project's structure, dependencies, and architecture for documentation and insights.
 Discovers: File organization, dependency graph, API endpoints, design patterns, entry points.
 Auto-runs: Before generating documentation, when asked about architecture, for project overview.
 Keywords: analyze, structure, architecture, dependencies, overview, understand, explore
 Examples: "analyze this project", "what's the architecture", "show project structure"
-```
+```text
 
 ### 6. create_doc_template (NEW)
 
-```
+```text
 Create documentation templates following Diátaxis or other selected standards.
 Types: Tutorial (learning-oriented), How-to (task-oriented), Reference (information-oriented), Explanation (understanding-oriented).
 Auto-runs: When creating new docs, starting documentation, following templates.
 Keywords: template, tutorial, how-to, reference, explanation, guide, documentation type
 Examples: "create a tutorial template", "new how-to guide", "reference documentation"
-```
+```text
 
 ## Tool Metadata Structure
 
@@ -120,7 +120,7 @@ interface EnhancedToolMetadata {
   requiredBefore?: string[]; // Tools that must run first
   suggestedAfter?: string[]; // Tools to run after
 }
-```
+```text
 
 ## Example Enhanced Metadata
 
@@ -193,7 +193,7 @@ Examples: "review this file", "check for security issues", "audit my code"`,
   chainWith: ["get_standards"],
   suggestedAfter: ["Edit", "generate_documentation"],
 };
-```
+```text
 
 ## Natural Language Mapping
 
@@ -221,7 +221,7 @@ const naturalLanguageMap = {
   "scrum compliance": ["review_methodology"],
   "check process": ["review_methodology"],
 };
-```
+```text
 
 ## Auto-Chain Definitions
 
@@ -251,7 +251,8 @@ const autoChains = {
     steps: ["get*standards", "review*methodology", "create_doc_template"],
   },
 };
-```
+```text
 
 These enhanced descriptions and metadata make the tools much more discoverable
 and likely to be used automatically when appropriate.
+````

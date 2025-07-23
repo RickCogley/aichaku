@@ -10,13 +10,16 @@ alongside official standards.
 Ensure you have:
 
 - Aichaku installed and configured
+
 - Access to your `~/.claude/aichaku/user/docs/standards/` directory
+
 - A text editor for creating standard files
+
 - Basic understanding of Markdown syntax
 
 ## Quick Start
 
-```bash
+````bash
 # Create a new custom standard
 aichaku standards --create-custom "Team Guidelines"
 
@@ -25,7 +28,7 @@ aichaku standards --add custom:team-guidelines
 
 # Apply to CLAUDE.md
 aichaku integrate
-```
+```text
 
 ## Understanding Custom Standards
 
@@ -34,8 +37,11 @@ aichaku integrate
 Custom standards are user-defined development guidelines that:
 
 - Capture your team's specific practices and conventions
+
 - Extend or specialize existing standards for your domain
+
 - Document organizational requirements not covered by built-in standards
+
 - Integrate seamlessly with Aichaku's standard management system
 
 ### How They Differ from Built-in Standards
@@ -53,8 +59,11 @@ Custom standards are user-defined development guidelines that:
 Custom standards are:
 
 - Stored in `~/.claude/aichaku/user/docs/standards/`
+
 - Automatically discovered on startup
+
 - Named using UPPER-KEBAB-CASE.md convention
+
 - Loaded alongside built-in standards
 
 ## Creating Custom Standards
@@ -65,13 +74,16 @@ The easiest way to create a custom standard:
 
 ```bash
 aichaku standards --create-custom "Security Hardening"
-```
+```text
 
 This command:
 
 1. Prompts for the standard name if not provided
+
 2. Converts to UPPER-KEBAB-CASE filename
+
 3. Creates a pre-formatted template
+
 4. Opens in your default editor (if available)
 
 ### Manual Creation
@@ -82,7 +94,7 @@ You can also create standards manually:
 
    ```bash
    cd ~/.claude/aichaku/user/docs/standards/
-   ```
+````
 
 2. Create a new file using UPPER-KEBAB-CASE:
 
@@ -91,6 +103,7 @@ You can also create standards manually:
    ```
 
 3. Add required frontmatter:
+
    ```yaml
    ---
    title: "Security Hardening Guidelines"
@@ -103,7 +116,7 @@ You can also create standards manually:
 
 When you use `--create-custom`, Aichaku generates this template:
 
-````markdown
+```````markdown
 ---
 title: "Security Hardening Guidelines"
 description: "Additional security measures for production"
@@ -122,7 +135,9 @@ organization.
 List the fundamental principles this standard is based on:
 
 1. **Principle One** - Explanation
+
 2. **Principle Two** - Explanation
+
 3. **Principle Three** - Explanation
 
 ## Guidelines
@@ -133,7 +148,7 @@ List the fundamental principles this standard is based on:
 
 Clear, actionable guideline.
 
-```typescript
+``````typescript
 // ✅ Good example
 const secureConfig = {
   encryption: "AES-256",
@@ -145,8 +160,8 @@ const config = {
   encryption: "weak",
   timeout: null,
 };
-```
-````
+```text
+````text
 
 #### Rule 1.2
 
@@ -159,15 +174,19 @@ Structure your guidelines in logical categories...
 ## Implementation Checklist
 
 - [ ] Item one to verify
+
 - [ ] Item two to verify
+
 - [ ] Item three to verify
 
 ## References
 
 - [Internal Wiki Link](https://wiki.company.com/security)
+
 - [External Best Practices](https://example.com)
 
-````
+---
+
 ## Managing Custom Standards
 
 ### List Custom Standards
@@ -183,7 +202,7 @@ aichaku standards --list | grep "🛠️"
 
 # Show detailed view with descriptions
 aichaku standards --list --detailed
-````
+```text
 
 Output example:
 
@@ -198,7 +217,7 @@ Built-in Standards:
 Custom Standards:
 🛠️ custom:team-guidelines    - Our team's coding guidelines
 🛠️ custom:security-hardening - Additional security measures
-```
+```text
 
 ### Edit Custom Standards
 
@@ -213,7 +232,7 @@ vim ~/.claude/aichaku/user/docs/standards/SECURITY-HARDENING.md
 
 # On macOS, open in default app
 open ~/.claude/aichaku/user/docs/standards/SECURITY-HARDENING.md
-```
+```text
 
 ### Copy Custom Standards
 
@@ -226,7 +245,7 @@ aichaku standards --copy-custom security-hardening security-production
 # This creates a new file with the same content
 # Edit the new file to specialize it
 aichaku standards --edit-custom security-production
-```
+```text
 
 ### Delete Custom Standards
 
@@ -242,7 +261,7 @@ aichaku standards --remove custom:old-guidelines
 # Confirm deletion when prompted
 # Use --force to skip confirmation
 aichaku standards --delete-custom old-guidelines --force
-```
+```text
 
 ## Using Custom Standards in Projects
 
@@ -259,7 +278,7 @@ aichaku standards --add tdd,custom:security-hardening,clean-arch
 
 # Add all standards from a category
 aichaku standards --add-category security
-```
+```text
 
 ### View Project Standards
 
@@ -271,17 +290,21 @@ aichaku standards --show
 
 # Show with full descriptions
 aichaku standards --show --detailed
-```
+```text
 
 Output example:
 
 ```text
 Current Project Standards:
+
 - 📚 tdd (Built-in)
+
 - 🛠️ custom:team-guidelines (Custom)
+
 - 📚 solid (Built-in)
+
 - 🛠️ custom:security-hardening (Custom)
-```
+```text
 
 ## Integration with CLAUDE.md
 
@@ -319,8 +342,11 @@ generating code:
 ### Use Clear Naming Conventions
 
 - **Use descriptive names**: `api-design-patterns` not `api`
+
 - **Include scope**: `mobile-security` vs generic `security`
+
 - **Avoid conflicts**: Don't use names similar to built-in standards
+
 - **Be consistent**: Establish team naming patterns
 
 ### Follow Content Guidelines
@@ -340,9 +366,7 @@ Write effective custom standards:
 ❌ Write vague guidelines
 ❌ Include outdated practices
 ❌ Mix unrelated concerns
-```
-````
-`````
+```text
 
 ### Organize Your Standards
 
@@ -355,14 +379,18 @@ Structure your custom standards library:
 ├── MOBILE-SECURITY.md         # Mobile-specific security
 ├── REACT-COMPONENTS.md        # Frontend patterns
 └── TEAM-CONVENTIONS.md        # General team rules
-```
+```text
 
 Use consistent tags for easy filtering:
 
 - `team` - Team-wide conventions
+
 - `frontend` - UI/UX guidelines
+
 - `backend` - Server-side patterns
+
 - `security` - Security enhancements
+
 - `testing` - Test strategies
 
 ## Sharing Custom Standards
@@ -379,7 +407,7 @@ cp ~/.claude/aichaku/user/docs/standards/*.md .team/docs/standards/
 # Add to git
 git add .team/standards
 git commit -m "Add team development standards"
-```
+```text
 
 ### Choose Distribution Methods
 
@@ -389,11 +417,14 @@ git commit -m "Add team development standards"
    # Clone team standards
    git clone https://github.com/team/standards.git
    cp standards/*.md ~/.claude/aichaku/user/docs/standards/
-   ```
+``````
 
 2. **Shared Drive**
+
    - Store in team shared folder
+
    - Document installation process
+
    - Version with dates
 
 3. **Installation Script**
@@ -419,8 +450,11 @@ git commit -m "Add team development standards"
 **Solutions**:
 
 - Check filename uses UPPER-KEBAB-CASE.md
+
 - Verify location: `~/.claude/aichaku/user/docs/standards/`
+
 - Ensure valid frontmatter (YAML format)
+
 - Look for parsing errors in the file
 
 #### Integration Not Including Custom Standard
@@ -430,8 +464,11 @@ git commit -m "Add team development standards"
 **Solutions**:
 
 - Confirm standard is added to project: `aichaku standards --show`
+
 - Check for typos in standard name
+
 - Use full prefix: `custom:standard-name`
+
 - Run with debug: `AICHAKU_DEBUG=1 aichaku integrate`
 
 #### File Naming Issues
@@ -440,13 +477,13 @@ git commit -m "Add team development standards"
 
 **Solutions**:
 
-```bash
+````bash
 # Rename to correct format
 mv wrong-name.md CORRECT-NAME.md
 
 # Remove spaces and special characters
 mv "My Standard.md" MY-STANDARD.md
-```
+```text
 
 #### Migration from Old Structure
 
@@ -460,7 +497,7 @@ aichaku migrate --custom-standards-only
 
 # Manual migration
 mv ~/.claude/docs/standards/custom/* ~/.claude/aichaku/user/docs/standards/
-```
+```text
 
 ### Use Debug Commands
 
@@ -481,7 +518,7 @@ aichaku standards --validate custom:my-standard
 
 # Show full paths
 aichaku standards --list --show-paths
-```
+```text
 
 ## Migration from Legacy Custom Standards
 
@@ -495,7 +532,7 @@ aichaku migrate --custom-standards-only
 
 # Full migration including all settings
 aichaku migrate
-```
+```text
 
 ### Use Manual Migration
 
@@ -506,7 +543,7 @@ aichaku migrate
    ~/.claude/docs/standards/custom/
    ~/.claude/.aichaku/docs/standards/
    ~/Documents/aichaku-standards/
-   ```
+````
 
 2. **Copy to new location**:
 
@@ -531,6 +568,7 @@ aichaku migrate
    ```
 
 4. **Update project references**:
+
    ```bash
    # In each project using custom standards
    aichaku standards --refresh
@@ -539,7 +577,7 @@ aichaku migrate
 
 ### Verify After Migration
 
-```bash
+````bash
 # Verify all standards are available
 aichaku standards --list
 
@@ -549,10 +587,12 @@ aichaku standards --info custom:my-standard
 # Test in a project
 aichaku standards --add custom:my-standard
 aichaku integrate
-```
+```text
 
 ---
 
 Remember: Custom standards are a powerful way to codify your team's specific
 practices while leveraging Aichaku's integration capabilities. Keep them
 focused, well-documented, and actively maintained for maximum benefit.
+````
+```````

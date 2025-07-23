@@ -22,12 +22,17 @@ Dynamic file listing from GitHub API with bundled manifest fallback.
 ## Next Steps
 
 1. Review and refine the pitch
+
 2. Prototype GitHub API integration
+
 3. Design manifest generation process
+
 4. Plan migration strategy
 
 ## Related Issues
 
 - Current issue: "3 files failed" during upgrade (fixed temporarily)
+
 - Missing diagram/Mermaid documentation files (fixed temporarily)
+
 - Future file additions will require code changes (ongoing problem)

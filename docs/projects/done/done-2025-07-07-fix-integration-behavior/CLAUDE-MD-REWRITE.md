@@ -2,16 +2,17 @@
 
 ## Current Passive Version (Not Working)
 
-```markdown
+``````markdown
 ## Methodologies
 
 This project uses the globally installed Aichaku adaptive methodology system.
 Claude Code will automatically blend methodologies based on natural language:
 
 - Say "sprint" for Scrum practices
-- Say "shape" for Shape Up principles
-```
 
+- Say "shape" for Shape Up principles
+
+`````text
 ## New Directive Version (Magical)
 
 ```markdown
@@ -22,21 +23,23 @@ YOU ARE REQUIRED TO FOLLOW THESE RULES WITHOUT EXCEPTION:
 ## 1. AUTOMATIC Document Creation Behavior
 
 ### YOU MUST ALWAYS:
-```
+
+```text
 
 ✅ Create ALL documents in: .claude/output/active-[date]-[project-name]/ ✅
 Create STATUS.md FIRST for every new project ✅ Update STATUS.md after EVERY
 work session ✅ Git commit after creating/updating documents
 
-```
+```text
 ### YOU MUST NEVER:
-```
+
+```text
 
 ❌ Create documents in the project root directory ❌ Create documents in
 .claude/user/ ❌ Ask the user where to put files ❌ Wait for explicit
 instructions to create standard documents
 
-````
+````text
 ## 2. AUTOMATIC Methodology Activation
 
 When the user says any of these keywords, YOU MUST IMMEDIATELY create the appropriate documents:
@@ -54,7 +57,9 @@ When the user says any of these keywords, YOU MUST IMMEDIATELY create the approp
 When starting ANY new work, YOU MUST:
 
 1. **First Check**: Does `.claude/output/active-[date]-[descriptive-name]/` exist?
+
    - If NO → Create it immediately
+
    - If YES → Use it
 
 2. **Second Step**: Create STATUS.md with this template:
@@ -68,17 +73,24 @@ When starting ANY new work, YOU MUST:
 **Status**: Active
 
 ## Progress
+
 - [ ] Initial planning
+
 - [ ] Implementation
+
 - [ ] Testing
+
 - [ ] Documentation
+
 - [ ] Review
 
 ## Updates
 ### [Timestamp]
+
 - Created initial project structure
+
 - [What you're about to do]
-````
+````text
 
 3. **Then**: Create methodology-specific documents
 
@@ -92,7 +104,7 @@ IF you accidentally create a file in the wrong location:
 mv [wrong-path] .claude/output/active-[current-project]/
 git add -A
 git commit -m "fix: move document to correct Aichaku location"
-```
+```text
 
 2. **Log the correction** in STATUS.md:
 
@@ -100,7 +112,7 @@ git commit -m "fix: move document to correct Aichaku location"
 ### [Timestamp]
 
 - Corrected file location to follow Aichaku conventions
-```
+```text
 
 ## 5. AUTOMATIC Git Integration
 
@@ -114,8 +126,9 @@ git add .claude/output/
 git commit -m "docs: [action] for [project-name]
 
 - Created/Updated [document-type]
+
 - Following Aichaku [methodology] pattern"
-```
+```text
 
 ## 6. Current Active Project
 
@@ -126,43 +139,56 @@ If the file doesn't exist, create it:
 
 ```bash
 echo "active-$(date +%Y-%m-%d)-[project-name]" > .claude/.aichaku-active
-```
+```text
 
 ## REMEMBER: These are AUTOMATIC behaviors, not suggestions!
 
 Every time you:
 
 - Create a document → It goes in .claude/output/active-\*/
+
 - Update progress → Update STATUS.md
+
 - Complete work → Git commit
+
 - Finish project → Move to done-\*/
 
 NO EXCEPTIONS. NO ASKING. JUST DO IT.
 
-````
+````text
 ## Key Improvements
 
 1. **Imperative Language**: "YOU MUST" instead of "will"
+
 2. **Explicit Behaviors**: Exact actions for each trigger
+
 3. **No Ambiguity**: Clear dos and don'ts
+
 4. **Error Recovery**: What to do when things go wrong
+
 5. **Repetition**: Key rules repeated multiple times
+
 6. **Visual Emphasis**: Checkmarks, crosses, and emojis for clarity
+
 7. **Concrete Examples**: Actual commands to run
 
 ## Additional Reinforcement Files
 
 ### .claude/RULES-REMINDER.md
+
 ```markdown
 # 🚨 QUICK REMINDER
 
 Before creating ANY file, ask yourself:
+
 1. Is it going in `.claude/output/active-*/`?
+
 2. Does STATUS.md exist there?
+
 3. Have I updated STATUS.md recently?
 
 If any answer is NO → FIX IT FIRST!
-````
+````text
 
 ### .claude/output/WHERE-FILES-GO.md
 
@@ -172,13 +198,17 @@ If any answer is NO → FIX IT FIRST!
 ## ✅ CORRECT Locations:
 
 - .claude/output/active-2025-01-07-project-name/document.md
+
 - .claude/output/done-2025-01-06-old-project/retrospective.md
 
 ## ❌ WRONG Locations:
 
 - ./document.md (project root)
+
 - .claude/user/document.md
+
 - .claude/methodologies/document.md
+
 - src/document.md
 
 ## 🎯 Current Active Project:
@@ -186,7 +216,7 @@ If any answer is NO → FIX IT FIRST!
 Check `.claude/.aichaku-active` for the current project directory.
 
 ALWAYS create files in the active project directory!
-```
+```text
 
 ### .claude/hooks/README.md
 
@@ -196,9 +226,14 @@ ALWAYS create files in the active project directory!
 These scripts ensure Aichaku conventions are followed automatically:
 
 - `pre-create.sh`: Validates file paths before creation
+
 - `post-create.sh`: Updates STATUS.md after file creation
+
 - `check-location.sh`: Verifies files are in correct directories
+
 - `auto-correct.sh`: Moves files to correct locations
 
 These run automatically - you don't need to call them manually.
-```
+```text
+`````
+``````

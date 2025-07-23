@@ -11,7 +11,7 @@
 
 Don't want to read the docs? Just run this:
 
-```bash
+````bash
 # Install Aichaku globally from JSR
 deno install -g -A -n aichaku jsr:@rick/aichaku/cli
 
@@ -24,7 +24,7 @@ aichaku integrate       # Tell Claude about it
 # Start using with Claude!
 # Say: "I need to plan a new feature"
 # Claude will use Aichaku automatically
-```
+```text
 
 That's it! Aichaku is now helping Claude understand your development workflow.
 Read on for details, or jump to [full documentation](docs/).
@@ -83,7 +83,7 @@ integrated.
 ```bash
 # Install and initialize everything with one command:
 deno run -A https://rickcogley.github.io/aichaku/init.ts
-```
+```text
 
 This single command will:
 
@@ -98,7 +98,7 @@ This single command will:
 deno install -g --allow-read --allow-write --allow-env --allow-net --allow-run -n aichaku jsr:@rick/aichaku/cli
 aichaku init --global
 aichaku init
-```
+```text
 
 ## 🔧 YAML Configuration System
 
@@ -134,7 +134,7 @@ behavioral_directives:
             - "Ask clarifying questions"
           forbidden:
             - "DO NOT create documents yet"
-```
+```text
 
 ### How the Magic Works
 
@@ -149,7 +149,7 @@ behavioral_directives:
 
 ### Configuration Hierarchy
 
-```
+```text
 ~/.claude/aichaku/config/
 ├── core.yaml              # Base Aichaku behaviors
 ├── methodologies/
@@ -160,15 +160,15 @@ behavioral_directives:
 └── standards/
     ├── security.yaml       # OWASP, NIST security standards
     └── development.yaml    # TDD, Clean Architecture, etc.
-```
+```text
 
 **Project Overrides** (optional):
 
-```
+```text
 your-project/.claude/aichaku/
 ├── overrides.yaml          # Project-specific customizations
 └── local-standards.yaml    # Additional standards for this project
-```
+```text
 
 ### Real-World Impact
 
@@ -203,7 +203,7 @@ directives:
     custom_method:
       triggers: ["our-process", "company-way"]
       documents: ["company-process.md"]
-```
+```text
 
 Run `aichaku integrate --force` and your CLAUDE.md is regenerated with your
 customizations merged seamlessly.
@@ -251,7 +251,7 @@ You: "Let's plan our next sprint, but I want to shape this feature properly"
 Claude: [Blends Scrum structure with Shape Up shaping]
         "I'll help you shape the feature first, then fit it into your sprint.
          Let's start with the problem definition and appetite..."
-```
+```text
 
 ### Natural Language Detection
 
@@ -260,7 +260,7 @@ You: "We need a kanban board for tracking our 6-week cycle"
 Claude: [Detects Kanban + Shape Up terminology]
         "I'll create a Kanban board structured around your Shape Up cycle.
          We'll use swimlanes for different bets and track progress visually."
-```
+```text
 
 ### Team Vocabulary
 
@@ -271,7 +271,7 @@ Claude: [Recognizes Scrum ceremony + general terms]
          - What did you complete yesterday?
          - What will you work on today?
          - Any blockers?"
-```
+```text
 
 ## Included Methodologies
 
@@ -298,7 +298,7 @@ aichaku help --list
 
 # Compare methodologies side-by-side
 aichaku help --compare
-```
+```text
 
 ### Initialize
 
@@ -314,7 +314,7 @@ aichaku init
 
 # Preview what would happen
 aichaku init --dry-run
-```
+```text
 
 ### Upgrading
 
@@ -338,7 +338,7 @@ aichaku upgrade --global
 # Step 4: Upgrade each project
 cd your-project
 aichaku upgrade
-```
+```text
 
 #### Understanding Version Mismatches
 
@@ -353,7 +353,7 @@ cat ~/.claude/aichaku/config.json  # might show v0.25.0
 
 # Project version (what the project expects)
 cat .claude/aichaku/aichaku.config.json  # might show different versions
-```
+```text
 
 This happens because:
 
@@ -366,7 +366,7 @@ This happens because:
 ```bash
 # One-liner to upgrade both CLI and global files
 deno cache --reload jsr:@rick/aichaku/cli && deno install -g -A -n aichaku --force jsr:@rick/aichaku/cli && aichaku upgrade --global
-```
+```text
 
 #### Upgrade Details
 
@@ -397,7 +397,7 @@ aichaku uninstall
 
 # Remove global installation
 aichaku uninstall --global
-```
+```text
 
 ### Cleanup Legacy Files
 
@@ -407,7 +407,7 @@ aichaku cleanup
 
 # Preview what would be removed
 aichaku cleanup --dry-run
-```
+```text
 
 This removes old files from `~/.claude/` after upgrading to the new structure.
 
@@ -422,7 +422,7 @@ aichaku integrate --dry-run
 
 # Force add even if already present
 aichaku integrate --force
-```
+```text
 
 ### Hooks - Automate Your Workflow
 
@@ -461,7 +461,7 @@ aichaku hooks --uninstall path-validator --global
 
 # Validate installed hooks are working
 aichaku hooks --validate
-```
+```text
 
 **Available Hook Categories:**
 
@@ -513,7 +513,7 @@ aichaku standards --show
 
 # Copy standard content to clipboard
 aichaku standards --copy GOOGLE-STYLE
-```
+```text
 
 **Available Standard Categories:**
 
@@ -537,7 +537,7 @@ aichaku help --compare
 # Deep dive into a specific methodology
 aichaku help kanban
 # Shows key concepts, best/not ideal for, and quick start tips
-```
+```text
 
 ### Programmatic Usage
 
@@ -558,7 +558,7 @@ await init({
 await integrate({
   projectPath: "./my-project",
 });
-```
+```text
 
 ## MCP Server Features
 
@@ -589,7 +589,7 @@ aichaku review file.ts
 
 # Stop the server when done
 aichaku mcp --stop-server
-```
+```text
 
 **What it does:**
 
@@ -622,7 +622,7 @@ Performs comprehensive analysis of your codebase:
 ```bash
 # Example usage in Claude Desktop:
 "Analyze this project's architecture and suggest improvements"
-```
+```text
 
 #### 2. **Documentation Template Creation** (`create_doc_template`)
 
@@ -638,7 +638,7 @@ Generates context-aware documentation templates:
 # Example usage in Claude Desktop:
 "Create a README template for this TypeScript project"
 "Generate an API documentation template"
-```
+```text
 
 #### 3. **Automated Documentation Generation** (`generate_documentation`)
 
@@ -654,7 +654,7 @@ Creates comprehensive documentation from your codebase:
 # Example usage in Claude Desktop:
 "Generate complete documentation for this project"
 "Create API docs for the authentication module"
-```
+```text
 
 ### Statistics and Analytics
 
@@ -674,7 +674,7 @@ aichaku stats
 
 # Reset statistics
 aichaku stats --reset
-```
+```text
 
 ### Aichaku Branding and Feedback
 
@@ -693,7 +693,7 @@ All MCP server responses include:
 # The MCP servers are automatically installed with Aichaku
 aichaku init --global
 aichaku mcp --install
-```
+```text
 
 2. **Configure Claude Code**: Use the `claude mcp` command to add the servers:
 
@@ -704,7 +704,7 @@ claude mcp add -s user github-operations ~/.aichaku/mcp-servers/github-operation
 
 # Verify they're configured
 claude mcp list
-```
+```text
 
 **Scope Options:**
 
@@ -728,7 +728,7 @@ Claude: [Uses analyze_project] 🪴 Aichaku: Analyzing project structure...
         - API documentation for all public methods
         - Architecture overview with diagrams
         - Contributing guidelines
-```
+```text
 
 #### Methodology-Aware Documentation
 
@@ -742,7 +742,7 @@ Claude: [Uses create_doc_template] 🪴 Aichaku: Creating Shape Up pitch templat
         - Solution outline
         - Rabbit holes to avoid
         - Nice-to-haves
-```
+```text
 
 #### Continuous Documentation Updates
 
@@ -755,13 +755,13 @@ Claude: [Uses generate_documentation] 🪴 Aichaku: Updating API documentation..
         - Request/response examples
         - Error codes and handling
         - Integration examples
-```
+```text
 
 ## Architecture
 
 ### Global Installation (One Time)
 
-```
+```text
 ~/.claude/
 ├── methodologies/          # All methodology files live here
 │   ├── core/              # Universal modes
@@ -773,17 +773,17 @@ Claude: [Uses generate_documentation] 🪴 Aichaku: Updating API documentation..
 │   └── [other methodologies...]
 ├── user/                  # Global customizations
 └── .aichaku.json         # Global metadata
-```
+```text
 
 ### Project Integration (Per Project)
 
-```
+```text
 project/
 ├── CLAUDE.md             # Contains reference to global Aichaku
 └── .claude/              # Optional, only if customizations needed
     ├── user/             # Project-specific overrides
     └── .aichaku-project  # Project marker file
-```
+```text
 
 **Key Point**: Methodologies are NEVER copied to projects - they're referenced
 from the global installation. This keeps your git repositories clean!
@@ -821,7 +821,7 @@ cd aichaku
 
 # Setup git hooks for automatic formatting
 git config core.hooksPath .githooks
-```
+```text
 
 ### Commands
 
@@ -840,7 +840,7 @@ deno task lint
 
 # Create release
 deno task release:patch
-```
+```text
 
 ## Philosophy
 
@@ -866,13 +866,13 @@ If you're upgrading from v0.4.x, the architecture has significantly improved:
 
 ```bash
 deno install -g --allow-read --allow-write --allow-env --allow-net --allow-run -n aichaku --force jsr:@rick/aichaku/cli
-```
+```text
 
 2. **Keep your global installation** (if you have one):
 
 ```bash
 # No changes needed to ~/.claude/
-```
+```text
 
 3. **Clean up existing projects:**
 
@@ -880,14 +880,14 @@ deno install -g --allow-read --allow-write --allow-env --allow-net --allow-run -
 # In each project that has aichaku:
 rm -rf .claude/methodologies .claude/.aichaku.json
 # Keep .claude/user/ if you have customizations
-```
+```text
 
 4. **Re-initialize projects:**
 
 ```bash
 aichaku init
 # This will create the new minimal structure
-```
+```text
 
 Your customizations in `.claude/user/` are preserved!
 
@@ -930,3 +930,4 @@ MIT © Rick Cogley
 <p align="center">
   <i>Made with 愛着 - Bringing affection to your development workflow</i>
 </p>
+````

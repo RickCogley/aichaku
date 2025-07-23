@@ -20,7 +20,7 @@ while losing critical configuration data including standards.
 
 **Solution**: Added spread operator to preserve all existing metadata fields:
 
-```typescript
+`````typescript
 metadata = {
   ...rawMetadata, // Preserve all existing fields (including standards)
   version: rawMetadata.version || metadataInfo.version || VERSION,
@@ -30,7 +30,7 @@ metadata = {
     (isGlobal ? "global" : "local"),
   lastUpgrade: rawMetadata.lastUpgrade || null,
 };
-```
+```text
 
 ### 2. Complete Legacy File Format Purge
 
@@ -40,15 +40,19 @@ metadata = {
 2024: .aichaku-standards.json          # Original format
 2025: .aichaku-standards.json → standards.json + doc-standards.json  # Split format
 2025: All formats → aichaku.json       # Unified format (current)
-```
+```text
 
 **Files Completely Eliminated**:
 
 - `.aichaku-standards.json` - Original standards config
+
 - `aichaku-standards.json` - Development standards variant
+
 - `standards.json` - Intermediate separate standards file ⭐ **CONFIRMED
   PURGED**
+
 - `doc-standards.json` - Separate documentation standards file
+
 - `.aichaku-doc-standards.json` - Legacy documentation standards
 
 ### 3. Architecture Specification Implementation: "All Methodologies, Selected Standards"
@@ -61,8 +65,10 @@ auto-discovered globally
 #### MCP Methodology Manager (Fixed)
 
 - **Before**: Read methodologies from per-project configuration files
+
 - **After**: Auto-discover all methodologies globally from
   `~/.claude/aichaku/docs/methodologies/`
+
 - **Result**: 6 methodologies discovered automatically (scrum, lean, shape-up,
   scrumban, kanban, xp)
 
@@ -70,6 +76,7 @@ auto-discovered globally
 
 - **Standards**: Remain per-project selection stored in
   `.claude/aichaku/aichaku.json`
+
 - **User Experience**: No more `.yaml` extension requirements (normalized
   automatically)
 
@@ -77,8 +84,11 @@ auto-discovered globally
 
 - Replaced hardcoded file lists in content-fetcher.ts with GitHub API-based
   discovery
+
 - Uses GitHub tree endpoint to dynamically detect available files
+
 - Implements true "configuration as code" philosophy
+
 - Fixes issue where moved files (like SHAPE-UP-ADAPTIVE.md) caused upgrade
   failures
 
@@ -90,8 +100,11 @@ auto-discovered globally
 **Rationale**:
 
 - Eliminates maintenance burden of hardcoded file lists
+
 - Automatically adapts when files are moved/renamed
+
 - True "configuration as code" implementation
+
 - Fallback to hardcoded structure only if API fails
 
 ### 2. Config File Naming Standard
@@ -100,7 +113,9 @@ auto-discovered globally
 **Rationale**:
 
 - 40 references already use aichaku.json vs only 10 using aichaku.config.json
+
 - Simpler, cleaner naming convention
+
 - ConfigManager already expects this name
 
 ### 3. Build Process Discovery
@@ -109,8 +124,11 @@ auto-discovered globally
 compilation **Rationale**:
 
 - Proper binary naming with versions
+
 - Includes MCP server builds
+
 - Automated GitHub release uploads
+
 - Consistent with project standards
 
 ## Files Created/Modified
@@ -124,11 +142,15 @@ compilation **Rationale**:
 
 - `src/commands/content-fetcher.ts` - Implemented
   fetchGitHubStructureDynamically()
+
 - `src/paths.ts` - Fixed project config path from aichaku.config.json to
   aichaku.json
+
 - `src/utils/config-manager.ts` - Updated legacy file lists to include
   aichaku.config.json
+
 - `version.ts` - Updated by Nagare for v0.31.0 and v0.31.2 releases
+
 - `deno.lock` - Updated dependencies
 
 ## Problems Solved
@@ -179,13 +201,16 @@ $ cat ./.claude/aichaku/aichaku.json
     "customStandards": { ... }
   }
 }
-````
+````text
 
 ### Legacy File Prevention
 
 - ✅ **No `standards.json` files created**
+
 - ✅ **No `aichaku-standards.json` files created**
+
 - ✅ **No `.aichaku-standards.json` files created**
+
 - ✅ **Only unified `aichaku.json` format used**
 
 ### Dynamic Discovery Validation
@@ -195,7 +220,7 @@ $ deno run --allow-read --allow-env /tmp/test_discovery.ts
 Searching in: /Users/rcogley/.claude/aichaku
 Discovered methodologies: [ "scrum", "lean", "shape-up", "scrumban", "kanban", "xp" ]
 Total count: 6
-```
+```text
 
 ## Lessons Learned
 
@@ -229,13 +254,19 @@ the release process.
 ### Core Architecture Files
 
 - `src/commands/upgrade.ts` - Critical metadata preservation fix
+
 - `src/commands/standards.ts` - Unified config format, ID normalization
+
 - `src/commands/integrate.ts` - Global methodology discovery
+
 - `src/utils/path-security.ts` - Fixed JSR import paths
+
 - `mcp/aichaku-mcp-server/src/methodology-manager.ts` - Architecture fix for
   global discovery
+
 - `mcp/aichaku-mcp-server/src/standards-manager.ts` - Consolidated format
   support
+
 - `scripts/build-binaries.ts` - Automated binary cleanup (freed 18GB)
 
 ### Legacy Reference Analysis
@@ -243,8 +274,11 @@ the release process.
 **287 references** to legacy file formats found across codebase:
 
 - Migration code (intentionally preserved for backward compatibility)
+
 - Test files (testing migration scenarios)
+
 - Documentation (historical references)
+
 - Comments and strings (not active code paths)
 
 **Status**: All active code paths now use unified format. Legacy references
@@ -253,8 +287,11 @@ remain only for migration compatibility and historical documentation.
 ## Security and Compliance
 
 - All file operations use `safeReadTextFile()` and `validatePath()`
+
 - Prevented directory traversal in config operations
+
 - Maintained principle of least privilege for file permissions
+
 - Atomic config updates prevent partial corruption
 
 ## Impact Assessment
@@ -262,20 +299,26 @@ remain only for migration compatibility and historical documentation.
 ### User Experience Improvements
 
 - **Single source of truth**: All configuration in one `aichaku.json` file
+
 - **Friction reduction**: No more `.yaml` extension requirements for standards
+
 - **Automatic discovery**: New methodologies picked up without configuration
 
 ### Architecture Benefits
 
 - **Simplified system**: One config format vs. 5+ legacy formats
+
 - **Clear boundaries**: Standards (per-project) vs. Methodologies (global)
+
 - **Reduced complexity**: Global discovery vs. per-project methodology
   management
 
 ### Performance Gains
 
 - **Disk space**: 18GB freed from automated binary cleanup
+
 - **Discovery speed**: Single global scan vs. multiple file checks
+
 - **Deployment**: Cleaner releases without legacy file baggage
 
 ## Status: ✅ COMPLETE
@@ -284,18 +327,26 @@ remain only for migration compatibility and historical documentation.
 
 1. ✅ **All legacy formats purged** (`standards.json`, `aichaku-standards.json`,
    etc.)
+
 2. ✅ **Unified configuration** (single `aichaku.json` format)
+
 3. ✅ **Architecture specification implemented** ("all methodologies, selected
    standards")
+
 4. ✅ **Dynamic discovery working** (6 methodologies auto-discovered)
+
 5. ✅ **User experience improved** (no `.yaml` extension requirements)
+
 6. ✅ **Clean installations verified** (no legacy file creation)
 
 ### Ready for Release v0.32.0
 
 - All critical upgrade issues resolved
+
 - Architecture consolidation complete
+
 - Comprehensive testing passed
+
 - Documentation updated
 
 ---
@@ -304,5 +355,6 @@ remain only for migration compatibility and historical documentation.
 to unified architecture, Aichaku now has a clean, maintainable foundation for
 future development.
 
-_Checkpoint created: 2025-07-17 13:39:12_\
-_Architecture consolidation completed: 2025-07-17 21:15:00_
+*Checkpoint created: 2025-07-17 13:39:12*\
+*Architecture consolidation completed: 2025-07-17 21:15:00*
+`````

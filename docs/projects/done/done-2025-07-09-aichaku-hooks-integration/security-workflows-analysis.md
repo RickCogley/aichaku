@@ -12,21 +12,33 @@ for Aichaku:
 ### Key Components
 
 1. **5 Security Workflows**:
+
    - publish.yml - Secure release to JSR
+
    - security.yml - Daily vulnerability scanning
+
    - codeql.yml - Code quality and security analysis
+
    - devskim.yml - Microsoft security linting
+
    - dependency-review.yml - Supply chain security
 
 2. **Aichaku-Specific Section** (Lines 69-77):
+
    - Path Security focus (critical for file operations)
+
    - Input Validation (preventing injection in templates)
+
    - No Network Operations (reduced attack surface)
+
    - Documentation Security (safe template generation)
 
 3. **Detailed Configuration**:
+
    - Workflow triggers and schedules
+
    - Security rationale for each workflow
+
    - Maintenance guidelines
 
 ## Recommendation: Keep in Aichaku
@@ -34,8 +46,11 @@ for Aichaku:
 ### Rationale
 
 1. **Specificity**: The entire document is tailored to Aichaku's security needs
+
 2. **Context**: References Aichaku's unique requirements vs. Nagare/Salty
+
 3. **Integration**: Could become part of Aichaku's security guidance modules
+
 4. **Discoverability**: Currently hidden, should be more visible
 
 ### Proposed Solution
@@ -79,16 +94,23 @@ for Aichaku:
 ## Benefits of Keeping in Aichaku
 
 1. **Complete Security Story**: Pairs with OWASP/ISO guidance
+
 2. **Actionable**: Users can copy workflow configurations
+
 3. **Educational**: Teaches security automation principles
+
 4. **Maintenance**: Updates with Aichaku's security posture
 
 ## Implementation Steps
 
 1. Move file to new location
+
 2. Add to security guidance catalog
+
 3. Create help command integration
+
 4. Reference in main documentation
+
 5. Create hook for workflow validation
 
 ## Alternative Consideration
@@ -96,8 +118,11 @@ for Aichaku:
 If you strongly prefer moving to Nagare:
 
 1. **Extract Generic Parts**: Security workflow principles
+
 2. **Keep Aichaku-Specific**: The section about Aichaku's adaptations
+
 3. **Cross-Reference**: Nagare could reference Aichaku's specific needs
+
 4. **Shared Module**: Create a shared security workflow guide both tools
    reference
 

@@ -13,19 +13,25 @@ methodologies
 ### Planning
 
 - [x] Problem identified: Users forget methodologies need separate update
+
 - [x] Solution shaped: Smart version checking + helpful messages
+
 - [x] Implementation approach decided
 
 ### Execution
 
 - [x] Implement smart upgrade command
+
 - [x] Add post-install helper
+
 - [x] Test upgrade flow
+
 - [x] Update documentation
 
 ### Improvement
 
 - [x] Test with real upgrade scenario
+
 - [x] Refine messages based on clarity
 
 ## 📝 Notes
@@ -36,4 +42,5 @@ obvious
 ## 🔗 References
 
 - User experience in Nagare showed confusion
+
 - Current upgrade requires manual two-step process

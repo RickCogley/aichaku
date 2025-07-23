@@ -13,24 +13,27 @@ found.
 ## Solution
 
 1. Create basic test files for core functionality
+
 2. Modify the workflow to gracefully handle when no tests exist
+
 3. Ensure tests follow Deno conventions
 
 ### Rough Sketch
 
 **Test Structure:**
 
-```
+````text
 src/
 ├── commands/
 │   ├── init_test.ts
 │   └── integrate_test.ts
 └── mod_test.ts
-```
+```text
 
 **Workflow Modification:**
 
 ```yaml
+
 - name: Run all tests with coverage
   run: |
     if find . -name "*_test.ts" -type f | grep -q .; then
@@ -38,22 +41,29 @@ src/
     else
       echo "No test files found, skipping tests"
     fi
-```
+```text
 
 ## Rabbit Holes
 
 - Don't create comprehensive test suite yet
+
 - Don't test every edge case
+
 - Don't add complex test utilities
 
 ## No-gos
 
 - We're NOT adding external testing frameworks
+
 - We're NOT testing methodology files
+
 - We're NOT creating integration tests
 
 ## Nice to Have
 
 - Basic smoke tests that verify core functionality
+
 - Tests that can be expanded later
+
 - Clear test structure for future additions
+````
