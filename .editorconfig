@@ -1,0 +1,108 @@
+# EditorConfig helps maintain consistent coding styles across different editors and IDEs
+# More info: https://editorconfig.org/
+
+root = true
+
+# Default settings for all files
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# Markdown files - special handling for line breaks and length
+[*.md]
+indent_style = space
+indent_size = 2
+max_line_length = 120
+trim_trailing_whitespace = false  # Preserve markdown line breaks (two spaces = <br>)
+
+# TypeScript/JavaScript files
+[*.{ts,js,mts,cts}]
+indent_style = space
+indent_size = 2
+max_line_length = 100
+quote_type = double
+
+# JSON files (including Deno config)
+[*.{json,jsonc}]
+indent_style = space
+indent_size = 2
+max_line_length = 100
+
+# Deno-specific JSON files
+[deno.{json,jsonc}]
+indent_style = space
+indent_size = 2
+
+# YAML files
+[*.{yaml,yml}]
+indent_style = space
+indent_size = 2
+max_line_length = 100
+
+# Shell scripts
+[*.{sh,bash,zsh}]
+indent_style = space
+indent_size = 2
+max_line_length = 100
+
+# Batch files (Windows)
+[*.{bat,cmd}]
+indent_style = space
+indent_size = 2
+end_of_line = crlf
+
+# Makefile - must use tabs
+[{Makefile,makefile,*.mk}]
+indent_style = tab
+indent_size = 4
+
+# Configuration files
+[*.{toml,ini,cfg,conf}]
+indent_style = space
+indent_size = 2
+
+# Web files
+[*.{html,htm}]
+indent_style = space
+indent_size = 2
+max_line_length = 120
+
+[*.{css,scss,sass,less}]
+indent_style = space
+indent_size = 2
+max_line_length = 100
+
+# XML files
+[*.{xml,svg}]
+indent_style = space
+indent_size = 2
+max_line_length = 120
+
+# Docker files
+[{Dockerfile,*.dockerfile}]
+indent_style = space
+indent_size = 2
+
+# GitHub workflows and templates
+[.github/**/*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+# Lock files - don't modify
+[*.lock]
+insert_final_newline = false
+trim_trailing_whitespace = false
+
+# Large data files - don't modify
+[*.{min.js,min.css}]
+insert_final_newline = false
+trim_trailing_whitespace = false
+
+# Binary files - don't modify
+[*.{png,jpg,jpeg,gif,ico,pdf,zip,tar,gz}]
+insert_final_newline = false
+trim_trailing_whitespace = false

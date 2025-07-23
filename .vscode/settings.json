@@ -1,0 +1,78 @@
+{
+  // Markdown editing preferences
+  "markdown.extension.list.indentationSize": "inherit",
+  "markdown.extension.orderedList.marker": "ordered",
+  "markdown.extension.italic.indicator": "*",
+  "markdown.extension.bold.indicator": "**",
+
+  // Markdown linting configuration to match our standards
+  "markdownlint.config": {
+    "MD040": true,
+    "MD044": {
+      "names": [
+        "JavaScript",
+        "TypeScript",
+        "GitHub",
+        "GitLab",
+        "Markdown",
+        "Aichaku"
+      ]
+    },
+    "MD049": { "style": "asterisk" },
+    "MD050": { "style": "asterisk" },
+    "MD022": true,
+    "MD032": true,
+    "MD046": { "style": "fenced" }
+  },
+
+  // File associations
+  "files.associations": {
+    "*.md": "markdown",
+    "*.mmd": "mermaid",
+    ".markdownlint-cli2.jsonc": "jsonc"
+  },
+
+  // Formatting settings
+  "editor.formatOnSave": true,
+  "editor.rulers": [100, 120],
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.wordWrapColumn": 100,
+
+  // Language-specific settings
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 100,
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "off",
+      "other": "off"
+    }
+  },
+
+  "[typescript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // Deno settings
+  "deno.enable": true,
+  "deno.lint": true,
+  "deno.unstable": true,
+
+  // Extension recommendations
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "DavidAnson.vscode-markdownlint",
+    "denoland.vscode-deno",
+    "bierner.markdown-mermaid"
+  ]
+}
