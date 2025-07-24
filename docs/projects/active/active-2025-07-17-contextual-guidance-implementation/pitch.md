@@ -34,8 +34,8 @@
 ✨ Standards ready (45 files verified/updated)
 ```
 
-**User feedback**: _"does not say WHERE the files are located. It's like a black box, the users gets no feedback about
-the folder the files have been installed in, which I think is really disconcerting."_
+**User feedback**: *"does not say WHERE the files are located. It's like a black box, the users gets no feedback about
+the folder the files have been installed in, which I think is really disconcerting."*
 
 **Validation confirms**: Our problem identification was 100% accurate. The upgrade mechanics work, but the missing
 location context remains the core UX issue.

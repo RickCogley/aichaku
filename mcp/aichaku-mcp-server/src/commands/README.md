@@ -150,14 +150,13 @@ When Claude Code detects methodology keywords...
 
 <!-- AICHAKU:END -->
 
-````
 ### Testing
 
 Run the tests with:
 
 ```bash
 deno test src/commands/integrate-yaml.test.ts --allow-read --allow-write --allow-env
-````
+```
 
 ### Examples
 

@@ -68,4 +68,4 @@ Given these findings, the best approach is to:
 
 ---
 
-_Checkpoint created: 2025-07-16T09:45:00Z_
+*Checkpoint created: 2025-07-16T09:45:00Z*

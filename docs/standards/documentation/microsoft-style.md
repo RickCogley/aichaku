@@ -188,7 +188,7 @@ Make sure your [task] completed successfully:
 
 1. Go to the [location] to view your new [resource].
 
-2. Check that the status shows as _Ready_ or _Active_.
+2. Check that the status shows as *Ready* or *Active*.
 
 3. Test the [resource] by [specific test action].
 
@@ -273,7 +273,7 @@ command-name 123
 
 #### `[optional-argument]`
 
-_Optional_. [Description and when to use it].
+*Optional*. [Description and when to use it].
 
 - **Type**: String
 - **Valid values**: [List or describe]
@@ -461,10 +461,10 @@ Follow these guidelines to get the most from [concept]:
 
 Let's see how [concept] works in practice:
 
-_Contoso Corporation needs to [business need]. They implement [concept] to:_
+*Contoso Corporation needs to [business need]. They implement [concept] to:*
 
-- _[Specific goal 1]_
-- _[Specific goal 2]_
+- *[Specific goal 1]*
+- *[Specific goal 2]*
 
 Here's how they did it: [Concrete example with code/configuration if applicable]
 
@@ -553,7 +553,7 @@ Now that you understand [concept], you're ready to:
 #### UI Elements
 
 - **Bold** for UI elements: "Select **File** > **Save**"
-- _Italics_ for user input: "In the **Name** box, enter _MyProject_"
+- *Italics* for user input: "In the **Name** box, enter *MyProject*"
 - `Code` formatting for code elements, files, and values
 
 #### Tables

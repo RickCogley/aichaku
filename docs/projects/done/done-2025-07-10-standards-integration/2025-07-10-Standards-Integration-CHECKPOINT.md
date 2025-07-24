@@ -168,6 +168,6 @@ aichaku integrate
 
 ---
 
-_Generated: 2025-01-10_\
-_Project: Aichaku Standards Integration_\
-_Status: 🌿 Active_
+*Generated: 2025-01-10*\
+*Project: Aichaku Standards Integration*\
+*Status: 🌿 Active*

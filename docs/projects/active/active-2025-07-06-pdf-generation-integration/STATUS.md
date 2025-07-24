@@ -81,4 +81,4 @@ graph LR
 
 ---
 
-_Last updated: 2025-07-14 by Claude_
+*Last updated: 2025-07-14 by Claude*

@@ -89,4 +89,4 @@ This redesign positions Aichaku as a truly elegant tool that:
 
 ---
 
-_This change transformed Aichaku from a good tool into a delightful experience._
+*This change transformed Aichaku from a good tool into a delightful experience.*

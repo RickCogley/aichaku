@@ -18,7 +18,7 @@ Just describe what you want to do. Claude Code automatically:
 
 ### 📋 Planning Mode
 
-_"What should we build?" / "Let's plan" / "Define this feature"_
+*"What should we build?" / "Let's plan" / "Define this feature"*
 
 Helps you decide what to build based on your methodology:
 
@@ -29,7 +29,7 @@ Helps you decide what to build based on your methodology:
 
 ### 🔨 Execution Mode
 
-_"Let's build" / "Start coding" / "Implement this"_
+*"Let's build" / "Start coding" / "Implement this"*
 
 Guides development with methodology constraints:
 
@@ -40,7 +40,7 @@ Guides development with methodology constraints:
 
 ### 📊 Improvement Mode
 
-_"How are we doing?" / "Retrospective" / "Show metrics"_
+*"How are we doing?" / "Retrospective" / "Show metrics"*
 
 Measures and improves your process:
 

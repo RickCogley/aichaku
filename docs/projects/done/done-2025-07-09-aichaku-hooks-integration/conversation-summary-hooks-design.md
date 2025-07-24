@@ -190,4 +190,4 @@ productivity: {
 
 ---
 
-_Design created: 2025-01-13_
+*Design created: 2025-01-13*

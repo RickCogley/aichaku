@@ -56,4 +56,4 @@ graph LR
 
 ---
 
-_Last Updated: 2025-01-13_
+*Last Updated: 2025-01-13*

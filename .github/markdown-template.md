@@ -100,13 +100,13 @@ This document follows Aichaku Markdown standards:
 
 - ✅ Code blocks have language specifications
 - ✅ Proper names use correct capitalization (GitHub, TypeScript, etc.)
-- ✅ Emphasis uses _underscores_ (matches Prettier formatting)
+- ✅ Emphasis uses *underscores* (matches Prettier formatting)
 - ✅ Headings surrounded by blank lines
 - ✅ Lists surrounded by blank lines
 - ✅ Consistent formatting throughout
 
 ---
 
-_Created: YYYY-MM-DD_\
-_Last updated: YYYY-MM-DD_\
-_Methodology: [applicable methodology if relevant]_
+*Created: YYYY-MM-DD*\
+*Last updated: YYYY-MM-DD*\
+*Methodology: [applicable methodology if relevant]*

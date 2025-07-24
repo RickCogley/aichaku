@@ -182,7 +182,7 @@ Files to update:
 ### Not Doing
 
 - Not moving CLAUDE.md location (stays in project root)
-- Not changing output folder naming (active-_, done-_)
+- Not changing output folder naming (active-*, done-*)
 - Not adding complex configuration files
 - Not breaking existing integrations
 

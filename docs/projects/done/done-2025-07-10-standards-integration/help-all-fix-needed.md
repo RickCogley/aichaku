@@ -30,4 +30,4 @@ Medium - This is a documentation/discoverability issue that affects users trying
 
 ---
 
-_Added: 2025-01-13_
+*Added: 2025-01-13*

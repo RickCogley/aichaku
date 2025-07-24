@@ -37,9 +37,9 @@ The easiest way to [task] is through the [interface].
 
    | Setting  | Value         | Description                          |
    | -------- | ------------- | ------------------------------------ |
-   | **Name** | _Your choice_ | A descriptive name for [purpose]     |
-   | **Type** | _Standard_    | For most scenarios, use Standard     |
-   | **Size** | _Medium_      | Balance between performance and cost |
+   | **Name** | *Your choice* | A descriptive name for [purpose]     |
+   | **Type** | *Standard*    | For most scenarios, use Standard     |
+   | **Size** | *Medium*      | Balance between performance and cost |
 
 5. Select **Review + create**.
 

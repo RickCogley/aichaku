@@ -72,4 +72,4 @@ Implement Option 3 - Enhanced Implementation. This would make the hook actually 
 
 ---
 
-_Issue discovered: 2025-01-13_ _Related to: Hook system implementation_
+*Issue discovered: 2025-01-13* *Related to: Hook system implementation*

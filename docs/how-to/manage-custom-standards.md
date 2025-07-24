@@ -106,7 +106,9 @@ When you use `--create-custom`, Aichaku generates a structured template with:
 - Standard sections (Overview, Implementation, Examples)
 - Placeholder content to guide your writing
 
-The template is defined in [`src/commands/standards.ts`](../../src/commands/standards.ts) and includes sections for overview, implementation, examples, best practices, and common pitfalls.
+The template is defined in [`src/commands/standards.ts`](../../src/commands/standards.ts) and includes sections for
+overview, implementation, examples, best practices, and common pitfalls.
+
 ## Managing Custom Standards
 
 ### List Custom Standards
@@ -122,7 +124,7 @@ aichaku standards --list | grep "🛠️"
 
 # Show detailed view with descriptions
 aichaku standards --list --detailed
-````
+```
 
 Output example:
 
@@ -224,9 +226,12 @@ Current Project Standards:
 
 ## Integration with CLAUDE.md
 
-When you run `aichaku integrate`, custom standards appear in CLAUDE.md alongside built-in standards with clear attribution showing their source location.
+When you run `aichaku integrate`, custom standards appear in CLAUDE.md alongside built-in standards with clear
+attribution showing their source location.
 
-Custom standards are marked with a source reference (e.g., "Custom standard from ~/.claude/aichaku/user/docs/standards/") to distinguish them from built-in standards.
+Custom standards are marked with a source reference (e.g., "Custom standard from
+~/.claude/aichaku/user/docs/standards/") to distinguish them from built-in standards.
+
 ## Best Practices
 
 ### Use Clear Naming Conventions
@@ -254,8 +259,9 @@ Write effective custom standards:
 ❌ Include outdated practices
 ❌ Mix unrelated concerns
 ```
-````
-`````
+
+```
+```
 
 ### Organize Your Standards
 
@@ -365,7 +371,8 @@ mv "My Standard.md" MY-STANDARD.md
 
 **Problem**: Standards not found in expected location
 
-**Solution**: Ensure standards are in `~/.claude/aichaku/user/docs/standards/` with proper `.md` extension and UPPER-KEBAB-CASE naming.
+**Solution**: Ensure standards are in `~/.claude/aichaku/user/docs/standards/` with proper `.md` extension and
+UPPER-KEBAB-CASE naming.
 
 ### Use Debug Commands
 
@@ -387,7 +394,6 @@ aichaku standards --validate custom:my-standard
 # Show full paths
 aichaku standards --list --show-paths
 ```
-
 
 ---
 

@@ -67,8 +67,8 @@ graph TD
 - **Markdown** (not markdown when referring to the language)
 
 ```md
-✅ Good: "Push your changes to GitHub and run TypeScript checks"
-❌ Bad: "Push your changes to github and run typescript checks"
+✅ Good: "Push your changes to GitHub and run TypeScript checks" ❌ Bad: "Push your changes to github and run typescript
+checks"
 ```
 
 <!-- markdownlint-enable MD044 -->
@@ -80,10 +80,12 @@ graph TD
 **Rule**: Always use asterisks for emphasis, never underscores.
 
 <!-- markdownlint-disable MD049 MD050 -->
+
 ```md
-✅ Good: Use *emphasis* and **strong emphasis** with asterisks
-❌ Bad: Don't use _emphasis_ or __strong emphasis__ with underscores
+✅ Good: Use _emphasis_ and **strong emphasis** with asterisks ❌ Bad: Don't use _emphasis_ or **strong emphasis** with
+underscores
 ```
+
 <!-- markdownlint-enable MD049 MD050 -->
 
 ### Heading Spacing
@@ -102,7 +104,9 @@ graph TD
 Space before, next paragraph content.
 
 ❌ Bad: Previous paragraph content, right against:
+
 ## Section Heading
+
 Then soon followed by, next paragraph content.
 ```
 
@@ -126,10 +130,10 @@ Then soon followed by, next paragraph content.
 Then another space, and this paragraph.
 
 ❌ Bad: This is a paragraph, with no space and the bullet list.
+
 - List item 1
 - List item 2
-- List item 3
-Then no space again, and another paragraph.
+- List item 3 Then no space again, and another paragraph.
 ```
 
 <!-- markdownlint-enable MD032 -->
@@ -137,7 +141,6 @@ Then no space again, and another paragraph.
 ### File Structure Standards
 
 **Rule**: All Markdown files must follow this structure:
-
 
 ```md
 # Document Title
@@ -159,10 +162,8 @@ Use descriptive headings that follow logical hierarchy.
 
 ---
 
-*Created: YYYY-MM-DD*
-*Last updated: YYYY-MM-DD*
+_Created: YYYY-MM-DD_ _Last updated: YYYY-MM-DD_
 ```
-
 
 ## Content Quality Standards
 
@@ -262,8 +263,7 @@ code here
 <!-- markdownlint-disable MD049 MD050 -->
 
 ```md
-❌ Bad: Mix of _underscores_ and *asterisks*
-✅ Good: Consistent **asterisks** throughout *the doc*
+❌ Bad: Mix of _underscores_ and _asterisks_ ✅ Good: Consistent **asterisks** throughout _the doc_
 ```
 
 <!-- markdownlint-enable MD049 MD050 -->
@@ -289,7 +289,6 @@ code here
 ```
 
 <!-- markdownlint-enable MD001 -->
-
 
 ### Validation Commands
 

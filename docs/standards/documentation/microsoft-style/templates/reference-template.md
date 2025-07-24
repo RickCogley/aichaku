@@ -14,7 +14,7 @@ command-name [--option] <required-argument> [optional-argument]
 
 #### `<required-argument>`
 
-_Required_. [Description of the argument and its purpose].
+*Required*. [Description of the argument and its purpose].
 
 - **Type**: String | Integer | Boolean
 - **Valid values**: [List specific values or describe format]
@@ -29,7 +29,7 @@ command-name 123
 
 #### `[optional-argument]`
 
-_Optional_. [Description and when to use it].
+*Optional*. [Description and when to use it].
 
 - **Type**: String
 - **Valid values**: [List or describe]

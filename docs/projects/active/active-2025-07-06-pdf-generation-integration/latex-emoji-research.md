@@ -1,6 +1,6 @@
 # LaTeX Emoji Support Research
 
-_Source: Claude.ai research on Unicode emoji support in LaTeX_
+*Source: Claude.ai research on Unicode emoji support in LaTeX*
 
 ## Key Findings for Aichaku PDF Generation
 

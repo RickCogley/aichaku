@@ -20,7 +20,7 @@ Let's start by creating a simple [thing] to understand the basics.
 
 2. Select **File** > **New** > **[Option]**.
 
-3. In the **Name** box, enter a descriptive name like _MyFirst[Thing]_.
+3. In the **Name** box, enter a descriptive name like *MyFirst[Thing]*.
 
 4. Select **Create**.
 

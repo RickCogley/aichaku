@@ -130,5 +130,5 @@ For projects experiencing similar issues:
 
 ---
 
-_Document created: 2025-07-16_\
-_Last updated: 2025-07-16_
+*Document created: 2025-07-16*\
+*Last updated: 2025-07-16*

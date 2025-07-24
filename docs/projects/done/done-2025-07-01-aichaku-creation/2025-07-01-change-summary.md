@@ -118,5 +118,5 @@ providing real value. The system adapts to users rather than forcing users to ad
 
 ---
 
-_Generated with Claude Code + Aichaku_\
-_© 2025 Rick Cogley - MIT License_
+*Generated with Claude Code + Aichaku*\
+*© 2025 Rick Cogley - MIT License*
