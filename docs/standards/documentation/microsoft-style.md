@@ -21,87 +21,18 @@ Help users learn by doing, building confidence through successful completion of 
 
 ### Structure
 
-````markdown
-# Learn to [accomplish a goal] with [product]
+Microsoft tutorials follow a hands-on, step-by-step approach with clear outcomes and encouraging tone.
 
-**Time to complete**: About [X] minutes
+See the complete template: [`templates/tutorial-template.md`](./templates/tutorial-template.md)
 
-In this tutorial, you learn how to [specific outcomes]. This tutorial is designed for [audience description].
+Key structural elements:
+- **Time estimate** upfront  
+- **Prerequisites** section
+- **Numbered steps** with clear actions
+- **Encouragement** after each achievement  
+- **What you learned** summary
+- **Try this next** section for continued learning
 
-## What you need
-
-Before you start, make sure you have:
-
-- [Requirement with specific version if applicable]
-- [Access requirement]
-- [Knowledge prerequisite]
-
-## Create your first [thing]
-
-Let's start by creating a simple [thing] to understand the basics.
-
-1. Open [tool/interface].
-
-2. Select **File** > **New** > **[Option]**.
-
-3. In the **Name** box, enter a descriptive name like _MyFirst[Thing]_.
-
-4. Select **Create**.
-
-   > [!TIP]
-   > Choose names that describe what your [thing] does. This helps you stay organized as your project grows.
-
-5. In the editor that opens, add this code:
-
-   ```language
-   // Your first [thing]
-   code example here
-   ```
-````
-
-6. Select **Save** (or press Ctrl+S).
-
-Great! You created your first [thing]. Notice how [explain what they should observe].
-
-## Modify your [thing]
-
-Now let's make it do something more interesting.
-
-1. In the code you just wrote, find the line that says:
-
-   ```language
-   specific line to modify
-   ```
-
-2. Change it to:
-
-   ```language
-   modified version
-   ```
-
-3. Save your changes.
-
-4. Run your [thing] by selecting **Run** or pressing F5.
-
-You should see [expected result]. If you see an error instead, check that [common mistake to verify].
-
-## What you learned
-
-Congratulations! In this tutorial, you:
-
-- ✅ Created your first [thing]
-- ✅ Modified it to [what they changed]
-- ✅ Learned about [key concept]
-
-## Try this next
-
-Ready for more? Here are some ways to build on what you learned:
-
-- [Link to related tutorial]: Add [feature] to your [thing]
-- [Link to how-to guide]: Connect your [thing] to [service]
-- [Link to concept]: Understand how [things] work
-
-````
 ### Microsoft Style Notes for Tutorials
 
 - **Use "you" and active voice**: "You create a function" not "A function is created"
@@ -403,7 +334,7 @@ graph LR
     A[User Request] --> B[Component 1]
     B --> C[Component 2]
     C --> D[Result]
-````
+```
 
 Let's break this down:
 
