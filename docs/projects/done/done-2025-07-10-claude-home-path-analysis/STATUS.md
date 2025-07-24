@@ -2,9 +2,8 @@
 
 ## Project Overview
 
-Analyzing all references to .claude and HOME directories in the Aichaku codebase
-to understand the scope of changes needed if we move everything under
-.claude/aichaku.
+Analyzing all references to .claude and HOME directories in the Aichaku codebase to understand the scope of changes
+needed if we move everything under .claude/aichaku.
 
 ## Status
 

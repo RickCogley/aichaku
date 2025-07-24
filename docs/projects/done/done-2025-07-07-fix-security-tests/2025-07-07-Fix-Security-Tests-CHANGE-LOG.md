@@ -4,14 +4,12 @@
 
 ## Summary
 
-Fixed failing Security Tests GitHub Action by formatting CLAUDE.md to meet Deno
-formatter requirements.
+Fixed failing Security Tests GitHub Action by formatting CLAUDE.md to meet Deno formatter requirements.
 
 ## Problem
 
-The Security Tests workflow was failing on every commit with formatting errors
-in CLAUDE.md. The integration content added by `aichaku integrate` had line
-breaks that didn't meet the formatter's expectations.
+The Security Tests workflow was failing on every commit with formatting errors in CLAUDE.md. The integration content
+added by `aichaku integrate` had line breaks that didn't meet the formatter's expectations.
 
 ## Solution
 

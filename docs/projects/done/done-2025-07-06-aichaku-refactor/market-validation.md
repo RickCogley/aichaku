@@ -14,8 +14,7 @@
 
 - **Need**: Flexibility as they discover what works
 - **Pain**: Rigid methodology tools that don't fit their reality
-- **Aichaku Value**: Start with startup-friendly Lean, naturally evolve to Scrum
-  as they grow
+- **Aichaku Value**: Start with startup-friendly Lean, naturally evolve to Scrum as they grow
 
 ### 2. Consultants / Freelancers
 
@@ -124,8 +123,8 @@ Based on your insight:
 
 ## The Bet
 
-**Hypothesis**: Developers using AI for project management want methodology
-guidance that adapts to their language, not forces them into rigid frameworks.
+**Hypothesis**: Developers using AI for project management want methodology guidance that adapts to their language, not
+forces them into rigid frameworks.
 
 **Risk**: Low - worst case, it works like current single-methodology tools
 
@@ -133,8 +132,7 @@ guidance that adapts to their language, not forces them into rigid frameworks.
 
 ## Your Insight Applied
 
-> "it's ok to have some changes to how projects are documented, so long as
-> certain things are 'set in stone'"
+> "it's ok to have some changes to how projects are documented, so long as certain things are 'set in stone'"
 
 This is exactly right. Aichaku should:
 
@@ -158,5 +156,4 @@ This is exactly right. Aichaku should:
 3. Iterate based on what actually helps
 4. Add strict mode if users request it
 
-The key insight: **Aichaku succeeds if it reduces methodology friction, not if
-it enforces methodology purity.**
+The key insight: **Aichaku succeeds if it reduces methodology friction, not if it enforces methodology purity.**

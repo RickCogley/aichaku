@@ -4,9 +4,8 @@
 
 ### The Essence of 愛着
 
-愛着 (aichaku) is that warm feeling of attachment we develop toward things
-through sustained use and care. It's not just liking something - it's the
-comfort and trust that grows from repeated interaction.
+愛着 (aichaku) is that warm feeling of attachment we develop toward things through sustained use and care. It's not just
+liking something - it's the comfort and trust that grows from repeated interaction.
 
 ### Why Potted Plant?
 
@@ -59,8 +58,7 @@ In Japanese culture:
 - **育てる (Sodateru)** - To raise/nurture with care
 - **手入れ (Teire)** - Regular maintenance and care
 
-The potted plant connects to these concepts while remaining universally
-understood.
+The potted plant connects to these concepts while remaining universally understood.
 
 ### Practical Benefits
 
@@ -97,6 +95,5 @@ We say:
 
 ## Conclusion
 
-The 🪴 potted plant transforms Aichaku from a tool into a living system that
-users nurture and grow with. It captures the essence of 愛着 - that warm
-attachment that develops through sustained care and interaction.
+The 🪴 potted plant transforms Aichaku from a tool into a living system that users nurture and grow with. It captures
+the essence of 愛着 - that warm attachment that develops through sustained care and interaction.

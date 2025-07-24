@@ -4,12 +4,10 @@
 
 Two issues with current Aichaku directives:
 
-1. Despite clear directives saying "YOU MUST NEVER: ❌ Wait for permission to
-   create standard documents", Claude Code still asks "Would you like me to
-   create STATUS.md?" and similar questions
-2. CLAUDE.md directs to create "CHANGE-LOG.md" but it should use descriptive
-   naming like "YYYY-MM-DD-Project-Name-CHANGE-LOG.md" for better recognition
-   when shared as PDFs
+1. Despite clear directives saying "YOU MUST NEVER: ❌ Wait for permission to create standard documents", Claude Code
+   still asks "Would you like me to create STATUS.md?" and similar questions
+2. CLAUDE.md directs to create "CHANGE-LOG.md" but it should use descriptive naming like
+   "YYYY-MM-DD-Project-Name-CHANGE-LOG.md" for better recognition when shared as PDFs
 
 ## Appetite
 
@@ -17,8 +15,8 @@ Two issues with current Aichaku directives:
 
 ## Solution
 
-Strengthen the CLAUDE.md directives with more emphatic language and repetition
-to override Claude Code's default polite behavior.
+Strengthen the CLAUDE.md directives with more emphatic language and repetition to override Claude Code's default polite
+behavior.
 
 ### Rough Sketch
 
@@ -55,8 +53,7 @@ This is MANDATORY. Users expect files to appear automatically.
 ```markdown
 **Completing Work:**
 
-1. Create change log with descriptive name:
-   `YYYY-MM-DD-{Project-Name}-CHANGE-LOG.md` Example:
+1. Create change log with descriptive name: `YYYY-MM-DD-{Project-Name}-CHANGE-LOG.md` Example:
    `2025-07-07-Fix-Security-Tests-CHANGE-LOG.md`
 2. Rename folder: active-* → complete-*
 3. Ask: "Work appears complete. Shall I commit and push?"

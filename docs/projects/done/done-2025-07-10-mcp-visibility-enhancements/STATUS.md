@@ -6,9 +6,8 @@
 
 ## Overview
 
-Enhanced the Aichaku MCP (Model Context Protocol) server to provide better
-visibility when being used by Claude Code and added document linting
-capabilities.
+Enhanced the Aichaku MCP (Model Context Protocol) server to provide better visibility when being used by Claude Code and
+added document linting capabilities.
 
 ## Progress
 
@@ -27,11 +26,9 @@ graph LR
 Added console logging to stderr for visibility in Claude Code console:
 
 - **Tool Invocation Logging**: Every MCP tool call now logs to console
-- **File Review Logging**: Shows which file is being reviewed and what standards
-  are being used
+- **File Review Logging**: Shows which file is being reviewed and what standards are being used
 - **Startup Messages**: Clear indication when MCP server starts
-- **Document Type Detection**: Identifies document types (Tutorial, How-to,
-  Reference, Explanation)
+- **Document Type Detection**: Identifies document types (Tutorial, How-to, Reference, Explanation)
 
 Example output:
 

@@ -4,17 +4,15 @@
 
 ### 1. JSR Publishing Fix ✅
 
-**Problem**: CI tests failed because `init --dry-run` checked for global
-installation first **Solution**: Reordered logic in `init.ts` to check dry-run
-mode before filesystem checks **Impact**: CI can now run tests without requiring
+**Problem**: CI tests failed because `init --dry-run` checked for global installation first **Solution**: Reordered
+logic in `init.ts` to check dry-run mode before filesystem checks **Impact**: CI can now run tests without requiring
 global Aichaku installation
 
 ### 2. Workflow Security Improvements ✅
 
 #### publish.yml
 
-- Replaced `--allow-all` with specific permissions:
-  `--allow-read --allow-write --allow-env`
+- Replaced `--allow-all` with specific permissions: `--allow-read --allow-write --allow-env`
 - Removed `--no-check` flag from deno publish (now type-checks during publish)
 - Removed fake Node.js/Bun compatibility tests (Aichaku is Deno-only)
 - Fixed init test to use `--global --dry-run`

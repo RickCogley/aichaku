@@ -7,8 +7,7 @@
 
 ## Summary
 
-Successfully upgraded the Salty project to Aichaku v0.28.0, including migration
-to the new project structure.
+Successfully upgraded the Salty project to Aichaku v0.28.0, including migration to the new project structure.
 
 ## What Was Done
 

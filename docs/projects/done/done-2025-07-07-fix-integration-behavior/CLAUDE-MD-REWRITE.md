@@ -5,8 +5,8 @@
 ```markdown
 ## Methodologies
 
-This project uses the globally installed Aichaku adaptive methodology system.
-Claude Code will automatically blend methodologies based on natural language:
+This project uses the globally installed Aichaku adaptive methodology system. Claude Code will automatically blend
+methodologies based on natural language:
 
 - Say "sprint" for Scrum practices
 - Say "shape" for Shape Up principles
@@ -24,17 +24,15 @@ YOU ARE REQUIRED TO FOLLOW THESE RULES WITHOUT EXCEPTION:
 ### YOU MUST ALWAYS:
 ```
 
-✅ Create ALL documents in: .claude/output/active-[date]-[project-name]/ ✅
-Create STATUS.md FIRST for every new project ✅ Update STATUS.md after EVERY
-work session ✅ Git commit after creating/updating documents
+✅ Create ALL documents in: .claude/output/active-[date]-[project-name]/ ✅ Create STATUS.md FIRST for every new project
+✅ Update STATUS.md after EVERY work session ✅ Git commit after creating/updating documents
 
 ```
 ### YOU MUST NEVER:
 ```
 
-❌ Create documents in the project root directory ❌ Create documents in
-.claude/user/ ❌ Ask the user where to put files ❌ Wait for explicit
-instructions to create standard documents
+❌ Create documents in the project root directory ❌ Create documents in .claude/user/ ❌ Ask the user where to put
+files ❌ Wait for explicit instructions to create standard documents
 
 ````
 ## 2. AUTOMATIC Methodology Activation
@@ -119,8 +117,7 @@ git commit -m "docs: [action] for [project-name]
 
 ## 6. Current Active Project
 
-The current active project is tracked in `.claude/.aichaku-active`. READ this
-file to know where to create documents.
+The current active project is tracked in `.claude/.aichaku-active`. READ this file to know where to create documents.
 
 If the file doesn't exist, create it:
 

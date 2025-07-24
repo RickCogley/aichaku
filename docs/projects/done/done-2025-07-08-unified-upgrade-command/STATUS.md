@@ -2,8 +2,8 @@
 
 ## Project Status
 
-**Started**: 2025-07-08 **Type**: UX Enhancement **Methodology**: Shape Up
-(Small Batch) **Status**: Shaping → Implementation
+**Started**: 2025-07-08 **Type**: UX Enhancement **Methodology**: Shape Up (Small Batch) **Status**: Shaping →
+Implementation
 
 ```mermaid
 graph LR

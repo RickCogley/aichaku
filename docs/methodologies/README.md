@@ -1,7 +1,7 @@
 # Simple Agile Methodologies for Claude Code
 
-A lightweight, mode-based system that helps Claude Code adapt to any development
-methodology without complex personas or verbose documentation.
+A lightweight, mode-based system that helps Claude Code adapt to any development methodology without complex personas or
+verbose documentation.
 
 ## Quick Start
 
@@ -53,8 +53,7 @@ Measures and improves your process:
 
 ### Shape Up
 
-**When**: You need to define features with fixed timelines **Key concept**:
-6-week cycles, appetite not estimates
+**When**: You need to define features with fixed timelines **Key concept**: 6-week cycles, appetite not estimates
 
 ```text
 "Let's shape a new feature" → Pitch document with 2 or 6 week appetite
@@ -62,8 +61,7 @@ Measures and improves your process:
 
 ### Scrum
 
-**When**: You want predictable delivery with regular rhythm **Key concept**:
-Sprints with ceremonies and roles
+**When**: You want predictable delivery with regular rhythm **Key concept**: Sprints with ceremonies and roles
 
 ```text
 "Plan next sprint" → Sprint backlog based on velocity
@@ -71,8 +69,8 @@ Sprints with ceremonies and roles
 
 ### Kanban
 
-**When**: You have continuous flow work with varying priorities **Key concept**:
-Visualize work, limit WIP, optimize flow
+**When**: You have continuous flow work with varying priorities **Key concept**: Visualize work, limit WIP, optimize
+flow
 
 ```text
 "Show our kanban board" → Current state with WIP limits
@@ -80,8 +78,7 @@ Visualize work, limit WIP, optimize flow
 
 ### XP (Extreme Programming)
 
-**When**: Code quality is critical **Key concept**: Technical practices like TDD
-and pairing
+**When**: Code quality is critical **Key concept**: Technical practices like TDD and pairing
 
 ```text
 "Let's TDD this feature" → Red-green-refactor cycles
@@ -89,8 +86,7 @@ and pairing
 
 ### Lean
 
-**When**: You need to validate ideas quickly **Key concept**:
-Build-measure-learn with MVPs
+**When**: You need to validate ideas quickly **Key concept**: Build-measure-learn with MVPs
 
 ```text
 "Define an MVP" → Minimum experiment to test hypothesis
@@ -191,8 +187,8 @@ Natural language works best, but shortcuts available:
 
 ## Remember
 
-The best methodology is the one that helps you ship quality software
-sustainably. This system adapts to you, not the other way around.
+The best methodology is the one that helps you ship quality software sustainably. This system adapts to you, not the
+other way around.
 
 ---
 

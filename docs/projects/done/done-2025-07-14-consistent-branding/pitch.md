@@ -2,8 +2,8 @@
 
 ## Problem
 
-The `aichaku init` command output lacks the distinctive 🪴 Aichaku branding that
-appears in other parts of the system. This is particularly important because:
+The `aichaku init` command output lacks the distinctive 🪴 Aichaku branding that appears in other parts of the system.
+This is particularly important because:
 
 - It's often the first screen new users see
 - It sets the tone for the entire experience
@@ -26,18 +26,15 @@ Should be:
 
 ## Appetite
 
-1 week - This is a small but high-impact improvement that affects every user's
-first impression.
+1 week - This is a small but high-impact improvement that affects every user's first impression.
 
 ## Solution
 
-Create a centralized branding system that makes it effortless for any script or
-command to maintain consistent branding.
+Create a centralized branding system that makes it effortless for any script or command to maintain consistent branding.
 
 ### Architectural Approach
 
-Instead of manually adding branding to each command, create a branded messaging
-module:
+Instead of manually adding branding to each command, create a branded messaging module:
 
 ```typescript
 // src/utils/branded-messages.ts

@@ -1055,8 +1055,7 @@ export function help(options: HelpOptions = {}): HelpResult {
       if (!normalizedName) {
         return {
           success: false,
-          message:
-            `Unknown standard: ${options.standard}. Use 'aichaku help --standards' to see available options.`,
+          message: `Unknown standard: ${options.standard}. Use 'aichaku help --standards' to see available options.`,
         };
       }
 
@@ -1090,11 +1089,7 @@ export function help(options: HelpOptions = {}): HelpResult {
     // List all methodologies
     if (options.list) {
       const list = Object.entries(METHODOLOGIES)
-        .map(([_key, meta], index) =>
-          `  ${index + 1}. ${meta.icon} ${
-            meta.name.padEnd(18)
-          } - ${meta.summary}`
-        )
+        .map(([_key, meta], index) => `  ${index + 1}. ${meta.icon} ${meta.name.padEnd(18)} - ${meta.summary}`)
         .join("\n");
 
       const methodNames = Object.entries(METHODOLOGIES)
@@ -1136,8 +1131,7 @@ export function help(options: HelpOptions = {}): HelpResult {
       if (!normalizedName) {
         return {
           success: false,
-          message:
-            `Unknown methodology: ${options.methodology}. Use 'aichaku help --list' to see available options.`,
+          message: `Unknown methodology: ${options.methodology}. Use 'aichaku help --list' to see available options.`,
         };
       }
 
@@ -1197,9 +1191,7 @@ workflow with Claude Code.
   } catch (error) {
     return {
       success: false,
-      message: `Help command failed: ${
-        error instanceof Error ? error.message : String(error)
-      }`,
+      message: `Help command failed: ${error instanceof Error ? error.message : String(error)}`,
     };
   }
 }
@@ -1274,9 +1266,7 @@ function listAllResources(): HelpResult {
 
   // List methodologies
   Object.entries(METHODOLOGIES).forEach(([_key, meta], index) => {
-    content += `  ${index + 1}. ${meta.icon} ${
-      meta.name.padEnd(18)
-    } - ${meta.summary}\n`;
+    content += `  ${index + 1}. ${meta.icon} ${meta.name.padEnd(18)} - ${meta.summary}\n`;
   });
 
   content += `\n🛡️ Standards & Best Practices (0)\n`;

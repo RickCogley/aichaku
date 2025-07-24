@@ -25,8 +25,7 @@ All tasks completed! Ready for final review and testing.
 
 ### 1. Diátaxis Structure Implementation
 
-- Created four documentation categories: tutorials, how-to, reference,
-  explanation
+- Created four documentation categories: tutorials, how-to, reference, explanation
 - Refactored all existing documentation into appropriate categories
 - Created .diataxis file for linting configuration
 
@@ -47,8 +46,7 @@ All tasks completed! Ready for final review and testing.
 ### 4. Documentation Standards Feature
 
 - Created `aichaku docs-standard` command
-- Added three documentation standards (diataxis-google, microsoft-style,
-  writethedocs)
+- Added three documentation standards (diataxis-google, microsoft-style, writethedocs)
 - Created templates for each document type
 - Integrated with CLAUDE.md injection
 

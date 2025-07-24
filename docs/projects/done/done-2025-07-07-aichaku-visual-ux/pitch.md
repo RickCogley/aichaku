@@ -10,13 +10,11 @@ Currently, Aichaku operates invisibly, leading to:
 
 ## Appetite
 
-**1 week** - This focuses on visual enhancements without changing core
-functionality.
+**1 week** - This focuses on visual enhancements without changing core functionality.
 
 ## Solution
 
-We'll implement three visual enhancements that make Aichaku's presence clear and
-helpful:
+We'll implement three visual enhancements that make Aichaku's presence clear and helpful:
 
 ### 1. Aichaku Visual Identity
 
@@ -46,18 +44,16 @@ helpful:
 ```markdown
 ### Visual Communication
 
-When Aichaku functionality is active, prefix messages with: 🪴 Aichaku: [your
-message]
+When Aichaku functionality is active, prefix messages with: 🪴 Aichaku: [your message]
 
 Examples:
 
-- "🪴 Aichaku: I notice you're discussing a sprint. Let me help shape this
-  idea..."
+- "🪴 Aichaku: I notice you're discussing a sprint. Let me help shape this idea..."
 - "🪴 Aichaku: Creating Shape Up project: user-authentication-redesign"
 - "🪴 Aichaku: Documents created in .claude/output/"
 
-Note: Keep language clear and technical. Use growth icons (🌱🌿🌳🍃) as subtle
-visual indicators for project phases, but avoid garden metaphors in text.
+Note: Keep language clear and technical. Use growth icons (🌱🌿🌳🍃) as subtle visual indicators for project phases, but
+avoid garden metaphors in text.
 ```
 
 ### 2. Project Phase Indicators
@@ -143,9 +139,8 @@ Say "help with Aichaku" for more information.
 ```markdown
 ### Session Start Behavior
 
-On first methodology keyword detection each session: "🪴 Aichaku: I noticed you
-mentioned [keyword]. I'm here to help structure your [methodology] workflow.
-Currently in discussion mode - let me know when you're ready to create project
+On first methodology keyword detection each session: "🪴 Aichaku: I noticed you mentioned [keyword]. I'm here to help
+structure your [methodology] workflow. Currently in discussion mode - let me know when you're ready to create project
 documentation."
 ```
 
@@ -167,11 +162,9 @@ Documentation: .claude/output/
 
 ## Rabbit Holes
 
-1. **Complex animations**: Keep progress indicators simple - ASCII and emoji
-   only
+1. **Complex animations**: Keep progress indicators simple - ASCII and emoji only
 2. **Over-branding**: Don't make Aichaku too prominent vs helpful
-3. **Platform differences**: Visual elements must work everywhere Claude Code
-   works
+3. **Platform differences**: Visual elements must work everywhere Claude Code works
 4. **Customization**: Avoid making icons/colors configurable
 
 ## No-gos

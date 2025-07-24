@@ -59,9 +59,7 @@ Understanding the architecture behind our API helps you...
   const result = linter.lint("test.md", content);
 
   // Should detect mixed types (reference + tutorial + explanation)
-  const mixedTypeIssues = result.issues.filter((i) =>
-    i.rule === "mixed-document-type"
-  );
+  const mixedTypeIssues = result.issues.filter((i) => i.rule === "mixed-document-type");
   assertEquals(mixedTypeIssues.length > 0, true);
 });
 
@@ -80,9 +78,7 @@ This guide shows you how to deploy your application to production.
   const result = linter.lint("test.md", content);
 
   // Should warn about missing Prerequisites and Result sections
-  const missingSectionIssues = result.issues.filter((i) =>
-    i.rule === "missing-required-section"
-  );
+  const missingSectionIssues = result.issues.filter((i) => i.rule === "missing-required-section");
   assertEquals(missingSectionIssues.length > 0, true);
 });
 
@@ -98,9 +94,7 @@ Short sentences are good. They are easy to read.
   const result = linter.lint("test.md", content);
 
   // Should warn about the long sentence
-  const longSentenceIssues = result.issues.filter((i) =>
-    i.rule === "sentence-too-long"
-  );
+  const longSentenceIssues = result.issues.filter((i) => i.rule === "sentence-too-long");
   assertEquals(longSentenceIssues.length, 1);
 });
 
@@ -116,9 +110,7 @@ The function returns a list of users.
   const result = linter.lint("test.md", content);
 
   // Should suggest present tense for "will return"
-  const tenseIssues = result.issues.filter((i) =>
-    i.rule === "use-present-tense"
-  );
+  const tenseIssues = result.issues.filter((i) => i.rule === "use-present-tense");
   assertEquals(tenseIssues.length >= 1, true);
 });
 
@@ -136,9 +128,7 @@ Just follow these steps.
   const result = linter.lint("test.md", content);
 
   // Should warn about forbidden words
-  const forbiddenWordIssues = result.issues.filter((i) =>
-    i.rule === "forbidden-word"
-  );
+  const forbiddenWordIssues = result.issues.filter((i) => i.rule === "forbidden-word");
   assertEquals(forbiddenWordIssues.length > 0, true);
 });
 
@@ -154,9 +144,7 @@ Deno.test("GoogleStyleLinter - checks heading case", () => {
   const result = linter.lint("test.md", content);
 
   // Should warn about title case in headings
-  const headingCaseIssues = result.issues.filter((i) =>
-    i.rule === "heading-case"
-  );
+  const headingCaseIssues = result.issues.filter((i) => i.rule === "heading-case");
   assertEquals(headingCaseIssues.length >= 1, true);
 });
 
@@ -172,9 +160,7 @@ Read the [API documentation](https://example.com/api) for details.
   const result = linter.lint("test.md", content);
 
   // Should error on generic link text
-  const linkTextIssues = result.issues.filter((i) =>
-    i.rule === "meaningful-link-text"
-  );
+  const linkTextIssues = result.issues.filter((i) => i.rule === "meaningful-link-text");
   assertEquals(linkTextIssues.length, 1);
   assertEquals(linkTextIssues[0].severity, "error");
 });
@@ -191,9 +177,7 @@ Don't use this function if you don't have permissions.
   const result = linter.lint("test.md", content);
 
   // Should suggest contractions for conversational tone
-  const contractionIssues = result.issues.filter((i) =>
-    i.rule === "use-contractions"
-  );
+  const contractionIssues = result.issues.filter((i) => i.rule === "use-contractions");
   assertEquals(contractionIssues.length >= 1, true);
 });
 
@@ -246,8 +230,6 @@ This jumps from H1 to H4.
   const result = linter.lint("test.md", content);
 
   // Should warn about skipped heading levels
-  const hierarchyIssues = result.issues.filter((i) =>
-    i.rule === "heading-hierarchy"
-  );
+  const hierarchyIssues = result.issues.filter((i) => i.rule === "heading-hierarchy");
   assertEquals(hierarchyIssues.length >= 1, true);
 });

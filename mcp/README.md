@@ -1,7 +1,6 @@
 # Aichaku MCP Servers
 
-This directory contains the Model Context Protocol (MCP) servers that provide
-Claude Code with enhanced capabilities.
+This directory contains the Model Context Protocol (MCP) servers that provide Claude Code with enhanced capabilities.
 
 ## Directory Structure
 
@@ -19,8 +18,7 @@ mcp/
 
 **Tools Provided**:
 
-- `mcp__aichaku-reviewer__review_file` - Review individual files for security
-  and standards
+- `mcp__aichaku-reviewer__review_file` - Review individual files for security and standards
 - `mcp__aichaku-reviewer__review_methodology` - Check methodology compliance
 - `mcp__aichaku-reviewer__get_standards` - Get project standards configuration
 - `mcp__aichaku-reviewer__analyze_project` - Analyze project structure

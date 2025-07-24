@@ -186,9 +186,7 @@ export class FilePathAnonymizer {
       const _currentPath = parts.slice(0, i + 1).join("/");
       // This is a simplified check - in practice, you'd check for actual marker files
       if (
-        projectMarkers.some((marker) =>
-          parts[i]?.includes(marker.split(".")[0])
-        )
+        projectMarkers.some((marker) => parts[i]?.includes(marker.split(".")[0]))
       ) {
         projectIndex = i;
         break;

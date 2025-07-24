@@ -1,14 +1,12 @@
 # Aichaku Folder Migration Module
 
-This module handles the migration from the old `~/.claude/` structure to the new
-`~/.claude/aichaku/` structure, ensuring aichaku files are properly organized
-while preserving user data.
+This module handles the migration from the old `~/.claude/` structure to the new `~/.claude/aichaku/` structure,
+ensuring aichaku files are properly organized while preserving user data.
 
 ## Overview
 
-The migration module safely moves aichaku-specific files from the old location
-to the new structured location while preserving all user data and
-configurations.
+The migration module safely moves aichaku-specific files from the old location to the new structured location while
+preserving all user data and configurations.
 
 ### What Gets Migrated
 

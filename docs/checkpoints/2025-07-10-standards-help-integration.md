@@ -4,16 +4,15 @@ Date: 2025-07-10
 
 ## Session Summary
 
-Successfully implemented standards documentation integration into the
-`aichaku help` command, creating a comprehensive knowledge base for developers.
+Successfully implemented standards documentation integration into the `aichaku help` command, creating a comprehensive
+knowledge base for developers.
 
 ## Key Accomplishments
 
 ### 1. Enhanced Help Command
 
 - Extended `help.ts` to support both methodologies and standards
-- Added new options: `--standards`, `--all`, `--security`, `--architecture`,
-  etc.
+- Added new options: `--standards`, `--all`, `--security`, `--architecture`, etc.
 - Created smart topic detection to distinguish standards from methodologies
 - Maintained backward compatibility with existing methodology help
 
@@ -70,8 +69,7 @@ All commands tested successfully:
 
 1. `/src/commands/help.ts` - Main implementation
 2. `/cli.ts` - Enhanced argument parsing
-3. Created documentation in
-   `.claude/output/done-2025-07-10-standards-help-integration/`
+3. Created documentation in `.claude/output/done-2025-07-10-standards-help-integration/`
 
 ## Usage Examples
 
@@ -126,8 +124,7 @@ With the help integration complete, developers can now:
 3. Integrate standards into CLAUDE.md
 4. Have Claude Code follow these standards proactively
 
-The knowledge base serves as both a learning resource and practical guide for
-improving development practices.
+The knowledge base serves as both a learning resource and practical guide for improving development practices.
 
 ## Related Work
 

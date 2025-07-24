@@ -1,7 +1,6 @@
 # Shape Up
 
-**BEST FOR**: Features with unclear solutions, fixed timeline projects, avoiding
-scope creep
+**BEST FOR**: Features with unclear solutions, fixed timeline projects, avoiding scope creep
 
 **TRIGGERS**: "shape", "appetite", "pitch", "betting table", "6 weeks"
 
@@ -59,8 +58,8 @@ Risk: [Any concerns]
 
 ## Context Adaptations
 
-**Solo**: Skip betting ceremony, direct shape → build **Team**: Full process
-with betting table **Urgent**: Not suitable - use Kanban instead
+**Solo**: Skip betting ceremony, direct shape → build **Team**: Full process with betting table **Urgent**: Not
+suitable - use Kanban instead
 
 ## Key Decisions
 
@@ -81,5 +80,5 @@ with betting table **Urgent**: Not suitable - use Kanban instead
 
 ## Advanced Topics
 
-- [**Blending Shape Up with other methodologies**](../integrations/shape-up-blending.md) -
-  Guide for mixing Shape Up with Scrum, Kanban, Lean, and XP
+- [**Blending Shape Up with other methodologies**](../integrations/shape-up-blending.md) - Guide for mixing Shape Up
+  with Scrum, Kanban, Lean, and XP

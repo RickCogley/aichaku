@@ -2,9 +2,8 @@
 
 ## Overview
 
-Updated the Aichaku hooks system to generate hooks with the correct nested
-structure that Claude Code expects, and migrated from bash-based hooks to a
-unified TypeScript runner for better security and cross-platform compatibility.
+Updated the Aichaku hooks system to generate hooks with the correct nested structure that Claude Code expects, and
+migrated from bash-based hooks to a unified TypeScript runner for better security and cross-platform compatibility.
 
 ## Key Changes
 
@@ -105,8 +104,7 @@ Created 5 new GitHub-focused hooks:
 ### Documentation Review Hooks
 
 - **docs-review**: Reviews Markdown files against documentation standards
-- **jsdoc-checker**: Adaptive JSDoc validation that detects project type
-  (Deno/TSDoc/JSDoc/TypeDoc)
+- **jsdoc-checker**: Adaptive JSDoc validation that detects project type (Deno/TSDoc/JSDoc/TypeDoc)
 
 ### Hook Distribution Discovery
 
@@ -125,8 +123,7 @@ Successfully installed and tested hooks globally:
 - docs-review ✅
 - jsdoc-checker ✅
 
-Key insight: Selective installation is crucial to avoid noise from hooks
-triggering too frequently.
+Key insight: Selective installation is crucial to avoid noise from hooks triggering too frequently.
 
 ## Next Steps
 

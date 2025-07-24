@@ -2,21 +2,17 @@
 
 ## Problem
 
-Aichaku's current directives make Claude Code too eager to create project
-folders immediately when methodology keywords are detected. This leads to:
+Aichaku's current directives make Claude Code too eager to create project folders immediately when methodology keywords
+are detected. This leads to:
 
-1. **Premature folder creation** - Folders created before the effort is properly
-   named or defined
-2. **Multiple duplicate folders** - CC creates multiple folders due to
-   uncertainty about naming
+1. **Premature folder creation** - Folders created before the effort is properly named or defined
+2. **Multiple duplicate folders** - CC creates multiple folders due to uncertainty about naming
 3. **Output clutter** - Unnecessary folders accumulate in the output directory
-4. **Lost discussion context** - Important exploratory discussion happens after
-   folder creation instead of before
+4. **Lost discussion context** - Important exploratory discussion happens after folder creation instead of before
 
 ## Solution
 
-Implement a **discussion-first approach** with clear checkpoints before document
-creation:
+Implement a **discussion-first approach** with clear checkpoints before document creation:
 
 ### Phase 1: Discussion Mode (DEFAULT)
 
@@ -56,9 +52,8 @@ Add new section before current "AUTOMATIC Document Creation":
 
 ### Phase 1: Discussion Mode (DEFAULT)
 
-When methodology keywords are detected, YOU MUST: ✅ Acknowledge: "I see you're
-thinking about [methodology context]" ✅ Ask clarifying questions ✅ Help shape
-and refine the idea ❌ DO NOT create any project folders ❌ DO NOT create any
+When methodology keywords are detected, YOU MUST: ✅ Acknowledge: "I see you're thinking about [methodology context]" ✅
+Ask clarifying questions ✅ Help shape and refine the idea ❌ DO NOT create any project folders ❌ DO NOT create any
 documents
 
 ### Phase 2: Wait for Explicit Readiness
@@ -73,9 +68,8 @@ Only proceed to create documents when user says:
 
 ### Phase 3: Create Named Project
 
-When user is ready: ✅ Confirm name: "Based on our discussion, I'll name this
-project: [descriptive-name]" ✅ Create ONE folder with clear name ✅ Generate
-all standard documents
+When user is ready: ✅ Confirm name: "Based on our discussion, I'll name this project: [descriptive-name]" ✅ Create ONE
+folder with clear name ✅ Generate all standard documents
 ```
 
 ### Modify Current Section 2
@@ -85,13 +79,11 @@ Change "CRITICAL: NO ASKING, JUST CREATE" to:
 ```markdown
 ### 2. CRITICAL: DISCUSSION FIRST, THEN CREATE
 
-**During Discussion Phase:** ❌ NEVER say: "Would you like me to create..." ✅
-ALWAYS say: "I understand you're exploring [topic]. Let me help you think
-through this..."
+**During Discussion Phase:** ❌ NEVER say: "Would you like me to create..." ✅ ALWAYS say: "I understand you're
+exploring [topic]. Let me help you think through this..."
 
-**When User Signals Readiness:** ✅ IMMEDIATELY create without asking permission
-✅ Say: "Creating project: [descriptive-name]" ❌ NEVER ask for confirmation
-once signaled
+**When User Signals Readiness:** ✅ IMMEDIATELY create without asking permission ✅ Say: "Creating project:
+[descriptive-name]" ❌ NEVER ask for confirmation once signaled
 ```
 
 ## Benefits

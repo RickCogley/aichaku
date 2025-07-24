@@ -2,8 +2,8 @@
 
 ## Overview
 
-This document outlines the plan to migrate from `/references` to `/docs` and
-relocate auto-generated API documentation to a subfolder.
+This document outlines the plan to migrate from `/references` to `/docs` and relocate auto-generated API documentation
+to a subfolder.
 
 ## Current Structure
 
@@ -167,5 +167,4 @@ deno task docs:lint docs/
 deno task test
 ```
 
-This migration maintains all functionality while moving to a more conventional
-structure.
+This migration maintains all functionality while moving to a more conventional structure.

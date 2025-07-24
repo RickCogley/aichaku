@@ -56,8 +56,7 @@ data = response.json()
 
 ## Authentication
 
-All requests require authentication using a Bearer token in the Authorization
-header:
+All requests require authentication using a Bearer token in the Authorization header:
 
 ```
 Authorization: Bearer YOUR*API*TOKEN
@@ -439,9 +438,7 @@ async function makeRequest(url, options, retries = 3) {
     }
 
     const retryAfter = response.headers.get("Retry-After");
-    const delay = retryAfter
-      ? parseInt(retryAfter) * 1000
-      : Math.pow(2, i) * 1000;
+    const delay = retryAfter ? parseInt(retryAfter) * 1000 : Math.pow(2, i) * 1000;
 
     await new Promise((resolve) => setTimeout(resolve, delay));
   }

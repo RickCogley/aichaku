@@ -2,9 +2,8 @@
 
 ## Executive Summary
 
-While CodeQL and DevSkim provide excellent baseline security coverage, they have
-significant gaps that require targeted custom checks to address. This analysis
-identifies what each tool covers well, their limitations, and areas where
+While CodeQL and DevSkim provide excellent baseline security coverage, they have significant gaps that require targeted
+custom checks to address. This analysis identifies what each tool covers well, their limitations, and areas where
 focused custom security checks add real value.
 
 ## CodeQL Analysis
@@ -22,8 +21,8 @@ focused custom security checks add real value.
 
 #### 1. Runtime and Dynamic Analysis Blind Spots
 
-Think of CodeQL as a building inspector who only looks at blueprints, not the
-actual building in use. It excels at static analysis but misses:
+Think of CodeQL as a building inspector who only looks at blueprints, not the actual building in use. It excels at
+static analysis but misses:
 
 - Runtime vulnerabilities that only appear when code executes
 - Issues from dynamic code generation or reflection
@@ -67,8 +66,7 @@ CodeQL struggles with context-dependent vulnerabilities:
 
 #### 1. Superficial Pattern Matching
 
-DevSkim is like a spell-checker for security - it catches obvious mistakes but
-misses nuanced issues:
+DevSkim is like a spell-checker for security - it catches obvious mistakes but misses nuanced issues:
 
 - High false positive rate due to simple regex matching
 - Can't understand code context or flow
@@ -123,8 +121,7 @@ Neither tool effectively covers:
 
 ### Runtime Security Model
 
-Deno's unique permission system creates security considerations that general
-tools miss:
+Deno's unique permission system creates security considerations that general tools miss:
 
 - **Permission escalation**: `--allow-all` usage in production
 - **Dynamic imports**: Template literal injection in import paths
@@ -140,17 +137,14 @@ tools miss:
 
 ### What to Keep in Custom Checks
 
-1. **Deno-specific permission validation** - Neither tool understands Deno's
-   security model
-2. **Context-aware randomness checking** - Static tools can't determine security
-   context
+1. **Deno-specific permission validation** - Neither tool understands Deno's security model
+2. **Context-aware randomness checking** - Static tools can't determine security context
 3. **Runtime security patterns** - Dynamic import validation, eval detection
 4. **Project-specific patterns** - Domain knowledge that general tools lack
 
 ### What to Remove from Custom Checks
 
-1. **Path traversal detection** - CodeQL handles this better with semantic
-   analysis
+1. **Path traversal detection** - CodeQL handles this better with semantic analysis
 2. **Generic pattern matching** - DevSkim covers these more comprehensively
 3. **Hardcoded secrets** - Better handled by specialized tools and hooks
 4. **SQL injection patterns** - Well covered by both tools
@@ -159,25 +153,22 @@ tools miss:
 
 To build comprehensive coverage, consider adding:
 
-- **Dynamic Application Security Testing (DAST)** - For runtime vulnerability
-  detection
+- **Dynamic Application Security Testing (DAST)** - For runtime vulnerability detection
 - **Software Composition Analysis (SCA)** - For deep dependency scanning
 - **Infrastructure as Code scanners** - For cloud and container configurations
 - **Runtime Application Self-Protection (RASP)** - For production monitoring
 - **API security testing tools** - For comprehensive API vulnerability detection
-- **Secret scanning** - For exposed credentials and keys (already implemented in
-  hooks)
+- **Secret scanning** - For exposed credentials and keys (already implemented in hooks)
 - **Security orchestration** - To correlate findings across all tools
 
 ## Security Architecture Philosophy
 
-Think of it like home security: CodeQL and DevSkim are your locks and window
-bars (preventive), but you also need motion sensors (runtime detection),
-security cameras (monitoring), and an alarm system (incident response) for
-complete protection.
+Think of it like home security: CodeQL and DevSkim are your locks and window bars (preventive), but you also need motion
+sensors (runtime detection), security cameras (monitoring), and an alarm system (incident response) for complete
+protection.
 
-The key is recognizing that no single tool can catch everything - you need a
-layered approach where each tool's strengths compensate for others' weaknesses.
+The key is recognizing that no single tool can catch everything - you need a layered approach where each tool's
+strengths compensate for others' weaknesses.
 
 ## Implementation Strategy
 
@@ -199,5 +190,5 @@ layered approach where each tool's strengths compensate for others' weaknesses.
 - Create unified reporting and alerting
 - Establish clear escalation paths for different types of findings
 
-This analysis provides the foundation for a security strategy that maximizes
-tool effectiveness while minimizing maintenance overhead and false positives.
+This analysis provides the foundation for a security strategy that maximizes tool effectiveness while minimizing
+maintenance overhead and false positives.

@@ -171,8 +171,8 @@ Location: `project/.claude/`
     └── settings.local.json    # Claude Code settings (stays here)
 ```
 
-Note: The `.aichaku-project` marker file is no longer needed. Aichaku detects
-projects by the presence of `.claude/aichaku/` directory.
+Note: The `.aichaku-project` marker file is no longer needed. Aichaku detects projects by the presence of
+`.claude/aichaku/` directory.
 
 ## Methodology package structure
 
@@ -343,10 +343,9 @@ Aichaku v2.0+ uses a new organized structure to avoid cluttering `~/.claude/`:
 ### Old structure (v1.x)
 ```
 
-~/.claude/ ├── methodologies/ # Aichaku files mixed with user files ├──
-standards/ # Aichaku files mixed with user files ├── output/ # User work ├──
-CLAUDE.md # User's global instructions ├── settings.json # User settings └──
-commands.json # User commands
+~/.claude/ ├── methodologies/ # Aichaku files mixed with user files ├── standards/ # Aichaku files mixed with user files
+├── output/ # User work ├── CLAUDE.md # User's global instructions ├── settings.json # User settings └── commands.json #
+User commands
 
 ```
 ### New structure (v2.0+)
@@ -356,9 +355,8 @@ commands.json # User commands
 
 # Core methodology files │ ├── standards/ # Built-in standards │ ├── user/
 
-User customizations │ └── cache/ # Performance cache │ ├── output/ # User work
-(stays in original location) ├── CLAUDE.md # User instructions (stays in
-original location) ├── settings.json # User settings (stays in original
+User customizations │ └── cache/ # Performance cache │ ├── output/ # User work (stays in original location) ├──
+CLAUDE.md # User instructions (stays in original location) ├── settings.json # User settings (stays in original
 location) └── commands.json # User commands (stays in original location)
 
 ```
@@ -373,14 +371,12 @@ location) └── commands.json # User commands (stays in original location)
 Work organization:
 ```
 
-output/ ├── active-2025-07-10-authentication-system/ │ ├── STATUS.md # Current
-progress │ ├── pitch.md # Initial pitch │ ├── cycle-plan.md # Execution plan │
-├── implementation-notes.md # Technical details │ └── assets/ # Supporting files
-│ ├── diagrams/ │ └── screenshots/ │ ├── active-2025-07-11-payment-integration/
-│ └── [project files] │ ├── done-2025-07-09-security-audit/ │ ├── STATUS.md #
-Final status │ ├── findings.md # Audit results │ ├── remediation-plan.md # Fix
-plan │ └── 2025-07-09-Security-Audit-CHANGE-LOG.md │ └──
-archived-2025-01-15-legacy-migration/ └── [old project files]
+output/ ├── active-2025-07-10-authentication-system/ │ ├── STATUS.md # Current progress │ ├── pitch.md # Initial pitch │
+├── cycle-plan.md # Execution plan │ ├── implementation-notes.md # Technical details │ └── assets/ # Supporting files │
+├── diagrams/ │ └── screenshots/ │ ├── active-2025-07-11-payment-integration/ │ └── [project files] │ ├──
+done-2025-07-09-security-audit/ │ ├── STATUS.md # Final status │ ├── findings.md # Audit results │ ├──
+remediation-plan.md # Fix plan │ └── 2025-07-09-Security-Audit-CHANGE-LOG.md │ └── archived-2025-01-15-legacy-migration/
+└── [old project files]
 
 ````
 ## File naming conventions

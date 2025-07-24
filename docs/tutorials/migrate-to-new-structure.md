@@ -2,9 +2,8 @@
 
 ## Overview
 
-Starting with Aichaku v0.20.0, we've reorganized the folder structure to provide
-better separation between Aichaku's core files and your custom content. This
-migration guide will walk you through updating your existing setup to the new
+Starting with Aichaku v0.20.0, we've reorganized the folder structure to provide better separation between Aichaku's
+core files and your custom content. This migration guide will walk you through updating your existing setup to the new
 structure.
 
 ### Why Migrate?
@@ -13,10 +12,8 @@ The new structure provides:
 
 - **Clear ownership**: Aichaku files live in `aichaku/` subdirectories
 - **Better organization**: Custom standards have a dedicated location
-- **Easier updates**: Core files can be updated without affecting your
-  customizations
-- **Cleaner root**: The `~/.claude/` directory stays organized for multiple
-  tools
+- **Easier updates**: Core files can be updated without affecting your customizations
+- **Cleaner root**: The `~/.claude/` directory stays organized for multiple tools
 
 ### What's Changing
 
@@ -432,8 +429,7 @@ If you have scripts that reference the old structure:
 
 Now that you've migrated:
 
-1. **Learn about custom standards**: See
-   [Managing Custom Standards](/docs/how-to/manage-custom-standards.md)
+1. **Learn about custom standards**: See [Managing Custom Standards](/docs/how-to/manage-custom-standards.md)
 2. **Explore new features**: Check [What's New](/docs/reference/changelog.md)
 3. **Share with your team**: Use this guide to help others migrate
 
@@ -457,5 +453,5 @@ The migration process is designed to be safe and reversible:
 3. **Updates automatically** when you run commands
 4. **Can be rolled back** if needed
 
-Remember: This is a one-time migration. Once completed, Aichaku will use the new
-structure going forward, providing better organization and easier maintenance.
+Remember: This is a one-time migration. Once completed, Aichaku will use the new structure going forward, providing
+better organization and easier maintenance.

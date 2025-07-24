@@ -2,9 +2,8 @@
 
 ## Overview
 
-This guide covers tools and techniques for automating Mermaid diagram
-generation, maintaining consistency, and integrating diagrams into development
-workflows.
+This guide covers tools and techniques for automating Mermaid diagram generation, maintaining consistency, and
+integrating diagrams into development workflows.
 
 ## Table of Contents
 
@@ -97,8 +96,7 @@ class MermaidClassDiagramGenerator {
 
       // Add methods
       classInfo.methods.forEach((method) => {
-        mermaid +=
-          `    ${method.visibility}${method.name}(${method.params}): ${method.returnType}\n`;
+        mermaid += `    ${method.visibility}${method.name}(${method.params}): ${method.returnType}\n`;
       });
 
       mermaid += "  }\n\n";
@@ -509,11 +507,8 @@ class PrismaToMermaid {
     models.forEach((model) => {
       model.fields.forEach((field) => {
         if (field.relation) {
-          const relType = field.relation.type === "one-to-many"
-            ? "||--o{"
-            : "||--||";
-          const rel =
-            `  ${model.name} ${relType} ${field.relation.to} : "${field.name}"`;
+          const relType = field.relation.type === "one-to-many" ? "||--o{" : "||--||";
+          const rel = `  ${model.name} ${relType} ${field.relation.to} : "${field.name}"`;
           relationships.add(rel);
         }
       });
@@ -655,14 +650,7 @@ class OpenAPIToSequence {
 
 ```typescript
 // graphql2mermaid.ts
-import {
-  GraphQLFieldMap,
-  GraphQLObjectType,
-  GraphQLSchema,
-  isListType,
-  isNonNullType,
-  isObjectType,
-} from "graphql";
+import { GraphQLFieldMap, GraphQLObjectType, GraphQLSchema, isListType, isNonNullType, isObjectType } from "graphql";
 
 class GraphQLToMermaid {
   generateClassDiagram(schema: GraphQLSchema): string {
@@ -725,8 +713,7 @@ class GraphQLToMermaid {
         const isList = this.isListField(field.type);
         const relationSymbol = isList ? "||--o{" : "||--||";
 
-        relationships +=
-          `  ${typeName} ${relationSymbol} ${fieldType.name} : ${fieldName}\n`;
+        relationships += `  ${typeName} ${relationSymbol} ${fieldType.name} : ${fieldName}\n`;
       }
     });
 
@@ -825,8 +812,7 @@ class C4DiagramGenerator {
     diagram += `  subgraph "${system.name}"\n`;
 
     system.containers.forEach((container) => {
-      diagram +=
-        `    ${container.name}[${container.name}<br/>${container.technology}<br/>${container.description}]\n`;
+      diagram += `    ${container.name}[${container.name}<br/>${container.technology}<br/>${container.description}]\n`;
     });
 
     diagram += "  end\n\n";
@@ -834,9 +820,7 @@ class C4DiagramGenerator {
     // Add relationships between containers
     system.containers.forEach((container, idx) => {
       if (idx > 0) {
-        diagram += `  ${
-          system.containers[idx - 1].name
-        } --> ${container.name}\n`;
+        diagram += `  ${system.containers[idx - 1].name} --> ${container.name}\n`;
       }
     });
 
@@ -850,8 +834,7 @@ class C4DiagramGenerator {
     diagram += `  subgraph "${container.name}"\n`;
 
     container.components.forEach((component) => {
-      diagram +=
-        `    ${component.name}[${component.name}<br/>${component.technology}]\n`;
+      diagram += `    ${component.name}[${component.name}<br/>${component.technology}]\n`;
     });
 
     diagram += "  end\n\n";

@@ -2,9 +2,8 @@
 
 ## Overview
 
-Based on analysis of existing security implementations in Nagare and Salty, plus
-the new 15-factor app guidelines, this document outlines how Aichaku can provide
-modular, reusable guidance sections.
+Based on analysis of existing security implementations in Nagare and Salty, plus the new 15-factor app guidelines, this
+document outlines how Aichaku can provide modular, reusable guidance sections.
 
 ## Guidance Categories
 

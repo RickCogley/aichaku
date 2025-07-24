@@ -4,10 +4,7 @@
  * MCP tool for analyzing project structure and characteristics
  */
 
-import {
-  type ProjectAnalysis,
-  ProjectAnalyzer,
-} from "../analysis/project-analyzer.ts";
+import { type ProjectAnalysis, ProjectAnalyzer } from "../analysis/project-analyzer.ts";
 import { feedbackSystem } from "../feedback/feedback-system.ts";
 import { validatePath } from "../utils/path-security.ts";
 import { existsSync } from "@std/fs/exists";
@@ -26,8 +23,7 @@ export interface AnalyzeProjectResult {
 
 export const analyzeProjectTool = {
   name: "analyze_project",
-  description:
-    "Analyze project structure, languages, architecture, and dependencies",
+  description: "Analyze project structure, languages, architecture, and dependencies",
   inputSchema: {
     type: "object",
     properties: {
@@ -57,9 +53,7 @@ export const analyzeProjectTool = {
         validatePath(resolvedPath, Deno.cwd());
       } catch (error) {
         throw new Error(
-          `Invalid project path: ${
-            error instanceof Error ? error.message : String(error)
-          }`,
+          `Invalid project path: ${error instanceof Error ? error.message : String(error)}`,
         );
       }
 
@@ -99,9 +93,7 @@ export const analyzeProjectTool = {
         analysis,
       };
     } catch (error) {
-      const errorMessage = error instanceof Error
-        ? error.message
-        : String(error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
       feedbackSystem.reportError(operationId, new Error(errorMessage));
 
       return {
@@ -117,9 +109,7 @@ function formatAnalysisSummary(analysis: ProjectAnalysis): string {
 
   const parts = [
     `Project type: ${type}`,
-    `Primary language: ${languages[0]?.language || "Unknown"} (${
-      languages[0]?.percentage || 0
-    }%)`,
+    `Primary language: ${languages[0]?.language || "Unknown"} (${languages[0]?.percentage || 0}%)`,
   ];
 
   if (architecture.pattern) {

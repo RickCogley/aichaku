@@ -232,6 +232,5 @@ Let me start by understanding your requirements..."
 
 ## Summary
 
-v0.5.0 transforms Aichaku from a tool that works into a tool that delights.
-Every interaction is thoughtful, every message is clear, and the entire
-experience feels magical rather than mechanical.
+v0.5.0 transforms Aichaku from a tool that works into a tool that delights. Every interaction is thoughtful, every
+message is clear, and the entire experience feels magical rather than mechanical.

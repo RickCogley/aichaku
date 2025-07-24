@@ -16,8 +16,7 @@
 
 ## Background/Context
 
-[Provide any additional context that helps understand why this story is valuable
-and what problem it solves]
+[Provide any additional context that helps understand why this story is valuable and what problem it solves]
 
 ## Acceptance Criteria
 
@@ -73,8 +72,7 @@ and what problem it solves]
 
 ## Notes
 
-[Any additional information, decisions made, or context from refinement
-sessions]
+[Any additional information, decisions made, or context from refinement sessions]
 
 ---
 

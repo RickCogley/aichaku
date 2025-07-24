@@ -2,8 +2,7 @@
 
 ## Summary of Work Accomplished
 
-- Analyzed and sorted 118 permissions from `.claude/settings.local.json` into
-  logical categories
+- Analyzed and sorted 118 permissions from `.claude/settings.local.json` into logical categories
 - Identified recommended permissions for global configuration
 - Updated global settings file with sorted and expanded permissions list
 
@@ -18,13 +17,11 @@
 
 ### Created
 
-- `docs/checkpoints/checkpoint-2025-07-15-claude-permissions-update.md` - This
-  checkpoint file
+- `docs/checkpoints/checkpoint-2025-07-15-claude-permissions-update.md` - This checkpoint file
 
 ### Modified
 
-- `/Users/rcogley/.dotfiles/claude/.claude/settings.json` - Added recommended
-  permissions and sorted alphabetically
+- `/Users/rcogley/.dotfiles/claude/.claude/settings.json` - Added recommended permissions and sorted alphabetically
 
 ## Problems Solved
 

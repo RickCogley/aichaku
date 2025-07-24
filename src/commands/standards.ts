@@ -8,23 +8,10 @@
 import { exists } from "jsr:@std/fs@1/exists";
 import { ensureDir } from "jsr:@std/fs@1/ensure-dir";
 import { join, normalize, resolve } from "jsr:@std/path@1";
-import {
-  ensureAichakuDirs,
-  getAichakuPaths,
-  getUserStandardPath,
-  isPathSafe,
-} from "../paths.ts";
-import {
-  safeReadDir,
-  safeReadTextFile,
-  safeRemove,
-} from "../utils/path-security.ts";
+import { ensureAichakuDirs, getAichakuPaths, getUserStandardPath, isPathSafe } from "../paths.ts";
+import { safeReadDir, safeReadTextFile, safeRemove } from "../utils/path-security.ts";
 import { resolveProjectPath } from "../utils/project-paths.ts";
-import {
-  type ContentMetadata,
-  discoverContent,
-  type DiscoveredContent,
-} from "../utils/dynamic-content-discovery.ts";
+import { type ContentMetadata, discoverContent, type DiscoveredContent } from "../utils/dynamic-content-discovery.ts";
 
 /**
  * Represents a development standard or guideline
@@ -559,9 +546,7 @@ async function showProjectStandards(projectPath?: string): Promise<void> {
   }
 
   // Check integration status and provide options
-  const validatedProjectPath = projectPath
-    ? resolveProjectPath(projectPath)
-    : Deno.cwd();
+  const validatedProjectPath = projectPath ? resolveProjectPath(projectPath) : Deno.cwd();
   const claudeMdPath = join(validatedProjectPath, "CLAUDE.md");
   const claudeExists = await exists(claudeMdPath);
   const needsIntegration = !claudeExists ||
@@ -573,9 +558,7 @@ async function showProjectStandards(projectPath?: string): Promise<void> {
   console.log(`\n💡 What you can do:`);
   if (needsIntegration) {
     console.log(
-      `   • Run 'aichaku integrate' to ${
-        claudeExists ? "update" : "create"
-      } CLAUDE.md with these standards`,
+      `   • Run 'aichaku integrate' to ${claudeExists ? "update" : "create"} CLAUDE.md with these standards`,
     );
   }
   console.log(`   • Run 'aichaku standards --add <id>' to add more standards`);
@@ -815,9 +798,7 @@ async function createCustomStandard(name: string): Promise<void> {
     console.log(`   • View all standards: aichaku standards --list`);
   } catch (error) {
     console.error(
-      `❌ Failed to create custom standard: ${
-        error instanceof Error ? error.message : "Unknown error"
-      }`,
+      `❌ Failed to create custom standard: ${error instanceof Error ? error.message : "Unknown error"}`,
     );
   }
 }
@@ -854,9 +835,7 @@ async function deleteCustomStandard(name: string): Promise<void> {
     console.log(`   aichaku standards --remove ${sanitizedName}`);
   } catch (error) {
     console.error(
-      `❌ Failed to delete custom standard: ${
-        error instanceof Error ? error.message : "Unknown error"
-      }`,
+      `❌ Failed to delete custom standard: ${error instanceof Error ? error.message : "Unknown error"}`,
     );
   }
 }
@@ -907,9 +886,7 @@ async function editCustomStandard(name: string): Promise<void> {
     }
   } catch (error) {
     console.error(
-      `❌ Failed to open editor: ${
-        error instanceof Error ? error.message : "Unknown error"
-      }`,
+      `❌ Failed to open editor: ${error instanceof Error ? error.message : "Unknown error"}`,
     );
     console.log(`   You can manually edit: ${standardPath}`);
   }
@@ -980,9 +957,7 @@ async function copyCustomStandard(
     );
   } catch (error) {
     console.error(
-      `❌ Failed to copy custom standard: ${
-        error instanceof Error ? error.message : "Unknown error"
-      }`,
+      `❌ Failed to copy custom standard: ${error instanceof Error ? error.message : "Unknown error"}`,
     );
   }
 }
@@ -1308,8 +1283,7 @@ async function addCustomStandard(
   if (!/^[a-zA-Z0-9_-]+$/.test(standardName)) {
     return {
       success: false,
-      error:
-        "Invalid custom standard name. Use only letters, numbers, hyphens, and underscores.",
+      error: "Invalid custom standard name. Use only letters, numbers, hyphens, and underscores.",
     };
   }
 
@@ -1320,9 +1294,7 @@ async function addCustomStandard(
     if (!customStandard) {
       return {
         success: false,
-        error: `Custom standard '${standardName}' not found. Check ${
-          formatCustomStandardPaths(standardName)
-        }`,
+        error: `Custom standard '${standardName}' not found. Check ${formatCustomStandardPaths(standardName)}`,
       };
     }
 
@@ -1347,9 +1319,7 @@ async function addCustomStandard(
   } catch (error) {
     return {
       success: false,
-      error: `Failed to load custom standard: ${
-        error instanceof Error ? error.message : String(error)
-      }`,
+      error: `Failed to load custom standard: ${error instanceof Error ? error.message : String(error)}`,
     };
   }
 }
@@ -1439,9 +1409,7 @@ function extractStandardMetadata(content: string): {
   // Extract tags from YAML frontmatter or special comment
   const tagsMatch = content.match(/tags:\s*\[(.*?)\]/i);
   if (tagsMatch) {
-    metadata.tags = tagsMatch[1].split(",").map((tag) =>
-      tag.trim().replace(/"/g, "")
-    );
+    metadata.tags = tagsMatch[1].split(",").map((tag) => tag.trim().replace(/"/g, ""));
   }
 
   return metadata;
@@ -1556,7 +1524,5 @@ async function loadAvailableCustomStandards(): Promise<
     }
   }
 
-  return Array.from(uniqueStandards.values()).sort((a, b) =>
-    a.id.localeCompare(b.id)
-  );
+  return Array.from(uniqueStandards.values()).sort((a, b) => a.id.localeCompare(b.id));
 }

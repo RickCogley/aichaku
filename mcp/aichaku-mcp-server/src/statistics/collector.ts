@@ -14,11 +14,7 @@ import type {
 import { DEFAULT_CONFIG } from "./types.ts";
 import type { StorageBackend } from "./storage.ts";
 import type { ReviewResult } from "../types.ts";
-import {
-  DataSanitizer,
-  FilePathAnonymizer,
-  UserIdentifierAnonymizer,
-} from "./privacy.ts";
+import { DataSanitizer, FilePathAnonymizer, UserIdentifierAnonymizer } from "./privacy.ts";
 import { safeStat } from "../utils/path-security.ts";
 
 export class StatisticsCollector {
@@ -125,9 +121,7 @@ export class StatisticsCollector {
       ? {
         findingsCount: result.findings.length,
         severity: result.summary,
-        fileType: args.file
-          ? FilePathAnonymizer.getFileType(args.file as string)
-          : undefined,
+        fileType: args.file ? FilePathAnonymizer.getFileType(args.file as string) : undefined,
         fileSize: await this.getFileSize(args.file as string),
       }
       : undefined;
@@ -268,14 +262,12 @@ export class StatisticsCollector {
     );
 
     // Update average duration
-    const totalDuration =
-      performance.averageDuration * (performance.totalInvocations - 1) +
+    const totalDuration = performance.averageDuration * (performance.totalInvocations - 1) +
       invocation.duration;
     performance.averageDuration = totalDuration / performance.totalInvocations;
 
     // Update success rate
-    const successCount =
-      performance.successRate * (performance.totalInvocations - 1) +
+    const successCount = performance.successRate * (performance.totalInvocations - 1) +
       (invocation.success ? 1 : 0);
     performance.successRate = successCount / performance.totalInvocations;
 
@@ -325,17 +317,14 @@ export class StatisticsCollector {
     fileAnalysis.lastReviewed = invocation.timestamp;
 
     // Update average review time
-    const totalTime =
-      fileAnalysis.averageReviewTime * (fileAnalysis.reviewCount - 1) +
+    const totalTime = fileAnalysis.averageReviewTime * (fileAnalysis.reviewCount - 1) +
       invocation.duration;
     fileAnalysis.averageReviewTime = totalTime / fileAnalysis.reviewCount;
 
     // Update common issues
     if (result?.findings) {
       for (const finding of result.findings) {
-        const existingIssue = fileAnalysis.commonIssues.find((issue) =>
-          issue.rule === finding.rule
-        );
+        const existingIssue = fileAnalysis.commonIssues.find((issue) => issue.rule === finding.rule);
         if (existingIssue) {
           existingIssue.count++;
         } else {
@@ -402,9 +391,7 @@ export class StatisticsCollector {
 
       // Update common violations
       for (const finding of result.findings) {
-        const existingViolation = standardsUsage.commonViolations.find((v) =>
-          v.rule === finding.rule
-        );
+        const existingViolation = standardsUsage.commonViolations.find((v) => v.rule === finding.rule);
         if (existingViolation) {
           existingViolation.count++;
         } else {

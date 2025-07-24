@@ -2,8 +2,8 @@
 
 ## 🏗️ PROJECT STRUCTURE - ALWAYS START HERE
 
-For ANY new work, feature, or change, IMMEDIATELY create: 📁
-`.claude/output/active-{YYYY-MM-DD}-{descriptive-name}/` └── STATUS.md
+For ANY new work, feature, or change, IMMEDIATELY create: 📁 `.claude/output/active-{YYYY-MM-DD}-{descriptive-name}/`
+└── STATUS.md
 
 This happens AUTOMATICALLY when users say:
 
@@ -17,9 +17,8 @@ Users should NEVER need to ask for this structure!
 
 **Adapt to the user's language, don't force them to adapt to yours.**
 
-When users mix terminology from different methodologies, blend approaches
-naturally rather than correcting them. This guide helps AI assistants understand
-how to combine methodologies based on context.
+When users mix terminology from different methodologies, blend approaches naturally rather than correcting them. This
+guide helps AI assistants understand how to combine methodologies based on context.
 
 ## Quick Reference Matrix
 
@@ -209,31 +208,27 @@ Aichaku approach:
 
 ### Level 1: Acknowledge
 
-Recognize their terminology: "I see you're using sprints. Let me help you shape
-this feature for your next sprint."
+Recognize their terminology: "I see you're using sprints. Let me help you shape this feature for your next sprint."
 
 ### Level 2: Blend
 
-Combine naturally: "Let's create a sprint plan that includes your shaped bets
-and handles the support work flow."
+Combine naturally: "Let's create a sprint plan that includes your shaped bets and handles the support work flow."
 
 ### Level 3: Enhance
 
-Add value through combination: "Your sprint + kanban approach is great. We can
-add shaping to reduce mid-sprint surprises."
+Add value through combination: "Your sprint + kanban approach is great. We can add shaping to reduce mid-sprint
+surprises."
 
 ## What NOT to Do
 
-❌ **Don't Correct Terminology** User: "Our sprint betting session" Wrong:
-"Actually, it's either sprint planning OR betting table" Right: "Let's run your
-sprint betting session..."
+❌ **Don't Correct Terminology** User: "Our sprint betting session" Wrong: "Actually, it's either sprint planning OR
+betting table" Right: "Let's run your sprint betting session..."
 
-❌ **Don't Force Purity** User: "We do Scrum but like Shape Up's no-estimates"
-Wrong: "You can't mix these methodologies" Right: "Great! Use sprints for
-rhythm, appetites for sizing"
+❌ **Don't Force Purity** User: "We do Scrum but like Shape Up's no-estimates" Wrong: "You can't mix these
+methodologies" Right: "Great! Use sprints for rhythm, appetites for sizing"
 
-❌ **Don't Overwhelm** User: "What's the best way to plan?" Wrong: [Long
-explanation of all methodologies] Right: "What kind of work are you planning?"
+❌ **Don't Overwhelm** User: "What's the best way to plan?" Wrong: [Long explanation of all methodologies] Right: "What
+kind of work are you planning?"
 
 ## Remember
 
@@ -243,5 +238,4 @@ explanation of all methodologies] Right: "What kind of work are you planning?"
 4. **Context is king** - Adapt to their situation
 5. **Natural combinations** - Some methods blend better
 
-The goal is to be helpful, not methodologically pure. Aichaku adapts to users,
-not the other way around.
+The goal is to be helpful, not methodologically pure. Aichaku adapts to users, not the other way around.

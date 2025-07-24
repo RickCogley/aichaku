@@ -128,9 +128,7 @@ function separateStandardsByType(allStandards: string[]): {
     std.includes("docs")
   );
 
-  const developmentStandards = allStandards.filter((std) =>
-    !documentationStandards.includes(std)
-  );
+  const developmentStandards = allStandards.filter((std) => !documentationStandards.includes(std));
 
   return { developmentStandards, documentationStandards };
 }
@@ -300,9 +298,7 @@ export async function integrate(
   if (options.dryRun) {
     const fileExists = await exists(claudeMdPath);
     console.log(
-      `[DRY RUN] Would ${
-        fileExists ? "update" : "create"
-      } CLAUDE.md at: ${claudeMdPath}`,
+      `[DRY RUN] Would ${fileExists ? "update" : "create"} CLAUDE.md at: ${claudeMdPath}`,
     );
     console.log(`[DRY RUN] Would add YAML configuration with:`);
     console.log(
@@ -356,9 +352,7 @@ export async function integrate(
     return {
       success: true,
       path: claudeMdPath,
-      message: `${
-        action === "created" ? "Created new" : "Updated"
-      } CLAUDE.md with YAML configuration${standardsMsg}`,
+      message: `${action === "created" ? "Created new" : "Updated"} CLAUDE.md with YAML configuration${standardsMsg}`,
       action,
       lineNumber,
     };
@@ -366,9 +360,7 @@ export async function integrate(
     return {
       success: false,
       path: claudeMdPath,
-      message: `Failed to integrate: ${
-        error instanceof Error ? error.message : String(error)
-      }`,
+      message: `Failed to integrate: ${error instanceof Error ? error.message : String(error)}`,
     };
   }
 }

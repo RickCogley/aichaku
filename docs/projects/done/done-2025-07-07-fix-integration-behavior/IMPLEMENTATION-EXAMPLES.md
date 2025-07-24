@@ -247,8 +247,7 @@ import { join, relative } from "@std/path";
 
 export class AichakuFileMonitor {
   private watchedPaths = new Set<string>();
-  private correctPath =
-    /^\.claude\/output\/(active|done)-\d{4}-\d{2}-\d{2}-[\w-]+\//;
+  private correctPath = /^\.claude\/output\/(active|done)-\d{4}-\d{2}-\d{2}-[\w-]+\//;
 
   async checkAndCorrect(filePath: string): Promise<string | null> {
     // Skip if already in correct location

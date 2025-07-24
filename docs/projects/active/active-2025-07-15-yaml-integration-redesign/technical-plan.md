@@ -2,8 +2,7 @@
 
 ## Overview
 
-This document provides detailed technical specifications for implementing the
-compact YAML integration system.
+This document provides detailed technical specifications for implementing the compact YAML integration system.
 
 ## Phase 1: Command Unification (Week 1-2)
 
@@ -13,8 +12,7 @@ compact YAML integration system.
 
 - `src/commands/docs-standard.ts` - Hardcoded standards
 - `src/commands/standards.ts` - Dynamic discovery
-- `src/utils/dynamic-content-discovery.ts` - Already supports dynamic category
-  discovery!
+- `src/utils/dynamic-content-discovery.ts` - Already supports dynamic category discovery!
 
 **Actions:**
 
@@ -263,9 +261,7 @@ async function migrateClaudeMd(filePath: string): Promise<void> {
   console.log(`
 ✅ Migration complete!
 
-- Reduced size from ${formatBytes(content.length)} to ${
-    formatBytes(newContent.length)
-  }
+- Reduced size from ${formatBytes(content.length)} to ${formatBytes(newContent.length)}
 - Preserved your custom content
 - Selected standards: ${selectedStandards.join(", ")}
 
@@ -281,16 +277,14 @@ Your original file is backed up at ${filePath}.backup
 ```typescript
 // Test YAML block detection
 Deno.test("findYamlBlock detects configuration", () => {
-  const content =
-    `# CLAUDE.md\n\n\`\`\`yaml\n# Aichaku Configuration\naichaku:\n  version: "3.0.0"\n\`\`\``;
+  const content = `# CLAUDE.md\n\n\`\`\`yaml\n# Aichaku Configuration\naichaku:\n  version: "3.0.0"\n\`\`\``;
   const block = findYamlBlock(content);
   assertNotEquals(block, null);
 });
 
 // Test migration
 Deno.test("migrateClaudeMd preserves custom content", async () => {
-  const oldContent =
-    `# My Custom Header\n\n<!-- AICHAKU:START -->old stuff<!-- AICHAKU:END -->\n\n# My Custom Footer`;
+  const oldContent = `# My Custom Header\n\n<!-- AICHAKU:START -->old stuff<!-- AICHAKU:END -->\n\n# My Custom Footer`;
   const result = await migrateContent(oldContent);
   assert(result.includes("# My Custom Header"));
   assert(result.includes("# My Custom Footer"));
@@ -353,8 +347,8 @@ case "learn":
 
 ### 5.2 YAML-Driven Learn Content
 
-**Design:** The learn command will read YAML metadata to dynamically generate
-its content without duplicating information.
+**Design:** The learn command will read YAML metadata to dynamically generate its content without duplicating
+information.
 
 ```typescript
 interface LearnContent {
@@ -403,8 +397,7 @@ async function buildLearnContent(basePath: string): Promise<LearnContent> {
 
 ### 5.3 Path Access Considerations
 
-**Problem:** Claude Code may not have direct access to `~/.claude/aichaku/`
-paths.
+**Problem:** Claude Code may not have direct access to `~/.claude/aichaku/` paths.
 
 **Solution:** Use integration URLs that Claude can understand:
 
@@ -418,8 +411,7 @@ integration_url: "aichaku://standards/security/owasp-web";
 integration_url: "@standards/security/owasp-web";
 ```
 
-This allows Claude to request content through a protocol it understands, rather
-than assuming file system access.
+This allows Claude to request content through a protocol it understands, rather than assuming file system access.
 
 ## YAML Extension Convention Decision
 

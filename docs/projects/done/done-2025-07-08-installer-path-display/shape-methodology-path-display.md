@@ -2,10 +2,8 @@
 
 ## Problem
 
-The installer shows where the aichaku command is installed
-(`/Users/rcogley/.deno/bin/aichaku`) but doesn't show where the methodologies
-are installed. Users need to know both locations for transparency and
-troubleshooting.
+The installer shows where the aichaku command is installed (`/Users/rcogley/.deno/bin/aichaku`) but doesn't show where
+the methodologies are installed. Users need to know both locations for transparency and troubleshooting.
 
 ## Appetite
 

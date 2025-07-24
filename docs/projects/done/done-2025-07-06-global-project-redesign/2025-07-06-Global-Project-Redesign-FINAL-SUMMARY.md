@@ -2,8 +2,7 @@
 
 ## 🎯 What We Achieved
 
-Successfully transformed Aichaku from a "copy everything everywhere" tool to an
-elegant global-first architecture.
+Successfully transformed Aichaku from a "copy everything everywhere" tool to an elegant global-first architecture.
 
 ## 📊 Key Metrics
 
@@ -59,14 +58,10 @@ elegant global-first architecture.
 
 ## 📚 Lessons Learned
 
-1. **Architecture matters** - Global-first design eliminated entire categories
-   of problems
-2. **Messages shape experience** - Clear, non-redundant output makes tools feel
-   professional
-3. **Interactive guidance helps** - Prompts at the right moment prevent
-   confusion
-4. **Dog-fooding reveals issues** - Using Aichaku on itself would have caught
-   these earlier
+1. **Architecture matters** - Global-first design eliminated entire categories of problems
+2. **Messages shape experience** - Clear, non-redundant output makes tools feel professional
+3. **Interactive guidance helps** - Prompts at the right moment prevent confusion
+4. **Dog-fooding reveals issues** - Using Aichaku on itself would have caught these earlier
 
 ## 🚀 Impact
 

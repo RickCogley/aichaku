@@ -2,8 +2,8 @@
 
 ## Problem
 
-The current content-fetcher.ts has hard-coded file structures that get out of
-sync with the actual repository contents. This causes:
+The current content-fetcher.ts has hard-coded file structures that get out of sync with the actual repository contents.
+This causes:
 
 - False "failure" messages during upgrades (e.g., "3 files failed")
 - Missing files that exist in the repo but aren't in the hard-coded list
@@ -62,8 +62,7 @@ async function generateManifest() {
 ## Rabbit Holes
 
 - **Not** building a complex caching system - simple in-memory cache is enough
-- **Not** trying to version individual files - whole methodology set is
-  versioned together
+- **Not** trying to version individual files - whole methodology set is versioned together
 - **Not** implementing partial updates - full methodology refresh on upgrade
 - **Not** adding file watching or sync features
 

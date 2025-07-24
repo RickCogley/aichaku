@@ -17,19 +17,10 @@ export { DEFAULT_CONFIG } from "./types.ts";
 export { createStorage } from "./storage.ts";
 
 // Main interfaces
-export {
-  closeGlobalStats,
-  getStatsManager,
-  initGlobalStats,
-  StatisticsManager,
-} from "./manager.ts";
+export { closeGlobalStats, getStatsManager, initGlobalStats, StatisticsManager } from "./manager.ts";
 
 // Privacy utilities
-export {
-  DataSanitizer,
-  FilePathAnonymizer,
-  UserIdentifierAnonymizer,
-} from "./privacy.ts";
+export { DataSanitizer, FilePathAnonymizer, UserIdentifierAnonymizer } from "./privacy.ts";
 
 /**
  * Create a statistics manager with custom configuration

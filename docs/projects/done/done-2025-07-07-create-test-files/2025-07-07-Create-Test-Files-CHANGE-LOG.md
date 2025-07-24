@@ -2,13 +2,11 @@
 
 ## Summary
 
-Created a basic test suite for Aichaku with 9 passing tests across core
-functionality.
+Created a basic test suite for Aichaku with 9 passing tests across core functionality.
 
 ## Problem
 
-No test files existed in the project, causing the Security Tests workflow to
-fail with "No test modules found" error.
+No test files existed in the project, causing the Security Tests workflow to fail with "No test modules found" error.
 
 ## Solution Implemented
 

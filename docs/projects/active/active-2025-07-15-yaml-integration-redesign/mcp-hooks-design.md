@@ -2,9 +2,8 @@
 
 ## Overview
 
-This document outlines how MCP (Model Context Protocol) hooks can dynamically
-load content based on references in the CLAUDE.md YAML block, enabling a compact
-configuration that expands into full context when needed.
+This document outlines how MCP (Model Context Protocol) hooks can dynamically load content based on references in the
+CLAUDE.md YAML block, enabling a compact configuration that expands into full context when needed.
 
 ## Architecture
 
@@ -22,8 +21,7 @@ graph TD
 
 ### 1. Pre-Read Hook: `aichaku-yaml-expander`
 
-**Trigger**: Before Claude reads CLAUDE.md **Function**: Detects YAML block and
-expands references
+**Trigger**: Before Claude reads CLAUDE.md **Function**: Detects YAML block and expands references
 
 ```yaml
 # Example CLAUDE.md YAML block
@@ -43,8 +41,7 @@ aichaku:
 
 ### 2. Context Hook: `aichaku-context-provider`
 
-**Trigger**: When Claude detects methodology/standard keywords **Function**:
-Loads specific content on-demand
+**Trigger**: When Claude detects methodology/standard keywords **Function**: Loads specific content on-demand
 
 ```typescript
 // Hook implementation pseudocode
@@ -243,5 +240,5 @@ aichaku test-hooks --simulate "OWASP security check"
 - **Week 5**: Integration with CLI
 - **Week 6**: Documentation and release
 
-This design enables the compact YAML approach while maintaining full
-functionality through intelligent, dynamic content loading.
+This design enables the compact YAML approach while maintaining full functionality through intelligent, dynamic content
+loading.

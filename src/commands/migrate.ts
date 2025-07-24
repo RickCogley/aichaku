@@ -8,10 +8,7 @@
 
 // import { Command, confirm } from "../../deps.ts";
 import { Logger } from "../utils/logger.ts";
-import {
-  FolderMigration,
-  type MigrationConfig,
-} from "../migration/folder-migration.ts";
+import { FolderMigration, type MigrationConfig } from "../migration/folder-migration.ts";
 import { getAichakuPaths } from "../paths.ts";
 import { resolveProjectPath } from "../utils/project-paths.ts";
 
@@ -243,12 +240,8 @@ export function createMigrateCommand(): Command {
         : undefined;
 
       // Check what needs migration
-      const globalNeeded = migrateGlobal
-        ? await migration.isMigrationNeeded()
-        : false;
-      const projectNeeded = projectPath
-        ? await checkProjectMigration(projectPath)
-        : false;
+      const globalNeeded = migrateGlobal ? await migration.isMigrationNeeded() : false;
+      const projectNeeded = projectPath ? await checkProjectMigration(projectPath) : false;
 
       if (!globalNeeded && !projectNeeded) {
         logger.info("✅ No migration needed - already using new structure!");
@@ -260,9 +253,7 @@ export function createMigrateCommand(): Command {
       logger.info("Migration plan:");
       if (globalNeeded) {
         logger.info(
-          `  • Global: ${
-            paths.legacy.globalMethodologies.replace("/methodologies", "")
-          } → ${paths.global.root}`,
+          `  • Global: ${paths.legacy.globalMethodologies.replace("/methodologies", "")} → ${paths.global.root}`,
         );
         logger.info("    - methodologies/");
         logger.info("    - standards/");
@@ -272,9 +263,7 @@ export function createMigrateCommand(): Command {
       }
       if (projectNeeded) {
         logger.info(
-          `  • Project: ${
-            paths.legacy.projectOutput.replace("/output", "")
-          } → ${paths.project.root}`,
+          `  • Project: ${paths.legacy.projectOutput.replace("/output", "")} → ${paths.project.root}`,
         );
         logger.info("    - .aichaku-project");
         logger.info(

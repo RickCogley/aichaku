@@ -85,8 +85,7 @@ export class MultiServerMCPManager {
     this.servers.set("github-operations", {
       id: "github-operations",
       name: "GitHub Operations",
-      description:
-        "Comprehensive GitHub CLI replacement with deterministic operations",
+      description: "Comprehensive GitHub CLI replacement with deterministic operations",
       binaryName: `github-operations${ext}`,
       tools: [
         "mcp__github__auth_status",
@@ -199,9 +198,7 @@ export class MultiServerMCPManager {
       for (const status of notInstalledServers) {
         console.log(`${colors.red("✗")} ${colors.bold(status.name)}`);
         console.log(
-          `   Install with: ${
-            colors.cyan(`aichaku mcp --install-${status.id}`)
-          }`,
+          `   Install with: ${colors.cyan(`aichaku mcp --install-${status.id}`)}`,
         );
         console.log("");
       }
@@ -227,9 +224,7 @@ export class MultiServerMCPManager {
       console.log(colors.bold("⚙️  Claude Code Configuration"));
       console.log("To use these servers in Claude Code:");
       console.log(
-        `1. Run ${
-          colors.cyan("aichaku mcp --config")
-        } to see the configuration`,
+        `1. Run ${colors.cyan("aichaku mcp --config")} to see the configuration`,
       );
       console.log("2. Add it to Claude Code's MCP settings");
       console.log("3. Restart Claude Code");

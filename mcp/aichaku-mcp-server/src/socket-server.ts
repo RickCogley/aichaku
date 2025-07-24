@@ -7,9 +7,7 @@
 import { resolve } from "@std/path";
 
 const SOCKET_PATH = `${Deno.env.get("HOME")}/.aichaku/mcp-server.sock`;
-const MCP_SERVER_PATH = `${
-  Deno.env.get("HOME")
-}/.aichaku/mcp-servers/aichaku-code-reviewer`;
+const MCP_SERVER_PATH = `${Deno.env.get("HOME")}/.aichaku/mcp-servers/aichaku-code-reviewer`;
 
 /**
  * Handle a client connection

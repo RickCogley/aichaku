@@ -8,19 +8,17 @@
 
 ## Executive Summary
 
-Aichaku revolutionizes how Claude Code supports development methodologies by
-replacing a complex 70+ file persona system with a simple 3-mode approach. Users
-can now start working immediately using natural language, with the system
+Aichaku revolutionizes how Claude Code supports development methodologies by replacing a complex 70+ file persona system
+with a simple 3-mode approach. Users can now start working immediately using natural language, with the system
 automatically detecting context and applying the right methodology constraints.
 
 ## Problem Solved
 
-**Before**: Users faced a steep learning curve with 12+ personas, dozens of
-commands, and thousands of lines of documentation before getting any value from
-methodology support.
+**Before**: Users faced a steep learning curve with 12+ personas, dozens of commands, and thousands of lines of
+documentation before getting any value from methodology support.
 
-**After**: Users simply describe what they want to do, and Claude Code
-automatically provides the right guidance using one of three intuitive modes.
+**After**: Users simply describe what they want to do, and Claude Code automatically provides the right guidance using
+one of three intuitive modes.
 
 ## Major Changes Implemented
 
@@ -114,9 +112,8 @@ aichaku install
 
 ## Conclusion
 
-Aichaku successfully delivers on its promise: making development methodologies
-feel natural and invisible while providing real value. The system adapts to
-users rather than forcing users to adapt to it, bringing true "愛着"
+Aichaku successfully delivers on its promise: making development methodologies feel natural and invisible while
+providing real value. The system adapts to users rather than forcing users to adapt to it, bringing true "愛着"
 (affection/attachment) to development practices.
 
 ---

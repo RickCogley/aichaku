@@ -2,9 +2,8 @@
 
 ## Overview
 
-Transform the MCP server from a passive review tool to an active documentation
-generation and quality assurance system that automatically engages when
-appropriate.
+Transform the MCP server from a passive review tool to an active documentation generation and quality assurance system
+that automatically engages when appropriate.
 
 ## Architecture Changes
 
@@ -53,8 +52,7 @@ interface GenerateDocumentationTool {
 class DocumentationGenerator implements GenerateDocumentationTool {
   name = "generate_documentation" as const;
 
-  description =
-    `Generate comprehensive project documentation in /docs based on selected standards.
+  description = `Generate comprehensive project documentation in /docs based on selected standards.
     Creates: architecture diagrams, API docs, specifications, guides.
     Keywords: generate docs, create documentation, write documentation, comprehensive docs.
     Triggers on: "generate project documentation", "create docs", "document this project"`;
@@ -118,8 +116,7 @@ interface AnalyzeProjectTool {
 class ProjectAnalyzer implements AnalyzeProjectTool {
   name = "analyze_project" as const;
 
-  description =
-    `Analyze project structure, dependencies, and architecture for documentation.
+  description = `Analyze project structure, dependencies, and architecture for documentation.
     Examines: file structure, dependencies, patterns, API endpoints, components.
     Auto-invoked before: generate*documentation, create*architecture_diagram`;
 
@@ -169,8 +166,7 @@ interface CreateDocTemplateTool {
 class DocTemplateCreator implements CreateDocTemplateTool {
   name = "create_doc_template" as const;
 
-  description =
-    `Create documentation templates following selected standards (Diátaxis, etc).
+  description = `Create documentation templates following selected standards (Diátaxis, etc).
     Types: tutorial, how-to, reference, explanation.
     Auto-invoked: when creating new documentation files`;
 
@@ -308,8 +304,7 @@ class AutoInvocationEngine {
   private rules: InvocationRule[] = [
     {
       name: "post-edit-security-review",
-      condition: (ctx) =>
-        ctx.lastAction === "edit" && ctx.file.match(/auth|security|crypto/i),
+      condition: (ctx) => ctx.lastAction === "edit" && ctx.file.match(/auth|security|crypto/i),
       action: (ctx) => ({
         tool: "review_file",
         params: { file: ctx.file, includeExternal: true },

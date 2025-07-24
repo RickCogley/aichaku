@@ -1,7 +1,6 @@
 # [Action verb] [specific task]
 
-This article explains how to [task]. Use this approach when you want to
-[scenario].
+This article explains how to [task]. Use this approach when you want to [scenario].
 
 **In this article**
 
@@ -30,8 +29,7 @@ The easiest way to [task] is through the [interface].
 2. Find your [resource] in the list.
 
    > [!NOTE]
-   > If you don't see your [resource], make sure you selected the correct
-   > [filter/scope].
+   > If you don't see your [resource], make sure you selected the correct [filter/scope].
 
 3. Select **[Action]** > **[Specific option]**.
 
@@ -47,8 +45,7 @@ The easiest way to [task] is through the [interface].
 
 6. Review your settings, then select **Create**.
 
-The operation typically completes in 2-5 minutes. You can monitor progress in
-the notifications area.
+The operation typically completes in 2-5 minutes. You can monitor progress in the notifications area.
 
 ### Use the command line
 
@@ -68,8 +65,7 @@ az resource create \
 ```
 
 > [!IMPORTANT]
-> Replace the example values with your actual values. The location must be a
-> valid Azure region.
+> Replace the example values with your actual values. The location must be a valid Azure region.
 
 ### Use PowerShell
 
@@ -132,8 +128,7 @@ To avoid unnecessary charges, remove resources you no longer need:
 
 ### Creation fails with error "[specific error]"
 
-**Symptoms**: The resource creation fails with error message "[specific error
-message]".
+**Symptoms**: The resource creation fails with error message "[specific error message]".
 
 **Cause**: This usually means [explanation].
 

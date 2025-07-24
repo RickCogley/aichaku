@@ -2,17 +2,15 @@
 
 ## Overview
 
-The Aichaku hooks feature provides automated workflow enhancements through
-Claude Code's hook system. Users can now install pre-configured hooks that
-automatically trigger during their development workflow.
+The Aichaku hooks feature provides automated workflow enhancements through Claude Code's hook system. Users can now
+install pre-configured hooks that automatically trigger during their development workflow.
 
 ## Key Features Implemented
 
 ### 1. Reorganized Hook Categories
 
 - **Essential** (4 hooks): Must-have hooks for Claude+Aichaku workflow
-  - `conversation-summary`: Auto-saves conversation summaries on Stop and
-    PreCompact events
+  - `conversation-summary`: Auto-saves conversation summaries on Stop and PreCompact events
   - `path-validator`: Ensures files are created in correct directories
   - `status-updater`: Auto-updates STATUS.md when project files change
   - `code-review`: Reviews code after edits using Aichaku MCP
@@ -35,8 +33,8 @@ automatically trigger during their development workflow.
 aichaku hooks --show
 ```
 
-Displays all installed Aichaku hooks from both global
-(`~/.claude/settings.json`) and local (`.claude/settings.json`) configurations.
+Displays all installed Aichaku hooks from both global (`~/.claude/settings.json`) and local (`.claude/settings.json`)
+configurations.
 
 #### List Available Hooks
 
@@ -44,8 +42,7 @@ Displays all installed Aichaku hooks from both global
 aichaku hooks --list
 ```
 
-Shows all available hooks with descriptions and installation commands at the
-bottom.
+Shows all available hooks with descriptions and installation commands at the bottom.
 
 #### Install Hooks
 
@@ -66,8 +63,7 @@ aichaku hooks --install conversation-summary,code-review --local
 
 ### 3. Conversation Summary Hook
 
-Special implementation using script-based approach (as recommended by Anthropic
-support):
+Special implementation using script-based approach (as recommended by Anthropic support):
 
 - Automatically installs `summarize-conversation.ts` script
 - Receives transcript data via stdin
@@ -85,12 +81,10 @@ support):
 
 ### Fixed Issues
 
-1. **Removed unused methodology-detector hook** - Was setting AICHAKU_MODE
-   environment variable that was never used
-2. **Script-based hooks** - Implemented proper script approach instead of simple
-   echo commands
-3. **Test file naming** - Renamed `test-review.ts` to `test-review_test.ts` to
-   follow conventions and fix security scan issues
+1. **Removed unused methodology-detector hook** - Was setting AICHAKU_MODE environment variable that was never used
+2. **Script-based hooks** - Implemented proper script approach instead of simple echo commands
+3. **Test file naming** - Renamed `test-review.ts` to `test-review_test.ts` to follow conventions and fix security scan
+   issues
 
 ### Security Considerations
 
@@ -126,8 +120,7 @@ aichaku hooks --list
 
 1. **Automated Workflow** - Hooks run automatically during Claude Code sessions
 2. **Conversation Preservation** - Never lose context with automatic summaries
-3. **Quality Enforcement** - Path validation and code review ensure best
-   practices
+3. **Quality Enforcement** - Path validation and code review ensure best practices
 4. **Flexibility** - Choose global or project-specific installations
 5. **Easy Management** - Simple CLI commands for all operations
 
@@ -138,6 +131,5 @@ aichaku hooks --list
 - The conversation-summary script is automatically installed when needed
 - All hooks follow security best practices with proper input validation
 
-This feature significantly enhances the Claude+Aichaku development experience by
-automating common tasks and ensuring best practices are followed throughout the
-development workflow.
+This feature significantly enhances the Claude+Aichaku development experience by automating common tasks and ensuring
+best practices are followed throughout the development workflow.

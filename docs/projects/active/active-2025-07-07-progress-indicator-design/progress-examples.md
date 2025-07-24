@@ -337,11 +337,9 @@ Scrum     [Day 5/10] ██████░░░░ 🌙 Day complete
 ```markdown
 <!-- AICHAKU:PROGRESS:START -->
 
-Methodology: Shape Up Phase: Building Progress: 58% Week: 3.5 of 6 Status:
-on-track
+Methodology: Shape Up Phase: Building Progress: 58% Week: 3.5 of 6 Status: on-track
 
-Visual: [Shaping:✓][Building:████████░░░░][Cool-down: ] 📍 Building Phase - Week
-3.5/6 - ON TRACK ✅
+Visual: [Shaping:✓][Building:████████░░░░][Cool-down: ] 📍 Building Phase - Week 3.5/6 - ON TRACK ✅
 
 <!-- AICHAKU:PROGRESS:END -->
 ```
@@ -353,8 +351,7 @@ Visual: [Shaping:✓][Building:████████░░░░][Cool-down: 
 
 Methodology: Scrum Sprint: 15 Day: 6 of 10 Points: 23 of 40 Status: on-track
 
-Visual: Sprint 15 [██████░░░░░░░░] Day 6/10 Burndown: ▂▃▄▅▆▇ (57% complete)
-Velocity: 23/40 points - ON TRACK ✅
+Visual: Sprint 15 [██████░░░░░░░░] Day 6/10 Burndown: ▂▃▄▅▆▇ (57% complete) Velocity: 23/40 points - ON TRACK ✅
 
 <!-- AICHAKU:PROGRESS:END -->
 ```
@@ -364,11 +361,9 @@ Velocity: 23/40 points - ON TRACK ✅
 ```markdown
 <!-- AICHAKU:PROGRESS:START -->
 
-Methodology: Kanban WIP: 8 of 10 Cycle Time: 3.2 days Throughput: 12 items/week
-Status: normal
+Methodology: Kanban WIP: 8 of 10 Cycle Time: 3.2 days Throughput: 12 items/week Status: normal
 
-Visual: [Backlog:12|Ready:5|Doing:2*|Review:1|Done:47] Flow: Normal | CT: 3.2d
-(↓0.5) | TP: 12/wk (↑2)
+Visual: [Backlog:12|Ready:5|Doing:2*|Review:1|Done:47] Flow: Normal | CT: 3.2d (↓0.5) | TP: 12/wk (↑2)
 
 <!-- AICHAKU:PROGRESS:END -->
 ```

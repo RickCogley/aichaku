@@ -52,9 +52,7 @@ export async function discoverContent(
   basePath: string,
   useDocsPath: boolean = false,
 ): Promise<DiscoveredContent> {
-  const contentPath = useDocsPath
-    ? join(basePath, "docs", contentType)
-    : join(basePath, contentType);
+  const contentPath = useDocsPath ? join(basePath, "docs", contentType) : join(basePath, contentType);
 
   const categories: Record<string, ContentMetadata[]> = {};
   const items: ContentMetadata[] = [];
@@ -133,10 +131,7 @@ async function _enhanceMetadataFromYaml(
       if (yamlData.standards && Array.isArray(yamlData.standards)) {
         const standardId = metadata.path.split("/").pop()?.replace(".md", "") ||
           "";
-        const yamlStandard =
-          (yamlData.standards as Array<Record<string, unknown>>).find((s) =>
-            s.id === standardId
-          );
+        const yamlStandard = (yamlData.standards as Array<Record<string, unknown>>).find((s) => s.id === standardId);
 
         if (yamlStandard) {
           // Enhance with YAML metadata

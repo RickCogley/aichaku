@@ -5,10 +5,9 @@
 
 ## 1. Problem
 
-**The Problem**: Claude Code users struggle with complex methodology
-documentation. Current systems require learning dozens of personas, commands,
-and concepts before getting value. Teams waste time figuring out which
-methodology to use and how to apply it correctly.
+**The Problem**: Claude Code users struggle with complex methodology documentation. Current systems require learning
+dozens of personas, commands, and concepts before getting value. Teams waste time figuring out which methodology to use
+and how to apply it correctly.
 
 **When it happens**:
 
@@ -29,8 +28,8 @@ methodology to use and how to apply it correctly.
 - Force-fit one methodology for everything (inefficient)
 - Create their own ad-hoc processes (inconsistent)
 
-**Why now**: Claude Code adoption is growing rapidly. Users need intuitive
-methodology support that enhances rather than hinders their workflow.
+**Why now**: Claude Code adoption is growing rapidly. Users need intuitive methodology support that enhances rather than
+hinders their workflow.
 
 ## 2. Appetite
 
@@ -47,8 +46,7 @@ This is a 6-week project because:
 
 ### Approach
 
-Replace complex persona-based system with three simple modes that adapt to any
-methodology:
+Replace complex persona-based system with three simple modes that adapt to any methodology:
 
 ```
 User Intent → Mode Detection → Methodology Rules → Action
@@ -81,8 +79,7 @@ methodologies/
 ### Key Flows
 
 1. **New User Flow**:
-   - User describes need → System detects context → Suggests approach →
-     Immediate value
+   - User describes need → System detects context → Suggests approach → Immediate value
 
 2. **Methodology Switching**:
    - Natural language request → Mode continues → Rules change → No confusion
@@ -94,23 +91,19 @@ methodologies/
 
 ### ⚠️ Over-Engineering
 
-**Risk**: Making modes too complex **Patch**: Keep each mode under 200 lines,
-focus on actions not theory
+**Risk**: Making modes too complex **Patch**: Keep each mode under 200 lines, focus on actions not theory
 
 ### ⚠️ Backward Compatibility
 
-**Risk**: Breaking existing Shape Up installations **Patch**: Archive old
-system, clear migration path
+**Risk**: Breaking existing Shape Up installations **Patch**: Archive old system, clear migration path
 
 ### ⚠️ Natural Language Parsing
 
-**Risk**: Complex NLP for trigger detection **Patch**: Simple keyword matching
-is sufficient
+**Risk**: Complex NLP for trigger detection **Patch**: Simple keyword matching is sufficient
 
 ### ⚠️ Feature Creep
 
-**Risk**: Adding "nice to have" features **Patch**: Strict focus on core value -
-making methodologies invisible
+**Risk**: Adding "nice to have" features **Patch**: Strict focus on core value - making methodologies invisible
 
 ## 5. No-gos
 

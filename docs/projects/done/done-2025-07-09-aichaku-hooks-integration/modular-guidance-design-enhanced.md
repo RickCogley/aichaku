@@ -2,9 +2,8 @@
 
 ## Overview
 
-Based on comprehensive research of industry standards and best practices, this
-enhanced design expands Aichaku's modular guidance system to include a rich set
-of categories that address modern software development needs.
+Based on comprehensive research of industry standards and best practices, this enhanced design expands Aichaku's modular
+guidance system to include a rich set of categories that address modern software development needs.
 
 ## Enhanced Guidance Categories
 
@@ -452,8 +451,7 @@ aichaku integrate --phase=expert
 
 ## Benefits of Enhanced System
 
-1. **Comprehensive Coverage**: From security to documentation, all aspects
-   covered
+1. **Comprehensive Coverage**: From security to documentation, all aspects covered
 2. **Industry Alignment**: Standards from Google, Microsoft, NIST, and more
 3. **Regulatory Compliance**: Built-in support for GDPR, NIS2, DORA, etc.
 4. **Modern Practices**: DevOps, SRE, and cloud-native patterns included
@@ -492,6 +490,5 @@ aichaku integrate --phase=expert
 - Enterprise scaling practices
 - Custom team standards
 
-This enhanced design provides a comprehensive, modern, and flexible guidance
-system that can adapt to any software development context while maintaining
-Aichaku's core philosophy of natural, adaptive methodology support.
+This enhanced design provides a comprehensive, modern, and flexible guidance system that can adapt to any software
+development context while maintaining Aichaku's core philosophy of natural, adaptive methodology support.

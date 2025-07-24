@@ -133,8 +133,7 @@ const HOOK_TEMPLATES = {
     matcher: "Write|MultiEdit",
     source: "aichaku",
     // Using TypeScript runner for better security and cross-platform compatibility
-    command:
-      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts path-validator`,
+    command: `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts path-validator`,
   },
   "status-updater": {
     name: "Aichaku Status Updater",
@@ -142,8 +141,7 @@ const HOOK_TEMPLATES = {
     type: "PostToolUse",
     matcher: "Write|Edit|MultiEdit",
     source: "aichaku",
-    command:
-      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts status-updater`,
+    command: `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts status-updater`,
   },
   "conversation-summary": {
     name: "Conversation Summary",
@@ -202,8 +200,7 @@ const HOOK_TEMPLATES = {
     type: "PreToolUse",
     matcher: "Write|Edit",
     source: "aichaku",
-    command:
-      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts owasp-checker`,
+    command: `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts owasp-checker`,
   },
   "commit-validator": {
     name: "Conventional Commit Validator",
@@ -230,16 +227,14 @@ const HOOK_TEMPLATES = {
     type: "PostToolUse",
     matcher: "Write|Edit|MultiEdit",
     source: "aichaku",
-    command:
-      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts todo-tracker`,
+    command: `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts todo-tracker`,
   },
   "pr-checker": {
     name: "PR Context Checker",
     description: "Checks active pull requests at session start",
     type: "SessionStart",
     source: "aichaku",
-    command:
-      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts pr-checker`,
+    command: `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts pr-checker`,
   },
   "issue-linker": {
     name: "Issue Linker",
@@ -247,8 +242,7 @@ const HOOK_TEMPLATES = {
     type: "PreToolUse",
     matcher: "Bash",
     source: "aichaku",
-    command:
-      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts issue-linker`,
+    command: `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts issue-linker`,
   },
   "workflow-monitor": {
     name: "GitHub Workflow Monitor",
@@ -265,23 +259,19 @@ const HOOK_TEMPLATES = {
     type: "PostToolUse",
     matcher: "Write|Edit|MultiEdit",
     source: "aichaku",
-    command:
-      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts release-helper`,
+    command: `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts release-helper`,
   },
   "push-monitor": {
     name: "Push Monitor",
-    description:
-      "Alerts when git push is detected and provides GitHub Actions monitoring tips",
+    description: "Alerts when git push is detected and provides GitHub Actions monitoring tips",
     type: "PreToolUse",
     matcher: "Bash",
     source: "aichaku",
-    command:
-      `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts push-monitor`,
+    command: `deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-hooks.ts push-monitor`,
   },
   "aichaku-feedback": {
     name: "Aichaku Feedback",
-    description:
-      "Shows brief feedback about what Aichaku will do - confirms hooks are active",
+    description: "Shows brief feedback about what Aichaku will do - confirms hooks are active",
     type: "PreToolUse",
     matcher: ".*",
     source: "aichaku",
@@ -290,8 +280,7 @@ const HOOK_TEMPLATES = {
   },
   "markdown-review": {
     name: "Markdown Review",
-    description:
-      "Automatically reviews markdown files using MCP Aichaku Reviewer",
+    description: "Automatically reviews markdown files using MCP Aichaku Reviewer",
     type: "PostToolUse",
     matcher: "Write|Edit|MultiEdit",
     source: "aichaku",
@@ -426,9 +415,7 @@ function listHooks(): void {
       console.log(`  ${hookId}`);
       console.log(`    ${hook.description}`);
       console.log(
-        `    Event: ${hook.type}${
-          "matcher" in hook && hook.matcher ? ` (${hook.matcher})` : ""
-        }`,
+        `    Event: ${hook.type}${"matcher" in hook && hook.matcher ? ` (${hook.matcher})` : ""}`,
       );
       console.log();
     }
@@ -477,8 +464,7 @@ async function ensureHookScripts(): Promise<void> {
   }
 
   // Create the unified hook runner script
-  const scriptContent =
-    `#!/usr/bin/env -S deno run --allow-read --allow-write --allow-env
+  const scriptContent = `#!/usr/bin/env -S deno run --allow-read --allow-write --allow-env
 
 // Aichaku Hook Runner
 // This script handles all Aichaku hooks with proper TypeScript support
@@ -1071,8 +1057,7 @@ function displayHooksFromSettings(settings: Settings): void {
         const match = hookCommand.match(/aichaku-hooks\.ts\s+(\S+)/);
         if (match) {
           const hookId = match[1];
-          const template =
-            HOOK_TEMPLATES[hookId as keyof typeof HOOK_TEMPLATES];
+          const template = HOOK_TEMPLATES[hookId as keyof typeof HOOK_TEMPLATES];
           if (template) {
             hookName = template.name;
             console.log(`  • ${hookName}`);
@@ -1165,9 +1150,7 @@ async function validateHooks(): Promise<void> {
       totalHooks++;
 
       // Check if it's an Aichaku hook by looking at the command
-      const isAichakuHook = hook.hooks?.some((h) =>
-        h.command.includes("aichaku") || h.command.includes("Aichaku")
-      );
+      const isAichakuHook = hook.hooks?.some((h) => h.command.includes("aichaku") || h.command.includes("Aichaku"));
 
       if (isAichakuHook) {
         aichakuHooks++;
@@ -1177,8 +1160,7 @@ async function validateHooks(): Promise<void> {
         const match = hookCommand.match(/aichaku-hooks\.ts\s+(\S+)/);
         if (match) {
           const hookId = match[1];
-          const template =
-            HOOK_TEMPLATES[hookId as keyof typeof HOOK_TEMPLATES];
+          const template = HOOK_TEMPLATES[hookId as keyof typeof HOOK_TEMPLATES];
           console.log(`  ✅ ${template?.name || `Aichaku Hook (${hookId})`}`);
         } else {
           console.log(`  ✅ Aichaku Hook`);

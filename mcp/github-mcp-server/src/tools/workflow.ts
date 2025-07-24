@@ -33,9 +33,7 @@ export const workflowTools = {
             {
               type: "text",
               text: format.info(
-                `No workflow runs found for ${owner}/${repo}${
-                  workflow ? ` (${workflow})` : ""
-                }`,
+                `No workflow runs found for ${owner}/${repo}${workflow ? ` (${workflow})` : ""}`,
               ),
             },
           ],
@@ -71,9 +69,7 @@ export const workflowTools = {
         content: [
           {
             type: "text",
-            text: `❌ Failed to list workflow runs: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
+            text: `❌ Failed to list workflow runs: ${error instanceof Error ? error.message : String(error)}`,
           },
         ],
         isError: true,
@@ -113,9 +109,7 @@ export const workflowTools = {
         `Created: ${new Date(run.created_at).toLocaleString()}`,
       ) + "\n";
       responseText += format.listItem(
-        `Started: ${
-          new Date(run.run_started_at || run.created_at).toLocaleString()
-        }`,
+        `Started: ${new Date(run.run_started_at || run.created_at).toLocaleString()}`,
       ) + "\n";
       responseText += format.listItem(
         `Updated: ${new Date(run.updated_at).toLocaleString()}`,
@@ -148,9 +142,7 @@ export const workflowTools = {
         content: [
           {
             type: "text",
-            text: `❌ Failed to view workflow run: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
+            text: `❌ Failed to view workflow run: ${error instanceof Error ? error.message : String(error)}`,
           },
         ],
         isError: true,
@@ -295,9 +287,7 @@ export const workflowTools = {
         content: [
           {
             type: "text",
-            text: `❌ Failed to watch workflow run: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
+            text: `❌ Failed to watch workflow run: ${error instanceof Error ? error.message : String(error)}`,
           },
         ],
         isError: true,

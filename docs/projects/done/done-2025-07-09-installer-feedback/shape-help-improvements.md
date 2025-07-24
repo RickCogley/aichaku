@@ -5,8 +5,7 @@
 The help command works but could be more helpful:
 
 1. No examples of actual usage with Claude Code
-2. Methodology names don't match how users refer to them (e.g., "shape-up" vs
-   "shape up")
+2. Methodology names don't match how users refer to them (e.g., "shape-up" vs "shape up")
 3. No quick reference for common commands
 4. Output is text-heavy
 

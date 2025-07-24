@@ -5,8 +5,7 @@
 Currently, the Aichaku hook system has a poor user experience:
 
 - Hook scripts are NOT installed during `aichaku init --global`
-- Users must manually run `aichaku hooks --install` to create the TypeScript
-  runner
+- Users must manually run `aichaku hooks --install` to create the TypeScript runner
 - The hook script is embedded as a string literal in source code
 - No version management - outdated scripts persist after Aichaku upgrades
 - Requires Deno for execution (TypeScript compilation overhead)
@@ -15,13 +14,11 @@ This violates the "install once globally, works everywhere" promise.
 
 ## Appetite
 
-**6 weeks** - This is a foundational improvement that enables better hook
-adoption.
+**6 weeks** - This is a foundational improvement that enables better hook adoption.
 
 ## Solution
 
-Distribute hooks as compiled binaries using the **existing MCP binary
-distribution system**:
+Distribute hooks as compiled binaries using the **existing MCP binary distribution system**:
 
 ### Core Components
 
@@ -87,20 +84,17 @@ Don't create a custom distribution format. Stick with the proven MCP approach.
 
 ### ❌ Multiple Hook Binaries
 
-Don't compile separate binaries per hook. Keep the single unified runner with
-switches.
+Don't compile separate binaries per hook. Keep the single unified runner with switches.
 
 ### ❌ Fallback to TypeScript
 
-Don't add complexity with "if binary fails, use TypeScript" logic. Make binary
-distribution reliable.
+Don't add complexity with "if binary fails, use TypeScript" logic. Make binary distribution reliable.
 
 ## No-Gos
 
 ### ❌ Breaking Changes to Hook API
 
-Hook command structure stays the same - only the runner changes from TypeScript
-to binary.
+Hook command structure stays the same - only the runner changes from TypeScript to binary.
 
 ### ❌ Platform-Specific Features
 
@@ -108,8 +102,7 @@ No OS-specific hook functionality. Keep hooks cross-platform compatible.
 
 ### ❌ Embedded Hook Source
 
-Don't embed the TypeScript source in binaries for "debugging". Use proper error
-handling and logging.
+Don't embed the TypeScript source in binaries for "debugging". Use proper error handling and logging.
 
 ## Implementation Phases
 
@@ -158,5 +151,4 @@ If binary compilation fails on any platform:
 - Deno compile support for target platforms ✅
 - GitHub Actions for automated builds ✅
 
-This leverages proven systems (MCP distribution) to solve a real user pain point
-with minimal risk.
+This leverages proven systems (MCP distribution) to solve a real user pain point with minimal risk.

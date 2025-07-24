@@ -2,13 +2,12 @@
 
 ## Summary
 
-Enhanced Aichaku's CLAUDE.md integration to stop Claude Code from asking
-permission to create files and to use descriptive change log naming.
+Enhanced Aichaku's CLAUDE.md integration to stop Claude Code from asking permission to create files and to use
+descriptive change log naming.
 
 ## Problem
 
-1. Claude Code kept asking "Would you like me to create STATUS.md?" despite
-   directives saying not to ask
+1. Claude Code kept asking "Would you like me to create STATUS.md?" despite directives saying not to ask
 2. CHANGE-LOG.md naming was generic, making PDFs hard to identify
 
 ## Solution Implemented

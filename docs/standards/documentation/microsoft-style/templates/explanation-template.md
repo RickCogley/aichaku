@@ -15,8 +15,7 @@
 
 [Clear, simple definition followed by a relatable analogy if helpful]
 
-Think of [concept] like [familiar analogy]. Just as [analogy explanation],
-[concept] helps you [benefit/purpose].
+Think of [concept] like [familiar analogy]. Just as [analogy explanation], [concept] helps you [benefit/purpose].
 
 ### Key benefits
 
@@ -61,9 +60,8 @@ For those interested in the technical details:
 [Deeper technical explanation with specific implementation details]
 
 > [!NOTE]
-> You don't need to understand these internals to use [concept] effectively.
-> This information is for those who want to optimize performance or troubleshoot
-> complex issues.
+> You don't need to understand these internals to use [concept] effectively. This information is for those who want to
+> optimize performance or troubleshoot complex issues.
 
 ## When to use it
 
@@ -230,8 +228,7 @@ Look at alternatives when:
 
 ### Can I use [concept] with [technology]?
 
-Yes, [concept] integrates well with [technology]. See [integration guide](link)
-for details.
+Yes, [concept] integrates well with [technology]. See [integration guide](link) for details.
 
 ### How does [concept] handle [concern]?
 
@@ -239,8 +236,7 @@ for details.
 
 ### What's the difference between [concept] and [similar concept]?
 
-While both [similarity], [concept] focuses on [difference 1], whereas [similar
-concept] emphasizes [difference 2].
+While both [similarity], [concept] focuses on [difference 1], whereas [similar concept] emphasizes [difference 2].
 
 ## What's next?
 

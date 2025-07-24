@@ -47,22 +47,19 @@ export const DOC_STANDARD_CATEGORIES: Record<string, DocStandardCategory> = {
     standards: {
       "diataxis-google": {
         name: "Diátaxis + Google Style",
-        description:
-          "Four-mode documentation (Tutorial, How-to, Reference, Explanation) with Google's writing style",
+        description: "Four-mode documentation (Tutorial, How-to, Reference, Explanation) with Google's writing style",
         tags: ["comprehensive", "structured", "google", "diataxis"],
         templates: ["tutorial", "how-to", "reference", "explanation"],
       },
       "microsoft-style": {
         name: "Microsoft Writing Style Guide",
-        description:
-          "Microsoft's modern technical writing approach with accessible, conversational tone",
+        description: "Microsoft's modern technical writing approach with accessible, conversational tone",
         tags: ["comprehensive", "accessible", "microsoft", "modern"],
         templates: ["tutorial", "how-to", "reference", "explanation"],
       },
       "writethedocs": {
         name: "Write the Docs Principles",
-        description:
-          "Community-driven best practices for technical documentation",
+        description: "Community-driven best practices for technical documentation",
         tags: ["community", "best-practices", "inclusive", "docs-as-code"],
         templates: ["tutorial", "how-to", "reference", "explanation"],
       },

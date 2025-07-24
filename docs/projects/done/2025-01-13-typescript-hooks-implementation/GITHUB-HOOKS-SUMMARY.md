@@ -2,9 +2,8 @@
 
 ## What Was Added
 
-I've created a new **"GitHub"** category for hooks that provides GitHub workflow
-automation and best practices. This allows users to install all GitHub-related
-hooks with a single command.
+I've created a new **"GitHub"** category for hooks that provides GitHub workflow automation and best practices. This
+allows users to install all GitHub-related hooks with a single command.
 
 ## Installation
 
@@ -29,10 +28,8 @@ The `github` category includes 5 hooks:
 ### 1. `todo-tracker`
 
 - **Type**: PostToolUse (Write|Edit|MultiEdit)
-- **Purpose**: Detects when you edit code/Markdown files and suggests creating
-  GitHub issues from TODOs
-- **Features**: Promotes proper TODO formatting like `TODO(#123)` or
-  `TODO(security): Fix auth`
+- **Purpose**: Detects when you edit code/Markdown files and suggests creating GitHub issues from TODOs
+- **Features**: Promotes proper TODO formatting like `TODO(#123)` or `TODO(security): Fix auth`
 
 ### 2. `pr-checker`
 
@@ -50,8 +47,7 @@ The `github` category includes 5 hooks:
 
 - **Type**: PostToolUse (Write|Edit|MultiEdit)
 - **Purpose**: Activates when editing `.github/workflows/` files
-- **Guidance**: Test locally with `act`, validate syntax, handle secrets
-  properly
+- **Guidance**: Test locally with `act`, validate syntax, handle secrets properly
 
 ### 5. `release-helper`
 
@@ -74,8 +70,7 @@ The `github` category includes 5 hooks:
 ## Benefits
 
 1. **Easy Installation**: One command installs all GitHub-related hooks
-2. **Workflow Integration**: Hooks activate at the right moments in your
-   workflow
+2. **Workflow Integration**: Hooks activate at the right moments in your workflow
 3. **MCP Ready**: Designed to work with GitHub MCP servers for automation
 4. **Best Practices**: Gentle reminders for GitHub conventions and workflows
 
@@ -94,5 +89,5 @@ aichaku hooks --show
 # Start coding - hooks will activate automatically!
 ```
 
-The hooks provide contextual suggestions but don't interfere with your workflow.
-They're designed to enhance productivity when working with GitHub repositories.
+The hooks provide contextual suggestions but don't interfere with your workflow. They're designed to enhance
+productivity when working with GitHub repositories.

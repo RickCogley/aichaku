@@ -2,8 +2,8 @@
 
 ## Summary
 
-Successfully improved JSDoc documentation across the Aichaku codebase to ensure
-comprehensive API documentation generation.
+Successfully improved JSDoc documentation across the Aichaku codebase to ensure comprehensive API documentation
+generation.
 
 ## Key Improvements
 
@@ -41,15 +41,14 @@ Successfully generated HTML documentation with `deno doc`:
 deno doc --html --name="Aichaku API" --output=docs/api mod.ts
 ```
 
-Generated 69 files in docs/api/ including documentation for all exported
-functions.
+Generated 69 files in docs/api/ including documentation for all exported functions.
 
 ## Verification
 
 The search index shows all major functions are now documented:
 
-- cleanup, docsStandard, help, **hooks**, init, install, integrate, list,
-  **review**, standards, uninstall, update, upgrade
+- cleanup, docsStandard, help, **hooks**, init, install, integrate, list, **review**, standards, uninstall, update,
+  upgrade
 
 ## Best Practices Applied
 

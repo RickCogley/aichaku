@@ -127,9 +127,7 @@ export async function installAllMCPServers(): Promise<void> {
 
 export async function installMCPServer(serverId?: string): Promise<void> {
   const serverType = serverId || "aichaku-reviewer";
-  const serverName = serverType === "aichaku-reviewer"
-    ? "Aichaku MCP Server"
-    : "GitHub MCP Server";
+  const serverName = serverType === "aichaku-reviewer" ? "Aichaku MCP Server" : "GitHub MCP Server";
 
   console.log(`📦 Installing ${serverName}...\n`);
 
@@ -174,8 +172,7 @@ export async function installMCPServer(serverId?: string): Promise<void> {
       targetPath = join(mcpDir, `github-operations${ext}`);
     }
 
-    const downloadUrl =
-      `https://github.com/RickCogley/aichaku/releases/download/v${VERSION}/${binaryName}`;
+    const downloadUrl = `https://github.com/RickCogley/aichaku/releases/download/v${VERSION}/${binaryName}`;
 
     console.log(
       `📥 Downloading MCP server v${VERSION} for ${platform}-${arch}...`,
@@ -212,9 +209,7 @@ export async function installMCPServer(serverId?: string): Promise<void> {
     );
   } catch (error) {
     console.error(
-      `❌ Installation failed: ${
-        error instanceof Error ? error.message : String(error)
-      }`,
+      `❌ Installation failed: ${error instanceof Error ? error.message : String(error)}`,
     );
     console.error("\n💡 Alternative: Install from source:");
     console.error("   git clone https://github.com/RickCogley/aichaku");
@@ -384,9 +379,7 @@ async function startHTTPServer(): Promise<void> {
 
     if (!fileExists) {
       // Try to copy from development directory if running locally
-      const serverScript = `${
-        Deno.env.get("PWD")
-      }/mcp/aichaku-mcp-server/src/http-server.ts`;
+      const serverScript = `${Deno.env.get("PWD")}/mcp/aichaku-mcp-server/src/http-server.ts`;
 
       try {
         const serverCode = await Deno.readTextFile(serverScript);

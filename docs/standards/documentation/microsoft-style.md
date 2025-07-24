@@ -2,9 +2,8 @@
 
 ## Quick Reference
 
-The Microsoft Writing Style Guide promotes clear, consistent, and accessible
-technical documentation with a warm, approachable tone. It emphasizes
-inclusivity, global readability, and user empowerment.
+The Microsoft Writing Style Guide promotes clear, consistent, and accessible technical documentation with a warm,
+approachable tone. It emphasizes inclusivity, global readability, and user empowerment.
 
 ### Core Principles
 
@@ -18,8 +17,7 @@ inclusivity, global readability, and user empowerment.
 
 ### Purpose
 
-Help users learn by doing, building confidence through successful completion of
-tasks.
+Help users learn by doing, building confidence through successful completion of tasks.
 
 ### Structure
 
@@ -28,8 +26,7 @@ tasks.
 
 **Time to complete**: About [X] minutes
 
-In this tutorial, you learn how to [specific outcomes]. This tutorial is
-designed for [audience description].
+In this tutorial, you learn how to [specific outcomes]. This tutorial is designed for [audience description].
 
 ## What you need
 
@@ -52,8 +49,7 @@ Let's start by creating a simple [thing] to understand the basics.
 4. Select **Create**.
 
    > [!TIP]
-   > Choose names that describe what your [thing] does. This helps you stay
-   > organized as your project grows.
+   > Choose names that describe what your [thing] does. This helps you stay organized as your project grows.
 
 5. In the editor that opens, add this code:
 
@@ -65,8 +61,7 @@ Let's start by creating a simple [thing] to understand the basics.
 
 6. Select **Save** (or press Ctrl+S).
 
-Great! You created your first [thing]. Notice how [explain what they should
-observe].
+Great! You created your first [thing]. Notice how [explain what they should observe].
 
 ## Modify your [thing]
 
@@ -88,8 +83,7 @@ Now let's make it do something more interesting.
 
 4. Run your [thing] by selecting **Run** or pressing F5.
 
-You should see [expected result]. If you see an error instead, check that
-[common mistake to verify].
+You should see [expected result]. If you see an error instead, check that [common mistake to verify].
 
 ## What you learned
 
@@ -186,8 +180,7 @@ az resource create \
 ````
 
 > [!IMPORTANT]
-> Replace the example values with your actual values. The location must be a
-> valid Azure region.
+> Replace the example values with your actual values. The location must be a valid Azure region.
 
 ## Verify results
 
@@ -199,8 +192,7 @@ Make sure your [task] completed successfully:
 
 3. Test the [resource] by [specific test action].
 
-If something doesn't look right, see
-[Troubleshoot common issues](#troubleshooting).
+If something doesn't look right, see [Troubleshoot common issues](#troubleshooting).
 
 ## Clean up resources
 
@@ -606,6 +598,5 @@ Before writing, consider:
 3. **Context**: When will they need it?
 4. **Format**: What type of document serves them best?
 
-Remember: Good documentation anticipates user needs and removes barriers to
-success. Write with empathy, clarity, and respect for your readers' time and
-expertise.
+Remember: Good documentation anticipates user needs and removes barriers to success. Write with empathy, clarity, and
+respect for your readers' time and expertise.

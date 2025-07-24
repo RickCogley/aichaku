@@ -8,11 +8,7 @@
 
 import { exists } from "@std/fs";
 import { basename, resolve } from "@std/path";
-import {
-  helpSection,
-  printFormatted,
-  statusMessage,
-} from "../utils/terminal-formatter.ts";
+import { helpSection, printFormatted, statusMessage } from "../utils/terminal-formatter.ts";
 
 export interface GitHubOptions {
   help?: boolean;

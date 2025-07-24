@@ -51,9 +51,7 @@ export class MCPTcpClient {
       // Initialize the connection
       await this.initialize();
     } catch (error) {
-      const errorMessage = error instanceof Error
-        ? error.message
-        : String(error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
       if (errorMessage.includes("Connection refused")) {
         throw new Error(
           `MCP server not running on ${this.config.host}:${this.config.port}. ` +

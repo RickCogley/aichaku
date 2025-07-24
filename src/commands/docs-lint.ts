@@ -55,9 +55,7 @@ async function loadDocumentationConfig(
   );
   const legacyConfigPath = join(projectPath, ".claude", "docs-standards.json");
 
-  const configPath = (await exists(newConfigPath))
-    ? newConfigPath
-    : legacyConfigPath;
+  const configPath = (await exists(newConfigPath)) ? newConfigPath : legacyConfigPath;
 
   if (!await exists(configPath)) {
     return null;
@@ -104,11 +102,7 @@ function getLinters(
  */
 function formatIssue(issue: LintIssue, filePath: string): string {
   const icon = icons[issue.severity];
-  const color = issue.severity === "error"
-    ? colors.red
-    : issue.severity === "warning"
-    ? colors.yellow
-    : colors.blue;
+  const color = issue.severity === "error" ? colors.red : issue.severity === "warning" ? colors.yellow : colors.blue;
 
   let location = `${filePath}:${issue.line}`;
   if (issue.column) {

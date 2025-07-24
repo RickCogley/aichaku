@@ -125,9 +125,7 @@ export class MCPProcessManager {
     }
 
     this.mcpDir = join(homeDir, ".aichaku", "mcp-server");
-    this.binaryName = Deno.build.os === "windows"
-      ? "mcp-code-reviewer.exe"
-      : "mcp-code-reviewer";
+    this.binaryName = Deno.build.os === "windows" ? "mcp-code-reviewer.exe" : "mcp-code-reviewer";
     this.pidManager = new PIDManager(this.mcpDir);
   }
 
@@ -147,8 +145,7 @@ export class MCPProcessManager {
     if (!(await exists(binaryPath))) {
       return {
         success: false,
-        message:
-          `MCP server not found at ${binaryPath}. Run 'aichaku mcp --install' first.`,
+        message: `MCP server not found at ${binaryPath}. Run 'aichaku mcp --install' first.`,
       };
     }
 
@@ -232,9 +229,7 @@ export class MCPProcessManager {
     return {
       running,
       pid: running ? pid : undefined,
-      uptime: running && this.startTime
-        ? this.formatUptime(this.startTime)
-        : undefined,
+      uptime: running && this.startTime ? this.formatUptime(this.startTime) : undefined,
       binaryPath,
       version: await this.getVersion(),
     };
@@ -306,9 +301,7 @@ export class MCPProcessManager {
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
     if (hours > 0) {
-      return `${hours} hour${hours > 1 ? "s" : ""} ${minutes} minute${
-        minutes !== 1 ? "s" : ""
-      }`;
+      return `${hours} hour${hours > 1 ? "s" : ""} ${minutes} minute${minutes !== 1 ? "s" : ""}`;
     } else {
       return `${minutes} minute${minutes !== 1 ? "s" : ""}`;
     }
@@ -396,9 +389,9 @@ async function showEnhancedStatus(
   );
   console.log(`📍 Location:       ${status.binaryPath}`);
   console.log(
-    `${status.running ? "🟢" : "🔴"} Status:         ${
-      status.running ? "Running" : "Stopped"
-    }${status.pid ? ` (PID: ${status.pid})` : ""}`,
+    `${status.running ? "🟢" : "🔴"} Status:         ${status.running ? "Running" : "Stopped"}${
+      status.pid ? ` (PID: ${status.pid})` : ""
+    }`,
   );
 
   if (status.uptime) {

@@ -1,7 +1,6 @@
 # Session Checkpoints
 
-This directory contains session checkpoints that document work progress and
-decisions.
+This directory contains session checkpoints that document work progress and decisions.
 
 ## Checkpoint Format
 

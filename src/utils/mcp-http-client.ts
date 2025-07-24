@@ -55,9 +55,7 @@ export class MCPHttpClient {
       // Initialize MCP session
       await this.initialize();
     } catch (error) {
-      const errorMessage = error instanceof Error
-        ? error.message
-        : String(error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
       if (
         errorMessage.includes("Failed to fetch") ||
         errorMessage.includes("NetworkError")

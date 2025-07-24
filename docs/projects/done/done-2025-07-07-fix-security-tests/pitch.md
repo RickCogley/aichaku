@@ -2,9 +2,8 @@
 
 ## Problem
 
-The Security Tests GitHub Action is failing on every commit due to formatting
-issues in CLAUDE.md. The formatter is complaining about line breaks and
-whitespace in the Aichaku integration section that was added by the
+The Security Tests GitHub Action is failing on every commit due to formatting issues in CLAUDE.md. The formatter is
+complaining about line breaks and whitespace in the Aichaku integration section that was added by the
 `aichaku integrate` command.
 
 ## Appetite
@@ -39,5 +38,4 @@ Two issues need fixing:
 
 ## Nice to Have
 
-- Consider fixing the integrate command in a future iteration to output properly
-  formatted content
+- Consider fixing the integrate command in a future iteration to output properly formatted content

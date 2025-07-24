@@ -2,9 +2,8 @@
 
 ## Overview
 
-Successfully implemented a comprehensive folder reorganization to move Aichaku
-files from `~/.claude/` to `~/.claude/aichaku/`, providing better namespace
-separation and organizational structure while maintaining full backward
+Successfully implemented a comprehensive folder reorganization to move Aichaku files from `~/.claude/` to
+`~/.claude/aichaku/`, providing better namespace separation and organizational structure while maintaining full backward
 compatibility.
 
 ## Key Achievements
@@ -13,8 +12,7 @@ compatibility.
 
 - Moved all Aichaku files under dedicated `~/.claude/aichaku/` namespace
 - Created clear separation between system files and user customizations
-- Established logical organization: `methodologies/`, `standards/`, `user/`,
-  `output/`, and `config/`
+- Established logical organization: `methodologies/`, `standards/`, `user/`, `output/`, and `config/`
 - Improved project-level organization under `.claude/aichaku/`
 
 ### 2. Path Management Infrastructure
@@ -27,8 +25,7 @@ compatibility.
 ### 3. Migration System
 
 - Built comprehensive migration tool with `aichaku migrate` command
-- Implemented safety features: dry-run mode, automatic backups, rollback
-  capability
+- Implemented safety features: dry-run mode, automatic backups, rollback capability
 - Created idempotent operations to prevent data loss
 - Added progress indicators and detailed logging
 
@@ -63,9 +60,8 @@ compatibility.
 
 ## Impact
 
-This reorganization transforms Aichaku from a tool that scattered files across
-`~/.claude/` into a well-organized system under its own namespace. Users benefit
-from:
+This reorganization transforms Aichaku from a tool that scattered files across `~/.claude/` into a well-organized system
+under its own namespace. Users benefit from:
 
 - Cleaner file system organization
 - Reduced chance of conflicts with other tools
@@ -75,8 +71,7 @@ from:
 
 ## Migration Path
 
-New users install directly to the new structure, while existing users can
-migrate at their convenience:
+New users install directly to the new structure, while existing users can migrate at their convenience:
 
 ```bash
 # Check migration status
@@ -93,5 +88,5 @@ aichaku migrate --global --backup
 - Monitor adoption rates
 - Plan legacy support removal for v2.0
 
-This reorganization positions Aichaku as a professional, well-structured tool
-ready for long-term growth and maintenance.
+This reorganization positions Aichaku as a professional, well-structured tool ready for long-term growth and
+maintenance.

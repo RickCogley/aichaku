@@ -68,9 +68,7 @@ export const releaseTools = {
           });
         } catch (error) {
           errors.push(
-            `${assetPath}: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
+            `${assetPath}: ${error instanceof Error ? error.message : String(error)}`,
           );
         }
       }
@@ -78,14 +76,12 @@ export const releaseTools = {
       const successCount = results.length;
       const errorCount = errors.length;
 
-      let responseText =
-        format.header("GitHub Release Asset Upload Results", "🚀") + "\n";
+      let responseText = format.header("GitHub Release Asset Upload Results", "🚀") + "\n";
       responseText += format.separator() + "\n\n";
       responseText += format.field("Release", `${release.name} (${tag})`) +
         "\n";
       responseText += format.field("Repository", `${owner}/${repo}`) + "\n";
-      responseText +=
-        format.field("Success", `${successCount} assets uploaded`) + "\n";
+      responseText += format.field("Success", `${successCount} assets uploaded`) + "\n";
       responseText += format.field("Errors", `${errorCount} failures`) + "\n";
 
       if (results.length > 0) {
@@ -164,11 +160,7 @@ export const releaseTools = {
       responseText += format.field("Repository", `${owner}/${repo}`) + "\n";
       responseText += format.field(
         "Status",
-        release.draft
-          ? "Draft"
-          : release.prerelease
-          ? "Pre-release"
-          : "Published",
+        release.draft ? "Draft" : release.prerelease ? "Pre-release" : "Published",
       ) + "\n";
       responseText += format.field(
         "Created",
@@ -176,9 +168,7 @@ export const releaseTools = {
       ) + "\n";
       responseText += format.field(
         "Published",
-        release.published_at
-          ? new Date(release.published_at).toLocaleDateString()
-          : "Not published",
+        release.published_at ? new Date(release.published_at).toLocaleDateString() : "Not published",
       ) + "\n";
 
       responseText += "\n" + format.section("Description");
@@ -261,19 +251,14 @@ export const releaseTools = {
         };
       }
 
-      let responseText =
-        format.header(`GitHub Releases for ${owner}/${repo}`, "📋") + "\n";
+      let responseText = format.header(`GitHub Releases for ${owner}/${repo}`, "📋") + "\n";
       responseText += format.separator() + "\n\n";
       responseText += format.field("Found", `${releases.length} releases`) +
         "\n\n";
 
       for (const release of releases) {
         const assetCount = release.assets.length;
-        const status = release.draft
-          ? "Draft"
-          : release.prerelease
-          ? "Pre-release"
-          : "Published";
+        const status = release.draft ? "Draft" : release.prerelease ? "Pre-release" : "Published";
         const date = new Date(release.published_at || release.created_at)
           .toLocaleDateString();
 
@@ -302,9 +287,7 @@ export const releaseTools = {
         content: [
           {
             type: "text",
-            text: `❌ Failed to list releases: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
+            text: `❌ Failed to list releases: ${error instanceof Error ? error.message : String(error)}`,
           },
         ],
         isError: true,

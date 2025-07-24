@@ -1,7 +1,6 @@
 # Project Status: Progress Indicator Design
 
-**Status**: ACTIVE - Design Phase **Started**: 2025-07-07 **Target**: Feature
-for v0.7.0
+**Status**: ACTIVE - Design Phase **Started**: 2025-07-07 **Target**: Feature for v0.7.0
 
 ## Prerequisites
 
@@ -44,16 +43,11 @@ graph LR
 
 ## Key Decisions
 
-1. **ASCII-First Design**: You maintain Claude Code compatibility with
-   ASCII-first rendering
-2. **Per-Methodology Indicators**: Each methodology gets unique workflow
-   indicators
-3. **STATUS.md Integration**: You integrate via comment markers for seamless
-   updates
-4. **Three Display Modes**: You can choose between ascii, compact, and minimal
-   modes
-5. **Zero Dependencies**: You maintain security stance with no external
-   dependencies
+1. **ASCII-First Design**: You maintain Claude Code compatibility with ASCII-first rendering
+2. **Per-Methodology Indicators**: Each methodology gets unique workflow indicators
+3. **STATUS.md Integration**: You integrate via comment markers for seamless updates
+4. **Three Display Modes**: You can choose between ascii, compact, and minimal modes
+5. **Zero Dependencies**: You maintain security stance with no external dependencies
 
 ## Design Highlights
 
@@ -111,12 +105,9 @@ graph LR
 
 ## Related Documents
 
-- [`progress-indicator-design.md`](./progress-indicator-design.md) - Complete
-  design specification
-- [`progress-examples.md`](./progress-examples.md) - Visual examples for all
-  methodologies
-- [`implementation-guide.md`](./implementation-guide.md) - Step-by-step
-  implementation plan
+- [`progress-indicator-design.md`](./progress-indicator-design.md) - Complete design specification
+- [`progress-examples.md`](./progress-examples.md) - Visual examples for all methodologies
+- [`implementation-guide.md`](./implementation-guide.md) - Step-by-step implementation plan
 
 ## Success Criteria
 

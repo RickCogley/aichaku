@@ -35,10 +35,7 @@ import { hooks } from "./src/commands/hooks.ts";
 import { standards } from "./src/commands/standards.ts";
 import { docsStandard } from "./src/commands/docs-standard.ts";
 import { runMCPCommand } from "./src/commands/mcp.ts";
-import {
-  createMigrateCommand,
-  showMigrateHelp,
-} from "./src/commands/migrate.ts";
+import { createMigrateCommand, showMigrateHelp } from "./src/commands/migrate.ts";
 import { runReviewCommand } from "./src/commands/review.ts";
 import { runGitHubCommand } from "./src/commands/github.ts";
 import { cleanup } from "./src/commands/cleanup.ts";
@@ -324,11 +321,7 @@ Your project now has:
   • Access to all global methodologies
   • Pre-created output directory for documents
   • Behavioral guidelines for Claude Code
-  ${
-            result.message?.includes("CLAUDE.md")
-              ? "• CLAUDE.md integration with clear directives"
-              : ""
-          }
+  ${result.message?.includes("CLAUDE.md") ? "• CLAUDE.md integration with clear directives" : ""}
 
 💡 Just start talking! Say things like:
    • "Let's shape a new feature"
@@ -401,11 +394,7 @@ Your project now has:
         if (result.claudeMdReferences && result.claudeMdReferences.length > 0) {
           console.log(`
 ℹ️  CLAUDE.md still contains Aichaku references:
-${
-            result.claudeMdReferences.map((ref) =>
-              `    Line ${ref.line}: "${ref.text}"`
-            ).join("\n")
-          }
+${result.claudeMdReferences.map((ref) => `    Line ${ref.line}: "${ref.text}"`).join("\n")}
     
     Remove these manually if no longer needed.`);
         }
@@ -429,9 +418,7 @@ ${
 
 ✅ Integration complete!
 
-📍 ${result.action === "created" ? "Created" : "Added"} at line ${
-            result.lineNumber || "N/A"
-          }
+📍 ${result.action === "created" ? "Created" : "Added"} at line ${result.lineNumber || "N/A"}
 📚 Methodologies available: 6
 🔗 Using global: ~/.claude/
 
@@ -626,9 +613,7 @@ ${
         help: args.help as boolean | undefined,
         // Auth
         authStatus: args.authStatus as boolean | undefined,
-        authLogin: (typeof args.authLogin === "string")
-          ? args.authLogin
-          : undefined,
+        authLogin: (typeof args.authLogin === "string") ? args.authLogin : undefined,
         // Release
         releaseUpload: args.releaseUpload as boolean | undefined,
         releaseView: args.releaseView as boolean | undefined,

@@ -21,22 +21,10 @@ import { AichakuFormatter, ConsoleOutputManager } from "./feedback-system.ts";
 import { feedbackSystem } from "./feedback/feedback-system.ts";
 import type { ReviewRequest, ReviewResult } from "./types.ts";
 import { existsSync } from "@std/fs/exists";
-import {
-  detectEnvironmentConfig,
-  StatisticsManager,
-} from "./statistics/mod.ts";
-import {
-  type AnalyzeProjectArgs,
-  analyzeProjectTool,
-} from "./tools/analyze-project.ts";
-import {
-  type GenerateDocumentationArgs,
-  generateDocumentationTool,
-} from "./tools/generate-documentation.ts";
-import {
-  type CreateDocTemplateArgs,
-  createDocTemplateTool,
-} from "./tools/create-doc-template.ts";
+import { detectEnvironmentConfig, StatisticsManager } from "./statistics/mod.ts";
+import { type AnalyzeProjectArgs, analyzeProjectTool } from "./tools/analyze-project.ts";
+import { type GenerateDocumentationArgs, generateDocumentationTool } from "./tools/generate-documentation.ts";
+import { type CreateDocTemplateArgs, createDocTemplateTool } from "./tools/create-doc-template.ts";
 // Note: integrate command moved to main CLI
 
 const PACKAGE_JSON = {
@@ -83,8 +71,7 @@ class MCPCodeReviewer {
         tools: [
           {
             name: "review_file",
-            description:
-              "Review a file for security, standards, and methodology compliance",
+            description: "Review a file for security, standards, and methodology compliance",
             inputSchema: {
               type: "object",
               properties: {
@@ -94,13 +81,11 @@ class MCPCodeReviewer {
                 },
                 content: {
                   type: "string",
-                  description:
-                    "File content (optional, will read from disk if not provided)",
+                  description: "File content (optional, will read from disk if not provided)",
                 },
                 includeExternal: {
                   type: "boolean",
-                  description:
-                    "Include external security scanners if available",
+                  description: "Include external security scanners if available",
                   default: true,
                 },
               },
@@ -109,8 +94,7 @@ class MCPCodeReviewer {
           },
           {
             name: "review_methodology",
-            description:
-              "Check if project follows selected methodology patterns",
+            description: "Check if project follows selected methodology patterns",
             inputSchema: {
               type: "object",
               properties: {
@@ -142,8 +126,7 @@ class MCPCodeReviewer {
           },
           {
             name: "get_statistics",
-            description:
-              "Get usage statistics and analytics for MCP tool usage",
+            description: "Get usage statistics and analytics for MCP tool usage",
             inputSchema: {
               type: "object",
               properties: {
@@ -171,8 +154,7 @@ class MCPCodeReviewer {
           createDocTemplateTool,
           {
             name: "send_feedback",
-            description:
-              "Send feedback message that appears visibly in Claude Code console",
+            description: "Send feedback message that appears visibly in Claude Code console",
             inputSchema: {
               type: "object",
               properties: {
@@ -320,9 +302,7 @@ class MCPCodeReviewer {
                 content: [
                   {
                     type: "text",
-                    text: result.success
-                      ? JSON.stringify(result.analysis, null, 2)
-                      : `Error: ${result.error}`,
+                    text: result.success ? JSON.stringify(result.analysis, null, 2) : `Error: ${result.error}`,
                   },
                 ],
               };
@@ -484,9 +464,7 @@ class MCPCodeReviewer {
               const validLevels = ["info", "success", "warning", "error"];
               if (!validLevels.includes(level)) {
                 throw new Error(
-                  `Invalid feedback level: ${level}. Must be one of: ${
-                    validLevels.join(", ")
-                  }`,
+                  `Invalid feedback level: ${level}. Must be one of: ${validLevels.join(", ")}`,
                 );
               }
 
@@ -508,8 +486,7 @@ class MCPCodeReviewer {
                   break;
               }
 
-              const formattedMessage =
-                `${icon} [${level.toUpperCase()}] ${message}`;
+              const formattedMessage = `${icon} [${level.toUpperCase()}] ${message}`;
 
               // Record statistics
               await this.statisticsManager.recordInvocation(
@@ -561,9 +538,7 @@ class MCPCodeReviewer {
                 text: `${
                   AichakuFormatter.formatBrandedMessage(
                     "❌",
-                    `Error: ${
-                      error instanceof Error ? error.message : String(error)
-                    }`,
+                    `Error: ${error instanceof Error ? error.message : String(error)}`,
                   )
                 }`,
               },

@@ -1,25 +1,20 @@
 # Software Project Reference Documentation Analysis
 
-This document categorizes and analyzes the essential types of permanent
-reference documents that software projects typically need, based on industry
-best practices and examples from well-documented projects.
+This document categorizes and analyzes the essential types of permanent reference documents that software projects
+typically need, based on industry best practices and examples from well-documented projects.
 
 ## 1. Architecture Documents
 
 ### Purpose
 
-Capture high-level system design, component relationships, and architectural
-decisions.
+Capture high-level system design, component relationships, and architectural decisions.
 
 ### Common Formats and Structures
 
 - **System Overview**: High-level description of the system's purpose and goals
-- **Component Architecture**: Detailed breakdown of system components and their
-  relationships
-- **Physical Architecture**: Infrastructure, deployment topology, hardware
-  requirements
-- **Process Architecture**: Background processes, service interactions,
-  lifecycle management
+- **Component Architecture**: Detailed breakdown of system components and their relationships
+- **Physical Architecture**: Infrastructure, deployment topology, hardware requirements
+- **Process Architecture**: Background processes, service interactions, lifecycle management
 - **Data Flow Diagrams**: How information moves through the system
 - **Technology Stack**: Languages, frameworks, databases, and tools used
 
@@ -147,8 +142,7 @@ Define the structure, relationships, and constraints of data within the system.
 
 ### Common Formats and Structures
 
-- **Entity-Relationship Diagrams (ERDs)**: Visual representation of data
-  relationships
+- **Entity-Relationship Diagrams (ERDs)**: Visual representation of data relationships
 - **Data Dictionary**: Comprehensive field-level documentation
 - **Schema Definitions**: DDL scripts, migrations, constraints
 - **Data Flow Documentation**: How data moves and transforms
@@ -223,8 +217,7 @@ Document security controls, threat models, and compliance requirements.
 
 #### Threat Models
 
-- **STRIDE Analysis**: Spoofing, Tampering, Repudiation, Information Disclosure,
-  DoS, Elevation of Privilege
+- **STRIDE Analysis**: Spoofing, Tampering, Repudiation, Information Disclosure, DoS, Elevation of Privilege
 - **Attack Surface Documentation**: Entry points and vulnerabilities
 - **Risk Assessment Matrix**: Likelihood vs. impact analysis
 - **Mitigation Strategies**: Controls for identified threats
@@ -510,8 +503,7 @@ Capture important architectural decisions with their context and consequences.
 
 ### Common Formats and Structures
 
-- **Title**: Brief, descriptive name (ADR-001: Use PostgreSQL for primary
-  datastore)
+- **Title**: Brief, descriptive name (ADR-001: Use PostgreSQL for primary datastore)
 - **Status**: Draft, Proposed, Accepted, Deprecated, Superseded
 - **Context**: Forces, constraints, and background
 - **Decision**: What was decided and why
@@ -599,6 +591,5 @@ Well-maintained reference documentation is crucial for:
 - **Quality**: Consistent implementation
 - **Knowledge Transfer**: Reduced key person dependencies
 
-The key to successful documentation is treating it as a first-class deliverable,
-maintained with the same rigor as code, and continuously improved based on user
-feedback and system evolution.
+The key to successful documentation is treating it as a first-class deliverable, maintained with the same rigor as code,
+and continuously improved based on user feedback and system evolution.

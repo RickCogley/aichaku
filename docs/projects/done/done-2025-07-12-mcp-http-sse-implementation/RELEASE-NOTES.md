@@ -2,9 +2,8 @@
 
 ## Summary
 
-This release introduces a major enhancement to the Aichaku MCP server with
-HTTP/SSE (Server-Sent Events) support, enabling multiple Claude Code instances
-to share a single MCP server efficiently. This addresses the performance and
+This release introduces a major enhancement to the Aichaku MCP server with HTTP/SSE (Server-Sent Events) support,
+enabling multiple Claude Code instances to share a single MCP server efficiently. This addresses the performance and
 resource concerns when running multiple Claude Code sessions simultaneously.
 
 ## 🌟 Major Features
@@ -67,8 +66,7 @@ aichaku mcp --stop-server
 
 - Updated MCP-SERVER.md with HTTP/SSE architecture diagrams
 - Clear explanation of when to use each mode:
-  - **Aichaku MCP**: Supports both process and HTTP/SSE modes (heavy
-    initialization, frequent use)
+  - **Aichaku MCP**: Supports both process and HTTP/SSE modes (heavy initialization, frequent use)
   - **GitHub MCP**: Process-only mode (lightweight, occasional use)
 - Added troubleshooting and performance optimization guides
 
@@ -111,8 +109,7 @@ aichaku mcp --stop-server
 ### For Existing Users
 
 1. **No action required** - existing process mode continues to work
-2. **Optional upgrade** - run `aichaku mcp --start-server` for improved
-   performance
+2. **Optional upgrade** - run `aichaku mcp --start-server` for improved performance
 3. **Automatic detection** - CLI automatically uses server when available
 
 ### For Multiple Claude Code Instances
@@ -164,18 +161,15 @@ aichaku mcp --stop-server
 
 ## 📚 Additional Resources
 
-- [MCP Server Documentation](docs/MCP-SERVER.md) - Complete technical
-  documentation
+- [MCP Server Documentation](docs/MCP-SERVER.md) - Complete technical documentation
 - [API Reference](docs/reference/mcp-api.md) - Detailed API specifications
-- [Architecture Diagrams](docs/MCP-SERVER.md#architecture) - Visual system
-  overview
+- [Architecture Diagrams](docs/MCP-SERVER.md#architecture) - Visual system overview
 
 ## 🎯 Impact
 
-This release significantly improves the developer experience for teams using
-multiple Claude Code instances simultaneously. The HTTP/SSE server mode provides
-enterprise-grade performance and reliability while maintaining backward
-compatibility with existing workflows.
+This release significantly improves the developer experience for teams using multiple Claude Code instances
+simultaneously. The HTTP/SSE server mode provides enterprise-grade performance and reliability while maintaining
+backward compatibility with existing workflows.
 
-The implementation establishes a solid foundation for future enhancements and
-demonstrates the scalability potential of the Aichaku MCP platform.
+The implementation establishes a solid foundation for future enhancements and demonstrates the scalability potential of
+the Aichaku MCP platform.

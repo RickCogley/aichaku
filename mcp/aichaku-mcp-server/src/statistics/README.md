@@ -1,16 +1,13 @@
 # MCP Statistics Tracking System
 
-A comprehensive, privacy-conscious statistics tracking and reporting system for
-MCP tool usage in Aichaku.
+A comprehensive, privacy-conscious statistics tracking and reporting system for MCP tool usage in Aichaku.
 
 ## 🚀 Features
 
-- **Real-time Usage Tracking**: Monitor tool invocations, performance, and
-  success rates
+- **Real-time Usage Tracking**: Monitor tool invocations, performance, and success rates
 - **Privacy-First Design**: Configurable anonymization and data sanitization
 - **Multiple Storage Options**: Deno KV, JSON files, or in-memory storage
-- **Rich Analytics**: Insights into tool usage patterns, file review frequency,
-  and performance trends
+- **Rich Analytics**: Insights into tool usage patterns, file review frequency, and performance trends
 - **Interactive Q&A**: Natural language queries about usage statistics
 - **Export Capabilities**: JSON and CSV export formats
 - **Lightweight & Fast**: Minimal overhead with efficient data structures
@@ -118,8 +115,7 @@ claude-mcp get_statistics --type export --format csv
 
 ### Environment-Based Configuration
 
-The system automatically detects the environment and applies appropriate
-settings:
+The system automatically detects the environment and applies appropriate settings:
 
 ```typescript
 // Development environment
@@ -415,8 +411,7 @@ const config = {
 
 ## 🤝 Contributing
 
-The statistics system is designed to be extensible. To add new metrics or
-reporting features:
+The statistics system is designed to be extensible. To add new metrics or reporting features:
 
 1. Extend the `ToolInvocation` or `StatisticsReport` types
 2. Update the collector to gather new data
@@ -459,5 +454,4 @@ const config = {
 
 ## 📄 License
 
-Part of the Aichaku methodology-driven development system. See the main project
-license for details.
+Part of the Aichaku methodology-driven development system. See the main project license for details.

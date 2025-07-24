@@ -1,7 +1,6 @@
 # Getting Started with [Product Name]
 
-In this tutorial, you'll learn how to [main outcome]. By the end, you'll have
-[specific achievement].
+In this tutorial, you'll learn how to [main outcome]. By the end, you'll have [specific achievement].
 
 ## Prerequisites
 

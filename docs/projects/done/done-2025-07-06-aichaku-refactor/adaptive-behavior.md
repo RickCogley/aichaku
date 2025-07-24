@@ -6,15 +6,14 @@
 
 ## Core Principle: Context-Aware Methodology Blending
 
-Aichaku should enable Claude Code to intelligently blend methodologies based on
-user language and context, not force rigid methodology boundaries.
+Aichaku should enable Claude Code to intelligently blend methodologies based on user language and context, not force
+rigid methodology boundaries.
 
 ## Key Behaviors
 
 ### 1. Default Lean
 
-When users start with a specific methodology's language, the AI should lean
-toward those conventions:
+When users start with a specific methodology's language, the AI should lean toward those conventions:
 
 - User says "let's shape this bet" → Shape Up templates and language
 - User says "plan our sprint" → Scrum templates and ceremonies
@@ -24,10 +23,8 @@ toward those conventions:
 
 When users introduce concepts from other methodologies, adapt seamlessly:
 
-- Starting in Shape Up but mentions "daily standup" → Pull in Scrum's standup
-  template
-- In Scrum but talks about "betting on this feature" → Incorporate Shape Up's
-  bet concept
+- Starting in Shape Up but mentions "daily standup" → Pull in Scrum's standup template
+- In Scrum but talks about "betting on this feature" → Incorporate Shape Up's bet concept
 - In Kanban but needs "retrospective" → Use Scrum's retro format
 
 ### 3. Natural Language Detection
@@ -71,19 +68,15 @@ Each methodology should have:
 
 ### When in Shape Up Mode
 
-- If user mentions "sprint planning" → Use Shape Up's 6-week cycle planning but
-  call it "sprint planning" if that's their term
-- If user wants "daily standups" → Suggest brief check-ins focused on betting
-  table progress
-- If user asks for "user stories" → Frame as "pitches" with appetite instead of
-  points
+- If user mentions "sprint planning" → Use Shape Up's 6-week cycle planning but call it "sprint planning" if that's
+  their term
+- If user wants "daily standups" → Suggest brief check-ins focused on betting table progress
+- If user asks for "user stories" → Frame as "pitches" with appetite instead of points
 
 ### When in Scrum Mode
 
-- If user mentions "betting" → Use Scrum's planning poker but frame as "betting
-  on complexity"
-- If user wants "continuous flow" → Suggest shortening sprints or moving to
-  Kanban
+- If user mentions "betting" → Use Scrum's planning poker but frame as "betting on complexity"
+- If user wants "continuous flow" → Suggest shortening sprints or moving to Kanban
 - If user talks about "appetite" → Map to sprint capacity/velocity
 ```
 
@@ -135,6 +128,5 @@ Aichaku enables adaptive behavior when:
 3. **Context examples** - Show blending in action
 4. **Mode detection** - Should consider full context, not just keywords
 
-This adaptive behavior is what makes Aichaku truly useful - it meets users where
-they are, speaks their language, and provides the right methodology support
-without forcing choices.
+This adaptive behavior is what makes Aichaku truly useful - it meets users where they are, speaks their language, and
+provides the right methodology support without forcing choices.

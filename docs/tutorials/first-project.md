@@ -1,7 +1,7 @@
 # Your First Aichaku Project
 
-This tutorial walks you through creating a real project with Aichaku and Claude.
-You'll build a simple feature from planning through completion.
+This tutorial walks you through creating a real project with Aichaku and Claude. You'll build a simple feature from
+planning through completion.
 
 ## What you'll build
 
@@ -445,8 +445,6 @@ Continue learning:
 
 - Read [Configure Your Project](../how-to/configure-project.md)
 - Explore [Core Concepts](../explanation/core-concepts.md)
-- Study
-  [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md)
+- Study [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md)
 
-Remember: Aichaku adapts to how you work, not the other way around. Happy
-building! 🪴
+Remember: Aichaku adapts to how you work, not the other way around. Happy building! 🪴

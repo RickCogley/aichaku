@@ -2,18 +2,15 @@
 
 ## Overview
 
-Google's style guides are comprehensive coding standards used across Google's
-engineering teams. They emphasize readability, consistency, and maintainability
-while providing specific guidance for multiple programming languages.
+Google's style guides are comprehensive coding standards used across Google's engineering teams. They emphasize
+readability, consistency, and maintainability while providing specific guidance for multiple programming languages.
 
 ### Core Philosophy
 
-1. **Optimize for the reader, not the writer**: Code is read far more often than
-   it's written
+1. **Optimize for the reader, not the writer**: Code is read far more often than it's written
 2. **Be consistent**: When in doubt, be consistent with existing code
 3. **Use common sense**: Rules can be broken if there's a good reason
-4. **Clarity over cleverness**: Avoid clever tricks that make code harder to
-   understand
+4. **Clarity over cleverness**: Avoid clever tricks that make code harder to understand
 
 ## Language-Specific Guidelines
 
@@ -744,6 +741,5 @@ class-naming-style=PascalCase
 const-naming-style=UPPER_CASE
 ```
 
-Remember: The goal of style guides is to improve code readability and
-maintainability. When in doubt, optimize for clarity and consistency with your
-team's existing code.
+Remember: The goal of style guides is to improve code readability and maintainability. When in doubt, optimize for
+clarity and consistency with your team's existing code.

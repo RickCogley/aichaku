@@ -9,16 +9,13 @@ When you hear any of these:
 - "Fix..." / "Improve..." / "Change..."
 - "Plan..." / "Shape..." / "Define..."
 
-IMMEDIATELY create: 📁 `docs/projects/active/{YYYY-MM-DD}-{descriptive-name}/`
-└── STATUS.md
+IMMEDIATELY create: 📁 `docs/projects/active/{YYYY-MM-DD}-{descriptive-name}/` └── STATUS.md
 
 This is automatic - users shouldn't need to ask!
 
-**ACTIVATES WHEN**: User needs to decide what to build, prioritize work, or
-define features
+**ACTIVATES WHEN**: User needs to decide what to build, prioritize work, or define features
 
-**TRIGGERS**: "plan", "shape", "prioritize", "what should we build", "define",
-"scope"
+**TRIGGERS**: "plan", "shape", "prioritize", "what should we build", "define", "scope"
 
 ## Quick Start
 
@@ -179,11 +176,9 @@ Start: When current task done
 
 ## Anti-Patterns to Avoid
 
-❌ Over-planning for simple tasks ❌ Under-planning for complex work ❌ Skipping
-context detection ❌ Using wrong methodology for situation ❌ Creating plans
-without clear next actions
+❌ Over-planning for simple tasks ❌ Under-planning for complex work ❌ Skipping context detection ❌ Using wrong
+methodology for situation ❌ Creating plans without clear next actions
 
 ## Remember
 
-Planning Mode is about making decisions quickly with the right amount of detail.
-Always end with a clear next action.
+Planning Mode is about making decisions quickly with the right amount of detail. Always end with a clear next action.

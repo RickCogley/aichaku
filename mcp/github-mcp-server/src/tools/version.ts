@@ -40,11 +40,7 @@ export const versionTools = {
 ## 🐙 GitHub API
 **Version:** ${githubVersion.version}
 **Compatible:** ${githubVersion.compatible ? "✅ Yes" : "❌ No"}
-**Status:** ${
-        githubVersion.compatible
-          ? "All API operations available"
-          : "API access limited"
-      }
+**Status:** ${githubVersion.compatible ? "All API operations available" : "API access limited"}
 
 ## 🛠️ GitHub CLI (gh)
 **Version:** ${ghVersion}
@@ -59,18 +55,10 @@ export const versionTools = {
 ## 📊 Compatibility Matrix
 | Operation | MCP Server | GitHub CLI | Recommendation |
 |-----------|------------|------------|----------------|
-| Release Upload | ✅ | ${
-        ghCompatible ? "✅" : "❌"
-      } | Use MCP for deterministic results |
-| Workflow Monitoring | ✅ | ${
-        ghCompatible ? "✅" : "❌"
-      } | Use MCP for real-time monitoring |
-| Authentication | ✅ | ${
-        ghCompatible ? "✅" : "❌"
-      } | Use MCP for secure token management |
-| Repository Info | ✅ | ${
-        ghCompatible ? "✅" : "❌"
-      } | Use MCP for structured data |
+| Release Upload | ✅ | ${ghCompatible ? "✅" : "❌"} | Use MCP for deterministic results |
+| Workflow Monitoring | ✅ | ${ghCompatible ? "✅" : "❌"} | Use MCP for real-time monitoring |
+| Authentication | ✅ | ${ghCompatible ? "✅" : "❌"} | Use MCP for secure token management |
+| Repository Info | ✅ | ${ghCompatible ? "✅" : "❌"} | Use MCP for structured data |
 
 ## 🎯 Benefits of MCP Server
 - **Deterministic**: No dependency on external CLI tools
@@ -98,9 +86,7 @@ ${
         content: [
           {
             type: "text",
-            text: `❌ Failed to get version info: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
+            text: `❌ Failed to get version info: ${error instanceof Error ? error.message : String(error)}`,
           },
         ],
         isError: true,
@@ -171,12 +157,10 @@ ${
 
       if (!isCompatible) {
         status = "❌ Incompatible";
-        recommendation =
-          "GitHub CLI version is too old. Update to v2.0+ or use MCP server exclusively.";
+        recommendation = "GitHub CLI version is too old. Update to v2.0+ or use MCP server exclusively.";
       } else if (!isRecommended) {
         status = "⚠️ Compatible (old)";
-        recommendation =
-          "GitHub CLI version is compatible but old. Consider updating or using MCP server.";
+        recommendation = "GitHub CLI version is compatible but old. Consider updating or using MCP server.";
       }
 
       const responseText = `🔍 GitHub CLI Compatibility Check
@@ -191,21 +175,9 @@ ${
 ${recommendation}
 
 ## 🔄 Version Upgrade Impact
-${
-        major >= 2 && minor >= 75
-          ? "✅ Recent version - minimal breaking changes expected"
-          : ""
-      }
-${
-        major >= 2 && minor >= 70 && minor < 75
-          ? "⚠️ Moderate version - some feature changes possible"
-          : ""
-      }
-${
-        major >= 2 && minor < 70
-          ? "❌ Older version - significant changes possible in newer versions"
-          : ""
-      }
+${major >= 2 && minor >= 75 ? "✅ Recent version - minimal breaking changes expected" : ""}
+${major >= 2 && minor >= 70 && minor < 75 ? "⚠️ Moderate version - some feature changes possible" : ""}
+${major >= 2 && minor < 70 ? "❌ Older version - significant changes possible in newer versions" : ""}
 ${major < 2 ? "❌ Very old version - major breaking changes in v2.0+" : ""}
 
 ## 🎯 MCP Server Advantages
@@ -231,9 +203,7 @@ ${major < 2 ? "❌ Very old version - major breaking changes in v2.0+" : ""}
         content: [
           {
             type: "text",
-            text: `❌ Failed to check compatibility: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
+            text: `❌ Failed to check compatibility: ${error instanceof Error ? error.message : String(error)}`,
           },
         ],
         isError: true,

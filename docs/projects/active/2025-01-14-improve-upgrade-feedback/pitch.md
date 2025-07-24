@@ -2,9 +2,8 @@
 
 ## Problem
 
-When users run `aichaku upgrade --global`, MCP servers are updated silently in
-the background without any user feedback. Additionally, the cleanup and upgrade
-commands fail to detect and handle many legacy file structures. This creates
+When users run `aichaku upgrade --global`, MCP servers are updated silently in the background without any user feedback.
+Additionally, the cleanup and upgrade commands fail to detect and handle many legacy file structures. This creates
 confusion and leaves projects in inconsistent states:
 
 ### Upgrade Command Issues:
@@ -12,19 +11,14 @@ confusion and leaves projects in inconsistent states:
 - Users don't know if MCP servers were actually updated
 - The upgrade feels incomplete due to lack of transparency
 - **Critical missing step**: HTTP server restart is not documented
-- **Missing version feedback**: HTTP server doesn't show version when
-  starting/stopping
-- **Misleading output**: Says "Updating methodology files" without clarifying
-  they're global
-- **No session migration**: Doesn't detect or migrate `.claude/sessions/` to
-  `docs/checkpoints/`
+- **Missing version feedback**: HTTP server doesn't show version when starting/stopping
+- **Misleading output**: Says "Updating methodology files" without clarifying they're global
+- **No session migration**: Doesn't detect or migrate `.claude/sessions/` to `docs/checkpoints/`
 
 ### Cleanup Command Issues:
 
-- **Doesn't detect** `.claude/sessions/` as legacy (should migrate to
-  `docs/checkpoints/`)
-- **Doesn't detect** `.claude/output/` as legacy (should migrate to
-  `docs/projects/`)
+- **Doesn't detect** `.claude/sessions/` as legacy (should migrate to `docs/checkpoints/`)
+- **Doesn't detect** `.claude/output/` as legacy (should migrate to `docs/projects/`)
 - **Doesn't detect** duplicate files like `.aichaku-behavior` in wrong locations
 - **Doesn't handle** all legacy metadata file locations
 
@@ -39,20 +33,17 @@ Testing across 4 projects revealed:
 
 **Real user feedback:**
 
-- "The `aichaku upgrade --global` should say the mcp's were updated and give
-  some details."
+- "The `aichaku upgrade --global` should say the mcp's were updated and give some details."
 - "These steps need to be added to the upgrade process, in the README.md"
 - "The cleanup command should discover anything like this and fix it"
 
 ## Appetite
 
-**6 weeks** - This is a small but important UX improvement that affects every
-global upgrade.
+**6 weeks** - This is a small but important UX improvement that affects every global upgrade.
 
 ## Solution
 
-Improve both upgrade and cleanup commands to handle all legacy structures and
-provide clear feedback:
+Improve both upgrade and cleanup commands to handle all legacy structures and provide clear feedback:
 
 ### Upgrade Command Improvements
 
@@ -178,26 +169,18 @@ provide clear feedback:
 
 ## Rabbit Holes
 
-- **Over-engineering the progress display** - Don't add complex animations or
-  fancy formatting
-- **Making MCP updates blocking** - If one MCP server fails, don't stop the
-  entire upgrade
-- **Version comparison complexity** - Don't try to parse every possible MCP
-  server version format
-- **Cross-platform progress indicators** - Keep output simple and compatible
-  across terminals
+- **Over-engineering the progress display** - Don't add complex animations or fancy formatting
+- **Making MCP updates blocking** - If one MCP server fails, don't stop the entire upgrade
+- **Version comparison complexity** - Don't try to parse every possible MCP server version format
+- **Cross-platform progress indicators** - Keep output simple and compatible across terminals
 
 ## No-Gos
 
 - **Verbose logging by default** - Don't overwhelm users with too much detail
-- **Interactive prompts** - Keep the upgrade process automated and
-  non-interactive
-- **Network dependency checks** - Don't validate that MCP servers are working,
-  just that files updated
-- **Breaking existing projects** - Migration must handle all old formats
-  gracefully
-- **Forcing immediate migration** - Support reading old formats for backward
-  compatibility
+- **Interactive prompts** - Keep the upgrade process automated and non-interactive
+- **Network dependency checks** - Don't validate that MCP servers are working, just that files updated
+- **Breaking existing projects** - Migration must handle all old formats gracefully
+- **Forcing immediate migration** - Support reading old formats for backward compatibility
 
 ## Technical Notes
 
@@ -208,8 +191,7 @@ provide clear feedback:
 
 ### Upgrade Command Metadata Discovery Issue
 
-**Found during testing**: The upgrade command expects specific metadata files in
-specific locations:
+**Found during testing**: The upgrade command expects specific metadata files in specific locations:
 
 **For Project Upgrades** (looks in `{projectRoot}/.claude/aichaku/`):
 
@@ -223,13 +205,12 @@ specific locations:
 - Missing `.aichaku.json` file entirely
 - Only having `aichaku.config.json` (which upgrade command ignores)
 
-**Fix Required**: Upgrade command should handle multiple metadata file formats
-and locations, or init command should create consistent file structure.
+**Fix Required**: Upgrade command should handle multiple metadata file formats and locations, or init command should
+create consistent file structure.
 
 ### CRITICAL: Architecture Violation in Upgrade Process
 
-**Major Issue Found**: The upgrade command shows it will update local
-`methodologies/` files:
+**Major Issue Found**: The upgrade command shows it will update local `methodologies/` files:
 
 ```
 [DRY RUN] Would update:
@@ -238,8 +219,7 @@ and locations, or init command should create consistent file structure.
 
 **This violates the new architecture** where:
 
-- ✅ Methodologies should ONLY exist globally
-  (`~/.claude/aichaku/methodologies/`)
+- ✅ Methodologies should ONLY exist globally (`~/.claude/aichaku/methodologies/`)
 - ❌ Projects should NEVER have local `methodologies/` directories
 - ✅ Projects should only have references to global methodologies
 
@@ -249,8 +229,7 @@ and locations, or init command should create consistent file structure.
 2. Upgrade command incorrectly tries to update local methodologies
 3. Project was never properly migrated to new architecture
 
-**Impact**: Users get confused about where methodologies live and whether
-they're truly global.
+**Impact**: Users get confused about where methodologies live and whether they're truly global.
 
 ### CRITICAL: Metadata File Chaos
 
@@ -297,10 +276,8 @@ they're truly global.
 
 We've created a proof-of-concept implementation that shows how to:
 
-1. **Migrate existing projects** - Automatically consolidate all 6+ files into
-   one
-2. **Maintain backward compatibility** - Support reading old format during
-   transition
+1. **Migrate existing projects** - Automatically consolidate all 6+ files into one
+2. **Maintain backward compatibility** - Support reading old format during transition
 3. **Provide clean API** - Simple `ConfigManager` class for all operations
 4. **Enable smooth rollout** - Phased migration plan over several versions
 
@@ -341,8 +318,7 @@ Transform standards from narrative prose to structured, executable rules:
 **Current Approach (Narrative):**
 
 ```markdown
-Follow Test-Driven Development. Write tests first. Ensure good test coverage.
-Consider edge cases.
+Follow Test-Driven Development. Write tests first. Ensure good test coverage. Consider edge cases.
 ```
 
 **New Approach (Structured):**
@@ -461,12 +437,10 @@ Current standards:
 
 1. **Compact References**: CLAUDE.md contains only critical rules in YAML
 2. **MCP Validation**: Your MCP tool checks code against full YAML rules
-3. **Targeted Injection**: MCP injects specific violations/suggestions into
-   context
+3. **Targeted Injection**: MCP injects specific violations/suggestions into context
 4. **Human Learning**: Developers use `--show` to understand standards deeply
 
-This approach provides the benefits of configuration-as-code while working
-within Claude Code's limitations.
+This approach provides the benefits of configuration-as-code while working within Claude Code's limitations.
 
 ## Success Metrics
 
@@ -481,8 +455,7 @@ within Claude Code's limitations.
 
 ## Immediate README Fix Needed
 
-The current upgrade documentation is missing the HTTP server restart step. This
-should be added immediately:
+The current upgrade documentation is missing the HTTP server restart step. This should be added immediately:
 
 **Current README section (lines 181-196) should include:**
 
@@ -493,5 +466,4 @@ aichaku mcp --stop-server    # Stop old version
 aichaku mcp --start-server   # Start updated version
 ```
 
-This ensures users don't continue running the old HTTP server version after
-upgrading everything else.
+This ensures users don't continue running the old HTTP server version after upgrading everything else.

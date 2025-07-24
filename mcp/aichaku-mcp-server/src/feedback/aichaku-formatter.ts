@@ -115,9 +115,7 @@ export class AichakuFormatter {
     ];
 
     scanners.forEach((scanner) => {
-      const icon = scanner.active
-        ? AICHAKU_BRAND.ACTIVITIES.SUCCESS
-        : AICHAKU_BRAND.ACTIVITIES.WARNING;
+      const icon = scanner.active ? AICHAKU_BRAND.ACTIVITIES.SUCCESS : AICHAKU_BRAND.ACTIVITIES.WARNING;
       const status = scanner.active ? "active" : "not available";
       lines.push(
         this.formatBrandedMessage(
@@ -145,9 +143,7 @@ export class AichakuFormatter {
    */
   formatResultSummary(result: ReviewResult): string {
     const findingCount = result.findings.length;
-    const icon = findingCount === 0
-      ? AICHAKU_BRAND.ACTIVITIES.SUCCESS
-      : AICHAKU_BRAND.ACTIVITIES.WARNING;
+    const icon = findingCount === 0 ? AICHAKU_BRAND.ACTIVITIES.SUCCESS : AICHAKU_BRAND.ACTIVITIES.WARNING;
 
     return this.formatBrandedMessage(
       icon,
@@ -198,12 +194,8 @@ ${AICHAKU_BRAND.PHASES.BLOOMING} Your code meets all security and standards requ
       summary.info > 0 ? `${summary.info} info` : null,
     ].filter(Boolean);
 
-    return `${AICHAKU_BRAND.ACTIVITIES.WARNING} Summary: ${
-      priorityItems.join(", ")
-    }
-${AICHAKU_BRAND.PHASES.GROWING} Review Status: ${
-      this.getOverallStatus(summary)
-    }`;
+    return `${AICHAKU_BRAND.ACTIVITIES.WARNING} Summary: ${priorityItems.join(", ")}
+${AICHAKU_BRAND.PHASES.GROWING} Review Status: ${this.getOverallStatus(summary)}`;
   }
 
   private formatFindings(result: ReviewResult): string {
@@ -234,9 +226,7 @@ ${AICHAKU_BRAND.PHASES.GROWING} Review Status: ${
     const lines = [
       `${AICHAKU_BRAND.ACTIVITIES.SCANNING} Line ${finding.line}: ${finding.message}`,
       `  ${AICHAKU_BRAND.PHASES.SEED} Rule: ${finding.rule}`,
-      `  ${AICHAKU_BRAND.PHASES.GROWING} Category: ${
-        finding.category || "General"
-      }`,
+      `  ${AICHAKU_BRAND.PHASES.GROWING} Category: ${finding.category || "General"}`,
       `  ${AICHAKU_BRAND.PHASES.MATURE} Tool: ${finding.tool}`,
     ];
 

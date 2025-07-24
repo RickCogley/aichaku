@@ -1,7 +1,6 @@
 # Example: New CLAUDE.md with YAML Integration
 
-This shows what CLAUDE.md will look like after implementing the YAML integration
-system.
+This shows what CLAUDE.md will look like after implementing the YAML integration system.
 
 ---
 
@@ -141,8 +140,7 @@ aichaku:
 
 ## How It Works
 
-1. **Triggers**: When Claude sees keywords, it knows which methodology you're
-   discussing
+1. **Triggers**: When Claude sees keywords, it knows which methodology you're discussing
 2. **Integration URLs**: MCP hooks resolve these to actual content
 3. **Directives**: Define Claude's behavior without verbose instructions
 4. **Visual Identity**: Consistent presentation across all interactions

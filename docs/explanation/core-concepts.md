@@ -1,14 +1,12 @@
 # Core Concepts
 
-This document explains the fundamental concepts behind Aichaku and how they work
-together to support development teams.
+This document explains the fundamental concepts behind Aichaku and how they work together to support development teams.
 
 ## Understanding Aichaku
 
-Aichaku (愛着) is a Japanese word meaning "attachment" or "affection" - the
-emotional connection that develops through continued use and care. In software
-development, this represents the relationship between teams and their work,
-enhanced by thoughtful tooling.
+Aichaku (愛着) is a Japanese word meaning "attachment" or "affection" - the emotional connection that develops through
+continued use and care. In software development, this represents the relationship between teams and their work, enhanced
+by thoughtful tooling.
 
 ## The fundamental design principle
 
@@ -25,9 +23,8 @@ Like having a complete toolkit, every project gets all methodologies:
 - **XP** for engineering practices
 - **Scrumban** for hybrid approaches
 
-Why? Because real teams adapt. A Shape Up team might need Scrum's retrospectives
-during difficult cycles. A Scrum team might adopt Kanban's WIP limits for bug
-fixes. Having all methodologies available removes friction from these natural
+Why? Because real teams adapt. A Shape Up team might need Scrum's retrospectives during difficult cycles. A Scrum team
+might adopt Kanban's WIP limits for bug fixes. Having all methodologies available removes friction from these natural
 adaptations.
 
 ### Selected standards enforced
@@ -40,9 +37,8 @@ Like choosing the right soil for your garden, standards are carefully selected:
 - **SOLID** for design principles
 - **Conventional Commits** for clear history
 
-Why selected? Because too many standards create confusion. Better to master five
-essential standards than struggle with fifty. These standards work across all
-methodologies - OWASP practices apply whether you're in a sprint or a Shape Up
+Why selected? Because too many standards create confusion. Better to master five essential standards than struggle with
+fifty. These standards work across all methodologies - OWASP practices apply whether you're in a sprint or a Shape Up
 cycle.
 
 ## The three modes
@@ -127,8 +123,7 @@ When methodology keywords are detected:
 - Helps shape ideas
 - **No files created yet**
 
-This respects that users might just be thinking out loud, not ready to
-formalize.
+This respects that users might just be thinking out loud, not ready to formalize.
 
 ### Phase 2: Creation
 
@@ -145,8 +140,7 @@ Then Claude immediately:
 - Creates methodology documents
 - **No confirmation needed**
 
-This eliminates the annoying "Would you like me to..." prompts while ensuring
-user control.
+This eliminates the annoying "Would you like me to..." prompts while ensuring user control.
 
 ## Document structure
 
@@ -383,8 +377,7 @@ Notice how:
 
 ## Foundation Quality Principles
 
-Aichaku is built on enterprise-grade quality standards that ensure reliability
-and maintainability:
+Aichaku is built on enterprise-grade quality standards that ensure reliability and maintainability:
 
 ### Configuration-as-Code Architecture 🏗️
 
@@ -431,13 +424,12 @@ and maintainability:
 - Visual diagrams for spatial awareness (directory trees, process flows)
 - Enhanced user confidence through clear communication
 
-These foundation principles ensure Aichaku provides enterprise-ready tooling
-with consistent quality across all features.
+These foundation principles ensure Aichaku provides enterprise-ready tooling with consistent quality across all
+features.
 
 ## Summary
 
-Aichaku's core concepts work together to create a development environment that's
-both flexible and consistent:
+Aichaku's core concepts work together to create a development environment that's both flexible and consistent:
 
 1. **All methodologies** provide process flexibility
 2. **Selected standards** ensure quality consistency
@@ -446,6 +438,5 @@ both flexible and consistent:
 5. **Visual language** enables quick comprehension
 6. **Document artifacts** preserve knowledge
 
-The result is a system that enhances how teams work with AI, providing structure
-that enables rather than constrains, and flexibility that empowers rather than
-confuses.
+The result is a system that enhances how teams work with AI, providing structure that enables rather than constrains,
+and flexibility that empowers rather than confuses.

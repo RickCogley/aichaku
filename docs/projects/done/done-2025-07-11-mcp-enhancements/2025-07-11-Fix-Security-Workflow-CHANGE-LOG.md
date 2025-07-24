@@ -2,21 +2,16 @@
 
 ## Summary
 
-Fixed DevSkim security alerts by replacing direct file system operations with
-validated security utilities.
+Fixed DevSkim security alerts by replacing direct file system operations with validated security utilities.
 
 ## Changes
 
 ### Security Fixes
 
-- **src/commands/integrate.ts**: Replaced `Deno.readTextFile` and `Deno.stat`
-  with `safeReadTextFile` and `safeStat`
-- **src/commands/docs-standard.ts**: Replaced `Deno.readTextFile` with
-  `safeReadTextFile`
-- **src/commands/hooks.ts**: Replaced `Deno.readTextFile` with
-  `safeReadTextFile`
-- **src/migration/folder-migration.ts**: Replaced `Deno.remove` with
-  `safeRemove`
+- **src/commands/integrate.ts**: Replaced `Deno.readTextFile` and `Deno.stat` with `safeReadTextFile` and `safeStat`
+- **src/commands/docs-standard.ts**: Replaced `Deno.readTextFile` with `safeReadTextFile`
+- **src/commands/hooks.ts**: Replaced `Deno.readTextFile` with `safeReadTextFile`
+- **src/migration/folder-migration.ts**: Replaced `Deno.remove` with `safeRemove`
 - **scripts/build-binaries.ts**: Replaced `Deno.readFile` with `safeReadFile`
 
 ### Technical Details

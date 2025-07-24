@@ -9,8 +9,8 @@
 
 ## Overview
 
-This guide provides step-by-step instructions to transform Aichaku from a
-passive methodology library into an active behavioral modification system.
+This guide provides step-by-step instructions to transform Aichaku from a passive methodology library into an active
+behavioral modification system.
 
 ## Phase 1: Update CLAUDE.md Integration (Critical)
 
@@ -158,11 +158,7 @@ Your project now has:
   • Access to all global methodologies
   • Pre-created output directory for documents
   • Behavioral guidelines for Claude Code
-  ${
-  result.message?.includes("CLAUDE.md")
-    ? "• CLAUDE.md integration with clear directives"
-    : ""
-}
+  ${result.message?.includes("CLAUDE.md") ? "• CLAUDE.md integration with clear directives" : ""}
 
 💡 Just start talking! Say things like:
    • "Let's shape a new feature"
@@ -184,8 +180,7 @@ const commands = {
   commands: {
     "/plan": {
       description: "Start planning mode",
-      action:
-        "Create .claude/output/active-{date}-{name}/ and read planning mode guide",
+      action: "Create .claude/output/active-{date}-{name}/ and read planning mode guide",
     },
     "/build": {
       description: "Start execution mode",
@@ -243,6 +238,5 @@ No manual setup needed - it just works!
 
 ## Success Criteria
 
-✅ You report "it just works" ✅ No manual directory creation ✅ Documents
-always in right place ✅ Natural language triggers work ✅ Feels magical and
-automatic
+✅ You report "it just works" ✅ No manual directory creation ✅ Documents always in right place ✅ Natural language
+triggers work ✅ Feels magical and automatic

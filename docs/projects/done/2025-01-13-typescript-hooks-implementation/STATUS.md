@@ -4,8 +4,7 @@
 
 **Started**: 2025-01-13\
 **Target**: 6-week cycle\
-**Phase**: [Problem] → [Solution] → [Implementation] → [**Testing**] → [Release]
-▲
+**Phase**: [Problem] → [Solution] → [Implementation] → [**Testing**] → [Release] ▲
 
 ## Progress Overview
 
@@ -38,10 +37,8 @@
 
 ## Key Decisions
 
-1. **Single Binary Approach**: One compiled TypeScript file handles all hooks
-   via CLI arguments
-2. **Silent Failures**: Hooks exit quietly on errors to avoid disrupting Claude
-   Code
+1. **Single Binary Approach**: One compiled TypeScript file handles all hooks via CLI arguments
+2. **Silent Failures**: Hooks exit quietly on errors to avoid disrupting Claude Code
 3. **5-Second Timeouts**: Prevent runaway processes
 4. **No External Dependencies**: Use only Deno built-ins
 

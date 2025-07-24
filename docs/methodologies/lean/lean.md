@@ -61,8 +61,8 @@ Next: [Pivot or persevere]
 
 ## Context Adaptations
 
-**Startup**: Full build-measure-learn cycle **Enterprise**: Lean experiments
-within constraints **Technical**: Spike solutions, POCs
+**Startup**: Full build-measure-learn cycle **Enterprise**: Lean experiments within constraints **Technical**: Spike
+solutions, POCs
 
 ## Key Decisions
 

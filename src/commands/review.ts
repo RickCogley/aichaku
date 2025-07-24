@@ -6,10 +6,7 @@
 import { exists } from "@std/fs";
 import { resolve } from "@std/path";
 import { callMCPTool } from "../utils/mcp-client.ts";
-import {
-  getSharedMCPClient,
-  isMCPServerRunning,
-} from "../utils/mcp-http-client.ts";
+import { getSharedMCPClient, isMCPServerRunning } from "../utils/mcp-http-client.ts";
 
 /**
  * Options for the review command
@@ -100,8 +97,7 @@ export async function runReviewCommand(
 
           // Extract and display the review text
           if (result && typeof result === "object" && "content" in result) {
-            const content =
-              (result as { content?: { text?: string }[] }).content;
+            const content = (result as { content?: { text?: string }[] }).content;
             if (Array.isArray(content) && content[0]?.text) {
               console.log(content[0].text);
             } else {

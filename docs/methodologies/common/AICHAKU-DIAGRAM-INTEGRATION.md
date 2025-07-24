@@ -2,16 +2,14 @@
 
 ## Overview
 
-This guide shows how to seamlessly integrate the comprehensive Mermaid diagram
-patterns into Aichaku's methodology-driven development approach. It provides
-specific guidance for each methodology supported by Aichaku.
+This guide shows how to seamlessly integrate the comprehensive Mermaid diagram patterns into Aichaku's
+methodology-driven development approach. It provides specific guidance for each methodology supported by Aichaku.
 
 ## Aichaku Integration Points
 
 ### 1. PLANNING MODE Integration
 
-When users enter planning mode with methodology keywords, enhance the generated
-documents with appropriate diagrams:
+When users enter planning mode with methodology keywords, enhance the generated documents with appropriate diagrams:
 
 #### Shape Up Integration
 
@@ -555,11 +553,10 @@ Maintain visual consistency while adapting to methodology specifics:
 
 ## Summary
 
-This integration guide shows how to seamlessly blend comprehensive Mermaid
-diagram patterns with Aichaku's methodology-driven approach. By automatically
-generating contextually appropriate diagrams, teams can maintain up-to-date
-visual documentation that supports their chosen methodology while following
-software engineering best practices.
+This integration guide shows how to seamlessly blend comprehensive Mermaid diagram patterns with Aichaku's
+methodology-driven approach. By automatically generating contextually appropriate diagrams, teams can maintain
+up-to-date visual documentation that supports their chosen methodology while following software engineering best
+practices.
 
 The result is documentation that:
 

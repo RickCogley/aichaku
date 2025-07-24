@@ -153,8 +153,7 @@ Consider for retrospective:
 
 ## Notes
 
-[Any additional context about current state, team concerns, or special
-considerations]
+[Any additional context about current state, team concerns, or special considerations]
 
 ---
 

@@ -2,8 +2,7 @@
 
 **PHASE**: SHAPING\
 **NEXT PHASE**: BETTING (when pitch is complete)\
-**TEMPLATE COMPLIANCE**: All 5 sections must be completed before moving to
-betting
+**TEMPLATE COMPLIANCE**: All 5 sections must be completed before moving to betting
 
 ## 1. Problem
 
@@ -146,6 +145,5 @@ These are out of scope because:
 - [ ] All major rabbit holes are identified and patched
 - [ ] No-gos explicitly state what we're NOT doing
 
-**Claude Code Reminder**: This pitch should be saved to
-`.claude/output/[status-YYYYMM-projectname]/pitch.md`. Only proceed to betting
-when all sections are complete.
+**Claude Code Reminder**: This pitch should be saved to `.claude/output/[status-YYYYMM-projectname]/pitch.md`. Only
+proceed to betting when all sections are complete.

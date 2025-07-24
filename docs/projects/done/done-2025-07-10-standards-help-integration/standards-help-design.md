@@ -4,8 +4,8 @@
 
 ## Overview
 
-Enhance `aichaku help` to provide comprehensive guidance on modular standards,
-creating a valuable knowledge base for developers.
+Enhance `aichaku help` to provide comprehensive guidance on modular standards, creating a valuable knowledge base for
+developers.
 
 ## Command Structure
 

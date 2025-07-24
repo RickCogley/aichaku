@@ -2,8 +2,7 @@
 
 ## Problem
 
-When using a redirect from `https://esolia.pro/aichaku` to the init.ts file,
-Deno throws an SSL certificate error:
+When using a redirect from `https://esolia.pro/aichaku` to the init.ts file, Deno throws an SSL certificate error:
 
 ```
 error: Import 'https://esolia.pro/aichaku' failed.
@@ -14,8 +13,7 @@ error: Import 'https://esolia.pro/aichaku' failed.
 
 ### 1. Fix SSL Certificate (Recommended)
 
-The error indicates the SSL certificate for esolia.pro has expired. Update the
-certificate first.
+The error indicates the SSL certificate for esolia.pro has expired. Update the certificate first.
 
 ### 2. Use HTTP Redirect Headers
 
@@ -83,5 +81,4 @@ This will show you:
 
 ## Immediate Workaround
 
-For now, users can use the direct GitHub URL or wait for the SSL certificate to
-be renewed.
+For now, users can use the direct GitHub URL or wait for the SSL certificate to be renewed.

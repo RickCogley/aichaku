@@ -2,8 +2,8 @@
 
 ## Overview
 
-This document outlines the plan to migrate from 6+ metadata files to a single
-`aichaku.json` configuration file, following modern tooling patterns.
+This document outlines the plan to migrate from 6+ metadata files to a single `aichaku.json` configuration file,
+following modern tooling patterns.
 
 ## Current State (6+ files)
 

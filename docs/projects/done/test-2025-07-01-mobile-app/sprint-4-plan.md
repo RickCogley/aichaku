@@ -6,8 +6,7 @@
 
 ## Sprint Goal
 
-Complete user profile features and improve app performance to support upcoming
-launch.
+Complete user profile features and improve app performance to support upcoming launch.
 
 ## Committed User Stories
 
@@ -97,5 +96,4 @@ Stakeholders: Product team, Marketing
 
 ## Notes
 
-This sprint focuses on polish before launch. Performance is critical - swarm if
-needed.
+This sprint focuses on polish before launch. Performance is critical - swarm if needed.

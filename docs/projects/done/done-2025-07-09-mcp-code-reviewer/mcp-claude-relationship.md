@@ -123,8 +123,7 @@ Claude: "The fixes look good. They address:
 deno run -A mcp-server.ts
 ```
 
-**Pros**: Fast iteration, easy debugging, cross-platform **Cons**: Slightly
-slower startup
+**Pros**: Fast iteration, easy debugging, cross-platform **Cons**: Slightly slower startup
 
 ### Option 2: Compiled (Recommended for Distribution)
 
@@ -133,8 +132,7 @@ slower startup
 deno compile --allow-all --output mcp-code-reviewer mcp-server.ts
 ```
 
-**Pros**: Faster startup, single binary, no Deno required **Cons**:
-Platform-specific builds, larger size
+**Pros**: Faster startup, single binary, no Deno required **Cons**: Platform-specific builds, larger size
 
 ### Recommendation: **Both**
 
@@ -260,5 +258,4 @@ Cloud MCP (advanced scanners)
 - Hook automation works perfectly
 - PR creation possible
 
-The local approach aligns with the "first line of defence" philosophy and keeps
-everything under user control.
+The local approach aligns with the "first line of defence" philosophy and keeps everything under user control.

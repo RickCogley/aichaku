@@ -2,8 +2,7 @@
 
 ## Overview
 
-Implement hooks that automatically create conversation summaries at two critical
-points:
+Implement hooks that automatically create conversation summaries at two critical points:
 
 - **Stop**: When user pauses/stops a conversation
 - **PreCompact**: Before Claude compacts context due to length limits

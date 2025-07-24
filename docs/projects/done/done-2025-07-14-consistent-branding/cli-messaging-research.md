@@ -2,9 +2,8 @@
 
 ## Overview
 
-CLI messages are a form of technical documentation that users interact with in
-real-time. Applying documentation standards to CLI output creates better user
-experiences.
+CLI messages are a form of technical documentation that users interact with in real-time. Applying documentation
+standards to CLI output creates better user experiences.
 
 ## Key Standards and Guidelines
 
@@ -53,8 +52,7 @@ experiences.
 
 - **Purpose**: Explain failure and provide recovery path
 - **Structure**: What failed + Why + How to fix
-- **Example**: "Can't create directory: Permission denied. Try running with
-  sudo."
+- **Example**: "Can't create directory: Permission denied. Try running with sudo."
 
 ### Warning Messages
 

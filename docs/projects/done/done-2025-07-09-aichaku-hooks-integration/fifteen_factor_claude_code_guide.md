@@ -1,9 +1,8 @@
 # Getting Started with 15-Factor App Implementation for Claude Code
 
-This guide provides practical implementation patterns for building cloud-native
-applications following the expanded 15-factor methodology. Use these principles
-to shape codebases that are portable, scalable, and maintainable across modern
-cloud platforms.
+This guide provides practical implementation patterns for building cloud-native applications following the expanded
+15-factor methodology. Use these principles to shape codebases that are portable, scalable, and maintainable across
+modern cloud platforms.
 
 ## Prerequisites
 
@@ -13,8 +12,7 @@ Before implementing these patterns, ensure you have:
 - **Development environment** with Docker and your chosen programming language
 - **Access to cloud platform** (AWS, GCP, Azure) or local Kubernetes cluster
 - **CI/CD pipeline** setup (GitHub Actions, GitLab CI, or similar)
-- **Monitoring tools** for observability (Prometheus, Grafana, or cloud
-  equivalents)
+- **Monitoring tools** for observability (Prometheus, Grafana, or cloud equivalents)
 
 ## Quick Reference Checklist
 
@@ -314,8 +312,7 @@ app.listen(PORT, () => {
 
 ### Note for Serverless
 
-For AWS Lambda/Google Cloud Functions, this factor doesn't apply directly. Focus
-on the self-contained principle:
+For AWS Lambda/Google Cloud Functions, this factor doesn't apply directly. Focus on the self-contained principle:
 
 ```javascript
 // handler.js - Serverless function
@@ -790,6 +787,5 @@ spec:
 7. **Basic console.log only** - Implement structured logging
 8. **Security as afterthought** - Build it in from the start
 
-Remember: These factors are guidelines, not rigid rules. Adapt them thoughtfully
-to your specific architecture and requirements while maintaining their core
-principles of portability, scalability, and maintainability.
+Remember: These factors are guidelines, not rigid rules. Adapt them thoughtfully to your specific architecture and
+requirements while maintaining their core principles of portability, scalability, and maintainability.

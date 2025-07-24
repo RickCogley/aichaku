@@ -2,8 +2,8 @@
 
 ## Problem
 
-The current release process relies on the `gh` CLI being available in the shell
-context during the `postRelease` hook. This can fail due to:
+The current release process relies on the `gh` CLI being available in the shell context during the `postRelease` hook.
+This can fail due to:
 
 - Context switching during automated releases
 - Authentication issues in different environments

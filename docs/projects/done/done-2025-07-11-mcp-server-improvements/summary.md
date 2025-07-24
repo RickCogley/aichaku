@@ -2,9 +2,8 @@
 
 ## What We're Building
 
-A comprehensive improvement to the MCP server management experience that
-eliminates manual system administration tasks and provides a user-friendly
-interface.
+A comprehensive improvement to the MCP server management experience that eliminates manual system administration tasks
+and provides a user-friendly interface.
 
 ## Key Improvements
 
@@ -105,5 +104,5 @@ claude mcp add aichaku-reviewer --stdio -- ~/.aichaku/mcp-server/mcp-code-review
 
 ## Next Steps
 
-The design is complete and ready for implementation. The modular architecture
-allows for incremental development and testing of each component.
+The design is complete and ready for implementation. The modular architecture allows for incremental development and
+testing of each component.

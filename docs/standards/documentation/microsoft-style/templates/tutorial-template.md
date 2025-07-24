@@ -2,8 +2,7 @@
 
 **Time to complete**: About [X] minutes
 
-In this tutorial, you learn how to [specific outcomes]. This tutorial is
-designed for [audience description].
+In this tutorial, you learn how to [specific outcomes]. This tutorial is designed for [audience description].
 
 ## What you need
 
@@ -26,8 +25,7 @@ Let's start by creating a simple [thing] to understand the basics.
 4. Select **Create**.
 
    > [!TIP]
-   > Choose names that describe what your [thing] does. This helps you stay
-   > organized as your project grows.
+   > Choose names that describe what your [thing] does. This helps you stay organized as your project grows.
 
 5. In the editor that opens, add this code:
 
@@ -38,8 +36,7 @@ Let's start by creating a simple [thing] to understand the basics.
 
 6. Select **Save** (or press Ctrl+S).
 
-Great! You created your first [thing]. Notice how [explain what they should
-observe].
+Great! You created your first [thing]. Notice how [explain what they should observe].
 
 ## Modify your [thing]
 

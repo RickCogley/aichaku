@@ -1,7 +1,7 @@
 # MCP API Reference
 
-Complete reference for the Aichaku MCP (Model Context Protocol) server API,
-including all available tools, parameters, and configuration options.
+Complete reference for the Aichaku MCP (Model Context Protocol) server API, including all available tools, parameters,
+and configuration options.
 
 ## Available Tools
 
@@ -9,8 +9,7 @@ The Aichaku MCP server provides three tools to Claude Code:
 
 ### `review_file`
 
-Reviews a single file for security vulnerabilities, standards compliance, and
-code quality issues.
+Reviews a single file for security vulnerabilities, standards compliance, and code quality issues.
 
 #### Parameters
 
@@ -283,8 +282,7 @@ Creates a documentation template file for tutorials, how-tos, references, etc.
 
 ### Project Configuration
 
-The MCP server reads project configuration from
-`.claude/.aichaku-standards.json`:
+The MCP server reads project configuration from `.claude/.aichaku-standards.json`:
 
 ```json
 {
@@ -545,8 +543,7 @@ When reviewing multiple files:
 
 ## Logging
 
-Debug logs are written to `~/.aichaku/mcp-server/logs/` when debug mode is
-enabled:
+Debug logs are written to `~/.aichaku/mcp-server/logs/` when debug mode is enabled:
 
 ```bash
 export AICHAKU*MCP*DEBUG=true
@@ -572,6 +569,5 @@ Always use matching Aichaku and MCP server versions for best results.
 ## See Also
 
 - [Setup MCP Server](../tutorials/setup-mcp-server.md) - Installation guide
-- [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md) -
-  Multi-project setup
+- [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md) - Multi-project setup
 - [MCP Architecture](../explanation/mcp-architecture.md) - Technical deep dive

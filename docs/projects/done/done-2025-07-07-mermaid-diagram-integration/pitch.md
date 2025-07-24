@@ -2,21 +2,18 @@
 
 ## Problem
 
-Currently, Aichaku generates text-based documentation which lacks visual
-representations. Users would benefit from:
+Currently, Aichaku generates text-based documentation which lacks visual representations. Users would benefit from:
 
 - Visual project overviews
 - Workflow diagrams
 - Effort-specific visualizations
 - Architecture diagrams
 
-Without visuals, complex relationships and workflows are harder to understand at
-a glance.
+Without visuals, complex relationships and workflows are harder to understand at a glance.
 
 ## Solution
 
-Integrate Mermaid diagram generation into Aichaku's document creation workflow.
-Mermaid is ideal because:
+Integrate Mermaid diagram generation into Aichaku's document creation workflow. Mermaid is ideal because:
 
 - **Markdown-native**: Diagrams defined in Markdown code blocks
 - **Version control friendly**: Text-based diagram definitions
@@ -105,9 +102,8 @@ pandoc output.md -o final.pdf
 ```markdown
 ### 5. Visual Documentation Requirements
 
-**YOU MUST include Mermaid diagrams in:** ✅ Every PROJECT-OVERVIEW.md ✅ Every
-methodology-specific workflow ✅ Architecture decisions when relevant ✅ Complex
-process flows
+**YOU MUST include Mermaid diagrams in:** ✅ Every PROJECT-OVERVIEW.md ✅ Every methodology-specific workflow ✅
+Architecture decisions when relevant ✅ Complex process flows
 
 **Diagram Placement:**
 
@@ -147,13 +143,11 @@ pandoc "$1.processed.md" -o "${1%.md}.pdf" --pdf-engine=xelatex
 
 ## Challenges & Solutions
 
-**Challenge**: Mermaid syntax in PDFs **Solution**: Pre-render to SVG during PDF
-generation
+**Challenge**: Mermaid syntax in PDFs **Solution**: Pre-render to SVG during PDF generation
 
 **Challenge**: Diagram complexity **Solution**: Start simple, provide templates
 
-**Challenge**: Maintaining diagrams **Solution**: Make them part of status
-updates
+**Challenge**: Maintaining diagrams **Solution**: Make them part of status updates
 
 ## Success Criteria
 

@@ -64,9 +64,7 @@ export class StatisticsReporter {
     };
 
     // Store the report
-    const reportId = `${now.getTime()}-${
-      Math.random().toString(36).substring(2, 8)
-    }`;
+    const reportId = `${now.getTime()}-${Math.random().toString(36).substring(2, 8)}`;
     await this.storage.set(["stats", "reports", reportId], report);
 
     return report;
@@ -229,9 +227,7 @@ export class StatisticsReporter {
     const totalOperations = invocations.length;
     const successfulOperations = invocations.filter((i) => i.success).length;
     const averageSessionDuration = sessions.reduce((sum, s) => {
-      const duration = s.endTime
-        ? s.endTime.getTime() - s.startTime.getTime()
-        : 0;
+      const duration = s.endTime ? s.endTime.getTime() - s.startTime.getTime() : 0;
       return sum + duration;
     }, 0) / sessions.length;
 
@@ -242,8 +238,7 @@ export class StatisticsReporter {
 
     const fileCounts = invocations.reduce((counts, inv) => {
       if (inv.resultSummary?.fileType) {
-        counts[inv.resultSummary.fileType] =
-          (counts[inv.resultSummary.fileType] || 0) + 1;
+        counts[inv.resultSummary.fileType] = (counts[inv.resultSummary.fileType] || 0) + 1;
       }
       return counts;
     }, {} as Record<string, number>);
@@ -253,11 +248,9 @@ export class StatisticsReporter {
       totalOperations,
       averageSessionDuration,
       overallSuccessRate: successfulOperations / totalOperations,
-      mostUsedTool:
-        Object.entries(toolCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ||
+      mostUsedTool: Object.entries(toolCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ||
         "none",
-      mostReviewedFileType:
-        Object.entries(fileCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ||
+      mostReviewedFileType: Object.entries(fileCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ||
         "none",
       mostUsedStandard: "security", // Placeholder
     };
@@ -360,16 +353,13 @@ export class StatisticsReporter {
       });
 
       const successCount = dayInvocations.filter((inv) => inv.success).length;
-      const averageTime = dayInvocations.reduce((sum, inv) =>
-        sum + inv.duration, 0) /
+      const averageTime = dayInvocations.reduce((sum, inv) => sum + inv.duration, 0) /
         dayInvocations.length;
 
       trends.push({
         date: date.toISOString().split("T")[0],
         averageResponseTime: averageTime || 0,
-        successRate: dayInvocations.length > 0
-          ? successCount / dayInvocations.length
-          : 0,
+        successRate: dayInvocations.length > 0 ? successCount / dayInvocations.length : 0,
         operationCount: dayInvocations.length,
       });
     }
@@ -398,9 +388,7 @@ export class StatisticsReporter {
     const failingOperations = performance.filter((p) => p.successRate < 0.8);
     if (failingOperations.length > 0) {
       recommendations.push(
-        `Review ${
-          failingOperations.map((p) => p.operationType).join(", ")
-        } - success rate is below 80%`,
+        `Review ${failingOperations.map((p) => p.operationType).join(", ")} - success rate is below 80%`,
       );
     }
 
@@ -419,17 +407,13 @@ export class StatisticsReporter {
 
     if (unusedTools.length > 0) {
       recommendations.push(
-        `Consider using ${
-          unusedTools.join(", ")
-        } tools for more comprehensive analysis`,
+        `Consider using ${unusedTools.join(", ")} tools for more comprehensive analysis`,
       );
     }
 
     // Check for frequent issues
     const commonIssues = invocations
-      .filter((inv) =>
-        inv.resultSummary?.findingsCount && inv.resultSummary.findingsCount > 0
-      )
+      .filter((inv) => inv.resultSummary?.findingsCount && inv.resultSummary.findingsCount > 0)
       .reduce((issues, inv) => {
         if (inv.resultSummary?.severity) {
           Object.entries(inv.resultSummary.severity).forEach(
@@ -461,9 +445,7 @@ Time Range: ${report.timeRange.start.toLocaleDateString()} - ${report.timeRange.
 ${PHASES.HARVEST} SUMMARY
 • Total Sessions: ${report.summary.totalSessions}
 • Total Operations: ${report.summary.totalOperations}
-• Average Session Duration: ${
-      Math.round(report.summary.averageSessionDuration / 1000)
-    }s
+• Average Session Duration: ${Math.round(report.summary.averageSessionDuration / 1000)}s
 • Overall Success Rate: ${Math.round(report.summary.overallSuccessRate * 100)}%
 • Most Used Tool: ${report.summary.mostUsedTool}
 • Most Reviewed File Type: ${report.summary.mostReviewedFileType}
@@ -471,27 +453,23 @@ ${PHASES.HARVEST} SUMMARY
 ${ACTIVITIES.SCANNING} TOOL USAGE
 ${
       report.toolUsage.map((tool) =>
-        `• ${tool.toolName}: ${tool.usageCount} uses, ${
-          Math.round(tool.successRate * 100)
-        }% success, ${Math.round(tool.averageDuration)}ms avg`
+        `• ${tool.toolName}: ${tool.usageCount} uses, ${Math.round(tool.successRate * 100)}% success, ${
+          Math.round(tool.averageDuration)
+        }ms avg`
       ).join("\n")
     }
 
 ${ACTIVITIES.ANALYZING} FILE ANALYTICS
 ${
       report.fileAnalytics.map((file) =>
-        `• ${file.fileType}: ${file.reviewCount} reviews, ${
-          Math.round(file.averageIssues)
-        } avg issues`
+        `• ${file.fileType}: ${file.reviewCount} reviews, ${Math.round(file.averageIssues)} avg issues`
       ).join("\n")
     }
 
 ${ACTIVITIES.VALIDATING} STANDARDS COMPLIANCE
 ${
       report.standardsCompliance.map((standard) =>
-        `• ${standard.standard}: ${standard.usageCount} checks, ${
-          Math.round(standard.averageScore)
-        }% avg score`
+        `• ${standard.standard}: ${standard.usageCount} checks, ${Math.round(standard.averageScore)}% avg score`
       ).join("\n")
     }
 
@@ -514,9 +492,7 @@ ${report.recommendations.map((rec) => `• ${rec}`).join("\n")}
     return `${AICHAKU_BRANDING.ICON} MCP Server Usage:\n` +
       `• Total operations: ${invocations.length}\n` +
       `• Total sessions: ${sessions.length}\n` +
-      `• Average operations per session: ${
-        Math.round(invocations.length / sessions.length)
-      }`;
+      `• Average operations per session: ${Math.round(invocations.length / sessions.length)}`;
   }
 
   private async getMostUsedTools(): Promise<string> {
@@ -544,9 +520,7 @@ ${report.recommendations.map((rec) => `• ${rec}`).join("\n")}
       .slice(0, 10);
 
     return `${AICHAKU_BRANDING.ACTIVITIES.ANALYZING} Most Reviewed Files:\n` +
-      sortedFiles.map((f) =>
-        `• ${f.value.filePath}: ${f.value.reviewCount} reviews`
-      ).join("\n");
+      sortedFiles.map((f) => `• ${f.value.filePath}: ${f.value.reviewCount} reviews`).join("\n");
   }
 
   private async getAverageOperationTimes(): Promise<string> {
@@ -556,9 +530,7 @@ ${report.recommendations.map((rec) => `• ${rec}`).join("\n")}
     ]);
 
     return `${AICHAKU_BRANDING.PHASES.GROWING} Average Operation Times:\n` +
-      performance.map((p) =>
-        `• ${p.value.operationType}: ${Math.round(p.value.averageDuration)}ms`
-      )
+      performance.map((p) => `• ${p.value.operationType}: ${Math.round(p.value.averageDuration)}ms`)
         .join("\n");
   }
 
@@ -583,10 +555,8 @@ ${report.recommendations.map((rec) => `• ${rec}`).join("\n")}
     ]);
 
     return `${AICHAKU_BRANDING.ACTIVITIES.SUCCESS} Success/Failure Rates:\n` +
-      performance.map((p) =>
-        `• ${p.value.operationType}: ${
-          Math.round(p.value.successRate * 100)
-        }% success rate`
-      ).join("\n");
+      performance.map((p) => `• ${p.value.operationType}: ${Math.round(p.value.successRate * 100)}% success rate`).join(
+        "\n",
+      );
   }
 }

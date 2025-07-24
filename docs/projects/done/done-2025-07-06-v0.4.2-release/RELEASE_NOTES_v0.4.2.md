@@ -2,8 +2,7 @@
 
 ## Overview
 
-This release improves the user experience of the `aichaku init` command with
-better messaging and helpful guidance.
+This release improves the user experience of the `aichaku init` command with better messaging and helpful guidance.
 
 ## What's Changed
 
@@ -11,8 +10,7 @@ better messaging and helpful guidance.
 
 - **Better visual presentation** with Unicode box borders for success message
 - **Global detection** - Shows when global Aichaku is detected
-- **Consistent terminology** - Changed "installed" to "initialized" to match
-  command name
+- **Consistent terminology** - Changed "installed" to "initialized" to match command name
 - **Helpful next steps** including:
   - Reminder to run `aichaku integrate` to add to CLAUDE.md
   - List of available commands with brief descriptions

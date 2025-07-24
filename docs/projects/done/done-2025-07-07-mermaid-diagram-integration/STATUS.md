@@ -2,8 +2,7 @@
 
 ## Project Status
 
-**Started**: 2025-07-07 **Type**: Enhancement **Methodology**: Shape Up
-**Status**: Active
+**Started**: 2025-07-07 **Type**: Enhancement **Methodology**: Shape Up **Status**: Active
 
 ## Progress
 

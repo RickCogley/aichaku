@@ -4,14 +4,12 @@ _"Making Aichaku Truly Superior"_
 
 ## Vision
 
-Aichaku v0.5.0 will be a transformative release that makes the tool feel
-magical. Users should feel like they have a thoughtful assistant that
-understands their intent and keeps their workspace beautifully organized.
+Aichaku v0.5.0 will be a transformative release that makes the tool feel magical. Users should feel like they have a
+thoughtful assistant that understands their intent and keeps their workspace beautifully organized.
 
 ## Core Principles
 
-1. **Clarity Over Cleverness** - Every message should be immediately
-   understandable
+1. **Clarity Over Cleverness** - Every message should be immediately understandable
 2. **Beauty in Simplicity** - Terminal output should be visually pleasing
 3. **Natural Language First** - Commands are fallbacks; conversation is primary
 4. **Zero Friction** - Global install once, works everywhere
@@ -267,8 +265,7 @@ When you hear any of these:
 - "Help me implement..." / "We need to..."
 - "Fix..." / "Improve..." / "Change..."
 
-IMMEDIATELY create: 📁 .claude/output/active-{YYYY-MM-DD}-{descriptive-name}/
-└── STATUS.md
+IMMEDIATELY create: 📁 .claude/output/active-{YYYY-MM-DD}-{descriptive-name}/ └── STATUS.md
 
 This is automatic - users shouldn't need to ask!
 ```
@@ -278,8 +275,7 @@ This is automatic - users shouldn't need to ask!
 ```markdown
 # Status: {Change Description}
 
-**Status**: ACTIVE - {Current Mode} **Started**: {Date} **Methodology**:
-{Detected blend}
+**Status**: ACTIVE - {Current Mode} **Started**: {Date} **Methodology**: {Detected blend}
 
 ## 🎯 Objective
 
@@ -402,7 +398,6 @@ Your customizations are preserved!
 
 ---
 
-This implementation plan transforms Aichaku from a good tool into a delightful
-experience. Every interaction should feel thoughtful, every output should be
-beautiful, and the entire system should work so naturally that users forget
-they're using a tool at all.
+This implementation plan transforms Aichaku from a good tool into a delightful experience. Every interaction should feel
+thoughtful, every output should be beautiful, and the entire system should work so naturally that users forget they're
+using a tool at all.

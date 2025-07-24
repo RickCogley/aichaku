@@ -2,9 +2,8 @@
 
 ## 🎉 What We Accomplished
 
-We've successfully implemented a major architectural redesign of Aichaku that
-transforms it from a "copy files everywhere" tool to a clean, global-first
-system.
+We've successfully implemented a major architectural redesign of Aichaku that transforms it from a "copy files
+everywhere" tool to a clean, global-first system.
 
 ## 🏗️ Architecture Changes
 
@@ -74,5 +73,4 @@ All implementation is complete:
 2. **Test with Nagare** to verify the new flow
 3. **Publish to JSR**
 
-The implementation matches the vision perfectly - Aichaku now feels magical
-rather than mechanical!
+The implementation matches the vision perfectly - Aichaku now feels magical rather than mechanical!

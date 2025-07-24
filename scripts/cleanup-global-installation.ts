@@ -114,9 +114,7 @@ export async function cleanupGlobalInstallation(options: {
     ];
 
     console.log(
-      `\n🧹 ${
-        dryRun ? "[DRY RUN] Would remove" : "Removing"
-      } unnecessary files and directories:`,
+      `\n🧹 ${dryRun ? "[DRY RUN] Would remove" : "Removing"} unnecessary files and directories:`,
     );
 
     // Remove unnecessary items
@@ -131,9 +129,7 @@ export async function cleanupGlobalInstallation(options: {
           try {
             await Deno.remove(itemPath, { recursive: true });
           } catch (error) {
-            const errorMsg = `Failed to remove ${item}: ${
-              error instanceof Error ? error.message : String(error)
-            }`;
+            const errorMsg = `Failed to remove ${item}: ${error instanceof Error ? error.message : String(error)}`;
             console.error(`    ❌ ${errorMsg}`);
             result.errors.push(errorMsg);
           }
@@ -144,9 +140,7 @@ export async function cleanupGlobalInstallation(options: {
     }
 
     console.log(
-      `\n✅ ${
-        dryRun ? "[DRY RUN] Would keep" : "Keeping"
-      } essential directories:`,
+      `\n✅ ${dryRun ? "[DRY RUN] Would keep" : "Keeping"} essential directories:`,
     );
 
     // Verify essential items exist
@@ -166,9 +160,7 @@ export async function cleanupGlobalInstallation(options: {
     // Summary
     console.log(`\n📊 Cleanup Summary:`);
     console.log(
-      `  🗑️  ${result.removed.length} items ${
-        dryRun ? "would be " : ""
-      }removed`,
+      `  🗑️  ${result.removed.length} items ${dryRun ? "would be " : ""}removed`,
     );
     console.log(`  📁 ${result.kept.length} essential items verified`);
     console.log(`  ❌ ${result.errors.length} errors/warnings`);
@@ -192,9 +184,7 @@ export async function cleanupGlobalInstallation(options: {
     result.success = result.errors.length === 0;
     return result;
   } catch (error) {
-    const errorMsg = `Cleanup failed: ${
-      error instanceof Error ? error.message : String(error)
-    }`;
+    const errorMsg = `Cleanup failed: ${error instanceof Error ? error.message : String(error)}`;
     console.error(`❌ ${errorMsg}`);
     result.errors.push(errorMsg);
     return result;

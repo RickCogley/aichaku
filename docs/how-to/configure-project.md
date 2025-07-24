@@ -8,13 +8,13 @@ Ensure you have Aichaku installed and initialized in your project. You need:
 - Access to your project's `.claude` directory
 - Text editor or command-line access
 
-This guide shows you how to configure Aichaku for your specific needs. Each
-section addresses a specific configuration task.
+This guide shows you how to configure Aichaku for your specific needs. Each section addresses a specific configuration
+task.
 
 ## Solution
 
-Follow these sections to configure different aspects of your Aichaku project.
-Each provides step-by-step instructions for specific configuration tasks.
+Follow these sections to configure different aspects of your Aichaku project. Each provides step-by-step instructions
+for specific configuration tasks.
 
 ## Configure project settings
 
@@ -36,8 +36,7 @@ This file controls:
 - Which coding standards Claude follows (including custom standards)
 - Your primary methodology (for documentation)
 - Where you create files
-- Custom standards metadata that you configure at
-  `~/.claude/aichaku/standards.json`
+- Custom standards metadata that you configure at `~/.claude/aichaku/standards.json`
 
 ## Add or remove coding standards
 
@@ -107,8 +106,9 @@ Edit any template to match your team's needs:
 
 # Sprint Planning - $\{TEAM_NAME\}
 
-Sprint Duration: **3 weeks** <!-- Changed from 2 weeks --> Team Velocity: **45
-points** <!-- Your team's actual velocity -->
+Sprint Duration: **3 weeks** <!-- Changed from 2 weeks --> Team Velocity: **45 points**
+
+<!-- Your team's actual velocity -->
 
 ## Sprint Goal
 
@@ -260,8 +260,7 @@ source ~/.zshrc
 
 ## Working with custom standards
 
-Custom standards allow you to define organization-specific coding guidelines
-that work alongside built-in standards.
+Custom standards allow you to define organization-specific coding guidelines that work alongside built-in standards.
 
 ## Create a custom standard
 
@@ -301,13 +300,11 @@ Output shows both types:
 3. **Add** - Include in project with `--add custom:name`
 4. **Share** - Export and import across teams
 
-For detailed instructions, see
-[How to Manage Custom Standards](./manage-custom-standards.md).
+For detailed instructions, see [How to Manage Custom Standards](./manage-custom-standards.md).
 
 ## Migration from old structure
 
-If you have custom standards in the old location (`~/.claude/docs/standards/`),
-migrate them:
+If you have custom standards in the old location (`~/.claude/docs/standards/`), migrate them:
 
 ```bash
 # Run migration command
@@ -483,8 +480,6 @@ cp templates/CONTRIBUTING.md .claude/methodologies/common/templates/
 
 ## Next steps
 
-- Read the [Configuration Reference](../reference/configuration-options.md) for
-  all options
-- Learn about
-  [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md)
+- Read the [Configuration Reference](../reference/configuration-options.md) for all options
+- Learn about [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md)
 - Explore [Core Concepts](../explanation/core-concepts.md)

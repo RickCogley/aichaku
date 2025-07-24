@@ -113,9 +113,7 @@ export async function learn(options: LearnOptions = {}): Promise<LearnResult> {
   } catch (error) {
     return {
       success: false,
-      message: `Learn command failed: ${
-        error instanceof Error ? error.message : String(error)
-      }`,
+      message: `Learn command failed: ${error instanceof Error ? error.message : String(error)}`,
     };
   }
 }
@@ -141,8 +139,7 @@ async function showTopicHelp(
 
   return {
     success: false,
-    message:
-      `Unknown topic: ${topic}. Use 'aichaku learn --all' to see available options.`,
+    message: `Unknown topic: ${topic}. Use 'aichaku learn --all' to see available options.`,
   };
 }
 
@@ -182,12 +179,10 @@ async function findMethodology(
     // Check if the methodology name matches
     const itemName = item.name.toLowerCase().replace(/[\s-_]/g, "");
     const pathParts = item.path.split("/");
-    const dirName =
-      pathParts[pathParts.length - 2]?.toLowerCase().replace(/[\s-_]/g, "") ||
+    const dirName = pathParts[pathParts.length - 2]?.toLowerCase().replace(/[\s-_]/g, "") ||
       "";
-    const fileName =
-      pathParts[pathParts.length - 1]?.replace(".yaml", "").toLowerCase()
-        .replace(/[\s-_]/g, "") || "";
+    const fileName = pathParts[pathParts.length - 1]?.replace(".yaml", "").toLowerCase()
+      .replace(/[\s-_]/g, "") || "";
 
     if (
       itemName === methodologyName || fileName === methodologyName ||
@@ -234,11 +229,10 @@ async function findStandard(
   for (const item of discovered.items) {
     // Check if the standard name matches
     const itemName = item.name.toLowerCase().replace(/[\s-_]/g, "");
-    const fileName =
-      item.path.split("/").pop()?.replace(".yaml", "").toLowerCase().replace(
-        /[\s-_]/g,
-        "",
-      ) || "";
+    const fileName = item.path.split("/").pop()?.replace(".yaml", "").toLowerCase().replace(
+      /[\s-_]/g,
+      "",
+    ) || "";
 
     if (itemName === standardName || fileName === standardName) {
       return join(standardsPath, item.path);
@@ -293,8 +287,7 @@ ${data.display?.description || "No description available"}
       const sections = extractMarkdownSections(mdContent);
 
       if (sections.quickStart) {
-        helpContent +=
-          `\n💡 Quick Start with Claude Code\n${sections.quickStart}\n`;
+        helpContent += `\n💡 Quick Start with Claude Code\n${sections.quickStart}\n`;
       }
 
       if (sections.examples) {
@@ -359,8 +352,7 @@ ${data.display?.description || "No description available"}
       const sections = extractMarkdownSections(mdContent);
 
       if (sections.implementation) {
-        helpContent +=
-          `\n💻 Implementation Examples\n${sections.implementation}\n`;
+        helpContent += `\n💻 Implementation Examples\n${sections.implementation}\n`;
       }
 
       if (sections.withClaude) {
@@ -567,8 +559,7 @@ async function compareMethodologies(basePath: string): Promise<LearnResult> {
     }
   }
 
-  content +=
-    `└─────────────────┴──────────────────┴─────────────────┴──────────────────┘`;
+  content += `└─────────────────┴──────────────────┴─────────────────┴──────────────────┘`;
 
   return {
     success: true,

@@ -1,7 +1,6 @@
 # Extreme Programming (XP)
 
-**BEST FOR**: Quality-critical code, learning teams, complex technical
-challenges
+**BEST FOR**: Quality-critical code, learning teams, complex technical challenges
 
 **TRIGGERS**: "TDD", "test first", "pair programming", "refactor", "XP"
 
@@ -69,9 +68,8 @@ Rule: Switch pairs daily
 
 ## Context Adaptations
 
-**Solo**: Self-review protocols, rubber duck debugging **Remote**: Screen
-sharing tools, collaborative IDEs **Learning**: Start with TDD, add practices
-gradually
+**Solo**: Self-review protocols, rubber duck debugging **Remote**: Screen sharing tools, collaborative IDEs
+**Learning**: Start with TDD, add practices gradually
 
 ## Key Decisions
 

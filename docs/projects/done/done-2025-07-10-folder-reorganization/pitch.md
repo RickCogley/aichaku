@@ -2,8 +2,7 @@
 
 **Status**: 🌱 New\
 **Appetite**: 2 days\
-**Problem**: Aichaku files are mixed with other Claude-related files in
-~/.claude/
+**Problem**: Aichaku files are mixed with other Claude-related files in ~/.claude/
 
 ## Problem
 
@@ -90,10 +89,8 @@ export const AICHAKU_PATHS = {
 
   // Project paths
   projectRoot: (projectPath: string) => join(projectPath, ".claude", "aichaku"),
-  projectOutput: (projectPath: string) =>
-    join(AICHAKU_PATHS.projectRoot(projectPath), "output"),
-  projectConfig: (projectPath: string) =>
-    join(AICHAKU_PATHS.projectRoot(projectPath), ".aichaku-project"),
+  projectOutput: (projectPath: string) => join(AICHAKU_PATHS.projectRoot(projectPath), "output"),
+  projectConfig: (projectPath: string) => join(AICHAKU_PATHS.projectRoot(projectPath), ".aichaku-project"),
 
   // Legacy paths (for migration)
   legacyGlobalRoot: () => join(Deno.env.get("HOME") || "", ".claude"),
@@ -228,5 +225,4 @@ graph TD
     G --> C
 ```
 
-This reorganization will make Aichaku more professional and easier to manage
-alongside other Claude-related tools.
+This reorganization will make Aichaku more professional and easier to manage alongside other Claude-related tools.

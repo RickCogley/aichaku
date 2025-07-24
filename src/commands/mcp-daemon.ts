@@ -4,9 +4,7 @@
 
 // import { exists } from "@std/fs"; // Future use
 
-const MCP_SERVER_PATH = `${
-  Deno.env.get("HOME")
-}/.aichaku/mcp-servers/aichaku-code-reviewer`;
+const MCP_SERVER_PATH = `${Deno.env.get("HOME")}/.aichaku/mcp-servers/aichaku-code-reviewer`;
 const PID_FILE = `${Deno.env.get("HOME")}/.aichaku/mcp-server.pid`;
 const LOG_FILE = `${Deno.env.get("HOME")}/.aichaku/mcp-server.log`;
 const FIFO_REQUEST = `${Deno.env.get("HOME")}/.aichaku/mcp-request.fifo`;

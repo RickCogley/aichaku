@@ -4,29 +4,23 @@
 
 The current MCP server experience has several disconnected issues:
 
-1. **Manual Process Management** - Complex commands requiring system admin
-   knowledge
-2. **Invisible Operations** - Claude Code gives no feedback about MCP
-   interactions
-3. **Passive Documentation** - Tools only review, don't generate comprehensive
-   docs
+1. **Manual Process Management** - Complex commands requiring system admin knowledge
+2. **Invisible Operations** - Claude Code gives no feedback about MCP interactions
+3. **Passive Documentation** - Tools only review, don't generate comprehensive docs
 4. **Black Box Experience** - Users don't know what's happening or why
 5. **No Usage Insights** - Can't track how MCP tools are being used
 
-This creates a fragmented, opaque experience that doesn't match Aichaku's
-philosophy of thoughtful, visible development.
+This creates a fragmented, opaque experience that doesn't match Aichaku's philosophy of thoughtful, visible development.
 
 ## Appetite
 
-**1-2 weeks** - This is a foundational improvement that will dramatically
-enhance the entire Aichaku experience.
+**1-2 weeks** - This is a foundational improvement that will dramatically enhance the entire Aichaku experience.
 
 ## Solution
 
 ### Unified Enhancement Strategy
 
-Instead of separate improvements, create one cohesive system that addresses all
-pain points:
+Instead of separate improvements, create one cohesive system that addresses all pain points:
 
 ```mermaid
 graph TB
@@ -233,6 +227,5 @@ Create smooth onboarding experience:
 3. **Privacy Violations** - All analytics are anonymized and local
 4. **Breaking Changes** - Maintain backward compatibility throughout
 
-This unified approach creates a cohesive, professional MCP experience that
-embodies Aichaku's philosophy of thoughtful, visible, and productive
-development.
+This unified approach creates a cohesive, professional MCP experience that embodies Aichaku's philosophy of thoughtful,
+visible, and productive development.

@@ -54,8 +54,7 @@ Items in progress > 3 days:
 
 ### Expedite Lane (Max 1)
 
-**Current**: #23 User Profile **Criteria**: Production issues, security fixes
-**SLA**: 24 hours
+**Current**: #23 User Profile **Criteria**: Production issues, security fixes **SLA**: 24 hours
 
 ### Standard Work
 
@@ -102,9 +101,8 @@ Items in progress > 3 days:
 
 ### Active Experiment
 
-**Hypothesis**: Reducing Review WIP from 3 to 2 will reduce cycle time
-**Started**: [Date] **Measure**: Avg cycle time for Review column **Target**:
-20% reduction
+**Hypothesis**: Reducing Review WIP from 3 to 2 will reduce cycle time **Started**: [Date] **Measure**: Avg cycle time
+for Review column **Target**: 20% reduction
 
 ### Experiment Backlog
 
@@ -118,5 +116,4 @@ Items in progress > 3 days:
 
 ---
 
-**Next Review**: [Date] - Weekly flow review **Next Retrospective**: [Date] -
-Monthly process improvement
+**Next Review**: [Date] - Weekly flow review **Next Retrospective**: [Date] - Monthly process improvement

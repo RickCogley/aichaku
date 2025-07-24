@@ -2,9 +2,8 @@
 
 ## Summary
 
-Successfully implemented comprehensive folder reorganization to move Aichaku
-files from `~/.claude/` to `~/.claude/aichaku/` for better organization and
-namespace separation.
+Successfully implemented comprehensive folder reorganization to move Aichaku files from `~/.claude/` to
+`~/.claude/aichaku/` for better organization and namespace separation.
 
 ## Major Changes
 
@@ -82,10 +81,8 @@ NEW: .claude/aichaku/
 
 #### MCP Server Updated:
 
-- ✅ `mcp-server/src/standards-manager.ts` - Standards loading with legacy
-  fallback
-- ✅ `mcp-server/src/methodology-manager.ts` - Methodology loading with legacy
-  fallback
+- ✅ `mcp-server/src/standards-manager.ts` - Standards loading with legacy fallback
+- ✅ `mcp-server/src/methodology-manager.ts` - Methodology loading with legacy fallback
 
 ### 4. Backward Compatibility
 
@@ -139,8 +136,7 @@ NEW: .claude/aichaku/
 3. **Easier Uninstall**: Simply remove `~/.claude/aichaku/`
 4. **Future-Proof**: Room for growth without cluttering `~/.claude/`
 5. **Professional Structure**: Follows best practices for tool organization
-6. **System/User Separation**: Clear distinction between system content and user
-   customizations
+6. **System/User Separation**: Clear distinction between system content and user customizations
 
 ## Security Improvements
 
@@ -186,8 +182,7 @@ aichaku migrate --project /path/to/project
 - `src/commands/migrate.ts` - Migration CLI command
 - `src/utils/logger.ts` - Enhanced logging
 - `deps.ts` - Dependency management
-- Documentation files in
-  `.claude/output/active-2025-07-10-folder-reorganization/`
+- Documentation files in `.claude/output/active-2025-07-10-folder-reorganization/`
 
 ## Files Modified
 
@@ -211,5 +206,5 @@ aichaku migrate --project /path/to/project
 3. **Monitor Adoption**: Track migration success rates
 4. **Future Cleanup**: Consider removing legacy support in v2.0
 
-This reorganization significantly improves Aichaku's professional structure
-while maintaining full backward compatibility for existing users.
+This reorganization significantly improves Aichaku's professional structure while maintaining full backward
+compatibility for existing users.

@@ -120,8 +120,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
       return {
         success: false,
         path: targetPath,
-        message:
-          "🪴 Aichaku: Please install Aichaku globally first: aichaku init --global",
+        message: "🪴 Aichaku: Please install Aichaku globally first: aichaku init --global",
         action: "error",
       };
     }
@@ -138,8 +137,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     return {
       success: false,
       path: targetPath,
-      message:
-        `🪴 Aichaku: Already initialized globally. Use --force to reinstall or 'aichaku upgrade' to update.`,
+      message: `🪴 Aichaku: Already initialized globally. Use --force to reinstall or 'aichaku upgrade' to update.`,
       action: "exists",
     };
   }
@@ -151,8 +149,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     return {
       success: false,
       path: targetPath,
-      message:
-        `🪴 Aichaku: Project already initialized. Use --force to reinitialize.`,
+      message: `🪴 Aichaku: Project already initialized. Use --force to reinitialize.`,
       action: "exists",
     };
   }
@@ -379,9 +376,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     return {
       success: true,
       path: targetPath,
-      message: isGlobal
-        ? Brand.completed("Global installation")
-        : Brand.completed("Project initialization"),
+      message: isGlobal ? Brand.completed("Global installation") : Brand.completed("Project initialization"),
       globalDetected: !isGlobal,
       action: "created",
     };

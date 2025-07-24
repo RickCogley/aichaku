@@ -1,16 +1,5 @@
 import { assertEquals, assertExists } from "@std/assert";
-import {
-  APP_INFO,
-  BUILD_INFO,
-  init,
-  install,
-  integrate,
-  list,
-  uninstall,
-  update,
-  upgrade,
-  VERSION,
-} from "../mod.ts";
+import { APP_INFO, BUILD_INFO, init, install, integrate, list, uninstall, update, upgrade, VERSION } from "../mod.ts";
 
 Deno.test("mod.ts exports all required functions", () => {
   // Test command exports

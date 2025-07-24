@@ -4,17 +4,14 @@
 
 ## Summary
 
-Cleaned up the `.claude/output/` directory by properly organizing completed
-projects that were still marked as active.
+Cleaned up the `.claude/output/` directory by properly organizing completed projects that were still marked as active.
 
 ## Changes Made
 
 ### 1. Renamed Completed Projects
 
-- `active-2025-07-07-fix-integration-behavior` →
-  `complete-2025-07-07-fix-integration-behavior`
-  - This was the v0.6.0 release that transformed Aichaku into an active
-    behavioral system
+- `active-2025-07-07-fix-integration-behavior` → `complete-2025-07-07-fix-integration-behavior`
+  - This was the v0.6.0 release that transformed Aichaku into an active behavioral system
 
 - `active-2025-07-06-aichaku-refactor` → `complete-2025-07-06-aichaku-refactor`
   - Earlier refactoring work that was completed

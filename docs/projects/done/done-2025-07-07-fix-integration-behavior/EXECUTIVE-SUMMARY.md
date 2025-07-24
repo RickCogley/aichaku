@@ -13,9 +13,8 @@ This executive summary outlines the transformation strategy for Aichaku.
 
 ## The Vision
 
-Transform Aichaku from a passive methodology library into an active behavioral
-modification system that makes Claude Code automatically follow best practices
-without user intervention.
+Transform Aichaku from a passive methodology library into an active behavioral modification system that makes Claude
+Code automatically follow best practices without user intervention.
 
 ## Core Problem
 
@@ -137,13 +136,13 @@ When user says → You MUST create:
 
 ### Immediate (After v0.5.1)
 
-✅ You report "it just works" ✅ No manual directory creation ✅ Documents
-always in correct location ✅ Natural language triggers work
+✅ You report "it just works" ✅ No manual directory creation ✅ Documents always in correct location ✅ Natural
+language triggers work
 
 ### Long-term (After v0.6.0)
 
-✅ Zero incorrect file placements ✅ Automatic status tracking ✅ Seamless
-project transitions ✅ Delightful "magical" experience
+✅ Zero incorrect file placements ✅ Automatic status tracking ✅ Seamless project transitions ✅ Delightful "magical"
+experience
 
 ## The Magic Formula
 
@@ -198,8 +197,6 @@ User: "Wow, it just worked!"
 
 ## Conclusion
 
-By applying behavioral psychology principles and learning from successful
-automation tools, we can transform Aichaku from a passive library into an active
-assistant that makes methodology adoption truly effortless. The key is multiple
-layers of reinforcement that guide Claude Code to do the right thing
-automatically, every time.
+By applying behavioral psychology principles and learning from successful automation tools, we can transform Aichaku
+from a passive library into an active assistant that makes methodology adoption truly effortless. The key is multiple
+layers of reinforcement that guide Claude Code to do the right thing automatically, every time.

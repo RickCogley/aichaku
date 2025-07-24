@@ -127,9 +127,7 @@ export async function uninstall(
 
   try {
     // Check for CLAUDE.md references
-    const projectPath = isGlobal
-      ? Deno.cwd()
-      : resolve(options.projectPath || ".");
+    const projectPath = isGlobal ? Deno.cwd() : resolve(options.projectPath || ".");
     const claudeMdPath = join(projectPath, "CLAUDE.md");
     const claudeMdReferences: { line: number; text: string }[] = [];
 
@@ -152,9 +150,7 @@ export async function uninstall(
     }
 
     // Remove the entire .claude directory if it only contains Aichaku files
-    const methodologiesDir = isGlobal
-      ? paths.global.methodologies
-      : paths.project.root;
+    const methodologiesDir = isGlobal ? paths.global.methodologies : paths.project.root;
     const hasOnlyAichaku = await exists(methodologiesDir) &&
       await exists(aichakuJsonPath);
 
@@ -205,9 +201,7 @@ export async function uninstall(
     return {
       success: false,
       path: targetPath,
-      message: `Uninstall failed: ${
-        error instanceof Error ? error.message : String(error)
-      }`,
+      message: `Uninstall failed: ${error instanceof Error ? error.message : String(error)}`,
     };
   }
 }

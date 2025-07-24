@@ -1,15 +1,13 @@
 # Getting Started with MCP Server Configuration
 
-This guide explains how to set up Aichaku's MCP (Model Context Protocol) servers
-to work with Claude Code.
+This guide explains how to set up Aichaku's MCP (Model Context Protocol) servers to work with Claude Code.
 
 ## Prerequisites
 
 Before you begin, ensure you have:
 
 - [Claude Code](https://claude.ai/code) installed and running
-- [Aichaku CLI](https://github.com/RickCogley/aichaku) installed
-  (`npm install -g @aichaku/cli`)
+- [Aichaku CLI](https://github.com/RickCogley/aichaku) installed (`npm install -g @aichaku/cli`)
 - Basic familiarity with command line interfaces
 - Administrator access to your system for installing software
 - Understanding of what MCP (Model Context Protocol) is
@@ -128,8 +126,7 @@ Installed MCP Servers
 
 ## HTTP/SSE Bridge Server (Optional - aichaku-reviewer only)
 
-For better performance with multiple Claude Code instances (aichaku-reviewer
-only):
+For better performance with multiple Claude Code instances (aichaku-reviewer only):
 
 ```bash
 # Start the HTTP/SSE bridge server
@@ -170,8 +167,7 @@ MCP servers are configured in `~/.claude/settings.json`:
 }
 ```
 
-**Note**: `aichaku setup` automatically manages this configuration. You rarely
-need to edit it manually.
+**Note**: `aichaku setup` automatically manages this configuration. You rarely need to edit it manually.
 
 ## Verification
 
@@ -327,8 +323,7 @@ If you encounter issues:
 1. **Check server status**: `aichaku mcp`
 2. **View detailed logs**: Check Claude Code console output
 3. **Reset configuration**: `aichaku setup --force`
-4. **Report issues**:
-   [Aichaku GitHub Issues](https://github.com/RickCogley/aichaku/issues)
+4. **Report issues**: [Aichaku GitHub Issues](https://github.com/RickCogley/aichaku/issues)
 
 ## Summary
 
@@ -338,5 +333,5 @@ If you encounter issues:
 - **Use `aichaku setup`** for automatic configuration
 - **Restart Claude Code** after configuration changes
 
-The MCP system enables powerful integrations between Claude Code and external
-tools while maintaining security and performance.
+The MCP system enables powerful integrations between Claude Code and external tools while maintaining security and
+performance.

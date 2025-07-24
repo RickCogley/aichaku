@@ -2,8 +2,8 @@
 
 ## Problem Summary
 
-The nagare release process was failing due to type checking errors in excluded
-files (v2 files and config-manager.ts). The issue was complex because:
+The nagare release process was failing due to type checking errors in excluded files (v2 files and config-manager.ts).
+The issue was complex because:
 
 1. Pre-release hooks and nagare's autofix were checking different sets of files
 2. `deno check` behavior with exclusions was not well understood
@@ -66,23 +66,20 @@ types: [
    - `deno check .` → Ignores exclusions ❌
    - `deno check **/*.ts` → Ignores exclusions ❌
 
-2. **Configuration Hierarchy**: Top-level exclude works for all tools, but each
-   tool section can have its own exclude as well
+2. **Configuration Hierarchy**: Top-level exclude works for all tools, but each tool section can have its own exclude as
+   well
 
-3. **YAML Files**: Correctly kept in linting/formatting since they're source
-   configuration files, not generated docs
+3. **YAML Files**: Correctly kept in linting/formatting since they're source configuration files, not generated docs
 
 ## Current Status
 
-✅ All exclusions properly configured ✅ Pre-release hooks updated to use
-correct command ✅ Nagare type checking re-enabled ✅ Release process should now
-work with all safety checks
+✅ All exclusions properly configured ✅ Pre-release hooks updated to use correct command ✅ Nagare type checking
+re-enabled ✅ Release process should now work with all safety checks
 
 ## Remaining Question
 
-We're not 100% certain how nagare's autofix runs the type-check command
-internally. If it runs `deno check` with arguments (like `deno check .`), it
-would still fail. This needs to be verified in nagare's source code or through
+We're not 100% certain how nagare's autofix runs the type-check command internally. If it runs `deno check` with
+arguments (like `deno check .`), it would still fail. This needs to be verified in nagare's source code or through
 testing an actual release.
 
 ## Next Steps

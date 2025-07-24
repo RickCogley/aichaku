@@ -136,9 +136,8 @@ Claude: "I understand now - using 'any' defeats TypeScript's purpose.
 
 ## Key Insight
 
-By using these prompting techniques, the MCP becomes more than a reviewer - it
-becomes an effective teacher that helps Claude internalize best practices and
-write better code throughout the session.
+By using these prompting techniques, the MCP becomes more than a reviewer - it becomes an effective teacher that helps
+Claude internalize best practices and write better code throughout the session.
 
 The combination of:
 

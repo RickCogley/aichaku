@@ -2,8 +2,8 @@
 
 ## Summary
 
-Successfully fixed all security test failures by addressing both formatting
-issues and handling the case when no test files exist.
+Successfully fixed all security test failures by addressing both formatting issues and handling the case when no test
+files exist.
 
 ## Problem
 
@@ -21,8 +21,7 @@ Security Tests workflow was failing due to:
 
 ### 2. Updated Security Workflow
 
-Modified `.github/workflows/security.yml` to gracefully handle missing test
-files:
+Modified `.github/workflows/security.yml` to gracefully handle missing test files:
 
 - Added check for existence of `*_test.ts` files before running tests
 - Set environment variable `no_tests=true` when no tests found

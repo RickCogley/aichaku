@@ -130,11 +130,9 @@ const reviewFileMetadata: EnhancedToolMetadata = {
   name: "Security & Standards Review",
   category: "security",
 
-  shortDescription:
-    "Review code for security vulnerabilities and standards compliance",
+  shortDescription: "Review code for security vulnerabilities and standards compliance",
 
-  longDescription:
-    `Automatically review code files for security vulnerabilities, coding standards, and best practices.
+  longDescription: `Automatically review code files for security vulnerabilities, coding standards, and best practices.
 Detects: OWASP vulnerabilities, SQL injection, XSS, hardcoded secrets, code quality issues.
 Standards: Checks compliance with SOLID, TDD, Clean Code, and your project's selected standards.
 Auto-runs: After file edits, before commits, when security concerns are mentioned.
@@ -253,5 +251,5 @@ const autoChains = {
 };
 ```
 
-These enhanced descriptions and metadata make the tools much more discoverable
-and likely to be used automatically when appropriate.
+These enhanced descriptions and metadata make the tools much more discoverable and likely to be used automatically when
+appropriate.

@@ -70,8 +70,7 @@ deno run --allow-read --allow-write --allow-env ~/.claude/aichaku/hooks/aichaku-
 
 **Stick with TypeScript** for now because:
 
-1. **Negligible Performance Impact**: 2-3 seconds over an entire session is
-   imperceptible
+1. **Negligible Performance Impact**: 2-3 seconds over an entire session is imperceptible
 2. **Deno Caching**: After first run, TypeScript is nearly as fast
 3. **Maintenance Simplicity**: One codebase, no platform builds
 4. **User Experience**: Easy updates, visible source code
@@ -90,9 +89,8 @@ If performance becomes critical:
 
 ## Conclusion
 
-The ~50ms overhead per hook execution is a reasonable tradeoff for the
-significant simplicity gains. Users are unlikely to notice the difference, but
-they will definitely notice if binary distribution is complex or buggy.
+The ~50ms overhead per hook execution is a reasonable tradeoff for the significant simplicity gains. Users are unlikely
+to notice the difference, but they will definitely notice if binary distribution is complex or buggy.
 
-**Recommendation: Ship v0.29.0 with TypeScript hooks** and revisit binary
-compilation only if performance complaints arise.
+**Recommendation: Ship v0.29.0 with TypeScript hooks** and revisit binary compilation only if performance complaints
+arise.

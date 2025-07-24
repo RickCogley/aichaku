@@ -2,8 +2,8 @@
 
 ## Summary
 
-Successfully implemented the `aichaku-feedback` hook to provide visual
-confirmation that the Aichaku hook system is active and working.
+Successfully implemented the `aichaku-feedback` hook to provide visual confirmation that the Aichaku hook system is
+active and working.
 
 ## What Was Done
 
@@ -30,8 +30,7 @@ confirmation that the Aichaku hook system is active and working.
 
 - Ran `deno fmt` to fix formatting
 - Built the project with `deno task build`
-- Installed the hook:
-  `./dist/aichaku-0.28.0-macos-arm64 hooks --install aichaku-feedback --global`
+- Installed the hook: `./dist/aichaku-0.28.0-macos-arm64 hooks --install aichaku-feedback --global`
 
 ## Key Features Implemented
 

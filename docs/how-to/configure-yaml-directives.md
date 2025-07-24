@@ -2,9 +2,8 @@
 
 ## Overview
 
-Aichaku uses a YAML-based configuration system that allows you to customize how
-Claude Code works with your projects. Instead of large static Markdown files,
-directives are now modular YAML configurations that can be mixed and matched.
+Aichaku uses a YAML-based configuration system that allows you to customize how Claude Code works with your projects.
+Instead of large static Markdown files, directives are now modular YAML configurations that can be mixed and matched.
 
 ## Key Benefits
 
@@ -138,8 +137,7 @@ This will regenerate your `CLAUDE.md` with the new configuration.
 
 ### Methodology-Specific Options
 
-Each methodology (Shape Up, Scrum, Kanban, etc.) has its own configuration file
-with:
+Each methodology (Shape Up, Scrum, Kanban, etc.) has its own configuration file with:
 
 - Specific terminology and triggers
 - Document templates and requirements
@@ -157,16 +155,13 @@ Security, development, and style standards are also YAML-configurable:
 
 ## Enterprise-Grade Configuration Quality
 
-Aichaku's YAML configuration system follows enterprise software engineering
-standards:
+Aichaku's YAML configuration system follows enterprise software engineering standards:
 
 ### Configuration-as-Code Architecture
 
-**Problem Solved**: Eliminates hardcoded lists scattered throughout the codebase
-that made maintenance difficult.
+**Problem Solved**: Eliminates hardcoded lists scattered throughout the codebase that made maintenance difficult.
 
-**Before**: Methodology lists, fallbacks, and templates were hardcoded in
-business logic
+**Before**: Methodology lists, fallbacks, and templates were hardcoded in business logic
 
 ```typescript
 // BAD: Hardcoded in multiple places
@@ -182,20 +177,15 @@ return getFallbackMethodologies(); // Reads from config/methodology-fallback.ts
 
 ### Key Configuration Files
 
-- **`src/config/methodology-fallback.ts`** - Emergency fallback when dynamic
-  discovery fails
-- **`src/config/methodology-defaults.ts`** - Default methodology lists for new
-  installations
+- **`src/config/methodology-fallback.ts`** - Emergency fallback when dynamic discovery fails
+- **`src/config/methodology-defaults.ts`** - Default methodology lists for new installations
 - **`src/config/methodology-templates.ts`** - Template mappings per methodology
-- **`mcp/aichaku-mcp-server/src/config/methodology-fallback.ts`** - MCP server
-  configuration
+- **`mcp/aichaku-mcp-server/src/config/methodology-fallback.ts`** - MCP server configuration
 
 ### Benefits for Teams
 
-1. **Maintainable**: Adding new methodologies only requires updating
-   configuration files
-2. **Auditable**: All configuration changes are version controlled and
-   documented
+1. **Maintainable**: Adding new methodologies only requires updating configuration files
+2. **Auditable**: All configuration changes are version controlled and documented
 3. **Testable**: Configuration can be validated and tested independently
 4. **Consistent**: No risk of different hardcoded lists getting out of sync
 5. **Scalable**: Easy to extend without touching business logic
@@ -207,8 +197,7 @@ return getFallbackMethodologies(); // Reads from config/methodology-fallback.ts
 - **Documentation**: Each config file includes purpose and update tracking
 - **Version control**: Configuration changes are tracked with rationale
 
-This foundation ensures Aichaku remains maintainable as it scales to more
-methodologies and standards.
+This foundation ensures Aichaku remains maintainable as it scales to more methodologies and standards.
 
 ## Troubleshooting
 
@@ -247,5 +236,4 @@ If you were using older versions of Aichaku with large Markdown files:
 2. **No manual migration needed** - just run `aichaku upgrade`
 3. **Old files are automatically cleaned up** during upgrade
 
-The new YAML system provides the same functionality with much better
-maintainability and performance.
+The new YAML system provides the same functionality with much better maintainability and performance.

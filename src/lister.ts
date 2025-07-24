@@ -75,9 +75,7 @@ export async function list(): Promise<ListResult> {
     );
     for (const methodology of available) {
       if (
-        globalDiscovered.items.some((item) =>
-          item.path.startsWith(methodology.name)
-        )
+        globalDiscovered.items.some((item) => item.path.startsWith(methodology.name))
       ) {
         installed.global.push(methodology);
       }
@@ -94,9 +92,7 @@ export async function list(): Promise<ListResult> {
     );
     for (const methodology of available) {
       if (
-        localDiscovered.items.some((item) =>
-          item.path.startsWith(methodology.name)
-        )
+        localDiscovered.items.some((item) => item.path.startsWith(methodology.name))
       ) {
         installed.local.push(methodology);
       }

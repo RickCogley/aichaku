@@ -172,5 +172,5 @@ Claude: *Sprint planning mode*
 
 ## Remember
 
-Commands are shortcuts, not requirements. Describe what you need naturally, and
-Claude Code will help. Use commands when you know exactly what you want.
+Commands are shortcuts, not requirements. Describe what you need naturally, and Claude Code will help. Use commands when
+you know exactly what you want.

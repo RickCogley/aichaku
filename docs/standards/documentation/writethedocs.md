@@ -2,9 +2,8 @@
 
 ## Quick Reference
 
-Write the Docs is a community of people who care about documentation. This guide
-incorporates community-driven best practices for creating documentation that is
-helpful, accessible, and maintainable.
+Write the Docs is a community of people who care about documentation. This guide incorporates community-driven best
+practices for creating documentation that is helpful, accessible, and maintainable.
 
 ### Core Values
 
@@ -25,9 +24,8 @@ Guide newcomers through their first successful experience with your project.
 ````markdown
 # Getting Started with {{Project Name}}
 
-Welcome! This tutorial walks you through using {{Project}} for the first time.
-By the end, you'll have {{specific achievement}} and understand the basics of
-{{key concepts}}.
+Welcome! This tutorial walks you through using {{Project}} for the first time. By the end, you'll have {{specific
+achievement}} and understand the basics of {{key concepts}}.
 
 ## Before You Begin
 
@@ -39,15 +37,13 @@ This tutorial takes about [time] to complete.
 - [Requirement]: [Version required and why]
 - Basic familiarity with [prerequisite knowledge]
 
-> 💡 **New to [prerequisite]?** Check out [this gentle introduction](link)
-> first.
+> 💡 **New to [prerequisite]?** Check out [this gentle introduction](link) first.
 
 ### What We'll Build
 
 [Screenshot or diagram of the final result]
 
-In this tutorial, we'll create [description of the end result]. This will teach
-you:
+In this tutorial, we'll create [description of the end result]. This will teach you:
 
 - How [Project] handles [concept 1]
 - The basics of [concept 2]
@@ -115,8 +111,7 @@ Before we dive in, here's a quick overview:
 - **[Term 1]**: [Plain English explanation]
 - **[Term 2]**: [Another clear explanation]
 
-Don't worry if this doesn't all make sense yet - it will become clearer as we
-work through the example.
+Don't worry if this doesn't all make sense yet - it will become clearer as we work through the example.
 
 ### Create the Project Structure
 
@@ -279,8 +274,7 @@ export PROJECT_ENV=production
 export API_KEY=your-api-key-here
 ````
 
-> 📝 **Note**: Store sensitive values like API keys in a `.env` file. See
-> [Managing Secrets](link) for details.
+> 📝 **Note**: Store sensitive values like API keys in a `.env` file. See [Managing Secrets](link) for details.
 
 ### 2. [Main Action]
 
@@ -445,8 +439,7 @@ curl -X GET \
 
 ## Authentication
 
-All requests require authentication using a Bearer token in the Authorization
-header:
+All requests require authentication using a Bearer token in the Authorization header:
 
 ```
 Authorization: Bearer YOUR*API*TOKEN
@@ -809,9 +802,8 @@ Think of it like [analogy]. When you [action in analogy], you [result]. Similarl
 Let's trace through what happens when you [common user action]:
 ````
 
-User Action ↓ [Component 1] → "Validates and prepares request" ↓ [Component 2] →
-"Processes according to rules" ↓ [Component 3] → "Returns formatted result" ↓
-User sees result
+User Action ↓ [Component 1] → "Validates and prepares request" ↓ [Component 2] → "Processes according to rules" ↓
+[Component 3] → "Returns formatted result" ↓ User sees result
 
 ````
 ### Step-by-Step Breakdown
@@ -846,8 +838,7 @@ result = system.process("Hello, World!")
 
 ### Why [Specific Choice]?
 
-You might wonder why we [design decision] instead of [alternative]. Here's our
-thinking:
+You might wonder why we [design decision] instead of [alternative]. Here's our thinking:
 
 **Option 1: [The alternative]**
 
@@ -959,15 +950,13 @@ To fully understand [concept], it helps to know about:
 
 ## Summary
 
-[Concept] provides [key benefit] by [how it works at high level]. The key things
-to remember:
+[Concept] provides [key benefit] by [how it works at high level]. The key things to remember:
 
 1. **[Main takeaway 1]**
 2. **[Main takeaway 2]**
 3. **[Main takeaway 3]**
 
-Whether you're [use case 1] or [use case 2], understanding these principles will
-help you [benefit].
+Whether you're [use case 1] or [use case 2], understanding these principles will help you [benefit].
 
 ## Further Reading
 
@@ -1092,8 +1081,7 @@ When reviewing documentation PRs:
 
 ## title: How to Configure Widgets last_updated: 2023-10-15 version: 2.3.0 contributors: [alice, bob, carlos]
 
-> ⚠️ **Version Note**: This guide is for version 2.3+. For earlier versions, see
-> [archived docs](link).
+> ⚠️ **Version Note**: This guide is for version 2.3+. For earlier versions, see [archived docs](link).
 ```
 
 #### Regular Reviews
@@ -1163,5 +1151,5 @@ Write the Docs principles emphasize:
 4. **Focus on user success** - Measure by user outcomes
 5. **Build community** - Documentation connects people
 
-Remember: The best documentation is the one that helps your users succeed at
-their goals. Everything else is implementation details.
+Remember: The best documentation is the one that helps your users succeed at their goals. Everything else is
+implementation details.

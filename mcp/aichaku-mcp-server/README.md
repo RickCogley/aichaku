@@ -1,19 +1,16 @@
 # 🪴 Aichaku MCP Code Reviewer
 
-An MCP (Model Context Protocol) server that provides automated security and
-standards review for Claude Code, based on Aichaku methodologies and standards.
+An MCP (Model Context Protocol) server that provides automated security and standards review for Claude Code, based on
+Aichaku methodologies and standards.
 
 ## Features
 
 - **Security Scanning**: Built-in patterns for OWASP Top 10 vulnerabilities
-- **Standards Compliance**: Checks against selected standards (15-Factor, TDD,
-  etc.)
-- **Methodology Validation**: Ensures adherence to Shape Up, Scrum, Kanban
-  practices
+- **Standards Compliance**: Checks against selected standards (15-Factor, TDD, etc.)
+- **Methodology Validation**: Ensures adherence to Shape Up, Scrum, Kanban practices
 - **TypeScript Support**: Specific checks for TypeScript best practices
 - **Educational Feedback**: Provides learning opportunities, not just criticism
-- **External Tool Integration**: Supports CodeQL, DevSkim, Semgrep (if
-  installed)
+- **External Tool Integration**: Supports CodeQL, DevSkim, Semgrep (if installed)
 - **Privacy-First**: All scanning happens locally, no code leaves your machine
 
 ## Installation

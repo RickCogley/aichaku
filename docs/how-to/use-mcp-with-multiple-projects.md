@@ -1,8 +1,7 @@
 # How to Use MCP with Multiple Projects
 
-This guide shows you how to use a single Aichaku MCP server installation across
-all your projects. You'll learn the global installation model and how to manage
-MCP for multiple projects efficiently.
+This guide shows you how to use a single Aichaku MCP server installation across all your projects. You'll learn the
+global installation model and how to manage MCP for multiple projects efficiently.
 
 ## Before you begin
 
@@ -15,15 +14,13 @@ Ensure you have:
 
 ## Overview
 
-The Aichaku MCP server works as a **global service**, not a per-project tool.
-This means:
+The Aichaku MCP server works as a **global service**, not a per-project tool. This means:
 
 - **Install once** - The MCP server lives in `~/.aichaku/mcp-server/`
 - **Use everywhere** - All projects on your machine can use the same server
 - **Single configuration** - Configure Claude Code once for all projects
 - **Automatic detection** - Projects with Aichaku automatically benefit
-- **No port conflicts** - MCP uses stdio by default (HTTP/SSE mode available on
-  port 7182)
+- **No port conflicts** - MCP uses stdio by default (HTTP/SSE mode available on port 7182)
 
 ## Understanding the architecture
 
@@ -66,8 +63,7 @@ If you haven't already, install the MCP server globally:
 aichaku mcp --install
 ```
 
-This installs to `~/.aichaku/mcp-server/` - a location accessible from any
-project.
+This installs to `~/.aichaku/mcp-server/` - a location accessible from any project.
 
 ### Step 2: Configure Claude Code once
 
@@ -397,13 +393,11 @@ find ~ -maxdepth 10 -name ".aichaku-standards.json" -type f 2>/dev/null | \
 
 The Aichaku MCP server's global installation model provides:
 
-✅ **Simplicity** - Install once, use everywhere ✅ **Flexibility** - Different
-standards per project ✅ **Performance** - No overhead or background services ✅
-**Security** - Isolated, read-only operation ✅ **Maintainability** - Single
-binary to update
+✅ **Simplicity** - Install once, use everywhere ✅ **Flexibility** - Different standards per project ✅
+**Performance** - No overhead or background services ✅ **Security** - Isolated, read-only operation ✅
+**Maintainability** - Single binary to update
 
-Remember: Think of the MCP server as a tool like `git` or `npm` - installed
-globally but aware of project context.
+Remember: Think of the MCP server as a tool like `git` or `npm` - installed globally but aware of project context.
 
 ## Related guides
 

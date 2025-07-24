@@ -51,9 +51,7 @@ class UserRepository {
 
   async findById(id: string): Promise<User | null> {
     const userData = await database.users.findOne({ id });
-    return userData
-      ? new User(userData.id, userData.email, userData.name)
-      : null;
+    return userData ? new User(userData.id, userData.email, userData.name) : null;
   }
 }
 
@@ -108,8 +106,7 @@ class User {
 
 ### Open/Closed Principle (OCP)
 
-**"Software entities should be open for extension, but closed for
-modification"**
+**"Software entities should be open for extension, but closed for modification"**
 
 #### ✅ Good: Extensible Design
 
@@ -174,8 +171,7 @@ class PaymentService {
 
 ### Liskov Substitution Principle (LSP)
 
-**"Objects of a superclass should be replaceable with objects of any subclass
-without breaking the application"**
+**"Objects of a superclass should be replaceable with objects of any subclass without breaking the application"**
 
 #### ✅ Good: Proper Inheritance
 
@@ -510,6 +506,5 @@ class ReportGenerator {
 }
 ```
 
-Remember: SOLID principles work together to create code that is easier to
-maintain, test, and extend. Apply them thoughtfully to avoid over-engineering
-while ensuring your code remains flexible and robust.
+Remember: SOLID principles work together to create code that is easier to maintain, test, and extend. Apply them
+thoughtfully to avoid over-engineering while ensuring your code remains flexible and robust.

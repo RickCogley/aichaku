@@ -2,20 +2,16 @@
 
 ## Executive Summary
 
-Successfully implemented top-level exclude configuration in deno.json to fix
-nagare release failures. The solution leverages Deno v2.3.1+ behavior where
-`deno check` (without arguments) respects top-level exclude patterns.
+Successfully implemented top-level exclude configuration in deno.json to fix nagare release failures. The solution
+leverages Deno v2.3.1+ behavior where `deno check` (without arguments) respects top-level exclude patterns.
 
 ## Problem Analysis
 
 ### Initial Issue
 
-- Nagare release process was failing due to type checking errors in deprecated
-  v2 files
-- Files like `config-manager.ts` had type errors but needed to remain for
-  backward compatibility
-- Pre-release hooks and nagare's autofix were running different type check
-  commands
+- Nagare release process was failing due to type checking errors in deprecated v2 files
+- Files like `config-manager.ts` had type errors but needed to remain for backward compatibility
+- Pre-release hooks and nagare's autofix were running different type check commands
 
 ### Root Cause
 
@@ -58,8 +54,7 @@ const checkCmd = new Deno.Command("deno", {
 
 ### 3. Import Chain Consideration
 
-**Important Discovery**: Files are checked if imported by non-excluded files. We
-had to exclude:
+**Important Discovery**: Files are checked if imported by non-excluded files. We had to exclude:
 
 - `config-manager.ts` (the problematic file)
 - `config-manager.test.ts` (imports config-manager)
@@ -92,10 +87,8 @@ had to exclude:
 1. **Read the GitHub Issues**: The behavior was documented in
    [denoland/deno#26864](https://github.com/denoland/deno/issues/26864)
 2. **Test Exit Codes**: Don't just look at output - check exit codes
-3. **Understand Import Graphs**: Excluding a file doesn't help if it's imported
-   by included files
-4. **Nagare Compatibility**: Nagare respects the project's deno.json
-   configuration
+3. **Understand Import Graphs**: Excluding a file doesn't help if it's imported by included files
+4. **Nagare Compatibility**: Nagare respects the project's deno.json configuration
 
 ## Migration Guide
 

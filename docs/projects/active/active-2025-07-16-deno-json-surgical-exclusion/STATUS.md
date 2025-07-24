@@ -6,14 +6,12 @@
 
 ## Summary
 
-Successfully implemented top-level exclude configuration in deno.json to fix
-nagare release failures. The solution was tested and deployed in release
-v0.30.0.
+Successfully implemented top-level exclude configuration in deno.json to fix nagare release failures. The solution was
+tested and deployed in release v0.30.0.
 
 ## Key Achievements
 
-✅ **Problem Identified**: Nagare's type checking was failing on deprecated v2
-files\
+✅ **Problem Identified**: Nagare's type checking was failing on deprecated v2 files\
 ✅ **Root Cause Found**: `deno check` behavior varies with arguments\
 ✅ **Solution Implemented**: Top-level exclude configuration\
 ✅ **Testing Completed**: Verified with dry runs and actual release\
@@ -30,8 +28,8 @@ files\
 
 ### Key Learning
 
-The top-level `exclude` in deno.json only works when running `deno check`
-without arguments (not with `deno check .` or `deno check **/*.ts`).
+The top-level `exclude` in deno.json only works when running `deno check` without arguments (not with `deno check .` or
+`deno check **/*.ts`).
 
 ## Next Steps
 

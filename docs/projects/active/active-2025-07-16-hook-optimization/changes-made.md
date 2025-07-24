@@ -24,16 +24,14 @@
 
 ### 4. Kept Essential Hooks
 
-- **path-validator**: Validates Aichaku file structure (PreToolUse on
-  Write|MultiEdit)
+- **path-validator**: Validates Aichaku file structure (PreToolUse on Write|MultiEdit)
 - **status-updater**: Shows project activity reminders (PostToolUse)
 - **Markdown-review**: MCP integration for doc review (PostToolUse)
 - **conversation-summary**: Creates checkpoint summaries (PreCompact)
 
 ## Files Modified
 
-- Backed up: `~/.claude/settings.json` →
-  `~/.claude/settings.json.backup-2025-07-16`
+- Backed up: `~/.claude/settings.json` → `~/.claude/settings.json.backup-2025-07-16`
 - Created: `~/.claude/settings-optimized.json`
 - To apply: `cp ~/.claude/settings-optimized.json ~/.claude/settings.json`
 

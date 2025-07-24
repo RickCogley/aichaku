@@ -2,9 +2,8 @@
 
 ## Problem
 
-Several completed projects in `.claude/output/` are still marked with `active-`
-prefix when they should be `complete-`. This creates confusion about what work
-is actually ongoing versus finished.
+Several completed projects in `.claude/output/` are still marked with `active-` prefix when they should be `complete-`.
+This creates confusion about what work is actually ongoing versus finished.
 
 ## Appetite
 

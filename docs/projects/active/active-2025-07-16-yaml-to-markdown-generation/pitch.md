@@ -2,8 +2,7 @@
 
 ## Problem
 
-We currently maintain both YAML and Markdown files for each methodology and
-standard. This creates:
+We currently maintain both YAML and Markdown files for each methodology and standard. This creates:
 
 - **Drift risk**: Manual updates to one file might not be reflected in the other
 - **Duplication of effort**: Writing the same information twice

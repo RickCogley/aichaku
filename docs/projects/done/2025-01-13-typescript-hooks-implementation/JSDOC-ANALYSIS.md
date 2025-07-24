@@ -2,8 +2,7 @@
 
 ## Current State
 
-Based on our grep analysis, we have **385 JSDoc blocks** across 44 files in the
-`/src` directory.
+Based on our grep analysis, we have **385 JSDoc blocks** across 44 files in the `/src` directory.
 
 ## Good Examples
 

@@ -1,7 +1,6 @@
 # aichaku (愛着)
 
-> Adaptive methodology support for Claude Code that blends approaches based on
-> how you naturally work
+> Adaptive methodology support for Claude Code that blends approaches based on how you naturally work
 
 [![JSR](https://jsr.io/badges/@rick/aichaku)](https://jsr.io/@rick/aichaku)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -26,52 +25,44 @@ aichaku integrate       # Tell Claude about it
 # Claude will use Aichaku automatically
 ```
 
-That's it! Aichaku is now helping Claude understand your development workflow.
-Read on for details, or jump to [full documentation](docs/).
+That's it! Aichaku is now helping Claude understand your development workflow. Read on for details, or jump to
+[full documentation](docs/).
 
 ## What is aichaku?
 
-Aichaku (愛着 - "affection/attachment") provides adaptive methodology support
-for Claude Code. Install once globally, use everywhere. Rather than forcing you
-to choose a single methodology, aichaku provides all of them and helps Claude
-Code blend approaches based on your natural language. Say "sprint" and get Scrum
-practices; mention "shaping" and get Shape Up principles - all seamlessly
-integrated.
+Aichaku (愛着 - "affection/attachment") provides adaptive methodology support for Claude Code. Install once globally,
+use everywhere. Rather than forcing you to choose a single methodology, aichaku provides all of them and helps Claude
+Code blend approaches based on your natural language. Say "sprint" and get Scrum practices; mention "shaping" and get
+Shape Up principles - all seamlessly integrated.
 
 ## 📚 Documentation & Resources
 
 ### 🎯 Interactive Methodology Guides (with Mermaid Diagrams)
 
-- [**Shape Up Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/shape-up/shape-up.md) -
-  6-week cycles with interactive workflow diagrams
-- [**Scrum Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/scrum/scrum.md) -
-  Sprint planning with visual process flows
-- [**Kanban Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/kanban/kanban.md) -
-  Flow visualization and WIP limits
+- [**Shape Up Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/shape-up/shape-up.md) - 6-week
+  cycles with interactive workflow diagrams
+- [**Scrum Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/scrum/scrum.md) - Sprint planning
+  with visual process flows
+- [**Kanban Guide**](https://github.com/RickCogley/aichaku/blob/main/docs/methodologies/kanban/kanban.md) - Flow
+  visualization and WIP limits
 
 ### 📖 Complete Documentation
 
-- [**Full Documentation Hub**](docs/) - Comprehensive guides, tutorials, and
-  reference materials
-- [**API Documentation**](https://aichaku.esolia.deno.net/) - Complete
-  TypeScript API reference
+- [**Full Documentation Hub**](docs/) - Comprehensive guides, tutorials, and reference materials
+- [**API Documentation**](https://aichaku.esolia.deno.net/) - Complete TypeScript API reference
 - [**How-to Guides**](docs/how-to/) - Task-specific instructions and workflows
-- [**Reference Materials**](docs/reference/) - Technical specifications and
-  options
+- [**Reference Materials**](docs/reference/) - Technical specifications and options
 
 ### 🔗 Quick Links
 
-📦 **[JSR Package](https://jsr.io/@rick/aichaku)** | 🐙
-**[GitHub Repository](https://github.com/RickCogley/aichaku)**
+📦 **[JSR Package](https://jsr.io/@rick/aichaku)** | 🐙 **[GitHub Repository](https://github.com/RickCogley/aichaku)**
 
 **✨ Key Features:**
 
 - 🌍 **Global install, works everywhere** - One-time setup, all projects benefit
-- 📝 **Automatic session summaries** - Never lose context with automatic
-  checkpoint creation
+- 📝 **Automatic session summaries** - Never lose context with automatic checkpoint creation
 - 🎯 **Adaptive blending** - Methodologies adapt to your language
-- 🔄 **All methodologies included** - Shape Up, Scrum, Kanban, XP, Lean,
-  Scrumban
+- 🔄 **All methodologies included** - Shape Up, Scrum, Kanban, XP, Lean, Scrumban
 - 🧠 **Context-aware** - AI responds to your terminology and needs
 - 📁 **Clean projects** - No methodology file duplication
 - 🚀 **Simple lifecycle** - Just init, integrate, upgrade, and uninstall
@@ -102,18 +93,15 @@ aichaku init
 
 ## 🔧 YAML Configuration System
 
-**The Revolutionary Core of Aichaku:** Aichaku transforms how Claude Code
-directives are created and maintained through a groundbreaking YAML-based
-"configuration as code" approach.
+**The Revolutionary Core of Aichaku:** Aichaku transforms how Claude Code directives are created and maintained through
+a groundbreaking YAML-based "configuration as code" approach.
 
 ### The Problem with Traditional Approaches
 
-- **Massive files**: Traditional CLAUDE.md files can exceed 50KB of repetitive
-  content
+- **Massive files**: Traditional CLAUDE.md files can exceed 50KB of repetitive content
 - **Difficult maintenance**: Changes require updating multiple large files
 - **No modularity**: Everything hardcoded in monolithic Markdown files
-- **Version drift**: Different projects with different versions of the same
-  guidance
+- **Version drift**: Different projects with different versions of the same guidance
 
 ### Aichaku's Solution: 96% Size Reduction
 
@@ -138,14 +126,11 @@ behavioral_directives:
 
 ### How the Magic Works
 
-1. **Modular YAML Files**: Core behaviors, methodologies, and standards defined
-   in separate, focused YAML files
-2. **Dynamic Assembly**: When you run `aichaku integrate`, the system reads
-   multiple YAML sources and assembles a complete configuration
-3. **Smart Merging**: Base configuration + methodology-specific + project
-   overrides = perfectly tailored guidance
-4. **Single Source of Truth**: Update one YAML file, and all projects benefit
-   from improvements
+1. **Modular YAML Files**: Core behaviors, methodologies, and standards defined in separate, focused YAML files
+2. **Dynamic Assembly**: When you run `aichaku integrate`, the system reads multiple YAML sources and assembles a
+   complete configuration
+3. **Smart Merging**: Base configuration + methodology-specific + project overrides = perfectly tailored guidance
+4. **Single Source of Truth**: Update one YAML file, and all projects benefit from improvements
 
 ### Configuration Hierarchy
 
@@ -205,8 +190,7 @@ directives:
       documents: ["company-process.md"]
 ```
 
-Run `aichaku integrate --force` and your CLAUDE.md is regenerated with your
-customizations merged seamlessly.
+Run `aichaku integrate --force` and your CLAUDE.md is regenerated with your customizations merged seamlessly.
 
 ### The Technical Architecture
 
@@ -218,8 +202,8 @@ The YAML system enables unprecedented flexibility:
 - **Modularity**: Mix and match methodologies, standards, and behaviors
 - **Maintenance**: Update once, deploy everywhere
 
-This isn't just a configuration system—it's a paradigm shift that makes Claude
-Code directives maintainable, consistent, and powerful.
+This isn't just a configuration system—it's a paradigm shift that makes Claude Code directives maintainable, consistent,
+and powerful.
 
 [Learn more about YAML configuration →](docs/how-to/configure-yaml-directives.md)
 
@@ -229,18 +213,17 @@ Aichaku uses a simple **3-mode system** that adapts to your context:
 
 ### 📋 Planning Mode
 
-When you say "let's plan" or "what should we build", Claude Code helps you
-define work using the best methodology for your context.
+When you say "let's plan" or "what should we build", Claude Code helps you define work using the best methodology for
+your context.
 
 ### 🔨 Execution Mode
 
-When you say "let's build" or "start coding", Claude Code guides development
-with appropriate constraints (sprints, WIP limits, etc).
+When you say "let's build" or "start coding", Claude Code guides development with appropriate constraints (sprints, WIP
+limits, etc).
 
 ### 📊 Improvement Mode
 
-When you say "how are we doing" or "retrospective", Claude Code measures
-progress and suggests concrete improvements.
+When you say "how are we doing" or "retrospective", Claude Code measures progress and suggests concrete improvements.
 
 ## Usage Examples
 
@@ -428,17 +411,16 @@ aichaku integrate --force
 
 **⭐ Featured: Automatic Session Summaries**
 
-Aichaku automatically creates structured summaries of your Claude Code sessions!
-Never lose context when conversations are compacted or ended.
+Aichaku automatically creates structured summaries of your Claude Code sessions! Never lose context when conversations
+are compacted or ended.
 
 - ✅ **Automatic** - Runs on conversation end and compaction
 - 📄 **Structured** - Consistent Markdown format with key sections
 - 📅 **Timestamped** - Easy to find and reference later
 - 📋 **Organized** - Saved to `docs/checkpoints/` directory
 
-Claude Code hooks allow you to run scripts at various points in Claude's
-lifecycle, such as before/after tool use, at conversation end, or during
-compaction.
+Claude Code hooks allow you to run scripts at various points in Claude's lifecycle, such as before/after tool use, at
+conversation end, or during compaction.
 
 ```bash
 # See what hooks are available
@@ -488,8 +470,7 @@ aichaku hooks --validate
   - `workflow-monitor`: Monitors GitHub Actions
   - `release-helper`: Assists with releases
 
-**Important:** Restart Claude Code after installing/removing hooks for changes
-to take effect.
+**Important:** Restart Claude Code after installing/removing hooks for changes to take effect.
 
 ### Standards - Development Guidelines
 
@@ -562,20 +543,17 @@ await integrate({
 
 ## MCP Server Features
 
-**⚠️ CRITICAL CONFIGURATION NOTE**: Installing MCP servers via Aichaku does NOT
-automatically make them available to Claude Code. You MUST configure them in
-Claude Code's MCP system separately. See
+**⚠️ CRITICAL CONFIGURATION NOTE**: Installing MCP servers via Aichaku does NOT automatically make them available to
+Claude Code. You MUST configure them in Claude Code's MCP system separately. See
 [MCP Configuration Guide](docs/how-to/configure-mcp-servers.md) for details.
 
-Aichaku includes an enhanced Model Context Protocol (MCP) server that provides
-intelligent project analysis and documentation generation capabilities directly
-within Claude Desktop.
+Aichaku includes an enhanced Model Context Protocol (MCP) server that provides intelligent project analysis and
+documentation generation capabilities directly within Claude Desktop.
 
 ### HTTP/SSE Server for Code Review (v0.25.0+)
 
-The HTTP/SSE server provides a bridge between the `aichaku review` command and
-the Aichaku Code Reviewer MCP server. This allows multiple Claude Code instances
-to share a single MCP server for code review operations:
+The HTTP/SSE server provides a bridge between the `aichaku review` command and the Aichaku Code Reviewer MCP server.
+This allows multiple Claude Code instances to share a single MCP server for code review operations:
 
 ```bash
 # Start the HTTP/SSE bridge server
@@ -658,8 +636,7 @@ Creates comprehensive documentation from your codebase:
 
 ### Statistics and Analytics
 
-The MCP server tracks usage statistics to help you understand how Aichaku is
-being used:
+The MCP server tracks usage statistics to help you understand how Aichaku is being used:
 
 - **Tool usage frequency**: Which tools are used most often
 - **Success rates**: How often operations complete successfully
@@ -785,8 +762,8 @@ project/
     └── .aichaku-project  # Project marker file
 ```
 
-**Key Point**: Methodologies are NEVER copied to projects - they're referenced
-from the global installation. This keeps your git repositories clean!
+**Key Point**: Methodologies are NEVER copied to projects - they're referenced from the global installation. This keeps
+your git repositories clean!
 
 ## User Customization
 
@@ -796,8 +773,7 @@ The `user/` directory is yours to customize how Aichaku works for your team:
 - **templates/**: Add your organization's document templates
 - **methods/**: Define custom practices or terminology
 
-All customizations are preserved during upgrades. See `user/README.md` after
-installation for detailed examples.
+All customizations are preserved during upgrades. See `user/README.md` after installation for detailed examples.
 
 ## Commands (Optional)
 
@@ -844,10 +820,9 @@ deno task release:patch
 
 ## Philosophy
 
-Traditional methodology tools force you to adapt to them. Aichaku reverses
-this - it helps Claude Code adapt to you. Whether you're a solo developer,
-startup team, or enterprise group, aichaku provides just enough process to be
-helpful without getting in the way.
+Traditional methodology tools force you to adapt to them. Aichaku reverses this - it helps Claude Code adapt to you.
+Whether you're a solo developer, startup team, or enterprise group, aichaku provides just enough process to be helpful
+without getting in the way.
 
 ## Migrating from v0.4.x
 
@@ -893,9 +868,8 @@ Your customizations in `.claude/user/` are preserved!
 
 ## Why "aichaku"?
 
-愛着 (aichaku) means developing attachment or affection for something over time.
-We chose this name because good development practices should feel natural and
-become something you're attached to, not forced to follow.
+愛着 (aichaku) means developing attachment or affection for something over time. We chose this name because good
+development practices should feel natural and become something you're attached to, not forced to follow.
 
 ## Future Roadmap
 
@@ -914,8 +888,7 @@ become something you're attached to, not forced to follow.
 
 ## API Documentation
 
-For detailed API documentation, visit
-[https://aichaku.esolia.deno.net/](https://aichaku.esolia.deno.net/)
+For detailed API documentation, visit [https://aichaku.esolia.deno.net/](https://aichaku.esolia.deno.net/)
 
 ## Contributing
 

@@ -2,8 +2,8 @@
 
 ## The Problem
 
-Despite clear formatting guidelines, Claude frequently uses incorrect dates
-(like 2025-01-10 instead of 2025-07-10) when creating project folders.
+Despite clear formatting guidelines, Claude frequently uses incorrect dates (like 2025-01-10 instead of 2025-07-10) when
+creating project folders.
 
 ## Current Guidance
 
@@ -34,8 +34,7 @@ This shows the format but doesn't emphasize checking the actual date.
 ```markdown
 ### 📅 DATE REMINDER
 
-**ALWAYS check "Today's date:" in the environment info before creating
-folders!**
+**ALWAYS check "Today's date:" in the environment info before creating folders!**
 
 Common mistakes to avoid:
 
@@ -81,9 +80,8 @@ Today's date: 2025-07-10 ⚠️ USE THIS DATE FOR FOLDERS
 Add a step before folder creation:
 
 ```markdown
-**Phase 3: CREATE NAMED PROJECT** ✅ First ask yourself: "What is today's date
-from the environment info?" ✅ Confirm: "Today is 2025-07-10" (example) ✅ Then
-create: active-2025-07-10-{descriptive-name}/
+**Phase 3: CREATE NAMED PROJECT** ✅ First ask yourself: "What is today's date from the environment info?" ✅ Confirm:
+"Today is 2025-07-10" (example) ✅ Then create: active-2025-07-10-{descriptive-name}/
 ```
 
 ### 3. Example with Current Date Reference
@@ -106,9 +104,8 @@ I recommend **Option 1** with the explicit date check reminder. It:
 - Provides a concrete example using "today"
 - Doesn't add too much complexity
 
-The key insight is that the current guide assumes I'll naturally check the
-environment date, but in practice, I often default to "01" for the month or copy
-from examples without updating.
+The key insight is that the current guide assumes I'll naturally check the environment date, but in practice, I often
+default to "01" for the month or copy from examples without updating.
 
 ## Testing the Fix
 
@@ -119,5 +116,4 @@ After updating CLAUDE.md:
 3. Verify it uses the correct current date
 4. Monitor if the mistake recurs
 
-The goal is to make it impossible to create a folder without first consciously
-checking today's actual date.
+The goal is to make it impossible to create a folder without first consciously checking today's actual date.

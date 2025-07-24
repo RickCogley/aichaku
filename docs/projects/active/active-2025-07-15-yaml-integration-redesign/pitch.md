@@ -2,14 +2,12 @@
 
 ## Problem
 
-The current Aichaku integration system has grown organically, resulting in
-several pain points:
+The current Aichaku integration system has grown organically, resulting in several pain points:
 
 ### 1. CLAUDE.md File Bloat
 
-Currently, when a user selects standards like OWASP, TDD, and Diataxis, the
-entire Markdown content of each standard is injected into CLAUDE.md. This
-creates files that are:
+Currently, when a user selects standards like OWASP, TDD, and Diataxis, the entire Markdown content of each standard is
+injected into CLAUDE.md. This creates files that are:
 
 - **10KB-50KB+** in size for moderate selections
 - **Difficult to scan** visually
@@ -43,8 +41,7 @@ summary:
 rules: [...]
 ```
 
-But integration just dumps the entire Markdown file instead of leveraging this
-structure.
+But integration just dumps the entire Markdown file instead of leveraging this structure.
 
 ### 4. Inflexible Integration
 
@@ -69,8 +66,7 @@ Users can't choose how standards appear in CLAUDE.md:
 
 ### Core Idea: Compact YAML Configuration Block
 
-Replace the current marker-based injection system with a single, compact YAML
-block in CLAUDE.md:
+Replace the current marker-based injection system with a single, compact YAML block in CLAUDE.md:
 
 ```yaml
 # Aichaku Configuration
@@ -136,8 +132,7 @@ aichaku:
 
 1. **Tiny Footprint**: ~2KB instead of 50KB+
 2. **Fast Parsing**: YAML is structured data
-3. **Smart Integration**: Claude gets triggers and can load full content on
-   demand
+3. **Smart Integration**: Claude gets triggers and can load full content on demand
 4. **User Editable**: Users can add custom fields
 5. **Clean Diffs**: Version control friendly
 
@@ -255,28 +250,27 @@ function integrate() {
 
 ### 1. Over-Engineering the YAML Structure
 
-**Danger**: Creating deeply nested, complex YAML that's hard to read/edit
-**Solution**: Keep it flat and simple - just what Claude needs
+**Danger**: Creating deeply nested, complex YAML that's hard to read/edit **Solution**: Keep it flat and simple - just
+what Claude needs
 
 ### 2. Backward Compatibility Forever
 
-**Danger**: Maintaining old marker system indefinitely **Solution**: One-time
-migration, then deprecate old format
+**Danger**: Maintaining old marker system indefinitely **Solution**: One-time migration, then deprecate old format
 
 ### 3. Dynamic Loading Complexity
 
-**Danger**: Building complex systems for Claude to dynamically load content
-**Solution**: Simple `integration_url` field - let Claude handle it
+**Danger**: Building complex systems for Claude to dynamically load content **Solution**: Simple `integration_url`
+field - let Claude handle it
 
 ### 4. Custom Template System
 
-**Danger**: Building a full template engine **Solution**: Start with predefined
-modes (summary/full), add templates later if needed
+**Danger**: Building a full template engine **Solution**: Start with predefined modes (summary/full), add templates
+later if needed
 
 ### 5. Perfect Category Taxonomy
 
-**Danger**: Endless debates about categorization **Solution**: Use existing
-categories, allow multiple categories per standard
+**Danger**: Endless debates about categorization **Solution**: Use existing categories, allow multiple categories per
+standard
 
 ## No-Gos
 
@@ -376,8 +370,8 @@ This shapes a solution that:
 - **Maintains flexibility** for future enhancements
 - **Respects existing users** through automatic migration
 
-The appetite of 6 weeks is appropriate for this architectural change that will
-significantly improve the Aichaku experience.
+The appetite of 6 weeks is appropriate for this architectural change that will significantly improve the Aichaku
+experience.
 
 ## Decision Required
 
@@ -392,5 +386,5 @@ Are we ready to bet 6 weeks on this compact YAML integration system?
 - ❌ One-time migration complexity
 - ❌ Documentation rewrite needed
 
-The benefits clearly outweigh the costs. This positions Aichaku for sustainable
-growth while improving the user experience.
+The benefits clearly outweigh the costs. This positions Aichaku for sustainable growth while improving the user
+experience.

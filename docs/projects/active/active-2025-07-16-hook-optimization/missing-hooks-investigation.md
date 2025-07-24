@@ -2,11 +2,10 @@
 
 ## Issue Identified
 
-The aichaku project's settings.json references a hooks file that doesn't exist
-in the source code:
+The aichaku project's settings.json references a hooks file that doesn't exist in the source code:
 
-**Referenced Path:** `~/.claude/aichaku/hooks/aichaku-hooks.ts` **Issue:** This
-file doesn't exist in the aichaku source repository
+**Referenced Path:** `~/.claude/aichaku/hooks/aichaku-hooks.ts` **Issue:** This file doesn't exist in the aichaku source
+repository
 
 ## Impact
 
@@ -43,15 +42,13 @@ From `/Users/rcogley/.claude/settings.json`:
 
 - No `aichaku-hooks.ts` file found in the repository
 - Hooks-related documentation exists but not the actual implementation
-- Related files found in `/scratch/` and `/docs/projects/` but not the main
-  hooks file
+- Related files found in `/scratch/` and `/docs/projects/` but not the main hooks file
 
 ## Required Actions
 
 ### Immediate
 
-1. **Locate the missing hooks file** - Check if it exists elsewhere in the
-   development environment
+1. **Locate the missing hooks file** - Check if it exists elsewhere in the development environment
 2. **Add to source control** - Include aichaku-hooks.ts in the repository
 3. **Create installation process** - Users need a way to install hooks
 
@@ -71,22 +68,17 @@ From `/Users/rcogley/.claude/settings.json`:
 
 ### 1. File Location Confirmed
 
-- **File exists**: `/Users/rcogley/.claude/aichaku/hooks/aichaku-hooks.ts`
-  (51,564 bytes)
-- **Generated dynamically**: Created by `src/commands/hooks.ts` during
-  installation
+- **File exists**: `/Users/rcogley/.claude/aichaku/hooks/aichaku-hooks.ts` (51,564 bytes)
+- **Generated dynamically**: Created by `src/commands/hooks.ts` during installation
 - **Not in source control**: File is generated, not committed to repository
 
 ### 2. Root Cause Analysis
 
 The hooks system uses a **dynamic generation approach**:
 
-1. **Template in Source**: `src/commands/hooks.ts` contains hook templates and
-   generation logic
-2. **Installation Process**: `ensureHookScripts()` function (lines 465-618)
-   generates `aichaku-hooks.ts`
-3. **User Installation**: Users must run `aichaku hooks --install <category>` to
-   generate the file
+1. **Template in Source**: `src/commands/hooks.ts` contains hook templates and generation logic
+2. **Installation Process**: `ensureHookScripts()` function (lines 465-618) generates `aichaku-hooks.ts`
+3. **User Installation**: Users must run `aichaku hooks --install <category>` to generate the file
 
 ### 3. Current Architecture
 
@@ -114,8 +106,7 @@ The file is **intentionally generated** because:
 The current architecture is **working as designed**:
 
 1. **Developer Environment**: File exists because hooks were installed locally
-2. **User Experience**: Users run `aichaku hooks --install essential` to
-   generate the file
+2. **User Experience**: Users run `aichaku hooks --install essential` to generate the file
 3. **Distribution**: Hook templates are in source, runtime is generated
 
 ### Documentation Enhancement Needed
@@ -128,6 +119,5 @@ The installation process should be better documented:
 
 ## Priority: Low (Working as Designed)
 
-The hooks system is functioning correctly. The "missing file" is actually
-generated during proper installation flow. This is a documentation/UX issue, not
-a technical problem.
+The hooks system is functioning correctly. The "missing file" is actually generated during proper installation flow.
+This is a documentation/UX issue, not a technical problem.

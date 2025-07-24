@@ -2,8 +2,7 @@
 
 ## The Core Problem
 
-Claude Code reads CLAUDE.md but the current integration only **informs** rather
-than **directs** behavior.
+Claude Code reads CLAUDE.md but the current integration only **informs** rather than **directs** behavior.
 
 ## Multi-Layer Solution
 
@@ -18,8 +17,7 @@ This project uses Aichaku. When working on this project, you MUST:
 
 ### 1. Document Creation Rules
 
-**ALWAYS create documents in**:
-`.claude/output/active-YYYY-MM-DD-{descriptive-name}/`
+**ALWAYS create documents in**: `.claude/output/active-YYYY-MM-DD-{descriptive-name}/`
 
 **NEVER create documents in**:
 
@@ -31,20 +29,16 @@ This project uses Aichaku. When working on this project, you MUST:
 
 When you hear these triggers, IMMEDIATELY:
 
-1. Create project structure:
-   `.claude/output/active-YYYY-MM-DD-{descriptive-name}/`
+1. Create project structure: `.claude/output/active-YYYY-MM-DD-{descriptive-name}/`
 2. Create STATUS.md with current status
 3. Create appropriate methodology documents:
 
 **Planning Triggers** ("let's plan", "shape this", "create a pitch"):
 
 - Read `~/.claude/methodologies/common/PLANNING-MODE.md`
-- Shape Up: Create pitch.md using
-  `~/.claude/methodologies/shape-up/templates/pitch.md`
-- Scrum: Create sprint-planning.md using
-  `~/.claude/methodologies/scrum/templates/sprint-planning.md`
-- Kanban: Create kanban-board.md using
-  `~/.claude/methodologies/kanban/templates/kanban-board.md`
+- Shape Up: Create pitch.md using `~/.claude/methodologies/shape-up/templates/pitch.md`
+- Scrum: Create sprint-planning.md using `~/.claude/methodologies/scrum/templates/sprint-planning.md`
+- Kanban: Create kanban-board.md using `~/.claude/methodologies/kanban/templates/kanban-board.md`
 
 **Execution Triggers** ("implement", "build", "start coding"):
 
@@ -93,8 +87,7 @@ When you hear these triggers, IMMEDIATELY:
 **ALWAYS keep user informed**:
 
 - Update STATUS.md after each significant action
-- Start responses with current status: "📍 Currently in [mode] working on
-  [task]"
+- Start responses with current status: "📍 Currently in [mode] working on [task]"
 - End planning with: "📋 Planning complete. Ready to proceed?"
 - Never start implementation without explicit approval
 
@@ -110,14 +103,12 @@ When you hear these triggers, IMMEDIATELY:
    - refactor: Code changes without feature change
 3. Push to origin: `git push origin [current-branch]`
 
-**For large efforts**: Ask "Should I create multiple commits for better
-history?"
+**For large efforts**: Ask "Should I create multiple commits for better history?"
 
 ### 7. Document Creation Freedom
 
-**NEVER ask permission** to create documents. Just create them. **ALWAYS
-create** supporting documents as needed (diagrams, notes, research). **FREELY
-organize** with subdirectories as appropriate.
+**NEVER ask permission** to create documents. Just create them. **ALWAYS create** supporting documents as needed
+(diagrams, notes, research). **FREELY organize** with subdirectories as appropriate.
 
 CRITICAL: This is all AUTOMATIC behavior. Users expect a magical experience.
 ```
@@ -181,8 +172,8 @@ Each project directory should contain:
 
 ## For Claude Code
 
-When users discuss new work, IMMEDIATELY create a new active-\* directory here.
-Don't wait to be asked. This is expected behavior.
+When users discuss new work, IMMEDIATELY create a new active-\* directory here. Don't wait to be asked. This is expected
+behavior.
 ```
 
 ### Layer 4: Enhanced Commands.json

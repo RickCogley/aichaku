@@ -6,14 +6,12 @@
 
 ## Overview
 
-Implemented a shared HTTP/SSE (Server-Sent Events) server architecture for the
-MCP (Model Context Protocol) server to support multiple concurrent Claude Code
-instances efficiently.
+Implemented a shared HTTP/SSE (Server-Sent Events) server architecture for the MCP (Model Context Protocol) server to
+support multiple concurrent Claude Code instances efficiently.
 
 ## Problem Statement
 
-The original MCP implementation spawned a new process for each request, which
-would be problematic when:
+The original MCP implementation spawned a new process for each request, which would be problematic when:
 
 - Multiple Claude Code instances are running on the same machine
 - Frequent requests lead to excessive process creation/destruction
@@ -21,8 +19,8 @@ would be problematic when:
 
 ## Solution
 
-Created an HTTP server with Server-Sent Events that allows multiple Claude Code
-instances to connect to a single shared MCP server process.
+Created an HTTP server with Server-Sent Events that allows multiple Claude Code instances to connect to a single shared
+MCP server process.
 
 ## Architecture
 
@@ -169,17 +167,13 @@ aichaku mcp --stop-server
 
 ## Known Limitations
 
-1. **Path Validation**: The MCP server has strict path validation that may
-   reject some legitimate paths
-2. **Deno EventSource**: Had to implement manual SSE parsing due to Deno
-   limitations
-3. **Process Persistence**: Server process must be manually managed (not a
-   system service)
+1. **Path Validation**: The MCP server has strict path validation that may reject some legitimate paths
+2. **Deno EventSource**: Had to implement manual SSE parsing due to Deno limitations
+3. **Process Persistence**: Server process must be manually managed (not a system service)
 
 ## Future Enhancements
 
-1. **WebSocket Support**: Could replace SSE for better bidirectional
-   communication
+1. **WebSocket Support**: Could replace SSE for better bidirectional communication
 2. **Service Integration**: systemd/launchd/Windows Service support
 3. **Multi-user Support**: Currently limited to single user
 4. **Configuration File**: Server settings could be externalized
@@ -195,7 +189,5 @@ aichaku mcp --stop-server
 
 ## Conclusion
 
-The HTTP/SSE server implementation successfully addresses the requirement for
-supporting multiple Claude Code instances while maintaining cross-platform
-compatibility and backward compatibility with the existing process-spawning
-approach.
+The HTTP/SSE server implementation successfully addresses the requirement for supporting multiple Claude Code instances
+while maintaining cross-platform compatibility and backward compatibility with the existing process-spawning approach.

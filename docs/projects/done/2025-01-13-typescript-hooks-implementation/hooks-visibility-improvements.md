@@ -2,17 +2,14 @@
 
 ## Summary
 
-Updated the aichaku-hooks.ts file to provide better visibility and developer
-feedback when hooks are triggered.
+Updated the aichaku-hooks.ts file to provide better visibility and developer feedback when hooks are triggered.
 
 ## Changes Made
 
 ### 1. Enhanced Hook Feedback
 
-- **🪴 Aichaku Branding**: All hooks now start with the distinctive plant emoji
-  branding
-- **Visible Output**: Changed from silent exit codes (0) to visible ones (2)
-  where appropriate
+- **🪴 Aichaku Branding**: All hooks now start with the distinctive plant emoji branding
+- **Visible Output**: Changed from silent exit codes (0) to visible ones (2) where appropriate
 - **Progress Indicators**: Added clear status messages showing what's happening
 
 ### 2. Specific Hook Improvements
@@ -105,5 +102,4 @@ To install the updated hooks:
 aichaku hooks --install essential --global
 ```
 
-The hooks will provide visible, helpful feedback throughout the development
-workflow!
+The hooks will provide visible, helpful feedback throughout the development workflow!

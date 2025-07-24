@@ -65,8 +65,7 @@ command argument-value
 
 ## Configuration file
 
-You can specify options in a configuration file instead of command-line
-arguments.
+You can specify options in a configuration file instead of command-line arguments.
 
 **Default location**: `~/.config/product/config.yaml`
 

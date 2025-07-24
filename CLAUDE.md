@@ -1,12 +1,10 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with
-the Aichaku methodology library.
+This file provides guidance to Claude Code (claude.ai/code) when working with the Aichaku methodology library.
 
 ## Directives for Claude Code from Aichaku
 
-This configuration is dynamically assembled from YAML files in your
-~/.claude/aichaku installation.
+This configuration is dynamically assembled from YAML files in your ~/.claude/aichaku installation.
 
 ```yaml
 aichaku:

@@ -54,8 +54,7 @@ Flow efficiency: 45%
 
 ## Context Adaptations
 
-**From Scrum**: Start by adding WIP limits **From Kanban**: Add rhythm with
-ceremonies\
+**From Scrum**: Start by adding WIP limits **From Kanban**: Add rhythm with ceremonies\
 **Stable Hybrid**: Find your balance
 
 ## Key Decisions

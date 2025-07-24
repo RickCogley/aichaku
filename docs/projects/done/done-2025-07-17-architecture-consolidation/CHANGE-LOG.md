@@ -8,22 +8,19 @@
 
 ## Executive Summary
 
-This project successfully eliminated all legacy configuration file formats and
-implemented the unified "all methodologies, selected standards" architecture
-specification. The work resolved critical upgrade command failures while
+This project successfully eliminated all legacy configuration file formats and implemented the unified "all
+methodologies, selected standards" architecture specification. The work resolved critical upgrade command failures while
 establishing a clean, maintainable foundation for future Aichaku development.
 
 ## Critical Issues Addressed
 
 ### 1. Upgrade Command Failure 🚨
 
-**Problem**: Users experienced "No installation found" errors after running
-`aichaku upgrade`, caused by the upgrade command inadvertently deleting the main
-`aichaku.json` file.
+**Problem**: Users experienced "No installation found" errors after running `aichaku upgrade`, caused by the upgrade
+command inadvertently deleting the main `aichaku.json` file.
 
-**Root Cause**: Missing spread operator in metadata preservation logic
-(src/commands/upgrade.ts:76-83) meant only specific fields were preserved,
-losing critical configuration data including standards.
+**Root Cause**: Missing spread operator in metadata preservation logic (src/commands/upgrade.ts:76-83) meant only
+specific fields were preserved, losing critical configuration data including standards.
 
 **Solution**: Added comprehensive metadata preservation:
 
@@ -43,11 +40,9 @@ metadata = {
 
 **Specification**: "All methodologies, selected standards"
 
-**Before**: Mixed approach with some methodologies configured per-project
-**After**: Clean separation where:
+**Before**: Mixed approach with some methodologies configured per-project **After**: Clean separation where:
 
-- **Methodologies**: Auto-discovered globally from
-  `~/.claude/aichaku/docs/methodologies/`
+- **Methodologies**: Auto-discovered globally from `~/.claude/aichaku/docs/methodologies/`
 - **Standards**: Selected per-project in `.claude/aichaku/aichaku.json`
 
 ## Legacy Format Evolution Timeline
@@ -131,8 +126,7 @@ private async discoverAllMethodologies(): Promise<string[]> {
 }
 ```
 
-**Result**: 6 methodologies automatically discovered (scrum, lean, shape-up,
-scrumban, kanban, xp)
+**Result**: 6 methodologies automatically discovered (scrum, lean, shape-up, scrumban, kanban, xp)
 
 #### 2. Standards Command (`src/commands/standards.ts`)
 
@@ -283,8 +277,8 @@ Total count: 6
 - ✅ **Documentation**: Historical references
 - ✅ **Comments/strings**: Not active code paths
 
-**Status**: All active code paths now use unified format. Legacy references
-remain only for migration compatibility and historical documentation.
+**Status**: All active code paths now use unified format. Legacy references remain only for migration compatibility and
+historical documentation.
 
 ## Files Modified
 
@@ -313,18 +307,14 @@ Documentation files             # Architecture updates
 
 ### Technical Insights
 
-1. **Metadata Preservation**: Spread operators are critical for config
-   migrations
-2. **Architecture Clarity**: Explicit specifications prevent implementation
-   drift
+1. **Metadata Preservation**: Spread operators are critical for config migrations
+2. **Architecture Clarity**: Explicit specifications prevent implementation drift
 3. **Testing Strategy**: Clean environment testing reveals hidden dependencies
-4. **Legacy Management**: Aggressive consolidation requires careful transition
-   planning
+4. **Legacy Management**: Aggressive consolidation requires careful transition planning
 
 ### Process Improvements
 
-1. **Change Impact Analysis**: Better tooling needed for tracking file format
-   references
+1. **Change Impact Analysis**: Better tooling needed for tracking file format references
 2. **Migration Testing**: Automated testing of upgrade scenarios is essential
 3. **Documentation Maintenance**: Proactive updates during architecture changes
 4. **User Journey Testing**: End-to-end testing reveals integration issues
@@ -369,19 +359,16 @@ Documentation files             # Architecture updates
 
 ## Conclusion
 
-This architecture consolidation project represents a major milestone in
-Aichaku's evolution. By eliminating legacy technical debt and implementing a
-unified configuration system, we've established a clean, maintainable foundation
-that:
+This architecture consolidation project represents a major milestone in Aichaku's evolution. By eliminating legacy
+technical debt and implementing a unified configuration system, we've established a clean, maintainable foundation that:
 
 1. **Resolves immediate user issues** (upgrade command failures)
 2. **Simplifies the developer experience** (single configuration format)
 3. **Improves system performance** (global discovery, reduced file I/O)
 4. **Enables future innovation** (clean architecture for new features)
 
-The project demonstrates the value of aggressive technical debt elimination and
-architectural clarity. The unified "all methodologies, selected standards"
-specification is now fully realized, providing users with automatic methodology
+The project demonstrates the value of aggressive technical debt elimination and architectural clarity. The unified "all
+methodologies, selected standards" specification is now fully realized, providing users with automatic methodology
 discovery while maintaining project-specific standards selection.
 
 **Status**: ✅ **Complete and ready for release v0.32.0**

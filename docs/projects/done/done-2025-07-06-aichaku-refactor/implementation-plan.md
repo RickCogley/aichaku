@@ -6,8 +6,7 @@
 
 ## Objective
 
-Transform Aichaku from a "methodology selector" to a true adaptive system with
-simple init/upgrade/uninstall lifecycle.
+Transform Aichaku from a "methodology selector" to a true adaptive system with simple init/upgrade/uninstall lifecycle.
 
 ## Technical Tasks
 

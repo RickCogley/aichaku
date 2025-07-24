@@ -6,8 +6,8 @@
 
 ## Project Overview
 
-Implementing the Model Context Protocol (MCP) server for automated code review
-based on Aichaku methodologies and standards.
+Implementing the Model Context Protocol (MCP) server for automated code review based on Aichaku methodologies and
+standards.
 
 ## Current Status 🌱
 

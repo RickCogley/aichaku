@@ -101,15 +101,13 @@ export class Example extends Model {
 - Exports correctly
 - No syntax errors
 
-**Test Approach**: Create `test/models/Example.test.js` with basic instantiation
-and validation tests.
+**Test Approach**: Create `test/models/Example.test.js` with basic instantiation and validation tests.
 
 ---
 
 ### Task #2: [Task Name]
 
-**Type**: Modify **File**: `src/services/ExampleService.js` **Dependencies**:
-[Task #1]
+**Type**: Modify **File**: `src/services/ExampleService.js` **Dependencies**: [Task #1]
 
 **Context**: [Why modifying this file]
 
@@ -283,6 +281,5 @@ After execution, verify:
 - [ ] Feature working end-to-end
 - [ ] Execution report generated
 
-**Claude Code Reminder**: Save execution reports to
-`.claude/output/[status-YYYYMM-projectname]/execution-report.md`. Focus on
-DOING, not discussing. Execute the plan exactly as written.
+**Claude Code Reminder**: Save execution reports to `.claude/output/[status-YYYYMM-projectname]/execution-report.md`.
+Focus on DOING, not discussing. Execute the plan exactly as written.

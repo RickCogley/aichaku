@@ -2,25 +2,22 @@
 
 ## Problem
 
-Users want to understand what each methodology offers before choosing or using
-them. Currently, they need to:
+Users want to understand what each methodology offers before choosing or using them. Currently, they need to:
 
 - Search online for methodology information
 - Read through multiple files in `.claude/methodologies/`
 - Ask Claude Code directly (but lose context)
 
-There's no quick, built-in way to learn about a methodology's strengths,
-weaknesses, and use cases.
+There's no quick, built-in way to learn about a methodology's strengths, weaknesses, and use cases.
 
 ## Appetite
 
-Small batch - 2-3 days of work. This is a nice-to-have feature that enhances the
-user experience but isn't critical for core functionality.
+Small batch - 2-3 days of work. This is a nice-to-have feature that enhances the user experience but isn't critical for
+core functionality.
 
 ## Solution
 
-Add a `help` command that provides concise, practical information about each
-methodology:
+Add a `help` command that provides concise, practical information about each methodology:
 
 ```bash
 # Show help for specific methodology

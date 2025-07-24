@@ -97,5 +97,4 @@ So that [benefit]
 3. Schedule sprint review and retrospective
 4. Begin daily standups
 
-**Sprint Commitment**: The team commits to completing the above stories to the
-Definition of Done by [sprint end date].
+**Sprint Commitment**: The team commits to completing the above stories to the Definition of Done by [sprint end date].

@@ -47,12 +47,9 @@ Based on log analysis from `/tmp/aichaku-hooks.log`:
 
 ### Immediate Actions
 
-1. **DISABLE aichaku-feedback** - This is the primary issue, providing minimal
-   value for 1,719 API calls
-2. **REFINE commit-validator** - Should only run on actual git commands, not all
-   bash commands
-3. **CONSOLIDATE PostToolUse hooks** - Combine docs-review, jsdoc-checker, and
-   Markdown-review into one
+1. **DISABLE aichaku-feedback** - This is the primary issue, providing minimal value for 1,719 API calls
+2. **REFINE commit-validator** - Should only run on actual git commands, not all bash commands
+3. **CONSOLIDATE PostToolUse hooks** - Combine docs-review, jsdoc-checker, and Markdown-review into one
 
 ### Hook Configuration Changes
 

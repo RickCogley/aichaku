@@ -101,16 +101,14 @@ export async function upgrade(
       return {
         success: false,
         path: targetPath,
-        message:
-          `🪴 Aichaku: No installation found at ${targetPath}. Run 'aichaku init' first.`,
+        message: `🪴 Aichaku: No installation found at ${targetPath}. Run 'aichaku init' first.`,
       };
     }
   } else if (!metadataInfo.path) {
     return {
       success: false,
       path: targetPath,
-      message:
-        `🪴 Aichaku: No installation found at ${targetPath}. Run 'aichaku init' first.`,
+      message: `🪴 Aichaku: No installation found at ${targetPath}. Run 'aichaku init' first.`,
     };
   }
 
@@ -145,9 +143,7 @@ export async function upgrade(
     return {
       success: false,
       path: targetPath,
-      message: `Failed to read installation metadata: ${
-        error instanceof Error ? error.message : String(error)
-      }`,
+      message: `Failed to read installation metadata: ${error instanceof Error ? error.message : String(error)}`,
     };
   }
 
@@ -157,8 +153,7 @@ export async function upgrade(
       return {
         success: true,
         path: targetPath,
-        message:
-          `ℹ️  Current version: v${VERSION}\n    Latest version:  v${VERSION}\n    \n✓ You're up to date!`,
+        message: `ℹ️  Current version: v${VERSION}\n    Latest version:  v${VERSION}\n    \n✓ You're up to date!`,
         action: "check",
         version: metadata.version,
         latestVersion: VERSION,
@@ -181,8 +176,7 @@ export async function upgrade(
     return {
       success: true,
       path: targetPath,
-      message:
-        `🪴 Aichaku: Already on latest version (v${VERSION}). Use --force to reinstall.`,
+      message: `🪴 Aichaku: Already on latest version (v${VERSION}). Use --force to reinstall.`,
       action: "current",
     };
   }
@@ -455,9 +449,7 @@ export async function upgrade(
 
                 if (!options.silent) {
                   Brand.success(
-                    `Migrated ${legacySelected.length} standards from ${
-                      legacyFile.split("/").pop()
-                    }`,
+                    `Migrated ${legacySelected.length} standards from ${legacyFile.split("/").pop()}`,
                   );
                 }
               }
@@ -476,9 +468,9 @@ export async function upgrade(
             // Don't fail upgrade if migration fails
             if (!options.silent) {
               console.warn(
-                `⚠️  Could not migrate standards from ${
-                  legacyFile.split("/").pop()
-                }: ${error instanceof Error ? error.message : String(error)}`,
+                `⚠️  Could not migrate standards from ${legacyFile.split("/").pop()}: ${
+                  error instanceof Error ? error.message : String(error)
+                }`,
               );
             }
           }

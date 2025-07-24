@@ -2,32 +2,28 @@
 
 ## Quick Reference
 
-The Diátaxis framework organizes documentation into four distinct modes, each
-serving a specific user need. Combined with Google's developer documentation
-style guide, this creates clear, accessible, and well-structured documentation.
+The Diátaxis framework organizes documentation into four distinct modes, each serving a specific user need. Combined
+with Google's developer documentation style guide, this creates clear, accessible, and well-structured documentation.
 
 ### The Four Modes of Documentation
 
 1. **🎓 Tutorial** - Learning-oriented: Teaching a beginner to do something
 2. **🔧 How-to Guide** - Task-oriented: Showing how to solve a specific problem
 3. **📖 Reference** - Information-oriented: Describing the machinery
-4. **💡 Explanation** - Understanding-oriented: Clarifying and discussing
-   concepts
+4. **💡 Explanation** - Understanding-oriented: Clarifying and discussing concepts
 
 ## Tutorial Guidelines
 
 ### Purpose
 
-Tutorials are lessons that take the reader through a series of steps to complete
-a project. They are learning-oriented.
+Tutorials are lessons that take the reader through a series of steps to complete a project. They are learning-oriented.
 
 ### Structure
 
 ````markdown
 # Getting Started with [Product Name]
 
-In this tutorial, you'll learn how to [main outcome]. By the end, you'll have
-[specific achievement].
+In this tutorial, you'll learn how to [main outcome]. By the end, you'll have [specific achievement].
 
 ## Prerequisites
 
@@ -389,5 +385,5 @@ Ensure your documentation clearly identifies which mode it belongs to:
 3. Maintain consistency across similar documents
 4. Review against both Diátaxis principles and Google style guide
 
-Remember: Good documentation serves the reader's needs at their moment of need.
-Choose the right mode for the right purpose.
+Remember: Good documentation serves the reader's needs at their moment of need. Choose the right mode for the right
+purpose.

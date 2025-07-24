@@ -10,8 +10,8 @@ The pattern that caused the most problems:
 "(Deno\.(readFile|readTextFile|open|stat|lstat|readDir|remove|rename|mkdir)|fs\.(readFile|writeFile|readdir|stat|unlink|rename|mkdir))\s*\(\s*[a-zA-Z*$][a-zA-Z0-9*$]*\s*[,)]"
 ```
 
-This pattern matches ANY file operation with a variable, which is standard
-programming practice. Examples of false positives:
+This pattern matches ANY file operation with a variable, which is standard programming practice. Examples of false
+positives:
 
 - `await Deno.readTextFile(configPath)`
 - `await Deno.mkdir(dir, { recursive: true })`
@@ -19,9 +19,8 @@ programming practice. Examples of false positives:
 
 ### 2. Maintenance Burden
 
-The exclusion list in the workflow has grown to over 1000 characters and is
-still not comprehensive enough. Each new file operation requires updating the
-exclusions.
+The exclusion list in the workflow has grown to over 1000 characters and is still not comprehensive enough. Each new
+file operation requires updating the exclusions.
 
 ### 3. What DevSkim Already Covers
 
@@ -52,8 +51,7 @@ exclusions.
 
 ### Remove These Custom Checks
 
-1. **Path traversal vulnerabilities** - CodeQL does this better with semantic
-   analysis
+1. **Path traversal vulnerabilities** - CodeQL does this better with semantic analysis
 2. **Dangerous patterns (eval, etc.)** - DevSkim already covers these
 3. **Generic security patterns** - Covered by both tools
 

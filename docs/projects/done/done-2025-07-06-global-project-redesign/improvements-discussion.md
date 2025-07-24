@@ -4,8 +4,8 @@
 
 ### 1. Global vs Project Installation Confusion
 
-**Problem**: When Aichaku is installed globally, running `aichaku init` in a
-project still copies all methodologies locally.
+**Problem**: When Aichaku is installed globally, running `aichaku init` in a project still copies all methodologies
+locally.
 
 - Creates unnecessary duplication
 - Forces users to add `.claude/` to `.gitignore` in every project

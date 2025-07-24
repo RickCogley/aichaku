@@ -6,8 +6,7 @@
 
 ## Content Analysis
 
-This file documents GitHub Actions security workflows specifically configured
-for Aichaku:
+This file documents GitHub Actions security workflows specifically configured for Aichaku:
 
 ### Key Components
 
@@ -98,9 +97,7 @@ If you strongly prefer moving to Nagare:
 1. **Extract Generic Parts**: Security workflow principles
 2. **Keep Aichaku-Specific**: The section about Aichaku's adaptations
 3. **Cross-Reference**: Nagare could reference Aichaku's specific needs
-4. **Shared Module**: Create a shared security workflow guide both tools
-   reference
+4. **Shared Module**: Create a shared security workflow guide both tools reference
 
-However, given the file's specific focus on Aichaku's security requirements and
-workflows, keeping it within Aichaku and making it part of the modular guidance
-system seems most appropriate.
+However, given the file's specific focus on Aichaku's security requirements and workflows, keeping it within Aichaku and
+making it part of the modular guidance system seems most appropriate.

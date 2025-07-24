@@ -6,8 +6,7 @@
 
 ## Background
 
-[Historical context or theoretical foundation that helps readers understand why
-this concept exists]
+[Historical context or theoretical foundation that helps readers understand why this concept exists]
 
 ## How [concept] works
 

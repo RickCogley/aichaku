@@ -182,8 +182,7 @@ export class GitHubClient {
     const fileSize = fileData.length;
 
     // Upload asset
-    const uploadUrl =
-      `https://uploads.github.com/repos/${owner}/${repo}/releases/${releaseId}/assets`;
+    const uploadUrl = `https://uploads.github.com/repos/${owner}/${repo}/releases/${releaseId}/assets`;
     const uploadResponse = await this.makeRequest(
       `${uploadUrl}?name=${encodeURIComponent(fileName)}`,
       {

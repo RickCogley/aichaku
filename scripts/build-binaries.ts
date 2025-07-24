@@ -90,8 +90,7 @@ async function compileMCPServers() {
   // Build Aichaku MCP Server
   for (const platform of PLATFORMS) {
     const ext = platform.os === "windows" ? ".exe" : "";
-    const output =
-      `./dist/aichaku-code-reviewer-${VERSION}-${platform.name}${ext}`;
+    const output = `./dist/aichaku-code-reviewer-${VERSION}-${platform.name}${ext}`;
 
     console.log(`  📦 Building Aichaku MCP server for ${platform.name}...`);
 

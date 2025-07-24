@@ -2,15 +2,12 @@
 
 ## Overview
 
-This document is created to test the docs-review hook that should trigger when
-Markdown files are edited.
+This document is created to test the docs-review hook that should trigger when Markdown files are edited.
 
 ## Test Scenarios
 
-1. **Documentation Standards Review**: The hook should check this Markdown file
-   against documentation standards
-2. **JSDoc Checker**: When we edit TypeScript files, the jsdoc-checker should
-   provide guidance
+1. **Documentation Standards Review**: The hook should check this Markdown file against documentation standards
+2. **JSDoc Checker**: When we edit TypeScript files, the jsdoc-checker should provide guidance
 
 ## Expected Behavior
 

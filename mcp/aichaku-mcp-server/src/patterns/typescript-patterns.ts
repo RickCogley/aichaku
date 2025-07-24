@@ -62,8 +62,7 @@ export class TypeScriptPatterns {
         name: "Non-null assertion operator (!) can hide null/undefined errors",
         pattern: /\w+\s*!\./,
         severity: "low",
-        description:
-          "Non-null assertion operator (!) can hide null/undefined errors",
+        description: "Non-null assertion operator (!) can hide null/undefined errors",
         fix: "Add proper null checks or use optional chaining",
         category: "typescript",
       },
@@ -132,8 +131,7 @@ export class TypeScriptPatterns {
         name: "Consider using const assertions or union types instead of enums",
         pattern: /enum\s+\w+\s*\{/,
         severity: "info",
-        description:
-          "Consider using const assertions or union types instead of enums",
+        description: "Consider using const assertions or union types instead of enums",
         fix: "Use 'as const' or string literal unions for better tree-shaking",
         category: "typescript",
       },

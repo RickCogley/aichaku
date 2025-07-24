@@ -2,9 +2,8 @@
 
 ## Overview
 
-After successfully migrating personal slash commands to the new Markdown format,
-we should consider adding slash command management to Aichaku itself. This would
-allow users to install, manage, and share slash commands through the Aichaku
+After successfully migrating personal slash commands to the new Markdown format, we should consider adding slash command
+management to Aichaku itself. This would allow users to install, manage, and share slash commands through the Aichaku
 CLI.
 
 ## Current State Analysis
@@ -308,13 +307,12 @@ Add to `aichaku.json`:
 
 ## Recommendation
 
-Start with Phase 1 in Aichaku v0.30.0 to provide basic command management. This
-would:
+Start with Phase 1 in Aichaku v0.30.0 to provide basic command management. This would:
 
 - Install built-in Aichaku commands during `aichaku init`
 - Provide `aichaku commands list` for discovery
 - Allow `aichaku commands create` for custom commands
 - Set foundation for future sharing features
 
-The file-based approach works well, but adding Aichaku management would make
-commands more discoverable and shareable across the community.
+The file-based approach works well, but adding Aichaku management would make commands more discoverable and shareable
+across the community.

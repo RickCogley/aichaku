@@ -2,17 +2,15 @@
 
 ## Summary
 
-Investigated how `deno check` handles exclusions in deno.json configuration.
-Discovered that unlike `deno fmt` and `deno lint`, the `deno check` command does
-NOT support exclusions through deno.json.
+Investigated how `deno check` handles exclusions in deno.json configuration. Discovered that unlike `deno fmt` and
+`deno lint`, the `deno check` command does NOT support exclusions through deno.json.
 
 ## Key Findings
 
 ### What Works
 
 - **deno fmt**: Respects the `"fmt": { "exclude": [...] }` section in deno.json
-- **deno lint**: Respects the `"lint": { "exclude": [...] }` section in
-  deno.json
+- **deno lint**: Respects the `"lint": { "exclude": [...] }` section in deno.json
 - Both tools properly skip files matching the exclusion patterns
 
 ### What Doesn't Work
@@ -40,13 +38,10 @@ Results:
 
 ## Implications for Nagare Release Process
 
-Since nagare runs `deno check` on all TypeScript files and there's no way to
-configure exclusions:
+Since nagare runs `deno check` on all TypeScript files and there's no way to configure exclusions:
 
-1. **Current Working Solution**: Keep "type-check" disabled in nagare's autofix
-   configuration
-2. **Alternative**: Maintain explicit file lists in pre-release hooks (current
-   approach)
+1. **Current Working Solution**: Keep "type-check" disabled in nagare's autofix configuration
+2. **Alternative**: Maintain explicit file lists in pre-release hooks (current approach)
 3. **Not Viable**: Using deno.json to exclude files from type checking
 
 ## Updated Approach
@@ -68,8 +63,7 @@ Given these findings, the best approach is to:
 
 - Not all Deno tools support the same configuration options
 - Always verify tool behavior before implementing configuration changes
-- The Deno documentation doesn't explicitly state that check lacks exclusion
-  support
+- The Deno documentation doesn't explicitly state that check lacks exclusion support
 - Testing assumptions is critical before implementing solutions
 
 ---

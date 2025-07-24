@@ -2,8 +2,7 @@
 
 ## How Mermaid Works
 
-Mermaid diagrams are created using Markdown code blocks with the `mermaid`
-language identifier:
+Mermaid diagrams are created using Markdown code blocks with the `mermaid` language identifier:
 
 ````markdown
 ```mermaid
@@ -128,8 +127,7 @@ gantt
 
 ## Notes on PDF Generation
 
-The key challenge is that Mermaid blocks need to be converted to images for PDF.
-Here's a working approach:
+The key challenge is that Mermaid blocks need to be converted to images for PDF. Here's a working approach:
 
 ```bash
 # Install mermaid CLI

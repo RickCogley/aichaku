@@ -1,8 +1,7 @@
 # Deno App Configuration and Metadata Guide
 
-This guide shows you how to implement configuration and metadata management for
-Deno/TypeScript applications, covering both development and installed
-application scenarios.
+This guide shows you how to implement configuration and metadata management for Deno/TypeScript applications, covering
+both development and installed application scenarios.
 
 ## Overview
 
@@ -11,15 +10,14 @@ Application configuration involves two distinct scenarios:
 1. **Development configuration**: Project metadata and build-time settings
 2. **User configuration**: Runtime settings for installed applications
 
-Think of this like the difference between an architect's blueprint (development)
-and how each homeowner arranges their furniture (user configuration).
+Think of this like the difference between an architect's blueprint (development) and how each homeowner arranges their
+furniture (user configuration).
 
 ## Development Configuration
 
 ### Set Up Project Metadata
 
-Create a `deno.json` file in your project root to define project metadata and
-tooling configuration:
+Create a `deno.json` file in your project root to define project metadata and tooling configuration:
 
 ```json
 {
@@ -44,8 +42,7 @@ tooling configuration:
 
 ### Create a Configuration Schema
 
-Define and validate your configuration structure using TypeScript and runtime
-validation:
+Define and validate your configuration structure using TypeScript and runtime validation:
 
 ```typescript
 // config/schema.ts
@@ -179,8 +176,7 @@ Organize configuration files by purpose:
 
 ### Implement Configuration Manager
 
-Create a manager class to handle loading, saving, and migrating user
-configuration:
+Create a manager class to handle loading, saving, and migrating user configuration:
 
 ```typescript
 // config/user-config.ts
@@ -471,15 +467,13 @@ Deno.test("handles config migration", async () => {
 
 ### Common Issues
 
-**Configuration not loading**: Check file permissions and ensure directories
-exist.
+**Configuration not loading**: Check file permissions and ensure directories exist.
 
 **Migration failures**: Always backup user configuration before migrations.
 
 **Cross-platform paths**: Test on all target platforms, especially Windows.
 
-**Permission errors**: Request appropriate Deno permissions (--allow-read,
---allow-write, --allow-env).
+**Permission errors**: Request appropriate Deno permissions (--allow-read, --allow-write, --allow-env).
 
 ## Further Reading
 

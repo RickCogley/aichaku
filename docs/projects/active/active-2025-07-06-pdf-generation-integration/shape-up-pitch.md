@@ -2,27 +2,23 @@
 
 ## Problem
 
-Aichaku enforces good practices like creating final summaries, but stops short
-of making them shareable with business stakeholders. Markdown files aren't
-suitable for:
+Aichaku enforces good practices like creating final summaries, but stops short of making them shareable with business
+stakeholders. Markdown files aren't suitable for:
 
 - Executive presentations
 - Client deliverables
 - Archive documentation
 - Non-technical stakeholders
 
-The PDF generation capability exists but is hidden in scripts, requiring manual
-discovery and setup.
+The PDF generation capability exists but is hidden in scripts, requiring manual discovery and setup.
 
-**Update**: We discovered SharePoint renders Markdown files natively, which
-provides an immediate solution for many business users. However, PDF generation
-is still valuable for formal documents, offline sharing, and organizations
+**Update**: We discovered SharePoint renders Markdown files natively, which provides an immediate solution for many
+business users. However, PDF generation is still valuable for formal documents, offline sharing, and organizations
 without SharePoint.
 
 ## Appetite
 
-Medium batch - 4-6 hours. This is a core feature that completes the
-"professional output" story.
+Medium batch - 4-6 hours. This is a core feature that completes the "professional output" story.
 
 ## Solution
 

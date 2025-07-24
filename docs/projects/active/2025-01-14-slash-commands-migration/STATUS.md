@@ -2,8 +2,7 @@
 
 ## Overview
 
-Migrating from JSON-based slash commands in settings.json to the new Markdown
-format in ~/.claude/commands/
+Migrating from JSON-based slash commands in settings.json to the new Markdown format in ~/.claude/commands/
 
 ## Status
 

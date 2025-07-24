@@ -19,8 +19,7 @@ aichaku init
 
 ### Scenario 2: Existing Aichaku User (Clean Upgrade)
 
-**User**: Has Aichaku, wants permanent docs, no historical analysis **Command**:
-`aichaku references init`
+**User**: Has Aichaku, wants permanent docs, no historical analysis **Command**: `aichaku references init`
 
 ```bash
 # Bootstrap permanent docs for existing users
@@ -36,8 +35,8 @@ aichaku references init
 
 ### Scenario 3: Existing User with Rich History
 
-**User**: Has lots of `.claude/output/` projects, wants to extract all learnings
-**Command**: `aichaku references bootstrap --include-history`
+**User**: Has lots of `.claude/output/` projects, wants to extract all learnings **Command**:
+`aichaku references bootstrap --include-history`
 
 ```bash
 # Full bootstrap with historical analysis
@@ -58,8 +57,7 @@ aichaku references bootstrap --include-history
 
 ### Scenario 4: Selective Historical Analysis
 
-**User**: Wants to pick which projects to analyze **Command**:
-`aichaku references bootstrap --interactive`
+**User**: Wants to pick which projects to analyze **Command**: `aichaku references bootstrap --interactive`
 
 ```bash
 # Interactive selection of projects to analyze
@@ -82,8 +80,7 @@ aichaku references bootstrap --interactive
 
 ### Scenario 5: Quick Start (Minimal)
 
-**User**: Just wants basic structure, will fill in manually **Command**:
-`aichaku references init --minimal`
+**User**: Just wants basic structure, will fill in manually **Command**: `aichaku references init --minimal`
 
 ```bash
 # Minimal structure without analysis
@@ -97,8 +94,8 @@ aichaku references init --minimal
 
 ### Scenario 6: Fix Missing/Broken Standards
 
-**User**: Has Aichaku but some standards are missing or duplicated (like
-TEST-PYRAMID, SOLID, CONVENTIONAL-COMMITS) **Command**: `aichaku standards fix`
+**User**: Has Aichaku but some standards are missing or duplicated (like TEST-PYRAMID, SOLID, CONVENTIONAL-COMMITS)
+**Command**: `aichaku standards fix`
 
 ```bash
 # Fix missing or broken standards
@@ -379,6 +376,5 @@ class UpgradeCommand {
 2. **Educational**: Explain what's being created
 3. **Customizable**: Easy to skip or modify
 
-This comprehensive trigger system ensures that both new and existing users can
-easily adopt permanent reference documentation, with flexibility for different
-needs and preferences!
+This comprehensive trigger system ensures that both new and existing users can easily adopt permanent reference
+documentation, with flexibility for different needs and preferences!

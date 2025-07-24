@@ -2,9 +2,8 @@
 
 ## Overview
 
-This document designs an optimal progress indicator system for Aichaku that
-works effectively in Claude Code's environment, supporting all methodologies
-with clear visual feedback.
+This document designs an optimal progress indicator system for Aichaku that works effectively in Claude Code's
+environment, supporting all methodologies with clear visual feedback.
 
 ## Design Principles
 
@@ -207,8 +206,8 @@ interface ProgressData {
 <!-- AICHAKU:PROGRESS:START -->
 ```
 
-Shape Up Cycle: Feature Authentication [Shaping:✓][Building:████░░░░][Cool-down:
-] Week 3.5 of 6 | 58% Complete | ON TRACK
+Shape Up Cycle: Feature Authentication [Shaping:✓][Building:████░░░░][Cool-down: ] Week 3.5 of 6 | 58% Complete | ON
+TRACK
 
 ```
 <!-- AICHAKU:PROGRESS:END -->
@@ -304,8 +303,7 @@ const colors = {
 
 ## Benefits Over External Libraries
 
-While libraries like `ora` or `cli-progress` offer features, our custom solution
-provides:
+While libraries like `ora` or `cli-progress` offer features, our custom solution provides:
 
 1. **Zero Dependencies**: Maintains Aichaku's security stance
 2. **Methodology-Aware**: Tailored to each workflow's needs

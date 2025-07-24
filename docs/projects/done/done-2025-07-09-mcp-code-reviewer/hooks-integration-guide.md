@@ -4,8 +4,7 @@
 
 ## Overview
 
-Claude Code hooks provide the perfect mechanism for automatic MCP reviews
-without explicit user commands.
+Claude Code hooks provide the perfect mechanism for automatic MCP reviews without explicit user commands.
 
 ## Hook Flow
 
@@ -154,9 +153,8 @@ esac
 }
 ```
 
-**Note**: PR creation is ALWAYS manual. The hook can suggest fixes but won't
-create PRs automatically. Users must explicitly ask: "Create a PR to fix these
-issues".
+**Note**: PR creation is ALWAYS manual. The hook can suggest fixes but won't create PRs automatically. Users must
+explicitly ask: "Create a PR to fix these issues".
 
 ## Installation Commands
 

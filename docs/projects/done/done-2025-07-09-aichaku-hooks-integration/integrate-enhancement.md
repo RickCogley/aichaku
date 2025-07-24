@@ -2,9 +2,8 @@
 
 ## Overview
 
-Update the `aichaku integrate` command to include both methodology rules AND
-selected standards in CLAUDE.md, creating a complete guidance system for Claude
-Code.
+Update the `aichaku integrate` command to include both methodology rules AND selected standards in CLAUDE.md, creating a
+complete guidance system for Claude Code.
 
 ## Current State
 
@@ -123,8 +122,8 @@ aichaku integrate
 
 ### Integration with MCP
 
-The MCP will read the same `.claude/.aichaku-standards.json` file to know which
-standards to review against, ensuring consistency between generation and review.
+The MCP will read the same `.claude/.aichaku-standards.json` file to know which standards to review against, ensuring
+consistency between generation and review.
 
 ## Next Steps
 

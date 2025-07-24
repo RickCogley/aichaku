@@ -144,5 +144,4 @@ Tomorrow: Integrate TokenService into authentication middleware
 - Pairing caught issues early
 - 100% coverage achieved naturally
 
-**Quote of the session**: "Make it fail, make it pass, make it beautiful" -
-Uncle Bob
+**Quote of the session**: "Make it fail, make it pass, make it beautiful" - Uncle Bob

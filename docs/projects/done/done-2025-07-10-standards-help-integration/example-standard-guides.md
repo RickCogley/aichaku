@@ -359,5 +359,4 @@ Always show:
 4. **Scannable**: Easy to find information
 5. **Comprehensive**: Everything in one place
 
-These templates provide a consistent, engaging way to learn about development
-standards directly from the command line!
+These templates provide a consistent, engaging way to learn about development standards directly from the command line!

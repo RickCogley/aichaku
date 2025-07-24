@@ -2,16 +2,14 @@
 
 ## Project Overview
 
-🪴 Aichaku: Implementing modular standards integration for enhanced prompt
-engineering
+🪴 Aichaku: Implementing modular standards integration for enhanced prompt engineering
 
 ## Completed Work
 
 ### 1. ✅ Hooks Command Implementation
 
 - Created `aichaku hooks` command for Claude Code hook management
-- Implemented hook templates for path validation, status updates, and
-  methodology detection
+- Implemented hook templates for path validation, status updates, and methodology detection
 - Fixed multiple issues:
   - Missing utility files (colors.ts, spinner.ts, symbols.ts)
   - JSON parsing error with comments in ~/.claude/settings.json
@@ -50,13 +48,10 @@ engineering
   - `<!-- AICHAKU:METHODOLOGY:START/END -->` for methodology rules
   - `<!-- AICHAKU:STANDARDS:START/END -->` for selected standards
 - Created comprehensive standard content files:
-  - `~/.claude/docs/standards/security/owasp-web.md` - OWASP Top 10 Web
-    Application Security
-  - `~/.claude/docs/standards/architecture/15-factor.md` - 15-Factor App
-    Methodology
+  - `~/.claude/docs/standards/security/owasp-web.md` - OWASP Top 10 Web Application Security
+  - `~/.claude/docs/standards/architecture/15-factor.md` - 15-Factor App Methodology
   - `~/.claude/docs/standards/development/tdd.md` - Test-Driven Development
-  - `~/.claude/docs/standards/security/nist-csf.md` - NIST Cybersecurity
-    Framework
+  - `~/.claude/docs/standards/security/nist-csf.md` - NIST Cybersecurity Framework
 - Features:
   - Surgical updates preserving existing content
   - Dynamic content loading based on selected standards
@@ -77,12 +72,10 @@ engineering
 - **User's name**: Rick
 - **Emphasized**: "world-famous aichaku branding" (🪴)
 - **Focus**: User choice over auto-detection
-- **UX Priority**: Clear next steps showing what users CAN do, not just required
-  actions
-- **Integration Purpose**: Standards in CLAUDE.md for proactive code
-  generation + same standards for MCP-based reactive review
-- **Workflow Vision**: Dual-purpose standards system for both generation and
+- **UX Priority**: Clear next steps showing what users CAN do, not just required actions
+- **Integration Purpose**: Standards in CLAUDE.md for proactive code generation + same standards for MCP-based reactive
   review
+- **Workflow Vision**: Dual-purpose standards system for both generation and review
 
 ## Current State
 
@@ -90,10 +83,8 @@ engineering
 
 - All major features for standards integration are implemented and tested
 - The system now supports modular guidance with user choice
-- Enhanced integrate command successfully creates/updates CLAUDE.md with both
-  methodology and selected standards
-- Clear workflow established: select standards → integrate → code generation
-  with standards awareness
+- Enhanced integrate command successfully creates/updates CLAUDE.md with both methodology and selected standards
+- Clear workflow established: select standards → integrate → code generation with standards awareness
 
 ### Example Workflow
 

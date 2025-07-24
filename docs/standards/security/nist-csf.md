@@ -4,18 +4,12 @@
 
 The NIST CSF organizes cybersecurity activities into six core functions:
 
-1. **🎯 Govern** - Establish cybersecurity governance and enterprise risk
-   management
-2. **🔍 Identify** - Understand cybersecurity risks to systems, people, assets,
-   data, and capabilities
-3. **🛡️ Protect** - Implement appropriate safeguards to ensure delivery of
-   critical services
-4. **🔍 Detect** - Implement activities to identify the occurrence of
-   cybersecurity events
-5. **🚨 Respond** - Implement activities to take action regarding detected
-   cybersecurity incidents
-6. **🔄 Recover** - Implement activities to restore capabilities impaired by
-   cybersecurity incidents
+1. **🎯 Govern** - Establish cybersecurity governance and enterprise risk management
+2. **🔍 Identify** - Understand cybersecurity risks to systems, people, assets, data, and capabilities
+3. **🛡️ Protect** - Implement appropriate safeguards to ensure delivery of critical services
+4. **🔍 Detect** - Implement activities to identify the occurrence of cybersecurity events
+5. **🚨 Respond** - Implement activities to take action regarding detected cybersecurity incidents
+6. **🔄 Recover** - Implement activities to restore capabilities impaired by cybersecurity incidents
 
 ### Implementation for Software Development
 
@@ -110,8 +104,7 @@ const secureDefaults = {
 class SecurityMonitoring {
   static monitorFailedLogins(attempts: LoginAttempt[]) {
     const recentFailures = attempts.filter(
-      (attempt) =>
-        !attempt.successful && attempt.timestamp > Date.now() - 5 * 60 * 1000,
+      (attempt) => !attempt.successful && attempt.timestamp > Date.now() - 5 * 60 * 1000,
     );
 
     if (recentFailures.length > 5) {
@@ -347,6 +340,5 @@ class AuditLogger {
 }
 ```
 
-Remember: The NIST CSF is a risk-based approach to cybersecurity. Focus on
-implementing controls that address your specific risks and business
-requirements, starting with the most critical assets and highest-risk scenarios.
+Remember: The NIST CSF is a risk-based approach to cybersecurity. Focus on implementing controls that address your
+specific risks and business requirements, starting with the most critical assets and highest-risk scenarios.

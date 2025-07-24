@@ -2,8 +2,7 @@
 
 ## Summary
 
-Transformed Aichaku from immediate document creation to a thoughtful
-discussion-first approach.
+Transformed Aichaku from immediate document creation to a thoughtful discussion-first approach.
 
 ## Changes Made
 

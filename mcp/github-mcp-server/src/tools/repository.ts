@@ -23,12 +23,8 @@ export const repositoryTools = {
       responseText += `${format.separator(40)}\n\n`;
 
       responseText += `Repository: ${repository.full_name}\n`;
-      responseText += `Description: ${
-        repository.description || "No description"
-      }\n`;
-      responseText += `Visibility: ${
-        repository.private ? "Private" : "Public"
-      }\n`;
+      responseText += `Description: ${repository.description || "No description"}\n`;
+      responseText += `Visibility: ${repository.private ? "Private" : "Public"}\n`;
       responseText += `Default Branch: ${repository.default_branch}\n`;
 
       responseText += `\n🔗 Links:\n`;
@@ -51,9 +47,7 @@ export const repositoryTools = {
         content: [
           {
             type: "text",
-            text: `❌ Failed to view repository: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
+            text: `❌ Failed to view repository: ${error instanceof Error ? error.message : String(error)}`,
           },
         ],
         isError: true,
@@ -70,8 +64,7 @@ export const repositoryTools = {
       limit?: number;
     },
   ) {
-    const { type = "owner", sort = "updated", direction = "desc", limit = 10 } =
-      args;
+    const { type = "owner", sort = "updated", direction = "desc", limit = 10 } = args;
 
     try {
       const repositories = await client.listRepositories({
@@ -105,9 +98,7 @@ export const repositoryTools = {
 
         responseText += `\n${repo.full_name}\n`;
         responseText += `${"─".repeat(repo.full_name.length)}\n`;
-        responseText += `  Description: ${
-          repo.description || "No description"
-        }\n`;
+        responseText += `  Description: ${repo.description || "No description"}\n`;
         responseText += `  Visibility: ${visibility}\n`;
         responseText += `  Default Branch: ${repo.default_branch}\n`;
         responseText += `  🔗 ${repo.html_url}\n`;
@@ -126,9 +117,7 @@ export const repositoryTools = {
         content: [
           {
             type: "text",
-            text: `❌ Failed to list repositories: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
+            text: `❌ Failed to list repositories: ${error instanceof Error ? error.message : String(error)}`,
           },
         ],
         isError: true,

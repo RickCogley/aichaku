@@ -2,14 +2,12 @@
 
 ## Summary
 
-Based on GitHub issue #26864, discovered that `deno check` DOES support
-exclusions when:
+Based on GitHub issue #26864, discovered that `deno check` DOES support exclusions when:
 
 1. Using top-level `"exclude"` in deno.json (not in a "check" section)
 2. Running `deno check` without arguments (not `deno check .`)
 
-This is a significant improvement from the previous understanding that deno
-check had no exclusion support.
+This is a significant improvement from the previous understanding that deno check had no exclusion support.
 
 ## Key Discovery
 
@@ -72,8 +70,7 @@ Created test file with intentional type error in `scratch/test-exclude.ts`:
 
 - Running `deno check` successfully skipped the test file
 - Also skipped all v2 files and other excluded paths
-- Only reported the known error in config-manager.ts (which is in our exclude
-  list)
+- Only reported the known error in config-manager.ts (which is in our exclude list)
 
 ## Benefits
 
@@ -85,8 +82,8 @@ Created test file with intentional type error in `scratch/test-exclude.ts`:
 ## Current Status
 
 ✅ Format checking works with exclusions ✅ Lint checking works with exclusions\
-✅ Type checking works with exclusions (when using `deno check` without args) ✅
-Nagare release process fully functional with all safety checks enabled
+✅ Type checking works with exclusions (when using `deno check` without args) ✅ Nagare release process fully functional
+with all safety checks enabled
 
 ---
 

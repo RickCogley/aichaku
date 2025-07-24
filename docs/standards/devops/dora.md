@@ -2,20 +2,16 @@
 
 ## Overview
 
-DORA (DevOps Research and Assessment) metrics are four key metrics identified by
-the DORA team at Google that indicate the performance of software development
-teams. These metrics are strongly correlated with organizational performance and
+DORA (DevOps Research and Assessment) metrics are four key metrics identified by the DORA team at Google that indicate
+the performance of software development teams. These metrics are strongly correlated with organizational performance and
 are used to measure the effectiveness of DevOps practices.
 
 ### The Four Key Metrics
 
-1. **Deployment Frequency** - How often an organization successfully releases to
-   production
-2. **Lead Time for Changes** - Time from code commit to code running in
-   production
+1. **Deployment Frequency** - How often an organization successfully releases to production
+2. **Lead Time for Changes** - Time from code commit to code running in production
 3. **Mean Time to Recovery (MTTR)** - Time to restore service after an incident
-4. **Change Failure Rate** - Percentage of deployments causing a failure in
-   production
+4. **Change Failure Rate** - Percentage of deployments causing a failure in production
 
 ## Performance Levels
 
@@ -32,8 +28,7 @@ DORA categorizes teams into four performance levels:
 
 ### 1. Deployment Frequency
 
-**Definition**: How often code is deployed to production or released to end
-users.
+**Definition**: How often code is deployed to production or released to end users.
 
 #### Measurement Implementation
 
@@ -113,8 +108,7 @@ jobs:
 
 ### 2. Lead Time for Changes
 
-**Definition**: Time from code commit to code successfully running in
-production.
+**Definition**: Time from code commit to code successfully running in production.
 
 #### Measurement Implementation
 
@@ -784,6 +778,5 @@ Recent additions to DORA metrics include:
 4. **Documentation** - Coverage and accuracy metrics
 5. **Technical Debt** - Code quality trends
 
-Remember: DORA metrics are indicators, not goals. Use them to identify areas for
-improvement and track progress, but always consider the broader context of your
-team and organization.
+Remember: DORA metrics are indicators, not goals. Use them to identify areas for improvement and track progress, but
+always consider the broader context of your team and organization.

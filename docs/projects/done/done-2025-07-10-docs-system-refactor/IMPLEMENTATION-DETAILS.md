@@ -2,9 +2,8 @@
 
 ## Overview
 
-This document provides comprehensive details about the documentation system
-overhaul for Aichaku, including the implementation of Diátaxis framework, Google
-style guide, documentation standards feature, and linting tools.
+This document provides comprehensive details about the documentation system overhaul for Aichaku, including the
+implementation of Diátaxis framework, Google style guide, documentation standards feature, and linting tools.
 
 ## 1. Diátaxis Framework Implementation
 

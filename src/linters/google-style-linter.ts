@@ -144,8 +144,7 @@ export class GoogleStyleLinter extends BaseLinter {
           severity: "warning",
           line: lineNumber,
           rule: "sentence-too-long",
-          message:
-            `Sentence too long (${wordCount} words, max ${this.config.maxSentenceWords})`,
+          message: `Sentence too long (${wordCount} words, max ${this.config.maxSentenceWords})`,
           suggestion: "Break this sentence into shorter, clearer sentences",
         }));
       }
@@ -176,11 +175,8 @@ export class GoogleStyleLinter extends BaseLinter {
             severity: "warning",
             line: lineNumber,
             rule: "use-present-tense",
-            message: `Use present tense: "will ${futureMatch[1]}" → "${
-              futureMatch[1]
-            }s"`,
-            suggestion:
-              "Documentation should use present tense to describe current behavior",
+            message: `Use present tense: "will ${futureMatch[1]}" → "${futureMatch[1]}s"`,
+            suggestion: "Documentation should use present tense to describe current behavior",
           }));
         } else {
           issues.push(this.createIssue({
@@ -188,8 +184,7 @@ export class GoogleStyleLinter extends BaseLinter {
             line: lineNumber,
             rule: "use-present-tense",
             message: "Consider using present tense",
-            suggestion:
-              "Documentation should describe what the software does, not what it will do",
+            suggestion: "Documentation should describe what the software does, not what it will do",
           }));
         }
       }
@@ -218,8 +213,7 @@ export class GoogleStyleLinter extends BaseLinter {
           line: lineNumber,
           rule: "use-active-voice",
           message: "Use active voice instead of passive voice",
-          suggestion:
-            "Rewrite the sentence with the subject performing the action",
+          suggestion: "Rewrite the sentence with the subject performing the action",
         }));
       }
     });
@@ -343,8 +337,7 @@ export class GoogleStyleLinter extends BaseLinter {
             severity: "info",
             line: lineNumber,
             rule: "use-contractions",
-            message:
-              `Consider using contraction: "${expanded}" → "${contraction}"`,
+            message: `Consider using contraction: "${expanded}" → "${contraction}"`,
             suggestion: "Contractions make documentation more conversational",
           }));
         }
@@ -397,8 +390,7 @@ export class GoogleStyleLinter extends BaseLinter {
           column: match.index + 1,
           rule: "unnecessary-capitalization",
           message: `Unnecessary capitalization: "${match[0]}"`,
-          suggestion:
-            "Only capitalize proper nouns and the first word of sentences",
+          suggestion: "Only capitalize proper nouns and the first word of sentences",
         }));
       }
     }
@@ -451,8 +443,7 @@ export class GoogleStyleLinter extends BaseLinter {
         severity: "info",
         line: lineNumber,
         rule: "line-too-long",
-        message:
-          `Line too long (${line.length} characters, max ${this.config.maxLineLength})`,
+        message: `Line too long (${line.length} characters, max ${this.config.maxLineLength})`,
         suggestion: "Consider breaking long lines for better readability",
       }));
     }
@@ -471,8 +462,7 @@ export class GoogleStyleLinter extends BaseLinter {
           line: index + 1,
           rule: "meaningful-link-text",
           message: "Use meaningful link text",
-          suggestion:
-            "Link text should describe the destination, not use generic phrases",
+          suggestion: "Link text should describe the destination, not use generic phrases",
         }));
       }
     });

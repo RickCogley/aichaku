@@ -2,14 +2,7 @@
  * Tests for folder migration module
  */
 
-import {
-  assertEquals,
-  assertExists,
-  assertRejects,
-  ensureDir,
-  exists,
-  join,
-} from "../../deps.ts";
+import { assertEquals, assertExists, assertRejects, ensureDir, exists, join } from "../../deps.ts";
 import { FolderMigration, runMigration } from "./folder-migration.ts";
 import { Logger } from "../utils/logger.ts";
 
@@ -24,9 +17,7 @@ class TestFolderMigration extends FolderMigration {
 
 // Create a test directory structure
 async function createTestStructure(basePath: string, isProject = false) {
-  const oldRoot = isProject
-    ? join(basePath, ".claude")
-    : join(basePath, ".claude");
+  const oldRoot = isProject ? join(basePath, ".claude") : join(basePath, ".claude");
 
   // Create old structure
   await ensureDir(join(oldRoot, "methodologies", "shape-up"));
@@ -75,9 +66,7 @@ async function createTestStructureWithCustomStandards(
 ) {
   await createTestStructure(basePath, isProject);
 
-  const oldRoot = isProject
-    ? join(basePath, ".claude")
-    : join(basePath, ".claude");
+  const oldRoot = isProject ? join(basePath, ".claude") : join(basePath, ".claude");
 
   // Create legacy custom standards
   await ensureDir(join(oldRoot, "standards", "custom"));
@@ -98,12 +87,8 @@ async function createTestStructureWithRecentCustomStandards(
 ) {
   await createTestStructure(basePath, isProject);
 
-  const _oldRoot = isProject
-    ? join(basePath, ".claude")
-    : join(basePath, ".claude");
-  const newRoot = isProject
-    ? join(basePath, ".claude", "aichaku")
-    : join(basePath, ".claude", "aichaku");
+  const _oldRoot = isProject ? join(basePath, ".claude") : join(basePath, ".claude");
+  const newRoot = isProject ? join(basePath, ".claude", "aichaku") : join(basePath, ".claude", "aichaku");
 
   // Create new structure first
   await ensureDir(newRoot);

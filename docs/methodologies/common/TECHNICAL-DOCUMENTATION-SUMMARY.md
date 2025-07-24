@@ -2,10 +2,9 @@
 
 ## Overview
 
-This comprehensive guide provides everything needed to create effective
-technical documentation using Mermaid diagrams. The collection includes
-patterns, automation tools, and best practices for maintaining visual
-documentation that scales with your codebase.
+This comprehensive guide provides everything needed to create effective technical documentation using Mermaid diagrams.
+The collection includes patterns, automation tools, and best practices for maintaining visual documentation that scales
+with your codebase.
 
 ## Document Structure
 
@@ -15,21 +14,16 @@ documentation that scales with your codebase.
 
 **Key Sections**:
 
-- **System Architecture Diagrams (C4 Model)**: Context, Container, Component,
-  and Code level diagrams
+- **System Architecture Diagrams (C4 Model)**: Context, Container, Component, and Code level diagrams
 - **Data Flow Diagrams**: Simple and complex data processing pipelines
-- **State Machines**: Simple and complex state transitions with guards and
-  actions
-- **Sequence Diagrams**: HTTP flows, async message processing, and protocol
-  interactions
+- **State Machines**: Simple and complex state transitions with guards and actions
+- **Sequence Diagrams**: HTTP flows, async message processing, and protocol interactions
 - **Entity Relationship Diagrams**: Database schemas and domain models
 - **Deployment Diagrams**: Cloud infrastructure and Kubernetes deployments
-- **Component Interaction Diagrams**: Microservices and event-driven
-  architectures
+- **Component Interaction Diagrams**: Microservices and event-driven architectures
 - **Decision Trees**: Business logic and feature flag decision flows
 
-**When to Use**: Reference when designing new documentation or improving
-existing diagrams
+**When to Use**: Reference when designing new documentation or improving existing diagrams
 
 ### 2. [Advanced Patterns](./diagrams/advanced-patterns.mmd)
 
@@ -61,8 +55,7 @@ existing diagrams
 - **CI/CD Integration**: GitHub Actions and GitLab CI automation
 - **Diagram Testing and Validation**: Syntax checking and consistency validation
 - **Version Control Strategies**: Git hooks and change tracking
-- **Export and Publishing**: Multi-format output and documentation site
-  integration
+- **Export and Publishing**: Multi-format output and documentation site integration
 
 **When to Use**: Setting up automated documentation workflows
 
@@ -73,12 +66,10 @@ existing diagrams
 **Key Sections**:
 
 - **Flowchart**: Process flows with all node shapes and styling options
-- **Sequence Diagrams**: Message types, activation boxes, loops, and
-  conditionals
+- **Sequence Diagrams**: Message types, activation boxes, loops, and conditionals
 - **Class Diagrams**: Visibility, relationships, inheritance, and annotations
 - **State Diagrams**: Composite states, parallel states, and actions
-- **Entity Relationship Diagrams**: Relationship types and attribute
-  specifications
+- **Entity Relationship Diagrams**: Relationship types and attribute specifications
 - **Gantt Charts**: Timeline visualization with dependencies and milestones
 - **Specialized Diagrams**: Pie charts, Git graphs, and user journeys
 - **Advanced Features**: Themes, configuration, and interactivity
@@ -269,9 +260,8 @@ erDiagram
 
 ## Conclusion
 
-This comprehensive guide provides everything needed to implement effective
-technical documentation using Mermaid diagrams. The combination of patterns,
-automation, and best practices ensures that your documentation remains accurate,
+This comprehensive guide provides everything needed to implement effective technical documentation using Mermaid
+diagrams. The combination of patterns, automation, and best practices ensures that your documentation remains accurate,
 accessible, and maintainable.
 
 ### Key Benefits
@@ -284,12 +274,9 @@ accessible, and maintainable.
 ### Next Steps
 
 1. Start with the [Quick Start Checklist](#quick-start-checklist)
-2. Choose patterns from the
-   [Diagram Patterns Guide](./MERMAID-DIAGRAM-PATTERNS.md)
-3. Implement automation using the
-   [Automation Guide](./DIAGRAM-AUTOMATION-GUIDE.md)
+2. Choose patterns from the [Diagram Patterns Guide](./MERMAID-DIAGRAM-PATTERNS.md)
+3. Implement automation using the [Automation Guide](./DIAGRAM-AUTOMATION-GUIDE.md)
 4. Reference the [Complete Guide](./MERMAID-REFERENCE-GUIDE.md) for syntax
 
-Remember: Great documentation is not just about having diagrams—it's about
-having the right diagrams that tell the story of your system clearly and
-accurately.
+Remember: Great documentation is not just about having diagrams—it's about having the right diagrams that tell the story
+of your system clearly and accurately.

@@ -2,9 +2,8 @@
 
 ## Overview
 
-This document provides detailed technical specifications for the Aichaku
-architecture consolidation project, including the transition from multiple
-legacy configuration formats to a unified system.
+This document provides detailed technical specifications for the Aichaku architecture consolidation project, including
+the transition from multiple legacy configuration formats to a unified system.
 
 ## Architecture Specification
 
@@ -203,9 +202,7 @@ export async function discoverContent(
   basePath: string,
   useDocsPath: boolean = false,
 ): Promise<DiscoveredContent> {
-  const contentPath = useDocsPath
-    ? join(basePath, "docs", contentType)
-    : join(basePath, contentType);
+  const contentPath = useDocsPath ? join(basePath, "docs", contentType) : join(basePath, contentType);
 
   const items: ContentMetadata[] = [];
 
@@ -315,9 +312,7 @@ async function addStandards(
   standardIds: string,
   projectPath?: string,
 ): Promise<void> {
-  const ids = Array.isArray(standardIds)
-    ? standardIds.split(",").map((s) => s.trim())
-    : [standardIds];
+  const ids = Array.isArray(standardIds) ? standardIds.split(",").map((s) => s.trim()) : [standardIds];
 
   for (const id of ids) {
     const normalizedId = normalizeStandardId(id); // tdd.yaml → tdd
@@ -389,8 +384,7 @@ async function cleanupOldBinaries(): Promise<void> {
 
   if (!(await exists(distDir))) return;
 
-  const files: Array<{ name: string; version: string; stat: Deno.FileInfo }> =
-    [];
+  const files: Array<{ name: string; version: string; stat: Deno.FileInfo }> = [];
 
   for await (const entry of Deno.readDir(distDir)) {
     if (entry.isFile && !entry.name.includes("latest")) {
@@ -578,12 +572,10 @@ async function collectConfigMetrics(): Promise<ConfigFormatMetrics> {
 
 ### Extensibility Points
 
-1. **Custom Methodology Discovery**: Plugin system for user-defined
-   methodologies
+1. **Custom Methodology Discovery**: Plugin system for user-defined methodologies
 2. **Standards Validation**: Real-time validation of standards compliance
 3. **Configuration Sync**: Multi-project configuration synchronization
-4. **Template Evolution**: Dynamic template generation from methodology
-   definitions
+4. **Template Evolution**: Dynamic template generation from methodology definitions
 
 ### API Evolution Path
 
@@ -607,7 +599,6 @@ export class AichakuConfigAPI {
 
 ---
 
-This technical specification provides the foundation for understanding and
-maintaining the unified Aichaku architecture. The consolidation from multiple
-legacy formats to a single, coherent system significantly improves
-maintainability while preserving all user functionality and data.
+This technical specification provides the foundation for understanding and maintaining the unified Aichaku architecture.
+The consolidation from multiple legacy formats to a single, coherent system significantly improves maintainability while
+preserving all user functionality and data.

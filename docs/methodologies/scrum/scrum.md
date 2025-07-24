@@ -1,7 +1,6 @@
 # Scrum
 
-**BEST FOR**: Teams needing predictable delivery, client visibility, regular
-rhythm
+**BEST FOR**: Teams needing predictable delivery, client visibility, regular rhythm
 
 **TRIGGERS**: "sprint", "scrum", "velocity", "standup", "product owner"
 
@@ -59,8 +58,8 @@ Carry over: [What didn't finish]
 
 ## Context Adaptations
 
-**Solo**: Mini-sprints (1 week), skip ceremonies **Small Team**: Lightweight
-ceremonies, combine roles **Large Team**: Full ceremonies, clear roles
+**Solo**: Mini-sprints (1 week), skip ceremonies **Small Team**: Lightweight ceremonies, combine roles **Large Team**:
+Full ceremonies, clear roles
 
 ## Key Decisions
 

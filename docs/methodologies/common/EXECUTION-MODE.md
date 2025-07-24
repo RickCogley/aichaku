@@ -9,8 +9,7 @@ When you hear any of these:
 - "Fix this bug..." / "Add feature..."
 - "Start working on..." / "Let's do this..."
 
-IMMEDIATELY create (if not exists): 📁
-`docs/projects/active/{YYYY-MM-DD}-{descriptive-name}/` └── STATUS.md
+IMMEDIATELY create (if not exists): 📁 `docs/projects/active/{YYYY-MM-DD}-{descriptive-name}/` └── STATUS.md
 
 This is automatic - users shouldn't need to ask!
 
@@ -237,10 +236,9 @@ Before marking complete:
 ## Anti-Patterns to Avoid
 
 ❌ Starting without clear requirements ❌ Ignoring methodology constraints\
-❌ Silent struggles with blockers ❌ Scope creep during execution ❌ Skipping
-quality checks
+❌ Silent struggles with blockers ❌ Scope creep during execution ❌ Skipping quality checks
 
 ## Remember
 
-Execution Mode is about getting things done within constraints. Focus on
-progress, communicate blockers, maintain quality.
+Execution Mode is about getting things done within constraints. Focus on progress, communicate blockers, maintain
+quality.

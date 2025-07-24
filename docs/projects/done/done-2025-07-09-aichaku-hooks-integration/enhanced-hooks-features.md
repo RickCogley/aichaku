@@ -4,8 +4,7 @@
 
 ### Requirement
 
-Add ability to parse and display hooks that are already installed in
-settings.json files.
+Add ability to parse and display hooks that are already installed in settings.json files.
 
 ### Implementation
 
@@ -40,8 +39,7 @@ Total: 4 hooks active
 
 ### Requirement
 
-Support installing hooks either globally (all projects) or locally (current
-project only).
+Support installing hooks either globally (all projects) or locally (current project only).
 
 ### Implementation
 

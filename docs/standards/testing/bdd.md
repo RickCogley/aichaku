@@ -2,15 +2,13 @@
 
 ## Overview
 
-Behavior-Driven Development (BDD) is an agile software development practice that
-encourages collaboration between developers, QA, and non-technical stakeholders.
-BDD focuses on defining the behavior of software through examples written in a
-shared language that everyone can understand.
+Behavior-Driven Development (BDD) is an agile software development practice that encourages collaboration between
+developers, QA, and non-technical stakeholders. BDD focuses on defining the behavior of software through examples
+written in a shared language that everyone can understand.
 
 ### Core Principles
 
-1. **Shared Understanding**: Create a common language between technical and
-   non-technical team members
+1. **Shared Understanding**: Create a common language between technical and non-technical team members
 2. **Living Documentation**: Tests serve as documentation that stays up-to-date
 3. **Outside-In Development**: Start from user behavior and work inward
 4. **Examples Drive Design**: Concrete examples guide implementation
@@ -671,5 +669,5 @@ Scenario: Save customer information
 - Use for acceptance criteria
 - Include in definition of done
 
-Remember: BDD is about collaboration and communication. The tools and syntax are
-just means to achieve better understanding between all team members.
+Remember: BDD is about collaboration and communication. The tools and syntax are just means to achieve better
+understanding between all team members.

@@ -1,7 +1,6 @@
 # Understanding [Concept/System]
 
-[Opening that connects to user needs and sets context - why should they care
-about this topic?]
+[Opening that connects to user needs and sets context - why should they care about this topic?]
 
 ## The Challenge
 
@@ -13,8 +12,7 @@ Imagine you're building [relatable scenario]. You need to:
 - [Requirement 2 that adds complexity]
 - [Requirement 3 that makes it challenging]
 
-Traditional approaches like [alternative] fall short because [specific
-limitations]. This is where [concept] comes in.
+Traditional approaches like [alternative] fall short because [specific limitations]. This is where [concept] comes in.
 
 ## Core Concepts
 
@@ -22,8 +20,8 @@ limitations]. This is where [concept] comes in.
 
 [Plain language explanation using an analogy if helpful]
 
-Think of it like [analogy]. When you [action in analogy], you [result].
-Similarly, [concept] works by [parallel explanation].
+Think of it like [analogy]. When you [action in analogy], you [result]. Similarly, [concept] works by [parallel
+explanation].
 
 **Key insight**: [The main thing to remember]
 
@@ -70,8 +68,7 @@ User sees result
 
 1. **Initial Request**
 
-   When you [action], the system first [what happens]. This is important because
-   [why it matters].
+   When you [action], the system first [what happens]. This is important because [why it matters].
 
    ```python
    # What happens under the hood
@@ -83,8 +80,7 @@ User sees result
 
 2. **Processing Phase**
 
-   Next, [component] takes your request and [detailed explanation]. During this
-   phase:
+   Next, [component] takes your request and [detailed explanation]. During this phase:
    - [Sub-step 1]: [What and why]
    - [Sub-step 2]: [What and why]
    - [Sub-step 3]: [What and why]
@@ -158,8 +154,7 @@ print(processor.process("Hello!"))  # HELLO!
 
 ### Why [Specific Choice]?
 
-You might wonder why we [design decision] instead of [alternative]. Here's our
-thinking:
+You might wonder why we [design decision] instead of [alternative]. Here's our thinking:
 
 <table>
 <tr>
@@ -357,8 +352,7 @@ After 6 months in production:
 
 **Key learnings**:
 
-> "The most important thing we learned was [insight]. This changed how we
-> approach [related problems]."
+> "The most important thing we learned was [insight]. This changed how we approach [related problems]."
 >
 > — [Name], [Title] at [Company]
 
@@ -416,15 +410,13 @@ Join the conversation:
 
 ## Summary
 
-[Concept] provides [key benefit] by [how it works at high level]. The key things
-to remember:
+[Concept] provides [key benefit] by [how it works at high level]. The key things to remember:
 
 1. **[Main takeaway 1]** - [One sentence elaboration]
 2. **[Main takeaway 2]** - [One sentence elaboration]
 3. **[Main takeaway 3]** - [One sentence elaboration]
 
-Whether you're [use case 1] or [use case 2], understanding these principles will
-help you [benefit].
+Whether you're [use case 1] or [use case 2], understanding these principles will help you [benefit].
 
 ### Quick Reference Card
 

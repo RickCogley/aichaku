@@ -1,11 +1,9 @@
 # Markdown Standards for Aichaku
 
-**Universal formatting standards for all Markdown documentation in the Aichaku
-ecosystem.**
+**Universal formatting standards for all Markdown documentation in the Aichaku ecosystem.**
 
-This document establishes mandatory formatting rules that ensure professional,
-consistent, and maintainable documentation across all Aichaku projects,
-methodologies, and standards.
+This document establishes mandatory formatting rules that ensure professional, consistent, and maintainable
+documentation across all Aichaku projects, methodologies, and standards.
 
 ## Quick Reference Checklist
 
@@ -14,8 +12,7 @@ Before committing any Markdown file, ensure:
 ### ✅ Professional Standards (Mandatory)
 
 - [ ] **Code blocks have language specified** (``bash`,``json``, `````text``)
-- [ ] **Proper names capitalized** (GitHub, TypeScript, Markdown, JavaScript,
-      Aichaku)
+- [ ] **Proper names capitalized** (GitHub, TypeScript, Markdown, JavaScript, Aichaku)
 - [ ] **Emphasis uses underscores** (`_text_`) to match Prettier formatting
 - [ ] **Strong emphasis uses double asterisks** (`**text**`) not underscores
 - [ ] **Headings surrounded by blank lines** (before and after)
@@ -28,8 +25,7 @@ Before committing any Markdown file, ensure:
 
 ### Code Block Language Specification
 
-**Why**: Language specification enables syntax highlighting on GitHub, improves
-readability, and looks professional.
+**Why**: Language specification enables syntax highlighting on GitHub, improves readability, and looks professional.
 
 **Rule**: Every fenced code block must specify a language.
 
@@ -56,8 +52,7 @@ graph TD
 
 ### Proper Name Capitalization
 
-**Why**: Consistent capitalization shows attention to detail and respects brand
-guidelines.
+**Why**: Consistent capitalization shows attention to detail and respects brand guidelines.
 
 **Mandatory Names**:
 
@@ -74,8 +69,7 @@ your changes to GitHub and run TypeScript checks"
 
 ### Emphasis Style Consistency
 
-**Why**: Consistency across all documentation improves readability and
-maintainability.
+**Why**: Consistency across all documentation improves readability and maintainability.
 
 **Rule**: Always use asterisks for emphasis, never underscores.
 
@@ -205,8 +199,7 @@ Use the provided script for new documents:
 
 ## Methodology-Specific Extensions
 
-While these standards are universal, specific methodologies may add
-requirements:
+While these standards are universal, specific methodologies may add requirements:
 
 ### Shape Up Documents
 
@@ -306,10 +299,9 @@ These standards ensure that all Aichaku documentation:
 4. **Improves maintainability** through clear structure
 5. **Supports accessibility** through proper semantic markup
 
-**Remember**: These are not optional guidelines but mandatory standards for all
-Markdown content in the Aichaku ecosystem. The automated tooling enforces
-compliance, making it easy to maintain high-quality documentation without manual
-effort.
+**Remember**: These are not optional guidelines but mandatory standards for all Markdown content in the Aichaku
+ecosystem. The automated tooling enforces compliance, making it easy to maintain high-quality documentation without
+manual effort.
 
 ---
 

@@ -2,17 +2,15 @@
 
 ## Executive Summary
 
-This analysis compares yesterday's detailed feedback system specification
-(`/docs/reference/mcp-feedback-system.md`) with today's unified MCP enhancement
-design. The goal is to identify gaps, preserve key implementation details, and
+This analysis compares yesterday's detailed feedback system specification (`/docs/reference/mcp-feedback-system.md`)
+with today's unified MCP enhancement design. The goal is to identify gaps, preserve key implementation details, and
 create a merged specification that combines the best of both approaches.
 
 ## 1. Missing Elements from Yesterday's Design
 
 ### A. Detailed Visual Language Implementation
 
-Yesterday's specification provides comprehensive visual language guidelines that
-are absent from today's plan:
+Yesterday's specification provides comprehensive visual language guidelines that are absent from today's plan:
 
 #### Growth Phase Indicators (Missing in Today's Plan)
 
@@ -84,10 +82,8 @@ This educational approach is completely missing from today's plan.
 
 Yesterday specifies configuration options:
 
-- `AICHAKU*FEEDBACK*LEVEL`: Control feedback verbosity (minimal, standard,
-  verbose)
-- `AICHAKU*PROGRESS*THRESHOLD`: Milliseconds before showing progress
-  (default: 1500)
+- `AICHAKU*FEEDBACK*LEVEL`: Control feedback verbosity (minimal, standard, verbose)
+- `AICHAKU*PROGRESS*THRESHOLD`: Milliseconds before showing progress (default: 1500)
 - `AICHAKU*TIMING*THRESHOLD`: Milliseconds before showing timing (default: 3000)
 
 Today's plan doesn't mention these configuration options.
@@ -185,27 +181,23 @@ interface AichakuMCPConfig {
 
 ### A. Feedback Format Differences
 
-**Conflict**: Yesterday uses structured box formatting, today uses simpler
-line-based output **Resolution**: Use structured formatting for final results,
-line-based for real-time updates
+**Conflict**: Yesterday uses structured box formatting, today uses simpler line-based output **Resolution**: Use
+structured formatting for final results, line-based for real-time updates
 
 ### B. Branding Consistency
 
-**Conflict**: Yesterday uses `🪴 [Aichaku]` prefix, today sometimes omits
-brackets **Resolution**: Standardize on `🪴 Aichaku:` for cleaner appearance
-while maintaining brand
+**Conflict**: Yesterday uses `🪴 [Aichaku]` prefix, today sometimes omits brackets **Resolution**: Standardize on
+`🪴 Aichaku:` for cleaner appearance while maintaining brand
 
 ### C. Progress Indicator Style
 
-**Conflict**: Yesterday shows percentage bars, today shows status messages
-**Resolution**: Use both - status messages with optional progress bars for long
-operations
+**Conflict**: Yesterday shows percentage bars, today shows status messages **Resolution**: Use both - status messages
+with optional progress bars for long operations
 
 ### D. Statistics Display
 
-**Conflict**: Today introduces statistics not covered in yesterday's spec
-**Resolution**: Apply yesterday's visual language to create consistent
-statistics formatting
+**Conflict**: Today introduces statistics not covered in yesterday's spec **Resolution**: Apply yesterday's visual
+language to create consistent statistics formatting
 
 ## 5. Merged Specification Outline
 
@@ -277,5 +269,5 @@ The merged specification should:
 4. **Educate** users throughout all interactions
 5. **Configure** flexibly while maintaining sensible defaults
 
-This creates a cohesive MCP experience that's both powerful and approachable,
-maintaining Aichaku's philosophy of thoughtful, visible development.
+This creates a cohesive MCP experience that's both powerful and approachable, maintaining Aichaku's philosophy of
+thoughtful, visible development.

@@ -4,8 +4,7 @@
 
 ## Concept: Educational Review Results
 
-The MCP doesn't just report problems - it helps Claude learn and adjust within
-the session.
+The MCP doesn't just report problems - it helps Claude learn and adjust within the session.
 
 ## How It Works
 
@@ -39,10 +38,8 @@ class ReviewEngine {
         reminder:
           "I notice you used 'any' type 7 times, despite CLAUDE.md saying to avoid it. Please use proper types.",
         pattern: "Replacing proper types with 'any'",
-        correction:
-          "For each 'any', determine the actual type from usage context",
-        example:
-          "Instead of 'const data: any', use 'const data: UserData' or 'const data: unknown'",
+        correction: "For each 'any', determine the actual type from usage context",
+        example: "Instead of 'const data: any', use 'const data: UserData' or 'const data: unknown'",
       };
     }
 
@@ -125,9 +122,7 @@ class PatternTracker {
   }
 
   getMostCommonViolation(): string {
-    return Array.from(this.violations.entries()).sort((a, b) =>
-      b[1].count - a[1].count
-    )[0][0];
+    return Array.from(this.violations.entries()).sort((a, b) => b[1].count - a[1].count)[0][0];
   }
 }
 ```
@@ -179,18 +174,15 @@ server.setRequestHandler("tools/run", async (request) => {
 ```typescript
 const SECURITY_GUIDANCE = {
   "command-injection": {
-    reminder:
-      "You introduced command injection vulnerabilities. This is a CRITICAL security issue.",
+    reminder: "You introduced command injection vulnerabilities. This is a CRITICAL security issue.",
     pattern: "Passing unsanitized user input to shell commands",
     correction: 'Use parameter expansion: bash -c \'cmd "$1"\' -- "$VAR"',
     severity: "critical",
   },
   "sql-injection": {
-    reminder:
-      "SQL injection detected. Your CLAUDE.md requires parameterized queries.",
+    reminder: "SQL injection detected. Your CLAUDE.md requires parameterized queries.",
     pattern: "String concatenation in SQL queries",
-    correction:
-      "Use parameterized queries: query('SELECT * FROM users WHERE id = ?', [id])",
+    correction: "Use parameterized queries: query('SELECT * FROM users WHERE id = ?', [id])",
   },
 };
 ```
@@ -260,5 +252,5 @@ const METHODOLOGY_GUIDANCE = {
 4. **Positive Reinforcement**: Praise when standards followed
 5. **Learning Metrics**: Track improvement over time
 
-This creates a true feedback loop where the MCP doesn't just find problems but
-actively helps Claude learn and improve within the session!
+This creates a true feedback loop where the MCP doesn't just find problems but actively helps Claude learn and improve
+within the session!

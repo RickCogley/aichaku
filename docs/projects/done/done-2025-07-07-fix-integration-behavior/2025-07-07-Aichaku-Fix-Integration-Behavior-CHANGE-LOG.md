@@ -4,10 +4,9 @@
 
 ## Summary
 
-Major enhancement to Aichaku that transforms it from passive documentation into
-an active behavioral system. This fundamental change makes Claude Code
-automatically follow methodology patterns without any manual intervention,
-creating a truly "magical" developer experience.
+Major enhancement to Aichaku that transforms it from passive documentation into an active behavioral system. This
+fundamental change makes Claude Code automatically follow methodology patterns without any manual intervention, creating
+a truly "magical" developer experience.
 
 ## Problem Addressed
 
@@ -30,8 +29,7 @@ creating a truly "magical" developer experience.
 - Pre-creates `.claude/output/` directory with README
 - Creates `.aichaku-behavior` quick reference file
 - Creates `RULES-REMINDER.md` for behavioral reinforcement
-- Added helper functions: `getOutputReadmeContent()`, `getBehaviorContent()`,
-  `getRulesReminderContent()`
+- Added helper functions: `getOutputReadmeContent()`, `getBehaviorContent()`, `getRulesReminderContent()`
 
 ### 3. Updated `cli.ts`
 
@@ -60,10 +58,8 @@ You experience:
 This is a minor version bump (not a patch) because:
 
 - **Fundamental behavior change**: From passive to active system
-- **New features**: Pre-created directories, behavioral files, enhanced
-  integration
-- **User experience transformation**: Completely changes how you interact with
-  Aichaku
+- **New features**: Pre-created directories, behavioral files, enhanced integration
+- **User experience transformation**: Completely changes how you interact with Aichaku
 - **Backward compatible**: Existing installations continue to work
 
 ## Files Modified
@@ -74,6 +70,5 @@ This is a minor version bump (not a patch) because:
 
 ## Test Results
 
-✅ Local installation test successful ✅ All behavioral files created correctly
-✅ CLAUDE.md integration includes directives ✅ Output directory pre-created
-with guidance
+✅ Local installation test successful ✅ All behavioral files created correctly ✅ CLAUDE.md integration includes
+directives ✅ Output directory pre-created with guidance

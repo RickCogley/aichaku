@@ -1,7 +1,6 @@
 # Document Title
 
-Brief description of what this document covers and its purpose within the
-Aichaku methodology library.
+Brief description of what this document covers and its purpose within the Aichaku methodology library.
 
 ## Prerequisites
 
@@ -11,8 +10,7 @@ Aichaku methodology library.
 
 ## Overview
 
-Provide a clear introduction to the topic. This section should help readers
-understand:
+Provide a clear introduction to the topic. This section should help readers understand:
 
 - What problem this solves
 - When to use this approach

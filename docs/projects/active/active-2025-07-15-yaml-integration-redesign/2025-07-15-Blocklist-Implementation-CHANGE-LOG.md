@@ -6,9 +6,9 @@
 
 ## Summary
 
-Implemented comprehensive blocklist/exclusion functionality for the Aichaku MCP
-reviewer to protect sensitive files, particularly `~/.claude/commands/` files
-containing executable `!`command`` syntax, from being processed by review tools.
+Implemented comprehensive blocklist/exclusion functionality for the Aichaku MCP reviewer to protect sensitive files,
+particularly `~/.claude/commands/` files containing executable `!`command`` syntax, from being processed by review
+tools.
 
 ## Changes Made
 
@@ -16,33 +16,25 @@ containing executable `!`command`` syntax, from being processed by review tools.
 
 **NEW FILE**: Complete file filtering system with:
 
-- **Security-First Design**: Protects Claude commands, secrets, and sensitive
-  files
-- **Multi-Layer Exclusions**: Extensions, patterns, files, directories, paths,
-  content types
-- **Tool-Specific Rules**: Different exclusion rules per scanner (DevSkim,
-  Semgrep, etc.)
+- **Security-First Design**: Protects Claude commands, secrets, and sensitive files
+- **Multi-Layer Exclusions**: Extensions, patterns, files, directories, paths, content types
+- **Tool-Specific Rules**: Different exclusion rules per scanner (DevSkim, Semgrep, etc.)
 - **Size-Based Filtering**: Exclude files larger than specified limits
 - **Content Analysis**: Detect and exclude files with sensitive patterns
-- **Performance Optimized**: Early exclusion checks to avoid unnecessary
-  processing
+- **Performance Optimized**: Early exclusion checks to avoid unnecessary processing
 
 **Key Features**:
 
-- **Claude Commands Protection**: Automatically excludes
-  `**/.claude/commands/**` files
-- **Sensitive Content Detection**: Identifies `!`command`` syntax and other
-  dangerous patterns
+- **Claude Commands Protection**: Automatically excludes `**/.claude/commands/**` files
+- **Sensitive Content Detection**: Identifies `!`command`` syntax and other dangerous patterns
 - **ReDoS Protection**: Validates regex patterns for potential security issues
-- **Path Traversal Security**: Prevents directory traversal attacks in exclusion
-  patterns
+- **Path Traversal Security**: Prevents directory traversal attacks in exclusion patterns
 
 ### 2. Review Engine Integration (`src/review-engine.ts`)
 
 **MODIFIED**: Updated review engine to use file filtering:
 
-- **Constructor Enhancement**: Added `ReviewerConfig` parameter and `FileFilter`
-  instance
+- **Constructor Enhancement**: Added `ReviewerConfig` parameter and `FileFilter` instance
 - **Pre-Review Filtering**: Check exclusions before processing files
 - **Tool-Specific Exclusions**: Apply different exclusion rules per scanner
 - **Exclusion Reporting**: Track and report excluded files in results
@@ -58,8 +50,7 @@ containing executable `!`command`` syntax, from being processed by review tools.
 **MODIFIED**: Enhanced `ReviewResult` interface:
 
 - **Exclusion Tracking**: Added `excluded` and `excludeReason` fields
-- **Backward Compatibility**: Optional fields maintain existing API
-  compatibility
+- **Backward Compatibility**: Optional fields maintain existing API compatibility
 
 ### 4. Configuration System (`src/utils/config-loader.ts`)
 
@@ -248,8 +239,7 @@ reviewer:
 
 ### For Existing Users
 
-1. **Automatic Protection**: Default exclusions protect Claude commands
-   immediately
+1. **Automatic Protection**: Default exclusions protect Claude commands immediately
 2. **Backward Compatibility**: Existing code continues to work unchanged
 3. **Gradual Migration**: Add custom exclusions as needed
 
@@ -296,10 +286,9 @@ reviewer:
 
 ## Conclusion
 
-The blocklist implementation provides comprehensive protection for sensitive
-files while maintaining high performance and usability. The system is designed
-with security-first principles and provides multiple layers of protection
-against various attack vectors.
+The blocklist implementation provides comprehensive protection for sensitive files while maintaining high performance
+and usability. The system is designed with security-first principles and provides multiple layers of protection against
+various attack vectors.
 
 **Key Benefits**:
 
@@ -309,6 +298,5 @@ against various attack vectors.
 - ✅ **Usability**: Clear reporting and user feedback
 - ✅ **Maintainability**: Well-tested and documented codebase
 
-This implementation addresses the critical security concern of protecting
-`~/.claude/commands/` files while providing a robust foundation for future
-enhancements.
+This implementation addresses the critical security concern of protecting `~/.claude/commands/` files while providing a
+robust foundation for future enhancements.

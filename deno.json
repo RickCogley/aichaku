@@ -6,13 +6,7 @@
     "./cli": "./cli.ts"
   },
   "description": "AI-optimized project methodology installer for Claude Code - brings affection (愛着) to your development workflow",
-  "keywords": [
-    "claude",
-    "ai",
-    "methodology",
-    "shape-up",
-    "project-management"
-  ],
+  "keywords": ["claude", "ai", "methodology", "shape-up", "project-management"],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -33,8 +27,10 @@
   "tasks": {
     "dev": "deno run --watch mod.ts",
     "test": "deno test --allow-read --allow-write --allow-env --allow-run",
-    "lint": "deno lint",
     "fmt": "deno fmt",
+    "fmt:all": "deno fmt && markdownlint-cli2 --fix \"**/*.md\"",
+    "lint": "deno lint",
+    "lint:markdown": "markdownlint-cli2 --fix \"**/*.md\"",
     "check": "deno check src/**/*.ts cli.ts mod.ts version.ts nagare.config.ts nagare-launcher.ts init.ts",
     "nagare": "deno run -A nagare-launcher.ts",
     "release": "deno task nagare",
@@ -55,6 +51,7 @@
     "exclude": [
       ".claude/",
       "scratch/",
+      "dist/",
       "docs/api/",
       "docs/projects/**/*.ts",
       "examples/**/*.ts",
@@ -62,12 +59,19 @@
       "src/utils/config-manager.ts",
       "src/utils/config-manager.test.ts",
       "src/utils/migration-helper.ts"
-    ]
+    ],
+    "lineWidth": 120,
+    "proseWrap": "always",
+    "useTabs": false,
+    "indentWidth": 2,
+    "semiColons": true,
+    "singleQuote": false
   },
   "lint": {
     "exclude": [
       ".claude/",
       "scratch/",
+      "dist/",
       "docs/api/",
       "docs/projects/**/*.ts",
       "examples/**/*.ts",
@@ -75,20 +79,13 @@
       "src/utils/config-manager.ts",
       "src/utils/config-manager.test.ts",
       "src/utils/migration-helper.ts"
-    ]
+    ],
+    "rules": {
+      "tags": ["recommended", "eqeqeq", "no-await-in-loop", "camelcase", "default-param-last", "no-eval"]
+    }
   },
   "publish": {
-    "include": [
-      "mod.ts",
-      "cli.ts",
-      "version.ts",
-      "deps.ts",
-      "src/",
-      "docs/",
-      "README.md",
-      "LICENSE",
-      "CHANGELOG.md"
-    ],
+    "include": ["mod.ts", "cli.ts", "version.ts", "deps.ts", "src/", "docs/", "README.md", "LICENSE", "CHANGELOG.md"],
     "exclude": [
       "**/*_test.ts",
       "**/*.test.ts",
@@ -103,6 +100,7 @@
   "exclude": [
     ".claude/",
     "scratch/",
+    "dist/",
     "docs/api/",
     "docs/projects/**/*.ts",
     "examples/**/*.ts",
@@ -112,17 +110,13 @@
     "src/utils/migration-helper.ts"
   ],
   "compilerOptions": {
-    "lib": [
-      "deno.window"
-    ],
+    "lib": ["deno.window"],
     "strict": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
   "test": {
-    "include": [
-      "src/**/*_test.ts"
-    ]
+    "include": ["src/**/*_test.ts"]
   }
 }

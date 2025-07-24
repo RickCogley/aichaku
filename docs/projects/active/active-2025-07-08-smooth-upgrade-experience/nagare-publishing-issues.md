@@ -2,9 +2,8 @@
 
 ## Core Issue
 
-The JSR publish workflow fails almost every time during releases because
-formatting and type checking issues are discovered AFTER the tag is created and
-pushed.
+The JSR publish workflow fails almost every time during releases because formatting and type checking issues are
+discovered AFTER the tag is created and pushed.
 
 ## Specific Problems Encountered
 
@@ -17,16 +16,14 @@ pushed.
 ### 2. Formatting Inconsistencies
 
 - Files that passed local checks failed in CI
-- `deno.json` and `CHANGELOG.md` repeatedly had formatting issues (missing
-  newlines)
+- `deno.json` and `CHANGELOG.md` repeatedly had formatting issues (missing newlines)
 - Had to run `deno fmt` multiple times and recreate tags
 
 ### 3. Type Checking Failures
 
 - Version comparison code that worked locally failed in CI
 - TypeScript literal type issues weren't caught before tagging
-- Example: `VERSION === "0.7.0"` failed when VERSION was typed as literal
-  `"0.8.0"`
+- Example: `VERSION === "0.7.0"` failed when VERSION was typed as literal `"0.8.0"`
 
 ### 4. Recovery Process is Painful
 
@@ -38,12 +35,9 @@ pushed.
 
 ## Root Causes
 
-1. **No Pre-flight Validation**: Nagare doesn't run the EXACT same checks that
-   CI will run before creating the tag
-2. **Different Environments**: Local Deno version might format differently than
-   CI Deno version
-3. **Tag-First Approach**: Creating the tag before validating the release is
-   ready
+1. **No Pre-flight Validation**: Nagare doesn't run the EXACT same checks that CI will run before creating the tag
+2. **Different Environments**: Local Deno version might format differently than CI Deno version
+3. **Tag-First Approach**: Creating the tag before validating the release is ready
 
 ## Suggested Improvements for Nagare
 
@@ -102,8 +96,8 @@ $ git push origin v0.8.0
 $ gh workflow run "Publish to JSR" --ref v0.8.0
 ```
 
-This happened 3 times in a row for different issues, making what should be a
-simple release into a 30+ minute debugging session.
+This happened 3 times in a row for different issues, making what should be a simple release into a 30+ minute debugging
+session.
 
 ## Specific Examples from Today's Aichaku Release
 
@@ -117,11 +111,9 @@ simple release into a 30+ minute debugging session.
 ### Release v0.8.0
 
 1. Initial release succeeded in creating tag
-2. JSR publish failed - formatting issues in `deno.json` and `CHANGELOG.md`
-   (again)
+2. JSR publish failed - formatting issues in `deno.json` and `CHANGELOG.md` (again)
 3. Fixed formatting, but then type errors appeared
-4. Fixed type errors: `VERSION === "0.7.0"` when VERSION was literal type
-   `"0.8.0"`
+4. Fixed type errors: `VERSION === "0.7.0"` when VERSION was literal type `"0.8.0"`
 5. Had to delete and recreate tag 3 times total
 
 ## Impact

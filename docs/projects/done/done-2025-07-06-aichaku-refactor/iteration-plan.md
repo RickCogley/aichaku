@@ -6,8 +6,7 @@
 
 ## Core Principle
 
-"We need to actually use it to see how it works, then iterate" - This is our
-guiding approach.
+"We need to actually use it to see how it works, then iterate" - This is our guiding approach.
 
 ## Phase 1: MVP (This Release - v0.3.0)
 
@@ -139,9 +138,7 @@ Even as we iterate:
 
 ## Remember
 
-As you noted: Some things need to be "set in stone" (like final deliverables),
-while execution can be flexible. Aichaku should enhance this natural balance,
-not fight it.
+As you noted: Some things need to be "set in stone" (like final deliverables), while execution can be flexible. Aichaku
+should enhance this natural balance, not fight it.
 
-The goal isn't to create the perfect methodology tool - it's to reduce friction
-in AI-assisted project management.
+The goal isn't to create the perfect methodology tool - it's to reduce friction in AI-assisted project management.

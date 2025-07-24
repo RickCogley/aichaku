@@ -1,16 +1,14 @@
 # The Static Website Factors: A Comprehensive Development Checklist
 
-While static websites don't have a formal "12-factor" methodology like
-applications do, this checklist synthesizes best practices from JAMstack
-principles, modern web standards, and industry expertise into a structured
-framework for building high-quality static sites.
+While static websites don't have a formal "12-factor" methodology like applications do, this checklist synthesizes best
+practices from JAMstack principles, modern web standards, and industry expertise into a structured framework for
+building high-quality static sites.
 
 ## Core Philosophy
 
-Think of static websites as **digital sculptures** - once carved, they stand
-unchanged until the artist returns. Unlike dynamic applications that reshape
-themselves for each visitor, static sites deliver pre-built experiences with the
-speed of light and the reliability of stone.
+Think of static websites as **digital sculptures** - once carved, they stand unchanged until the artist returns. Unlike
+dynamic applications that reshape themselves for each visitor, static sites deliver pre-built experiences with the speed
+of light and the reliability of stone.
 
 ## The 15 Factors for Static Websites
 
@@ -463,13 +461,10 @@ tests:
 
 ## The Static Site Mantra
 
-> "Pre-render everything possible, enhance where valuable, and deliver at the
-> speed of light."
+> "Pre-render everything possible, enhance where valuable, and deliver at the speed of light."
 
-Remember: The goal is to create sites that are **fast**, **secure**,
-**accessible**, and **maintainable**. Each factor contributes to these goals,
-but don't let perfect be the enemy of good. Start with the basics and
-progressively enhance.
+Remember: The goal is to create sites that are **fast**, **secure**, **accessible**, and **maintainable**. Each factor
+contributes to these goals, but don't let perfect be the enemy of good. Start with the basics and progressively enhance.
 
 ## Quick Start Commands
 
@@ -491,6 +486,5 @@ npm run build
 netlify deploy --prod
 ```
 
-This checklist represents the collective wisdom of the static site community.
-Adapt it to your needs, but always keep user experience at the forefront of your
-decisions.
+This checklist represents the collective wisdom of the static site community. Adapt it to your needs, but always keep
+user experience at the forefront of your decisions.

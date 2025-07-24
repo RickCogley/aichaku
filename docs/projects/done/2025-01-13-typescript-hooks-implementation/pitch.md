@@ -18,8 +18,7 @@ Our bash-based hooks implementation caused catastrophic issues:
 
 ### 1. Single TypeScript Hook Runner
 
-Create a unified TypeScript file that handles all hooks through command-line
-switches:
+Create a unified TypeScript file that handles all hooks through command-line switches:
 
 ```typescript
 // aichaku-hooks.ts

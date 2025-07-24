@@ -2,8 +2,7 @@
 
 ## Problem
 
-Users don't know to create structured folders for changes. It's mentioned in
-PLANNING-MODE.md but not prominent enough.
+Users don't know to create structured folders for changes. It's mentioned in PLANNING-MODE.md but not prominent enough.
 
 ## Solution
 
@@ -12,8 +11,7 @@ Add a clear "ALWAYS START HERE" section to all core mode files:
 ```markdown
 ## 📁 ALWAYS START WITH STRUCTURE
 
-Before any new work, create your change folder:
-.claude/output/active-YYYY-MM-DD-descriptive-name/
+Before any new work, create your change folder: .claude/output/active-YYYY-MM-DD-descriptive-name/
 
 This happens automatically when you say:
 
@@ -35,5 +33,4 @@ STATUS.md tracks your progress through Planning → Execution → Improvement
 
 ## Key Point
 
-This should feel invisible to users - they just ask for something, and Claude
-Code creates the structure naturally.
+This should feel invisible to users - they just ask for something, and Claude Code creates the structure naturally.

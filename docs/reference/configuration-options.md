@@ -56,8 +56,8 @@ interface AichakuSettings {
 
 ### standards.json
 
-Standards configuration file located at `.claude/aichaku/standards.json`. This
-file tracks both built-in and custom standards selected for the project.
+Standards configuration file located at `.claude/aichaku/standards.json`. This file tracks both built-in and custom
+standards selected for the project.
 
 #### Schema
 
@@ -568,8 +568,7 @@ Examples:
 
 ### Core Configuration Files (src/config/)
 
-**Introduced in v0.31.2+** - Configuration-as-code system for enterprise-grade
-maintainability.
+**Introduced in v0.31.2+** - Configuration-as-code system for enterprise-grade maintainability.
 
 #### methodology-fallback.ts
 
@@ -635,21 +634,15 @@ export const METHODOLOGY*TEMPLATE*CONFIG = {
 
 Identical interface to main fallback config, used by MCP server for consistency.
 
-**Purpose**: Ensures MCP server and main CLI use identical fallback
-methodologies
+**Purpose**: Ensures MCP server and main CLI use identical fallback methodologies
 
 ### Configuration Principles
 
-1. **Single Source of Truth**: Each configuration aspect has exactly one
-   authoritative source
-2. **Type Safety**: All configurations use TypeScript interfaces for
-   compile-time validation
-3. **Documentation**: Each file includes purpose, reason, and last updated
-   metadata
-4. **Version Control**: All configuration changes are tracked with git commit
-   messages
-5. **No Hardcoding**: Business logic never contains hardcoded configuration
-   values
+1. **Single Source of Truth**: Each configuration aspect has exactly one authoritative source
+2. **Type Safety**: All configurations use TypeScript interfaces for compile-time validation
+3. **Documentation**: Each file includes purpose, reason, and last updated metadata
+4. **Version Control**: All configuration changes are tracked with git commit messages
+5. **No Hardcoding**: Business logic never contains hardcoded configuration values
 
 ### Benefits
 
@@ -657,8 +650,7 @@ methodologies
 - **Auditable**: All configuration is version controlled and documented
 - **Testable**: Configuration can be validated independently
 - **Scalable**: Easy to extend without modifying business logic
-- **Consistent**: Eliminates risk of scattered hardcoded lists getting out of
-  sync
+- **Consistent**: Eliminates risk of scattered hardcoded lists getting out of sync
 
 ### Methodology icons
 

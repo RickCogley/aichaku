@@ -10,8 +10,7 @@
 
 ### 2. Documented Deno Check Exclusion Behavior
 
-- Discovered that `deno check` (no args) respects top-level exclude as of Deno
-  v2.3.1+
+- Discovered that `deno check` (no args) respects top-level exclude as of Deno v2.3.1+
 - Created comprehensive documentation of findings and migration guide
 - Updated project configuration to use proper exclusion patterns
 
@@ -25,70 +24,61 @@
 
 ### 1. Top-Level Exclude Configuration
 
-**Decision**: Use top-level `exclude` in deno.json instead of tool-specific
-exclusions **Rationale**: Only way to make `deno check` respect exclusions when
-run without arguments
+**Decision**: Use top-level `exclude` in deno.json instead of tool-specific exclusions **Rationale**: Only way to make
+`deno check` respect exclusions when run without arguments
 
 ### 2. Pre-Release Hook Standardization
 
-**Decision**: Update nagare.config.ts to use `deno check` without arguments
-**Rationale**: Ensures consistency between local checks and CI/CD pipeline
+**Decision**: Update nagare.config.ts to use `deno check` without arguments **Rationale**: Ensures consistency between
+local checks and CI/CD pipeline
 
 ### 3. Atomic Release Architecture
 
-**Decision**: Design state machine-based release orchestrator **Rationale**:
-Prevents partial releases (npm succeeds, JSR fails) and enables recovery
+**Decision**: Design state machine-based release orchestrator **Rationale**: Prevents partial releases (npm succeeds,
+JSR fails) and enables recovery
 
 ## Files Created/Modified
 
 ### Created
 
-- `docs/projects/active/active-2025-07-16-deno-json-surgical-exclusion/pitch.md` -
-  Shape Up pitch for exclusion fix
-- `docs/projects/active/active-2025-07-16-deno-json-surgical-exclusion/exclusion-rationale.md` -
-  Documented why each file is excluded
-- `docs/projects/active/active-2025-07-16-deno-json-surgical-exclusion/implementation-findings.md` -
-  Technical findings about deno check
-- `docs/projects/active/active-2025-07-16-deno-json-surgical-exclusion/STATUS.md` -
-  Project tracking
-- `docs/projects/active/active-2025-07-16-release-automation-enhancement/pitch.md` -
-  Release automation proposal
-- `docs/projects/active/active-2025-07-16-release-automation-enhancement/cycle-plan.md` -
-  4-day implementation plan
-- `docs/projects/active/active-2025-07-16-release-automation-enhancement/execution-plan.md` -
-  Detailed architecture
-- `docs/projects/active/active-2025-07-16-release-automation-enhancement/lessons-learned.md` -
-  v0.30.0 release post-mortem
+- `docs/projects/active/active-2025-07-16-deno-json-surgical-exclusion/pitch.md` - Shape Up pitch for exclusion fix
+- `docs/projects/active/active-2025-07-16-deno-json-surgical-exclusion/exclusion-rationale.md` - Documented why each
+  file is excluded
+- `docs/projects/active/active-2025-07-16-deno-json-surgical-exclusion/implementation-findings.md` - Technical findings
+  about deno check
+- `docs/projects/active/active-2025-07-16-deno-json-surgical-exclusion/STATUS.md` - Project tracking
+- `docs/projects/active/active-2025-07-16-release-automation-enhancement/pitch.md` - Release automation proposal
+- `docs/projects/active/active-2025-07-16-release-automation-enhancement/cycle-plan.md` - 4-day implementation plan
+- `docs/projects/active/active-2025-07-16-release-automation-enhancement/execution-plan.md` - Detailed architecture
+- `docs/projects/active/active-2025-07-16-release-automation-enhancement/lessons-learned.md` - v0.30.0 release
+  post-mortem
 
 ### Modified
 
 - `deno.json` - Added top-level exclude, removed version.ts from excludes
 - `nagare.config.ts` - Updated pre-release hook to use `deno check` without args
-- `docs/projects/active/active-2025-07-16-deno-json-surgical-exclusion/*.md` -
-  Formatted for consistency
+- `docs/projects/active/active-2025-07-16-deno-json-surgical-exclusion/*.md` - Formatted for consistency
 
 ## Problems Solved
 
 ### 1. Type Checking Inconsistency
 
-**Problem**: Nagare checked all files while pre-release hooks checked specific
-files **Solution**: Standardized on `deno check` with top-level exclude
-configuration
+**Problem**: Nagare checked all files while pre-release hooks checked specific files **Solution**: Standardized on
+`deno check` with top-level exclude configuration
 
 ### 2. JSR Publishing Failure
 
-**Problem**: version.ts was excluded but needed in module graph **Solution**:
-Removed version.ts from all exclude lists
+**Problem**: version.ts was excluded but needed in module graph **Solution**: Removed version.ts from all exclude lists
 
 ### 3. Manual Release Process
 
-**Problem**: 8+ manual steps prone to errors and omissions **Solution**:
-Designed automated release orchestrator with single command
+**Problem**: 8+ manual steps prone to errors and omissions **Solution**: Designed automated release orchestrator with
+single command
 
 ### 4. Tag Management Complexity
 
-**Problem**: Manual tag updates and force-pushing after fixes **Solution**:
-Proposed automatic tag management in release tool
+**Problem**: Manual tag updates and force-pushing after fixes **Solution**: Proposed automatic tag management in release
+tool
 
 ## Lessons Learned
 

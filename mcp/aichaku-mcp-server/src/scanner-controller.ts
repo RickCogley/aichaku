@@ -77,9 +77,7 @@ export class ScannerController {
     } catch (error) {
       // Scanner not found
       console.error(
-        `❌ Scanner ${scanner.name} is not installed: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
+        `❌ Scanner ${scanner.name} is not installed: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
   }
@@ -164,9 +162,7 @@ export class ScannerController {
       return scanner.parse(output, filePath);
     } catch (error) {
       console.error(
-        `Error running ${scanner.name}: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
+        `Error running ${scanner.name}: ${error instanceof Error ? error.message : String(error)}`,
       );
       return [];
     }
@@ -195,9 +191,7 @@ export class ScannerController {
       }
     } catch (error) {
       console.error(
-        `Failed to parse DevSkim output: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
+        `Failed to parse DevSkim output: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
 
@@ -227,9 +221,7 @@ export class ScannerController {
       }
     } catch (error) {
       console.error(
-        `Failed to parse Semgrep output: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
+        `Failed to parse Semgrep output: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
 
@@ -261,9 +253,7 @@ export class ScannerController {
       }
     } catch (error) {
       console.error(
-        `Failed to parse CodeQL output: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
+        `Failed to parse CodeQL output: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
 

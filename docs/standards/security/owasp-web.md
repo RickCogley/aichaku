@@ -121,5 +121,5 @@ try {
 }
 ```
 
-Remember: Security is not a feature to be added later - it must be built into
-every aspect of your application from the ground up.
+Remember: Security is not a feature to be added later - it must be built into every aspect of your application from the
+ground up.

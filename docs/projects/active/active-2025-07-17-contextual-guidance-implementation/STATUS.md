@@ -8,14 +8,12 @@ Week 1/6 ████░░░░░░░░░░░░░░░░ 16% 🌱
 
 ## Current Phase: Shaping
 
-**Problem identified**: Users report missing location context in
-`aichaku upgrade --global` output **Solution approach**: Apply existing visual
-guidance framework to upgrade commands
+**Problem identified**: Users report missing location context in `aichaku upgrade --global` output **Solution
+approach**: Apply existing visual guidance framework to upgrade commands
 
 ## Current Focus
 
-**✅ VALIDATION COMPLETE**: User tested v0.34.1 and confirmed the exact problem
-identified in our pitch.
+**✅ VALIDATION COMPLETE**: User tested v0.34.1 and confirmed the exact problem identified in our pitch.
 
 **User Feedback on v0.34.1 Global Upgrade**:
 
@@ -26,9 +24,8 @@ identified in our pitch.
 ✨ Standards ready (45 files verified/updated)
 ```
 
-**User Response**: "does not say WHERE the files are located. It's like a black
-box, the users gets no feedback about the folder the files have been installed
-in, which I think is really disconcerting."
+**User Response**: "does not say WHERE the files are located. It's like a black box, the users gets no feedback about
+the folder the files have been installed in, which I think is really disconcerting."
 
 **What's working**:
 
@@ -50,10 +47,8 @@ None currently - proceeding with shaping phase.
 
 ## Key Decisions Made
 
-1. **Target scope**: Focus on `aichaku upgrade --global` first (primary user
-   feedback)
-2. **Technical approach**: Leverage existing `src/utils/visual-guidance.ts`
-   framework
+1. **Target scope**: Focus on `aichaku upgrade --global` first (primary user feedback)
+2. **Technical approach**: Leverage existing `src/utils/visual-guidance.ts` framework
 3. **Output enhancement**: "What happened and where" + "What's next" guidance
 4. **Visual elements**: Directory trees, file counts, spatial awareness
 
@@ -90,5 +85,4 @@ None currently - proceeding with shaping phase.
 
 ---
 
-**Last updated**: 2025-07-17 by Claude Code **Next review**: When ready for
-betting phase
+**Last updated**: 2025-07-17 by Claude Code **Next review**: When ready for betting phase

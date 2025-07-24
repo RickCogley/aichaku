@@ -12,10 +12,8 @@ Modern cloud-native applications should follow these principles:
 6. **Processes** - Execute the app as one or more stateless processes
 7. **Port binding** - Export services via port binding
 8. **Concurrency** - Scale out via the process model
-9. **Disposability** - Maximize robustness with fast startup and graceful
-   shutdown
-10. **Dev/prod parity** - Keep development, staging, and production as similar
-    as possible
+9. **Disposability** - Maximize robustness with fast startup and graceful shutdown
+10. **Dev/prod parity** - Keep development, staging, and production as similar as possible
 11. **Logs** - Treat logs as event streams
 12. **Admin processes** - Run admin/management tasks as one-off processes
 13. **API first** - Design APIs before implementation
@@ -219,5 +217,5 @@ CMD ["node", "server.js"]
 - **Resilience**: Graceful handling of failures
 - **Observability**: Built-in monitoring and logging
 
-Remember: 15-factor apps are designed for modern cloud platforms. Each factor
-addresses specific challenges in distributed, containerized environments.
+Remember: 15-factor apps are designed for modern cloud platforms. Each factor addresses specific challenges in
+distributed, containerized environments.

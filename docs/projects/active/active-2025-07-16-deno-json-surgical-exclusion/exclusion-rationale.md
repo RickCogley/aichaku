@@ -1,7 +1,7 @@
 # File Exclusion Rationale
 
-This document explains why each file/directory pattern is excluded from linting
-and type checking in our `deno.json` configuration.
+This document explains why each file/directory pattern is excluded from linting and type checking in our `deno.json`
+configuration.
 
 ## Excluded Patterns
 
@@ -48,8 +48,7 @@ and type checking in our `deno.json` configuration.
 
 **Reason**: Part of deprecated v2 system
 
-- Has type error:
-  `Type 'unknown' is not assignable to type 'AichakuConfig | null'`
+- Has type error: `Type 'unknown' is not assignable to type 'AichakuConfig | null'`
 - Uses old configuration management approach
 - Referenced by v2 commands
 - Superseded by new YAML-based configuration system
@@ -78,8 +77,7 @@ and type checking in our `deno.json` configuration.
 ### Test Files (Future Consideration)
 
 - `**/*.test.ts`, `**/*_test.ts`
-- Currently we check test files, but if they become problematic, we can exclude
-  them
+- Currently we check test files, but if they become problematic, we can exclude them
 - Test files sometimes need different type constraints
 
 ### Other Generated Files (If Applicable)

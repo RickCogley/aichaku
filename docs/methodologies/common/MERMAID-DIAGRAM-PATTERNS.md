@@ -2,9 +2,8 @@
 
 ## Overview
 
-This guide provides comprehensive patterns for using Mermaid diagrams in
-technical reference documentation. Each pattern includes syntax examples, use
-cases, best practices, and version control considerations.
+This guide provides comprehensive patterns for using Mermaid diagrams in technical reference documentation. Each pattern
+includes syntax examples, use cases, best practices, and version control considerations.
 
 ## Table of Contents
 
@@ -23,8 +22,7 @@ cases, best practices, and version control considerations.
 
 ### Context Diagram (Level 1)
 
-**When to use**: Show the system in its environment with external actors and
-systems.
+**When to use**: Show the system in its environment with external actors and systems.
 
 ```mermaid
 graph TB
@@ -50,8 +48,7 @@ graph TB
 
 ### Container Diagram (Level 2)
 
-**When to use**: Show high-level technology choices and communication between
-containers.
+**When to use**: Show high-level technology choices and communication between containers.
 
 ```mermaid
 graph TB
@@ -1104,8 +1101,7 @@ graph LR
 
 ## Summary
 
-This guide provides comprehensive patterns for using Mermaid diagrams in
-technical documentation. Key takeaways:
+This guide provides comprehensive patterns for using Mermaid diagrams in technical documentation. Key takeaways:
 
 1. **Choose the right diagram type** for your use case
 2. **Keep diagrams focused** and avoid overwhelming complexity
@@ -1116,6 +1112,5 @@ technical documentation. Key takeaways:
 7. **Make diagrams accessible** with proper labels
 8. **Integrate** diagrams into your documentation workflow
 
-Remember: A good diagram is worth a thousand words, but a bad diagram can
-confuse more than clarify. Always prioritize clarity and purpose over
-complexity.
+Remember: A good diagram is worth a thousand words, but a bad diagram can confuse more than clarify. Always prioritize
+clarity and purpose over complexity.

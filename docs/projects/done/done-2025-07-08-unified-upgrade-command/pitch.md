@@ -10,8 +10,7 @@ aichaku upgrade          # Updates project metadata (what metadata??)
 aichaku integrate --force  # Updates CLAUDE.md (sounds like a workaround)
 ```
 
-Users naturally run `aichaku upgrade` expecting everything to be upgraded, but
-they get:
+Users naturally run `aichaku upgrade` expecting everything to be upgraded, but they get:
 
 - Confusing messages about running another command
 - No clear understanding of what "metadata" means
@@ -42,8 +41,7 @@ Replace the ham-handed approach with precise, marker-based updates:
 
 ## Methodologies
 
-This project uses the globally installed Aichaku adaptive methodology system...
-[All the Aichaku content]
+This project uses the globally installed Aichaku adaptive methodology system... [All the Aichaku content]
 
 <!-- AICHAKU:END -->
 ```
@@ -101,9 +99,7 @@ export async function integrate(
     // Surgical replacement
     const before = content.slice(0, startIdx);
     const after = content.slice(endIdx + MARKER_END.length);
-    const newContent = `${before}${MARKER * START}\n${
-      METHODOLOGY * SECTION
-    }\n${MARKER_END}${after}`;
+    const newContent = `${before}${MARKER * START}\n${METHODOLOGY * SECTION}\n${MARKER_END}${after}`;
 
     await Deno.writeTextFile(claudeMdPath, newContent);
     return { action: "updated", message: "Updated Aichaku section" };
@@ -111,14 +107,11 @@ export async function integrate(
     // Old format detected
     return {
       action: "skipped",
-      message:
-        "Legacy Aichaku section found. Use --force to upgrade to marker format",
+      message: "Legacy Aichaku section found. Use --force to upgrade to marker format",
     };
   } else {
     // First time - add with markers
-    const newSection = `${MARKER * START}\n${
-      METHODOLOGY * SECTION
-    }\n${MARKER_END}`;
+    const newSection = `${MARKER * START}\n${METHODOLOGY * SECTION}\n${MARKER_END}`;
     // ... insert at appropriate location ...
   }
 }

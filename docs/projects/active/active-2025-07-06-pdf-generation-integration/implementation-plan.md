@@ -9,8 +9,7 @@
 
 ## Overview
 
-This guide provides step-by-step instructions to integrate PDF generation
-capabilities into Aichaku.
+This guide provides step-by-step instructions to integrate PDF generation capabilities into Aichaku.
 
 ## Phase 1: Core PDF Module (2 hours)
 
@@ -198,9 +197,8 @@ async function completeWork(workDir: string) {
 
 # &#123;&#123;title&#125;&#125;
 
-**Project**: &#123;&#123;project&#125;&#125; **Date**:
-&#123;&#123;date&#125;&#125; **Version**: &#123;&#123;version&#125;&#125;
-**Status**: &#123;&#123;status&#125;&#125;
+**Project**: &#123;&#123;project&#125;&#125; **Date**: &#123;&#123;date&#125;&#125; **Version**:
+&#123;&#123;version&#125;&#125; **Status**: &#123;&#123;status&#125;&#125;
 
 ---
 

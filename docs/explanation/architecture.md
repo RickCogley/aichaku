@@ -1,25 +1,24 @@
 # Aichaku Architecture
 
-This document explains the architectural design of Aichaku, focusing on the
-"why" behind key decisions.
+This document explains the architectural design of Aichaku, focusing on the "why" behind key decisions.
 
 ## The fundamental distinction
 
-Aichaku's architecture reflects a core insight about software development: teams
-need different types of guidance for different aspects of their work.
+Aichaku's architecture reflects a core insight about software development: teams need different types of guidance for
+different aspects of their work.
 
 ### Methodologies are holistic workflows
 
-When you adopt Shape Up, you're not just using a planning template - you're
-embracing an entire philosophy about how to build software. You need:
+When you adopt Shape Up, you're not just using a planning template - you're embracing an entire philosophy about how to
+build software. You need:
 
 - The shaping process to define work
 - The betting table to prioritize
 - The six-week cycles to execute
 - The cool-down periods to reflect
 
-This is why Aichaku copies entire methodology directories. You can't do "half of
-Shape Up" any more than you can bake half a cake.
+This is why Aichaku copies entire methodology directories. You can't do "half of Shape Up" any more than you can bake
+half a cake.
 
 ### Standards are modular guidelines
 
@@ -29,8 +28,7 @@ In contrast, coding standards are independent modules. You can:
 - Apply TDD without following XP
 - Write conventional commits in any workflow
 
-This is why standards are selectively integrated - you pick what applies to your
-context.
+This is why standards are selectively integrated - you pick what applies to your context.
 
 ## Architectural layers
 
@@ -253,8 +251,7 @@ This would enable:
 
 ### Why copy all methodologies?
 
-**The problem**: Teams need flexibility to adapt their process, but setting up
-new methodologies creates friction.
+**The problem**: Teams need flexibility to adapt their process, but setting up new methodologies creates friction.
 
 **The solution**: Copy all methodologies during initialization.
 
@@ -266,13 +263,12 @@ new methodologies creates friction.
 - ❌ Uses more disk space (~300KB)
 - ❌ Creates more files in repositories
 
-**Why it's worth it**: The flexibility gained far outweighs the minimal disk
-usage. Teams can experiment freely without setup overhead.
+**Why it's worth it**: The flexibility gained far outweighs the minimal disk usage. Teams can experiment freely without
+setup overhead.
 
 ### Why inject standards into CLAUDE.md?
 
-**The problem**: Claude needs consistent access to coding standards, but reading
-multiple files impacts performance.
+**The problem**: Claude needs consistent access to coding standards, but reading multiple files impacts performance.
 
 **The solution**: Selected standards are injected directly into CLAUDE.md.
 
@@ -284,13 +280,11 @@ multiple files impacts performance.
 - ❌ Larger CLAUDE.md files
 - ❌ Potential sync issues with source
 
-**Why it's worth it**: Performance and customization benefits outweigh the
-maintenance considerations.
+**Why it's worth it**: Performance and customization benefits outweigh the maintenance considerations.
 
 ### Why enforce directory structure?
 
-**The problem**: Flexible paths create complexity for automation and Claude
-integration.
+**The problem**: Flexible paths create complexity for automation and Claude integration.
 
 **The solution**: Enforce the `.claude/` directory convention.
 
@@ -302,8 +296,7 @@ integration.
 - ❌ Less flexibility
 - ❌ May conflict with some workflows
 
-**Why it's worth it**: Consistency enables powerful automation and reduces
-cognitive load.
+**Why it's worth it**: Consistency enables powerful automation and reduces cognitive load.
 
 ## Architectural principles
 
@@ -384,11 +377,9 @@ These can be addressed if needed without architectural changes.
 
 ## Summary
 
-Aichaku's architecture embodies its core philosophy: provide complete
-methodologies for flexible workflows while maintaining focused standards for
-code quality. Every architectural decision supports this distinction, creating a
+Aichaku's architecture embodies its core philosophy: provide complete methodologies for flexible workflows while
+maintaining focused standards for code quality. Every architectural decision supports this distinction, creating a
 system that's both powerful and simple to understand.
 
-The file-based approach may seem primitive compared to modern databases, but it
-provides transparency, portability, and compatibility that more complex systems
-struggle to match. Sometimes the simple solution is the right solution.
+The file-based approach may seem primitive compared to modern databases, but it provides transparency, portability, and
+compatibility that more complex systems struggle to match. Sometimes the simple solution is the right solution.

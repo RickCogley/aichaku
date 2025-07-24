@@ -388,5 +388,5 @@ docs: fix typo in README
 feat: add new user registration form
 ```
 
-Remember: Conventional Commits create a shared language for your team and enable
-powerful automation tools that can streamline your development workflow.
+Remember: Conventional Commits create a shared language for your team and enable powerful automation tools that can
+streamline your development workflow.

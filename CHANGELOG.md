@@ -2,8 +2,7 @@
 
 All notable changes to aichaku (愛着) will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.35.7] - 2025-07-20
@@ -92,8 +91,7 @@ and this project adheres to
 
 ### Fixed
 
-- critical upgrade command overhaul - proper file management and legacy cleanup
-  (3150b2a)
+- critical upgrade command overhaul - proper file management and legacy cleanup (3150b2a)
 
 ## [0.34.0] - 2025-07-17
 
@@ -104,10 +102,8 @@ and this project adheres to
 
 ### Changed
 
-- add comprehensive foundation quality documentation across core sections
-  (fef4663)
-- update project documentation and central docs with foundation improvements
-  (6aec75c)
+- add comprehensive foundation quality documentation across core sections (fef4663)
+- update project documentation and central docs with foundation improvements (6aec75c)
 - foundation fixes completion - senior engineer quality standards (20fc5a3)
 
 ### Fixed
@@ -270,8 +266,7 @@ and this project adheres to
 
 - add version consistency and preflight completion summary (6ee34f4)
 - update MCP configuration to use user scope by default (195b97f)
-- complete permanent reference docs project with superior implementation
-  (486cab0)
+- complete permanent reference docs project with superior implementation (486cab0)
 - update MCP server improvements status - 90% complete (faa3db3)
 - update unified MCP enhancement status with today's progress (c0be53b)
 - audit and clean up active projects based on implementation status (1be1a89)
@@ -329,8 +324,7 @@ and this project adheres to
 ### Changed
 
 - apply code formatting (cab0607)
-- add hooks release summary and security workflow simplification project
-  (ba1578d)
+- add hooks release summary and security workflow simplification project (ba1578d)
 - apply code formatting (a9bf086)
 - track CLI polish issues in standards integration project (c5fc4f7)
 - organize completed projects and archive to done (cbd5995)
@@ -376,8 +370,7 @@ and this project adheres to
 - resolve all lint errors for clean release (d9d2e79)
 - format nagare config (31d3634)
 - fix upgrade command to correctly read metadata from both old and new locations
-- fix version display in upgrade command (was showing old version from legacy
-  config file)
+- fix version display in upgrade command (was showing old version from legacy config file)
 
 ## [0.23.0] - 2025-07-11
 
@@ -400,16 +393,14 @@ and this project adheres to
 ### Added
 
 - shape MCP project documentation manager concept (c9051f7)
-- implement unified MCP server enhancements with feedback and statistics
-  (b7492f0)
+- implement unified MCP server enhancements with feedback and statistics (b7492f0)
 
 ### Changed
 
 - rename example TypeScript files to exclude from type check (ea396df)
 - format code for release compliance (b26dc65)
 - add MCP server contributing and security documentation (746dd94)
-- migrate project docs and checkpoints to /docs/ for better discoverability
-  (cd3b651)
+- migrate project docs and checkpoints to /docs/ for better discoverability (cd3b651)
 - mark MCP enhancement work as completed (1aa6afd)
 - add MCP enhancement session documentation (7241c29)
 - update README with MCP server features and examples (180ed23)
@@ -431,8 +422,7 @@ and this project adheres to
 
 ### Fixed
 
-- resolve critical path traversal vulnerabilities in MCP server and CLI
-  (39132d4)
+- resolve critical path traversal vulnerabilities in MCP server and CLI (39132d4)
 
 ## [0.21.0] - 2025-07-11
 
@@ -455,8 +445,7 @@ and this project adheres to
 ### Added
 
 - reorganize to ~/.claude/aichaku/ folder structure (5a76eaf)
-- enhance MCP server with visibility logging and documentation patterns
-  (e23f2e7)
+- enhance MCP server with visibility logging and documentation patterns (e23f2e7)
 - add docs-lint command for documentation quality checking (12aee2b)
 - add docs-standard command for documentation standards management (e266c70)
 - add standards system with bundled content (475a761)
@@ -783,8 +772,7 @@ and this project adheres to
 ### Changed
 
 - add release notes and changelog for v0.3.0 (a2dd9f4)
-- add planning documents for adaptive refactor using Aichaku methodology
-  (2767e43)
+- add planning documents for adaptive refactor using Aichaku methodology (2767e43)
 
 ## [0.2.2] - 2025-07-06
 

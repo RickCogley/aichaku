@@ -414,8 +414,8 @@ const user: UserData = await getUser(id);
 📌 Note to self: I should follow the TypeScript standards in CLAUDE.md.
 ```
 
-This comprehensive approach transforms the MCP from a critic into an effective
-teacher, dramatically improving Claude's code quality within the session.
+This comprehensive approach transforms the MCP from a critic into an effective teacher, dramatically improving Claude's
+code quality within the session.
 
 ## Next Steps
 

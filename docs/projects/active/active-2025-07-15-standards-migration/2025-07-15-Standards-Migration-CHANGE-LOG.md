@@ -6,10 +6,9 @@
 
 ## Summary
 
-Successfully migrated all standards from `/standards/` to `/docs/standards/`
-while preserving the directory structure and git history. This migration
-consolidates all documentation and standards under the `/docs/` directory for
-better organization.
+Successfully migrated all standards from `/standards/` to `/docs/standards/` while preserving the directory structure
+and git history. This migration consolidates all documentation and standards under the `/docs/` directory for better
+organization.
 
 ## Migration Details
 
@@ -63,8 +62,7 @@ better organization.
 
 ### Documentation Updates
 
-- Updated all references from `/standards/` to `/docs/standards/` in
-  documentation
+- Updated all references from `/standards/` to `/docs/standards/` in documentation
 - Fixed YAML file links to use new path structure
 - Updated tutorial and how-to guides with new paths
 
@@ -142,8 +140,7 @@ better organization.
 
 ### For Users
 
-- **Minimal Impact** - Standards are installed to user's
-  `~/.claude/aichaku/standards/` (unchanged)
+- **Minimal Impact** - Standards are installed to user's `~/.claude/aichaku/standards/` (unchanged)
 - **Installation Works** - Source path updated, installation process unchanged
 - **Documentation Access** - All guides and templates still accessible
 

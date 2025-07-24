@@ -175,9 +175,7 @@ export class ProjectAnalyzer {
     // Determine if library or app
     const isLibrary = this.isLibrary(projectPath, detectedTypes[0]);
 
-    return `${detectedTypes[0]}-${
-      isLibrary ? "library" : "app"
-    }` as ProjectType;
+    return `${detectedTypes[0]}-${isLibrary ? "library" : "app"}` as ProjectType;
   }
 
   private isLibrary(projectPath: string, language: string): boolean {
@@ -461,9 +459,7 @@ export class ProjectAnalyzer {
       if (existsSync(requirementsPath)) {
         try {
           const content = safeReadTextFileSync(requirementsPath, projectPath);
-          const lines = content.split("\n").filter((line: string) =>
-            line.trim() && !line.startsWith("#")
-          );
+          const lines = content.split("\n").filter((line: string) => line.trim() && !line.startsWith("#"));
 
           for (const line of lines) {
             const match = line.match(/^([^=<>!~]+)([=<>!~].+)?$/);
@@ -492,14 +488,10 @@ export class ProjectAnalyzer {
           );
           if (depMatch) {
             const depSection = depMatch[1];
-            const depLines = depSection.split("\n").filter((line: string) =>
-              line.includes("=")
-            );
+            const depLines = depSection.split("\n").filter((line: string) => line.includes("="));
 
             for (const line of depLines) {
-              const [name, version] = line.split("=").map((s: string) =>
-                s.trim().replace(/['"]/g, "")
-              );
+              const [name, version] = line.split("=").map((s: string) => s.trim().replace(/['"]/g, ""));
               if (name && !name.startsWith("python")) {
                 dependencies.push({
                   name,
@@ -677,8 +669,7 @@ export class ProjectAnalyzer {
             const regex = new RegExp(pattern);
 
             while ((match = regex.exec(content)) !== null) {
-              const lineNumber =
-                content.substring(0, match.index).split("\n").length;
+              const lineNumber = content.substring(0, match.index).split("\n").length;
               endpoints.push({
                 method: match[1].toUpperCase(),
                 path: match[2],

@@ -5,11 +5,7 @@
 
 import { dirname, join, normalize } from "@std/path";
 import { ensureDir, exists } from "@std/fs";
-import {
-  safeReadTextFile,
-  safeRemove,
-  safeWriteTextFile,
-} from "../path-security.ts";
+import { safeReadTextFile, safeRemove, safeWriteTextFile } from "../path-security.ts";
 
 export class PIDManager {
   private pidFilePath: string;

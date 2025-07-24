@@ -35,9 +35,7 @@ export class MCPClient {
 
     const platform = Deno.build.os;
     const ext = platform === "windows" ? ".exe" : "";
-    const serverName = serverType === "github"
-      ? "github-operations"
-      : "aichaku-code-reviewer";
+    const serverName = serverType === "github" ? "github-operations" : "aichaku-code-reviewer";
 
     this.serverPath = join(
       homeDir,

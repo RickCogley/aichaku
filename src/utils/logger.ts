@@ -166,9 +166,7 @@ export class Logger {
       const bar = "█".repeat(filled) + "░".repeat(20 - filled);
 
       const progressText = `${bar} ${percentage}%`;
-      const fullMessage = message
-        ? `${progressText} - ${message}`
-        : progressText;
+      const fullMessage = message ? `${progressText} - ${message}` : progressText;
 
       // Use carriage return to update same line (fallback to console.log if process unavailable)
       try {

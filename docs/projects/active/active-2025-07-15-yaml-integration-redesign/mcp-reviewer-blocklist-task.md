@@ -2,8 +2,8 @@
 
 ## Overview
 
-Add a blocklist/exclusion feature to the MCP reviewer hook to allow users to
-exclude certain file types or patterns from review processing.
+Add a blocklist/exclusion feature to the MCP reviewer hook to allow users to exclude certain file types or patterns from
+review processing.
 
 ## Requirements
 
@@ -166,8 +166,7 @@ Handle edge cases gracefully:
 
 **Priority: Medium**
 
-While not critical for core functionality, this feature will significantly
-improve user experience by:
+While not critical for core functionality, this feature will significantly improve user experience by:
 
 - Reducing noise from irrelevant files
 - Speeding up review processes
@@ -198,8 +197,7 @@ Update the following documentation:
 
 ## Related to YAML Integration Project
 
-This feature is separate from the YAML integration redesign but should be kept
-in mind for:
+This feature is separate from the YAML integration redesign but should be kept in mind for:
 
 - Consistent configuration approaches
 - Potential shared configuration file structure

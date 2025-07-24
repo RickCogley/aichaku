@@ -2,15 +2,14 @@
 
 ## Key Finding
 
-SharePoint natively renders Markdown files with reasonable formatting, making it
-an excellent solution for sharing technical documentation with business users.
+SharePoint natively renders Markdown files with reasonable formatting, making it an excellent solution for sharing
+technical documentation with business users.
 
 ## What This Means
 
 1. **Zero Conversion Needed**: Upload .md files directly to SharePoint
 2. **Automatic Formatting**: SharePoint handles the Markdown → HTML conversion
-3. **Business-Friendly**: Non-technical users see formatted documents, not raw
-   Markdown
+3. **Business-Friendly**: Non-technical users see formatted documents, not raw Markdown
 4. **Version Control**: SharePoint's built-in versioning tracks changes
 
 ## Implementation Impact
@@ -71,12 +70,10 @@ Tip: Create a dedicated folder for Aichaku outputs
 
 Add to Aichaku README:
 
-> **Pro Tip**: SharePoint users can upload Markdown files directly. SharePoint
-> automatically renders them with formatting, making them perfect for sharing
-> with non-technical stakeholders. No PDF conversion needed!
+> **Pro Tip**: SharePoint users can upload Markdown files directly. SharePoint automatically renders them with
+> formatting, making them perfect for sharing with non-technical stakeholders. No PDF conversion needed!
 
 ---
 
-*Screenshot provided by user shows SharePoint rendering a Markdown file called
-"compass*art\*\_Markdown.md" with proper formatting including headers, lists,
-and text styling.*
+*Screenshot provided by user shows SharePoint rendering a Markdown file called "compass*art\*\_Markdown.md" with proper
+formatting including headers, lists, and text styling.*

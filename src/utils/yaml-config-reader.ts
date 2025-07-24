@@ -63,12 +63,8 @@ async function readCoreConfigs(corePath: string): Promise<YamlConfig> {
     // Sort by order if specified
     const sortedComponents = Object.entries(components)
       .sort(([, a], [, b]) => {
-        const aOrder = typeof (a as any).order === "number"
-          ? (a as any).order
-          : 999;
-        const bOrder = typeof (b as any).order === "number"
-          ? (b as any).order
-          : 999;
+        const aOrder = typeof (a as any).order === "number" ? (a as any).order : 999;
+        const bOrder = typeof (b as any).order === "number" ? (b as any).order : 999;
         return aOrder - bOrder;
       });
 
@@ -229,9 +225,7 @@ export async function assembleYamlConfig(options: {
   } = options;
 
   // First, get methodology quick reference
-  const allMethodologies = selectedMethodologies.length > 0
-    ? selectedMethodologies
-    : getDefaultMethodologies();
+  const allMethodologies = selectedMethodologies.length > 0 ? selectedMethodologies : getDefaultMethodologies();
   const methodologyQuickRef: YamlConfig = { methodologies: {} };
 
   for (const methodology of allMethodologies) {

@@ -4,9 +4,8 @@ Date: 2025-07-10 Time: 16:02
 
 ## Summary
 
-Completed MCP (Model Context Protocol) server setup, fixed permission issues in
-the installer, and configured appropriate development standards for the Aichaku
-CLI tool.
+Completed MCP (Model Context Protocol) server setup, fixed permission issues in the installer, and configured
+appropriate development standards for the Aichaku CLI tool.
 
 ## Work Completed
 
@@ -15,8 +14,7 @@ CLI tool.
 - **Problem**: Network permission errors when downloading methodology files
 - **Root Cause**: Missing `--allow-run` permission in init.ts installer
 - **Solution**: Added `--allow-run` to PERMISSIONS array
-- **Security**: Updated README to use explicit permissions instead of `-A` (all
-  permissions)
+- **Security**: Updated README to use explicit permissions instead of `-A` (all permissions)
 - **Commits**:
   - `0d8da2c`: fix: add --allow-run permission to init.ts installer
   - `87fbe07`: docs: use explicit permissions instead of -A in README
@@ -25,8 +23,7 @@ CLI tool.
 
 - **Global**: Upgraded from v0.18.0 to v0.19.0
 - **Project**: Successfully upgraded after fixing permissions
-- **MCP Server**: Verified installation at
-  `~/.aichaku/mcp-server/mcp-code-reviewer`
+- **MCP Server**: Verified installation at `~/.aichaku/mcp-server/mcp-code-reviewer`
 - **Binary checksums**: Verified integrity matches published checksums
 
 ### 3. Configured Development Standards
@@ -49,14 +46,12 @@ CLI tool.
   - Removed inappropriate web-specific standards
   - Cleaned up "Standard content not found" placeholders
 - **Result**: Focused, CLI-appropriate guidance document
-- **Commit**: `43adec2`: chore: clean up CLAUDE.md and configure appropriate
-  standards
+- **Commit**: `43adec2`: chore: clean up CLAUDE.md and configure appropriate standards
 
 ### 5. MCP Server Configuration
 
 - **Installation**: Binary already installed from previous session
-- **Configuration File**: Created
-  `~/Library/Application Support/Claude/claude_desktop_settings.json`
+- **Configuration File**: Created `~/Library/Application Support/Claude/claude_desktop_settings.json`
 - **Configuration**:
   ```json
   {

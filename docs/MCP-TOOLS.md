@@ -1,12 +1,11 @@
 # MCP Tools Reference
 
-> **Note**: This document describes planned future MCP tools for Aichaku.
-> Currently, the MCP server provides security review capabilities. The tools
-> described here (analyze*project, create_doc_template, generate*documentation)
-> are on the roadmap for future implementation.
+> **Note**: This document describes planned future MCP tools for Aichaku. Currently, the MCP server provides security
+> review capabilities. The tools described here (analyze*project, create_doc_template, generate*documentation) are on
+> the roadmap for future implementation.
 
-This reference describes the planned Model Context Protocol (MCP) tools for
-enhanced project analysis and documentation generation.
+This reference describes the planned Model Context Protocol (MCP) tools for enhanced project analysis and documentation
+generation.
 
 ## Prerequisites
 
@@ -15,8 +14,7 @@ Before using the MCP tools described in this guide, you need:
 - **Aichaku installed**: The MCP server must be running and configured
 - **Project access**: Read/write permissions to your project directory
 - **Basic command line knowledge**: Familiarity with terminal/command prompt
-- **Understanding of your project structure**: Knowledge of your codebase
-  organization
+- **Understanding of your project structure**: Knowledge of your codebase organization
 
 For setup instructions, see the main [Aichaku documentation](../README.md).
 
@@ -30,27 +28,24 @@ For setup instructions, see the main [Aichaku documentation](../README.md).
 - `get_statistics` - Get usage statistics and analytics
 - `send_feedback` - Send visible feedback messages to Claude Code console
 
-See [MCP-SERVER.md](./MCP-SERVER.md) for documentation of currently available
-tools.
+See [MCP-SERVER.md](./MCP-SERVER.md) for documentation of currently available tools.
 
 ## Planned Tools (Future Implementation)
 
-Future releases include the following tools to provide automated capabilities
-for:
+Future releases include the following tools to provide automated capabilities for:
 
 - Analyzing project structure and dependencies
 - Creating documentation templates based on project type
 - Generating comprehensive documentation automatically
 
-These tools work seamlessly with Aichaku's existing methodology support and you
-access them through the `mcp__aichaku__` prefix when implemented.
+These tools work seamlessly with Aichaku's existing methodology support and you access them through the `mcp__aichaku__`
+prefix when implemented.
 
 ## Tools Reference
 
 ## analyze_project
 
-Analyzes a project directory to understand its structure, technologies, and
-patterns.
+Analyzes a project directory to understand its structure, technologies, and patterns.
 
 ### Description
 
@@ -262,8 +257,7 @@ const archTemplate = await mcp__aichaku__create_doc_template({
 
 ## generate_documentation
 
-Automatically generates complete documentation by analyzing code and existing
-docs.
+Automatically generates complete documentation by analyzing code and existing docs.
 
 ### Description
 
@@ -674,10 +668,8 @@ try {
 
 ## Conclusion
 
-The Aichaku MCP tools provide powerful automation for project analysis and
-documentation generation. By combining these tools with Aichaku's methodology
-support and standards configuration, you can maintain high-quality, consistent
+The Aichaku MCP tools provide powerful automation for project analysis and documentation generation. By combining these
+tools with Aichaku's methodology support and standards configuration, you can maintain high-quality, consistent
 documentation across all your projects with minimal manual effort.
 
-For more information on configuring standards and methodologies, see the main
-Aichaku documentation.
+For more information on configuring standards and methodologies, see the main Aichaku documentation.

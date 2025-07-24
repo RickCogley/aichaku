@@ -32,8 +32,7 @@ server.setRequestHandler("tools/list", async () => ({
   tools: [
     {
       name: "review_file",
-      description:
-        "Review a file for security, standards, and methodology compliance",
+      description: "Review a file for security, standards, and methodology compliance",
       inputSchema: {
         type: "object",
         properties: {
@@ -50,8 +49,7 @@ server.setRequestHandler("tools/list", async () => ({
     },
     {
       name: "review_project",
-      description:
-        "Review entire project against selected standards and methodologies",
+      description: "Review entire project against selected standards and methodologies",
       inputSchema: {
         type: "object",
         properties: {
@@ -254,9 +252,7 @@ export class ShapeUpMethodology implements Methodology {
             "rabbit holes",
             "no-gos",
           ];
-          const missing = required.filter((s) =>
-            !content.toLowerCase().includes(s)
-          );
+          const missing = required.filter((s) => !content.toLowerCase().includes(s));
 
           if (missing.length > 0) {
             findings.push({

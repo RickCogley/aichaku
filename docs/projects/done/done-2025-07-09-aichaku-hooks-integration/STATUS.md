@@ -2,8 +2,8 @@
 
 ## Overview
 
-Enhancing Aichaku with Claude Code's hooks feature to provide automated
-methodology enforcement and improved developer experience.
+Enhancing Aichaku with Claude Code's hooks feature to provide automated methodology enforcement and improved developer
+experience.
 
 ## Current Status: 🌿 Active Development
 
@@ -17,8 +17,7 @@ graph LR
 
 ## Progress Timeline
 
-[Shaping] → [Pitching] → [Betting] → [**Building**] → [Cool-down] ▲ Day 7/14
-████████████░░░░░░░░░░░░░░░░░ 50% 🌿
+[Shaping] → [Pitching] → [Betting] → [**Building**] → [Cool-down] ▲ Day 7/14 ████████████░░░░░░░░░░░░░░░░░ 50% 🌿
 
 ## Completed Features
 
@@ -39,8 +38,7 @@ graph LR
 ## Features to Implement
 
 - [ ] Parse and display existing hooks from settings.json
-- [ ] Support both global (~/.claude/settings.json) and local
-      (.claude/settings.json) installation
+- [ ] Support both global (~/.claude/settings.json) and local (.claude/settings.json) installation
 - [ ] Enable individual hook installation (not just categories)
 - [ ] Add reminder about restarting Claude Code after hook changes
 - [ ] Interactive hook selection UI

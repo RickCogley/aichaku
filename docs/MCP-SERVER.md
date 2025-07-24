@@ -2,33 +2,25 @@
 
 ## Overview
 
-The Aichaku MCP (Model Context Protocol) server provides security review and
-methodology compliance checking capabilities for software projects. It enables
-AI assistants and other tools to analyze code for security vulnerabilities,
-verify adherence to coding standards, and ensure methodology patterns are
-followed correctly.
+The Aichaku MCP (Model Context Protocol) server provides security review and methodology compliance checking
+capabilities for software projects. It enables AI assistants and other tools to analyze code for security
+vulnerabilities, verify adherence to coding standards, and ensure methodology patterns are followed correctly.
 
 ### Key Features
 
-- **Security Review**: Automated security scanning using multiple tools
-  (Semgrep, ESLint security plugin, Bandit)
-- **Standards Compliance**: Check code against various coding standards (OWASP,
-  NIST-CSF, Clean Architecture, etc.)
-- **Methodology Verification**: Validate project structure against methodologies
-  (Shape Up, Scrum, Kanban, etc.)
+- **Security Review**: Automated security scanning using multiple tools (Semgrep, ESLint security plugin, Bandit)
+- **Standards Compliance**: Check code against various coding standards (OWASP, NIST-CSF, Clean Architecture, etc.)
+- **Methodology Verification**: Validate project structure against methodologies (Shape Up, Scrum, Kanban, etc.)
 - **Extensible Architecture**: Easy to add new security scanners and standards
 
 ## Architecture
 
 ### Design Decisions
 
-1. **TypeScript Implementation**: Chosen for type safety and excellent tooling
-   support
-2. **Modular Scanner System**: Each security scanner is a separate module for
-   maintainability
+1. **TypeScript Implementation**: Chosen for type safety and excellent tooling support
+2. **Modular Scanner System**: Each security scanner is a separate module for maintainability
 3. **Plugin Architecture**: Standards and methodologies are loaded dynamically
-4. **Async/Await Pattern**: All operations are asynchronous for better
-   performance
+4. **Async/Await Pattern**: All operations are asynchronous for better performance
 5. **Error Resilience**: Graceful handling of missing tools or failed scans
 
 ### System Architecture
@@ -36,8 +28,7 @@ followed correctly.
 The MCP server supports two operational modes:
 
 1. **Process Mode** (Default): Each request spawns a new MCP server process
-2. **HTTP/SSE Server Mode**: A persistent HTTP server handles multiple clients
-   via Server-Sent Events
+2. **HTTP/SSE Server Mode**: A persistent HTTP server handles multiple clients via Server-Sent Events
 
 #### Process Mode Architecture
 
@@ -190,8 +181,7 @@ Reviews a file for security vulnerabilities and code quality issues.
 
 - `file` (string, required): Path to the file to review
 - `content` (string, optional): File content (if not provided, reads from disk)
-- `includeExternal` (boolean, optional): Include external security scanners
-  (default: true)
+- `includeExternal` (boolean, optional): Include external security scanners (default: true)
 
 **Returns:**
 
@@ -241,8 +231,7 @@ Checks if a project follows selected methodology patterns.
 **Parameters:**
 
 - `projectPath` (string, required): Path to the project root
-- `methodology` (string, optional): Specific methodology to check (e.g.,
-  'shape-up', 'scrum')
+- `methodology` (string, optional): Specific methodology to check (e.g., 'shape-up', 'scrum')
 
 **Returns:**
 
@@ -282,15 +271,13 @@ Gets currently selected standards for the project.
 
 #### 4. `send_feedback` - Feedback Display Tool
 
-Sends a feedback message that appears visibly in the Claude Code console. This
-tool is designed for use by hooks and automation scripts to provide real-time
-feedback to users.
+Sends a feedback message that appears visibly in the Claude Code console. This tool is designed for use by hooks and
+automation scripts to provide real-time feedback to users.
 
 **Parameters:**
 
 - `message` (string, required): The feedback message to display
-- `level` (string, optional): The feedback level/type ("info", "success",
-  "warning", "error", default: "info")
+- `level` (string, optional): The feedback level/type ("info", "success", "warning", "error", default: "info")
 
 **Returns:**
 
@@ -413,8 +400,7 @@ const result = await mcp.callTool("get_standards", {
 
 ### Server Mode Selection
 
-The Aichaku CLI automatically detects and uses the HTTP/SSE server if it's
-running:
+The Aichaku CLI automatically detects and uses the HTTP/SSE server if it's running:
 
 ```bash
 # Start the HTTP/SSE server (one time)
@@ -535,9 +521,7 @@ async function getProjectStats(projectPath: string) {
     if (result.success) {
       stats.totalFiles++;
       stats.totalIssues += result.stats.totalIssues;
-      stats.criticalIssues += result.findings.filter((f) =>
-        f.severity === "error"
-      ).length;
+      stats.criticalIssues += result.findings.filter((f) => f.severity === "error").length;
 
       // Aggregate by scanner
       Object.entries(result.stats.byScanner).forEach(([scanner, count]) => {
@@ -852,9 +836,8 @@ if (stats.criticalIssues > baseline.maxCriticalIssues) {
 
 ### Overview
 
-Aichaku MCP servers are automatically updated when you upgrade the main Aichaku
-package. However, you may need to manually upgrade or reinstall MCP servers in
-some cases.
+Aichaku MCP servers are automatically updated when you upgrade the main Aichaku package. However, you may need to
+manually upgrade or reinstall MCP servers in some cases.
 
 ### Automatic Upgrade (Recommended)
 
@@ -1080,10 +1063,8 @@ aichaku setup --force
 If you encounter issues during upgrade:
 
 1. **Check the troubleshooting section above**
-2. **Review GitHub issues**:
-   [Aichaku Issues](https://github.com/RickCogley/aichaku/issues)
-3. **Check Claude Code documentation**:
-   [Claude Code Docs](https://docs.anthropic.com/en/docs/claude-code)
+2. **Review GitHub issues**: [Aichaku Issues](https://github.com/RickCogley/aichaku/issues)
+3. **Check Claude Code documentation**: [Claude Code Docs](https://docs.anthropic.com/en/docs/claude-code)
 4. **File a bug report** with:
    - Aichaku version (`aichaku --version`)
    - Operating system
@@ -1092,11 +1073,9 @@ If you encounter issues during upgrade:
 
 ## Conclusion
 
-The Aichaku MCP server provides a powerful, extensible platform for security
-review and methodology compliance. By following this documentation, you can
-effectively integrate security scanning into your development workflow and
+The Aichaku MCP server provides a powerful, extensible platform for security review and methodology compliance. By
+following this documentation, you can effectively integrate security scanning into your development workflow and
 maintain high code quality standards.
 
-For additional support or feature requests, please visit the
-[Aichaku repository](https://github.com/RickCogley/aichaku) or contact the
-maintainers.
+For additional support or feature requests, please visit the [Aichaku repository](https://github.com/RickCogley/aichaku)
+or contact the maintainers.

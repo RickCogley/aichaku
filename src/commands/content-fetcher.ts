@@ -19,8 +19,7 @@ export async function fetchContent(
   version: string,
   options: FetchOptions = {},
 ): Promise<boolean> {
-  const baseUrl =
-    `https://raw.githubusercontent.com/RickCogley/aichaku/v${version}/docs/${contentType}`;
+  const baseUrl = `https://raw.githubusercontent.com/RickCogley/aichaku/v${version}/docs/${contentType}`;
 
   // Get the appropriate structure based on content type
   // First try to fetch a manifest.json from GitHub for dynamic discovery
@@ -84,9 +83,7 @@ export async function fetchContent(
       failureCount++;
       failedFiles.push(relativePath);
 
-      const errorMessage = error instanceof Error
-        ? error.message
-        : String(error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
 
       // Track network permission errors separately
       if (errorMessage.includes("Requires net access")) {
@@ -127,9 +124,7 @@ export async function fetchContent(
 
   // Report results
   if (!options.silent) {
-    const contentName = contentType === "methodologies"
-      ? "methodology"
-      : contentType;
+    const contentName = contentType === "methodologies" ? "methodology" : contentType;
 
     if (successCount === 0 && failureCount > 0) {
       console.error(`\n❌ Failed to fetch any ${contentName} files!`);
@@ -296,8 +291,7 @@ async function fetchGitHubStructureDynamically(
   const path = urlParts.slice(6).join("/"); // docs/methodologies
 
   // Use GitHub API to get directory tree
-  const apiUrl =
-    `https://api.github.com/repos/${owner}/${repo}/git/trees/${ref}?recursive=1`;
+  const apiUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/${ref}?recursive=1`;
 
   try {
     const response = await fetch(apiUrl);
@@ -348,9 +342,7 @@ async function fetchGitHubStructureDynamically(
   } catch (error) {
     // If GitHub API fails, fall back to hardcoded structure
     console.warn(`Failed to fetch dynamic structure from GitHub API: ${error}`);
-    return contentType === "methodologies"
-      ? getMethodologyStructure()
-      : getStandardsStructure();
+    return contentType === "methodologies" ? getMethodologyStructure() : getStandardsStructure();
   }
 }
 
@@ -395,9 +387,7 @@ async function copyLocalFile(
 
     if (!options.silent) {
       console.warn(
-        `⚠️  Failed to copy ${relativePath}: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
+        `⚠️  Failed to copy ${relativePath}: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
   }
@@ -469,9 +459,7 @@ export async function fetchLocalContent(
 
     // Report results
     if (!options.silent) {
-      const contentName = contentType === "methodologies"
-        ? "methodology"
-        : contentType;
+      const contentName = contentType === "methodologies" ? "methodology" : contentType;
 
       if (stats.successCount === 0 && stats.failureCount > 0) {
         console.error(`\n❌ Failed to copy any ${contentName} files!`);
@@ -494,9 +482,7 @@ export async function fetchLocalContent(
   } catch (error) {
     if (!options.silent) {
       console.error(
-        `❌ Failed to fetch local content: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
+        `❌ Failed to fetch local content: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
     return false;

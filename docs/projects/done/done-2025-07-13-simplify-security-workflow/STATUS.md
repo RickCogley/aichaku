@@ -14,8 +14,8 @@ graph LR
 
 ## Project Goal
 
-Remove redundant custom security checks from GitHub workflow and rely on proven
-tools (DevSkim and CodeQL) for security scanning.
+Remove redundant custom security checks from GitHub workflow and rely on proven tools (DevSkim and CodeQL) for security
+scanning.
 
 ## Problem Statement
 
@@ -59,12 +59,9 @@ Our custom security checks in `.github/workflows/security.yml` are:
 ### Immediate Fix ✅ DONE
 
 - [x] **Fixed the actual failing issue**: CLAUDE.md formatting errors
-- [x] **Removed problematic path traversal check**: The check with massive
-      exclusion list causing false positives
-- [x] **Let CodeQL handle path traversal**: CodeQL does semantic analysis better
-      than regex patterns
-- [x] Security workflow should now pass without blocking releases on false
-      positives
+- [x] **Removed problematic path traversal check**: The check with massive exclusion list causing false positives
+- [x] **Let CodeQL handle path traversal**: CodeQL does semantic analysis better than regex patterns
+- [x] Security workflow should now pass without blocking releases on false positives
 
 ## Benefits
 
@@ -76,13 +73,10 @@ Our custom security checks in `.github/workflows/security.yml` are:
 
 ## Key Findings
 
-- **CodeQL and DevSkim have significant gaps** - Runtime analysis, Deno-specific
-  concerns, contextual vulnerabilities
+- **CodeQL and DevSkim have significant gaps** - Runtime analysis, Deno-specific concerns, contextual vulnerabilities
 - **Layered security approach needed** - No single tool catches everything
-- **Focused custom checks add value** - When they fill genuine gaps rather than
-  duplicate functionality
-- **See [Security Tools Analysis](security-tools-analysis.md)** for
-  comprehensive coverage analysis
+- **Focused custom checks add value** - When they fill genuine gaps rather than duplicate functionality
+- **See [Security Tools Analysis](security-tools-analysis.md)** for comprehensive coverage analysis
 
 ## Current State
 

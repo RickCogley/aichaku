@@ -1,7 +1,6 @@
 # Status: Global vs Project Redesign
 
-**Status**: COMPLETE ✅ **Started**: 2025-07-06 **Completed**: 2025-07-06
-**Released**: v0.5.0
+**Status**: COMPLETE ✅ **Started**: 2025-07-06 **Completed**: 2025-07-06 **Released**: v0.5.0
 
 ## Final Phase
 

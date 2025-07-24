@@ -246,8 +246,7 @@ export class WindowsPlatformHandler extends BasePlatformHandler {
 ```typescript
 // utils/mcp/version-manager.ts
 export class MCPVersionManager {
-  private readonly GITHUB_API =
-    "https://api.github.com/repos/RickCogley/aichaku/releases/latest";
+  private readonly GITHUB_API = "https://api.github.com/repos/RickCogley/aichaku/releases/latest";
   private readonly VERSION_REGEX = /VERSION:\s*([0-9]+\.[0-9]+\.[0-9]+)/;
 
   async getCurrentVersion(): Promise<string> {
@@ -330,15 +329,13 @@ async function displayStatus(status: ProcessStatus): Promise<void> {
   const updateAvailable = current !== latest;
 
   console.log(
-    `📦 Version:        ${current}${
-      updateAvailable ? ` (latest: ${latest} available)` : " (latest)"
-    }`,
+    `📦 Version:        ${current}${updateAvailable ? ` (latest: ${latest} available)` : " (latest)"}`,
   );
   console.log(`📍 Location:       ${status.binaryPath}`);
   console.log(
-    `${status.running ? "🟢" : "🔴"} Status:         ${
-      status.running ? "Running" : "Stopped"
-    }${status.pid ? ` (PID: ${status.pid})` : ""}`,
+    `${status.running ? "🟢" : "🔴"} Status:         ${status.running ? "Running" : "Stopped"}${
+      status.pid ? ` (PID: ${status.pid})` : ""
+    }`,
   );
 
   if (status.uptime) {

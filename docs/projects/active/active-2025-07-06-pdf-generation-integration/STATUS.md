@@ -43,14 +43,10 @@ graph LR
 
 ## Key Decisions
 
-1. **Optional by Default**: You can enable PDF generation, but it remains
-   optional
-2. **Auto-Generation**: The system auto-generates PDFs for specified document
-   types
-3. **Smart Dependencies**: You'll get smart dependency checking with helpful
-   setup guides
-4. **Professional Styling**: The system uses business-friendly defaults for
-   professional output
+1. **Optional by Default**: You can enable PDF generation, but it remains optional
+2. **Auto-Generation**: The system auto-generates PDFs for specified document types
+3. **Smart Dependencies**: You'll get smart dependency checking with helpful setup guides
+4. **Professional Styling**: The system uses business-friendly defaults for professional output
 5. **Script Integration**: We integrate existing script functionality seamlessly
 
 ## Next Steps
@@ -74,8 +70,7 @@ graph LR
 ## Related Documents
 
 - [`shape-up-pitch.md`](./shape-up-pitch.md) - Problem and solution overview
-- [`implementation-plan.md`](./implementation-plan.md) - Detailed implementation
-  steps
+- [`implementation-plan.md`](./implementation-plan.md) - Detailed implementation steps
 
 ## Success Criteria
 

@@ -6,8 +6,7 @@
 
 ### 1. Enhanced Help Command
 
-The `aichaku help` command now supports both methodologies and development
-standards:
+The `aichaku help` command now supports both methodologies and development standards:
 
 ```bash
 # View comprehensive help
@@ -73,8 +72,7 @@ const isStandard = topic &&
 
 ## Benefits
 
-1. **Comprehensive Knowledge**: Developers can learn both methodologies AND
-   standards
+1. **Comprehensive Knowledge**: Developers can learn both methodologies AND standards
 2. **Quick Reference**: Terminal-based help for immediate access
 3. **Visual Learning**: ASCII diagrams make concepts memorable
 4. **Practical Examples**: Real code snippets for each standard

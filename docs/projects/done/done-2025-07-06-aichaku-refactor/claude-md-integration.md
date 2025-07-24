@@ -2,8 +2,7 @@
 
 ## Problem
 
-When installing Aichaku globally, users need to manually add the methodology
-section to each project's CLAUDE.md file.
+When installing Aichaku globally, users need to manually add the methodology section to each project's CLAUDE.md file.
 
 ## Solution Options
 
@@ -59,16 +58,16 @@ I recommend **Option 2** - a dedicated `integrate` command because:
 ```markdown
 ## Methodologies
 
-This project uses the globally installed Aichaku adaptive methodology system.
-Claude Code will automatically blend methodologies based on natural language:
+This project uses the globally installed Aichaku adaptive methodology system. Claude Code will automatically blend
+methodologies based on natural language:
 
 - Say "sprint" for Scrum practices
 - Say "shape" for Shape Up principles
 - Say "kanban board" for flow visualization
 - Say "MVP" for Lean approaches
 
-The methodologies are installed globally in ~/.claude/methodologies/ and will
-adapt to how you naturally talk about work.
+The methodologies are installed globally in ~/.claude/methodologies/ and will adapt to how you naturally talk about
+work.
 ```
 
 ## Usage
@@ -81,5 +80,4 @@ aichaku integrate
 ✅ Added Aichaku methodology reference to CLAUDE.md
 ```
 
-This keeps the concerns separated and gives users control over when and where to
-integrate Aichaku references.
+This keeps the concerns separated and gives users control over when and where to integrate Aichaku references.

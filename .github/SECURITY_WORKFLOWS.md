@@ -1,7 +1,6 @@
 # GitHub Actions Security Workflows
 
-This document explains the security and publishing workflows configured for
-Aichaku.
+This document explains the security and publishing workflows configured for Aichaku.
 
 ## Workflows Overview
 

@@ -2,12 +2,9 @@
 
 ## Current Problems
 
-1. **Too Sparse**: The current YAML example lacks context and descriptive
-   information
-2. **Missing Directives**: The `METHODOLOGY_SECTION` rules aren't represented in
-   YAML
-3. **No Clear Purpose**: Unclear what the YAML is for or how Claude should use
-   it
+1. **Too Sparse**: The current YAML example lacks context and descriptive information
+2. **Missing Directives**: The `METHODOLOGY_SECTION` rules aren't represented in YAML
+3. **No Clear Purpose**: Unclear what the YAML is for or how Claude should use it
 4. **No References**: No way to access full documentation when needed
 
 ## Proposed Enhanced YAML Structure
@@ -274,11 +271,9 @@ aichaku:
 ## Key Improvements
 
 1. **Rich Context**: Each item has name, description, and purpose
-2. **Directives Included**: All behavioral rules from METHODOLOGY_SECTION in
-   structured format
+2. **Directives Included**: All behavioral rules from METHODOLOGY_SECTION in structured format
 3. **Clear Organization**: Separates directives, methodologies, and standards
-4. **Actionable Information**: Specific triggers, actions, and forbidden
-   behaviors
+4. **Actionable Information**: Specific triggers, actions, and forbidden behaviors
 5. **References**: Points to full documentation without bloating the file
 6. **Examples**: Shows exact format for progress displays and diagrams
 7. **Metadata**: Version, generation time, and description for context
@@ -300,6 +295,5 @@ When Claude reads this YAML:
 5. Can show proper progress indicators
 6. Follows the discussion-first approach
 
-The `reference` fields use the path format that Claude can understand, allowing
-it to request full content when needed without embedding everything in
-CLAUDE.md.
+The `reference` fields use the path format that Claude can understand, allowing it to request full content when needed
+without embedding everything in CLAUDE.md.

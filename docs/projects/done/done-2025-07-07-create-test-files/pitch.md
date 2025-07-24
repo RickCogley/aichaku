@@ -2,9 +2,8 @@
 
 ## Problem
 
-Security Tests workflow is failing because it expects test files but none exist.
-The workflow runs `deno test` which returns an error when no test modules are
-found.
+Security Tests workflow is failing because it expects test files but none exist. The workflow runs `deno test` which
+returns an error when no test modules are found.
 
 ## Appetite
 

@@ -2,9 +2,8 @@
 
 ## Overview
 
-A complete MCP server that provides all GitHub CLI operations as deterministic,
-reliable tools for Claude Code. This eliminates context dependencies and
-provides better error handling than shell-based `gh` commands.
+A complete MCP server that provides all GitHub CLI operations as deterministic, reliable tools for Claude Code. This
+eliminates context dependencies and provides better error handling than shell-based `gh` commands.
 
 ## Core Commands
 
@@ -444,6 +443,5 @@ postRelease: [
 7. **CI/CD Ready**: Works perfectly in automated environments
 8. **Extensible**: Easy to add new GitHub operations
 
-This comprehensive GitHub MCP tool would make all GitHub interactions from
-Claude Code completely reliable and deterministic, eliminating the context and
-authentication issues that can occur with shell-based `gh` commands.
+This comprehensive GitHub MCP tool would make all GitHub interactions from Claude Code completely reliable and
+deterministic, eliminating the context and authentication issues that can occur with shell-based `gh` commands.

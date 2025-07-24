@@ -2,20 +2,14 @@
 
 ## Problem
 
-Claude Code has introduced a new way to define slash commands using Markdown
-files in `~/.claude/commands/`, but we're still using the old JSON format in
-`settings.json`. This creates several issues:
+Claude Code has introduced a new way to define slash commands using Markdown files in `~/.claude/commands/`, but we're
+still using the old JSON format in `settings.json`. This creates several issues:
 
-1. **Outdated approach**: Our 10 slash commands are defined in a 228-line JSON
-   file, making them hard to maintain
-2. **No version control**: Individual commands can't be tracked separately in
-   git
-3. **Limited capabilities**: The new format supports YAML frontmatter with tool
-   permissions
-4. **Potential conflicts**: Claude now has built-in GitHub commands that may
-   overlap with our MCP
-5. **Poor discoverability**: Commands buried in JSON are hard to find and
-   understand
+1. **Outdated approach**: Our 10 slash commands are defined in a 228-line JSON file, making them hard to maintain
+2. **No version control**: Individual commands can't be tracked separately in git
+3. **Limited capabilities**: The new format supports YAML frontmatter with tool permissions
+4. **Potential conflicts**: Claude now has built-in GitHub commands that may overlap with our MCP
+5. **Poor discoverability**: Commands buried in JSON are hard to find and understand
 
 ### Evidence from Current State
 
@@ -40,13 +34,11 @@ files in `~/.claude/commands/`, but we're still using the old JSON format in
 
 ## Appetite
 
-**3 weeks** - This is a medium-sized migration that improves maintainability and
-aligns with Claude's new standards.
+**3 weeks** - This is a medium-sized migration that improves maintainability and aligns with Claude's new standards.
 
 ## Solution
 
-Migrate all slash commands to individual Markdown files with proper metadata and
-organization.
+Migrate all slash commands to individual Markdown files with proper metadata and organization.
 
 ### Directory Structure
 

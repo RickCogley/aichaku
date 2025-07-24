@@ -1,14 +1,12 @@
 # Conversation Summary Hook
 
-The `conversation-summary` hook automatically creates structured checkpoint
-summaries of your Claude Code conversations. It runs as both a Stop and
-PreCompact hook, ensuring you have persistent records of your work sessions
-without manual intervention.
+The `conversation-summary` hook automatically creates structured checkpoint summaries of your Claude Code conversations.
+It runs as both a Stop and PreCompact hook, ensuring you have persistent records of your work sessions without manual
+intervention.
 
 ## Purpose
 
-This hook solves the problem of losing context when conversations are compacted
-or ended. It automatically:
+This hook solves the problem of losing context when conversations are compacted or ended. It automatically:
 
 - Reads conversation transcripts
 - Generates structured summaries using Claude CLI
@@ -73,8 +71,8 @@ Immediate follow-up tasks or improvements needed
 
 ### Automatic (Recommended)
 
-The conversation-summary hook is installed automatically with Aichaku and
-configured in your global Claude Code settings at `~/.claude/settings.json`.
+The conversation-summary hook is installed automatically with Aichaku and configured in your global Claude Code settings
+at `~/.claude/settings.json`.
 
 ### Manual Verification
 
@@ -220,6 +218,5 @@ The hook is designed to be efficient:
 - Uses secure temporary file handling
 - Respects Deno's permission model
 
-This hook ensures you never lose important context from your development
-sessions, providing automatic documentation that helps maintain project
-continuity and knowledge preservation.
+This hook ensures you never lose important context from your development sessions, providing automatic documentation
+that helps maintain project continuity and knowledge preservation.

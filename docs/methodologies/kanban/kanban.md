@@ -1,7 +1,6 @@
 # Kanban
 
-**BEST FOR**: Continuous flow work, support teams, varying priorities, starting
-simply
+**BEST FOR**: Continuous flow work, support teams, varying priorities, starting simply
 
 **TRIGGERS**: "kanban", "flow", "WIP limit", "continuous", "pull"
 
@@ -58,8 +57,8 @@ Bottleneck: [Column]
 
 ## Context Adaptations
 
-**Solo**: Personal kanban (To Do → Doing → Done) **Team**: Full board with
-handoff states **Mixed Work**: Separate swim lanes by type
+**Solo**: Personal kanban (To Do → Doing → Done) **Team**: Full board with handoff states **Mixed Work**: Separate swim
+lanes by type
 
 ## Key Decisions
 

@@ -285,8 +285,7 @@ export default {
 
 ### Nagare Integration Strategy
 
-Since nagare runs outside of Claude Code context, we need a bridge between
-nagare hooks and MCP tools:
+Since nagare runs outside of Claude Code context, we need a bridge between nagare hooks and MCP tools:
 
 #### Option 1: Standalone MCP Client for Nagare
 
@@ -438,9 +437,8 @@ async function buildGitHubMCP() {
 }
 ```
 
-This ensures that the GitHub MCP tool solves the original context dependency
-problem in nagare's postRelease hooks while maintaining awareness of GitHub CLI
-version changes.
+This ensures that the GitHub MCP tool solves the original context dependency problem in nagare's postRelease hooks while
+maintaining awareness of GitHub CLI version changes.
 
 ## Error Handling Strategy
 
@@ -527,6 +525,5 @@ cp ./dist/github-mcp-server ~/.aichaku/mcp-servers/
 4. **User Experience**: Clear progress feedback and error messages
 5. **Maintenance**: Minimal configuration required
 
-This implementation plan provides a clear path to building a robust GitHub MCP
-tool that will make all GitHub operations from Claude Code completely reliable
-and deterministic.
+This implementation plan provides a clear path to building a robust GitHub MCP tool that will make all GitHub operations
+from Claude Code completely reliable and deterministic.

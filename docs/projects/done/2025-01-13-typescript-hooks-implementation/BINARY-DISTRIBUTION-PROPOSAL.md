@@ -7,8 +7,7 @@ Aichaku already distributes compiled binaries for MCP servers:
 ```typescript
 // From src/commands/mcp.ts
 const binaryName = `aichaku-code-reviewer-${VERSION}-${platformName}${ext}`;
-const downloadUrl =
-  `https://github.com/RickCogley/aichaku/releases/download/v${VERSION}/${binaryName}`;
+const downloadUrl = `https://github.com/RickCogley/aichaku/releases/download/v${VERSION}/${binaryName}`;
 ```
 
 ### How MCP Binaries Work:
@@ -62,8 +61,7 @@ const downloadUrl =
      const binaryName = `aichaku-hooks-${VERSION}-${platformName}${ext}`;
      const targetPath = join(hooksDir, `aichaku-hooks${ext}`);
 
-     const downloadUrl =
-       `https://github.com/RickCogley/aichaku/releases/download/v${VERSION}/${binaryName}`;
+     const downloadUrl = `https://github.com/RickCogley/aichaku/releases/download/v${VERSION}/${binaryName}`;
 
      // Download and install
      await downloadBinary(downloadUrl, targetPath);
@@ -186,5 +184,4 @@ Distributing hooks as a compiled binary (just like MCP servers) would:
 4. Work on systems without Deno
 5. Follow established pattern (MCP servers)
 
-This makes hooks truly "install and forget" - they're just there and ready to
-use!
+This makes hooks truly "install and forget" - they're just there and ready to use!

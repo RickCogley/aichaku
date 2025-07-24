@@ -2,10 +2,7 @@
 
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
-} from "@modelcontextprotocol/sdk/types.js";
+import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
 
 // Test different formatting approaches
 const formatters = {
@@ -14,9 +11,7 @@ const formatters = {
   },
 
   plain: (title: string, content: string) => {
-    return `${title}\n${
-      "=".repeat(title.length)
-    }\n\nStatus: Active\nDetails: ${content}\n\n• Item 1\n• Item 2`;
+    return `${title}\n${"=".repeat(title.length)}\n\nStatus: Active\nDetails: ${content}\n\n• Item 1\n• Item 2`;
   },
 
   ansi: (title: string, content: string) => {
@@ -25,15 +20,13 @@ const formatters = {
     const underline = (text: string) => `\x1b[4m${text}\x1b[0m`;
     const green = (text: string) => `\x1b[32m${text}\x1b[0m`;
 
-    return `${bold(underline(title))}\n\n${bold("Status:")} ${
-      green("Active")
-    }\n${bold("Details:")} ${content}\n\n• Item 1\n• Item 2`;
+    return `${bold(underline(title))}\n\n${bold("Status:")} ${green("Active")}\n${
+      bold("Details:")
+    } ${content}\n\n• Item 1\n• Item 2`;
   },
 
   unicode: (title: string, content: string) => {
-    return `📋 ${title}\n${
-      "━".repeat(30)
-    }\n\n✅ Status: Active\n📝 Details: ${content}\n\n▸ Item 1\n▸ Item 2`;
+    return `📋 ${title}\n${"━".repeat(30)}\n\n✅ Status: Active\n📝 Details: ${content}\n\n▸ Item 1\n▸ Item 2`;
   },
 
   structured: (title: string, content: string) => {

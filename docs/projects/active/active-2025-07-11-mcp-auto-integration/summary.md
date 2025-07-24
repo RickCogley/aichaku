@@ -2,8 +2,8 @@
 
 ## The Problem We're Solving
 
-When users ask Claude Code to "generate comprehensive project documentation,"
-the MCP server tools aren't being used automatically. This results in:
+When users ask Claude Code to "generate comprehensive project documentation," the MCP server tools aren't being used
+automatically. This results in:
 
 - Documentation without standards compliance
 - No automatic quality checks
@@ -11,9 +11,8 @@ the MCP server tools aren't being used automatically. This results in:
 
 ## Root Cause
 
-The MCP server currently only has tools for **reviewing** existing content, not
-**generating** new documentation. Additionally, tool descriptions lack the
-keywords and patterns that would trigger automatic usage.
+The MCP server currently only has tools for **reviewing** existing content, not **generating** new documentation.
+Additionally, tool descriptions lack the keywords and patterns that would trigger automatic usage.
 
 ## Our Solution
 
@@ -85,8 +84,8 @@ The system detects:
 
 ## Implementation Timeline
 
-**Day 1**: Documentation generation tools **Day 2**: Enhanced discovery system
-**Day 3**: Auto-invocation engine **Day 4**: Integration and testing
+**Day 1**: Documentation generation tools **Day 2**: Enhanced discovery system **Day 3**: Auto-invocation engine **Day
+4**: Integration and testing
 
 ## Expected Outcomes
 
@@ -111,5 +110,4 @@ With this plan shaped, we're ready to implement:
 3. Automatic invocation engine
 4. Natural language mapping
 
-This will transform the MCP server from a passive reviewer to an active
-participant in the development workflow.
+This will transform the MCP server from a passive reviewer to an active participant in the development workflow.

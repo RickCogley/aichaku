@@ -2,22 +2,17 @@
 
 ## Overview
 
-Clean Architecture, introduced by Robert C. Martin (Uncle Bob), is an
-architectural pattern that emphasizes the separation of concerns and the
-independence of business logic from external frameworks, databases, and UI.
+Clean Architecture, introduced by Robert C. Martin (Uncle Bob), is an architectural pattern that emphasizes the
+separation of concerns and the independence of business logic from external frameworks, databases, and UI.
 
 ### Core Principles
 
-1. **Independence of Frameworks**: The architecture doesn't depend on the
-   existence of some library of feature-laden software
-2. **Testability**: Business rules can be tested without the UI, database, web
-   server, or any external element
-3. **Independence of UI**: The UI can change easily without changing the rest of
-   the system
-4. **Independence of Database**: You can swap out Oracle or SQL Server for
-   MongoDB, BigTable, CouchDB, or something else
-5. **Independence of External Agency**: Business rules don't know anything about
-   the outside world
+1. **Independence of Frameworks**: The architecture doesn't depend on the existence of some library of feature-laden
+   software
+2. **Testability**: Business rules can be tested without the UI, database, web server, or any external element
+3. **Independence of UI**: The UI can change easily without changing the rest of the system
+4. **Independence of Database**: You can swap out Oracle or SQL Server for MongoDB, BigTable, CouchDB, or something else
+5. **Independence of External Agency**: Business rules don't know anything about the outside world
 
 ## The Dependency Rule
 
@@ -528,16 +523,11 @@ describe("CreateUserUseCase", () => {
 
 ## Clean Architecture Benefits
 
-1. **Independent of Frameworks**: Can change frameworks without changing
-   business logic
-2. **Testable**: Business rules can be tested without UI, database, or external
-   elements
-3. **Independent of UI**: Can change from web to console to mobile without
-   changing business rules
-4. **Independent of Database**: Can switch from SQL to NoSQL without changing
-   business rules
-5. **Independent of External Agency**: Business rules don't know about the
-   outside world
+1. **Independent of Frameworks**: Can change frameworks without changing business logic
+2. **Testable**: Business rules can be tested without UI, database, or external elements
+3. **Independent of UI**: Can change from web to console to mobile without changing business rules
+4. **Independent of Database**: Can switch from SQL to NoSQL without changing business rules
+5. **Independent of External Agency**: Business rules don't know about the outside world
 
 ## Common Pitfalls
 
@@ -643,6 +633,5 @@ class CreateUserUseCase {
 - [ ] Can change UI without changing business rules
 - [ ] Clear separation between layers
 
-Remember: The goal is to make the business rules the most important part of your
-application, with everything else being a detail that can be changed without
-affecting the core business logic.
+Remember: The goal is to make the business rules the most important part of your application, with everything else being
+a detail that can be changed without affecting the core business logic.

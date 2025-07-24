@@ -331,5 +331,5 @@ it("should process order", () => {
 }
 ```
 
-Remember: TDD is not just about testing - it's a design methodology that leads
-to better, more maintainable code through the discipline of writing tests first.
+Remember: TDD is not just about testing - it's a design methodology that leads to better, more maintainable code through
+the discipline of writing tests first.

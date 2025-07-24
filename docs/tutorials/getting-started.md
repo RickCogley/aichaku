@@ -1,8 +1,7 @@
 # Getting Started with Aichaku
 
-Welcome to Aichaku! This tutorial teaches you how to install Aichaku and create
-your first project. By the end, you'll understand how Aichaku helps Claude work
-with your team using development methodologies.
+Welcome to Aichaku! This tutorial teaches you how to install Aichaku and create your first project. By the end, you'll
+understand how Aichaku helps Claude work with your team using development methodologies.
 
 ## What you'll learn
 
@@ -49,8 +48,7 @@ Check that Aichaku installed correctly:
 aichaku --version
 ```
 
-You should see version information. If you get "command not found", add Deno to
-your PATH:
+You should see version information. If you get "command not found", add Deno to your PATH:
 
 ```bash
 echo 'export PATH="$HOME/.deno/bin:$PATH"' >> ~/.zshrc
@@ -96,8 +94,7 @@ Initialize Aichaku in your project:
 aichaku init
 ```
 
-This creates a `.claude/` directory in your project with everything Claude
-needs.
+This creates a `.claude/` directory in your project with everything Claude needs.
 
 ### Integrate with Claude
 
@@ -164,8 +161,7 @@ Aichaku automatically creates structured summaries of your work:
 - 📄 **Saved automatically** when conversations end or are compacted
 - 📋 **Organized** in `docs/checkpoints/` directory
 - 📅 **Timestamped** for easy reference
-- 📝 **Structured** with session overview, decisions, files modified, and next
-  steps
+- 📝 **Structured** with session overview, decisions, files modified, and next steps
 
 No more losing context between sessions!
 
@@ -232,26 +228,20 @@ You've successfully:
 - ✅ Learned the basic workflow
 - ✅ **Enabled automatic session summaries** ⭐
 
-**Quality Note**: Aichaku follows enterprise-grade engineering standards with
-automated pre-flight checks (format/lint/type-check/test), configuration-as-code
-architecture, and consistent branding across all commands. This ensures
-reliability and maintainability for professional development workflows.
+**Quality Note**: Aichaku follows enterprise-grade engineering standards with automated pre-flight checks
+(format/lint/type-check/test), configuration-as-code architecture, and consistent branding across all commands. This
+ensures reliability and maintainability for professional development workflows.
 
 Continue learning:
 
 - Read [First Project Tutorial](first-project.md) to build something real
-- Check [Configure Your Project](../how-to/configure-project.md) for
-  customization
-- Explore [Core Concepts](../explanation/core-concepts.md) to understand the
-  philosophy
+- Check [Configure Your Project](../how-to/configure-project.md) for customization
+- Explore [Core Concepts](../explanation/core-concepts.md) to understand the philosophy
 
 ## Getting help
 
 - Run `aichaku help` for command reference
-- Visit [GitHub Issues](https://github.com/RickCogley/aichaku/issues) for
-  support
-- Read the [Configuration Options](../reference/configuration-options.md) for
-  detailed settings
+- Visit [GitHub Issues](https://github.com/RickCogley/aichaku/issues) for support
+- Read the [Configuration Options](../reference/configuration-options.md) for detailed settings
 
-Remember: Aichaku makes Claude a better development partner by providing
-structure without rigidity. Happy coding!
+Remember: Aichaku makes Claude a better development partner by providing structure without rigidity. Happy coding!

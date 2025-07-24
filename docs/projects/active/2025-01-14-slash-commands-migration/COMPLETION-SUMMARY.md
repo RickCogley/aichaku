@@ -1,7 +1,7 @@
 # Slash Commands Migration - COMPLETED ✅
 
-**Migration Date**: 2025-01-14 21:49 **Status**: All 10 commands successfully
-migrated **Location**: `/Users/rcogley/.claude/commands/`
+**Migration Date**: 2025-01-14 21:49 **Status**: All 10 commands successfully migrated **Location**:
+`/Users/rcogley/.claude/commands/`
 
 ## Migration Results
 
@@ -78,5 +78,4 @@ Your slash commands are now ready! Try:
 - `/dev:preflight` for project checks
 - `/utils:commands` to see all available commands
 
-The migration is complete and your slash commands are now using Claude's modern
-Markdown-based system! 🎉
+The migration is complete and your slash commands are now using Claude's modern Markdown-based system! 🎉

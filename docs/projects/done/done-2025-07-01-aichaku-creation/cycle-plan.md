@@ -64,9 +64,8 @@ These were considered but didn't make the cut:
 
 ## Notes
 
-This is an accelerated cycle for demonstration purposes. In reality, this would
-be a full 6-week cycle with proper pacing. The compressed timeline shows the
-methodology in action while delivering real value.
+This is an accelerated cycle for demonstration purposes. In reality, this would be a full 6-week cycle with proper
+pacing. The compressed timeline shows the methodology in action while delivering real value.
 
 Key constraints:
 
@@ -79,5 +78,5 @@ Key constraints:
 
 ## Betting Decision
 
-✅ **BET APPROVED** - This solves a critical user need with a clear, bounded
-solution. The appetite matches the scope, and the team has the skills needed.
+✅ **BET APPROVED** - This solves a critical user need with a clear, bounded solution. The appetite matches the scope,
+and the team has the skills needed.

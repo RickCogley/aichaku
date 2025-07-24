@@ -11,8 +11,7 @@ The following versions of . are currently supported with security updates:
 
 ## Reporting a Vulnerability
 
-We take the security of . seriously. If you discover a security vulnerability,
-please follow these steps:
+We take the security of . seriously. If you discover a security vulnerability, please follow these steps:
 
 ### 1. Do NOT Create a Public Issue
 

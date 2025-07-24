@@ -1,14 +1,12 @@
 # MVP Experiment Plan - Marketplace Idea
 
-**Hypothesis**: Small businesses need a simple way to sell services online
-without complex e-commerce setup
+**Hypothesis**: Small businesses need a simple way to sell services online without complex e-commerce setup
 
 **MVP Timeline**: 5 days (January 6-10, 2025)
 
 ## What We're Testing
 
-1. **Problem Validation**: Do small service businesses struggle with current
-   solutions?
+1. **Problem Validation**: Do small service businesses struggle with current solutions?
 2. **Solution Appeal**: Will a simplified marketplace attract them?
 3. **Willingness to Pay**: Will they pay 5% transaction fee?
 
@@ -88,5 +86,4 @@ without complex e-commerce setup
 
 ## Notes
 
-Remember: We're testing the idea, not building a product. Fake it till we
-validate it!
+Remember: We're testing the idea, not building a product. Fake it till we validate it!

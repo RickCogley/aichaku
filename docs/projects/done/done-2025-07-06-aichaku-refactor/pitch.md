@@ -11,8 +11,7 @@ Users are confused about what Aichaku is:
 
 ## The Solution
 
-Make Aichaku what it was meant to be: **one adaptive system** that responds to
-context.
+Make Aichaku what it was meant to be: **one adaptive system** that responds to context.
 
 ### Before (Confusing)
 

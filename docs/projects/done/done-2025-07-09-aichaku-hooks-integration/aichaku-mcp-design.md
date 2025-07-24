@@ -2,10 +2,9 @@
 
 ## Overview
 
-A bespoke Model Context Protocol server for Aichaku that provides active code
-review capabilities based on user-selected standards and methodologies. Unlike
-the passive Aichaku CLI (which installs guidance files), the MCP actively
-reviews code against chosen standards.
+A bespoke Model Context Protocol server for Aichaku that provides active code review capabilities based on user-selected
+standards and methodologies. Unlike the passive Aichaku CLI (which installs guidance files), the MCP actively reviews
+code against chosen standards.
 
 ## Architecture Decision: System-Wide vs Per-Project
 
@@ -355,6 +354,5 @@ aichaku review init
 - Hook templates
 - Documentation
 
-This design provides a clean, efficient architecture that complements Aichaku's
-passive guidance with active review capabilities, all while respecting user
-choice and project boundaries.
+This design provides a clean, efficient architecture that complements Aichaku's passive guidance with active review
+capabilities, all while respecting user choice and project boundaries.

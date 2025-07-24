@@ -175,9 +175,7 @@ export class ProgressCommand implements Command {
       const output = renderer.render(progress, "minimal");
 
       console.log(
-        `║  ${
-          index + 1
-        }. ${project.name} (${progress.methodology})                      ║`,
+        `║  ${index + 1}. ${project.name} (${progress.methodology})                      ║`,
       );
       console.log(`║     ${output}             ║`);
       console.log(`║                                                  ║`);

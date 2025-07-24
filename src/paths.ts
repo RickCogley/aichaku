@@ -208,15 +208,9 @@ export async function checkLegacyPaths(): Promise<{
   try {
     const [globalMethodologies, globalStandards, projectOutput] = await Promise
       .all([
-        Deno.stat(paths.legacy.globalMethodologies).then(() => true).catch(() =>
-          false
-        ),
-        Deno.stat(paths.legacy.globalStandards).then(() => true).catch(() =>
-          false
-        ),
-        Deno.stat(paths.legacy.projectOutput).then(() => true).catch(() =>
-          false
-        ),
+        Deno.stat(paths.legacy.globalMethodologies).then(() => true).catch(() => false),
+        Deno.stat(paths.legacy.globalStandards).then(() => true).catch(() => false),
+        Deno.stat(paths.legacy.projectOutput).then(() => true).catch(() => false),
       ]);
 
     return {

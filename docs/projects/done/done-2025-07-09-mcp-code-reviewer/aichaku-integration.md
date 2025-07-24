@@ -4,8 +4,8 @@
 
 ## Overview
 
-The MCP Code Reviewer integrates with Aichaku to provide automated security and
-standards review based on the standards you've selected for your project.
+The MCP Code Reviewer integrates with Aichaku to provide automated security and standards review based on the standards
+you've selected for your project.
 
 ## Integration Points
 
@@ -122,9 +122,8 @@ Users can't track their expenses easily.
 
 Build a mobile app with AI categorization.
 
-// MCP reviews and suggests: // ⚠️ Shape Up Compliance: WARNINGS // - Missing
-appetite definition // - Missing "Rabbit holes" section // - Missing "No-gos"
-section
+// MCP reviews and suggests: // ⚠️ Shape Up Compliance: WARNINGS // - Missing appetite definition // - Missing "Rabbit
+holes" section // - Missing "No-gos" section
 ```
 
 ### Scenario 3: On-Demand Review

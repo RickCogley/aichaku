@@ -46,8 +46,7 @@ Looking at the installer output, I notice several areas for improvement:
 
 ## Proposed Improvements
 
-1. **Remove redundant path display** - Let Deno show the initial path, we just
-   add the methodologies path
+1. **Remove redundant path display** - Let Deno show the initial path, we just add the methodologies path
 2. **Add methodology count** - Show "✓ 6 methodologies ready" or similar
 3. **Single success message** - One clear completion message at the end
 4. **Better next steps** - More actionable and organized

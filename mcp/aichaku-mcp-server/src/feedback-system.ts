@@ -86,9 +86,7 @@ export class AichakuFormatter {
   }
 
   static resultsReady(findingCount: number): string {
-    const icon = findingCount === 0
-      ? AICHAKU_BRANDING.ACTIVITIES.SUCCESS
-      : AICHAKU_BRANDING.ACTIVITIES.WARNING;
+    const icon = findingCount === 0 ? AICHAKU_BRANDING.ACTIVITIES.SUCCESS : AICHAKU_BRANDING.ACTIVITIES.WARNING;
 
     return this.formatBrandedMessage(
       icon,
@@ -104,9 +102,7 @@ export class AichakuFormatter {
   }
 
   static externalScanner(scannerName: string, active: boolean): string {
-    const icon = active
-      ? AICHAKU_BRANDING.ACTIVITIES.SUCCESS
-      : AICHAKU_BRANDING.ACTIVITIES.WARNING;
+    const icon = active ? AICHAKU_BRANDING.ACTIVITIES.SUCCESS : AICHAKU_BRANDING.ACTIVITIES.WARNING;
     const status = active ? "active" : "not available";
 
     return this.formatBrandedMessage(
@@ -255,9 +251,7 @@ export class FeedbackManager {
     const length = 10;
     const filled = Math.round(progress * length);
     const empty = length - filled;
-    return `${"█".repeat(filled)}${"░".repeat(empty)} ${
-      Math.round(progress * 100)
-    }%`;
+    return `${"█".repeat(filled)}${"░".repeat(empty)} ${Math.round(progress * 100)}%`;
   }
 }
 
@@ -390,12 +384,8 @@ ${AICHAKU_BRANDING.PHASES.BLOOMING} Your code meets all security and standards r
       summary.info > 0 ? `${summary.info} info` : null,
     ].filter(Boolean);
 
-    return `${AICHAKU_BRANDING.ACTIVITIES.WARNING} Summary: ${
-      priorityItems.join(", ")
-    }
-${AICHAKU_BRANDING.PHASES.GROWING} Review Status: ${
-      this.getOverallStatus(summary)
-    }`;
+    return `${AICHAKU_BRANDING.ACTIVITIES.WARNING} Summary: ${priorityItems.join(", ")}
+${AICHAKU_BRANDING.PHASES.GROWING} Review Status: ${this.getOverallStatus(summary)}`;
   }
 
   private static formatFindings(result: ReviewResult): string {
@@ -408,8 +398,7 @@ ${AICHAKU_BRANDING.PHASES.GROWING} Review Status: ${
       if (findings.length === 0) continue;
 
       const icon = this.getSeverityIcon(severity as Severity);
-      const title =
-        `${icon} ${severity.toUpperCase()} ISSUES (${findings.length})`;
+      const title = `${icon} ${severity.toUpperCase()} ISSUES (${findings.length})`;
 
       sections.push(title);
       sections.push("─".repeat(50));
@@ -428,9 +417,7 @@ ${AICHAKU_BRANDING.PHASES.GROWING} Review Status: ${
     const lines = [
       `${AICHAKU_BRANDING.ACTIVITIES.SCANNING} Line ${finding.line}: ${finding.message}`,
       `  ${AICHAKU_BRANDING.PHASES.SEED} Rule: ${finding.rule}`,
-      `  ${AICHAKU_BRANDING.PHASES.GROWING} Category: ${
-        finding.category || "General"
-      }`,
+      `  ${AICHAKU_BRANDING.PHASES.GROWING} Category: ${finding.category || "General"}`,
       `  ${AICHAKU_BRANDING.PHASES.MATURE} Tool: ${finding.tool}`,
     ];
 

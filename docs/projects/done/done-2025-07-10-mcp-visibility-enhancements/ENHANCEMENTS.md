@@ -4,10 +4,8 @@
 
 Enhanced the Aichaku MCP server to address two key user concerns:
 
-1. **MCP Usage Visibility**: Added clear console logging to show when the MCP is
-   actively being used
-2. **Document Linting**: Extended MCP capabilities to lint Markdown
-   documentation files
+1. **MCP Usage Visibility**: Added clear console logging to show when the MCP is actively being used
+2. **Document Linting**: Extended MCP capabilities to lint Markdown documentation files
 
 ## Key Improvements
 
@@ -131,8 +129,7 @@ When reviewing a Markdown file:
 
 3. Restart Claude Code
 
-4. Ask Claude to review a Markdown file - you'll see the MCP activity in the
-   console!
+4. Ask Claude to review a Markdown file - you'll see the MCP activity in the console!
 
 ## Benefits
 

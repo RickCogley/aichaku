@@ -2,26 +2,22 @@
 
 ## Executive Summary
 
-Transform Aichaku from passive documentation to active behavioral modification
-through imperative instructions, multiple reinforcement points, and
-self-correcting mechanisms.
+Transform Aichaku from passive documentation to active behavioral modification through imperative instructions, multiple
+reinforcement points, and self-correcting mechanisms.
 
 ## Core Psychological Principles
 
 ### 1. Imperative Over Descriptive
 
-**Current**: "This project uses Aichaku" **Magical**: "YOU MUST create ALL
-documents in `.claude/output/active-*/`"
+**Current**: "This project uses Aichaku" **Magical**: "YOU MUST create ALL documents in `.claude/output/active-*/`"
 
 ### 2. Multiple Reinforcement Points
 
-**Current**: Single CLAUDE.md mention **Magical**: 7+ touchpoints that reinforce
-behavior
+**Current**: Single CLAUDE.md mention **Magical**: 7+ touchpoints that reinforce behavior
 
 ### 3. Positive Automatic Actions
 
-**Current**: User must remember conventions **Magical**: System auto-corrects
-and guides
+**Current**: User must remember conventions **Magical**: System auto-corrects and guides
 
 ## Implementation Strategy
 

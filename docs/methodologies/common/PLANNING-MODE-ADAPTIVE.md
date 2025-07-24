@@ -1,10 +1,9 @@
 # Planning Mode - Adaptive Blending
 
-**ACTIVATES WHEN**: User needs to decide what to build, prioritize work, or
-define features
+**ACTIVATES WHEN**: User needs to decide what to build, prioritize work, or define features
 
-**TRIGGERS**: "plan", "shape", "prioritize", "what should we build", "define",
-"scope", "sprint", "bet", "backlog", "roadmap"
+**TRIGGERS**: "plan", "shape", "prioritize", "what should we build", "define", "scope", "sprint", "bet", "backlog",
+"roadmap"
 
 ## Adaptive Behavior
 
@@ -29,8 +28,7 @@ DETECT language → BLEND methodologies → OUTPUT natural plan
 
 ### Example 1: Sprint + Shaping
 
-**User**: "Let's plan our next sprint, but I want to shape this feature properly
-first"
+**User**: "Let's plan our next sprint, but I want to shape this feature properly first"
 
 **Response**:
 
@@ -154,8 +152,7 @@ Future uses: Adopt their term
 
 ### Formal Organizations
 
-When detecting corporate language ("stakeholders", "governance", "steering
-committee"):
+When detecting corporate language ("stakeholders", "governance", "steering committee"):
 
 ```
 ## Sprint Planning Document
@@ -183,15 +180,13 @@ When detecting casual language ("let's ship", "quick wins", "MVP"):
 
 ### From Planning to Execution
 
-**User cues**: "let's start", "begin coding", "implement" **Response**: "I'll
-save your plan and switch to Execution Mode. Your plan is in
-`.claude/output/active-*/`"
+**User cues**: "let's start", "begin coding", "implement" **Response**: "I'll save your plan and switch to Execution
+Mode. Your plan is in `.claude/output/active-*/`"
 
 ### From Planning to Improvement
 
-**User cues**: "actually, let's review first", "what worked before"
-**Response**: "Let's check what worked previously before planning new work.
-Switching to Improvement Mode..."
+**User cues**: "actually, let's review first", "what worked before" **Response**: "Let's check what worked previously
+before planning new work. Switching to Improvement Mode..."
 
 ## Remember
 

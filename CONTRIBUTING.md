@@ -1,7 +1,7 @@
 # Contributing to Aichaku
 
-Thank you for your interest in contributing to Aichaku! This document provides
-guidelines for contributing to the project.
+Thank you for your interest in contributing to Aichaku! This document provides guidelines for contributing to the
+project.
 
 ## 🚀 Getting Started
 
@@ -21,9 +21,8 @@ guidelines for contributing to the project.
 
 ## 📝 Commit Message Guidelines
 
-Aichaku follows [Conventional Commits](https://www.conventionalcommits.org/)
-specification. This helps with automated changelog generation and semantic
-versioning.
+Aichaku follows [Conventional Commits](https://www.conventionalcommits.org/) specification. This helps with automated
+changelog generation and semantic versioning.
 
 ### Commit Message Format
 
@@ -104,8 +103,7 @@ test(lister): add methodology detection tests
 
 ### Breaking Changes
 
-For breaking changes, add `!` after the type or add `BREAKING CHANGE:` in the
-footer:
+For breaking changes, add `!` after the type or add `BREAKING CHANGE:` in the footer:
 
 ```bash
 feat!: redesign InstallOptions interface
@@ -285,8 +283,7 @@ Brief description of what this PR does.
 
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to
-      not work as expected)
+- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
 - [ ] Documentation update
 - [ ] Security fix
 
@@ -336,8 +333,7 @@ Include the following information:
 
 ## 🔒 Security
 
-If you discover a security vulnerability, please **do not** open a public issue.
-Instead:
+If you discover a security vulnerability, please **do not** open a public issue. Instead:
 
 1. **Open a GitHub Issue** with `[SECURITY]` tag
 2. **Provide detailed information** about the vulnerability
@@ -346,14 +342,12 @@ Instead:
 
 ## 📄 License
 
-By contributing to Aichaku, you agree that your contributions will be licensed
-under the [MIT License](LICENSE).
+By contributing to Aichaku, you agree that your contributions will be licensed under the [MIT License](LICENSE).
 
 ## ❓ Questions
 
 - **GitHub Discussions** - For general questions and methodology ideas
 - **GitHub Issues** - For bug reports and feature requests
-- **Documentation** - Check [README.md](./README.md) and
-  [CLAUDE.md](./CLAUDE.md) first
+- **Documentation** - Check [README.md](./README.md) and [CLAUDE.md](./CLAUDE.md) first
 
 Thank you for contributing to Aichaku! 🤖✨

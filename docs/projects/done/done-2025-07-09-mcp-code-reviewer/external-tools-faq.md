@@ -46,9 +46,8 @@ pip install semgrep
 
 ## What We CAN Bundle
 
-✅ **Pattern matching** - Built into our Deno binary ✅ **OWASP rules** - Our
-own implementation ✅ **Methodology checks** - Native TypeScript ✅ **Basic
-security scans** - No dependencies
+✅ **Pattern matching** - Built into our Deno binary ✅ **OWASP rules** - Our own implementation ✅ **Methodology
+checks** - Native TypeScript ✅ **Basic security scans** - No dependencies
 
 ## Distribution Approach
 

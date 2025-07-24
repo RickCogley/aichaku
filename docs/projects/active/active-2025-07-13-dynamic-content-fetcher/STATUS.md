@@ -7,13 +7,13 @@
 
 ## Current Status
 
-Just created the pitch. This would solve the fragile hard-coded file structure
-issue that causes confusing error messages during upgrades.
+Just created the pitch. This would solve the fragile hard-coded file structure issue that causes confusing error
+messages during upgrades.
 
 ## Problem Summary
 
-Hard-coded file lists in content-fetcher.ts get out of sync with actual
-repository contents, causing false failure messages and missing files.
+Hard-coded file lists in content-fetcher.ts get out of sync with actual repository contents, causing false failure
+messages and missing files.
 
 ## Proposed Solution
 

@@ -4,11 +4,9 @@
 
 Critical challenge identified:
 
-- **Project documents** (`.claude/output/active-*`) are conversation-context
-  driven
+- **Project documents** (`.claude/output/active-*`) are conversation-context driven
 - **Permanent documents** (`/references`) need to reflect actual system state
-- **Gap**: How to bridge between ephemeral project work and persistent system
-  knowledge
+- **Gap**: How to bridge between ephemeral project work and persistent system knowledge
 
 ## 🎯 Three-Strategy Approach
 
@@ -235,39 +233,31 @@ class PermanentDocManager {
 
 ### Shape Up Completion
 
-1. **Cool-down Phase**: "🪴 Aichaku: Analyzing Shape Up cycle for permanent doc
-   updates..."
+1. **Cool-down Phase**: "🪴 Aichaku: Analyzing Shape Up cycle for permanent doc updates..."
 2. **Extract Decisions**: Parse pitch outcomes and architecture decisions
 3. **Update ADRs**: Add new architecture decisions to permanent records
 4. **API Changes**: Update API documentation if endpoints changed
 
 ### Scrum Sprint Completion
 
-1. **Sprint Review**: "🪴 Aichaku: Analyzing Sprint retrospective for permanent
-   doc updates..."
+1. **Sprint Review**: "🪴 Aichaku: Analyzing Sprint retrospective for permanent doc updates..."
 2. **Story Analysis**: Extract technical learnings from completed user stories
-3. **Update Documentation**: Reflect new features in permanent API/architecture
-   docs
+3. **Update Documentation**: Reflect new features in permanent API/architecture docs
 4. **Technical Debt**: Add to permanent technical debt tracking
 
 ### Kanban Flow Analysis
 
-1. **Flow Metrics**: "🪴 Aichaku: Analyzing Kanban flow metrics for process
-   improvements..."
+1. **Flow Metrics**: "🪴 Aichaku: Analyzing Kanban flow metrics for process improvements..."
 2. **Card Analysis**: Extract technical patterns from completed cards
-3. **Process Updates**: Update operational documentation based on flow
-   improvements
+3. **Process Updates**: Update operational documentation based on flow improvements
 4. **Bottleneck Resolution**: Document solutions in permanent operational guides
 
 ### Lean Experiment Completion
 
-1. **Hypothesis Validation**: "🪴 Aichaku: Analyzing Lean experiment results for
-   permanent doc updates..."
-2. **Metric Analysis**: Extract validated assumptions for permanent
-   documentation
+1. **Hypothesis Validation**: "🪴 Aichaku: Analyzing Lean experiment results for permanent doc updates..."
+2. **Metric Analysis**: Extract validated assumptions for permanent documentation
 3. **Feature Documentation**: Update permanent docs based on validated features
-4. **Learning Integration**: Add validated hypotheses to permanent knowledge
-   base
+4. **Learning Integration**: Add validated hypotheses to permanent knowledge base
 
 ## 📖 Enhanced README Structure
 
@@ -282,13 +272,10 @@ Brief description of what this project does.
 
 System-wide documentation that persists across all projects and methodologies:
 
-- **[Architecture](references/architecture/)** - System design using Arc42
-  framework
+- **[Architecture](references/architecture/)** - System design using Arc42 framework
 - **[API Reference](references/api/)** - REST/GraphQL/CLI documentation
-- **[Data Models](references/data/)** - Database schemas and entity
-  relationships
-- **[Security](references/security/)** - Security policies, threat models,
-  compliance
+- **[Data Models](references/data/)** - Database schemas and entity relationships
+- **[Security](references/security/)** - Security policies, threat models, compliance
 - **[Operations](references/operations/)** - Deployment guides and runbooks
 - **[Integration](references/integration/)** - External system interfaces
 - **[Decisions](references/decisions/)** - Architecture Decision Records (ADRs)
@@ -297,10 +284,8 @@ System-wide documentation that persists across all projects and methodologies:
 
 Current and past project work across all methodologies:
 
-- **[Active Projects](.claude/output/active-*)** - Current cycles (Shape Up,
-  Scrum, Kanban, Lean)
-- **[Completed Projects](.claude/output/done-*)** - Historical project
-  documentation
+- **[Active Projects](.claude/output/active-*)** - Current cycles (Shape Up, Scrum, Kanban, Lean)
+- **[Completed Projects](.claude/output/done-*)** - Historical project documentation
 - **[Test Projects](.claude/output/test-*)** - Experimental and validation work
 
 ### 🔗 Quick Links
@@ -311,8 +296,7 @@ Current and past project work across all methodologies:
 
 ## 🎯 Development Methodologies
 
-This project uses [Aichaku](https://github.com/RickCogley/aichaku) for
-methodology-agnostic project management:
+This project uses [Aichaku](https://github.com/RickCogley/aichaku) for methodology-agnostic project management:
 
 - **Shape Up**: 6-week cycles with pitches and cool-downs
 - **Scrum**: Sprint-based development with retrospectives
@@ -330,8 +314,7 @@ All methodologies feed learnings into the permanent reference documentation.
 
 ---
 
-_Documentation generated and maintained by
-[Aichaku](https://github.com/RickCogley/aichaku)_
+_Documentation generated and maintained by [Aichaku](https://github.com/RickCogley/aichaku)_
 ```
 
 ## 🔧 MCP Integration Enhancement
@@ -361,17 +344,11 @@ class MethodologyAwareReviewer {
 
 ## 🎯 Key Benefits
 
-1. **Methodology Agnostic**: Works with Shape Up, Scrum, Kanban, Lean, and
-   custom methodologies
-2. **Automatic Knowledge Transfer**: Project learnings automatically feed
-   permanent documentation
-3. **Living Documentation**: Permanent docs stay current with actual system
-   state
-4. **Consistent Structure**: All methodologies contribute to the same permanent
-   documentation structure
-5. **Gradual Improvement**: Documentation quality improves over time through
-   accumulated learnings
+1. **Methodology Agnostic**: Works with Shape Up, Scrum, Kanban, Lean, and custom methodologies
+2. **Automatic Knowledge Transfer**: Project learnings automatically feed permanent documentation
+3. **Living Documentation**: Permanent docs stay current with actual system state
+4. **Consistent Structure**: All methodologies contribute to the same permanent documentation structure
+5. **Gradual Improvement**: Documentation quality improves over time through accumulated learnings
 
-This creates a comprehensive knowledge management system where temporary project
-work continuously enhances permanent system knowledge, regardless of which
-methodology teams choose to use.
+This creates a comprehensive knowledge management system where temporary project work continuously enhances permanent
+system knowledge, regardless of which methodology teams choose to use.

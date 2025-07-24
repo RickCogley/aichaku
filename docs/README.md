@@ -1,52 +1,37 @@
 # Getting Started with Aichaku Documentation
 
-Welcome to the Aichaku documentation! This guide uses the Diátaxis framework to
-help you find exactly what you need.
+Welcome to the Aichaku documentation! This guide uses the Diátaxis framework to help you find exactly what you need.
 
 ## Prerequisites
 
 Before you start using Aichaku:
 
-- **Claude Code** - You need access to [Claude Code](https://claude.ai/code) to
-  use Aichaku
+- **Claude Code** - You need access to [Claude Code](https://claude.ai/code) to use Aichaku
 - **Git repository** - A project with git initialized
-- **Basic familiarity** with development methodologies (Shape Up, Scrum, Kanban,
-  or Lean)
+- **Basic familiarity** with development methodologies (Shape Up, Scrum, Kanban, or Lean)
 - **Text editor** - Any editor that supports Markdown files
 
 ## 🆕 Latest Updates
 
 **v0.31.2+ - Foundation Quality & Pre-flight Standards**
 
-- **🏗️ FOUNDATION**: **Configuration-as-code compliance** - All hardcoded lists
-  eliminated for maintainability
-- **🎨 CONSISTENCY**: **Unified branding** - All commands now use consistent
-  `🪴 Aichaku:` messaging
-- **🧹 CLEANUP**: **Legacy file elimination** - Removed outdated
-  RULES-REMINDER.md creation
-- **⚡ PRE-FLIGHT**: **Senior engineer standards** - Automated linting, type
-  checking, and testing workflow
-- **🔧 VISUAL GUIDANCE**: **Contextual feedback framework** - "What did I do and
-  where" + "What's next" patterns
-- **✅ RELIABILITY**: **Help screen compliance** - All commands properly respect
-  --help flag
-- **🔍 TYPE SAFETY**: **Zero TypeScript errors** - Complete type checking
-  compliance
+- **🏗️ FOUNDATION**: **Configuration-as-code compliance** - All hardcoded lists eliminated for maintainability
+- **🎨 CONSISTENCY**: **Unified branding** - All commands now use consistent `🪴 Aichaku:` messaging
+- **🧹 CLEANUP**: **Legacy file elimination** - Removed outdated RULES-REMINDER.md creation
+- **⚡ PRE-FLIGHT**: **Senior engineer standards** - Automated linting, type checking, and testing workflow
+- **🔧 VISUAL GUIDANCE**: **Contextual feedback framework** - "What did I do and where" + "What's next" patterns
+- **✅ RELIABILITY**: **Help screen compliance** - All commands properly respect --help flag
+- **🔍 TYPE SAFETY**: **Zero TypeScript errors** - Complete type checking compliance
 
-**The Quality Foundation:** This release establishes enterprise-grade code
-quality standards with automated pre-flight checks (format/lint/check/test) and
-eliminates technical debt to prepare for advanced contextual guidance features.
+**The Quality Foundation:** This release establishes enterprise-grade code quality standards with automated pre-flight
+checks (format/lint/check/test) and eliminates technical debt to prepare for advanced contextual guidance features.
 
 **v0.29.0 - YAML Configuration Revolution & Enhanced Automation**
 
-- **🔧 REVOLUTIONARY**: **YAML-based "configuration as code"** - 96% reduction
-  in file sizes (50KB→2KB)
-- **🏗️ NEW**: Modular configuration system with dynamic assembly and smart
-  merging
-- **🎯 NEW**: Project-specific overrides with inheritance from global
-  configuration
-- **📝 NEW**: **Automatic session summaries** - Never lose context with
-  automatic checkpoint creation
+- **🔧 REVOLUTIONARY**: **YAML-based "configuration as code"** - 96% reduction in file sizes (50KB→2KB)
+- **🏗️ NEW**: Modular configuration system with dynamic assembly and smart merging
+- **🎯 NEW**: Project-specific overrides with inheritance from global configuration
+- **📝 NEW**: **Automatic session summaries** - Never lose context with automatic checkpoint creation
 - **🔗 NEW**: TypeScript-based hooks system for Claude Code automation
 - **🐙 NEW**: GitHub integration hooks (todo-tracker, pr-checker, etc.)
 - **📖 NEW**: Documentation review hooks (docs-review, jsdoc-checker)
@@ -54,9 +39,8 @@ eliminates technical debt to prepare for advanced contextual guidance features.
 - **📚 IMPROVED**: Comprehensive JSDoc for better API documentation
 - Enhanced hook categories: Essential, Productivity, Security, and GitHub
 
-**The Game Changer:** Instead of massive, hardcoded CLAUDE.md files, Aichaku now
-uses modular YAML configurations that are dynamically assembled. Update one YAML
-file, and all your projects benefit instantly!
+**The Game Changer:** Instead of massive, hardcoded CLAUDE.md files, Aichaku now uses modular YAML configurations that
+are dynamically assembled. Update one YAML file, and all your projects benefit instantly!
 
 ## 📚 Documentation Types
 
@@ -65,53 +49,42 @@ file, and all your projects benefit instantly!
 **Learning-oriented** - Start here if you're new to Aichaku
 
 - [Getting Started](tutorials/getting-started.md) - Install and set up Aichaku
-- [Your First Project](tutorials/first-project.md) - Build a real feature with
-  Aichaku
-- [Migrate to New Structure](tutorials/migrate-to-new-structure.md) - Update
-  from v0.19.x to v0.20.0+
+- [Your First Project](tutorials/first-project.md) - Build a real feature with Aichaku
+- [Migrate to New Structure](tutorials/migrate-to-new-structure.md) - Update from v0.19.x to v0.20.0+
 
 ### 🔧 [How-to Guides](how-to/)
 
 **Task-oriented** - Practical guides for specific tasks
 
-- [**Configure YAML Directives**](how-to/configure-yaml-directives.md) -
-  **REVOLUTIONARY: 96% smaller files with modular configuration** 🔧
-- [**Configure MCP Servers**](how-to/configure-mcp-servers.md) - **CRITICAL: Set
-  up MCP for Claude Code** ⚠️
-- [Configure Your Project](how-to/configure-project.md) - Customize Aichaku with
-  standards and methodologies
-- [Manage Custom Standards](how-to/manage-custom-standards.md) - Create and
-  share your own coding standards
-- [Using MCP with Multiple Projects](how-to/use-mcp-with-multiple-projects.md) -
-  Share server across projects
+- [**Configure YAML Directives**](how-to/configure-yaml-directives.md) - **REVOLUTIONARY: 96% smaller files with modular
+  configuration** 🔧
+- [**Configure MCP Servers**](how-to/configure-mcp-servers.md) - **CRITICAL: Set up MCP for Claude Code** ⚠️
+- [Configure Your Project](how-to/configure-project.md) - Customize Aichaku with standards and methodologies
+- [Manage Custom Standards](how-to/manage-custom-standards.md) - Create and share your own coding standards
+- [Using MCP with Multiple Projects](how-to/use-mcp-with-multiple-projects.md) - Share server across projects
 
 ### 📖 [Reference](reference/)
 
 **Information-oriented** - Complete technical reference
 
-- [Configuration Options](reference/configuration-options.md) - All settings and
-  options
-- [File Structure](reference/file-structure.md) - Complete file organization
-  reference
+- [Configuration Options](reference/configuration-options.md) - All settings and options
+- [File Structure](reference/file-structure.md) - Complete file organization reference
 - [MCP API Reference](reference/mcp-api.md) - All available tools and commands
 
 ### 🔗 [Hooks](hooks/)
 
 **Automation-oriented** - Claude Code integration hooks
 
-- [**Conversation Summary**](hooks/conversation-summary.md) - **AUTOMATIC
-  session checkpoints** ⭐
+- [**Conversation Summary**](hooks/conversation-summary.md) - **AUTOMATIC session checkpoints** ⭐
 - [Aichaku Feedback](hooks/aichaku-feedback.md) - Visual confirmation system
 
 ### 💡 [Explanation](explanation/)
 
 **Understanding-oriented** - The "why" behind Aichaku
 
-- [Core Concepts](explanation/core-concepts.md) - Fundamental ideas and
-  principles
+- [Core Concepts](explanation/core-concepts.md) - Fundamental ideas and principles
 - [Architecture](explanation/architecture.md) - System design and structure
-- [Design Philosophy](explanation/design-philosophy.md) - Why Aichaku works this
-  way
+- [Design Philosophy](explanation/design-philosophy.md) - Why Aichaku works this way
 
 ## 🚀 Where to Start?
 
@@ -148,8 +121,7 @@ file, and all your projects benefit instantly!
 - [Configuration options](reference/configuration-options.md)
 - [Visual indicators](reference/configuration-options.md#visual-indicators)
 - [File structure](reference/file-structure.md)
-- [**Automatic session summaries**](hooks/conversation-summary.md) - Never lose
-  context! ⭐
+- [**Automatic session summaries**](hooks/conversation-summary.md) - Never lose context! ⭐
 
 ### Key Concepts
 

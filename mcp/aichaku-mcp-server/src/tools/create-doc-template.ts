@@ -37,24 +37,22 @@ export interface CreateDocTemplateResult {
   error?: string;
 }
 
-const TEMPLATES: Record<TemplateType, (args: CreateDocTemplateArgs) => string> =
-  {
-    tutorial: createTutorialTemplate,
-    "how-to": createHowToTemplate,
-    reference: createReferenceTemplate,
-    explanation: createExplanationTemplate,
-    api: createApiTemplate,
-    architecture: createArchitectureTemplate,
-    contributing: createContributingTemplate,
-    changelog: createChangelogTemplate,
-    security: createSecurityTemplate,
-    readme: createReadmeTemplate,
-  };
+const TEMPLATES: Record<TemplateType, (args: CreateDocTemplateArgs) => string> = {
+  tutorial: createTutorialTemplate,
+  "how-to": createHowToTemplate,
+  reference: createReferenceTemplate,
+  explanation: createExplanationTemplate,
+  api: createApiTemplate,
+  architecture: createArchitectureTemplate,
+  contributing: createContributingTemplate,
+  changelog: createChangelogTemplate,
+  security: createSecurityTemplate,
+  readme: createReadmeTemplate,
+};
 
 export const createDocTemplateTool = {
   name: "create_doc_template",
-  description:
-    "Create a documentation template file for tutorials, how-tos, references, etc.",
+  description: "Create a documentation template file for tutorials, how-tos, references, etc.",
   inputSchema: {
     type: "object",
     properties: {
@@ -97,9 +95,7 @@ export const createDocTemplateTool = {
         validatePath(resolvedPath, Deno.cwd());
       } catch (error) {
         throw new Error(
-          `Invalid output path: ${
-            error instanceof Error ? error.message : String(error)
-          }`,
+          `Invalid output path: ${error instanceof Error ? error.message : String(error)}`,
         );
       }
 
@@ -158,9 +154,7 @@ export const createDocTemplateTool = {
         content,
       };
     } catch (error) {
-      const errorMessage = error instanceof Error
-        ? error.message
-        : String(error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
       feedbackSystem.reportError(operationId, new Error(errorMessage));
 
       return {

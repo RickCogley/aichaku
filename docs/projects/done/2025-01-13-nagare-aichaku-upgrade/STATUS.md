@@ -7,8 +7,8 @@
 
 ## Summary
 
-Successfully upgraded the Nagare project from Aichaku v0.21.1 to v0.28.0,
-including migration to the new project structure.
+Successfully upgraded the Nagare project from Aichaku v0.21.1 to v0.28.0, including migration to the new project
+structure.
 
 ## What Was Done
 

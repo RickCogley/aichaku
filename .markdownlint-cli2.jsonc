@@ -112,8 +112,8 @@
     // MD039 - Spaces inside link text
     "MD039": true,
 
-    // MD040 - Fenced code blocks should have a language specified
-    "MD040": true,
+    // MD040 - Fenced code blocks should have a language specified (disabled to prevent auto-formatting cascade)
+    "MD040": false,
 
     // MD041 - First line in file should be a top level heading (disabled for flexibility)
     "MD041": false,

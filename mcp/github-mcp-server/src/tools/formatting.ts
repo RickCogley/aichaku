@@ -90,20 +90,14 @@ export const format = {
 
     if (includeDetails) {
       output += `Branch: ${run.head_branch}\n`;
-      output += `Status: ${run.status}${
-        run.conclusion ? ` (${run.conclusion})` : ""
-      }\n`;
+      output += `Status: ${run.status}${run.conclusion ? ` (${run.conclusion})` : ""}\n`;
       output += `Duration: ${duration > 0 ? `${duration}s` : "N/A"}\n`;
-      output += `Started: ${
-        new Date(run.run_started_at || run.created_at).toLocaleString()
-      }\n`;
+      output += `Started: ${new Date(run.run_started_at || run.created_at).toLocaleString()}\n`;
       output += `SHA: ${run.head_sha.substring(0, 7)}\n`;
       output += `\n🔗 View: ${run.html_url}\n`;
     } else {
       output += `  Branch: ${run.head_branch}\n`;
-      output += `  Status: ${run.status}${
-        run.conclusion ? ` (${run.conclusion})` : ""
-      }\n`;
+      output += `  Status: ${run.status}${run.conclusion ? ` (${run.conclusion})` : ""}\n`;
       output += `  Duration: ${duration > 0 ? `${duration}s` : "N/A"}\n`;
       output += `  🔗 ${run.html_url}\n`;
     }

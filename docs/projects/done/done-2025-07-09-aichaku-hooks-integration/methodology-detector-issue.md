@@ -2,9 +2,8 @@
 
 ## Problem Description
 
-The `methodology-detector` hook in `/src/commands/hooks.ts` sets an environment
-variable `AICHAKU_MODE=planning` but this variable is never used anywhere in the
-codebase.
+The `methodology-detector` hook in `/src/commands/hooks.ts` sets an environment variable `AICHAKU_MODE=planning` but
+this variable is never used anywhere in the codebase.
 
 ## Current Implementation
 
@@ -36,8 +35,7 @@ command: `echo "🪴 Aichaku: Methodology support activated"`;
 
 ### Option 2: Implement the Intended Functionality
 
-The original intent seems to be detecting and setting the current methodology
-mode. This could:
+The original intent seems to be detecting and setting the current methodology mode. This could:
 
 - Detect methodology from project files (shape-up, scrum, kanban, etc.)
 - Set appropriate mode (planning, building, reviewing, etc.)
@@ -60,8 +58,7 @@ If there's no clear use case, remove it from the basic hooks set.
 
 ## Recommendation
 
-Implement Option 3 - Enhanced Implementation. This would make the hook actually
-useful by:
+Implement Option 3 - Enhanced Implementation. This would make the hook actually useful by:
 
 - Providing context to Claude about the current methodology
 - Enabling other hooks to behave differently based on methodology
@@ -69,8 +66,7 @@ useful by:
 
 ## Implementation Notes
 
-- The environment variable would need to be set in a way that persists for the
-  session
+- The environment variable would need to be set in a way that persists for the session
 - Consider how this interacts with Claude Code's session management
 - May need to store state in a file rather than environment variable
 

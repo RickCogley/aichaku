@@ -2,33 +2,29 @@
 
 ## Problem
 
-Our security testing approach has evolved organically, resulting in a fragmented
-system that:
+Our security testing approach has evolved organically, resulting in a fragmented system that:
 
-**Blocks releases with false positives** - Path traversal checks with 1000+
-character exclusion lists flag legitimate file operations as vulnerabilities
+**Blocks releases with false positives** - Path traversal checks with 1000+ character exclusion lists flag legitimate
+file operations as vulnerabilities
 
-**Duplicates tool functionality** - Custom regex patterns attempt to recreate
-what CodeQL and DevSkim already do better with semantic analysis
+**Duplicates tool functionality** - Custom regex patterns attempt to recreate what CodeQL and DevSkim already do better
+with semantic analysis
 
-**Has major coverage gaps** - Runtime vulnerabilities, Deno-specific security
-concerns, and contextual issues fall through the cracks
+**Has major coverage gaps** - Runtime vulnerabilities, Deno-specific security concerns, and contextual issues fall
+through the cracks
 
-**Creates maintenance burden** - Complex custom checks require constant updates
-and exclusion pattern maintenance
+**Creates maintenance burden** - Complex custom checks require constant updates and exclusion pattern maintenance
 
 ## Appetite
 
-**6 weeks** - This is comprehensive security strategy work requiring research,
-design, implementation, and validation.
+**6 weeks** - This is comprehensive security strategy work requiring research, design, implementation, and validation.
 
 ## Solution
 
 ### Core Insight
 
-Think of security like home protection: CodeQL and DevSkim are your locks and
-window bars (preventive), but you also need motion sensors (runtime detection),
-security cameras (monitoring), and an alarm system (incident response) for
+Think of security like home protection: CodeQL and DevSkim are your locks and window bars (preventive), but you also
+need motion sensors (runtime detection), security cameras (monitoring), and an alarm system (incident response) for
 complete protection.
 
 ### Three-Layer Architecture
@@ -80,14 +76,11 @@ complete protection.
 
 ## Rabbit Holes
 
-**Don't build a static analysis engine** - Use professional tools for complex
-pattern matching
+**Don't build a static analysis engine** - Use professional tools for complex pattern matching
 
-**Don't over-customize** - If a gap requires complex logic, consider if it's
-worth the maintenance cost
+**Don't over-customize** - If a gap requires complex logic, consider if it's worth the maintenance cost
 
-**Don't aim for perfection** - Some gaps may be acceptable if filling them is
-too expensive
+**Don't aim for perfection** - Some gaps may be acceptable if filling them is too expensive
 
 ## No-gos
 
@@ -106,13 +99,11 @@ too expensive
 
 ## Risk Mitigation
 
-**If gaps can't be filled cost-effectively**: Document and accept risk with
-stakeholder approval
+**If gaps can't be filled cost-effectively**: Document and accept risk with stakeholder approval
 
-**If implementation exceeds 6 weeks**: Ship working improvements incrementally
-rather than waiting for perfection
+**If implementation exceeds 6 weeks**: Ship working improvements incrementally rather than waiting for perfection
 
 **If tools conflict**: Prioritize professional tools over custom implementations
 
-This pitch transforms our security approach from reactive patching to proactive
-architecture, ensuring comprehensive coverage without the maintenance burden.
+This pitch transforms our security approach from reactive patching to proactive architecture, ensuring comprehensive
+coverage without the maintenance burden.

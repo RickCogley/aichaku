@@ -3,8 +3,7 @@
 ## Current Issues
 
 1. "Installing Aichaku globally..." appears twice
-2. "Global installation complete!" and "Aichaku v0.12.0 installed successfully!"
-   are redundant
+2. "Global installation complete!" and "Aichaku v0.12.0 installed successfully!" are redundant
 3. Next steps message differs between global install and project skip
 4. Doesn't clearly state it's for Claude Code projects
 
@@ -47,14 +46,11 @@
 
 ## Key Changes
 
-1. **Add subtitle**: "Methodology Support for Claude Code" - makes it clear what
-   this is for
+1. **Add subtitle**: "Methodology Support for Claude Code" - makes it clear what this is for
 2. **Consolidate messages**: Remove duplicate "Installing globally" messages
 3. **Streamline success**: Just one success message at the end
-4. **Consistent next steps**: Same message whether global install or project
-   skip
-5. **Suppress redundant output**: Make the spawned `aichaku init --global` run
-   in silent mode
+4. **Consistent next steps**: Same message whether global install or project skip
+5. **Suppress redundant output**: Make the spawned `aichaku init --global` run in silent mode
 6. **Better progress indicators**: Use checkmarks consistently
 
 ## Implementation
@@ -62,8 +58,7 @@
 1. Update init.ts to:
    - Add subtitle to header
    - Run `aichaku init --global --silent` to suppress redundant messages
-   - Remove "Aichaku v0.12.0 installed successfully!" (keep just the checkmark
-     version)
+   - Remove "Aichaku v0.12.0 installed successfully!" (keep just the checkmark version)
    - Show methodology count from actual install
 
 2. Update cli.ts to:

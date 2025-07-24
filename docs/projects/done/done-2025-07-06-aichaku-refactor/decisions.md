@@ -8,8 +8,7 @@
 
 ### 1. Single Installation Approach
 
-**Decision**: Use `aichaku init` to install all methodologies at once
-**Rationale**:
+**Decision**: Use `aichaku init` to install all methodologies at once **Rationale**:
 
 - Files are tiny (few KB total)
 - System adapts based on context anyway
@@ -18,8 +17,7 @@
 
 ### 2. User Customization Architecture
 
-**Decision**: Separate `user/` directory that's never touched by upgrades
-**Rationale**:
+**Decision**: Separate `user/` directory that's never touched by upgrades **Rationale**:
 
 - Clear separation of concerns
 - Easy to backup/restore
@@ -58,8 +56,7 @@
 
 ### 5. Upgrade Strategy
 
-**Decision**: Full replacement of `methodologies/` + preserve `user/`
-**Rationale**:
+**Decision**: Full replacement of `methodologies/` + preserve `user/` **Rationale**:
 
 - Simple and predictable
 - No merge conflicts
@@ -80,13 +77,11 @@
 
 - "Aichaku is already initialized here. Use 'aichaku upgrade' to update."
 - "No Aichaku installation found. Run 'aichaku init' first."
-- "User customizations detected in user/. These will be preserved during
-  upgrade." **Rationale**: Guide users to success
+- "User customizations detected in user/. These will be preserved during upgrade." **Rationale**: Guide users to success
 
 ### 8. Methodology Flexibility
 
-**Decision**: Default to adaptive mode, add strict mode later if needed
-**Approach**:
+**Decision**: Default to adaptive mode, add strict mode later if needed **Approach**:
 
 - Start with full blending enabled
 - Monitor actual usage patterns
@@ -98,19 +93,14 @@
 
 ## Deferred Decisions
 
-1. **Methodology Versioning**: Each methodology could have its own version
-   (DEFER - adds complexity)
-2. **Partial Updates**: Update only changed files (DEFER - premature
-   optimization)
-3. **Rollback Feature**: Keep previous versions (DEFER - can add later if
-   needed)
+1. **Methodology Versioning**: Each methodology could have its own version (DEFER - adds complexity)
+2. **Partial Updates**: Update only changed files (DEFER - premature optimization)
+3. **Rollback Feature**: Keep previous versions (DEFER - can add later if needed)
 4. **Config File**: .aichaku.yml for preferences (DEFER - YAGNI)
 
 ## Rejected Approaches
 
-1. **In-place File Marking**: Using comments like `# USER CUSTOMIZATION START`
-   (too fragile)
+1. **In-place File Marking**: Using comments like `# USER CUSTOMIZATION START` (too fragile)
 2. **Git Submodules**: For methodology management (too complex for users)
 3. **Symlink Strategy**: Link to global install (platform compatibility issues)
-4. **Methodology Selection**: Keep current approach (doesn't match adaptive
-   vision)
+4. **Methodology Selection**: Keep current approach (doesn't match adaptive vision)

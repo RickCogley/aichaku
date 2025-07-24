@@ -1,9 +1,8 @@
 # Getting Started with Aichaku API
 
-This comprehensive tutorial teaches you how to use the Aichaku methodology
-library and MCP (Model Context Protocol) server. You learn how to use all
-available tools, CLI commands, and configuration options to enhance your
-development workflow.
+This comprehensive tutorial teaches you how to use the Aichaku methodology library and MCP (Model Context Protocol)
+server. You learn how to use all available tools, CLI commands, and configuration options to enhance your development
+workflow.
 
 ## Prerequisites
 
@@ -104,16 +103,14 @@ Options:
 
 ## MCP Tools
 
-You can access Aichaku MCP server tools through Claude Code using the
-`mcp__aichaku-reviewer__` prefix for review tools and `mcp__aichaku__` prefix
-for documentation tools.
+You can access Aichaku MCP server tools through Claude Code using the `mcp__aichaku-reviewer__` prefix for review tools
+and `mcp__aichaku__` prefix for documentation tools.
 
 ### Code Review Tools
 
 #### `review_file`
 
-Review a single file for security vulnerabilities, standards compliance, and
-code quality issues.
+Review a single file for security vulnerabilities, standards compliance, and code quality issues.
 
 ##### Parameters
 
@@ -258,8 +255,7 @@ Retrieve the currently selected standards for your project.
 
 #### `analyze_project`
 
-Analyze your project directory to understand its structure, technologies, and
-patterns.
+Analyze your project directory to understand its structure, technologies, and patterns.
 
 ##### Parameters
 
@@ -329,8 +325,7 @@ const deepAnalysis = await mcp__aichaku__analyze_project({
 
 #### `create_doc_template`
 
-Generate documentation templates based on your project type and detected
-patterns.
+Generate documentation templates based on your project type and detected patterns.
 
 ##### Parameters
 
@@ -384,8 +379,7 @@ const apiDocs = await mcp__aichaku__create_doc_template({
 
 #### `generate_documentation`
 
-Automatically generate complete documentation by analyzing your code and
-existing docs.
+Automatically generate complete documentation by analyzing your code and existing docs.
 
 ##### Parameters
 
@@ -592,8 +586,7 @@ const answer = (await mcp**aichaku) -
 
 ### Project Configuration
 
-You can configure project-specific settings in
-`.claude/.aichaku-standards.json`:
+You can configure project-specific settings in `.claude/.aichaku-standards.json`:
 
 ```json
 {
@@ -685,12 +678,7 @@ const current = await aichaku.standards.list();
 ### Deno Module
 
 ```typescript
-import {
-  init,
-  install,
-  list,
-  standards,
-} from "https://deno.land/x/aichaku/mod.ts";
+import { init, install, list, standards } from "https://deno.land/x/aichaku/mod.ts";
 
 // Initialize project
 await init({
@@ -709,8 +697,7 @@ const availableStandards = await standards.list();
 
 ## Security Patterns
 
-The MCP server includes built-in patterns for detecting security
-vulnerabilities:
+The MCP server includes built-in patterns for detecting security vulnerabilities:
 
 ### OWASP Top 10 (2021)
 

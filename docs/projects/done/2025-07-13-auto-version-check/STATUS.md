@@ -7,8 +7,8 @@
 
 ## Current Status
 
-Just created the pitch document. This feature would solve the confusion users
-experience when the CLI and global files have different versions.
+Just created the pitch document. This feature would solve the confusion users experience when the CLI and global files
+have different versions.
 
 ## Problem Summary
 
@@ -20,8 +20,7 @@ Users can have mismatched versions:
 
 ## Proposed Solution
 
-Check versions on CLI startup and warn users if they need to run
-`aichaku upgrade --global`.
+Check versions on CLI startup and warn users if they need to run `aichaku upgrade --global`.
 
 ## Next Steps
 

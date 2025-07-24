@@ -2,8 +2,7 @@
 
 ## Problem
 
-The current Aichaku release process has multiple pain points that create
-friction and opportunities for error:
+The current Aichaku release process has multiple pain points that create friction and opportunities for error:
 
 ### 1. Type Checking Failures
 
@@ -42,8 +41,7 @@ friction and opportunities for error:
 
 ## Solution
 
-Create a fully automated, single-command release process that handles all
-aspects of releasing Aichaku:
+Create a fully automated, single-command release process that handles all aspects of releasing Aichaku:
 
 ### Core Components
 
@@ -131,8 +129,7 @@ export const releaseConfig = {
 
 ## Appetite
 
-**4 days** - This is a focused improvement to an existing process, not a
-ground-up rebuild. We have:
+**4 days** - This is a focused improvement to an existing process, not a ground-up rebuild. We have:
 
 - Clear problem definition from recent release experiences
 - Existing release scripts to build upon

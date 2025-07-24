@@ -4,25 +4,18 @@ This directory contains utility modules for the Aichaku MCP server.
 
 ## YAML Generator
 
-The `yaml-generator.ts` module provides functionality to generate structured
-YAML configuration for CLAUDE.md files, encoding all Aichaku methodology rules
-in a compact, machine-readable format.
+The `yaml-generator.ts` module provides functionality to generate structured YAML configuration for CLAUDE.md files,
+encoding all Aichaku methodology rules in a compact, machine-readable format.
 
 ### Features
 
-- **Complete Rule Encoding**: All behavioral directives, visual identity rules,
-  and file organization patterns from the METHODOLOGY_SECTION are encoded in
-  structured YAML
-- **Methodology Configuration**: Includes triggers, best practices, templates,
-  and icons for each methodology
-- **Discussion Phases**: Encodes the three-phase discussion-first approach with
-  triggers, actions, and examples
-- **Visual Identity**: Includes growth phase emojis, progress display formats,
-  and methodology-specific icons
-- **File Organization**: Defines project structure, naming conventions, and
-  required files
-- **Diagram Templates**: Includes Mermaid diagram templates for different
-  document types
+- **Complete Rule Encoding**: All behavioral directives, visual identity rules, and file organization patterns from the
+  METHODOLOGY_SECTION are encoded in structured YAML
+- **Methodology Configuration**: Includes triggers, best practices, templates, and icons for each methodology
+- **Discussion Phases**: Encodes the three-phase discussion-first approach with triggers, actions, and examples
+- **Visual Identity**: Includes growth phase emojis, progress display formats, and methodology-specific icons
+- **File Organization**: Defines project structure, naming conventions, and required files
+- **Diagram Templates**: Includes Mermaid diagram templates for different document types
 - **Extensible**: Supports user customizations and methodology selection
 
 ### Usage
@@ -52,8 +45,7 @@ const customYaml = await generateAichakuYAML({
 
 ### Integration with CLAUDE.md
 
-The `claude-md-integration.ts` module shows how to generate complete CLAUDE.md
-sections:
+The `claude-md-integration.ts` module shows how to generate complete CLAUDE.md sections:
 
 ```typescript
 import { generateMinimalCLAUDEmd } from "./claude-md-integration.ts";
@@ -122,8 +114,7 @@ deno test src/utils/yaml-generator.test.ts --allow-read --allow-env
 
 ### Example
 
-See `examples/yaml-generator-example.ts` for a complete demonstration of the
-YAML generator capabilities.
+See `examples/yaml-generator-example.ts` for a complete demonstration of the YAML generator capabilities.
 
 ## Other Utilities
 
@@ -133,8 +124,7 @@ Configuration loading with validation and security checks.
 
 ### file-filter.ts
 
-File filtering utilities for excluding files from review based on patterns,
-size, and content type.
+File filtering utilities for excluding files from review based on patterns, size, and content type.
 
 ### path-security.ts
 

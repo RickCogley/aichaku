@@ -59,9 +59,7 @@ export function createEnhancedUpgradeMessage(
         "Updated methodology templates to latest versions",
         "Refreshed standards library with current definitions",
         "Preserved all user customizations",
-        isGlobal
-          ? "Made available to all projects"
-          : "Updated project-specific configuration",
+        isGlobal ? "Made available to all projects" : "Updated project-specific configuration",
       ],
     },
     {
@@ -139,8 +137,7 @@ export async function upgrade(
     return {
       success: false,
       path: targetPath,
-      message:
-        `🪴 Aichaku: No installation found at ${targetPath}. Run 'aichaku init' first.`,
+      message: `🪴 Aichaku: No installation found at ${targetPath}. Run 'aichaku init' first.`,
     };
   }
 
@@ -167,9 +164,7 @@ export async function upgrade(
     return {
       success: false,
       path: targetPath,
-      message: `Failed to read installation metadata: ${
-        error instanceof Error ? error.message : String(error)
-      }`,
+      message: `Failed to read installation metadata: ${error instanceof Error ? error.message : String(error)}`,
     };
   }
 
@@ -179,8 +174,7 @@ export async function upgrade(
       return {
         success: true,
         path: targetPath,
-        message:
-          `ℹ️  Current version: v${VERSION}\n    Latest version:  v${VERSION}\n    \n✓ You're up to date!`,
+        message: `ℹ️  Current version: v${VERSION}\n    Latest version:  v${VERSION}\n    \n✓ You're up to date!`,
         action: "check",
         version: metadata.version,
         latestVersion: VERSION,
@@ -203,8 +197,7 @@ export async function upgrade(
     return {
       success: true,
       path: targetPath,
-      message:
-        `🪴 Aichaku: Already on latest version (v${VERSION}). Use --force to reinstall.`,
+      message: `🪴 Aichaku: Already on latest version (v${VERSION}). Use --force to reinstall.`,
       action: "current",
     };
   }

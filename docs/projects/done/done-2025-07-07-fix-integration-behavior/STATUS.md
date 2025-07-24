@@ -6,8 +6,8 @@
 
 ## Problem Statement
 
-Aichaku 0.5.0 isn't working as expected because Claude Code doesn't
-automatically follow the methodology patterns. Users report:
+Aichaku 0.5.0 isn't working as expected because Claude Code doesn't automatically follow the methodology patterns. Users
+report:
 
 - Keywords like "shape up" have no effect
 - Documents created in wrong locations (project root, .claude/user)

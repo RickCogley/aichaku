@@ -1,14 +1,12 @@
 # Aichaku Feedback Hook
 
-The `aichaku-feedback` hook provides visual confirmation that the Aichaku hook
-system is active and working. It runs as a PreToolUse hook and shows brief,
-non-intrusive feedback about what Aichaku will monitor or check.
+The `aichaku-feedback` hook provides visual confirmation that the Aichaku hook system is active and working. It runs as
+a PreToolUse hook and shows brief, non-intrusive feedback about what Aichaku will monitor or check.
 
 ## Purpose
 
-This hook addresses the "yes, the system is working" feedback that was missing.
-It provides immediate visual confirmation when you interact with files or run
-commands, ensuring you know that Aichaku's automation is active.
+This hook addresses the "yes, the system is working" feedback that was missing. It provides immediate visual
+confirmation when you interact with files or run commands, ensuring you know that Aichaku's automation is active.
 
 ## Installation
 
@@ -49,8 +47,7 @@ If you prefer to add it manually via Claude Code's `/hooks` command:
 When you work with files, you'll see messages like:
 
 - `🪴 Aichaku: Monitoring [filename]`
-- `📁 Project file - will track progress` (for files in
-  `/docs/projects/active/`)
+- `📁 Project file - will track progress` (for files in `/docs/projects/active/`)
 - `📖 Markdown - will review standards` (for .md files)
 - `📚 Code - will check JSDoc` (for TypeScript/JavaScript files)
 - `🔒 Code - will check security` (for Python, Java, Go, etc.)
@@ -78,8 +75,7 @@ For other operations:
 1. **Non-blocking**: Always exits with code 0 to avoid disrupting your workflow
 2. **Brief**: Shows just enough information to confirm hooks are working
 3. **Context-aware**: Different messages based on file type or command
-4. **Visual**: Uses console.error() to ensure messages appear in Claude Code's
-   output
+4. **Visual**: Uses console.error() to ensure messages appear in Claude Code's output
 
 ## Troubleshooting
 
@@ -101,9 +97,8 @@ If you don't see feedback after installing:
 
 ## Customization
 
-The feedback messages are defined in the `aichakuFeedback` function in
-`~/.claude/aichaku/hooks/aichaku-hooks.ts`. You can customize them by editing
-this file.
+The feedback messages are defined in the `aichakuFeedback` function in `~/.claude/aichaku/hooks/aichaku-hooks.ts`. You
+can customize them by editing this file.
 
 ## Performance
 
@@ -114,5 +109,4 @@ The feedback hook is designed to be extremely lightweight:
 - No file I/O except debug logging
 - No external dependencies
 
-This ensures it won't slow down your Claude Code experience while providing the
-confirmation you need.
+This ensures it won't slow down your Claude Code experience while providing the confirmation you need.

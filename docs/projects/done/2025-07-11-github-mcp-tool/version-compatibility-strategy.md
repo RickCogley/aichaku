@@ -2,8 +2,8 @@
 
 ## Problem Statement
 
-The GitHub CLI (`gh`) receives regular updates through package managers like
-Homebrew. The GitHub MCP tool needs to be aware of:
+The GitHub CLI (`gh`) receives regular updates through package managers like Homebrew. The GitHub MCP tool needs to be
+aware of:
 
 1. **Which `gh` version was used as reference** during MCP development
 2. **Current `gh` version** on the system (if any)
@@ -420,6 +420,5 @@ setInterval(
 4. **User Confidence**: Clear status of compatibility
 5. **Support Information**: Easy to provide version info for troubleshooting
 
-This version compatibility strategy ensures that the GitHub MCP tool remains
-robust and provides clear visibility into any potential issues caused by version
-mismatches.
+This version compatibility strategy ensures that the GitHub MCP tool remains robust and provides clear visibility into
+any potential issues caused by version mismatches.

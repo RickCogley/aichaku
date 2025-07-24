@@ -36,8 +36,7 @@ There's an inconsistency between `aichaku --help` and `aichaku help` outputs:
 
 ### Expected Behavior
 
-Both commands should provide a consistent, polished experience that reflects
-Aichaku's brand identity.
+Both commands should provide a consistent, polished experience that reflects Aichaku's brand identity.
 
 ## Proposed Solution
 

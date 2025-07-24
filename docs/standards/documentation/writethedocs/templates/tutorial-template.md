@@ -1,8 +1,7 @@
 # Getting Started with [Project Name]
 
-Welcome! This tutorial walks you through using [Project] for the first time. By
-the end, you'll have [specific achievement] and understand the basics of [key
-concepts].
+Welcome! This tutorial walks you through using [Project] for the first time. By the end, you'll have [specific
+achievement] and understand the basics of [key concepts].
 
 ## Before You Begin
 
@@ -14,15 +13,13 @@ This tutorial takes about [time] to complete.
 - **[Requirement]**: [Version required and why]
 - **Basic familiarity with [prerequisite knowledge]**
 
-> 💡 **New to [prerequisite]?** Check out [this gentle introduction](link)
-> first.
+> 💡 **New to [prerequisite]?** Check out [this gentle introduction](link) first.
 
 ### What We'll Build
 
 [Screenshot or diagram of the final result]
 
-In this tutorial, we'll create [description of the end result]. This will teach
-you:
+In this tutorial, we'll create [description of the end result]. This will teach you:
 
 - How [Project] handles [concept 1]
 - The basics of [concept 2]
@@ -96,8 +93,7 @@ Before we dive in, here's a quick overview:
 - **[Term 2]**: [Another clear explanation]
 - **[Term 3]**: [One more explanation]
 
-Don't worry if this doesn't all make sense yet - it will become clearer as we
-work through the example.
+Don't worry if this doesn't all make sense yet - it will become clearer as we work through the example.
 
 ### Create the Project Structure
 
@@ -177,8 +173,7 @@ Success! Your first [component] is working.
 **Common issues**:
 
 1. **Error: file not found**
-   - Make sure you're in the right directory: `pwd` should show
-     `.../my-first-project`
+   - Make sure you're in the right directory: `pwd` should show `.../my-first-project`
    - Check the file exists: `ls src/`
 
 2. **Error: syntax error**

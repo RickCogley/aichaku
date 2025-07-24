@@ -1,9 +1,8 @@
 # How to Manage Custom Standards
 
-Custom standards allow you to define organization-specific or project-specific
-guidelines that complement Aichaku's built-in standards. They integrate
-seamlessly with the standard selection system and appear in your CLAUDE.md
-alongside official standards.
+Custom standards allow you to define organization-specific or project-specific guidelines that complement Aichaku's
+built-in standards. They integrate seamlessly with the standard selection system and appear in your CLAUDE.md alongside
+official standards.
 
 ## Before you begin
 
@@ -114,8 +113,7 @@ tags: ["security", "production", "custom"]
 
 ## Overview
 
-Brief description of what this standard covers and why it's important for your
-organization.
+Brief description of what this standard covers and why it's important for your organization.
 
 ## Core Principles
 
@@ -285,16 +283,14 @@ Current Project Standards:
 
 ## Integration with CLAUDE.md
 
-When you run `aichaku integrate`, custom standards appear in CLAUDE.md with
-clear attribution:
+When you run `aichaku integrate`, custom standards appear in CLAUDE.md with clear attribution:
 
 `````markdown
 <!-- AICHAKU:STANDARDS:START -->
 
 ## 📚 Selected Standards & Guidelines
 
-🪴 Aichaku: Based on your project configuration, follow these standards when
-generating code:
+🪴 Aichaku: Based on your project configuration, follow these standards when generating code:
 
 ### TDD
 
@@ -304,8 +300,7 @@ generating code:
 
 ### TEAM-GUIDELINES
 
-> 📍 **Source**: Custom standard from
-> ~/.claude/aichaku/user/docs/standards/TEAM-GUIDELINES.md
+> 📍 **Source**: Custom standard from ~/.claude/aichaku/user/docs/standards/TEAM-GUIDELINES.md
 
 [Your custom standard content...]
 
@@ -553,6 +548,5 @@ aichaku integrate
 
 ---
 
-Remember: Custom standards are a powerful way to codify your team's specific
-practices while leveraging Aichaku's integration capabilities. Keep them
-focused, well-documented, and actively maintained for maximum benefit.
+Remember: Custom standards are a powerful way to codify your team's specific practices while leveraging Aichaku's
+integration capabilities. Keep them focused, well-documented, and actively maintained for maximum benefit.

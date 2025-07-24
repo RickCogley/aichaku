@@ -2,16 +2,13 @@
 
 ## The Problem
 
-When publishing Markdown docs on GitHub Pages (which uses Jekyll), code samples
-containing template syntax (like `&#123;&#123; &#125;&#125;` or
-`&#123;&#37; &#37;&#125;`) can cause issues with Jekyll's Liquid template
-processor.
+When publishing Markdown docs on GitHub Pages (which uses Jekyll), code samples containing template syntax (like
+`&#123;&#123; &#125;&#125;` or `&#123;&#37; &#37;&#125;`) can cause issues with Jekyll's Liquid template processor.
 
 ## The Short Answer
 
-**Yes**, adding `&#123;&#37; raw &#37;&#125;` tags will impact GitHub's native
-Markdown rendering - these tags will appear as literal text when viewing the
-files directly on GitHub.
+**Yes**, adding `&#123;&#37; raw &#37;&#125;` tags will impact GitHub's native Markdown rendering - these tags will
+appear as literal text when viewing the files directly on GitHub.
 
 ## Visual Example
 
@@ -26,8 +23,7 @@ Here's a Vue.js example: {{ message }}
 ### With Jekyll/Liquid Protection:
 
 ```markdown
-Here's a Vue.js example: &#123;&#37; raw &#37;&#125; &#123;&#123; message
-&#125;&#125; &#123;&#37; endraw &#37;&#125;
+Here's a Vue.js example: &#123;&#37; raw &#37;&#125; &#123;&#123; message &#125;&#125; &#123;&#37; endraw &#37;&#125;
 ```
 
 ### How It Renders:
@@ -86,8 +82,7 @@ exclude:
 When possible, use different syntax in examples:
 
 ```markdown
-Here's a template example: [[message]] # Document that you're using alternate
-syntax
+Here's a template example: [[message]] # Document that you're using alternate syntax
 ```
 
 ### 5. Use Jekyll's `raw` Include Tag
@@ -102,22 +97,18 @@ Create an includes file:
 Then in your Markdown:
 
 ```markdown
-&#123;&#37; include raw-code.html code="&#123;&#123; message &#125;&#125;"
-&#37;&#125;
+&#123;&#37; include raw-code.html code="&#123;&#123; message &#125;&#125;" &#37;&#125;
 ```
 
 ## Recommendation
 
-The **HTML entities approach** is probably your best compromise if you need both
-environments to render cleanly, though it's less readable in the source. For
-maximum compatibility:
+The **HTML entities approach** is probably your best compromise if you need both environments to render cleanly, though
+it's less readable in the source. For maximum compatibility:
 
 1. Use HTML entities for simple, inline examples
-2. Use code fences for larger code blocks (Jekyll usually handles these
-   correctly)
+2. Use code fences for larger code blocks (Jekyll usually handles these correctly)
 3. Document your approach in your contributing guidelines
-4. Consider having separate folders for "GitHub viewable" docs vs "Jekyll
-   processed" docs if the problem is severe
+4. Consider having separate folders for "GitHub viewable" docs vs "Jekyll processed" docs if the problem is severe
 
 ## Example Documentation Structure
 

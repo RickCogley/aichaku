@@ -1,7 +1,6 @@
 # How to [specific task]
 
-This guide shows you how to [task description]. Use this approach when you need
-to [use case].
+This guide shows you how to [task description]. Use this approach when you need to [use case].
 
 ## Before you begin
 

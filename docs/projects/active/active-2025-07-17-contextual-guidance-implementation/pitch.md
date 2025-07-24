@@ -2,15 +2,13 @@
 
 ## Problem
 
-**Raw idea**: Users don't know where files are actually installed during
-`aichaku upgrade --global`
+**Raw idea**: Users don't know where files are actually installed during `aichaku upgrade --global`
 
 **What's going wrong**:
 
 - Current upgrade output tells users WHAT happened but not WHERE it happened
 - Missing spatial awareness causes user confusion and reduces confidence
-- Contradicts our "what did I do and where" principle from foundation quality
-  work
+- Contradicts our "what did I do and where" principle from foundation quality work
 - Users reported this exact issue during v0.34.0 upgrade testing
 
 **Real user feedback**:
@@ -36,18 +34,15 @@
 ✨ Standards ready (45 files verified/updated)
 ```
 
-**User feedback**: _"does not say WHERE the files are located. It's like a black
-box, the users gets no feedback about the folder the files have been installed
-in, which I think is really disconcerting."_
+**User feedback**: _"does not say WHERE the files are located. It's like a black box, the users gets no feedback about
+the folder the files have been installed in, which I think is really disconcerting."_
 
-**Validation confirms**: Our problem identification was 100% accurate. The
-upgrade mechanics work, but the missing location context remains the core UX
-issue.
+**Validation confirms**: Our problem identification was 100% accurate. The upgrade mechanics work, but the missing
+location context remains the core UX issue.
 
 ## Appetite
 
-**6 weeks** - This is a medium-sized improvement that enhances existing
-functionality rather than building new features.
+**6 weeks** - This is a medium-sized improvement that enhances existing functionality rather than building new features.
 
 **Why this appetite**:
 
@@ -58,8 +53,8 @@ functionality rather than building new features.
 
 ## Solution
 
-**Apply our visual guidance framework to upgrade commands** using the existing
-utilities in `src/utils/visual-guidance.ts`.
+**Apply our visual guidance framework to upgrade commands** using the existing utilities in
+`src/utils/visual-guidance.ts`.
 
 ### Core enhancement
 
@@ -138,8 +133,7 @@ Use existing framework components:
 
 **Don't add new upgrade flags or options** - This is purely output enhancement
 
-**Don't change upgrade timing or performance** - Visual output should be
-instantaneous
+**Don't change upgrade timing or performance** - Visual output should be instantaneous
 
 **Don't create upgrade configuration** - Keep upgrade behavior deterministic
 
@@ -251,8 +245,7 @@ createDirectoryTree("~/.claude/aichaku", structure, {
 
 1. **`src/commands/upgrade.ts`** - Add visual guidance to main upgrade function
 2. **`src/commands/upgrade-fix.ts`** - Enhance migration messaging
-3. **`src/utils/visual-guidance.ts`** - Extend as needed for upgrade-specific
-   visuals
+3. **`src/utils/visual-guidance.ts`** - Extend as needed for upgrade-specific visuals
 
 ### Integration points
 
@@ -270,11 +263,9 @@ createDirectoryTree("~/.claude/aichaku", structure, {
 
 ## Success metrics
 
-**User confidence**: Users know exactly where their files are installed
-**Support reduction**: Fewer "where did it install?" questions **Consistency**:
-All upgrade commands provide location context **Framework utilization**: Visual
+**User confidence**: Users know exactly where their files are installed **Support reduction**: Fewer "where did it
+install?" questions **Consistency**: All upgrade commands provide location context **Framework utilization**: Visual
 guidance framework proves its value
 
-This enhancement directly addresses user feedback while leveraging our
-investment in visual guidance infrastructure, providing immediate value with
-minimal risk.
+This enhancement directly addresses user feedback while leveraging our investment in visual guidance infrastructure,
+providing immediate value with minimal risk.

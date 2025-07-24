@@ -15,22 +15,17 @@ graph LR
 
 ## Project Goal
 
-Design and implement a modern, comprehensive security architecture that
-eliminates tool overlap, fills coverage gaps, and provides layered security
-without false positives blocking releases.
+Design and implement a modern, comprehensive security architecture that eliminates tool overlap, fills coverage gaps,
+and provides layered security without false positives blocking releases.
 
 ## Problem Statement
 
 Our current security approach has evolved organically with multiple tools that:
 
-1. **Overlap significantly** - Custom checks duplicate what CodeQL/DevSkim do
-   better
-2. **Have major gaps** - Runtime vulnerabilities, Deno-specific concerns,
-   contextual issues
-3. **Create maintenance burden** - Complex exclusion lists and brittle regex
-   patterns
-4. **Block releases unnecessarily** - False positives on legitimate code
-   patterns
+1. **Overlap significantly** - Custom checks duplicate what CodeQL/DevSkim do better
+2. **Have major gaps** - Runtime vulnerabilities, Deno-specific concerns, contextual issues
+3. **Create maintenance burden** - Complex exclusion lists and brittle regex patterns
+4. **Block releases unnecessarily** - False positives on legitimate code patterns
 
 ## Shape Up Appetite
 
@@ -44,15 +39,11 @@ Our current security approach has evolved organically with multiple tools that:
 
 ## Solution Outline
 
-1. **Security Tool Audit**: Map what CodeQL, DevSkim, Dependabot, and Aichaku
-   hooks actually cover
+1. **Security Tool Audit**: Map what CodeQL, DevSkim, Dependabot, and Aichaku hooks actually cover
 2. **Gap Analysis**: Identify what's missing vs. what's duplicated
-3. **Layered Strategy Design**: Define clear responsibilities for each security
-   layer
-4. **Focused Implementation**: Replace scattered custom checks with targeted
-   gap-filling
-5. **Validation**: Test with known vulnerabilities to ensure comprehensive
-   coverage
+3. **Layered Strategy Design**: Define clear responsibilities for each security layer
+4. **Focused Implementation**: Replace scattered custom checks with targeted gap-filling
+5. **Validation**: Test with known vulnerabilities to ensure comprehensive coverage
 
 ## Rabbit Holes
 
@@ -78,54 +69,44 @@ Our current security approach has evolved organically with multiple tools that:
 
 ### 🎯 Security Workflow Baseline Established (2025-07-15)
 
-**Milestone**: Successfully simplified and fixed the security.yml workflow to
-create a stable baseline for security checks.
+**Milestone**: Successfully simplified and fixed the security.yml workflow to create a stable baseline for security
+checks.
 
 **What was accomplished**:
 
-- ✅ **Removed duplicate security-original.yml** - Eliminated confusion from
-  multiple workflow files
-- ✅ **Simplified security checks** - Focused on basic patterns (hardcoded
-  secrets, eval, --allow-all)
-- ✅ **Eliminated redundant checks** - Removed type checking and test coverage
-  (handled by other workflows)
+- ✅ **Removed duplicate security-original.yml** - Eliminated confusion from multiple workflow files
+- ✅ **Simplified security checks** - Focused on basic patterns (hardcoded secrets, eval, --allow-all)
+- ✅ **Eliminated redundant checks** - Removed type checking and test coverage (handled by other workflows)
 - ✅ **Fixed workflow reliability** - Security workflow now passes consistently
 - ✅ **Reduced maintenance burden** - Timeout reduced from 30 to 15 minutes
 
-**Key insight**: The security workflow should focus purely on security patterns,
-not development quality checks. Type checking is already covered by preflight
-checks (deno check) and the publish workflow.
+**Key insight**: The security workflow should focus purely on security patterns, not development quality checks. Type
+checking is already covered by preflight checks (deno check) and the publish workflow.
 
 ### 🔒 CRITICAL: MCP Reviewer Blocklist Implementation (2025-07-15)
 
-**Milestone**: Implemented comprehensive file filtering system to protect
-sensitive files from review tools processing.
+**Milestone**: Implemented comprehensive file filtering system to protect sensitive files from review tools processing.
 
 **What was accomplished**:
 
-- ✅ **Complete File Filter System** - 7 new/modified files with multi-layer
-  exclusion logic
-- ✅ **Claude Commands Protection** - Automated protection for
-  `~/.claude/commands/` files containing `!`command`` syntax
-- ✅ **Sensitive Content Detection** - Content-based exclusions for API keys,
-  tokens, private keys
+- ✅ **Complete File Filter System** - 7 new/modified files with multi-layer exclusion logic
+- ✅ **Claude Commands Protection** - Automated protection for `~/.claude/commands/` files containing `!`command``
+  syntax
+- ✅ **Sensitive Content Detection** - Content-based exclusions for API keys, tokens, private keys
 - ✅ **Async/Await Fixes** - Resolved all async handling issues in review engine
 - ✅ **TypeScript Compliance** - All files pass strict type checking
 - ✅ **Comprehensive Testing** - 12 test cases covering all security scenarios
 - ✅ **Configuration Support** - YAML-based configuration with validation
 - ✅ **Integration Testing** - End-to-end validation of security protections
 
-**Key insight**: The MCP reviewer was vulnerable to processing Claude command
-files and sensitive content. The blocklist system provides multi-layer
-protection with security-first design.
+**Key insight**: The MCP reviewer was vulnerable to processing Claude command files and sensitive content. The blocklist
+system provides multi-layer protection with security-first design.
 
 **Security protections implemented**:
 
-- **File Path Exclusions**: `**/.claude/commands/**`, `**/.claude/user/**`,
-  `**/secrets/**`
+- **File Path Exclusions**: `**/.claude/commands/**`, `**/.claude/user/**`, `**/secrets/**`
 - **Extension Exclusions**: `.secret`, `.key`, `.token`, `.env`, `.pem`, `.crt`
-- **Content-Based Exclusions**: `!`command``syntax,`PRIVATE KEY`, `API_KEY`,
-  `SECRET`
+- **Content-Based Exclusions**: `!`command``syntax,`PRIVATE KEY`, `API_KEY`, `SECRET`
 - **Directory Exclusions**: `node_modules`, `.git`, `build`, `dist`, `tmp`
 - **Tool-Specific Rules**: Different exclusions for DevSkim, Semgrep, CodeQL
 - **Size-Based Filtering**: Configurable file size limits (default 1MB)
@@ -138,18 +119,15 @@ protection with security-first design.
 - **Dependency vulnerabilities**: Dependabot ✅
 - **File Processing Protection**: MCP Reviewer Blocklist ✅
 
-**Next steps**: This implementation completes the security architecture
-modernization by protecting the review tools themselves from processing
-sensitive files.
+**Next steps**: This implementation completes the security architecture modernization by protecting the review tools
+themselves from processing sensitive files.
 
 ---
 
 ## Key Files
 
-- [Security Tools Analysis](security-tools-analysis.md) - Comprehensive tool
-  capability assessment
-- [Architecture Design](security-architecture-design.md) - New security strategy
-  (TBD)
+- [Security Tools Analysis](security-tools-analysis.md) - Comprehensive tool capability assessment
+- [Architecture Design](security-architecture-design.md) - New security strategy (TBD)
 - [Implementation Plan](implementation-plan.md) - Execution roadmap (TBD)
 
 ## Success Criteria

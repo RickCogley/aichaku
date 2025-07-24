@@ -2,16 +2,14 @@
 
 ## Overview
 
-When Aichaku changes from `/references` to `/docs`, existing repositories using
-Aichaku will need a migration strategy to avoid broken links and documentation
-issues.
+When Aichaku changes from `/references` to `/docs`, existing repositories using Aichaku will need a migration strategy
+to avoid broken links and documentation issues.
 
 ## The Challenge
 
 Repositories using Aichaku may have:
 
-1. Links to Aichaku documentation (e.g.,
-   `/references/tutorials/getting-started.md`)
+1. Links to Aichaku documentation (e.g., `/references/tutorials/getting-started.md`)
 2. Automated documentation generation expecting certain paths
 3. CI/CD pipelines that reference documentation locations
 4. Custom scripts or tools that expect the old structure
@@ -138,8 +136,7 @@ aichaku migrate-docs --apply
 ```markdown
 ## Upcoming Breaking Change in v0.6.0
 
-The documentation directory will move from `/references` to `/docs` for better
-convention alignment.
+The documentation directory will move from `/references` to `/docs` for better convention alignment.
 
 **Action Required:**
 
@@ -236,5 +233,4 @@ The migration from `/references` to `/docs` can be smooth if we:
 3. Communicate clearly and early
 4. Support users through the transition
 
-This approach minimizes disruption while moving to a better, more conventional
-structure.
+This approach minimizes disruption while moving to a better, more conventional structure.

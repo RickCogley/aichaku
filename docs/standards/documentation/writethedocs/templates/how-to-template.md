@@ -1,7 +1,6 @@
 # How to [Specific Task]
 
-This guide shows you how to [task description]. This is useful when you need to
-[use case/scenario].
+This guide shows you how to [task description]. This is useful when you need to [use case/scenario].
 
 **Time:** About [X] minutes\
 **Difficulty:** [Beginner | Intermediate | Advanced]
@@ -34,8 +33,7 @@ export PROJECT_ENV=production
 export API_KEY=your-api-key-here
 ```
 
-> 📝 **Note**: Store sensitive values like API keys in a `.env` file. See
-> [Managing Secrets](link) for details.
+> 📝 **Note**: Store sensitive values like API keys in a `.env` file. See [Managing Secrets](link) for details.
 
 <details>
 <summary>Using environment files</summary>

@@ -4,14 +4,12 @@
 
 Currently, project documentation management in Aichaku has several pain points:
 
-1. **Inconsistent Placement**: Documents sometimes get saved to wrong locations
-   due to human interpretation of CLAUDE.md directives
-2. **Redundant Naming**: Folders like `active-2025-01-12-project-name` inside
-   `active/` directory are redundant
-3. **Incomplete Lifecycle**: Many "active" projects are actually complete but
-   missing final documentation and haven't been moved to `done/`
-4. **Manual Processes**: Moving projects, creating change logs, and maintaining
-   status is all manual
+1. **Inconsistent Placement**: Documents sometimes get saved to wrong locations due to human interpretation of CLAUDE.md
+   directives
+2. **Redundant Naming**: Folders like `active-2025-01-12-project-name` inside `active/` directory are redundant
+3. **Incomplete Lifecycle**: Many "active" projects are actually complete but missing final documentation and haven't
+   been moved to `done/`
+4. **Manual Processes**: Moving projects, creating change logs, and maintaining status is all manual
 
 This leads to:
 
@@ -112,5 +110,4 @@ One-time script to:
 5. Update CLAUDE.md with new patterns
 6. Document the tools in MCP-TOOLS.md
 
-This will bring precision to project documentation and make the workflow more
-reliable.
+This will bring precision to project documentation and make the workflow more reliable.

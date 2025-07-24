@@ -27,11 +27,9 @@
 
 ### Team Combinations Analysis:
 
-- **Minimal/Startup** (3-4 standards): conventional-commits, google-style OR
-  tdd, test-pyramid, maybe 15-factor
+- **Minimal/Startup** (3-4 standards): conventional-commits, google-style OR tdd, test-pyramid, maybe 15-factor
 - **Balanced Development** (5-6 standards): + dora, architecture choice
-- **Enterprise/Compliance** (7-8 standards): + nist-csf, bdd, clean-arch,
-  diataxis-google
+- **Enterprise/Compliance** (7-8 standards): + nist-csf, bdd, clean-arch, diataxis-google
 - **Security-Focused** (6 standards): + nist-csf, owasp-web
 
 ### Size Projections:

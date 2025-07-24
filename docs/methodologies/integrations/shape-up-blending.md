@@ -1,10 +1,8 @@
 # Shape Up - Methodology Blending Guide
 
-**BEST FOR**: Features with unclear solutions, fixed timeline projects, avoiding
-scope creep
+**BEST FOR**: Features with unclear solutions, fixed timeline projects, avoiding scope creep
 
-**TRIGGERS**: "shape", "appetite", "pitch", "betting table", "6 weeks", "cycle",
-"bet", "cool-down"
+**TRIGGERS**: "shape", "appetite", "pitch", "betting table", "6 weeks", "cycle", "bet", "cool-down"
 
 ## Blending With Other Methodologies
 
@@ -63,8 +61,7 @@ Shaping becomes:
 
 ### Shape Up + XP
 
-**When user mentions**: "TDD", "pairing", "refactoring", "continuous
-integration"
+**When user mentions**: "TDD", "pairing", "refactoring", "continuous integration"
 
 ```
 ## Quality-Driven Cycles
@@ -99,30 +96,26 @@ integration"
 
 ### Item 1: [Feature Name]
 
-**Problem**: [What users struggle with] **Appetite**: 1 sprint (2 weeks)
-**Solution Sketch**: [Rough approach] **Story Points**: [If they use points]
-**Acceptance Criteria**: [Scrum-style criteria]
+**Problem**: [What users struggle with] **Appetite**: 1 sprint (2 weeks) **Solution Sketch**: [Rough approach] **Story
+Points**: [If they use points] **Acceptance Criteria**: [Scrum-style criteria]
 
 ### Item 2: [Feature Name]
 
 [Same structure]
 
-These shaped items are ready for sprint planning. Each has a clear problem,
-solution approach, and fits within a sprint.
+These shaped items are ready for sprint planning. Each has a clear problem, solution approach, and fits within a sprint.
 ```
 
 ### Progressive Disclosure
 
 Start simple, add methodology depth as needed:
 
-**Level 1 - First Mention**: "For this feature, what's your appetite - 2 or 6
-weeks?"
+**Level 1 - First Mention**: "For this feature, what's your appetite - 2 or 6 weeks?"
 
-**Level 2 - Engagement**: "Let's shape this properly. What's the core problem?
-What rabbit holes should we avoid?"
+**Level 2 - Engagement**: "Let's shape this properly. What's the core problem? What rabbit holes should we avoid?"
 
-**Level 3 - Full Adoption**: "Ready for the betting table? Let's review all
-pitches and decide what gets this cycle's capacity."
+**Level 3 - Full Adoption**: "Ready for the betting table? Let's review all pitches and decide what gets this cycle's
+capacity."
 
 ## Context Clues for Blending
 
@@ -149,28 +142,23 @@ pitches and decide what gets this cycle's capacity."
 
 ### Shape Up Purist Warning Signs
 
-❌ User frustrated by "no extensions" rule ✅ Adapt: "Let's scope to what fits
-the time"
+❌ User frustrated by "no extensions" rule ✅ Adapt: "Let's scope to what fits the time"
 
 ❌ Team wants more structure ✅ Blend: Add light Scrum ceremonies
 
-❌ Stakeholders want detailed specs ✅ Enhance: Add acceptance criteria to
-pitches
+❌ Stakeholders want detailed specs ✅ Enhance: Add acceptance criteria to pitches
 
 ### Over-Blending Warnings
 
-❌ Trying to estimate story points for shaped work ✅ Clarify: "Appetite
-replaces estimation"
+❌ Trying to estimate story points for shaped work ✅ Clarify: "Appetite replaces estimation"
 
-❌ Daily standups becoming status reports ✅ Refocus: "What's your biggest
-unknown today?"
+❌ Daily standups becoming status reports ✅ Refocus: "What's your biggest unknown today?"
 
 ❌ Treating cool-down as a sprint ✅ Remind: "Cool-down is unstructured time"
 
 ## Remember
 
-Shape Up's strength is solving problems with fixed time and variable scope. When
-blending:
+Shape Up's strength is solving problems with fixed time and variable scope. When blending:
 
 - Keep the appetite concept central
 - Maintain shaping before building

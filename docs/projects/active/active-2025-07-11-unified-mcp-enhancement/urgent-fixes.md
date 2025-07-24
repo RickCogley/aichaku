@@ -2,8 +2,8 @@
 
 ## Critical Issue
 
-The MCP feedback system that should have been implemented yesterday is missing,
-which is why you're not seeing any output from the MCP server interactions.
+The MCP feedback system that should have been implemented yesterday is missing, which is why you're not seeing any
+output from the MCP server interactions.
 
 ## Immediate Action Required
 
@@ -52,9 +52,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       const duration = Date.now() - startTime;
 
       logAichakuFeedback(
-        `✨ Review complete: ${
-          result.issues?.length || 0
-        } findings (${duration}ms)`,
+        `✨ Review complete: ${result.issues?.length || 0} findings (${duration}ms)`,
       );
 
       return { content: [{ type: "text", text: result }] };
@@ -102,9 +100,7 @@ async function getMCPSessionSummary(): Promise<string> {
 🔍 Tools Used: ${stats.toolsUsed} operations
 📊 Most Active: ${stats.mostUsedTool} (${stats.mostUsedCount} times)
 ⚡ Avg Response: ${stats.avgResponseTime}ms
-✨ Quality Score: ${stats.qualityScore}% ${
-    stats.improvement > 0 ? `(+${stats.improvement}% improvement)` : ""
-  }
+✨ Quality Score: ${stats.qualityScore}% ${stats.improvement > 0 ? `(+${stats.improvement}% improvement)` : ""}
 📚 Standards Applied: ${stats.standardsChecked.join(", ")}
 🎯 Files Reviewed: ${stats.filesReviewed}`;
 }
@@ -129,5 +125,4 @@ async function showCompletion() {
 2. **DAY 1** (tomorrow): Full feedback system with branding
 3. **DAY 10**: Completion statistics integration
 
-This will restore the missing feedback loop and add the statistics feature you
-requested.
+This will restore the missing feedback loop and add the statistics feature you requested.

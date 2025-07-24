@@ -7,8 +7,7 @@
 
 ## Summary
 
-Successfully upgraded all 4 repositories to Aichaku v0.28.0 with the new
-docs/projects/ structure.
+Successfully upgraded all 4 repositories to Aichaku v0.28.0 with the new docs/projects/ structure.
 
 ## Repositories Upgraded
 

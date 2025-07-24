@@ -56,9 +56,7 @@ export const format = {
    * Format a section title
    */
   section: (title: string): string => {
-    return `\n${COLORS.BOLD}${title}${COLORS.RESET}\n${COLORS.DIM}${
-      "─".repeat(title.length)
-    }${COLORS.RESET}`;
+    return `\n${COLORS.BOLD}${title}${COLORS.RESET}\n${COLORS.DIM}${"─".repeat(title.length)}${COLORS.RESET}`;
   },
 
   /**
@@ -171,12 +169,10 @@ export const format = {
 
     if (detailed) {
       // Detailed view for single run
-      output +=
-        `${status.color}${status.icon} ${run.name}${COLORS.RESET} (#${run.id})\n`;
+      output += `${status.color}${status.icon} ${run.name}${COLORS.RESET} (#${run.id})\n`;
       output += format.separator(40) + "\n";
       output += format.field("Branch", run.head_branch) + "\n";
-      output +=
-        format.field("Status", `${status.color}${status.text}${COLORS.RESET}`) +
+      output += format.field("Status", `${status.color}${status.text}${COLORS.RESET}`) +
         "\n";
       output += format.field("Duration", format.duration(duration)) + "\n";
       output += format.field(
@@ -187,8 +183,7 @@ export const format = {
       output += "\n" + format.link("View on GitHub", run.html_url);
     } else {
       // Compact view for lists
-      output +=
-        `${status.color}${status.icon} ${run.name}${COLORS.RESET} ${COLORS.DIM}(#${run.id})${COLORS.RESET}\n`;
+      output += `${status.color}${status.icon} ${run.name}${COLORS.RESET} ${COLORS.DIM}(#${run.id})${COLORS.RESET}\n`;
       output += format.field("  Branch", run.head_branch, 2) + "\n";
       output += format.field(
         "  Status",
@@ -211,11 +206,9 @@ export const format = {
     if (detailed) {
       output += format.header(repo.full_name, ICONS.REPO) + "\n";
       output += format.separator(40) + "\n";
-      output +=
-        format.field("Description", repo.description || "No description") +
+      output += format.field("Description", repo.description || "No description") +
         "\n";
-      output +=
-        format.field("Visibility", repo.private ? "Private 🔒" : "Public 🌐") +
+      output += format.field("Visibility", repo.private ? "Private 🔒" : "Public 🌐") +
         "\n";
       output += format.field(
         "Default Branch",
@@ -235,10 +228,8 @@ export const format = {
       output += format.listItem(`Clone SSH: ${repo.ssh_url}`);
     } else {
       // Compact view for lists
-      output +=
-        `${COLORS.BOLD}${ICONS.REPO} ${repo.full_name}${COLORS.RESET}\n`;
-      output +=
-        format.field("  Description", repo.description || "No description", 2) +
+      output += `${COLORS.BOLD}${ICONS.REPO} ${repo.full_name}${COLORS.RESET}\n`;
+      output += format.field("  Description", repo.description || "No description", 2) +
         "\n";
       output += format.field(
         "  Visibility",

@@ -250,6 +250,5 @@ stages:
   - e2e-full # Complete coverage (scheduled)
 ```
 
-Remember: The Test Pyramid ensures fast feedback while maintaining confidence in
-your system. Focus on a solid foundation of unit tests, supported by targeted
-integration tests, topped with minimal but comprehensive E2E tests.
+Remember: The Test Pyramid ensures fast feedback while maintaining confidence in your system. Focus on a solid
+foundation of unit tests, supported by targeted integration tests, topped with minimal but comprehensive E2E tests.

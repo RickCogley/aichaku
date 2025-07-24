@@ -93,10 +93,8 @@ export class DiátaxisLinter extends BaseLinter {
         severity: "warning",
         line: 1,
         rule: "document-type-unclear",
-        message:
-          "Cannot determine document type (tutorial, how-to, reference, or explanation)",
-        suggestion:
-          "Add clear indicators of the document type in the title or introduction",
+        message: "Cannot determine document type (tutorial, how-to, reference, or explanation)",
+        suggestion: "Add clear indicators of the document type in the title or introduction",
       }));
     } else {
       // Check for mixed document types
@@ -181,9 +179,7 @@ export class DiátaxisLinter extends BaseLinter {
             message: `${this.capitalize(primaryType)} contains ${
               this.getTypeFromKeyword(keyword)
             } material: "${keyword}"`,
-            suggestion: `Consider moving ${
-              this.getTypeFromKeyword(keyword)
-            } content to a separate document`,
+            suggestion: `Consider moving ${this.getTypeFromKeyword(keyword)} content to a separate document`,
           }));
         }
       }
@@ -198,8 +194,7 @@ export class DiátaxisLinter extends BaseLinter {
     documentType: DiátaxisType,
     issues: LintIssue[],
   ): void {
-    const requiredSections =
-      DOCUMENT_TYPE_INDICATORS[documentType].requiredSections || [];
+    const requiredSections = DOCUMENT_TYPE_INDICATORS[documentType].requiredSections || [];
     const foundSections = new Set<string>();
 
     // Look for section headers
@@ -221,11 +216,8 @@ export class DiátaxisLinter extends BaseLinter {
           severity: "warning",
           line: 1,
           rule: "missing-required-section",
-          message: `${
-            this.capitalize(documentType)
-          } is missing required section: "${section}"`,
-          suggestion:
-            `Add a "${section}" section to follow Diátaxis guidelines`,
+          message: `${this.capitalize(documentType)} is missing required section: "${section}"`,
+          suggestion: `Add a "${section}" section to follow Diátaxis guidelines`,
         }));
       }
     });
@@ -268,8 +260,7 @@ export class DiátaxisLinter extends BaseLinter {
           line: index + 1,
           rule: "tutorial-task-oriented",
           message: "Tutorials should focus on learning, not completing tasks",
-          suggestion:
-            "Rephrase to emphasize learning rather than task completion",
+          suggestion: "Rephrase to emphasize learning rather than task completion",
         }));
       }
     });
@@ -286,8 +277,7 @@ export class DiátaxisLinter extends BaseLinter {
           severity: "info",
           line: index + 1,
           rule: "how-to-learning-oriented",
-          message:
-            "How-to guides should focus on completing tasks, not learning",
+          message: "How-to guides should focus on completing tasks, not learning",
           suggestion: "Rephrase to emphasize the task rather than learning",
         }));
       }
@@ -339,10 +329,8 @@ export class DiátaxisLinter extends BaseLinter {
           severity: "warning",
           line: index + 1,
           rule: "explanation-instructional",
-          message:
-            "Explanations should discuss concepts, not provide instructions",
-          suggestion:
-            "Move instructional content to a tutorial or how-to guide",
+          message: "Explanations should discuss concepts, not provide instructions",
+          suggestion: "Move instructional content to a tutorial or how-to guide",
         }));
       }
     });
@@ -380,8 +368,7 @@ export class DiátaxisLinter extends BaseLinter {
         if (index > 0) {
           const prevHeadingIndex = this.findPreviousHeading(lines, index - 1);
           if (prevHeadingIndex !== -1) {
-            const prevLevel =
-              (lines[prevHeadingIndex].match(/^#+/) || [""])[0].length;
+            const prevLevel = (lines[prevHeadingIndex].match(/^#+/) || [""])[0].length;
             if (level > prevLevel + 1) {
               issues.push(this.createIssue({
                 severity: "warning",
@@ -412,8 +399,7 @@ export class DiátaxisLinter extends BaseLinter {
         line: 1,
         rule: "missing-introduction",
         message: "Document lacks a clear introduction",
-        suggestion:
-          "Add an introductory paragraph explaining the document's purpose",
+        suggestion: "Add an introductory paragraph explaining the document's purpose",
       }));
     }
   }

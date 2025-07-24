@@ -2,24 +2,20 @@
 
 ## Migration Overview
 
-Successfully completed the migration of all standards from `/standards/` to
-`/docs/standards/` while preserving directory structure and git history. This
-migration consolidates all documentation and standards under the `/docs/`
+Successfully completed the migration of all standards from `/standards/` to `/docs/standards/` while preserving
+directory structure and git history. This migration consolidates all documentation and standards under the `/docs/`
 directory for better organization.
 
 ## What Was Accomplished
 
 ### 1. **Complete Directory Migration**
 
-All standards have been successfully migrated from `/standards/` to
-`/docs/standards/`:
+All standards have been successfully migrated from `/standards/` to `/docs/standards/`:
 
 - ✅ **architecture/** - 15-factor.md, clean-arch.md + YAML metadata
-- ✅ **development/** - 4 standards: google-style, conventional-commits, solid,
-  tdd + YAML metadata
+- ✅ **development/** - 4 standards: google-style, conventional-commits, solid, tdd + YAML metadata
 - ✅ **devops/** - dora.md + YAML metadata
-- ✅ **documentation/** - 3 styles: diataxis-google, microsoft-style,
-  writethedocs + templates + YAML metadata
+- ✅ **documentation/** - 3 styles: diataxis-google, microsoft-style, writethedocs + templates + YAML metadata
 - ✅ **security/** - nist-csf.md, owasp-web.md + YAML metadata
 - ✅ **testing/** - bdd.md, test-pyramid.md + YAML metadata
 
@@ -28,21 +24,16 @@ All standards have been successfully migrated from `/standards/` to
 Updated all source code references from old path to new path:
 
 - ✅ **src/commands/init.ts** - Already pointing to `../../../docs/standards`
-- ✅ **src/commands/init-v2.ts** - Updated from `../../../standards` to
-  `../../../docs/standards`
-- ✅ **src/commands/upgrade.ts** - Updated from `../../../standards` to
-  `../../../docs/standards`
-- ✅ **src/commands/upgrade-v2.ts** - Updated from `../../../standards` to
-  `../../../docs/standards`
+- ✅ **src/commands/init-v2.ts** - Updated from `../../../standards` to `../../../docs/standards`
+- ✅ **src/commands/upgrade.ts** - Updated from `../../../standards` to `../../../docs/standards`
+- ✅ **src/commands/upgrade-v2.ts** - Updated from `../../../standards` to `../../../docs/standards`
 
 ### 3. **Migration Scripts Enhanced**
 
 Created reusable migration scripts with improvements:
 
-- ✅ **scripts/migrate-standards.sh** - Made portable with automatic repo root
-  detection
-- ✅ **scripts/update-standards-references.sh** - Enhanced to handle all source
-  files
+- ✅ **scripts/migrate-standards.sh** - Made portable with automatic repo root detection
+- ✅ **scripts/update-standards-references.sh** - Enhanced to handle all source files
 - ✅ Both scripts now work from any repository clone
 
 ### 4. **File Structure Result**
@@ -84,8 +75,7 @@ The new `/docs/standards/` structure contains:
 ### 5. **Testing & Validation**
 
 - ✅ **Code formatted**: `deno fmt` completed successfully
-- ✅ **Functionality verified**: `aichaku init --global --dry-run` works
-  correctly
+- ✅ **Functionality verified**: `aichaku init --global --dry-run` works correctly
 - ✅ **Paths validated**: All source code now references correct location
 
 ## Benefits Achieved
@@ -99,8 +89,7 @@ The new `/docs/standards/` structure contains:
 
 ## Migration Method Used
 
-Used `git mv` commands to preserve full git history for each file and directory.
-This ensures that:
+Used `git mv` commands to preserve full git history for each file and directory. This ensures that:
 
 - All commit history is maintained
 - File blame information is preserved
@@ -132,8 +121,7 @@ Updates all code references:
 **Total files processed**: 89 files
 
 - **Moved**: 27 standards files + 12 template files + 9 YAML metadata files
-- **Updated**: 4 source code files (init-v2.ts, upgrade.ts, upgrade-v2.ts,
-  scripts)
+- **Updated**: 4 source code files (init-v2.ts, upgrade.ts, upgrade-v2.ts, scripts)
 - **Enhanced**: 2 migration scripts for portability
 
 ## Security Assessment
@@ -150,17 +138,14 @@ Updates all code references:
 1. ✅ **Migration complete** - All files successfully moved
 2. ✅ **Source code updated** - All references point to new location
 3. ✅ **Testing validated** - Core functionality verified
-4. 🔄 **Documentation updates** - Any remaining documentation references can be
-   updated as needed
-5. 🔄 **Other repositories** - Scripts can be adapted for other projects if
-   needed
+4. 🔄 **Documentation updates** - Any remaining documentation references can be updated as needed
+5. 🔄 **Other repositories** - Scripts can be adapted for other projects if needed
 
 ## Conclusion
 
-The standards migration to `/docs/standards/` has been completed successfully.
-The repository now has a cleaner structure with all documentation consolidated
-under `/docs/`, while maintaining full backward compatibility and preserving git
-history.
+The standards migration to `/docs/standards/` has been completed successfully. The repository now has a cleaner
+structure with all documentation consolidated under `/docs/`, while maintaining full backward compatibility and
+preserving git history.
 
-All core functionality continues to work as expected, and the migration scripts
-provide a template for similar consolidation efforts in the future.
+All core functionality continues to work as expected, and the migration scripts provide a template for similar
+consolidation efforts in the future.

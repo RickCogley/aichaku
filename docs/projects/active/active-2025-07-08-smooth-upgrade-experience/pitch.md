@@ -4,20 +4,15 @@
 
 The current Aichaku upgrade process is clunky and confusing:
 
-1. **Version Requirement Hell** - You must specify exact version:
-   `jsr:@rick/aichaku@0.7.0/cli`
+1. **Version Requirement Hell** - You must specify exact version: `jsr:@rick/aichaku@0.7.0/cli`
 2. **Silent Upgrades** - No feedback about what version was installed
-3. **Unclear Next Steps** - After global upgrade, you don't know how to upgrade
-   local installs
-4. **Manual Version Tracking** - You must check JSR or GitHub to find latest
-   version
-5. **Inconsistent Commands** - Global uses `deno install`, local uses
-   `aichaku upgrade`
+3. **Unclear Next Steps** - After global upgrade, you don't know how to upgrade local installs
+4. **Manual Version Tracking** - You must check JSR or GitHub to find latest version
+5. **Inconsistent Commands** - Global uses `deno install`, local uses `aichaku upgrade`
 
 ## Appetite
 
-**1 week** - Simple wrapper script and CLI improvements without major
-architecture changes.
+**1 week** - Simple wrapper script and CLI improvements without major architecture changes.
 
 ## Solution
 

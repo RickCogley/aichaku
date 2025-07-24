@@ -1,13 +1,12 @@
 # MCP Architecture
 
-Understand the Model Context Protocol (MCP) and how Aichaku's MCP server
-integrates with Claude Code to provide automated code review capabilities.
+Understand the Model Context Protocol (MCP) and how Aichaku's MCP server integrates with Claude Code to provide
+automated code review capabilities.
 
 ## What is MCP?
 
-The Model Context Protocol (MCP) is a standard that enables AI assistants like
-Claude to interact with external tools and services. Think of it as a bridge
-between Claude's AI capabilities and specialized tools on your computer.
+The Model Context Protocol (MCP) is a standard that enables AI assistants like Claude to interact with external tools
+and services. Think of it as a bridge between Claude's AI capabilities and specialized tools on your computer.
 
 ### Key concepts
 
@@ -450,12 +449,11 @@ The Aichaku MCP server architecture provides:
 ✅ **Educational** - Teaches while reviewing\
 ✅ **Extensible** - Add patterns and scanners
 
-The architecture makes Claude Code a more capable development partner while
-maintaining the security and privacy developers expect.
+The architecture makes Claude Code a more capable development partner while maintaining the security and privacy
+developers expect.
 
 ## Related Documentation
 
 - [Setup MCP Server](../tutorials/setup-mcp-server.md) - Get started
 - [MCP API Reference](../reference/mcp-api.md) - Technical details
-- [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md) -
-  Practical usage
+- [Using MCP with Multiple Projects](../how-to/use-mcp-with-multiple-projects.md) - Practical usage

@@ -1,12 +1,10 @@
 # Status: Upgrade Experience Improvements
 
-**Status**: DONE - Completed **Started**: 2025-07-06 **Methodology**: Shape Up +
-Lean (quick improvements)
+**Status**: DONE - Completed **Started**: 2025-07-06 **Methodology**: Shape Up + Lean (quick improvements)
 
 ## 🎯 Objective
 
-Make the upgrade process intuitive so users don't forget to update both CLI and
-methodologies
+Make the upgrade process intuitive so users don't forget to update both CLI and methodologies
 
 ## 📋 Progress
 
@@ -30,8 +28,7 @@ methodologies
 
 ## 📝 Notes
 
-User feedback: "I'll forget that" - upgrade process has two steps that aren't
-obvious
+User feedback: "I'll forget that" - upgrade process has two steps that aren't obvious
 
 ## 🔗 References
 

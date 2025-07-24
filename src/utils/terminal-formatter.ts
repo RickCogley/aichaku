@@ -102,9 +102,7 @@ export function formatForTerminal(
   // Add indentation if specified
   if (indent > 0) {
     const indentStr = " ".repeat(indent);
-    formatted = formatted.split("\n").map((line) =>
-      line.trim() ? indentStr + line : line
-    ).join("\n");
+    formatted = formatted.split("\n").map((line) => line.trim() ? indentStr + line : line).join("\n");
   }
 
   return formatted;

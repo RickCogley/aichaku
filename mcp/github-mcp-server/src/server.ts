@@ -7,10 +7,7 @@
 
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
-} from "@modelcontextprotocol/sdk/types.js";
+import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
 import { GitHubClient } from "./github/client.ts";
 import { GitHubAuthManager } from "./auth/manager.ts";
 
@@ -301,8 +298,7 @@ class GitHubMCPServer {
               properties: {
                 ghVersion: {
                   type: "string",
-                  description:
-                    "GitHub CLI version to check (auto-detect if not provided)",
+                  description: "GitHub CLI version to check (auto-detect if not provided)",
                 },
               },
               additionalProperties: false,
@@ -411,9 +407,7 @@ class GitHubMCPServer {
             content: [
               {
                 type: "text",
-                text: `Error executing ${name}: ${
-                  error instanceof Error ? error.message : String(error)
-                }`,
+                text: `Error executing ${name}: ${error instanceof Error ? error.message : String(error)}`,
               },
             ],
             isError: true,

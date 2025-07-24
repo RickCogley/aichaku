@@ -6,8 +6,7 @@ We've installed 4 essential hooks to test during our development:
 
 ### 1. **path-validator** (PreToolUse: Write|MultiEdit)
 
-- **Purpose**: Ensure files go in correct `docs/projects/active/YYYY-MM-DD-*`
-  structure
+- **Purpose**: Ensure files go in correct `docs/projects/active/YYYY-MM-DD-*` structure
 - **Test**: Try creating a file in wrong location
 - **Expected**: Warning message and blocked operation
 
@@ -97,5 +96,4 @@ Should we add this as a 5th hook to test?
 - Failed hooks should exit gracefully
 - Debug logging should be visible in `/tmp/aichaku-hooks.log`
 
-Let's start testing these hooks by actually using them during our continued
-development!
+Let's start testing these hooks by actually using them during our continued development!

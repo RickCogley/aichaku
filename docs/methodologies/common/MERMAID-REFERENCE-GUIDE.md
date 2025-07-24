@@ -854,6 +854,5 @@ graph TD
     B --> C[See System Architecture]
 ```
 
-This reference guide covers all major Mermaid diagram types with practical
-examples. Use it as a quick reference when creating technical documentation
-diagrams.
+This reference guide covers all major Mermaid diagram types with practical examples. Use it as a quick reference when
+creating technical documentation diagrams.

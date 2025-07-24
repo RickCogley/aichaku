@@ -2,8 +2,8 @@
 
 ## Storage Location
 
-**Old**: Single monolithic `~/.claude/settings.json` file (228+ lines) **New**:
-Individual files in `~/.claude/commands/` directory
+**Old**: Single monolithic `~/.claude/settings.json` file (228+ lines) **New**: Individual files in
+`~/.claude/commands/` directory
 
 ## Command Definition
 
@@ -29,8 +29,8 @@ description: Show preflight checks based on project type
 
 Detecting project type...
 
-!test -f deno.json && echo "Deno project detected" || true !test -f package.json
-&& echo "Node.js project detected" || true\
+!test -f deno.json && echo "Deno project detected" || true !test -f package.json && echo "Node.js project detected" ||
+true\
 !test -f pyproject.toml && echo "Python project detected" || true
 
 Based on the project type, here are your preflight checks:
@@ -82,8 +82,8 @@ Run these before committing your changes!
 **New**: Organized in directories by category
 ```
 
-commands/ ├── aichaku/ # Aichaku-specific ├── security/ # Security tools ├──
-dev/ # Development helpers └── utils/ # General utilities
+commands/ ├── aichaku/ # Aichaku-specific ├── security/ # Security tools ├── dev/ # Development helpers └── utils/ #
+General utilities
 
 ```
 ### 4. Version Control

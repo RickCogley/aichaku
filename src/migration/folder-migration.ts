@@ -6,15 +6,7 @@
  * @module
  */
 
-import {
-  basename,
-  copy,
-  dirname,
-  ensureDir,
-  exists,
-  join,
-  walk,
-} from "../../deps.ts";
+import { basename, copy, dirname, ensureDir, exists, join, walk } from "../../deps.ts";
 import { Logger } from "../utils/logger.ts";
 import { safeRemove } from "../utils/path-security.ts";
 
@@ -297,8 +289,7 @@ export class FolderMigration {
     }
 
     // Handle standards file rename specially
-    const isStandardsRename =
-      mapping.source.endsWith(".aichaku-standards.json") &&
+    const isStandardsRename = mapping.source.endsWith(".aichaku-standards.json") &&
       mapping.target.endsWith("standards.json");
 
     const sourceExists = await exists(mapping.source);
@@ -423,9 +414,7 @@ export class FolderMigration {
     );
 
     this.logger.success(
-      `Custom standards migrated: ${
-        basename(mapping.source)
-      } -> ${mapping.target}`,
+      `Custom standards migrated: ${basename(mapping.source)} -> ${mapping.target}`,
     );
     return true;
   }
@@ -527,9 +516,7 @@ export class FolderMigration {
         error instanceof Error ? error.message : String(error),
       );
       this.logger.error(
-        `Migration failed: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
+        `Migration failed: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
 
@@ -624,9 +611,7 @@ export class FolderMigration {
         error instanceof Error ? error.message : String(error),
       );
       this.logger.error(
-        `Project migration failed: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
+        `Project migration failed: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
 
@@ -637,9 +622,7 @@ export class FolderMigration {
    * Verify migration was successful
    */
   async verifyMigration(projectPath?: string): Promise<boolean> {
-    const root = projectPath
-      ? join(projectPath, ".claude", "aichaku")
-      : this.newRoot;
+    const root = projectPath ? join(projectPath, ".claude", "aichaku") : this.newRoot;
 
     try {
       // Check if new root exists
@@ -668,9 +651,7 @@ export class FolderMigration {
       return true;
     } catch (error) {
       this.logger.error(
-        `Migration verification failed: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
+        `Migration verification failed: ${error instanceof Error ? error.message : String(error)}`,
       );
       return false;
     }
@@ -696,16 +677,12 @@ export class FolderMigration {
         : this.getCustomStandardsMappings();
 
       this.logger.info(
-        `Migrating custom standards${
-          projectPath ? ` for project: ${projectPath}` : " globally"
-        }...`,
+        `Migrating custom standards${projectPath ? ` for project: ${projectPath}` : " globally"}...`,
       );
 
       // Create backup if requested
       if (config.backup && !config.dryRun) {
-        const backupRoot = projectPath
-          ? join(projectPath, ".claude")
-          : this.oldRoot;
+        const backupRoot = projectPath ? join(projectPath, ".claude") : this.oldRoot;
         result.backupPath = await this.createBackup(backupRoot);
       }
 
@@ -734,10 +711,9 @@ export class FolderMigration {
             result.itemsSkipped++;
           }
         } catch (error) {
-          const errorMsg =
-            `Failed to migrate custom standards ${mapping.source}: ${
-              error instanceof Error ? error.message : String(error)
-            }`;
+          const errorMsg = `Failed to migrate custom standards ${mapping.source}: ${
+            error instanceof Error ? error.message : String(error)
+          }`;
           this.logger.error(errorMsg);
           result.errors.push(errorMsg);
         }
@@ -781,9 +757,7 @@ export class FolderMigration {
         error instanceof Error ? error.message : String(error),
       );
       this.logger.error(
-        `Custom standards migration failed: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
+        `Custom standards migration failed: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
 
@@ -798,16 +772,12 @@ export class FolderMigration {
     projectPath?: string,
   ): Promise<boolean> {
     try {
-      const targetRoot = projectPath
-        ? join(projectPath, ".claude")
-        : this.oldRoot;
+      const targetRoot = projectPath ? join(projectPath, ".claude") : this.oldRoot;
 
       this.logger.info(`Rolling back migration from backup: ${backupPath}`);
 
       // Remove new structure
-      const newPath = projectPath
-        ? join(projectPath, ".claude", "aichaku")
-        : this.newRoot;
+      const newPath = projectPath ? join(projectPath, ".claude", "aichaku") : this.newRoot;
       if (await exists(newPath)) {
         // Security: Use safe remove with base directory validation
         const baseDir = dirname(newPath);
@@ -821,9 +791,7 @@ export class FolderMigration {
       return true;
     } catch (error) {
       this.logger.error(
-        `Rollback failed: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
+        `Rollback failed: ${error instanceof Error ? error.message : String(error)}`,
       );
       return false;
     }

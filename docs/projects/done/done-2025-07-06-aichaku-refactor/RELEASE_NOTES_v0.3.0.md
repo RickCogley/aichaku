@@ -2,10 +2,9 @@
 
 ## 🎉 Major Release: From Methodology Selector to Adaptive System
 
-We're excited to announce Aichaku v0.3.0, a transformative release that
-fundamentally reimagines how AI assistants work with project methodologies. This
-release moves beyond simple methodology selection to create an adaptive system
-that blends approaches based on natural language and context.
+We're excited to announce Aichaku v0.3.0, a transformative release that fundamentally reimagines how AI assistants work
+with project methodologies. This release moves beyond simple methodology selection to create an adaptive system that
+blends approaches based on natural language and context.
 
 ### 🌟 What's New
 
@@ -31,10 +30,8 @@ that blends approaches based on natural language and context.
 - **Smart blending**: Combines methodologies based on context
 - **No correction needed**: Works with how teams actually talk
 - **Examples**:
-  - "Let's do our daily standup and check the bets" → Blends Scrum ceremonies
-    with Shape Up concepts
-  - "Show our sprint progress on the kanban board" → Creates hybrid
-    visualizations
+  - "Let's do our daily standup and check the bets" → Blends Scrum ceremonies with Shape Up concepts
+  - "Show our sprint progress on the kanban board" → Creates hybrid visualizations
   - "We need to shape our backlog" → Merges Shape Up shaping with Scrum backlog
 
 #### 4. **Version Tracking System**
@@ -129,25 +126,23 @@ aichaku init
 
 #### Better Team Adoption
 
-Teams don't need to learn new terminology. Aichaku adapts to how your team
-already talks about work, whether that's "sprints", "cycles", "flow", or any
-combination.
+Teams don't need to learn new terminology. Aichaku adapts to how your team already talks about work, whether that's
+"sprints", "cycles", "flow", or any combination.
 
 #### Preserved Investment
 
-Your customizations, templates, and team-specific adaptations are now
-first-class citizens that survive upgrades. Build on Aichaku without fear of
-losing work.
+Your customizations, templates, and team-specific adaptations are now first-class citizens that survive upgrades. Build
+on Aichaku without fear of losing work.
 
 #### Natural AI Interactions
 
-AI assistants can now understand and respond to mixed methodology language,
-creating more helpful and contextual responses.
+AI assistants can now understand and respond to mixed methodology language, creating more helpful and contextual
+responses.
 
 #### Future-Proof Architecture
 
-The new command structure and version tracking system provides a solid
-foundation for future enhancements while maintaining backward compatibility.
+The new command structure and version tracking system provides a solid foundation for future enhancements while
+maintaining backward compatibility.
 
 ### 🔧 Technical Details
 
@@ -158,9 +153,8 @@ foundation for future enhancements while maintaining backward compatibility.
 
 ### 🙏 Acknowledgments
 
-This release represents a significant evolution in how we think about
-AI-assisted project management. Thank you to everyone who provided feedback on
-the initial releases.
+This release represents a significant evolution in how we think about AI-assisted project management. Thank you to
+everyone who provided feedback on the initial releases.
 
 ### 📚 Learn More
 
@@ -170,8 +164,7 @@ the initial releases.
 
 ---
 
-**Breaking Changes**: The CLI commands have changed. Use `aichaku init` instead
-of `aichaku install`. See migration guide above.
+**Breaking Changes**: The CLI commands have changed. Use `aichaku init` instead of `aichaku install`. See migration
+guide above.
 
-**Security**: All file operations include path validation. No network
-operations. See SECURITY.md for details.
+**Security**: All file operations include path validation. No network operations. See SECURITY.md for details.

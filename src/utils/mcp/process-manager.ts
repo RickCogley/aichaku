@@ -65,17 +65,13 @@ export class MCPProcessManager {
 
     this.mcpBinaryPath = normalize(join(
       mcpDir,
-      platform === "windows"
-        ? "aichaku-code-reviewer.exe"
-        : "aichaku-code-reviewer",
+      platform === "windows" ? "aichaku-code-reviewer.exe" : "aichaku-code-reviewer",
     ));
 
     this.pidManager = new PIDManager(mcpDir);
 
     // Select platform-specific handler
-    this.processHandler = platform === "windows"
-      ? new WindowsProcessHandler()
-      : new UnixProcessHandler();
+    this.processHandler = platform === "windows" ? new WindowsProcessHandler() : new UnixProcessHandler();
   }
 
   /**
@@ -292,9 +288,7 @@ export class MCPProcessManager {
         }
         if (status.processInfo.cpuUsage !== undefined) {
           console.log(
-            `   ${colors.dim("CPU:")} ${
-              status.processInfo.cpuUsage.toFixed(1)
-            }%`,
+            `   ${colors.dim("CPU:")} ${status.processInfo.cpuUsage.toFixed(1)}%`,
           );
         }
       }
@@ -316,39 +310,25 @@ export class MCPProcessManager {
     console.log(`\n🪴 ${colors.bold("MCP Tools for Claude Code:")}`);
     if (status.installed) {
       console.log(
-        `   ${
-          colors.cyan("mcp__aichaku-reviewer__review_file")
-        }        Review individual files`,
+        `   ${colors.cyan("mcp__aichaku-reviewer__review_file")}        Review individual files`,
       );
       console.log(
-        `   ${
-          colors.cyan("mcp__aichaku-reviewer__review_methodology")
-        }  Check methodology compliance`,
+        `   ${colors.cyan("mcp__aichaku-reviewer__review_methodology")}  Check methodology compliance`,
       );
       console.log(
-        `   ${
-          colors.cyan("mcp__aichaku-reviewer__get_standards")
-        }      Get project standards`,
+        `   ${colors.cyan("mcp__aichaku-reviewer__get_standards")}      Get project standards`,
       );
       console.log(
-        `   ${
-          colors.cyan("mcp__aichaku-reviewer__analyze_project")
-        }    Analyze project structure`,
+        `   ${colors.cyan("mcp__aichaku-reviewer__analyze_project")}    Analyze project structure`,
       );
       console.log(
-        `   ${
-          colors.cyan("mcp__aichaku-reviewer__generate_documentation")
-        } Generate docs`,
+        `   ${colors.cyan("mcp__aichaku-reviewer__generate_documentation")} Generate docs`,
       );
       console.log(
-        `   ${
-          colors.cyan("mcp__aichaku-reviewer__get_statistics")
-        }     View usage statistics`,
+        `   ${colors.cyan("mcp__aichaku-reviewer__get_statistics")}     View usage statistics`,
       );
       console.log(
-        `   ${
-          colors.cyan("mcp__aichaku-reviewer__create_doc_template")
-        } Create doc templates`,
+        `   ${colors.cyan("mcp__aichaku-reviewer__create_doc_template")} Create doc templates`,
       );
 
       if (!status.running) {

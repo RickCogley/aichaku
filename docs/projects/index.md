@@ -1,7 +1,6 @@
 # Aichaku Project Documentation
 
-This directory contains all project documentation created using Aichaku
-methodologies.
+This directory contains all project documentation created using Aichaku methodologies.
 
 ## Active Projects
 

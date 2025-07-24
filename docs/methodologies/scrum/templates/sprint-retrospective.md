@@ -101,8 +101,7 @@ Rate each area from 1 (poor) to 5 (excellent):
 
 ## Notes for Next Sprint
 
-[Any specific considerations or context the team should remember for next sprint
-planning]
+[Any specific considerations or context the team should remember for next sprint planning]
 
 ---
 

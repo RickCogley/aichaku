@@ -2,22 +2,19 @@
 
 ## Overview
 
-This document details the critical foundation fixes applied to the Aichaku
-codebase before implementing contextual guidance enhancements. As a senior
-engineer principle, all foundational issues must be resolved before adding new
+This document details the critical foundation fixes applied to the Aichaku codebase before implementing contextual
+guidance enhancements. As a senior engineer principle, all foundational issues must be resolved before adding new
 features.
 
 ## Critical Issues Identified and Fixed
 
 ### 1. **Configuration-as-Code Violations** 🚨
 
-**Problem**: Multiple hardcoded lists throughout the codebase violated
-maintainability principles.
+**Problem**: Multiple hardcoded lists throughout the codebase violated maintainability principles.
 
 #### Issues Found:
 
-- `mcp/aichaku-mcp-server/src/methodology-manager.ts:70` - Hardcoded fallback
-  methodology list
+- `mcp/aichaku-mcp-server/src/methodology-manager.ts:70` - Hardcoded fallback methodology list
 - `src/utils/yaml-config-reader.ts:233` - Hardcoded methodology list
 - `src/utils/yaml-config-reader.ts:300` - Another hardcoded methodology list
 - `src/commands/upgrade-v2.ts:300-302` - Hardcoded template mappings
@@ -209,8 +206,7 @@ function getRulesReminderContent(): string { ... }
 
 ## Next Steps
 
-With foundation issues resolved, the codebase now meets senior engineer
-standards and is ready for:
+With foundation issues resolved, the codebase now meets senior engineer standards and is ready for:
 
 1. Help screen bypassing fixes
 2. Standards --remove functionality testing

@@ -120,9 +120,7 @@ You can now use other GitHub MCP tools like:
         content: [
           {
             type: "text",
-            text: `❌ GitHub authentication failed: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
+            text: `❌ GitHub authentication failed: ${error instanceof Error ? error.message : String(error)}`,
           },
         ],
         isError: true,
@@ -152,9 +150,7 @@ To re-authenticate, use the \`auth_login\` tool with a valid GitHub token.`,
         content: [
           {
             type: "text",
-            text: `❌ Logout failed: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
+            text: `❌ Logout failed: ${error instanceof Error ? error.message : String(error)}`,
           },
         ],
         isError: true,

@@ -2,9 +2,8 @@
 
 ## Overview
 
-This document describes the migration handling for the `.aichaku-standards.json`
-→ `standards.json` file rename that was implemented in the folder migration
-tool.
+This document describes the migration handling for the `.aichaku-standards.json` → `standards.json` file rename that was
+implemented in the folder migration tool.
 
 ## Changes Made
 
@@ -12,10 +11,8 @@ tool.
 
 Added the standards file rename to both global and project migration mappings:
 
-- **Global**: `~/.claude/.aichaku-standards.json` →
-  `~/.claude/aichaku/standards.json`
-- **Project**: `.claude/.aichaku-standards.json` →
-  `.claude/aichaku/standards.json`
+- **Global**: `~/.claude/.aichaku-standards.json` → `~/.claude/aichaku/standards.json`
+- **Project**: `.claude/.aichaku-standards.json` → `.claude/aichaku/standards.json`
 
 ### 2. Special Handling for Rename
 
@@ -23,8 +20,7 @@ The migration tool now:
 
 - Detects when a file is being renamed (not just moved)
 - Shows "rename" instead of "migrate" in dry-run output
-- Logs "Renamed: .aichaku-standards.json -> standards.json" instead of showing
-  the full paths
+- Logs "Renamed: .aichaku-standards.json -> standards.json" instead of showing the full paths
 
 ### 3. Migration Detection
 
@@ -57,13 +53,11 @@ Added comprehensive tests to verify:
 
 ## Implementation Details
 
-The rename is handled as a standard file migration with special logging. The
-actual copy operation remains the same, ensuring data integrity.
+The rename is handled as a standard file migration with special logging. The actual copy operation remains the same,
+ensuring data integrity.
 
 ## Backward Compatibility
 
-- Migration is optional - if the file doesn't exist, migration continues without
-  error
+- Migration is optional - if the file doesn't exist, migration continues without error
 - Users who already migrated won't be affected
-- The new filename follows the established pattern (no leading dot for
-  non-hidden config files)
+- The new filename follows the established pattern (no leading dot for non-hidden config files)

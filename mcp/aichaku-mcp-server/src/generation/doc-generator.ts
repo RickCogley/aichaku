@@ -6,11 +6,7 @@
 
 import { ensureDir } from "@std/fs/ensure-dir";
 import { dirname, join, normalize } from "@std/path";
-import type {
-  DirectoryStructure,
-  ProjectAnalysis,
-  ProjectType,
-} from "../analysis/project-analyzer.ts";
+import type { DirectoryStructure, ProjectAnalysis, ProjectType } from "../analysis/project-analyzer.ts";
 import { safeWriteTextFileSync, validatePath } from "../utils/path-security.ts";
 import process from "node:process";
 
@@ -53,9 +49,7 @@ export class DocGenerator {
       validatePath(normalizedOutputPath, options.projectAnalysis.rootPath);
     } catch (error) {
       throw new Error(
-        `Invalid output path: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
+        `Invalid output path: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
 
@@ -68,9 +62,7 @@ export class DocGenerator {
       validatePath(readmePath, options.projectAnalysis.rootPath);
     } catch (error) {
       throw new Error(
-        `Invalid README path: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
+        `Invalid README path: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
 
@@ -115,9 +107,7 @@ export class DocGenerator {
         validatePath(fullPath, options.projectAnalysis.rootPath);
       } catch (error) {
         console.error(
-          `Skipping invalid path: ${fullPath} - ${
-            error instanceof Error ? error.message : String(error)
-          }`,
+          `Skipping invalid path: ${fullPath} - ${error instanceof Error ? error.message : String(error)}`,
         );
         continue;
       }
@@ -501,8 +491,7 @@ This is a ${type} project written primarily in ${mainLanguage}.
 `;
 
     if (architecture.pattern) {
-      readme +=
-        `The project follows the **${architecture.pattern}** architecture pattern.\n\n`;
+      readme += `The project follows the **${architecture.pattern}** architecture pattern.\n\n`;
     }
 
     readme += `## Getting Started
@@ -608,9 +597,7 @@ ${this.generateTreeView(analysis.structure)}
 |--------|------|-------------|
 `;
       for (const endpoint of analysis.apiEndpoints.slice(0, 5)) {
-        readme += `| ${endpoint.method} | \`${endpoint.path}\` | ${
-          endpoint.description || "TBD"
-        } |\n`;
+        readme += `| ${endpoint.method} | \`${endpoint.path}\` | ${endpoint.description || "TBD"} |\n`;
       }
 
       if (analysis.apiEndpoints.length > 5) {
@@ -797,19 +784,13 @@ This documentation follows the **${
 **Learning-oriented** - Start here if you're new to the project
 
 - [Getting Started](tutorials/getting-started.md)
-- [Your First ${
-      analysis.type.includes("library") ? "Integration" : "Application"
-    }](tutorials/first-app.md)
+- [Your First ${analysis.type.includes("library") ? "Integration" : "Application"}](tutorials/first-app.md)
 
 ### 🛠️ [How-to Guides](how-to/index.md)
 **Task-oriented** - Guides for specific tasks
 
 - [Common Tasks](how-to/common-tasks.md)
-${
-      analysis.apiEndpoints.length > 0
-        ? "- [Using the API](how-to/use-api.md)"
-        : ""
-    }
+${analysis.apiEndpoints.length > 0 ? "- [Using the API](how-to/use-api.md)" : ""}
 ${analysis.testFiles.length > 0 ? "- [Running Tests](how-to/run-tests.md)" : ""}
 
 ### 📖 [Reference](reference/index.md)
@@ -823,11 +804,7 @@ ${analysis.apiEndpoints.length > 0 ? "- [API Reference](reference/api.md)" : ""}
 **Understanding-oriented** - Discussions and concepts
 
 - [Key Concepts](explanation/concepts.md)
-${
-      analysis.architecture.pattern
-        ? `- [${analysis.architecture.pattern} Architecture](explanation/architecture.md)`
-        : ""
-    }
+${analysis.architecture.pattern ? `- [${analysis.architecture.pattern} Architecture](explanation/architecture.md)` : ""}
 - [Design Decisions](explanation/decisions.md)
 
 ## Quick Links
@@ -848,9 +825,7 @@ ${
   private generateTutorialIndex(analysis: ProjectAnalysis): string {
     return `# Tutorials
 
-Learn how to use ${
-      analysis.rootPath.split("/").pop()
-    } with these step-by-step tutorials.
+Learn how to use ${analysis.rootPath.split("/").pop()} with these step-by-step tutorials.
 
 ## Getting Started
 
@@ -951,11 +926,7 @@ You should see:
 
 \`\`\`
 Hello from ${projectName}!
-${
-      analysis.type.includes("library")
-        ? "Library loaded successfully"
-        : "Application started successfully"
-    }
+${analysis.type.includes("library") ? "Library loaded successfully" : "Application started successfully"}
 \`\`\`
 
 ## Step 4: Understanding the Code
@@ -993,9 +964,7 @@ Congratulations! You've successfully:
 
 Ready to learn more? Continue with:
 - [Basic Concepts](basic-concepts.md) - Understand core concepts
-- [Your First ${
-      analysis.type.includes("library") ? "Integration" : "Application"
-    }](first-app.md) - Build something real
+- [Your First ${analysis.type.includes("library") ? "Integration" : "Application"}](first-app.md) - Build something real
 
 ## Getting Help
 
@@ -1059,9 +1028,7 @@ Each guide:
 
     return `# How to Use the API
 
-This guide shows you how to interact with the ${
-      analysis.rootPath.split("/").pop()
-    } API.
+This guide shows you how to interact with the ${analysis.rootPath.split("/").pop()} API.
 
 ## Prerequisites
 
@@ -1170,11 +1137,7 @@ Technical reference for ${analysis.rootPath.split("/").pop()}.
 
 ## API Reference
 
-${
-      analysis.apiEndpoints.length > 0
-        ? `- [REST API](api.md) - Complete API documentation`
-        : "- No API endpoints found"
-    }
+${analysis.apiEndpoints.length > 0 ? `- [REST API](api.md) - Complete API documentation` : "- No API endpoints found"}
 - [Configuration](configuration.md) - All configuration options
 - [CLI Commands](cli.md) - Command-line interface reference
 
@@ -1195,9 +1158,8 @@ ${
 ## Configuration Files
 
 ${
-      analysis.configFiles.map((config) =>
-        `- [\`${config.path}\`](configs/${config.type}.md) - ${config.purpose}`
-      ).slice(0, 5).join("\n")
+      analysis.configFiles.map((config) => `- [\`${config.path}\`](configs/${config.type}.md) - ${config.purpose}`)
+        .slice(0, 5).join("\n")
     }
 
 ## Error Reference
@@ -1340,9 +1302,7 @@ Response includes:
   private generateExplanationIndex(analysis: ProjectAnalysis): string {
     return `# Concepts and Explanation
 
-Understanding the design and architecture of ${
-      analysis.rootPath.split("/").pop()
-    }.
+Understanding the design and architecture of ${analysis.rootPath.split("/").pop()}.
 
 ## Core Concepts
 
@@ -1354,9 +1314,7 @@ Understanding the design and architecture of ${
 
 ${
       analysis.architecture.layers.map((layer) =>
-        `- [${layer.name}](layers/${
-          layer.name.toLowerCase().replace(/\s+/g, "-")
-        }.md) - ${layer.purpose}`
+        `- [${layer.name}](layers/${layer.name.toLowerCase().replace(/\s+/g, "-")}.md) - ${layer.purpose}`
       ).join("\n")
     }
 
@@ -1401,9 +1359,7 @@ ${this.generateLimitationsExplanation(analysis)}
 
 ## ${architecture.pattern || "System"} Architecture
 
-${analysis.rootPath.split("/").pop()} follows the **${
-      architecture.pattern || "modular"
-    }** architecture pattern.
+${analysis.rootPath.split("/").pop()} follows the **${architecture.pattern || "modular"}** architecture pattern.
 
 ## Architecture Diagram
 
@@ -1444,13 +1400,7 @@ ${
 **Purpose**: ${layer.purpose}
 
 **Components**:
-${
-        layer.directories.map((dir) =>
-          `- \`${dir}\` - ${
-            this.inferDirectoryPurpose(dir.split("/").pop() || "")
-          }`
-        ).join("\n")
-      }
+${layer.directories.map((dir) => `- \`${dir}\` - ${this.inferDirectoryPurpose(dir.split("/").pop() || "")}`).join("\n")}
 
 **Responsibilities**:
 - ${this.generateLayerResponsibilities(layer.name).join("\n- ")}
@@ -1562,9 +1512,7 @@ yarn add ${analysis.rootPath.split("/").pop()}
 
 ### Using Deno
 \`\`\`typescript
-import { } from "https://deno.land/x/${
-        analysis.rootPath.split("/").pop()
-      }/mod.ts";
+import { } from "https://deno.land/x/${analysis.rootPath.split("/").pop()}/mod.ts";
 \`\`\``;
     }
 

@@ -29,5 +29,5 @@
 
 ## Notes
 
-Using Kanban for bug fixes while main development uses Shape Up. This provides
-continuous flow for urgent issues without disrupting feature cycles.
+Using Kanban for bug fixes while main development uses Shape Up. This provides continuous flow for urgent issues without
+disrupting feature cycles.

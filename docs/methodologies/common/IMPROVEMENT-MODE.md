@@ -9,16 +9,14 @@ When you hear any of these:
 - "Improve..." / "Optimize..." / "Refactor..."
 - "Measure..." / "Metrics..." / "Performance..."
 
-CONTINUE in existing folder OR create new: 📁
-`docs/projects/active/{YYYY-MM-DD}-{descriptive-name}/` └── STATUS.md (update to
-IMPROVEMENT mode)
+CONTINUE in existing folder OR create new: 📁 `docs/projects/active/{YYYY-MM-DD}-{descriptive-name}/` └── STATUS.md
+(update to IMPROVEMENT mode)
 
 This is automatic - users shouldn't need to ask!
 
 **ACTIVATES WHEN**: User wants to review, reflect, measure, or improve process
 
-**TRIGGERS**: "how are we doing", "retrospective", "metrics", "what's working",
-"review"
+**TRIGGERS**: "how are we doing", "retrospective", "metrics", "what's working", "review"
 
 ## Quick Start
 
@@ -281,6 +279,5 @@ CHECK:
 
 ## Remember
 
-Improvement Mode is about learning from data, not blame. Focus on system
-improvements, not individual performance. Small, continuous improvements beat
-big changes.
+Improvement Mode is about learning from data, not blame. Focus on system improvements, not individual performance.
+Small, continuous improvements beat big changes.

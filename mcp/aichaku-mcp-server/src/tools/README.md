@@ -1,7 +1,6 @@
 # MCP Documentation Generation Tools
 
-This directory contains MCP tools for generating comprehensive project
-documentation following various standards.
+This directory contains MCP tools for generating comprehensive project documentation following various standards.
 
 ## Tools
 
@@ -12,8 +11,7 @@ Analyzes a project's structure, languages, architecture, and dependencies.
 **Arguments:**
 
 - `projectPath` (string, required): Path to the project directory to analyze
-- `detailed` (boolean, optional): Include detailed analysis of files and
-  components (default: true)
+- `detailed` (boolean, optional): Include detailed analysis of files and components (default: true)
 
 **Returns:**
 
@@ -34,8 +32,7 @@ Generates comprehensive documentation following selected standards.
 **Arguments:**
 
 - `projectPath` (string, required): Path to the project directory
-- `outputPath` (string, optional): Output path for documentation (defaults to
-  projectPath/docs)
+- `outputPath` (string, optional): Output path for documentation (defaults to projectPath/docs)
 - `standard` (string, optional): Documentation standard to follow
   - "diataxis" (default) - Four-mode documentation framework
   - "diataxis-google" - Diátaxis with Google style guide
@@ -43,13 +40,10 @@ Generates comprehensive documentation following selected standards.
   - "microsoft" - Microsoft documentation style
   - "readme-first" - README-centric documentation
   - "api-first" - API-centric documentation
-- `overwrite` (boolean, optional): Overwrite existing documentation files
-  (default: false)
+- `overwrite` (boolean, optional): Overwrite existing documentation files (default: false)
 - `includeExamples` (boolean, optional): Include code examples (default: true)
-- `includeDiagrams` (boolean, optional): Generate Mermaid diagrams (default:
-  true)
-- `autoChain` (boolean, optional): Automatically run analyze_project first
-  (default: true)
+- `includeDiagrams` (boolean, optional): Generate Mermaid diagrams (default: true)
+- `autoChain` (boolean, optional): Automatically run analyze_project first (default: true)
 
 **Features:**
 
@@ -65,8 +59,7 @@ Creates specific documentation template files.
 
 **Arguments:**
 
-- `outputPath` (string, required): Path where the template file should be
-  created
+- `outputPath` (string, required): Path where the template file should be created
 - `templateType` (string, required): Type of template to create
   - "tutorial" - Step-by-step learning guide
   - "how-to" - Task-oriented guide
@@ -137,33 +130,28 @@ if (result.success && result.generatedFiles) {
 
 The documentation tools integrate with Aichaku's standards system:
 
-1. **Automatic Standard Detection**: When generating documentation, the tool
-   checks for project standards in `.claude/aichaku/standards.json`
+1. **Automatic Standard Detection**: When generating documentation, the tool checks for project standards in
+   `.claude/aichaku/standards.json`
 2. **Standard Mapping**: Maps Aichaku standards to documentation frameworks:
    - "DIATAXIS-GOOGLE" → diataxis-google documentation style
    - "GOOGLE-STYLE" → google documentation style
    - Default → diataxis framework
 
-3. **Quality Review**: Generated documentation can be reviewed using
-   `review_file` to ensure it meets selected standards
+3. **Quality Review**: Generated documentation can be reviewed using `review_file` to ensure it meets selected standards
 
 ## Architecture
 
 The documentation generation system consists of:
 
-- **Project Analyzer** (`analysis/project-analyzer.ts`): Analyzes project
-  structure and characteristics
-- **Doc Generator** (`generation/doc-generator.ts`): Generates documentation
-  based on analysis
+- **Project Analyzer** (`analysis/project-analyzer.ts`): Analyzes project structure and characteristics
+- **Doc Generator** (`generation/doc-generator.ts`): Generates documentation based on analysis
 - **Template System**: Pre-defined templates for various documentation types
 - **MCP Tools** (`tools/*.ts`): MCP-compatible tool definitions
 
 ## Best Practices
 
-1. **Run Analysis First**: Use `analyze_project` to understand your project
-   before generating docs
-2. **Choose Appropriate Standard**: Select a documentation standard that fits
-   your audience
+1. **Run Analysis First**: Use `analyze_project` to understand your project before generating docs
+2. **Choose Appropriate Standard**: Select a documentation standard that fits your audience
 3. **Review Generated Content**: Use `review_file` on generated documentation
 4. **Customize Templates**: Edit generated files to add project-specific content
 5. **Keep Docs Updated**: Re-run generation after major changes

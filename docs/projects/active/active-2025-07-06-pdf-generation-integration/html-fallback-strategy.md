@@ -2,8 +2,7 @@
 
 ## Overview
 
-While PDF is ideal for formal documents, HTML provides an excellent intermediate
-format that:
+While PDF is ideal for formal documents, HTML provides an excellent intermediate format that:
 
 - Works immediately without dependencies
 - Renders beautifully in browsers

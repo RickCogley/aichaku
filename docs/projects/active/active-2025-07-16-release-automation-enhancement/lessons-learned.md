@@ -2,16 +2,15 @@
 
 ## Release Date: 2025-07-16
 
-This document captures the specific issues encountered during the v0.30.0
-release and the insights gained that inform our release automation improvements.
+This document captures the specific issues encountered during the v0.30.0 release and the insights gained that inform
+our release automation improvements.
 
 ## Issues Encountered
 
 ### 1. Type Checking Confusion
 
-**What happened**: Nagare's built-in type checking was checking ALL files, while
-our pre-release hooks only checked specific files. This led to 187+ type errors
-in deprecated v2 files during the actual release.
+**What happened**: Nagare's built-in type checking was checking ALL files, while our pre-release hooks only checked
+specific files. This led to 187+ type errors in deprecated v2 files during the actual release.
 
 **Root cause**:
 
@@ -19,13 +18,12 @@ in deprecated v2 files during the actual release.
 - Only `deno check` (without arguments) respects the top-level exclude
 - Different tools were using different check commands
 
-**Lesson**: All type checking commands must be standardized and use the same
-exclusion logic.
+**Lesson**: All type checking commands must be standardized and use the same exclusion logic.
 
 ### 2. JSR Publishing Failure
 
-**What happened**: JSR publishing failed with "excluded-module" error for
-version.ts, even though npm publishing succeeded.
+**What happened**: JSR publishing failed with "excluded-module" error for version.ts, even though npm publishing
+succeeded.
 
 **Root cause**:
 
@@ -33,13 +31,11 @@ version.ts, even though npm publishing succeeded.
 - JSR requires all files in the module graph to be included
 - No validation that excluded files aren't needed for publishing
 
-**Lesson**: Pre-flight checks must validate that no required files are excluded
-from publishing.
+**Lesson**: Pre-flight checks must validate that no required files are excluded from publishing.
 
 ### 3. Documentation Formatting CI Failure
 
-**What happened**: After fixing the JSR issue, GitHub Actions failed due to
-unformatted documentation files.
+**What happened**: After fixing the JSR issue, GitHub Actions failed due to unformatted documentation files.
 
 **Root cause**:
 
@@ -47,13 +43,11 @@ unformatted documentation files.
 - Pre-release checks didn't include documentation formatting
 - Had to re-tag and force push multiple times
 
-**Lesson**: ALL files that will be checked in CI must be validated in
-pre-release checks.
+**Lesson**: ALL files that will be checked in CI must be validated in pre-release checks.
 
 ### 4. Manual Tag Management
 
-**What happened**: Had to manually move and force-push tags multiple times to
-re-trigger workflows.
+**What happened**: Had to manually move and force-push tags multiple times to re-trigger workflows.
 
 **Root cause**:
 
@@ -61,13 +55,11 @@ re-trigger workflows.
 - GitHub Actions only triggers on tag push
 - Manual process is error-prone
 
-**Lesson**: Release process should handle tag management automatically,
-including updates after fixes.
+**Lesson**: Release process should handle tag management automatically, including updates after fixes.
 
 ### 5. Binary Upload as Separate Step
 
-**What happened**: After the release succeeded, binaries had to be built and
-uploaded manually.
+**What happened**: After the release succeeded, binaries had to be built and uploaded manually.
 
 **Root cause**:
 
@@ -75,15 +67,14 @@ uploaded manually.
 - Requires manual intervention after release
 - Easy to forget or delay
 
-**Lesson**: Binary creation and upload should be automatic part of the release
-process.
+**Lesson**: Binary creation and upload should be automatic part of the release process.
 
 ## Key Insights
 
 ### 1. Partial Success is Worse than Failure
 
-When npm publishes but JSR fails, we're in an inconsistent state. The release
-process must be atomic - either everything succeeds or nothing is published.
+When npm publishes but JSR fails, we're in an inconsistent state. The release process must be atomic - either everything
+succeeds or nothing is published.
 
 ### 2. Pre-flight Validation Must Be Comprehensive
 
@@ -133,8 +124,7 @@ This should be: Run release → Success
 
 ## Recommendations for Implementation
 
-1. **Unified Configuration**: Single source of truth for what files to
-   check/exclude
+1. **Unified Configuration**: Single source of truth for what files to check/exclude
 2. **Comprehensive Validation**: Run ALL checks before starting any publishing
 3. **Atomic Operations**: Use transactions or rollback capabilities
 4. **Smart Recovery**: Detect what needs to be re-run after fixes
@@ -154,5 +144,4 @@ After implementing improvements, a release should:
 
 ---
 
-_These lessons directly inform the design of the release automation enhancement
-project._
+_These lessons directly inform the design of the release automation enhancement project._

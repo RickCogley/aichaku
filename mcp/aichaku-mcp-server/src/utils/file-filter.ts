@@ -183,9 +183,7 @@ export class FileFilter {
       },
     };
 
-    this.config = useDefaults
-      ? this.mergeConfig(this.defaultExclusions, config)
-      : config;
+    this.config = useDefaults ? this.mergeConfig(this.defaultExclusions, config) : config;
   }
 
   /**
@@ -203,9 +201,7 @@ export class FileFilter {
 
       // Check file extension exclusions
       if (this.config.extensions?.some((ext) => resolvedPath.endsWith(ext))) {
-        const ext = this.config.extensions.find((ext) =>
-          resolvedPath.endsWith(ext)
-        );
+        const ext = this.config.extensions.find((ext) => resolvedPath.endsWith(ext));
         return {
           shouldExclude: true,
           reason: `File extension excluded: ${ext}`,
@@ -213,9 +209,7 @@ export class FileFilter {
       }
 
       // Check glob pattern exclusions
-      const matchedPattern = this.config.patterns?.find((pattern) =>
-        minimatch(resolvedPath, pattern)
-      );
+      const matchedPattern = this.config.patterns?.find((pattern) => minimatch(resolvedPath, pattern));
       if (matchedPattern) {
         return {
           shouldExclude: true,
@@ -233,9 +227,7 @@ export class FileFilter {
       }
 
       // Check directory exclusions
-      const matchedDir = this.config.directories?.find((dir) =>
-        resolvedPath.includes(`/${dir}/`)
-      );
+      const matchedDir = this.config.directories?.find((dir) => resolvedPath.includes(`/${dir}/`));
       if (matchedDir) {
         return {
           shouldExclude: true,
@@ -244,9 +236,7 @@ export class FileFilter {
       }
 
       // Check path exclusions
-      const matchedPath = this.config.paths?.find((path) =>
-        resolvedPath.includes(path)
-      );
+      const matchedPath = this.config.paths?.find((path) => resolvedPath.includes(path));
       if (matchedPath) {
         return {
           shouldExclude: true,
@@ -256,9 +246,7 @@ export class FileFilter {
 
       // Check content-based exclusions
       if (content) {
-        const matchedContent = this.config.contentTypes?.find((pattern) =>
-          content.includes(pattern)
-        );
+        const matchedContent = this.config.contentTypes?.find((pattern) => content.includes(pattern));
         if (matchedContent) {
           return {
             shouldExclude: true,
@@ -270,9 +258,7 @@ export class FileFilter {
       // Check tool-specific exclusions
       if (tool && this.config.perToolExclusions?.[tool]) {
         const toolExclusions = this.config.perToolExclusions[tool];
-        const matchedToolPattern = toolExclusions.find((pattern) =>
-          minimatch(resolvedPath, pattern)
-        );
+        const matchedToolPattern = toolExclusions.find((pattern) => minimatch(resolvedPath, pattern));
         if (matchedToolPattern) {
           return {
             shouldExclude: true,
@@ -289,8 +275,7 @@ export class FileFilter {
           if (stats.size > maxSize) {
             return {
               shouldExclude: true,
-              reason:
-                `File size (${stats.size} bytes) exceeds maximum (${this.config.maxFileSize})`,
+              reason: `File size (${stats.size} bytes) exceeds maximum (${this.config.maxFileSize})`,
             };
           }
         } catch {

@@ -2,11 +2,9 @@
 
 ## Overview
 
-The Aichaku MCP (Model Context Protocol) server includes a comprehensive
-feedback and visibility system designed to provide clear, branded, and
-informative feedback for Claude Code's interactions with the server. This system
-ensures users understand what's happening during code reviews and security
-scans.
+The Aichaku MCP (Model Context Protocol) server includes a comprehensive feedback and visibility system designed to
+provide clear, branded, and informative feedback for Claude Code's interactions with the server. This system ensures
+users understand what's happening during code reviews and security scans.
 
 ## Visual Brand Identity
 
@@ -240,16 +238,14 @@ When external security scanners are used:
 
 ### Environment Variables
 
-- `AICHAKU*FEEDBACK*LEVEL`: Control feedback verbosity (minimal, standard,
-  verbose)
-- `AICHAKU*PROGRESS*THRESHOLD`: Milliseconds before showing progress
-  (default: 1500)
+- `AICHAKU*FEEDBACK*LEVEL`: Control feedback verbosity (minimal, standard, verbose)
+- `AICHAKU*PROGRESS*THRESHOLD`: Milliseconds before showing progress (default: 1500)
 - `AICHAKU*TIMING*THRESHOLD`: Milliseconds before showing timing (default: 3000)
 
 ### Customization
 
-The feedback system is designed to be configurable while maintaining brand
-consistency. Key aspects that can be customized:
+The feedback system is designed to be configurable while maintaining brand consistency. Key aspects that can be
+customized:
 
 - Progress thresholds
 - Verbosity levels
@@ -258,8 +254,7 @@ consistency. Key aspects that can be customized:
 
 ## Integration with Claude Code
 
-The feedback system is designed to work seamlessly with Claude Code's console
-output:
+The feedback system is designed to work seamlessly with Claude Code's console output:
 
 1. **stderr logging**: All feedback goes to stderr for visibility
 2. **Non-blocking**: Feedback doesn't interfere with MCP communication
