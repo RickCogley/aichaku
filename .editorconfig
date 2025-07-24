@@ -13,9 +13,9 @@ indent_style = space
 indent_size = 2
 
 # Markdown files - special handling for line breaks and length
-[*.md]
+[*.{md,markdown}]
 indent_style = space
-indent_size = 2
+indent_size = 4
 max_line_length = 120
 trim_trailing_whitespace = false  # Preserve markdown line breaks (two spaces = <br>)
 
