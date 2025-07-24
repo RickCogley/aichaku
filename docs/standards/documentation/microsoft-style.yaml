@@ -31,6 +31,7 @@ display:
   learn_more:
     docs: "https://rickcogley.github.io/aichaku/standards/documentation/microsoft-style"
     local: "~/.claude/aichaku/docs/standards/documentation/microsoft-style.md"
+    templates: "~/.claude/aichaku/docs/standards/documentation/templates/"
 
 rules:
   global_readiness:
@@ -87,6 +88,7 @@ rules:
       - "Celebrate user achievements"
   tutorial_structure:
     description: "Step-by-step learning-focused content"
+    template: "templates/microsoft-style-tutorial-template.md"
     opening:
       - "Clear learning objectives"
       - "Time estimate for completion"
@@ -97,8 +99,10 @@ rules:
       - "Screenshots and visual aids"
       - "Expected results after each step"
       - "Tips and troubleshooting"
+      - "Encouraging feedback after achievements"
     closing:
       - "Summary of achievements"
+      - "Cleanup instructions if needed"
       - "Next steps and related content"
       - "Links to deeper learning"
   ui_formatting:
@@ -118,21 +122,26 @@ rules:
       notes: "> [!NOTE]\n> Additional context"
   how_to_structure:
     description: "Task-oriented problem-solving content"
+    template: "templates/microsoft-style-how-to-template.md"
     title: "How to [accomplish specific task]"
     introduction:
       - "Brief description of task purpose"
       - "When to use this approach"
       - "Prerequisites if needed"
     procedure:
+      - "Multiple methods (GUI, CLI, PowerShell)"
       - "Clear, actionable steps"
       - "One action per step"
-      - "Expected outcomes"
+      - "Expected outcomes and timing"
       - "Verification methods"
     conclusion:
-      - "Summary of what was accomplished"
+      - "Verification steps"
+      - "Troubleshooting section"
+      - "Cleanup guidance"
       - "Related tasks or next steps"
   reference_structure:
     description: "Comprehensive information documentation"
+    template: "templates/microsoft-style-reference-template.md"
     organization:
       - "Logical grouping of information"
       - "Consistent formatting patterns"
@@ -143,6 +152,22 @@ rules:
       - "Return value specifications"
       - "Error condition documentation"
       - "Working code examples"
+      - "Status codes and return values table"
+  explanation_structure:
+    description: "Concept-oriented understanding documentation"
+    template: "templates/microsoft-style-explanation-template.md"
+    approach:
+      - "Engaging introduction explaining topic value"
+      - "Progressive disclosure from simple to complex"
+      - "Visual diagrams for complex relationships"
+      - "Real-world examples and scenarios"
+      - "Comparison tables with alternatives"
+    content:
+      - "Clear concept definitions with analogies"
+      - "Architecture explanations with diagrams"
+      - "Use case guidance and alternatives"
+      - "Best practices and anti-patterns"
+      - "Links to actionable next steps"
   error_messaging:
     description: "Clear, helpful error communication"
     principles:

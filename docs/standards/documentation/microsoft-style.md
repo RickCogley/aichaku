@@ -23,13 +23,14 @@ Help users learn by doing, building confidence through successful completion of 
 
 Microsoft tutorials follow a hands-on, step-by-step approach with clear outcomes and encouraging tone.
 
-See the complete template: [`templates/tutorial-template.md`](./templates/tutorial-template.md)
+See the complete template: [templates/microsoft-style-tutorial-template.md](./templates/microsoft-style-tutorial-template.md)
 
 Key structural elements:
-- **Time estimate** upfront  
+
+- **Time estimate** upfront
 - **Prerequisites** section
 - **Numbered steps** with clear actions
-- **Encouragement** after each achievement  
+- **Encouragement** after each achievement
 - **What you learned** summary
 - **Try this next** section for continued learning
 
@@ -44,121 +45,24 @@ Key structural elements:
 ## How-to Guide Guidelines
 
 ### Purpose
+
 Provide focused, task-oriented guidance for users who know what they want to accomplish.
 
 ### Structure
-```markdown
-# [Action verb] [specific task]
 
-This article explains how to [task]. Use this approach when you want to [scenario].
+Microsoft how-to guides follow a problem-solving approach with multiple methods and comprehensive troubleshooting.
 
-**In this article**
-- [Prerequisites](#prerequisites)
-- [Main task](#main-task)
-- [Verify results](#verify-results)
-- [Clean up resources](#clean-up-resources)
+See the complete template: [templates/microsoft-style-how-to-template.md](./templates/microsoft-style-how-to-template.md)
 
-## Prerequisites
+Key structural elements:
 
-- [Specific requirement with version]
-- [Permission or access needed]
-- Complete [prerequisite task](link) if you haven't already
-
-## [Main task]
-
-Choose the method that works best for your scenario:
-
-### Use the [interface name]
-
-The easiest way to [task] is through the [interface].
-
-1. Go to the [location] in the [interface].
-
-2. Find your [resource] in the list.
-
-   > [!NOTE]
-   > If you don't see your [resource], make sure you selected the correct [filter/scope].
-
-3. Select **[Action]** > **[Specific option]**.
-
-4. Configure these settings:
-
-   | Setting | Value | Description |
-   |---------|--------|-------------|
-   | **Name** | *Your choice* | A descriptive name for [purpose] |
-   | **Type** | *Standard* | For most scenarios, use Standard |
-   | **Size** | *Medium* | Balance between performance and cost |
-
-5. Select **Review + create**.
-
-6. Review your settings, then select **Create**.
-
-### Use the command line
-
-If you prefer working from the command line, or need to automate this task:
-
-```bash
-# Set your variables
-RESOURCE_NAME="your-resource-name"
-LOCATION="eastus"
-
-# Create the resource
-az resource create \
-  --name $RESOURCE_NAME \
-  --location $LOCATION \
-  --type Standard \
-  --size Medium
-````
-
-> [!IMPORTANT]
-> Replace the example values with your actual values. The location must be a valid Azure region.
-
-## Verify results
-
-Make sure your [task] completed successfully:
-
-1. Go to the [location] to view your new [resource].
-
-2. Check that the status shows as *Ready* or *Active*.
-
-3. Test the [resource] by [specific test action].
-
-If something doesn't look right, see [Troubleshoot common issues](#troubleshooting).
-
-## Clean up resources
-
-To avoid unnecessary charges, remove resources you no longer need:
-
-> [!WARNING]
-> This permanently deletes your [resource] and all associated data.
-
-1. Select your [resource].
-2. Select **Delete**.
-3. Type the resource name to confirm.
-4. Select **Delete**.
-
-## Troubleshooting
-
-### [Resource] not appearing
-
-- Wait 2-3 minutes and refresh the page
-- Check you're in the correct [scope/filter]
-- Verify you have permission to view [resources]
-
-### Creation fails with error "[specific error]"
-
-This usually means [explanation]. To fix it:
-
-1. [Solution step 1]
-2. [Solution step 2]
-
-## Next steps
-
-- [Learn about advanced features](link)
-- [Configure security settings](link)
-- [Set up monitoring](link)
-
-````
+- **Clear task focus** in the title
+- **Prerequisites** section with specific requirements
+- **Multiple methods** (GUI, CLI, PowerShell when applicable)
+- **Verification steps** to confirm success
+- **Troubleshooting** section with common issues
+- **Cleanup** guidance for resource management
+- **Next steps** for continued learning
 ### Microsoft Style Notes for How-to Guides
 
 - **Front-load important information**: Put key details early
@@ -173,121 +77,19 @@ This usually means [explanation]. To fix it:
 Provide complete, accurate technical information for users who need specific details.
 
 ### Structure
-```markdown
-# [Component/Command] reference
 
-## [Component/Command name]
+Microsoft reference documentation provides comprehensive technical information with consistent formatting and complete parameter coverage.
 
-[Brief description of purpose and common use cases]
+See the complete template: [templates/microsoft-style-reference-template.md](./templates/microsoft-style-reference-template.md)
 
-### Syntax
-````
+Key structural elements:
 
-command-name [--option] <required-argument> [optional-argument]
-
-````
-### Parameters
-
-#### `<required-argument>`
-
-*Required*. [Description of the argument and its purpose].
-
-- **Type**: String | Integer | Boolean
-- **Valid values**: [List specific values or describe format]
-- **Default**: None (required)
-
-**Examples**:
-```bash
-command-name "example-value"
-command-name 123
-````
-
-#### `[optional-argument]`
-
-*Optional*. [Description and when to use it].
-
-- **Type**: String
-- **Valid values**: [List or describe]
-- **Default**: `default-value`
-
-### Options
-
-#### `--option`, `-o`
-
-[Description of what this option does].
-
-- **Type**: String
-- **Valid values**: `value1` | `value2` | `value3`
-- **Default**: `value1`
-- **Required**: No
-
-**Example**:
-
-```bash
-command-name --option value2 my-argument
-```
-
-#### `--verbose`, `-v`
-
-Increase logging verbosity. Use up to three times for more detail.
-
-**Example**:
-
-```bash
-command-name -vvv my-argument  # Maximum verbosity
-```
-
-### Examples
-
-#### Basic usage
-
-Create a simple [thing]:
-
-```bash
-command-name my-thing
-```
-
-Output:
-
-```
-Created [thing] 'my-thing' successfully.
-ID: 12345
-Status: Active
-```
-
-#### Advanced usage
-
-Create a [thing] with custom configuration:
-
-```bash
-command-name my-advanced-thing \
-  --option value2 \
-  --config ./custom.json \
-  --timeout 300
-```
-
-### Return values
-
-| Code | Meaning            | Details                                         |
-| ---- | ------------------ | ----------------------------------------------- |
-| 0    | Success            | Operation completed without errors              |
-| 1    | General failure    | Check error message for details                 |
-| 2    | Invalid arguments  | Review command syntax                           |
-| 3    | Resource not found | Verify the resource name and permissions        |
-| 4    | Timeout            | Operation took too long; try increasing timeout |
-
-### Related commands
-
-- [`related-command`](link) - Brief description of relationship
-- [`another-command`](link) - How it works with this command
-
-### See also
-
-- [Conceptual overview of [topic]](link)
-- [How to use [command] in common scenarios](link)
-- [Best practices for [component]](link)
-
-````
+- **Clear syntax** with required vs optional parameters
+- **Complete parameter documentation** with types and examples
+- **Working code examples** with expected output
+- **Return values table** with status codes
+- **Related commands** section for discoverability
+- **Cross-references** to conceptual content
 ### Microsoft Style Notes for References
 
 - **Be scannable**: Use consistent formatting and clear sections
@@ -302,112 +104,21 @@ command-name my-advanced-thing \
 Help users understand concepts, architecture, and the reasoning behind design decisions.
 
 ### Structure
-```markdown
-# Understand [concept/technology]
 
-[Engaging introduction that explains why this topic matters to the reader]
+Microsoft explanation documentation helps users understand concepts and architecture with engaging introductions and progressive disclosure.
 
-**In this article**
-- [What is [concept]?](#what-is-concept)
-- [How it works](#how-it-works)
-- [When to use it](#when-to-use-it)
-- [Best practices](#best-practices)
+See the complete template: [templates/microsoft-style-explanation-template.md](./templates/microsoft-style-explanation-template.md)
 
-## What is [concept]?
+Key structural elements:
 
-[Clear, simple definition followed by a relatable analogy if helpful]
+- **Engaging introduction** explaining why the topic matters
+- **Clear concept definitions** with analogies when helpful
+- **Visual diagrams** to illustrate complex relationships
+- **Progressive disclosure** from simple to complex
+- **Practical examples** with real-world scenarios
+- **Comparison tables** showing alternatives and tradeoffs
+- **Next steps** linking to actionable content
 
-Think of [concept] like [familiar analogy]. Just as [analogy explanation], [concept] helps you [benefit/purpose].
-
-### Key benefits
-
-- **[Benefit 1]**: [How it helps users]
-- **[Benefit 2]**: [Specific advantage]
-- **[Benefit 3]**: [Business or technical value]
-
-## How it works
-
-[High-level explanation using diagrams where helpful]
-
-```mermaid
-graph LR
-    A[User Request] --> B[Component 1]
-    B --> C[Component 2]
-    C --> D[Result]
-```
-
-Let's break this down:
-
-1. **User Request**: When you [action], the system [what happens].
-
-2. **Processing**: The [component] takes your request and [explanation].
-
-3. **Result**: You get [outcome], which you can use to [purpose].
-
-### Under the hood
-
-For those interested in the technical details:
-
-[Deeper technical explanation with specific implementation details]
-
-## When to use it
-
-[Concept] works best when:
-
-- ✅ You need to [scenario 1]
-- ✅ Your application requires [requirement]
-- ✅ You want to [goal]
-
-Consider alternatives when:
-
-- ❌ Your use case involves [conflicting scenario]
-- ❌ You need [different requirement]
-- ❌ Performance is critical for [specific operation]
-
-## Compare with similar approaches
-
-| Approach            | Best for          | Limitations           |
-| ------------------- | ----------------- | --------------------- |
-| **[This concept]**  | [Use cases]       | [Tradeoffs]           |
-| **[Alternative 1]** | [Different cases] | [Different tradeoffs] |
-| **[Alternative 2]** | [Other cases]     | [Other tradeoffs]     |
-
-## Best practices
-
-Follow these guidelines to get the most from [concept]:
-
-### Do
-
-- ✅ [Specific recommended action]
-- ✅ [Another good practice]
-- ✅ [Performance tip]
-
-### Don't
-
-- ❌ [Common mistake to avoid]
-- ❌ [Anti-pattern]
-- ❌ [Security risk to avoid]
-
-## Example scenario
-
-Let's see how [concept] works in practice:
-
-*Contoso Corporation needs to [business need]. They implement [concept] to:*
-
-- *[Specific goal 1]*
-- *[Specific goal 2]*
-
-Here's how they did it: [Concrete example with code/configuration if applicable]
-
-## What's next?
-
-Now that you understand [concept], you're ready to:
-
-- [Try the hands-on tutorial](link) - Build something real
-- [Explore advanced features](link) - Go deeper
-- [Read the API reference](link) - See all the options
-
-````
 ### Microsoft Style Notes for Explanations
 
 - **Start with value**: Why should readers care about this topic?
@@ -421,6 +132,7 @@ Now that you understand [concept], you're ready to:
 ### Voice and Tone
 
 #### Be Warm and Approachable
+
 - ✅ "Let's explore how to..."
 - ✅ "You might wonder why..."
 - ✅ "Here's a tip that can save you time"
@@ -428,6 +140,7 @@ Now that you understand [concept], you're ready to:
 - ❌ "It should be noted that..."
 
 #### Empower Users
+
 - ✅ "You can customize this to fit your needs"
 - ✅ "Choose the option that works best for you"
 - ❌ "You must follow these steps exactly"
@@ -436,12 +149,14 @@ Now that you understand [concept], you're ready to:
 ### Accessibility Guidelines
 
 #### Structure
+
 - Use descriptive headings that stand alone
 - Keep paragraphs short (3-4 sentences)
 - Use lists to break up complex information
 - Provide alt text for all images
 
 #### Language
+
 - Define acronyms on first use: "Artificial Intelligence (AI)"
 - Avoid directional language: "Select **Next**" not "Click the button on the right"
 - Use device-agnostic terms: "select" not "click", "enter" not "type"
@@ -449,15 +164,17 @@ Now that you understand [concept], you're ready to:
 ### Inclusive Language
 
 #### Use Bias-Free Language
+
 - ✅ "They" as singular pronoun
 - ✅ "Primary/replica" not "master/slave"
 - ✅ "Allowlist/blocklist" not "whitelist/blacklist"
 - ✅ "Placeholder text" not "dummy text"
 
 #### Global Audience
+
 - Avoid idioms: "straightforward" not "piece of cake"
 - Use global examples: varied names, locations, scenarios
-- Specify formats: "MM/DD/YYYY" not just "date"
+- Specify formats: "YYYY/MM/DD" (prefer the ISO standard) not just "date"
 - Include timezone: "2 PM PST (UTC-8)"
 
 ### Formatting Standards
@@ -479,7 +196,7 @@ Now that you understand [concept], you're ready to:
 
 > [!CAUTION]
 > Serious consequences if ignored.
-````
+```
 
 #### UI Elements
 

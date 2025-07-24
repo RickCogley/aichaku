@@ -32,10 +32,12 @@ display:
   learn_more:
     docs: "https://rickcogley.github.io/aichaku/standards/documentation/diataxis-google"
     local: "~/.claude/aichaku/docs/standards/documentation/diataxis-google.md"
+    templates: "~/.claude/aichaku/docs/standards/documentation/templates/"
 
 rules:
   tutorial_mode:
     description: "Learning-oriented documentation for beginners"
+    template: "templates/diataxis-google-tutorial-template.md"
     purpose: "Teaching someone to do something through guided practice"
     characteristics:
       - "Step-by-step instructions"
@@ -59,6 +61,7 @@ rules:
       - "Encouraging and supportive tone"
   howto_mode:
     description: "Task-oriented documentation for solving specific problems"
+    template: "templates/diataxis-google-how-to-template.md"
     purpose: "Showing how to solve a particular problem"
     characteristics:
       - "Problem-focused"
@@ -80,6 +83,7 @@ rules:
       - "Provide alternatives when relevant"
   reference_mode:
     description: "Information-oriented documentation providing complete details"
+    template: "templates/diataxis-google-reference-template.md"
     purpose: "Describing the machinery - complete, accurate information"
     characteristics:
       - "Comprehensive coverage"
@@ -102,6 +106,7 @@ rules:
       - "Provide brief examples"
   explanation_mode:
     description: "Understanding-oriented documentation for deeper comprehension"
+    template: "templates/diataxis-google-explanation-template.md"
     purpose: "Clarifying and discussing concepts, design decisions, and context"
     characteristics:
       - "Understanding-oriented"

@@ -31,6 +31,7 @@ display:
   learn_more:
     docs: "https://rickcogley.github.io/aichaku/standards/documentation/writethedocs"
     local: "~/.claude/aichaku/docs/standards/documentation/writethedocs.md"
+    templates: "~/.claude/aichaku/docs/standards/documentation/templates/"
 
 rules:
   community_driven:
@@ -107,15 +108,19 @@ rules:
     description: "Different types of documentation for different needs"
     tutorial:
       purpose: "Learning-oriented first experience"
+      template: "templates/writethedocs-tutorial-template.md"
       characteristics: "Step-by-step, encouraging, complete example"
     how_to:
       purpose: "Problem-solving oriented"
+      template: "templates/writethedocs-how-to-template.md"
       characteristics: "Goal-oriented, practical, assumes some knowledge"
     reference:
       purpose: "Information-oriented"
+      template: "templates/writethedocs-reference-template.md"
       characteristics: "Comprehensive, accurate, scannable"
     explanation:
       purpose: "Understanding-oriented"
+      template: "templates/writethedocs-explanation-template.md"
       characteristics: "Context, background, discussion"
   contribution_workflow:
     description: "How community members can contribute to documentation"

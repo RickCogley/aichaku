@@ -20,55 +20,18 @@ Tutorials are lessons that take the reader through a series of steps to complete
 
 ### Structure
 
-````markdown
-# Getting Started with [Product Name]
+Diátaxis tutorials are learning-oriented lessons that take beginners through a series of steps to complete a meaningful project.
 
-In this tutorial, you'll learn how to [main outcome]. By the end, you'll have [specific achievement].
+See the complete template: [templates/diataxis-google-tutorial-template.md](./templates/diataxis-google-tutorial-template.md)
 
-## Prerequisites
+Key structural elements:
 
-- [Requirement 1]
-- [Requirement 2]
-
-## What you'll learn
-
-- How to [task 1]
-- How to [task 2]
-- How to [task 3]
-
-## Step 1: [Action]
-
-[Clear instruction with context]
-
-```bash
-# Example command
-example-command --flag value
-```
-````
-
-**Expected output:**
-
-```
-[Show what success looks like]
-```
-
-## Step 2: [Next Action]
-
-[Continue pattern...]
-
-## Summary
-
-You've successfully [what they achieved]. You learned how to:
-
-- [Accomplishment 1]
-- [Accomplishment 2]
-
-## Next steps
-
-- Try [related tutorial]
-- Explore [related concept]
-
-````
+- **Clear learning objectives** and expected outcomes
+- **Prerequisites** listed upfront
+- **Step-by-step progression** with context
+- **Expected outputs** for verification
+- **Summary** of achievements
+- **Next steps** for continued learning
 ### Google Style Notes for Tutorials
 
 - **Use second person**: "You'll create a service" not "We'll create a service"
@@ -83,58 +46,19 @@ You've successfully [what they achieved]. You learned how to:
 How-to guides are recipes that guide the reader through solving a specific problem. They are task-oriented.
 
 ### Structure
-```markdown
-# How to [Specific Task]
 
-This guide shows you how to [specific task]. Use this approach when you need to [use case].
+Diátaxis how-to guides are task-oriented recipes that help users solve specific problems with multiple approaches.
 
-## Before you begin
+See the complete template: [templates/diataxis-google-how-to-template.md](./templates/diataxis-google-how-to-template.md)
 
-Ensure you have:
-- [Prerequisite 1]
-- [Prerequisite 2]
+Key structural elements:
 
-## Solution
-
-### Option 1: [Approach Name]
-
-Use this approach when [specific condition].
-
-1. [First step]
-   ```bash
-   command --example
-````
-
-2. [Second step]
-   ```yaml
-   configuration:
-     key: value
-   ```
-
-### Option 2: [Alternative Approach]
-
-Use this approach when [different condition].
-
-[Steps...]
-
-## Verify your configuration
-
-Test your setup:
-
-```bash
-test-command
-```
-
-## Troubleshooting
-
-**Problem**: [Common issue] **Solution**: [How to fix it]
-
-## Related tasks
-
-- [Related how-to 1]
-- [Related how-to 2]
-
-````
+- **Clear task focus** in title and introduction
+- **Prerequisites** section before the main content
+- **Multiple solution options** when applicable
+- **Verification steps** to confirm success
+- **Troubleshooting** section for common issues
+- **Related tasks** for continued workflow
 ### Google Style Notes for How-to Guides
 
 - **Start with the goal**: Lead with what the user wants to accomplish
@@ -149,80 +73,20 @@ test-command
 Reference guides are technical descriptions of the machinery and how to operate it. They are information-oriented.
 
 ### Structure
-```markdown
-# [Component Name] Reference
 
-## Overview
+Diátaxis reference guides provide comprehensive technical descriptions of components, APIs, and commands.
 
-[Brief description of what this component does]
+See the complete template: [templates/diataxis-google-reference-template.md](./templates/diataxis-google-reference-template.md)
 
-## Synopsis
-````
+Key structural elements:
 
-command [options] [arguments]
-
-````
-## Description
-
-[Detailed explanation of the component's purpose and behavior]
-
-## Options
-
-### `--option-name` {#option-name}
-
-**Type**: `string` | `boolean` | `number`
-**Default**: `value`
-**Environment variable**: `ENV*VAR*NAME`
-
-[Description of what this option does]
-
-**Example**:
-```bash
-command --option-name=value
-````
-
-### `--another-option` {#another-option}
-
-[Continue pattern...]
-
-## Arguments
-
-### `argument-name`
-
-**Required**: Yes | No\
-**Type**: `string`\
-**Valid values**: `value1`, `value2`, `value3`
-
-[Description]
-
-## Examples
-
-### Basic usage
-
-```bash
-command basic-argument
-```
-
-### Advanced usage
-
-```bash
-command --option1=value --option2 complex-argument
-```
-
-## Exit codes
-
-| Code | Description       |
-| ---- | ----------------- |
-| 0    | Success           |
-| 1    | General error     |
-| 2    | Invalid arguments |
-
-## See also
-
-- [`related-command`](link) - Brief description
-- [Configuration guide](link)
-
-````
+- **Overview** with brief component description
+- **Synopsis** showing command syntax
+- **Complete options documentation** with types and defaults
+- **Arguments** with validation details
+- **Working examples** from basic to advanced
+- **Exit codes** and return values
+- **Cross-references** to related commands
 ### Google Style Notes for References
 
 - **Be complete**: Document every option, parameter, and return value
@@ -237,67 +101,20 @@ command --option1=value --option2 complex-argument
 Explanations are understanding-oriented discussions that clarify and illuminate concepts. They provide context and background.
 
 ### Structure
-```markdown
-# Understanding [Concept]
 
-## Overview
+Diátaxis explanations are understanding-oriented discussions that provide context, background, and illuminate the "why" behind concepts.
 
-[High-level introduction to the concept and why it matters]
+See the complete template: [templates/diataxis-google-explanation-template.md](./templates/diataxis-google-explanation-template.md)
 
-## Background
+Key structural elements:
 
-[Historical context or theoretical foundation]
-
-## How [Concept] works
-
-[Detailed explanation with diagrams if helpful]
-
-```mermaid
-graph TD
-    A[Input] --> B[Process]
-    B --> C[Output]
-````
-
-## Design decisions
-
-### Why we chose [approach]
-
-[Reasoning and trade-offs]
-
-**Advantages**:
-
-- [Benefit 1]
-- [Benefit 2]
-
-**Trade-offs**:
-
-- [Limitation 1]
-- [Limitation 2]
-
-## Common patterns
-
-### Pattern 1: [Name]
-
-[When and how to apply this pattern]
-
-### Pattern 2: [Name]
-
-[Continue...]
-
-## Comparison with alternatives
-
-| Approach      | Pros   | Cons   | Best for   |
-| ------------- | ------ | ------ | ---------- |
-| Our approach  | [List] | [List] | [Use case] |
-| Alternative 1 | [List] | [List] | [Use case] |
-
-## Further reading
-
-- [Academic paper or specification]
-- [Related explanation in docs]
-- [External resource]
-
-````
+- **Overview** explaining why the concept matters
+- **Background** with historical or theoretical context
+- **Design decisions** with reasoning and trade-offs
+- **Common patterns** and implementation approaches
+- **Comparison tables** with alternatives
+- **Visual diagrams** for complex relationships
+- **Further reading** for deeper understanding
 ### Google Style Notes for Explanations
 
 - **Start with why**: Explain why this concept matters to the reader
