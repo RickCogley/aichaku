@@ -100,72 +100,13 @@ You can also create standards manually:
 
 ### Template Structure
 
-When you use `--create-custom`, Aichaku generates this template:
+When you use `--create-custom`, Aichaku generates a structured template with:
 
-````markdown
----
-title: "Security Hardening Guidelines"
-description: "Additional security measures for production"
-tags: ["security", "production", "custom"]
----
+- YAML frontmatter (title, description, tags)
+- Standard sections (Overview, Implementation, Examples)
+- Placeholder content to guide your writing
 
-# Security Hardening Guidelines
-
-## Overview
-
-Brief description of what this standard covers and why it's important for your organization.
-
-## Core Principles
-
-List the fundamental principles this standard is based on:
-
-1. **Principle One** - Explanation
-2. **Principle Two** - Explanation
-3. **Principle Three** - Explanation
-
-## Guidelines
-
-### Category One
-
-#### Rule 1.1
-
-Clear, actionable guideline.
-
-```typescript
-// ✅ Good example
-const secureConfig = {
-  encryption: "AES-256",
-  timeout: 30000,
-};
-
-// ❌ Bad example
-const config = {
-  encryption: "weak",
-  timeout: null,
-};
-```
-````
-
-#### Rule 1.2
-
-Another guideline with examples.
-
-### Category Two
-
-Structure your guidelines in logical categories...
-
-## Implementation Checklist
-
-- [ ] Item one to verify
-- [ ] Item two to verify
-- [ ] Item three to verify
-
-## References
-
-- [Internal Wiki Link](https://wiki.company.com/security)
-- [External Best Practices](https://example.com)
-
-````
+The template is defined in [`src/commands/standards.ts`](../../src/commands/standards.ts) and includes sections for overview, implementation, examples, best practices, and common pitfalls.
 ## Managing Custom Standards
 
 ### List Custom Standards
@@ -283,32 +224,9 @@ Current Project Standards:
 
 ## Integration with CLAUDE.md
 
-When you run `aichaku integrate`, custom standards appear in CLAUDE.md with clear attribution:
+When you run `aichaku integrate`, custom standards appear in CLAUDE.md alongside built-in standards with clear attribution showing their source location.
 
-`````markdown
-<!-- AICHAKU:STANDARDS:START -->
-
-## 📚 Selected Standards & Guidelines
-
-🪴 Aichaku: Based on your project configuration, follow these standards when generating code:
-
-### TDD
-
-[Built-in standard content...]
-
----
-
-### TEAM-GUIDELINES
-
-> 📍 **Source**: Custom standard from ~/.claude/aichaku/user/docs/standards/TEAM-GUIDELINES.md
-
-[Your custom standard content...]
-
----
-
-<!-- AICHAKU:STANDARDS:END -->
-
-````markdown
+Custom standards are marked with a source reference (e.g., "Custom standard from ~/.claude/aichaku/user/docs/standards/") to distinguish them from built-in standards.
 ## Best Practices
 
 ### Use Clear Naming Conventions
@@ -443,19 +361,11 @@ mv wrong-name.md CORRECT-NAME.md
 mv "My Standard.md" MY-STANDARD.md
 ```
 
-#### Migration from Old Structure
+#### Directory Structure Issues
 
-**Problem**: Your standards in old location aren't recognized
+**Problem**: Standards not found in expected location
 
-**Solution**: Run migration
-
-```bash
-# Automatic migration
-aichaku migrate --custom-standards-only
-
-# Manual migration
-mv ~/.claude/docs/standards/custom/* ~/.claude/aichaku/user/docs/standards/
-```
+**Solution**: Ensure standards are in `~/.claude/aichaku/user/docs/standards/` with proper `.md` extension and UPPER-KEBAB-CASE naming.
 
 ### Use Debug Commands
 
@@ -478,73 +388,6 @@ aichaku standards --validate custom:my-standard
 aichaku standards --list --show-paths
 ```
 
-## Migration from Legacy Custom Standards
-
-If you have custom standards from older Aichaku versions:
-
-### Use Automatic Migration
-
-```bash
-# Migrate only custom standards
-aichaku migrate --custom-standards-only
-
-# Full migration including all settings
-aichaku migrate
-```
-
-### Use Manual Migration
-
-1. **Locate old standards**:
-
-   ```bash
-   # Common legacy locations
-   ~/.claude/docs/standards/custom/
-   ~/.claude/.aichaku/docs/standards/
-   ~/Documents/aichaku-standards/
-   ```
-
-2. **Copy to new location**:
-
-   ```bash
-   # Create directory if needed
-   mkdir -p ~/.claude/aichaku/user/standards
-
-   # Copy standards
-   cp ~/.claude/docs/standards/custom/*.md \
-      ~/.claude/aichaku/user/docs/standards/
-   ```
-
-3. **Update names if needed**:
-
-   ```bash
-   # Rename to UPPER-KEBAB-CASE
-   cd ~/.claude/aichaku/user/standards
-   for f in *.md; do
-     new_name=$(echo "$f" | tr '[:lower:]' '[:upper:]' | tr ' ' '-')
-     mv "$f" "$new_name"
-   done
-   ```
-
-4. **Update project references**:
-   ```bash
-   # In each project using custom standards
-   aichaku standards --refresh
-   aichaku integrate
-   ```
-
-### Verify After Migration
-
-```bash
-# Verify all standards are available
-aichaku standards --list
-
-# Check specific migrated standard
-aichaku standards --info custom:my-standard
-
-# Test in a project
-aichaku standards --add custom:my-standard
-aichaku integrate
-```
 
 ---
 
