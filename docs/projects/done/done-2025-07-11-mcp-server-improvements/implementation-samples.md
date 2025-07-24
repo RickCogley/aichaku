@@ -4,7 +4,7 @@
 
 ### utils/mcp/pid-manager.ts
 
-````typescript
+```typescript
 import { exists } from "@std/fs";
 import { join } from "@std/path";
 
@@ -88,7 +88,7 @@ export class PIDManager {
     return output.includes(pid.toString());
   }
 }
-```text
+```
 
 ### utils/mcp/process-manager.ts
 
@@ -329,7 +329,7 @@ export class MCPProcessManager {
     });
   }
 }
-```text
+```
 
 ## Priority 2: Enhanced MCP Command
 
@@ -516,19 +516,13 @@ function showConfigInstructions(): void {
   console.log("   • review_methodology - Check methodology compliance");
   console.log("   • get_standards - View project standards");
 }
-```text
+```
 
 ## Next Steps
 
 1. Implement the version manager with GitHub API integration
-
 2. Add automatic version embedding during build
-
 3. Create comprehensive tests for all platforms
-
 4. Update CLI argument parsing to support new flags
-
 5. Add telemetry for usage tracking (optional)
-
 6. Create migration guide for users
-````

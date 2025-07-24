@@ -4,7 +4,7 @@
 
 ### 1. Progress Engine Module
 
-````typescript
+```typescript
 // src/progress/engine.ts
 export interface ProgressEngine {
   calculate(data: ProgressData): ProgressMetrics;
@@ -22,7 +22,7 @@ export interface ProgressMetrics {
 }
 
 export type RenderStyle = "ascii" | "compact" | "minimal" | "dashboard";
-```text
+```
 
 ### 2. Methodology-Specific Renderers
 
@@ -73,7 +73,7 @@ export class ShapeUpRenderer implements MethodologyRenderer {
     }
   }
 }
-```text
+```
 
 ### 3. STATUS.md Integration
 
@@ -122,7 +122,7 @@ ${this.MARKER_END}`;
     }
   }
 }
-```text
+```
 
 ### 4. CLI Commands
 
@@ -186,7 +186,7 @@ export class ProgressCommand implements Command {
     console.log(`╚══════════════════════════════════════════════════╝`);
   }
 }
-```text
+```
 
 ### 5. Animation Support
 
@@ -225,7 +225,7 @@ export class ProgressAnimator {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }
-```text
+```
 
 ### 6. Color Support Detection
 
@@ -269,7 +269,7 @@ export class ColorSupport {
     return `${colors[color]}${text}${colors.reset}`;
   }
 }
-```text
+```
 
 ## Integration Points
 
@@ -290,7 +290,7 @@ async execute() {
 
   await this.statusIntegration.createInitialStatus(projectPath, progress);
 }
-```text
+```
 
 ### 2. With Methodology Detection
 
@@ -316,7 +316,7 @@ export function detectMethodology(input: string): MethodologyInfo {
 
   return info;
 }
-```text
+```
 
 ### 3. With Settings System
 
@@ -330,7 +330,7 @@ export function detectMethodology(input: string): MethodologyInfo {
     "animations": false  // Claude Code doesn't support well
   }
 }
-```text
+```
 
 ## Testing Strategy
 
@@ -374,26 +374,20 @@ Deno.test("STATUS.md integration", async () => {
   assertStringIncludes(content, "<!-- AICHAKU:PROGRESS:START -->");
   assertStringIncludes(content, "Visual:");
 });
-```text
+```
 
 ## Performance Considerations
 
 1. **Caching**: Cache progress calculations for 1 minute
-
 2. **Lazy Loading**: Only load renderers when needed
-
 3. **Minimal File I/O**: Batch STATUS.md updates
-
 4. **No Animations in CI**: Detect CI environment and disable
 
 ## Security Considerations
 
 1. **Path Validation**: Ensure STATUS.md paths are within project
-
 2. **Content Sanitization**: Escape user input in progress displays
-
 3. **No External Calls**: All progress calculation is local
-
 4. **File Permissions**: Respect existing file permissions
 
 ## Rollout Plan
@@ -401,39 +395,28 @@ Deno.test("STATUS.md integration", async () => {
 ### Phase 1: Core Engine (Week 1)
 
 - Progress calculation engine
-
 - Basic ASCII renderers
-
 - STATUS.md integration
 
 ### Phase 2: Methodology Support (Week 2)
 
 - Shape Up renderer
-
 - Scrum renderer
-
 - Kanban renderer
-
 - Lean & XP renderers
 
 ### Phase 3: CLI Integration (Week 3)
 
 - Progress command
-
 - Dashboard view
-
 - Settings integration
-
 - Auto-update hooks
 
 ### Phase 4: Polish (Week 4)
 
 - Color support
-
 - Animations (where supported)
-
 - Performance optimization
-
 - Documentation
 
 ## Example Usage After Implementation
@@ -470,5 +453,4 @@ $ aichaku progress dashboard
 $ aichaku complete building
 ✓ Phase complete! Moving to cool-down
 ✓ STATUS.md updated with progress
-```text
-````
+```

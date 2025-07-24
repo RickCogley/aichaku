@@ -11,11 +11,8 @@ embodies Aichaku's philosophy of thoughtful, visible development.
 ### 1.1 Core Brand Elements
 
 - **Primary Icon**: 🪴 (potted plant - growth and nurturing)
-
 - **Brand Name**: Aichaku
-
 - **Tagline**: "Methodology-Driven Development"
-
 - **Prefix Format**: `🪴 Aichaku:` (consistent across all messages)
 
 ### 1.2 Growth Phase Visual Language
@@ -51,7 +48,7 @@ Used to indicate specific operation types:
 
 ### 2.1 Timing Thresholds
 
-`````typescript
+```typescript
 const TIMING_THRESHOLDS = {
   immediate: 0, // Instant acknowledgment
   progress: 1500, // Show progress indicators (1.5s)
@@ -59,38 +56,38 @@ const TIMING_THRESHOLDS = {
   timing: 3000, // Show completion timing (3s)
   statistics: 5000, // Show session statistics (5s)
 };
-```text
+```
 
 ### 2.2 Progressive Disclosure Stages
 
 #### Stage 1: Immediate Acknowledgment (0ms)
 
-```text
+```
 🪴 Aichaku: 🔍 Tool invoked: review_file
 🪴 Aichaku: ⚙️ Processing: src/auth.ts
-```text
+```
 
 #### Stage 2: Progress Indicators (>1.5s)
 
-```text
+```
 🪴 Aichaku: 🌿 Analyzing security compliance...
 🪴 Aichaku: 🌿 Progress: ████████░░░░░░░░ 50%
-```text
+```
 
 #### Stage 3: Detailed Progress (>2s)
 
-```text
+```
 🪴 Aichaku: 🌿 Checking OWASP Top 10 compliance...
 🪴 Aichaku: 🌿 Scanning 247 lines across 3 modules
 🪴 Aichaku: 🌿 Validating against NIST-CSF standards
-```text
+```
 
 #### Stage 4: Completion with Timing (>3s)
 
-```text
+```
 🪴 Aichaku: ✨ Review complete: 2 suggestions found
 🪴 Aichaku: 🍃 Operation completed in 3.7s
-```text
+```
 
 ## 3. Enhanced Feature Integration
 
@@ -98,7 +95,7 @@ const TIMING_THRESHOLDS = {
 
 #### Status Command
 
-```text
+```
 $ aichaku mcp --status
 
 🪴 Aichaku MCP Server Status
@@ -107,22 +104,20 @@ $ aichaku mcp --status
 📦 Version: v0.21.2
 ⏱️ Uptime: 2 hours, 34 minutes
 🔧 Configuration:
-
   📚 Standards: OWASP, NIST-CSF, TDD, SOLID
   🎯 Methodologies: Shape Up, Scrum
   🔍 External Scanners: CodeQL ✅, DevSkim ❌
 
 📊 Session Statistics:
-
   🔍 Files Reviewed: 23
   ⚙️ Tools Invoked: 47
   ⚡ Avg Response: 823ms
   ✨ Issues Found: 12 (0 critical)
-```text
+```
 
 #### Restart Command
 
-```text
+```
 $ aichaku mcp --restart
 
 🪴 Aichaku: 🔧 Restarting MCP server...
@@ -131,13 +126,13 @@ $ aichaku mcp --restart
 🪴 Aichaku: 🌿 Loading configuration...
 🪴 Aichaku: 🌿 Initializing security scanners...
 🪴 Aichaku: ✨ Server ready (PID: 12346)
-```text
+```
 
 ### 3.2 Documentation Generation Workflow
 
 #### Natural Language Trigger
 
-```text
+```
 User: "Generate comprehensive project documentation"
 
 🪴 Aichaku: 🌱 Initiating documentation workflow...
@@ -167,11 +162,11 @@ User: "Generate comprehensive project documentation"
 
 🪴 Aichaku: 🌸 Documentation complete!
 🪴 Aichaku: 📊 Generated 4 files, 127KB total (4.2s)
-```text
+```
 
 ### 3.3 Code Review with Learning Opportunities
 
-````text
+````
 🪴 Aichaku TypeScript/JavaScript Review Results
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 💻 File: src/auth.ts
@@ -195,55 +190,46 @@ Impact: 🔥 Critical security vulnerability
 
 🌱 Context: SQL injection is OWASP's #3 vulnerability
 SQL injection attacks can:
-
 - Expose sensitive data
-
 - Modify or delete data
-
 - Execute administrative operations
 
 ❌ Current Pattern:
 ```typescript
 const query = `SELECT * FROM users WHERE id = '${userId}'`;
-````text
+````
 
 ✅ Secure Pattern:
 
 ```typescript
 const query = "SELECT * FROM users WHERE id = ?";
 const result = await db.query(query, [userId]);
-```text
+```
 
 🌿 Why This Works:
 
 1. Parameterized queries separate data from code
-
 2. Database engine handles escaping automatically
-
 3. Prevents malicious input from being executed
 
 🌱 Reflection Questions:
 
 - What made string concatenation seem easier?
-
 - How can we make secure patterns more discoverable?
-
 - What other injection risks might exist in the codebase?
 
 🍃 Next Steps:
 
 1. Fix this specific instance
-
 2. Search for similar patterns: grep "\\$\\{.*\\}" *.ts
-
 3. Add linting rule to prevent future occurrences
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-```text
+```
 ### 3.4 Development Statistics & Insights
 
 #### Session Summary
-```text
+```
 
 🪴 Aichaku: Development Session Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 📅 Date: 2025-01-11 ⏱️
@@ -264,14 +250,12 @@ TDD coverage: 67% → 78%
 🌱 Growth Opportunities:
 
 1. Consider adding more unit tests for auth module
-
 2. SQL injection patterns found in 3 locations
-
 3. Documentation coverage could improve by 15%
 
-```text
+```
 #### Natural Language Q&A
-```text
+```
 
 User: "How many security issues did I fix this week?"
 
@@ -288,11 +272,10 @@ compliance improved ✨ All external dependencies updated
 
 🌱 Keep growing! Your security awareness is blooming! 🌸
 
-````text
+````
 ## 4. Configuration System
 
 ### 4.1 Environment Variables
-
 ```bash
 # Feedback verbosity
 AICHAKU*FEEDBACK*LEVEL=standard      # minimal | standard | verbose
@@ -311,7 +294,7 @@ AICHAKU*TOOL*CHAINING=true           # Enable automatic tool sequences
 # Privacy settings
 AICHAKU*STATS*ANONYMOUS=true         # Anonymize file paths in stats
 AICHAKU*STATS*LOCAL_ONLY=true        # Don't send stats to external services
-````text
+````
 
 ### 4.2 Configuration File
 
@@ -345,26 +328,26 @@ AICHAKU*STATS*LOCAL_ONLY=true        # Don't send stats to external services
     }
   }
 }
-```text
+```
 
 ## 5. Error Handling & Recovery
 
 ### 5.1 Error Feedback Format
 
-```text
+```
 🪴 Aichaku: ❌ Operation failed: Cannot read file
 🪴 Aichaku: 🌱 Suggestion: Check file permissions
 🪴 Aichaku: 📚 Learn more: Run 'aichaku help permissions'
-```text
+```
 
 ### 5.2 Recovery Guidance
 
-```text
+```
 🪴 Aichaku: ⚠️ MCP server not responding
 🪴 Aichaku: 🔧 Attempting automatic recovery...
 🪴 Aichaku: 🌱 Starting new server instance...
 🪴 Aichaku: ✨ Recovery successful! Resuming operations.
-```text
+```
 
 ## 6. Implementation Classes
 
@@ -403,16 +386,14 @@ class DevelopmentInsights {
   generateSummary(period: string): SessionSummary;
   answerQuery(question: string): string;
 }
-```text
+```
 
 ## 7. Integration Points
 
 ### 7.1 MCP Server Integration
 
 - All feedback via stderr for Claude Code visibility
-
 - Non-blocking asynchronous updates
-
 - Proper error boundaries to prevent crashes
 
 ### 7.2 Tool Enhancement
@@ -430,28 +411,22 @@ const tools = {
     },
   },
 };
-```text
+```
 
 ## 8. Testing & Quality Assurance
 
 ### 8.1 Feedback Testing
 
 - Unit tests for all formatters
-
 - Integration tests for timing thresholds
-
 - Visual regression tests for output formatting
-
 - Performance tests for overhead measurement
 
 ### 8.2 User Experience Testing
 
 - A/B testing for verbosity levels
-
 - Feedback collection on educational content
-
 - Performance impact measurement
-
 - Cross-platform compatibility testing
 
 ## 9. Migration Path
@@ -459,17 +434,13 @@ const tools = {
 ### 9.1 Backward Compatibility
 
 - Existing MCP tools continue to work
-
 - New feedback is additive, not breaking
-
 - Configuration defaults match current behavior
 
 ### 9.2 Rollout Strategy
 
 1. Phase 1: Core feedback system (formatter, timing)
-
 2. Phase 2: Enhanced features (statistics, education)
-
 3. Phase 3: Advanced integration (tool chaining, Q&A)
 
 ## 10. Success Metrics
@@ -477,25 +448,19 @@ const tools = {
 ### 10.1 User Experience
 
 - Time to understand MCP operations: <5 seconds
-
 - Educational content engagement: >60% read rate
-
 - Error recovery success rate: >95%
 
 ### 10.2 Technical Performance
 
 - Feedback overhead: <5% of operation time
-
 - Memory usage: <10MB for statistics
-
 - Startup time impact: <100ms
 
 ### 10.3 Development Impact
 
 - Security issues caught: +40%
-
 - Documentation coverage: +50%
-
 - Developer satisfaction: >4.5/5 rating
 
 ## Conclusion
@@ -503,15 +468,10 @@ const tools = {
 This unified specification creates a comprehensive MCP feedback system that:
 
 1. **Maintains** detailed visual branding from yesterday's design
-
 2. **Enhances** with today's powerful new features
-
 3. **Educates** developers through contextual learning
-
 4. **Delights** with thoughtful, growth-oriented messaging
-
 5. **Performs** efficiently without overwhelming users
 
 The result is an MCP experience that truly embodies Aichaku's philosophy of
 making development more thoughtful, visible, and productive.
-`````

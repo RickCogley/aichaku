@@ -5,10 +5,10 @@
 When using a redirect from `https://esolia.pro/aichaku` to the init.ts file,
 Deno throws an SSL certificate error:
 
-````text
+```
 error: Import 'https://esolia.pro/aichaku' failed.
     0: error sending request for url (https://esolia.pro/aichaku): client error (Connect): invalid peer certificate: Expired
-```text
+```
 
 ## Solutions
 
@@ -21,36 +21,34 @@ certificate first.
 
 Instead of HTML redirect, use proper HTTP 302/301 redirect:
 
-```text
+```
 Location: https://raw.githubusercontent.com/RickCogley/aichaku/main/init.ts
-```text
+```
 
 ### 3. Host the File Directly
 
 Instead of redirecting, serve the actual content with proper MIME type:
 
-```text
+```
 Content-Type: application/typescript; charset=utf-8
-```text
+```
 
 ### 4. Use GitHub Pages (Best Long-term Solution)
 
 Set up GitHub Pages for aichaku repository:
 
 1. Create `gh-pages` branch or use `/docs` folder
-
 2. Add CNAME file with your domain (e.g., `aichaku.dev`)
-
 3. Serve init.ts directly or create a redirect
 
 Example structure:
 
-```text
+```
 docs/
 ├── index.html (redirect)
 ├── init.ts (copy of main init.ts)
 └── CNAME
-```text
+```
 
 ### 5. Use URL Shortener Service
 
@@ -59,16 +57,14 @@ Services like bit.ly or GitHub's git.io can create short URLs:
 ```bash
 # Example (not actual):
 deno run -A https://git.io/aichaku
-```text
+```
 
 ### 6. Cloudflare Workers (Advanced)
 
 Create a worker that:
 
 1. Receives requests to your short URL
-
 2. Fetches the content from GitHub
-
 3. Returns it with proper headers
 
 ### 7. Test with curl First
@@ -77,18 +73,15 @@ Before using with Deno, test the redirect:
 
 ```bash
 curl -I https://esolia.pro/aichaku
-```text
+```
 
 This will show you:
 
 - SSL certificate status
-
 - Redirect headers
-
 - Content type
 
 ## Immediate Workaround
 
 For now, users can use the direct GitHub URL or wait for the SSL certificate to
 be renewed.
-````

@@ -18,14 +18,14 @@
 
 ### Basic Syntax
 
-````mermaid
+```mermaid
 graph TD
     A[Start] --> B{Decision}
     B -->|Yes| C[Action 1]
     B -->|No| D[Action 2]
     C --> E[End]
     D --> E
-```text
+```
 
 ### Node Shapes
 
@@ -40,7 +40,7 @@ graph LR
     G --> H[/Trapezoid\]
     H --> I[\Reverse Trapezoid/]
     I --> J((Double Circle))
-```text
+```
 
 ### Directional Flows
 
@@ -52,7 +52,7 @@ graph TB
         A3[Left to Right LR]
         A4[Right to Left RL]
     end
-```text
+```
 
 ### Styling
 
@@ -66,7 +66,7 @@ graph TD
 
     class A,C startEndStyle
     class B processStyle
-```text
+```
 
 ### Subgraphs
 
@@ -96,7 +96,7 @@ graph TB
     E --> F
     D --> G
     E --> G
-```text
+```
 
 ## Sequence Diagrams
 
@@ -112,7 +112,7 @@ sequenceDiagram
     B->>C: Hello Charlie
     C-->>B: Hi Bob
     B-->>A: Hi Alice
-```text
+```
 
 ### Message Types
 
@@ -127,7 +127,7 @@ sequenceDiagram
     B--xA: Dashed arrow with X (async response)
     A-)B: Open arrow (fire and forget)
     B--)A: Dashed open arrow
-```text
+```
 
 ### Activation Boxes
 
@@ -143,7 +143,7 @@ sequenceDiagram
     S->>+D: Create session
     D-->>-S: Session ID
     S-->>-C: Login response
-```text
+```
 
 ### Loops and Conditionals
 
@@ -169,7 +169,7 @@ sequenceDiagram
     opt Cache available
         S->>S: Use cached data
     end
-```text
+```
 
 ### Notes and Comments
 
@@ -183,7 +183,7 @@ sequenceDiagram
     Note right of B: Bob thinks
     B->>A: Hi there
     Note left of A: Alice processes
-```text
+```
 
 ## Class Diagrams
 
@@ -201,7 +201,7 @@ classDiagram
         +getName() String
         +setName(name) void
     }
-```text
+```
 
 ### Visibility Modifiers
 
@@ -217,7 +217,7 @@ classDiagram
         #protectedMethod()
         ~packageMethod()
     }
-```text
+```
 
 ### Relationships
 
@@ -248,7 +248,7 @@ classDiagram
 
     Order : +calculateTotal()
     Product : +applyDiscount()
-```text
+```
 
 ### Inheritance and Interfaces
 
@@ -282,7 +282,7 @@ classDiagram
     Animal <|-- Cat
     Pet <|.. Dog
     Pet <|.. Cat
-```text
+```
 
 ### Annotations
 
@@ -308,7 +308,7 @@ classDiagram
         <<Component>>
         +render()
     }
-```text
+```
 
 ## State Diagrams
 
@@ -322,7 +322,7 @@ stateDiagram-v2
     Moving --> Still
     Moving --> Crash
     Crash --> [*]
-```text
+```
 
 ### Composite States
 
@@ -345,7 +345,7 @@ stateDiagram-v2
     }
 
     Second --> [*]
-```text
+```
 
 ### Parallel States
 
@@ -366,7 +366,7 @@ stateDiagram-v2
         ScrollLockOff --> ScrollLockOn : EvScrollLockPressed
         ScrollLockOn --> ScrollLockOff : EvScrollLockPressed
     }
-```text
+```
 
 ### State Actions
 
@@ -386,7 +386,7 @@ stateDiagram-v2
 
     Success : entry / log success
     Failed : entry / log error
-```text
+```
 
 ## Entity Relationship Diagrams
 
@@ -428,7 +428,7 @@ erDiagram
         string city
         string postal_code
     }
-```text
+```
 
 ### Relationship Types
 
@@ -440,7 +440,7 @@ erDiagram
     G }|--|{ H : "Many to Many"
     I ||..|| J : "One to One (Optional)"
     K }|..|{ L : "Many to Many (Optional)"
-```text
+```
 
 ### Attributes and Keys
 
@@ -474,7 +474,7 @@ erDiagram
 
     USER ||--|| PROFILE : has
     USER ||--o{ POST : writes
-```text
+```
 
 ## Gantt Charts
 
@@ -497,7 +497,7 @@ gantt
     section Phase 3
     Task 6           :         des6, after des5, 3d
     Task 7           :         des7, after des6, 2d
-```text
+```
 
 ### Milestone and Dependencies
 
@@ -523,7 +523,7 @@ gantt
     section Deployment
     Production Setup :milestone, prod, 2024-02-01, 0d
     Go Live         :milestone, live, 2024-02-05, 0d
-```text
+```
 
 ## Pie Charts
 
@@ -536,7 +536,7 @@ pie title Browser Usage
     "Safari" : 12.1
     "Edge" : 6.8
     "Other" : 4.4
-```text
+```
 
 ### Styled Pie Chart
 
@@ -548,7 +548,7 @@ pie title Programming Languages Usage
     "TypeScript" : 12.3
     "C#" : 8.1
     "Other" : 3.9
-```text
+```
 
 ## Git Graph
 
@@ -564,7 +564,7 @@ gitGraph
     checkout main
     merge develop
     commit id: "Release"
-```text
+```
 
 ### Complex Branching
 
@@ -604,7 +604,7 @@ gitGraph
     checkout main
     merge develop
     commit id: "Release v1.0"
-```text
+```
 
 ## User Journey
 
@@ -629,7 +629,7 @@ journey
       Receive product   : 5: Customer
       Leave review      : 4: Customer
       Get support       : 3: Customer, Support
-```text
+```
 
 ### User Experience Flow
 
@@ -647,7 +647,7 @@ journey
       Complete tutorial : 3: User
       Invite friends    : 5: User
       Make first action : 4: User
-```text
+```
 
 ## Advanced Features
 
@@ -661,7 +661,7 @@ graph TD
     C --> D[Rethink]
     D --> B
     B ---->|No| E[End]
-```text
+```
 
 ### Configuration
 
@@ -683,7 +683,7 @@ graph TD
     C -->|One| D[Laptop]
     C -->|Two| E[iPhone]
     C -->|Three| F[fa:fa-car Car]
-```text
+```
 
 ### Interactivity
 
@@ -697,7 +697,7 @@ graph TD
     click B "https://example.com/decision" "Learn about decisions"
     click C callback "Action 1 callback"
     click D callback "Action 2 callback"
-```text
+```
 
 ## Best Practices
 
@@ -711,7 +711,7 @@ graph TD
     ValidateInput -->|Invalid| ShowError[Show Error Message]
 
     %% Avoid: Generic names like A, B, C
-```text
+```
 
 ### 2. Layout and Spacing
 
@@ -738,7 +738,7 @@ graph TB
     BL1 --> DL1
     BL1 --> DL2
     BL2 --> DL1
-```text
+```
 
 ### 3. Color Coding
 
@@ -758,7 +758,7 @@ graph TD
     class B process
     class C output
     class D error
-```text
+```
 
 ### 4. Accessibility
 
@@ -770,13 +770,13 @@ graph TD
 
     A --> B
     B --> C
-```text
+```
 
 ### 5. Documentation Integration
 
 Always accompany complex diagrams with explanations:
 
-```markdown
+````markdown
 ## System Architecture
 
 The following diagram shows our microservices architecture:
@@ -796,23 +796,22 @@ graph TB
     GW --> US
     GW --> OS
     GW --> PS
-```text
+```
+````
 
 **Key Components:**
 
 - **Kong Gateway**: Handles routing, authentication, and rate limiting
-
 - **User Service**: Manages user accounts and profiles
-
 - **Order Service**: Processes orders and inventory
-
 - **Payment Service**: Handles payment processing and billing
 
+````
 ## Troubleshooting Common Issues
 
 ### 1. Syntax Errors
 
-```text
+```mermaid
 %% Common mistake: Missing direction
 graph
     A --> B  %% Error: Missing TD, LR, etc.
@@ -820,7 +819,7 @@ graph
 %% Correct:
 graph TD
     A --> B
-```text
+````
 
 ### 2. Unbalanced Brackets
 
@@ -832,7 +831,7 @@ graph TD
 %% Correct:
 graph TD
     A[Start] --> B[Process]
-```text
+```
 
 ### 3. Reserved Words
 
@@ -842,7 +841,7 @@ graph TD
     %% Don't use: class, end, if, else, etc.
     start[Start] --> process[Process]  %% Good
     class --> end  %% Bad - these are reserved
-```text
+```
 
 ### 4. Complex Diagrams
 
@@ -853,9 +852,8 @@ Break complex diagrams into smaller, focused ones:
 graph TD
     A[See User Flow Diagram] --> B[See Data Flow Diagram]
     B --> C[See System Architecture]
-```text
+```
 
 This reference guide covers all major Mermaid diagram types with practical
 examples. Use it as a quick reference when creating technical documentation
 diagrams.
-````

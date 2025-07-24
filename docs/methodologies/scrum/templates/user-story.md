@@ -22,11 +22,8 @@ and what problem it solves]
 ## Acceptance Criteria
 
 - [ ] **Given** [precondition], **When** [action], **Then** [expected result]
-
 - [ ] **Given** [precondition], **When** [action], **Then** [expected result]
-
 - [ ] **Given** [precondition], **When** [action], **Then** [expected result]
-
 - [ ] [Additional criterion in simple format if needed]
 
 ## Technical Notes
@@ -40,7 +37,6 @@ and what problem it solves]
 ## Dependencies
 
 - **Depends on**: [Other stories, external systems, or prerequisites]
-
 - **Blocks**: [Stories that cannot start until this is complete]
 
 ## Test Scenarios
@@ -52,7 +48,6 @@ and what problem it solves]
 ### Edge Cases
 
 - [Edge case 1 and expected behavior]
-
 - [Edge case 2 and expected behavior]
 
 ### Error Scenarios
@@ -62,27 +57,18 @@ and what problem it solves]
 ## Questions/Clarifications Needed
 
 - [ ] [Question for Product Owner or stakeholder]
-
 - [ ] [Technical clarification needed]
 
 ## Definition of Done
 
 - [ ] Code complete and pushed to repository
-
 - [ ] Unit tests written and passing (>80% coverage)
-
 - [ ] Integration tests for API endpoints
-
 - [ ] Code reviewed and approved by team
-
 - [ ] Documentation updated (API, user guide)
-
 - [ ] Deployed to staging environment
-
 - [ ] Acceptance criteria verified by QA
-
 - [ ] Product Owner sign-off
-
 - [ ] No critical or high-priority bugs
 
 ## Notes

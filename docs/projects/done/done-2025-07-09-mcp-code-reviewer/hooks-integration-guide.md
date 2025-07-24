@@ -9,7 +9,7 @@ without explicit user commands.
 
 ## Hook Flow
 
-````text
+```
 File Save → PostToolUse Hook → MCP Review → Claude Sees Results → User Informed
                                      ↓
                               [If issues found]
@@ -17,7 +17,7 @@ File Save → PostToolUse Hook → MCP Review → Claude Sees Results → User I
                          User asks: "Fix these issues"
                                      ↓
                             Create Fix PR → Claude Reviews → User Approves
-```text
+```
 
 ## Integration Patterns
 
@@ -37,7 +37,7 @@ File Save → PostToolUse Hook → MCP Review → Claude Sees Results → User I
     ]
   }
 }
-```text
+```
 
 ### 2. Smart Conditional Review
 
@@ -67,7 +67,7 @@ if should_review; then
       --format brief
   fi
 fi
-```text
+```
 
 ### 3. Pre-Commit Comprehensive Review
 
@@ -83,7 +83,7 @@ fi
     ]
   }
 }
-```text
+```
 
 ## Advanced Hook Patterns
 
@@ -106,7 +106,7 @@ const progressiveReviewHook = {
     fi
   '`,
 };
-```text
+```
 
 ### 2. Methodology-Aware Reviews
 
@@ -136,7 +136,7 @@ case "$FILENAME" in
       --standards "$(cat .claude/.aichaku-standards.json | jq -r '.selected[]')"
     ;;
 esac
-```text
+```
 
 ### 3. Review with Fix Suggestions (No Auto-PR)
 
@@ -152,7 +152,7 @@ esac
     ]
   }
 }
-```text
+```
 
 **Note**: PR creation is ALWAYS manual. The hook can suggest fixes but won't
 create PRs automatically. Users must explicitly ask: "Create a PR to fix these
@@ -168,7 +168,7 @@ curl -fsSL https://aichaku.dev/install-mcp.sh | sh
 
 # Or via npm
 npm install -g @aichaku/mcp-code-reviewer
-```text
+```
 
 ### 2. Install Aichaku Hooks
 
@@ -180,7 +180,7 @@ aichaku hooks --install mcp-review
 # - Basic auto-review hook
 # - Pre-commit validation hook
 # - Smart conditional review hook
-```text
+```
 
 ### 3. Configure Standards
 
@@ -192,7 +192,7 @@ aichaku standards --add owasp-web,15-factor,tdd
 aichaku integrate
 
 # MCP will now use these standards automatically
-```text
+```
 
 ## Hook Templates from Aichaku
 
@@ -207,7 +207,7 @@ When you run `aichaku hooks --install mcp-review`, it creates:
   "matcher": "Write|Edit|MultiEdit",
   "command": "mcp-review-trigger \"${TOOL*INPUT*FILE_PATH}\" --auto"
 }
-```text
+```
 
 ### 2. mcp-pre-commit
 
@@ -218,7 +218,7 @@ When you run `aichaku hooks --install mcp-review`, it creates:
   "matcher": "Bash(git commit)",
   "command": "mcp-review-trigger --pre-commit --fail-on-high"
 }
-```text
+```
 
 ### 3. mcp-smart-review
 
@@ -229,7 +229,7 @@ When you run `aichaku hooks --install mcp-review`, it creates:
   "matcher": "Write|Edit",
   "command": "~/.claude/hooks/aichaku-smart-review.sh \"${TOOL*INPUT*FILE_PATH}\""
 }
-```text
+```
 
 ## Performance Considerations
 
@@ -246,7 +246,7 @@ if [[ -f "$LAST_REVIEW" ]]; then
   fi
 fi
 touch "$LAST_REVIEW"
-```text
+```
 
 ### 2. Incremental Review
 
@@ -256,7 +256,7 @@ mcp-code-reviewer review \
   --file "$FILE" \
   --incremental \
   --baseline "$(git rev-parse HEAD)"
-```text
+```
 
 ### 3. Background Processing
 
@@ -267,7 +267,7 @@ mcp-code-reviewer review \
     --output ~/.claude/reviews/$(date +%s).json \
     --notify-on-high &
 } 2>/dev/null
-```text
+```
 
 ## Troubleshooting
 
@@ -279,7 +279,7 @@ cat ~/.claude/settings.json | jq '.hooks'
 
 # Test hook manually
 TOOL*INPUT*FILE_PATH="test.ts" bash -c 'your-hook-command'
-```text
+```
 
 ### MCP Not Found
 
@@ -289,7 +289,7 @@ which mcp-code-reviewer
 
 # Add to PATH if needed
 export PATH="$PATH:~/.claude/bin"
-```text
+```
 
 ### Performance Issues
 
@@ -299,27 +299,19 @@ mcp-code-reviewer config set mode lightweight
 
 # Disable certain scanners
 mcp-code-reviewer config disable codeql
-```text
+```
 
 ## Best Practices
 
 1. **Start Simple**: Begin with basic post-save reviews
-
 2. **Add Gradually**: Layer on pre-commit and smart reviews
-
 3. **Monitor Performance**: Use time limits and debouncing
-
 4. **Customize by Project**: Different hooks for different projects
-
 5. **User Control**: Always provide opt-out mechanisms
 
 ## Future Enhancements
 
 1. **Hook Conditions**: Review based on file patterns, project type
-
 2. **Review Caching**: Skip unchanged files
-
 3. **Team Sharing**: Shared hook configurations
-
 4. **AI Learning**: Hooks that adapt based on user preferences
-````

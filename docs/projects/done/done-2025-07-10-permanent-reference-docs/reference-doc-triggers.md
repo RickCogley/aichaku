@@ -6,7 +6,7 @@
 
 **User**: New to Aichaku, clean project **Command**: `aichaku init`
 
-````bash
+```bash
 # Enhanced init process
 aichaku init
 # 🪴 Aichaku: Initializing project...
@@ -15,7 +15,7 @@ aichaku init
 # 📚 Generate permanent reference documents? [Y/n]: Y
 # ✅ Created /references with architecture, API, and data documentation
 # 🎯 Aichaku ready! Try: aichaku help
-```text
+```
 
 ### Scenario 2: Existing Aichaku User (Clean Upgrade)
 
@@ -32,7 +32,7 @@ aichaku references init
 # ✅ Generated /references folder with comprehensive documentation
 # 🔗 Created GitHub-discoverable pointer files (originals backed up)
 # 📖 Updated README.md with documentation architecture
-```text
+```
 
 ### Scenario 3: Existing User with Rich History
 
@@ -54,7 +54,7 @@ aichaku references bootstrap --include-history
 # ✅ Created /references with insights from 12 projects + current codebase
 # 📋 Generated 23 Architecture Decision Records from historical decisions
 # 🔒 Created comprehensive security documentation from security patterns
-```text
+```
 
 ### Scenario 4: Selective Historical Analysis
 
@@ -78,7 +78,7 @@ aichaku references bootstrap --interactive
 #
 # Continue? [Y/n]: Y
 # 🔍 Analyzing selected projects and current codebase...
-```text
+```
 
 ### Scenario 5: Quick Start (Minimal)
 
@@ -93,7 +93,7 @@ aichaku references init --minimal
 # 📝 Generated template documents (not populated)
 # 🔗 Created GitHub pointer files
 # ✅ Ready for manual documentation
-```text
+```
 
 ### Scenario 6: Fix Missing/Broken Standards
 
@@ -109,7 +109,7 @@ aichaku standards fix
 # 🔧 Fixing missing standards...
 # 🧹 Cleaning up duplicate content...
 # ✅ Standards integrity restored
-```text
+```
 
 ## 🛠️ Technical Implementation
 
@@ -139,7 +139,7 @@ class InitCommand {
     );
   }
 }
-```text
+```
 
 ### New References Command
 
@@ -175,7 +175,7 @@ class ReferencesCommand {
     }
   }
 }
-```text
+```
 
 ### New Standards Command
 
@@ -223,7 +223,7 @@ class StandardsCommand {
     await this.cleanupDuplicateSections(duplicates);
   }
 }
-```text
+```
 
 ### Command Structure
 
@@ -241,7 +241,7 @@ aichaku standards
 ├── list                    # List all available standards
 ├── add                     # Add a new standard
 └── remove                  # Remove a standard
-```text
+```
 
 ## 🎮 User Experience Flows
 
@@ -258,7 +258,7 @@ flowchart TD
     F --> G[Generate permanent docs]
     G --> H[Setup complete]
     E --> H
-```text
+```
 
 ### Flow 2: Existing User Bootstrap
 
@@ -277,7 +277,7 @@ flowchart TD
     I --> K[Generate permanent docs]
     J --> K
     K --> L[Bootstrap complete]
-```text
+```
 
 ### Flow 3: Interactive Historical Analysis
 
@@ -290,42 +290,33 @@ flowchart TD
     E --> F[Extract methodology-specific learnings]
     F --> G[Generate comprehensive docs]
     G --> H[Show summary of integrated learnings]
-```text
+```
 
 ## 📋 Command Options & Flags
 
 ### `aichaku init`
 
 - **Default**: Includes permanent docs generation if code detected
-
 - **`--no-references`**: Skip permanent docs generation
-
 - **`--minimal`**: Create basic structure only
 
 ### `aichaku references init`
 
 - **Default**: Analyze current codebase only
-
 - **`--minimal`**: Create empty structure
-
 - **`--backup-existing`**: Backup existing /references before generating
 
 ### `aichaku references bootstrap`
 
 - **`--include-history`**: Analyze all .claude/output/ projects
-
 - **`--interactive`**: Choose which projects to analyze
-
 - **`--from-date DATE`**: Only analyze projects after date
-
 - **`--methodology TYPE`**: Only analyze specific methodology projects
 
 ### `aichaku references update`
 
 - **Default**: Update from recently completed projects
-
 - **`--project PATH`**: Update from specific project
-
 - **`--force`**: Overwrite existing sections
 
 ## 🔄 Automatic Triggers
@@ -349,7 +340,7 @@ class ProjectCompletionHandler {
     }
   }
 }
-```text
+```
 
 ### Upgrade Path Integration
 
@@ -371,29 +362,23 @@ class UpgradeCommand {
     }
   }
 }
-```text
+```
 
 ## 🎯 Migration Strategy
 
 ### For Existing Users
 
 1. **Soft Introduction**: Mention in upgrade notes
-
 2. **Optional Bootstrap**: Never force, always ask
-
 3. **Gradual Adoption**: Can start with minimal and build up
-
 4. **Historical Integration**: Option to extract from past work
 
 ### For New Users
 
 1. **Default Behavior**: Generate if code detected
-
 2. **Educational**: Explain what's being created
-
 3. **Customizable**: Easy to skip or modify
 
 This comprehensive trigger system ensures that both new and existing users can
 easily adopt permanent reference documentation, with flexibility for different
 needs and preferences!
-````

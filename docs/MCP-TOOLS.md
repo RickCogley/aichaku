@@ -13,11 +13,8 @@ enhanced project analysis and documentation generation.
 Before using the MCP tools described in this guide, you need:
 
 - **Aichaku installed**: The MCP server must be running and configured
-
 - **Project access**: Read/write permissions to your project directory
-
 - **Basic command line knowledge**: Familiarity with terminal/command prompt
-
 - **Understanding of your project structure**: Knowledge of your codebase
   organization
 
@@ -28,13 +25,9 @@ For setup instructions, see the main [Aichaku documentation](../README.md).
 **Currently Available:**
 
 - `review_file` - Security and standards review for individual files
-
 - `review_methodology` - Check project methodology compliance
-
 - `get_standards` - Retrieve project standards configuration
-
 - `get_statistics` - Get usage statistics and analytics
-
 - `send_feedback` - Send visible feedback messages to Claude Code console
 
 See [MCP-SERVER.md](./MCP-SERVER.md) for documentation of currently available
@@ -46,9 +39,7 @@ Future releases include the following tools to provide automated capabilities
 for:
 
 - Analyzing project structure and dependencies
-
 - Creating documentation templates based on project type
-
 - Generating comprehensive documentation automatically
 
 These tools work seamlessly with Aichaku's existing methodology support and you
@@ -66,17 +57,11 @@ patterns.
 This tool performs deep analysis of a codebase to identify:
 
 - Programming languages and frameworks used
-
 - Project structure and organization
-
 - Dependencies and package managers
-
 - Build tools and configuration
-
 - Testing frameworks
-
 - Documentation patterns
-
 - Potential methodology alignment
 
 ### Parameters
@@ -90,7 +75,7 @@ This tool performs deep analysis of a codebase to identify:
 
 ### Return Schema
 
-````typescript
+```typescript
 interface ProjectAnalysis {
   projectPath: string;
   name: string;
@@ -125,7 +110,7 @@ interface ProjectAnalysis {
     testCoverage?: number;
   };
 }
-```text
+```
 
 ### Usage Examples
 
@@ -137,7 +122,7 @@ mcp__aichaku__analyze_project --projectPath .
 
 # Analyze specific project
 mcp__aichaku__analyze_project --projectPath /path/to/my-project
-```text
+```
 
 **Deep Analysis with Options:**
 
@@ -148,7 +133,7 @@ mcp__aichaku__analyze_project \
   --depth 5 \
   --includeTests true \
   --includeDocs true
-```text
+```
 
 **Integration with Aichaku Workflow:**
 
@@ -170,7 +155,7 @@ if (analysis.methodology.detected.includes("shape-up")) {
   console.log("Project appears to follow Shape Up methodology");
   // Create Shape Up specific documentation
 }
-```text
+```
 
 ## create_doc_template
 
@@ -181,11 +166,8 @@ Generates documentation templates based on project type and detected patterns.
 Creates customized documentation templates that match your project's:
 
 - Technology stack
-
 - Project structure
-
 - Detected methodology
-
 - Documentation standards (from Aichaku configuration)
 
 ### Parameters
@@ -218,7 +200,7 @@ interface DocTemplate {
     standards: string[];
   };
 }
-```text
+```
 
 ### Usage Examples
 
@@ -235,7 +217,7 @@ mcp__aichaku__create_doc_template \
   --projectPath ./my-api \
   --templateType readme \
   --standards '["conventional-commits", "semver"]'
-```text
+```
 
 **Create API Documentation Template:**
 
@@ -254,7 +236,7 @@ const apiTemplate = await mcp__aichaku__create_doc_template({
 // - Request/Response Examples
 // - Error Codes
 // - Rate Limiting
-```text
+```
 
 **Architecture Documentation:**
 
@@ -276,7 +258,7 @@ const archTemplate = await mcp__aichaku__create_doc_template({
 // - Container Diagram sections
 // - Component descriptions
 // - ADR template references
-```text
+```
 
 ## generate_documentation
 
@@ -288,13 +270,9 @@ docs.
 This tool goes beyond templates to generate actual documentation content by:
 
 - Extracting information from code comments
-
 - Analyzing function signatures and types
-
 - Reading configuration files
-
 - Incorporating existing documentation
-
 - Following specified standards
 
 ### Parameters
@@ -334,7 +312,7 @@ interface GeneratedDocs {
   };
   warnings: string[];
 }
-```text
+```
 
 ### Usage Examples
 
@@ -353,7 +331,7 @@ mcp__aichaku__generate_documentation \
 # - docs/ARCHITECTURE.md (system design)
 # - docs/CONTRIBUTING.md (contribution guide)
 # - docs/examples/ (code examples)
-```text
+```
 
 **API-Only Documentation:**
 
@@ -373,7 +351,7 @@ const apiDocs = await mcp__aichaku__generate_documentation({
 // - OpenAPI specification
 // - Request/response examples
 // - Type definitions documentation
-```text
+```
 
 **Methodology-Aligned Documentation:**
 
@@ -391,7 +369,7 @@ const shapeUpDocs = await mcp__aichaku__generate_documentation({
 // - docs/CYCLES.md (development cycles)
 // - docs/COOLDOWN.md (cooldown activities)
 // - Integration with .claude/output/ structure
-```text
+```
 
 ## Integration with Aichaku Features
 
@@ -423,7 +401,7 @@ const docs = await mcp__aichaku__generate_documentation({
   methodology: analysis.methodology.detected[0],
   types: ["all"],
 });
-```text
+```
 
 ### Standards Compliance
 
@@ -441,7 +419,7 @@ const docs = await mcp__aichaku__generate_documentation({
   standards: standards.selected,
   includeExamples: true,
 });
-```text
+```
 
 ### Output Structure
 
@@ -460,7 +438,7 @@ project/
 │   ├── API.md
 │   ├── ARCHITECTURE.md
 │   └── examples/
-```text
+```
 
 ## Best Practices
 
@@ -495,7 +473,7 @@ const docs = await mcp__aichaku__generate_documentation({
   analysis: analysis,
   types: ["all"],
 });
-```text
+```
 
 ### 2. Caching Analysis Results
 
@@ -515,7 +493,7 @@ async function getProjectAnalysis(path) {
   }
   return analysisCache.get(path);
 }
-```text
+```
 
 ### 3. Incremental Documentation
 
@@ -542,7 +520,7 @@ await mcp__aichaku__generate_documentation({
   types: ["guides"],
   methodology: "shape-up",
 });
-```text
+```
 
 ### 4. Custom Standards Integration
 
@@ -558,7 +536,7 @@ const customDocs = await mcp__aichaku__generate_documentation({
 
 // Template includes security sections
 // and follows company style guidelines
-```text
+```
 
 ## Tips and Tricks
 
@@ -572,7 +550,7 @@ mcp__aichaku__analyze_project --projectPath . --depth 1
 
 # Deep dive into specific areas
 mcp__aichaku__analyze_project --projectPath ./src/core --depth 5
-```text
+```
 
 ### Multi-Language Projects
 
@@ -588,7 +566,7 @@ const docs = await mcp__aichaku__generate_documentation({
   // - Python backend → Sphinx
   // - Go microservices → godoc
 });
-```text
+```
 
 ### CI/CD Integration
 
@@ -598,21 +576,16 @@ Automate documentation generation:
 # .github/workflows/docs.yml
 name: Generate Documentation
 on:
-
   push:
     branches: [main]
     paths:
-
       - "src/**"
-
       - "docs/**"
 
 jobs:
-
   generate-docs:
     runs-on: ubuntu-latest
     steps:
-
       - uses: actions/checkout@v3
 
       - name: Setup Aichaku
@@ -636,7 +609,7 @@ jobs:
           git add docs/
           git commit -m "docs: auto-generate documentation"
           git push
-```text
+```
 
 ### Validation and Quality Checks
 
@@ -670,7 +643,7 @@ if (missingSections.length > 0) {
     `Missing documentation sections: ${missingSections.join(", ")}`,
   );
 }
-```text
+```
 
 ## Error Handling
 
@@ -697,7 +670,7 @@ try {
   // - error.details: Additional context
   // - error.suggestions: How to fix the issue
 }
-```text
+```
 
 ## Conclusion
 
@@ -708,4 +681,3 @@ documentation across all your projects with minimal manual effort.
 
 For more information on configuring standards and methodologies, see the main
 Aichaku documentation.
-````

@@ -27,14 +27,14 @@ standards review for Claude Code, based on Aichaku methodologies and standards.
 
 1. Clone or install the MCP server:
 
-````bash
+```bash
 # From Aichaku repository
 cd mcp-server
 deno task compile
 
 # Or install globally
 deno install -A -n mcp-code-reviewer https://raw.githubusercontent.com/RickCogley/aichaku/main/mcp-server/src/server.ts
-```text
+```
 
 2. Configure Claude Code to use the MCP server:
 
@@ -49,7 +49,7 @@ deno install -A -n mcp-code-reviewer https://raw.githubusercontent.com/RickCogle
     }
   }
 }
-```text
+```
 
 ## Usage
 
@@ -65,7 +65,7 @@ await mcp.review_file({
   file: "/path/to/file.ts",
   includeExternal: true, // Use external scanners if available
 });
-```text
+```
 
 ### `review_methodology`
 
@@ -76,7 +76,7 @@ await mcp.review_methodology({
   projectPath: "/path/to/project",
   methodology: "shape-up", // or "scrum", "kanban", etc.
 });
-```text
+```
 
 ### `get_standards`
 
@@ -86,7 +86,7 @@ Gets the currently selected standards for a project.
 await mcp.get_standards({
   projectPath: "/path/to/project",
 });
-```text
+```
 
 ## Security Patterns
 
@@ -103,7 +103,7 @@ The MCP checks for common security vulnerabilities including:
 
 When issues are found, the MCP provides comprehensive guidance:
 
-```text
+```
 🌱 Learning Opportunity - Let's fix this properly:
 
 📖 Context: Command injection is one of the most critical security vulnerabilities...
@@ -125,7 +125,7 @@ bash -c 'echo "$1"' -- "$USER_INPUT"
 🤔 Reflection: What made you use string interpolation?
 
 📌 Note to self: Always use parameter expansion for shell commands.
-```text
+```
 
 ## Configuration
 
@@ -143,7 +143,7 @@ The MCP reads configuration from:
   "selected": ["owasp-web", "15-factor", "tdd"],
   "methodologies": ["shape-up"]
 }
-```text
+```
 
 ## Development
 
@@ -158,7 +158,7 @@ deno task test
 
 # Type check
 deno task check
-```text
+```
 
 ### Building
 
@@ -168,7 +168,7 @@ deno task compile
 
 # Build for all platforms
 deno task compile:all
-```text
+```
 
 ## Architecture
 
@@ -194,7 +194,7 @@ graph TB
     RE --> SC
     RE --> FB
     FB -->|Educational Feedback| CC
-```text
+```
 
 ## Privacy & Security
 
@@ -224,4 +224,3 @@ MIT License - Same as Aichaku
 ---
 
 Built with 🪴 by the Aichaku team
-````

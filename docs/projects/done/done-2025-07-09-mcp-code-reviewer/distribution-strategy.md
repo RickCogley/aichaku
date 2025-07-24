@@ -5,54 +5,43 @@
 ## Core Principles
 
 1. **Privacy First**: Local-only execution, no cloud
-
 2. **Easy Installation**: One command setup
-
 3. **Optional Tools**: Security scanners installed separately
-
 4. **PR Creation**: Manual only, never automatic
 
 ## Distribution via GitHub Packages
 
 ### 1. Cross-Platform Binaries
 
-````yaml
+```yaml
 # .github/workflows/release.yml
 name: Build and Release
 
 on:
-
   release:
     types: [created]
 
 jobs:
-
   build:
     strategy:
       matrix:
         include:
-
           - os: macos-latest
             target: x86_64-apple-darwin
             name: mcp-code-reviewer-macos-intel
-
           - os: macos-latest
             target: aarch64-apple-darwin
             name: mcp-code-reviewer-macos-arm
-
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             name: mcp-code-reviewer-linux
-
           - os: windows-latest
             target: x86_64-pc-windows-msvc
             name: mcp-code-reviewer-windows.exe
 
     runs-on: ${{ matrix.os }}
     steps:
-
       - uses: actions/checkout@v4
-
       - uses: denoland/setup-deno@v1
 
       - name: Compile
@@ -72,7 +61,7 @@ jobs:
           upload*url: ${{ github.event.release.upload*url }}
           asset_path: ./${{ matrix.name }}
           asset_name: ${{ matrix.name }}
-```text
+```
 
 ### 2. Installation Script
 
@@ -106,7 +95,7 @@ claude code config add-mcp mcp-code-reviewer
 
 echo "✅ MCP Code Reviewer installed!"
 echo "🔒 Privacy: All reviews happen locally on your machine"
-```text
+```
 
 ## Tool Integration Strategy
 
@@ -115,11 +104,8 @@ echo "🔒 Privacy: All reviews happen locally on your machine"
 **Why?** DevSkim, CodeQL, and Semgrep are:
 
 - Written in different languages (C#, Java, Python)
-
 - Have their own runtimes
-
 - Licensed separately
-
 - Update independently
 
 ### Smart Tool Detection ✅
@@ -155,7 +141,7 @@ class ToolDetector {
     return missing.map((tool) => suggestions[tool]).join("\n");
   }
 }
-```text
+```
 
 ### Progressive Enhancement
 
@@ -176,13 +162,13 @@ async performReview(file: string): ReviewResult {
 
   return this.aggregateResults(results);
 }
-```text
+```
 
 ## User Experience
 
 ### First Run
 
-```text
+```
 $ mcp-code-reviewer
 🪴 MCP Code Reviewer v1.0.0
 
@@ -193,7 +179,6 @@ $ mcp-code-reviewer
 ✅ ESLint found
 
 💡 For enhanced security scanning, install:
-
    npm install -g @microsoft/devskim-cli
    brew install codeql
 
@@ -201,7 +186,7 @@ $ mcp-code-reviewer
    Your code never leaves your machine.
 
 Ready to review code!
-```text
+```
 
 ### Optional Tool Installation
 
@@ -221,29 +206,26 @@ $ mcp-code-reviewer install-tools
    npm install -g eslint eslint-plugin-security
 
 Install all? [y/N]
-```text
+```
 
 ## PR Creation - Manual Only
 
 ### Why Manual?
 
 - Avoids PR spam
-
 - User maintains control
-
 - Conscious decision required
-
 - Better for team workflows
 
 ### How It Works
 
-```text
+```
 User: "Create a PR to fix the security issues you found"
 Claude: "I'll create a PR with the security fixes"
   → MCP: create*fix*pr(findings, { confirmed: true })
   ← MCP: "Created PR #123 with 5 security fixes"
 Claude: "Created PR #123: [Security fixes for command injection and path traversal]"
-```text
+```
 
 ### Never Automatic
 
@@ -259,7 +241,7 @@ hooks: [
 // GOOD - User decides
 // User explicitly asks: "Fix these security issues"
 // Then MCP can create PR
-```text
+```
 
 ## Installation Methods
 
@@ -268,23 +250,20 @@ hooks: [
 ```bash
 # One-liner
 curl -fsSL https://aichaku.dev/install-mcp | bash
-```text
+```
 
 ### 2. Via Aichaku CLI
 
 ```bash
 # Future enhancement
 aichaku install-mcp
-```text
+```
 
 ### 3. Manual Download
 
 - Go to: https://github.com/aichaku/mcp-code-reviewer/releases
-
 - Download for your platform
-
 - Add to PATH
-
 - Configure Claude Code
 
 ### 4. Build from Source
@@ -293,20 +272,16 @@ aichaku install-mcp
 git clone https://github.com/aichaku/mcp-code-reviewer
 cd mcp-code-reviewer
 deno compile --allow-all --output mcp-code-reviewer src/server.ts
-```text
+```
 
 ## Security & Privacy Guarantees
 
 ### What We Promise
 
 1. **No Network Calls**: Except to check for updates (optional)
-
 2. **No Telemetry**: Zero tracking or analytics
-
 3. **No Code Storage**: Everything in memory only
-
 4. **No API Keys**: Works without any credentials
-
 5. **Open Source**: Audit the code yourself
 
 ### User Documentation Must Emphasize
@@ -317,13 +292,9 @@ deno compile --allow-all --output mcp-code-reviewer src/server.ts
 The MCP Code Reviewer runs 100% locally on your machine:
 
 - Your code NEVER leaves your computer
-
 - No cloud services or APIs involved
-
 - No account or authentication required
-
 - Complete control over your security reviews
 
 This is by design - we believe code security reviews should be private.
-```text
-````
+```

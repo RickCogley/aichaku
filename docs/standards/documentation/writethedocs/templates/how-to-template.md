@@ -11,9 +11,7 @@ This guide shows you how to [task description]. This is useful when you need to
 Before starting, ensure you have:
 
 - [ ] [Prerequisite 1] ([how to verify])
-
 - [ ] [Prerequisite 2] ([link to setup guide])
-
 - [ ] [Required permission or access]
 
 ## Overview
@@ -21,9 +19,7 @@ Before starting, ensure you have:
 We'll accomplish this task by:
 
 1. [High-level step 1]
-
 2. [High-level step 2]
-
 3. [High-level step 3]
 
 ## Step-by-Step Instructions
@@ -32,11 +28,11 @@ We'll accomplish this task by:
 
 First, we need to set up [what and why]:
 
-````bash
+```bash
 # Set necessary environment variables
 export PROJECT_ENV=production
 export API_KEY=your-api-key-here
-```text
+```
 
 > 📝 **Note**: Store sensitive values like API keys in a `.env` file. See
 > [Managing Secrets](link) for details.
@@ -51,7 +47,7 @@ Create a `.env` file:
 PROJECT_ENV=production
 API_KEY=your-api-key-here
 DATABASE_URL=postgresql://user:pass@host:5432/db
-```text
+```
 
 Load it:
 
@@ -59,7 +55,7 @@ Load it:
 source .env
 # or
 export $(cat .env | xargs)
-```text
+```
 
 </details>
 
@@ -71,14 +67,12 @@ Now we'll [what you're doing and why]:
 project command --option value \
   --another-option \
   --verbose
-```text
+```
 
 **What's happening here:**
 
 - `--option value`: [Explanation]
-
 - `--another-option`: [Why you need this]
-
 - `--verbose`: Shows detailed output (helpful for debugging)
 
 <details>
@@ -89,24 +83,21 @@ Instead of command-line options, you can use a configuration file:
 ```yaml
 # config.yaml
 options:
-
   option: value
   another_option: true
   verbose: true
-```text
+```
 
 Then run:
 
 ```bash
 project command --config config.yaml
-```text
+```
 
 This approach is better for:
 
 - Reproducible deployments
-
 - Complex configurations
-
 - Team collaboration
 
 </details>
@@ -117,22 +108,19 @@ Check that your [task] completed successfully:
 
 ```bash
 project status --check [thing-you-created]
-```text
+```
 
 Expected output:
 
-```text
+```
 Status: Active
 Health: Healthy
 Last Updated: 2023-10-15 14:30:00
 Details:
-
   - Component A: Running
-
   - Component B: Running
-
   - Component C: Running
-```text
+```
 
 > ✅ **Success indicators:**
 >
@@ -157,14 +145,14 @@ ENV PROJECT_ENV=production
 
 # Run the command
 RUN project command --config /app/config.yaml
-```text
+```
 
 Build and run:
 
 ```bash
 docker build -t my-project .
 docker run my-project
-```text
+```
 
 ### Automating with CI/CD
 
@@ -174,16 +162,13 @@ docker run my-project
 name: Deploy [Thing]
 
 on:
-
   push:
     branches: [main]
 
 jobs:
-
   deploy:
     runs-on: ubuntu-latest
     steps:
-
       - uses: actions/checkout@v3
 
       - name: Set up [Project]
@@ -195,23 +180,20 @@ jobs:
           API*KEY: &#36;&#123;&#123; secrets.API*KEY &#125;&#125;
         run: |
           project command --option &#36;&#123;&#123; github.event.inputs.value &#125;&#125;
-```text
+```
 
 #### GitLab CI
 
 ```yaml
 deploy:
-
   stage: deploy
   script:
-
     - project command --option $VALUE
   variables:
     PROJECT_ENV: production
   only:
-
     - main
-```text
+```
 
 ### Using with Different Cloud Providers
 
@@ -222,7 +204,7 @@ deploy:
 # Using AWS CLI
 aws configure set region us-east-1
 project command --cloud aws --region us-east-1
-```text
+```
 
 </details>
 
@@ -233,7 +215,7 @@ project command --cloud aws --region us-east-1
 # Using Azure CLI
 az login
 project command --cloud azure --resource-group my-rg
-```text
+```
 
 </details>
 
@@ -244,7 +226,7 @@ project command --cloud azure --resource-group my-rg
 # Using gcloud
 gcloud auth login
 project command --cloud gcp --project my-project-id
-```text
+```
 
 </details>
 
@@ -259,7 +241,7 @@ This usually means you don't have the required access. Check:
 
    ```bash
    project auth status
-````
+   ```
 
 2. **Your permissions**:
 
@@ -268,7 +250,6 @@ This usually means you don't have the required access. Check:
    ```
 
 3. **Resource existence**:
-
    ```bash
    project list resources --filter name=[resource-name]
    ```
@@ -276,9 +257,7 @@ This usually means you don't have the required access. Check:
 **Solutions**:
 
 - Request access from your administrator
-
 - Use a service account with proper permissions
-
 - Check you're in the right project/namespace
 
 </details>
@@ -289,12 +268,10 @@ This usually means you don't have the required access. Check:
 **Verify**:
 
 - The resource name is spelled correctly (case-sensitive!)
-
 - You're in the right project/namespace:
   ```bash
   project config get-context
   ```
-
 - The resource hasn't been deleted:
   ```bash
   project list resources --all --include-deleted
@@ -303,9 +280,7 @@ This usually means you don't have the required access. Check:
 **Common causes**:
 
 - Typo in resource name
-
 - Wrong environment (dev vs prod)
-
 - Resource in different region
 
 </details>
@@ -328,11 +303,8 @@ This usually means you don't have the required access. Check:
    ```
 
 3. **Common issues**:
-
    - **Caching**: Clear with `project cache clear`
-
    - **Propagation delay**: Changes can take 2-5 minutes
-
    - **Configuration drift**: Compare with `project diff`
 
 </details>
@@ -361,7 +333,6 @@ This usually means you don't have the required access. Check:
    ```
 
 4. **Monitor metrics**:
-
    ```bash
    project metrics [resource-name] --duration 1h
    ```
@@ -371,23 +342,16 @@ This usually means you don't have the required access. Check:
 ## Related Tasks
 
 - [How to Update [Thing]](link) - Modify existing resources
-
 - [How to Delete [Thing]](link) - Clean up when done
-
 - [How to Monitor [Thing]](link) - Track performance and health
-
 - [How to Backup [Thing]](link) - Ensure data safety
-
 - [How to Scale [Thing]](link) - Handle increased load
 
 ## Further Reading
 
 - [Architecture Overview](link) - Understand how this fits in the bigger picture
-
 - [Best Practices for [Topic]](link) - Optimize your approach
-
 - [API Reference](link) - Complete options and parameters
-
 - [Security Guide](link) - Secure your implementation
 
 ---
@@ -397,9 +361,7 @@ This usually means you don't have the required access. Check:
 Something unclear? Missing information? We appreciate your feedback!
 
 - 📝 [Edit this guide](github-edit-link)
-
 - 💬 [Ask questions](community-link)
-
 - 🐛 [Report issues](issue-link)
 
 **Contributors**: [List of contributors]\

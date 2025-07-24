@@ -16,12 +16,11 @@ Small batch - 30 minutes
 Update the installer output to clearly show both:
 
 1. Where the CLI command is installed
-
 2. Where the methodologies are installed
 
 ### Current Output
 
-````text
+```
 ✅ Successfully installed aichaku
 /Users/rcogley/.deno/bin/aichaku
    • Verifying installation...
@@ -30,11 +29,11 @@ Update the installer output to clearly show both:
 🌍 Setting up global methodologies...
    ✓ User customizations preserved
    ✓ Output directories created
-```text
+```
 
 ### Proposed Output
 
-```text
+```
 ✅ Successfully installed aichaku
 📍 CLI: /Users/rcogley/.deno/bin/aichaku
 📚 Methodologies: /Users/rcogley/.claude/methodologies
@@ -44,29 +43,22 @@ Update the installer output to clearly show both:
 🌍 Setting up global methodologies...
    ✓ User customizations preserved
    ✓ Output directories created
-```text
+```
 
 ## Implementation
 
 1. Update `init.ts` installer to show both paths
-
 2. Use consistent icons (📍 for location, 📚 for methodologies)
-
 3. Keep the format clean and scannable
 
 ## Rabbit Holes
 
 - Don't add verbose directory listings
-
 - Don't show internal file structure
-
 - Keep it to just the two key paths
 
 ## No-gos
 
 - No changes to the actual installation process
-
 - No additional file system operations
-
 - No changes to methodology storage location
-````

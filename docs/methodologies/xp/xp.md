@@ -10,38 +10,29 @@ challenges
 ### Planning Rules
 
 - Small stories (1-3 days)
-
 - Technical tasks included
-
 - Customer sets priorities
-
 - Team estimates
 
 ### Execution Rules
 
 - Test first, always
-
 - Pair when complex
-
 - Refactor mercilessly
-
 - Integrate continuously
 
 ### Improvement Rules
 
 - Track test coverage
-
 - Measure defect rates
-
 - Monitor build times
-
 - Increase pairing gradually
 
 ## Quick Templates
 
 ### TDD Cycle
 
-````javascript
+```javascript
 1. RED: Write failing test
    test("user can login", () => {
      expect(login(user)).toBe(true);
@@ -54,7 +45,7 @@ challenges
    function login(user) {
      return validateUser(user) && checkPassword(user);
    }
-```text
+```
 
 ### Story Card
 
@@ -66,7 +57,7 @@ Tasks:
 □ TDD implementation
 □ Refactor if needed
 □ Integrate
-```text
+```
 
 ### Pairing Schedule
 
@@ -74,7 +65,7 @@ Tasks:
 Morning: Alice + Bob on Feature A
 Afternoon: Alice + Carol on Bug B
 Rule: Switch pairs daily
-```text
+```
 
 ## Context Adaptations
 
@@ -85,32 +76,19 @@ gradually
 ## Key Decisions
 
 1. **When to Pair**
-
    - Complex algorithms
-
    - Critical features
-
    - Knowledge sharing
-
    - Bug hunting
 
 2. **Refactoring Triggers**
-
    - Duplication found
-
    - Tests hard to write
-
    - Feature hard to add
-
    - Code smells detected
 
 3. **Quality Standards**
-
    - 100% tests pass
-
    - Coverage > 80%
-
    - No known debt
-
    - Continuous green builds
-````

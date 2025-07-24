@@ -3,16 +3,14 @@
 ## The Problem
 
 - PostToolUse hooks run silently in Claude Code
-
 - Output is not shown in the console
-
 - Developers don't see that hooks are working
 
 ## Proposed Solution
 
 ### 1. Create a "feedback" PreToolUse hook
 
-````typescript
+```typescript
 // Runs BEFORE Write/Edit operations
 async function aichakuFeedback(input: HookInput): Promise<void> {
   const filePath = input.tool * input?.file * path || input.tool_input?.path;
@@ -40,27 +38,21 @@ async function aichakuFeedback(input: HookInput): Promise<void> {
   // Exit 0 to not block operation
   Deno.exit(0);
 }
-```text
+```
 
 ### 2. Use stderr for output
 
 - Claude Code shows stderr output from hooks
-
 - Use `console.error()` instead of `console.log()`
 
 ### 3. Keep PostToolUse hooks for actual work
 
 - PreToolUse: Show what will happen
-
 - PostToolUse: Do the actual work (silently)
 
 ## Implementation Plan
 
 1. Add `aichaku-feedback` hook to PreToolUse
-
 2. Update existing hooks to use stderr for critical messages
-
 3. Test with different file types
-
 4. Ensure developers see "🪴 Aichaku is working" messages
-````

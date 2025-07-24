@@ -114,7 +114,7 @@ All file operations are protected by multiple validation layers:
 
 ### Test Suite
 
-````bash
+```bash
 # Run security-focused tests
 deno task test:security
 
@@ -126,7 +126,7 @@ deno test tests/security/input-sanitization_test.ts
 
 # Full test suite with coverage
 deno task test:coverage
-```text
+```
 
 ### Manual Security Testing
 
@@ -136,7 +136,7 @@ deno task test:coverage
    # Attempt directory traversal
    aichaku generate "../../../etc/passwd"
    # Expected: Error - Invalid path
-````
+   ```
 
 2. **Input Validation Testing**:
 

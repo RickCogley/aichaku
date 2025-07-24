@@ -20,9 +20,8 @@ Configuration as code solves this by making standards **executable and
 explicit**. Instead of "use descriptive variable names," you define exactly what
 that means:
 
-````yaml
+```yaml
 naming:
-
   variables:
     min_length: 3
     pattern: "camelCase"
@@ -30,7 +29,7 @@ naming:
     examples:
       good: ["userAccountBalance", "isEmailValid"]
       bad: ["bal", "usr", "flag"]
-```text
+```
 
 ### Key Benefits for Development Teams
 
@@ -62,21 +61,15 @@ priorities and categories:
 
 ```yaml
 standards:
-
   critical:
-
     - no-hardcoded-secrets
-
     - input-validation
   preferred:
-
     - consistent-naming
-
     - documentation-coverage
   optional:
-
     - performance-optimizations
-```text
+```
 
 **Reduced Ambiguity**: Markdown leaves room for interpretation. YAML forces
 specificity that improves consistency.
@@ -96,12 +89,12 @@ mechanically.
 
 Place configuration files where Claude Code naturally discovers them:
 
-```text
+```
 .aichaku/
 ├── rules.yaml          # Primary rules file
 ├── context.md          # Human explanation
 └── README.md           # Quick reference
-```text
+```
 
 The `.aichaku/` directory signals tool configuration and follows established
 patterns for project-specific settings.
@@ -119,11 +112,9 @@ before making changes.**
 ## Quick Reference
 
 - Security rules: See `rules.yaml > security` section
-
 - TypeScript patterns: See `rules.yaml > typescript` section
-
 - Architecture guidelines: See `rules.yaml > architecture` section
-```text
+```
 
 ### Self-Documenting Configuration
 
@@ -134,27 +125,21 @@ Include instructions directly in the YAML file:
 # Read the entire file before suggesting code modifications
 
 meta:
-
   version: "1.0"
   instructions: |
     Before making any code changes:
-
     1. Review applicable rules below
-
     2. Check examples for context
-
     3. Apply rules consistently across the codebase
 
 security:
-
   critical_rules:
-
     - name: "no-hardcoded-secrets"
       description: "Never commit API keys, passwords, or tokens"
       examples:
         violation: "const API_KEY = 'sk-1234567890'"
         correct: "const API*KEY = process.env.API*KEY"
-```text
+```
 
 ### Integration Through MCP
 
@@ -171,7 +156,7 @@ export async function getProjectContext() {
     reminder: "Check each change against the rules above",
   };
 }
-```text
+```
 
 ## Recommended Implementation Strategy
 
@@ -180,9 +165,7 @@ export async function getProjectContext() {
 Combine the benefits of both formats:
 
 1. **Human-readable explanations** in CLAUDE.md
-
 2. **Machine-readable rules** in `.aichaku/rules.yaml`
-
 3. **Single source of truth** through aichaku's modular rule system generating
    both formats
 
@@ -191,7 +174,7 @@ developer comprehension through Markdown explanations.
 
 ### Project Structure
 
-```text
+```
 project-root/
 ├── CLAUDE.md                    # Human-readable context
 ├── .aichaku/
@@ -203,7 +186,7 @@ project-root/
 │       └── architecture.yaml   # Architectural patterns
 └── src/
     └── ...
-```text
+```
 
 ### Ensuring Adoption
 
@@ -226,4 +209,3 @@ The key success factor is making standards feel like part of the development
 workflow rather than external compliance requirements. Through strategic file
 placement, explicit references, and active MCP integration, configuration files
 become living documentation that guides development decisions in real-time.
-````

@@ -10,9 +10,7 @@ Before diving into how [concept] works, let's understand the problem it solves.
 Imagine you're building [relatable scenario]. You need to:
 
 - [Requirement 1 that seems simple]
-
 - [Requirement 2 that adds complexity]
-
 - [Requirement 3 that makes it challenging]
 
 Traditional approaches like [alternative] fall short because [specific
@@ -34,9 +32,9 @@ Similarly, [concept] works by [parallel explanation].
 
 [Deeper technical explanation for those who want it]
 
-````text
+```
 [Technical diagram or code showing internals]
-```text
+```
 
 This is implemented using [technical approach] because [reasoning].
 
@@ -56,7 +54,7 @@ This is implemented using [technical approach] because [reasoning].
 
 Let's trace through what happens when you [common user action]:
 
-```text
+```
 User Action
     ↓
 [Component 1] → "Validates and prepares request"
@@ -66,7 +64,7 @@ User Action
 [Component 3] → "Returns formatted result"
     ↓
 User sees result
-```text
+```
 
 ### Step-by-Step Breakdown
 
@@ -81,17 +79,14 @@ User sees result
        validated = validate(user_input)  # Ensures safety
        prepared = prepare(validated)     # Formats for processing
        return prepared
-````
+   ```
 
 2. **Processing Phase**
 
    Next, [component] takes your request and [detailed explanation]. During this
    phase:
-
    - [Sub-step 1]: [What and why]
-
    - [Sub-step 2]: [What and why]
-
    - [Sub-step 3]: [What and why]
 
    ```mermaid
@@ -113,7 +108,7 @@ Let's make this concrete with an actual example:
 
 **Scenario**: You want to [specific user goal]
 
-````python
+```python
 # User code
 result = system.process("Hello, World!")
 
@@ -124,7 +119,7 @@ result = system.process("Hello, World!")
 # 4. Return: Sends back processed result
 
 print(result)  # Output: "HELLO, WORLD!" (if configured for uppercase)
-```text
+```
 
 <details>
 <summary>Try it yourself</summary>
@@ -133,7 +128,6 @@ Here's a simplified version you can experiment with:
 
 ```python
 class SimpleProcessor:
-
     def **init**(self, transform='upper'):
         self.transform = transform
 
@@ -156,7 +150,7 @@ class SimpleProcessor:
 # Try it:
 processor = SimpleProcessor('upper')
 print(processor.process("Hello!"))  # HELLO!
-```text
+```
 
 </details>
 
@@ -210,12 +204,10 @@ We chose our approach because [reasoning tied to user needs].
 [Concept] is optimized for [specific use case]. This means:
 
 - **Fast**: [Specific performance characteristic with numbers]
-
 - **Efficient**: [Resource usage explanation]
-
 - **Scalable**: [How it handles growth]
 
-```text
+```
 Performance characteristics:
 ┌─────────────┬──────────┬──────────┐
 │ Operation   │ Time     │ Memory   │
@@ -224,12 +216,11 @@ Performance characteristics:
 │ Medium      │ < 50ms   │ ~10 MB   │
 │ Large       │ < 200ms  │ ~50 MB   │
 └─────────────┴──────────┴──────────┘
-```text
+```
 
 However, this optimization comes with trade-offs:
 
 - [Trade-off 1]: [Impact and when it matters]
-
 - [Trade-off 2]: [How to work around if needed]
 
 ## Common Patterns
@@ -243,10 +234,9 @@ However, this optimization comes with trade-offs:
 ```python
 # Example implementation
 def pattern_example():
-
     # [Explanation of what this does]
     pass
-```text
+```
 
 **Real-world example**: [Company/Project] uses this pattern to [achieve what]
 
@@ -259,19 +249,15 @@ def pattern_example():
 ```yaml
 # Configuration example
 pattern:
-
   type: advanced
   settings:
-
     - option1: value
-
     - option2: value
-```text
+```
 
 **Benefits**:
 
 - [Benefit 1]
-
 - [Benefit 2]
 
 ### Anti-patterns to Avoid
@@ -283,7 +269,7 @@ pattern:
 ```python
 # Don't do this
 bad_example = [problematic code]
-```text
+```
 
 **Why it's problematic**: [Explanation]
 
@@ -292,7 +278,7 @@ bad_example = [problematic code]
 ```python
 # Better approach
 good_example = [improved code]
-```text
+```
 
 ## Comparison with Alternatives
 
@@ -312,21 +298,15 @@ Let's compare [concept] with similar approaches:
 Choose [concept] when:
 
 - ✅ Your priority is [specific need]
-
 - ✅ You need [specific capability]
-
 - ✅ Your team is comfortable with [specific requirement]
-
 - ✅ You value [specific benefit] over [alternative benefit]
 
 Consider alternatives when:
 
 - 🤔 You need [different priority]
-
 - 🤔 Your constraints include [specific limitation]
-
 - 🤔 You're already using [conflicting technology]
-
 - 🤔 [Specific trade-off] is unacceptable
 
 ## Real-World Example
@@ -338,9 +318,7 @@ Let's look at how [Example Company] uses [concept] in production:
 [Example Company] needed to [specific business need]. Their requirements:
 
 - Process [volume] per day
-
 - Maintain [quality metric]
-
 - Scale to [future need]
 
 ### The Solution
@@ -350,20 +328,16 @@ They implemented [concept] with these customizations:
 ```yaml
 # Their configuration
 system:
-
   mode: production
   customizations:
-
     - feature1: enabled
-
     - feature2: custom_value
-
     - feature3: optimized
-```text
+```
 
 **Architecture diagram**:
 
-```text
+```
 [User Requests] → [Load Balancer]
                       ↓
               [Concept Implementation]
@@ -371,16 +345,14 @@ system:
         [Service A]    [Service B]
                 ↘         ↙
                  [Database]
-```text
+```
 
 ### Results
 
 After 6 months in production:
 
 - 📈 [Quantified improvement 1]: From X to Y
-
 - 💰 [Quantified improvement 2]: Saved $X per month
-
 - 😊 [Qualitative benefit]: Developer happiness increased
 
 **Key learnings**:
@@ -395,11 +367,8 @@ After 6 months in production:
 Based on their experience:
 
 1. **Start small**: Begin with [minimal implementation]
-
 2. **Measure everything**: Track [key metrics]
-
 3. **Iterate quickly**: Adjust [what to adjust] based on data
-
 4. **Document decisions**: Future you will thank present you
 
 ## Going Deeper
@@ -409,21 +378,15 @@ Based on their experience:
 Want to understand the internals? Here are resources for diving deeper:
 
 1. **[Internal Component 1]**:
-
    - [Link to deep dive]
-
    - Key insight: [What you'll learn]
 
 2. **[Algorithm/Approach]**:
-
    - [Link to technical paper]
-
    - Implementation: [Link to reference implementation]
 
 3. **[Advanced Topic]**:
-
    - [Video explanation]
-
    - [Interactive demo]
 
 ### Related Concepts
@@ -431,15 +394,12 @@ Want to understand the internals? Here are resources for diving deeper:
 To fully understand [concept], it helps to know about:
 
 - **[Related Concept 1]**: [Brief description and link]
-
   - How it connects: [Relationship]
 
 - **[Related Concept 2]**: [Brief description and link]
-
   - Why it matters: [Importance]
 
 - **[Related Concept 3]**: [Brief description and link]
-
   - When you'll need it: [Use case]
 
 ### Community Resources
@@ -447,17 +407,11 @@ To fully understand [concept], it helps to know about:
 Join the conversation:
 
 - 💬 **Forums**: [Community discussions](link)
-
 - 📹 **Videos**: [Tutorial playlist](link)
-
 - 📚 **Books**:
-
   - "[Book Title]" by [Author] - [What it covers]
-
   - "[Book Title]" by [Author] - [What it covers]
-
 - 🎓 **Courses**: [Online course](link)
-
 - 🐦 **Twitter**: Follow [#hashtag] for tips
 
 ## Summary
@@ -466,9 +420,7 @@ Join the conversation:
 to remember:
 
 1. **[Main takeaway 1]** - [One sentence elaboration]
-
 2. **[Main takeaway 2]** - [One sentence elaboration]
-
 3. **[Main takeaway 3]** - [One sentence elaboration]
 
 Whether you're [use case 1] or [use case 2], understanding these principles will
@@ -476,7 +428,7 @@ help you [benefit].
 
 ### Quick Reference Card
 
-```text
+```
 ┌─────────────────────────────────┐
 │ [Concept] Cheat Sheet           │
 ├─────────────────────────────────┤
@@ -496,26 +448,21 @@ help you [benefit].
 │ • Docs: [short URL]             │
 │ • Chat: [short URL]             │
 └─────────────────────────────────┘
-```text
+```
 
 ## Further Reading
 
 ### Essential Resources
 
 - 📖 [Academic Paper]: Original research behind [concept]
-
 - 🛠️ [Implementation Guide]: Step-by-step deployment
-
 - 💬 [Community Discussion]: Real experiences and tips
-
 - 📹 [Video Series]: Visual walkthrough of concepts
 
 ### Advanced Topics
 
 - [Advanced Pattern 1]: When you need [specific capability]
-
 - [Advanced Pattern 2]: Optimizing for [specific metric]
-
 - [Integration Guide]: Connecting with [other systems]
 
 ---
@@ -525,14 +472,10 @@ help you [benefit].
 Found something confusing? Have a better analogy? We'd love your help!
 
 - 📝 [Edit this page](github-edit-link)
-
 - 💬 [Discuss improvements](discussion-link)
-
 - 🐛 [Report issues](issue-link)
-
 - 🌟 [Share your use case](examples-link)
 
 **Contributors**: [List of contributors]\
 **Last updated**: [Date]\
 **Applies to version**: [Version]
-````

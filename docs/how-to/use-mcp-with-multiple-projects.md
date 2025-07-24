@@ -9,11 +9,8 @@ MCP for multiple projects efficiently.
 Ensure you have:
 
 - Aichaku installed on your system
-
 - Claude Code configured and working
-
 - Access to multiple projects that need code review
-
 - Basic understanding of command-line operations
 
 ## Overview
@@ -22,19 +19,15 @@ The Aichaku MCP server works as a **global service**, not a per-project tool.
 This means:
 
 - **Install once** - The MCP server lives in `~/.aichaku/mcp-server/`
-
 - **Use everywhere** - All projects on your machine can use the same server
-
 - **Single configuration** - Configure Claude Code once for all projects
-
 - **Automatic detection** - Projects with Aichaku automatically benefit
-
 - **No port conflicts** - MCP uses stdio by default (HTTP/SSE mode available on
   port 7182)
 
 ## Understanding the architecture
 
-````mermaid
+```mermaid
 graph TB
     subgraph "Your Machine"
         MCP[MCP Server<br/>~/.aichaku/mcp-server/]
@@ -54,16 +47,13 @@ graph TB
     MCP -->|reads| P1
     MCP -->|reads| P2
     MCP -->|reads| P3
-```text
+```
 
 Key points:
 
 - Claude Code spawns the MCP server as needed
-
 - Communication uses stdio (no network ports)
-
 - The server reads project configurations dynamically
-
 - No background services or daemons required
 
 ## Setting up for multiple projects
@@ -74,7 +64,7 @@ If you haven't already, install the MCP server globally:
 
 ```bash
 aichaku mcp --install
-```text
+```
 
 This installs to `~/.aichaku/mcp-server/` - a location accessible from any
 project.
@@ -85,7 +75,7 @@ Add the MCP configuration to Claude Code:
 
 ```bash
 aichaku mcp --config
-```text
+```
 
 This configuration in Claude's settings file works for all projects:
 
@@ -99,7 +89,7 @@ This configuration in Claude's settings file works for all projects:
     }
   }
 }
-```text
+```
 
 ### Step 3: Initialize each project
 
@@ -115,14 +105,12 @@ cd /path/to/project-b
 aichaku init
 aichaku integrate
 aichaku standards --add owasp-web,solid
-```text
+```
 
 Each project gets its own:
 
 - `.claude/` directory with methodologies
-
 - `.claude/.aichaku-standards.json` with selected standards
-
 - Custom CLAUDE.md with project rules
 
 ## How the MCP server finds project configuration
@@ -130,11 +118,8 @@ Each project gets its own:
 When Claude asks the MCP server to review a file, the server:
 
 1. **Identifies the project root** by looking for `.claude/` directory
-
 2. **Reads project standards** from `.claude/.aichaku-standards.json`
-
 3. **Detects methodologies** from project structure
-
 4. **Applies the correct rules** for that specific project
 
 Example project detection:
@@ -144,7 +129,7 @@ Example project detection:
                          ↑
             Finds .claude/ here
             Reads this project's standards
-```text
+```
 
 ## Managing different standards per project
 
@@ -155,7 +140,7 @@ Each project can have completely different standards:
 ```bash
 cd ~/projects/web-app
 aichaku standards --add owasp-web,clean-arch,tdd
-```text
+```
 
 Configuration in `.claude/.aichaku-standards.json`:
 
@@ -165,14 +150,14 @@ Configuration in `.claude/.aichaku-standards.json`:
   "selected": ["owasp-web", "clean-arch", "tdd"],
   "methodologies": ["scrum"]
 }
-```text
+```
 
 ### Project B: CLI Tool
 
 ```bash
 cd ~/projects/cli-tool
 aichaku standards --add nist-csf,solid,conventional-commits
-```text
+```
 
 Configuration in `.claude/.aichaku-standards.json`:
 
@@ -182,14 +167,14 @@ Configuration in `.claude/.aichaku-standards.json`:
   "selected": ["nist-csf", "solid", "conventional-commits"],
   "methodologies": ["shape-up"]
 }
-```text
+```
 
 ### Project C: Microservice
 
 ```bash
 cd ~/projects/microservice
 aichaku standards --add 15-factor,dora,test-pyramid
-```text
+```
 
 The MCP server automatically applies the right standards for each project.
 
@@ -207,7 +192,7 @@ monorepo/
 │   ├── frontend/
 │   ├── backend/
 │   └── shared/
-```text
+```
 
 All packages share the same standards.
 
@@ -222,7 +207,7 @@ monorepo/
 │   │   └── .claude/         # Backend-specific standards
 │   └── shared/
 │       └── .claude/         # Shared library standards
-```text
+```
 
 Each package has its own standards.
 
@@ -240,7 +225,7 @@ cd ~/projects/cli-tool
 # Ask Claude to review parser.ts - uses cli-tool standards
 
 # No restart needed - it just works!
-```text
+```
 
 ## Using HTTP/SSE mode for better performance
 
@@ -257,16 +242,13 @@ aichaku review src/auth.ts  # Uses shared server automatically
 # In another terminal simultaneously
 cd ~/projects/cli-tool
 aichaku review src/parser.ts  # Also uses the same shared server
-```text
+```
 
 The HTTP/SSE server:
 
 - Eliminates process startup time
-
 - Handles multiple concurrent requests
-
 - Maintains project isolation
-
 - Runs on port 7182
 
 ## Updating the MCP server
@@ -282,7 +264,7 @@ aichaku upgrade
 
 # Reinstall MCP server with new version
 aichaku mcp --install
-```text
+```
 
 All projects automatically use the updated server.
 
@@ -299,7 +281,7 @@ project-root/
 ├── .claude/                     # Required
 │   ├── .aichaku-standards.json  # Required for standards
 │   └── CLAUDE.md               # Required for methodology detection
-```text
+```
 
 ### Wrong standards applied
 
@@ -308,9 +290,7 @@ project-root/
 **Solution:** Check the working directory:
 
 1. Ensure you're in the correct project root
-
 2. Run `pwd` to verify location
-
 3. Check `.claude/.aichaku-standards.json` exists
 
 ### Performance with many projects
@@ -318,11 +298,8 @@ project-root/
 The MCP server is stateless and lightweight:
 
 - No background processes
-
 - No memory usage when not reviewing
-
 - Fast startup (< 100ms)
-
 - No cleanup needed
 
 ## Best practices
@@ -338,7 +315,7 @@ aichaku init
 aichaku integrate
 aichaku standards --add nist-csf,tdd,conventional-commits
 echo "✅ Aichaku configured with security-first standards"
-```text
+```
 
 ### 2. Document project standards
 
@@ -350,13 +327,11 @@ In each project's README:
 This project uses Aichaku with:
 
 - NIST CSF - Security framework
-
 - TDD - Test-driven development
-
 - Conventional Commits - Standardized commit messages
 
 Run `aichaku standards --list --selected` to see current standards.
-```text
+```
 
 ### 3. Team synchronization
 
@@ -368,7 +343,7 @@ cat .claude/.aichaku-standards.json > project-standards.json
 
 # Import on teammate's machine
 cp project-standards.json .claude/.aichaku-standards.json
-```text
+```
 
 ### 4. CI/CD integration
 
@@ -379,16 +354,13 @@ While MCP is for local development, document standards for CI:
 name: Verify Standards
 on: [push]
 jobs:
-
   check:
     runs-on: ubuntu-latest
     steps:
-
       - uses: actions/checkout@v3
-
       - name: Check standards file exists
         run: test -f .claude/.aichaku-standards.json
-```text
+```
 
 ## Security considerations
 
@@ -397,11 +369,8 @@ jobs:
 The MCP server installation is secure because:
 
 - **User-specific** - Installed in your home directory
-
 - **No elevated privileges** - Runs as your user
-
 - **No network access** - Communicates via stdio only
-
 - **Read-only** - Only reads files, never modifies
 
 ### Project isolation
@@ -409,11 +378,8 @@ The MCP server installation is secure because:
 Each project is isolated:
 
 - Standards are project-specific
-
 - No cross-project data sharing
-
 - File access limited to project directory
-
 - No persistent state between reviews
 
 ### Audit trail
@@ -425,7 +391,7 @@ Track MCP usage across projects:
 find ~ -maxdepth 10 -name ".aichaku-standards.json" -type f 2>/dev/null | \
   xargs -I {} dirname {} | \
   xargs -I {} dirname {}
-```text
+```
 
 ## Summary
 
@@ -442,8 +408,5 @@ globally but aware of project context.
 ## Related guides
 
 - [Setup MCP Server](../tutorials/setup-mcp-server.md) - Initial installation
-
 - [MCP API Reference](../reference/mcp-api.md) - Available tools
-
 - [Configure Your Project](configure-project.md) - Project setup
-````

@@ -21,14 +21,14 @@ Markdown content.
 
 #### As an MCP Tool
 
-`````typescript
+```typescript
 // Via MCP tool invocation
 await mcp.callTool("integrate_aichaku", {
   targetPath: "./my-project",
   methodologies: ["shape-up", "scrum"],
   projectName: "My Project",
 });
-```text
+```
 
 #### As a Direct Function
 
@@ -43,7 +43,7 @@ const result = await integrate({
 });
 
 console.log(result.message); // "Generated CLAUDE.md (2048 bytes, 96% reduction)"
-```text
+```
 
 #### As a CLI Command
 
@@ -62,7 +62,7 @@ aichaku integrate -f
 
 # Don't preserve existing content
 aichaku integrate --no-preserve
-```text
+```
 
 ### Options
 
@@ -117,7 +117,7 @@ diagrams:
   templates:
     - document: "STATUS.md"
       type: "graph LR"
-```text
+```
 
 ### Example Output
 
@@ -143,8 +143,8 @@ methodologies:
   shape-up:
     triggers: ["shape", "pitch"]
     # ... full YAML configuration ...
-```text
-`````
+```
+````
 
 ### Usage
 
@@ -152,7 +152,7 @@ When Claude Code detects methodology keywords...
 
 <!-- AICHAKU:END -->
 
-````text
+````
 ### Testing
 
 Run the tests with:

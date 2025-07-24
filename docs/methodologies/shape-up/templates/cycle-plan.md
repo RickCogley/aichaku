@@ -19,7 +19,6 @@ pitch doc]
 **Success looks like**:
 
 - [ ] [Key outcome 1]
-
 - [ ] [Key outcome 2]
 
 ---
@@ -34,7 +33,6 @@ pitch doc]
 **Success looks like**:
 
 - [ ] [Key outcome 1]
-
 - [ ] [Key outcome 2]
 
 ---
@@ -65,13 +63,11 @@ shaping / Try again next cycle]
 **Team A**: [Members]
 
 - Working on: [Bet 1]
-
 - Capacity: Full 6 weeks
 
 **Team B**: [Members]
 
 - Working on: [Bet 2]
-
 - Capacity: Full 6 weeks
 
 **Unassigned**: [Members available for small batch work]
@@ -79,13 +75,9 @@ shaping / Try again next cycle]
 ## Important Dates
 
 - **Cycle Start**: [Date]
-
 - **Week 3 Check-in**: [Date]
-
 - **Cycle End**: [Date]
-
 - **Cool-down Start**: [Date]
-
 - **Next Betting Table**: [Date]
 
 ## Notes
@@ -99,13 +91,9 @@ shaping / Try again next cycle]
 **Before moving to BUILDING phase, verify:**
 
 - [ ] All bets have assigned teams
-
 - [ ] Each bet has clear success criteria
-
 - [ ] Appetites are realistic for the scope
-
 - [ ] Teams understand they have full autonomy
-
 - [ ] Circuit breaker is clear: ship in 6 weeks or stop
 
 **Claude Code Reminder**: This cycle plan should be saved to

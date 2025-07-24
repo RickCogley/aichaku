@@ -8,23 +8,20 @@
 **What's going wrong**:
 
 - Current upgrade output tells users WHAT happened but not WHERE it happened
-
 - Missing spatial awareness causes user confusion and reduces confidence
-
 - Contradicts our "what did I do and where" principle from foundation quality
   work
-
 - Users reported this exact issue during v0.34.0 upgrade testing
 
 **Real user feedback**:
 
-````text
+```
 ❯ aichaku upgrade --global
 🪴 Aichaku: Growing from v0.33.0 to v0.34.0...
 ✅ User customizations detected - will be preserved
 🌿 Updating methodology files...
 ✨ Methodologies ready (49 files verified/updated)
-```text
+```
 
 **Missing**: WHERE are these 49 files? What directory structure was updated?
 
@@ -32,12 +29,12 @@
 
 **User tested the fixed upgrade command and confirmed the exact problem:**
 
-```text
+```
 🌿 Updating methodology files...
 ✨ Methodologies ready (49 files verified/updated)
 🌿 Updating standards library...
 ✨ Standards ready (45 files verified/updated)
-```text
+```
 
 **User feedback**: _"does not say WHERE the files are located. It's like a black
 box, the users gets no feedback about the folder the files have been installed
@@ -55,11 +52,8 @@ functionality rather than building new features.
 **Why this appetite**:
 
 - Leverages existing visual guidance framework from foundation work
-
 - Improves user experience without changing core upgrade logic
-
 - Addresses immediate user feedback from recent release
-
 - Can be implemented across all upgrade scenarios (global, project, CLI)
 
 ## Solution
@@ -73,14 +67,14 @@ Transform upgrade output from "what happened" to "what happened and where":
 
 **Before (current)**:
 
-```text
+```
 🪴 Aichaku: Growing from v0.33.0 to v0.34.0...
 ✨ Methodologies ready (49 files verified/updated)
-```text
+```
 
 **After (enhanced)**:
 
-```text
+```
 🪴 Aichaku: Growing from v0.33.0 to v0.34.0...
 
 📁 **What was updated:**
@@ -91,22 +85,17 @@ Global installation: ~/.claude/aichaku/
 └── aichaku.json     (metadata updated to v0.34.0)
 
 ✅ **What's next:**
-
 1. Run 'aichaku upgrade' in each project to sync
-
 2. Verify functionality: 'aichaku standards --show'
-
 3. Check for new features: 'aichaku help --new'
-```text
+```
 
 ### Visual guidance implementation
 
 Use existing framework components:
 
 1. **`createInstallationDiagram()`** - Show directory tree with file counts
-
 2. **`generateContextualFeedback()`** - Provide "what's next" guidance
-
 3. **`createUpgradeSummary()`** - Before/after version visualization
 
 ### Scope boundaries
@@ -114,21 +103,15 @@ Use existing framework components:
 **In scope**:
 
 - Enhance `aichaku upgrade --global` output (primary user feedback)
-
 - Enhance `aichaku upgrade` (project) output for consistency
-
 - Apply visual guidance to CLI upgrade checking
-
 - Consistent location awareness across all upgrade scenarios
 
 **Out of scope**:
 
 - Changing upgrade logic or file handling
-
 - New upgrade features or options
-
 - MCP server upgrade handling (separate system)
-
 - Rollback or undo functionality
 
 ## Rabbit holes
@@ -136,25 +119,19 @@ Use existing framework components:
 **Avoid over-engineering the visual output**
 
 - Don't create complex ASCII art or animations
-
 - Stick to simple directory trees and clear text
-
 - Don't slow down the upgrade process with elaborate displays
 
 **Don't change existing upgrade behavior**
 
 - Only enhance output, never modify what gets upgraded
-
 - Preserve all existing flags and options
-
 - Maintain backward compatibility for scripted usage
 
 **Avoid path complexity edge cases**
 
 - Use consistent path display (~/. notation for home directory)
-
 - Don't try to handle every possible installation location
-
 - Keep it simple: show the primary installation path
 
 ## No-gos
@@ -209,7 +186,7 @@ export async function upgrade(options: UpgradeOptions = {}) {
   console.log(installationDiagram);
   console.log(contextualFeedback);
 }
-```text
+```
 
 ### Directory tree visualization
 
@@ -226,13 +203,13 @@ const structure = {
 createDirectoryTree("~/.claude/aichaku", structure, {
   highlight: ["methodologies", "standards"],
 });
-```text
+```
 
 ## Fat marker sketches
 
 ### 1. Global upgrade with location context
 
-```text
+```
 🪴 Aichaku: Growing from v0.33.0 to v0.34.0...
 
 📁 Global installation updated:
@@ -243,11 +220,11 @@ createDirectoryTree("~/.claude/aichaku", structure, {
 └── 📄 aichaku.json        (→ v0.34.0)
 
 ✅ Ready! All projects now have latest methodologies.
-```text
+```
 
 ### 2. Project upgrade with inheritance visualization
 
-```text
+```
 🪴 Aichaku: Project synced with global v0.34.0
 
 📁 Project configuration:
@@ -256,48 +233,39 @@ createDirectoryTree("~/.claude/aichaku", structure, {
 └── 🔗 → ~/.claude/aichaku (methodologies & standards)
 
 ✅ Your project is now up to date!
-```text
+```
 
 ### 3. Version mismatch detection with clear guidance
 
-```text
+```
 ⚠️  Version mismatch detected:
-
    CLI: v0.34.0  📍 Your PATH
    Global: v0.33.0  📍 ~/.claude/aichaku
 
 🔧 Fix: aichaku upgrade --global
-```text
+```
 
 ## Technical implementation
 
 ### Files to modify
 
 1. **`src/commands/upgrade.ts`** - Add visual guidance to main upgrade function
-
 2. **`src/commands/upgrade-fix.ts`** - Enhance migration messaging
-
 3. **`src/utils/visual-guidance.ts`** - Extend as needed for upgrade-specific
    visuals
 
 ### Integration points
 
 - Use existing `Brand.*` functions for consistent messaging
-
 - Leverage `getAichakuPaths()` for accurate path display
-
 - Integrate with existing upgrade result interfaces
-
 - Maintain all existing error handling and edge cases
 
 ### Testing strategy
 
 - Update existing upgrade tests to expect enhanced output
-
 - Add visual guidance output verification
-
 - Test path display across different operating systems
-
 - Verify performance impact is negligible
 
 ## Success metrics
@@ -310,4 +278,3 @@ guidance framework proves its value
 This enhancement directly addresses user feedback while leveraging our
 investment in visual guidance infrastructure, providing immediate value with
 minimal risk.
-````

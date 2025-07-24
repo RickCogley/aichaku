@@ -9,7 +9,6 @@ Markdown files are edited.
 
 1. **Documentation Standards Review**: The hook should check this Markdown file
    against documentation standards
-
 2. **JSDoc Checker**: When we edit TypeScript files, the jsdoc-checker should
    provide guidance
 
@@ -18,9 +17,7 @@ Markdown files are edited.
 When this file is created, we expect:
 
 - The docs-review hook to analyze the Markdown structure
-
 - Suggestions for improvements if needed
-
 - Validation of Markdown formatting
 
 ## Notes

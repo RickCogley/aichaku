@@ -24,9 +24,7 @@
 ## Flow Metrics (Last 7 Days)
 
 - **Throughput**: 12 items completed
-
 - **Avg Cycle Time**: 4.2 hours
-
 - **Bottleneck**: Review stage (consider pairing)
 
 ## Notes

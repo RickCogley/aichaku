@@ -6,7 +6,6 @@ The `aichaku help --all` command does not currently show documentation
 standards, even though they have been implemented with:
 
 - `aichaku docs-standard` command
-
 - Multiple documentation standards available (Diátaxis, Google Style, etc.)
 
 ## Expected Behavior
@@ -24,7 +23,6 @@ The fix needs to be made in the help command implementation, likely in:
 ## Related Commands
 
 - `aichaku docs-standard --list` - Shows available documentation standards
-
 - `aichaku docs-standard --add diataxis-google` - Adds documentation standards
   to project
 

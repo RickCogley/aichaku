@@ -4,23 +4,19 @@
 
 1. **Too Sparse**: The current YAML example lacks context and descriptive
    information
-
 2. **Missing Directives**: The `METHODOLOGY_SECTION` rules aren't represented in
    YAML
-
 3. **No Clear Purpose**: Unclear what the YAML is for or how Claude should use
    it
-
 4. **No References**: No way to access full documentation when needed
 
 ## Proposed Enhanced YAML Structure
 
-````yaml
+```yaml
 # Aichaku Configuration
 # This YAML block provides Claude with methodology triggers and behavioral rules
 # Full documentation available at: ~/.claude/aichaku/
 aichaku:
-
   version: "3.0.0"
   description: "Adaptive methodology support system for software development"
   generated: "2025-01-15T20:30:00Z"
@@ -35,68 +31,45 @@ aichaku:
         mature: "🌳"
         complete: "🍃"
       rules:
-
         - "Always prefix Aichaku messages with 🪴 Aichaku:"
-
         - "Show growth phase in status updates"
-
         - "Never use garden metaphors in text"
 
     discussion_first:
       description: "Discuss and understand before creating any documents"
       phases:
-
         - name: "discussion"
           triggers: ["shape", "sprint", "kanban", "mvp", "methodology keywords"]
           actions:
-
             - "Acknowledge: '🪴 Aichaku: I see you're thinking about [topic]'"
-
             - "Ask clarifying questions"
-
             - "Help refine the approach"
           forbidden:
-
             - "Creating project folders"
-
             - "Creating documents"
-
             - "Asking 'Would you like me to create...'"
 
         - name: "ready"
           triggers:
-
             - "Let's create a project for this"
-
             - "I'm ready to start"
-
             - "Set up the project"
-
             - "Create the documentation"
           actions:
-
             - "Immediately say: '🪴 Aichaku: Creating project: [name]'"
-
             - "Create ALL documents in docs/projects/active/"
-
             - "Create STATUS.md FIRST"
           forbidden:
-
             - "Asking for confirmation"
-
             - "Saying 'Would you like me to...'"
 
     project_structure:
       base_path: "docs/projects/active/YYYY-MM-DD-{descriptive-name}/"
       required_files:
-
         - "STATUS.md (with mermaid diagram)"
-
         - "[methodology]-specific documents"
       forbidden_locations:
-
         - "Project root directory"
-
         - ".claude/user/ (reserved for customizations)"
       date_format: "Use TODAY's actual date from environment"
 
@@ -119,13 +92,9 @@ aichaku:
 
     git_workflow:
       on_complete:
-
         - "Create YYYY-MM-DD-{Project-Name}-CHANGE-LOG.md"
-
         - "Rename folder: active-* → done-*"
-
         - "Use conventional commits: feat:/fix:/docs:/refactor:"
-
         - "Ask: 'Work appears complete. Shall I commit and push?'"
 
   # Available methodologies with full context
@@ -155,9 +124,7 @@ aichaku:
         building: "🔨"
       cycle: "6 weeks build + 2 weeks cooldown"
       documents:
-
         - "pitch.md"
-
         - "hill-chart.md"
       reference: "~/.claude/aichaku/methodologies/shape-up/"
 
@@ -188,9 +155,7 @@ aichaku:
         sprint: "🏃"
         backlog: "📋"
       documents:
-
         - "sprint-planning.md"
-
         - "retrospective.md"
       reference: "~/.claude/aichaku/methodologies/scrum/"
 
@@ -215,7 +180,6 @@ aichaku:
         card: "📍"
         flow: "🌊"
       documents:
-
         - "kanban-board.md"
       reference: "~/.claude/aichaku/methodologies/kanban/"
 
@@ -232,9 +196,7 @@ aichaku:
         experiment: "🧪"
         metrics: "📊"
       documents:
-
         - "experiment-plan.md"
-
         - "mvp-definition.md"
       reference: "~/.claude/aichaku/methodologies/lean/"
 
@@ -252,18 +214,12 @@ aichaku:
         ]
       best_for: "Quality-critical code, learning teams, complex technical challenges"
       key_practices:
-
         - "Test-Driven Development"
-
         - "Pair Programming"
-
         - "Continuous Integration"
-
         - "Refactoring"
-
         - "Simple Design"
       documents:
-
         - "xp-practices.md"
       reference: "~/.claude/aichaku/methodologies/xp/"
 
@@ -276,7 +232,6 @@ aichaku:
         from_scrum: ["Roles", "Planning", "Reviews"]
         from_kanban: ["Continuous flow", "WIP limits", "Pull system"]
       documents:
-
         - "scrumban-board.md"
       reference: "~/.claude/aichaku/methodologies/scrumban/"
 
@@ -295,13 +250,9 @@ aichaku:
       ]
       focus: "Essential web application security verification"
       key_rules:
-
         - "A01: Broken Access Control"
-
         - "A02: Cryptographic Failures"
-
         - "A03: Injection"
-
         - "...and 7 more"
       applies_to: ["Web APIs", "Web Applications", "Services"]
       reference: "~/.claude/aichaku/standards/security/owasp-web.md"
@@ -313,40 +264,29 @@ aichaku:
       focus: "Write tests before implementation code"
       cycle: "Red → Green → Refactor"
       rules:
-
         - "Write a failing test first"
-
         - "Write minimal code to pass"
-
         - "Refactor while keeping tests green"
       benefits: ["Better design", "Full coverage", "Confidence in changes"]
       reference: "~/.claude/aichaku/standards/development/tdd.md"
-```text
+```
 
 ## Key Improvements
 
 1. **Rich Context**: Each item has name, description, and purpose
-
 2. **Directives Included**: All behavioral rules from METHODOLOGY_SECTION in
    structured format
-
 3. **Clear Organization**: Separates directives, methodologies, and standards
-
 4. **Actionable Information**: Specific triggers, actions, and forbidden
    behaviors
-
 5. **References**: Points to full documentation without bloating the file
-
 6. **Examples**: Shows exact format for progress displays and diagrams
-
 7. **Metadata**: Version, generation time, and description for context
 
 ## Size Comparison
 
 - **Old approach**: Full Markdown content = 50KB+
-
 - **New approach**: Rich YAML metadata = ~3-4KB
-
 - **Reduction**: ~92% while maintaining all essential information
 
 ## Usage by Claude
@@ -354,18 +294,12 @@ aichaku:
 When Claude reads this YAML:
 
 1. Immediately understands the behavioral rules (directives)
-
 2. Can detect methodology triggers in conversation
-
 3. Knows exactly what documents to create
-
 4. Has references to full content if needed
-
 5. Can show proper progress indicators
-
 6. Follows the discussion-first approach
 
 The `reference` fields use the path format that Claude can understand, allowing
 it to request full content when needed without embedding everything in
 CLAUDE.md.
-````

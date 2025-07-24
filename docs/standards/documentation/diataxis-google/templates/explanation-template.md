@@ -18,21 +18,19 @@ this concept exists]
 [Fundamental ideas that underpin the concept]
 
 1. **[Principle 1]**: [Explanation]
-
 2. **[Principle 2]**: [Explanation]
-
 3. **[Principle 3]**: [Explanation]
 
 ### Architecture
 
 [Visual or textual representation of how components interact]
 
-````mermaid
+```mermaid
 graph TD
     A[Component A] --> B[Component B]
     B --> C[Component C]
     B --> D[Component D]
-```text
+```
 
 ### Key components
 
@@ -53,15 +51,12 @@ graph TD
 **Advantages**:
 
 - [Benefit 1]
-
 - [Benefit 2]
-
 - [Benefit 3]
 
 **Trade-offs**:
 
 - [Limitation 1]
-
 - [Limitation 2]
 
 ### Alternatives considered
@@ -84,7 +79,7 @@ graph TD
 ```code
 // Example implementation
 [code showing the pattern]
-```text
+```
 
 ### Pattern 2: [Name]
 
@@ -95,17 +90,13 @@ graph TD
 ### Do
 
 - ✅ [Recommended practice 1]
-
 - ✅ [Recommended practice 2]
-
 - ✅ [Recommended practice 3]
 
 ### Don't
 
 - ❌ [Anti-pattern 1]
-
 - ❌ [Anti-pattern 2]
-
 - ❌ [Anti-pattern 3]
 
 ## Performance considerations
@@ -147,16 +138,11 @@ graph TD
 [Key takeaways and main points to remember]
 
 - [Main point 1]
-
 - [Main point 2]
-
 - [Main point 3]
 
 ## Further reading
 
 - [Academic paper or specification](link)
-
 - [Related explanation](link)
-
 - [External resource](link)
-````

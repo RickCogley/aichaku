@@ -9,7 +9,6 @@ application scenarios.
 Application configuration involves two distinct scenarios:
 
 1. **Development configuration**: Project metadata and build-time settings
-
 2. **User configuration**: Runtime settings for installed applications
 
 Think of this like the difference between an architect's blueprint (development)
@@ -22,7 +21,7 @@ and how each homeowner arranges their furniture (user configuration).
 Create a `deno.json` file in your project root to define project metadata and
 tooling configuration:
 
-````json
+```json
 {
   "name": "@myorg/app-name",
   "version": "1.0.0",
@@ -41,7 +40,7 @@ tooling configuration:
     "jsx": "react"
   }
 }
-```text
+```
 
 ### Create a Configuration Schema
 
@@ -64,7 +63,7 @@ export const ConfigSchema = z.object({
 });
 
 export type Config = z.infer<typeof ConfigSchema>;
-```text
+```
 
 ### Implement Layered Configuration
 
@@ -90,7 +89,7 @@ export async function loadConfig(): Promise<Config> {
   // Validate the final result
   return ConfigSchema.parse(config);
 }
-```text
+```
 
 ### Handle Secrets Securely
 
@@ -113,7 +112,7 @@ export class SecretManager {
     return this.secrets.get(key);
   }
 }
-```text
+```
 
 ## User Configuration for Installed Applications
 
@@ -158,13 +157,13 @@ export function getDataDir(): string {
       return join(home!, ".local", "share", "theapp");
   }
 }
-```text
+```
 
 ### Structure User Configuration
 
 Organize configuration files by purpose:
 
-```text
+```
 ~/.config/theapp/
 ├── config.json         # User preferences
 ├── credentials.json    # Encrypted sensitive data
@@ -176,7 +175,7 @@ Organize configuration files by purpose:
 ├── cache/             # Temporary data
 ├── logs/              # Application logs
 └── data.db            # User data
-```text
+```
 
 ### Implement Configuration Manager
 
@@ -262,7 +261,7 @@ export class UserConfigManager {
     this.config = { ...this.config, ...updates };
   }
 }
-```text
+```
 
 ### Handle First Run
 
@@ -306,7 +305,7 @@ export async function handleFirstRun() {
     new Date().toISOString(),
   );
 }
-```text
+```
 
 ### Implement Configuration Migrations
 
@@ -349,7 +348,7 @@ export async function migrateConfig(config: any): Promise<UserConfig> {
 
   return current;
 }
-```text
+```
 
 ### Define Configuration Precedence
 
@@ -382,11 +381,11 @@ export async function loadCompleteConfig() {
 
   return validateConfig(config);
 }
-```text
+```
 
 ## Configuration Flow Diagram
 
-```text
+```
 Application Startup
         │
         ▼
@@ -413,38 +412,27 @@ Application Startup
             │ Run App with │
             │ Final Config │
             └──────────────┘
-```text
+```
 
 ## Best Practices Summary
 
 ### Do
 
 - Follow platform conventions for file locations
-
 - Validate configuration at startup
-
 - Provide sensible defaults
-
 - Support configuration layers with clear precedence
-
 - Handle migrations between versions
-
 - Keep secrets separate and secure
-
 - Create configuration directories recursively
 
 ### Don't
 
 - Log sensitive configuration values
-
 - Hardcode paths or values
-
 - Mix user data with configuration
-
 - Assume configuration files exist
-
 - Skip validation
-
 - Store unencrypted sensitive data
 
 ## Testing Configuration
@@ -477,7 +465,7 @@ Deno.test("handles config migration", async () => {
   assertEquals(migrated.version, "1.1");
   assertEquals(migrated.preferences.theme, "dark");
 });
-```text
+```
 
 ## Troubleshooting
 
@@ -496,8 +484,5 @@ exist.
 ## Further Reading
 
 - [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
-
 - [Deno Configuration Documentation](https://deno.land/manual/getting*started/configuration*file)
-
 - [Application Configuration Best Practices](https://12factor.net/config)
-````

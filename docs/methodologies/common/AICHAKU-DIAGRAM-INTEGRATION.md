@@ -15,7 +15,7 @@ documents with appropriate diagrams:
 
 #### Shape Up Integration
 
-````mermaid
+```mermaid
 graph TD
     Problem[Problem Definition] --> Appetite[Define Appetite]
     Appetite --> Solution[Solution Outline]
@@ -26,14 +26,12 @@ graph TD
     style Appetite fill:#2196f3,stroke:#1976d2
     style Solution fill:#4caf50,stroke:#388e3c
     style Pitch fill:#9c27b0,stroke:#7b1fa2
-```text
+```
 
 **When to Generate**:
 
 - Problem identification triggers context diagram
-
 - Solution shaping creates component diagrams
-
 - Pitch writing includes user journey diagrams
 
 #### Scrum Integration
@@ -50,14 +48,12 @@ graph LR
     style Daily fill:#90EE90
     style Review fill:#FFB6C1
     style Retro fill:#DDA0DD
-```text
+```
 
 **When to Generate**:
 
 - Sprint planning creates Gantt charts
-
 - User story breakdown generates flowcharts
-
 - Retrospectives use journey diagrams
 
 #### Kanban Integration
@@ -75,14 +71,12 @@ graph LR
     style Progress fill:#FFA500
     style Blocked fill:#FF6B6B
     style Done fill:#4ECDC4
-```text
+```
 
 **When to Generate**:
 
 - Board setup creates state diagrams
-
 - Flow analysis generates flow charts
-
 - Metrics tracking uses pie charts
 
 ### 2. EXECUTION MODE Integration
@@ -104,7 +98,7 @@ sequenceDiagram
     Gen->>Docs: Update Class Diagrams
     Gen->>Docs: Update Sequence Diagrams
     Docs-->>Dev: Updated Documentation
-```text
+```
 
 #### Database Schema Updates
 
@@ -117,7 +111,7 @@ graph TD
 
     style Schema fill:#1976d2,stroke:#0d47a1,color:#ffffff
     style Generate fill:#388e3c,stroke:#2e7d32,color:#ffffff
-```text
+```
 
 ### 3. IMPROVEMENT MODE Integration
 
@@ -139,7 +133,7 @@ journey
       Improve Daily Standups: 4: Team
       Refactor Core Module  : 3: Team
       Add Integration Tests : 5: Team
-```text
+```
 
 #### Performance Optimization
 
@@ -156,7 +150,7 @@ graph TD
     style Measure fill:#64b5f6,stroke:#1976d2
     style Validate fill:#ffd54f,stroke:#f9a825
     style Document fill:#81c784,stroke:#388e3c
-```text
+```
 
 ## Methodology-Specific Templates
 
@@ -164,7 +158,7 @@ graph TD
 
 #### Pitch Template Enhancement
 
-```markdown
+````markdown
 # Shape Up Pitch: [Title]
 
 ## Problem
@@ -174,7 +168,6 @@ graph TD
 ## Appetite
 
 - Time: [6 weeks / 2 weeks]
-
 - Team: [Size]
 
 ## Solution
@@ -189,7 +182,8 @@ graph TD
     style A fill:#ffcdd2,stroke:#d32f2f
     style B fill:#fff3e0,stroke:#f57c00
     style C fill:#c8e6c9,stroke:#388e3c
-```text
+```
+````
 
 ## Rabbit Holes
 
@@ -214,10 +208,10 @@ sequenceDiagram
     D-->>A: [Response]
     A-->>F: [Result]
     F-->>U: [Updated UI]
-```text
+```
 
+````
 #### Hill Chart Template
-
 ```markdown
 # Hill Chart: [Project Name]
 
@@ -239,20 +233,18 @@ graph LR
     style B fill:#fff3e0,stroke:#f57c00
     style C fill:#c8e6c9,stroke:#388e3c
     style D fill:#e8f5e8,stroke:#4caf50
-```text
+````
 
 ## Weekly Progress
 
 - Week 1: [Status and position]
-
 - Week 2: [Status and position]
-
 - ...
 
+````
 ### Scrum Templates
 
 #### Sprint Planning Enhancement
-
 ```markdown
 # Sprint Planning: Sprint [Number]
 
@@ -260,11 +252,8 @@ graph LR
 [Clear, concise goal]
 
 ## Capacity
-
 - Team: [X] developers
-
 - Velocity: [Y] story points
-
 - Sprint duration: [Z] days
 
 ## Sprint Backlog
@@ -285,7 +274,7 @@ graph TD
     style US1 fill:#4caf50,stroke:#388e3c,color:#ffffff
     style US2 fill:#4caf50,stroke:#388e3c,color:#ffffff
     style US3 fill:#4caf50,stroke:#388e3c,color:#ffffff
-```text
+````
 
 ## Timeline
 
@@ -304,10 +293,10 @@ gantt
     User Story 1       :us1, 2024-01-09, 3d
     User Story 2       :us2, 2024-01-10, 5d
     User Story 3       :us3, 2024-01-12, 4d
-```text
+```
 
+````
 #### User Story Template
-
 ```markdown
 # User Story: [Title]
 
@@ -315,11 +304,8 @@ gantt
 As a [user type], I want [goal] so that [benefit].
 
 ## Acceptance Criteria
-
 - [ ] [Criterion 1]
-
 - [ ] [Criterion 2]
-
 - [ ] [Criterion 3]
 
 ## Flow Diagram
@@ -337,7 +323,7 @@ graph TD
     style Start fill:#e3f2fd,stroke:#1976d2
     style Success fill:#e8f5e8,stroke:#388e3c
     style Error fill:#ffebee,stroke:#d32f2f
-```text
+````
 
 ## Technical Implementation
 
@@ -357,12 +343,12 @@ sequenceDiagram
     S-->>C: [Response]
     C-->>UI: [Update]
     UI-->>U: [Feedback]
-```text
+```
 
+````
 ### Kanban Templates
 
 #### Board Setup Template
-
 ```markdown
 # Kanban Board: [Project Name]
 
@@ -386,28 +372,23 @@ stateDiagram-v2
     Review : Code review<br/>Testing
     Blocked : Waiting<br/>Impediment exists
     Done : Completed<br/>Meets DoD
-```text
+````
 
 ## Work in Progress Limits
 
 - To Do: No limit
-
 - In Progress: 3 items
-
 - Review: 2 items
 
 ## Definition of Done
 
 - [ ] Code review completed
-
 - [ ] Tests written and passing
-
 - [ ] Documentation updated
-
 - [ ] Deployed to staging
 
+````
 #### Flow Metrics Template
-
 ```markdown
 # Flow Metrics: [Time Period]
 
@@ -425,7 +406,7 @@ graph LR
     style W2 fill:#e8f5e8
     style W3 fill:#fff3e0
     style W4 fill:#f3e5f5
-```text
+````
 
 ## Lead Time Distribution
 
@@ -435,7 +416,7 @@ pie title Lead Time Distribution
     "4-7 days" : 40
     "8-14 days" : 25
     "15+ days" : 10
-```text
+```
 
 ## Cycle Time Trend
 
@@ -449,8 +430,9 @@ graph TD
     style A fill:#e3f2fd
     style B fill:#e8f5e8
     style C fill:#fff3e0
-```text
+```
 
+````
 ## Automated Integration
 
 ### GitHub Actions Integration
@@ -458,22 +440,16 @@ graph TD
 ```yaml
 name: Aichaku Diagram Generation
 on:
-
   push:
     paths:
-
       - '.claude/output/active-*/**'
-
       - 'src/**/*.ts'
-
       - 'database/schema.sql'
 
 jobs:
-
   generate-diagrams:
     runs-on: ubuntu-latest
     steps:
-
     - uses: actions/checkout@v3
 
     - name: Setup Node.js
@@ -524,7 +500,7 @@ jobs:
         git add .claude/output/
         git commit -m "docs: update generated diagrams for active projects" || true
         git push
-```text
+````
 
 ### VS Code Integration
 
@@ -540,7 +516,7 @@ jobs:
     "*.mmd": "mermaid"
   }
 }
-```text
+```
 
 ## Best Practices for Aichaku Integration
 
@@ -549,11 +525,8 @@ jobs:
 Generate diagrams based on methodology context:
 
 - **Shape Up**: Focus on problem-solution flows and hill charts
-
 - **Scrum**: Emphasize sprint timelines and user story breakdowns
-
 - **Kanban**: Show workflow states and flow metrics
-
 - **Lean**: Highlight experiments and learning cycles
 
 ### 2. Progressive Enhancement
@@ -561,9 +534,7 @@ Generate diagrams based on methodology context:
 Start with basic diagrams and enhance based on project complexity:
 
 - Simple projects: Basic flowcharts and state diagrams
-
 - Complex projects: Detailed sequence diagrams and architecture views
-
 - Large systems: Multi-level C4 diagrams and service meshes
 
 ### 3. Lifecycle Management
@@ -571,9 +542,7 @@ Start with basic diagrams and enhance based on project complexity:
 Align diagram updates with project phases:
 
 - **Planning**: Architecture and flow diagrams
-
 - **Execution**: Code-generated diagrams and progress tracking
-
 - **Review**: Retrospective journeys and improvement flows
 
 ### 4. Consistency Across Methodologies
@@ -581,9 +550,7 @@ Align diagram updates with project phases:
 Maintain visual consistency while adapting to methodology specifics:
 
 - Use consistent color schemes across all diagrams
-
 - Standardize iconography and symbols
-
 - Apply uniform styling for similar concepts
 
 ## Summary
@@ -597,10 +564,6 @@ software engineering best practices.
 The result is documentation that:
 
 - **Stays Current**: Automatically updates with code changes
-
 - **Matches Methodology**: Provides relevant visuals for each approach
-
 - **Scales Appropriately**: Grows in complexity with project needs
-
 - **Maintains Quality**: Follows established patterns and best practices
-````

@@ -14,24 +14,21 @@ commands, ensuring you know that Aichaku's automation is active.
 
 ### Using the Aichaku CLI (Recommended)
 
-````bash
+```bash
 # Install just the feedback hook globally
 aichaku hooks --install aichaku-feedback --global
 
 # Or install it as part of the essential hooks set
 aichaku hooks --install essential --global
-```text
+```
 
 ### Manual Installation
 
 If you prefer to add it manually via Claude Code's `/hooks` command:
 
 1. Use `/hooks` in Claude Code
-
 2. Select "PreToolUse" as the hook type
-
 3. Add this configuration:
-
    ```json
    {
      "name": "Aichaku Feedback",
@@ -43,7 +40,7 @@ If you prefer to add it manually via Claude Code's `/hooks` command:
        }
      ]
    }
-````
+   ```
 
 ## What You'll See
 
@@ -52,20 +49,13 @@ If you prefer to add it manually via Claude Code's `/hooks` command:
 When you work with files, you'll see messages like:
 
 - `🪴 Aichaku: Monitoring [filename]`
-
 - `📁 Project file - will track progress` (for files in
   `/docs/projects/active/`)
-
 - `📖 Markdown - will review standards` (for .md files)
-
 - `📚 Code - will check JSDoc` (for TypeScript/JavaScript files)
-
 - `🔒 Code - will check security` (for Python, Java, Go, etc.)
-
 - `⚙️ Workflow - will validate actions` (for GitHub Actions files)
-
 - `🧪 Test file - will check coverage` (for test files)
-
 - `🔐 Config - extra security checks` (for .env and config files)
 
 ### For Commands
@@ -73,11 +63,8 @@ When you work with files, you'll see messages like:
 When you run commands, you'll see:
 
 - `📝 Will check conventional format` (for git commit)
-
 - `🚀 Will track CI/CD workflows` (for git push)
-
 - `🔍 Will check security advisories` (for npm install/yarn add)
-
 - `🧪 Will track test results` (for test commands)
 
 ### Generic Confirmation
@@ -89,11 +76,8 @@ For other operations:
 ## Key Features
 
 1. **Non-blocking**: Always exits with code 0 to avoid disrupting your workflow
-
 2. **Brief**: Shows just enough information to confirm hooks are working
-
 3. **Context-aware**: Different messages based on file type or command
-
 4. **Visual**: Uses console.error() to ensure messages appear in Claude Code's
    output
 
@@ -102,21 +86,15 @@ For other operations:
 If you don't see feedback after installing:
 
 1. **Restart Claude Code** - Hooks require a restart to take effect
-
 2. **Verify installation**:
-
    ```bash
    aichaku hooks --show
    ```
-
 3. **Check the hook is executable**:
-
    ```bash
    ls -la ~/.claude/aichaku/hooks/aichaku-hooks.ts
    ```
-
 4. **Look for errors**:
-
    ```bash
    tail -f /tmp/aichaku-hooks.log
    ```
@@ -132,11 +110,8 @@ this file.
 The feedback hook is designed to be extremely lightweight:
 
 - Minimal processing (just pattern matching)
-
 - Quick exit (always exits with 0)
-
 - No file I/O except debug logging
-
 - No external dependencies
 
 This ensures it won't slow down your Claude Code experience while providing the

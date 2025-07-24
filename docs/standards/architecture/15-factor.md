@@ -5,42 +5,28 @@
 Modern cloud-native applications should follow these principles:
 
 1. **Codebase** - One codebase tracked in revision control
-
 2. **Dependencies** - Explicitly declare and isolate dependencies
-
 3. **Config** - Store config in the environment
-
 4. **Backing services** - Treat backing services as attached resources
-
 5. **Build, release, run** - Strictly separate build and run stages
-
 6. **Processes** - Execute the app as one or more stateless processes
-
 7. **Port binding** - Export services via port binding
-
 8. **Concurrency** - Scale out via the process model
-
 9. **Disposability** - Maximize robustness with fast startup and graceful
    shutdown
-
 10. **Dev/prod parity** - Keep development, staging, and production as similar
     as possible
-
 11. **Logs** - Treat logs as event streams
-
 12. **Admin processes** - Run admin/management tasks as one-off processes
-
 13. **API first** - Design APIs before implementation
-
 14. **Telemetry** - Collect metrics, logs, and traces
-
 15. **Authentication & authorization** - Centralized auth for all services
 
 ### Implementation Guidelines
 
 #### Configuration Management
 
-````typescript
+```typescript
 // ✅ Good: Environment variables
 const config = {
   port: process.env.PORT || 3000,
@@ -55,7 +41,7 @@ const config = {
   dbUrl: "postgres://prod-db:5432/myapp",
   redisUrl: "redis://prod-cache:6379",
 };
-```text
+```
 
 #### Stateless Processes
 
@@ -81,7 +67,7 @@ export async function handleRequest(req: Request): Promise<Response> {
   userCache.set(userId, userData);
   return new Response(JSON.stringify(userData));
 }
-```text
+```
 
 #### Backing Services
 
@@ -103,7 +89,7 @@ class DatabaseService {
     this.connection = await postgres.connect("postgres://prod-db:5432/myapp");
   }
 }
-```text
+```
 
 #### Graceful Shutdown
 
@@ -129,7 +115,7 @@ process.on("SIGTERM", async () => {
     process.exit(1);
   }, 10000);
 });
-```text
+```
 
 #### Telemetry Implementation
 
@@ -164,7 +150,7 @@ export async function processOrder(order: Order) {
     timer.end();
   }
 }
-```text
+```
 
 ### Cloud-Native Patterns
 
@@ -186,7 +172,7 @@ app.get("/health/ready", async (req, res) => {
     res.status(503).json({ status: "not ready", error: error.message });
   }
 });
-```text
+```
 
 #### Feature Flags
 
@@ -203,7 +189,7 @@ export function processCheckout(order: Order) {
   }
   return processCheckoutV1(order);
 }
-```text
+```
 
 ### Container Considerations
 
@@ -223,20 +209,15 @@ COPY . .
 EXPOSE 3000
 USER node
 CMD ["node", "server.js"]
-```text
+```
 
 ### Key Benefits
 
 - **Scalability**: Apps can scale horizontally
-
 - **Maintainability**: Clear separation of concerns
-
 - **Portability**: Runs consistently across environments
-
 - **Resilience**: Graceful handling of failures
-
 - **Observability**: Built-in monitoring and logging
 
 Remember: 15-factor apps are designed for modern cloud platforms. Each factor
 addresses specific challenges in distributed, containerized environments.
-````

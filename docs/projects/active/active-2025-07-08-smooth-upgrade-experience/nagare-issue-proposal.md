@@ -11,7 +11,7 @@ that these modifications pass formatting and type checking.
 
 ### Current Flow (Problematic)
 
-````mermaid
+```mermaid
 graph TD
     A[Run pre-release hooks] --> B[Modify files<br/>- version.ts<br/>- CHANGELOG.md<br/>- deno.json]
     B --> C[Create git tag]
@@ -20,7 +20,7 @@ graph TD
     E --> F{CI passes?}
     F -->|No| G[Tag points to broken commit!<br/>Manual intervention required]
     F -->|Yes| H[Release succeeds]
-```text
+```
 
 ### Proposed Flow (Fixed)
 
@@ -35,7 +35,7 @@ graph TD
     G --> H[Push to remote]
     H --> I[CI runs on tagged commit]
     I --> J[Release succeeds]
-```text
+```
 
 ## Code Changes Required in Nagare
 
@@ -55,7 +55,7 @@ if (this.config.release?.autoFix?.enabled) {
 
 // NEW: Validate formatted files
 await this.validateModifiedFiles();
-```text
+```
 
 ### 2. Implement `formatModifiedFiles` Method
 
@@ -79,7 +79,7 @@ private async formatModifiedFiles(): Promise<void> {
     }
   }
 }
-```text
+```
 
 ### 3. Implement `validateModifiedFiles` Method
 
@@ -122,7 +122,7 @@ private async validateModifiedFiles(): Promise<void> {
     throw new Error("Type checking failed.");
   }
 }
-```text
+```
 
 ### 4. Add Rollback Support
 
@@ -151,7 +151,7 @@ export async function rollbackRelease(version: string): Promise<void> {
     throw error;
   }
 }
-```text
+```
 
 ### 5. Add New Configuration Options
 
@@ -171,19 +171,15 @@ export interface NagareConfig {
     };
   };
 }
-```text
+```
 
 ## Benefits
 
 1. **No more broken tags**: Tags will only be created after validation passes
-
 2. **Faster feedback**: Errors caught locally before pushing
-
 3. **Automatic formatting**: Files modified by nagare are automatically
    formatted
-
 4. **Easy rollback**: If something goes wrong, rollback is automated
-
 5. **CI always passes**: Since validation happens before tagging
 
 ## Migration Guide
@@ -205,26 +201,21 @@ export default defineConfig({
     },
   },
 });
-```text
+```
 
 ## Testing Plan
 
 1. Create a test project with intentional formatting issues
-
 2. Run nagare release and verify it fails BEFORE creating tags
-
 3. Fix formatting issues and verify release succeeds
-
 4. Test rollback functionality if tag was accidentally created
 
 ## Alternative Solutions Considered
 
 1. **Run formatting in git pre-commit hooks**: This doesn't help with files
    modified by nagare itself
-
 2. **Add formatting to CI only**: This discovers issues too late, after tags are
    created
-
 3. **Manual pre-release checklist**: Error-prone and defeats the purpose of
    automation
 
@@ -234,4 +225,3 @@ This enhancement would make nagare's release process much more reliable by
 ensuring that only properly formatted and validated code gets tagged and
 released. The current "tag first, validate later" approach causes unnecessary
 friction and manual intervention in what should be an automated process.
-````

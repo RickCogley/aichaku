@@ -6,21 +6,15 @@ This article explains how to [task]. Use this approach when you want to
 **In this article**
 
 - [Prerequisites](#prerequisites)
-
 - [Main task](#main-task)
-
 - [Verify results](#verify-results)
-
 - [Clean up resources](#clean-up-resources)
-
 - [Troubleshooting](#troubleshooting)
 
 ## Prerequisites
 
 - [Specific requirement with version]
-
 - [Permission or access needed]
-
 - Complete [prerequisite task](link) if you haven't already
 
 ## [Main task]
@@ -60,7 +54,7 @@ the notifications area.
 
 If you prefer working from the command line, or need to automate this task:
 
-````bash
+```bash
 # Set your variables
 RESOURCE_NAME="your-resource-name"
 LOCATION="eastus"
@@ -71,7 +65,7 @@ az resource create \
   --location $LOCATION \
   --type Standard \
   --size Medium
-```text
+```
 
 > [!IMPORTANT]
 > Replace the example values with your actual values. The location must be a
@@ -92,7 +86,7 @@ New-AzResource `
   -Location $location `
   -Type Standard `
   -Size Medium
-```text
+```
 
 ## Verify results
 
@@ -114,11 +108,8 @@ To avoid unnecessary charges, remove resources you no longer need:
 > This permanently deletes your [resource] and all associated data.
 
 1. Select your [resource].
-
 2. Select **Delete**.
-
 3. Type the resource name to confirm.
-
 4. Select **Delete**.
 
 ## Troubleshooting
@@ -130,17 +121,13 @@ To avoid unnecessary charges, remove resources you no longer need:
 **Possible causes**:
 
 - The operation is still in progress
-
 - You're looking in the wrong location
-
 - You don't have permission to view the resource
 
 **Solutions**:
 
 1. Wait 2-3 minutes and refresh the page.
-
 2. Check that you're in the correct subscription and region.
-
 3. Verify your permissions by going to **Access control (IAM)**.
 
 ### Creation fails with error "[specific error]"
@@ -153,9 +140,7 @@ message]".
 **Solution**:
 
 1. [Solution step 1]
-
 2. [Solution step 2]
-
 3. If the problem persists, [additional action]
 
 ### Performance issues
@@ -165,26 +150,18 @@ message]".
 **Possible causes**:
 
 - Insufficient resources allocated
-
 - Network connectivity issues
-
 - Configuration problems
 
 **Solutions**:
 
 1. Check the resource metrics in the monitoring dashboard.
-
 2. Consider scaling up to a larger size.
-
 3. Review the configuration settings for optimization opportunities.
 
 ## Next steps
 
 - [Learn about advanced features](link)
-
 - [Configure security settings](link)
-
 - [Set up monitoring and alerts](link)
-
 - [Integrate with other services](link)
-````

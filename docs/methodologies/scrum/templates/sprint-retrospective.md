@@ -20,31 +20,22 @@
 ### 😊 What Went Well (Continue)
 
 - [Team collaboration was excellent during critical bug fix]
-
 - [Daily standups were focused and efficient]
-
 - [Pair programming on complex features worked well]
-
 - [Clear acceptance criteria made testing easier]
 
 ### 😟 What Didn't Go Well (Stop)
 
 - [Too many interruptions during sprint]
-
 - [Dependencies on external team caused delays]
-
 - [Some stories were too large and poorly defined]
-
 - [Build pipeline failures slowed development]
 
 ### 💡 Ideas for Improvement (Start)
 
 - [Implement better story breakdown in refinement]
-
 - [Create dependency tracking board]
-
 - [Add automated tests to prevent build failures]
-
 - [Schedule focused work time blocks]
 
 ## Root Cause Analysis
@@ -54,13 +45,9 @@
 **5 Whys Analysis**:
 
 1. Why? [First level cause]
-
 2. Why? [Second level cause]
-
 3. Why? [Third level cause]
-
 4. Why? [Fourth level cause]
-
 5. Why? [Root cause]
 
 ## Action Items
@@ -76,13 +63,9 @@
 Rate each area from 1 (poor) to 5 (excellent):
 
 - Communication: ⭐⭐⭐⭐☆
-
 - Collaboration: ⭐⭐⭐⭐⭐
-
 - Technical Practices: ⭐⭐⭐☆☆
-
 - Process Adherence: ⭐⭐⭐⭐☆
-
 - Team Morale: ⭐⭐⭐⭐☆
 
 ## Kudos & Recognition
@@ -90,9 +73,7 @@ Rate each area from 1 (poor) to 5 (excellent):
 🌟 **Shout-outs to team members**:
 
 - [Name] for [specific contribution]
-
 - [Name] for [going above and beyond]
-
 - [Name] for [helping teammates]
 
 ## Experiments for Next Sprint
@@ -104,9 +85,7 @@ Rate each area from 1 (poor) to 5 (excellent):
 ## Key Learnings
 
 1. [Important insight gained this sprint]
-
 2. [Technical learning or discovery]
-
 3. [Process improvement validated]
 
 ## Follow-up from Previous Retrospective
@@ -118,7 +97,6 @@ Rate each area from 1 (poor) to 5 (excellent):
 ## Team Agreements Updated
 
 - [Any new team agreement or working arrangement]
-
 - [Modified existing agreement]
 
 ## Notes for Next Sprint

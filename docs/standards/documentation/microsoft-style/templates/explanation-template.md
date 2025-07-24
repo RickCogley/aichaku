@@ -5,15 +5,10 @@
 **In this article**
 
 - [What is [concept]?](#what-is-concept)
-
 - [How it works](#how-it-works)
-
 - [When to use it](#when-to-use-it)
-
 - [Architecture](#architecture)
-
 - [Best practices](#best-practices)
-
 - [Common scenarios](#common-scenarios)
 
 ## What is [concept]?
@@ -26,9 +21,7 @@ Think of [concept] like [familiar analogy]. Just as [analogy explanation],
 ### Key benefits
 
 - **[Benefit 1]**: [How it helps users]
-
 - **[Benefit 2]**: [Specific advantage]
-
 - **[Benefit 3]**: [Business or technical value]
 
 ### Core components
@@ -36,16 +29,14 @@ Think of [concept] like [familiar analogy]. Just as [analogy explanation],
 [Concept] consists of these main parts:
 
 - **[Component 1]**: [What it does]
-
 - **[Component 2]**: [What it does]
-
 - **[Component 3]**: [What it does]
 
 ## How it works
 
 [High-level explanation using diagrams where helpful]
 
-````mermaid
+```mermaid
 graph LR
     A[User Request] --> B[Component 1]
     B --> C[Component 2]
@@ -53,7 +44,7 @@ graph LR
 
     style A fill:#e1f5fe
     style D fill:#c8e6c9
-```text
+```
 
 Let's break this down:
 
@@ -79,21 +70,15 @@ For those interested in the technical details:
 [Concept] works best when:
 
 - ✅ You need to [scenario 1]
-
 - ✅ Your application requires [requirement]
-
 - ✅ You want to [goal]
-
 - ✅ Performance is important for [use case]
 
 Consider alternatives when:
 
 - ❌ Your use case involves [conflicting scenario]
-
 - ❌ You need [different requirement]
-
 - ❌ Simplicity is more important than [trade-off]
-
 - ❌ You're working with [incompatible technology]
 
 ## Architecture
@@ -125,7 +110,7 @@ graph TB
     D --> F
     E --> F
     F --> G
-```text
+```
 
 ### Component details
 
@@ -136,15 +121,12 @@ graph TB
 **Responsibilities**:
 
 - [Responsibility 1]
-
 - [Responsibility 2]
-
 - [Responsibility 3]
 
 **Key features**:
 
 - [Feature 1]
-
 - [Feature 2]
 
 ## Best practices
@@ -156,17 +138,13 @@ Follow these guidelines to get the most from [concept]:
 #### Do
 
 - ✅ [Specific recommended action]
-
 - ✅ [Another good practice]
-
 - ✅ [Performance tip]
 
 #### Don't
 
 - ❌ [Common mistake to avoid]
-
 - ❌ [Anti-pattern]
-
 - ❌ [Security risk to avoid]
 
 ### Performance optimization
@@ -174,9 +152,7 @@ Follow these guidelines to get the most from [concept]:
 To get the best performance:
 
 1. **[Optimization 1]**: [How and why]
-
 2. **[Optimization 2]**: [How and why]
-
 3. **[Optimization 3]**: [How and why]
 
 ### Security considerations
@@ -184,9 +160,7 @@ To get the best performance:
 Keep these security aspects in mind:
 
 - **Authentication**: Always [security practice]
-
 - **Authorization**: Implement [security practice]
-
 - **Data protection**: Ensure [security practice]
 
 > [!IMPORTANT]
@@ -199,21 +173,17 @@ Keep these security aspects in mind:
 _Contoso Corporation needs to [business need]. They implement [concept] to:_
 
 - _[Specific goal 1]_
-
 - _[Specific goal 2]_
 
 **Solution approach**:
 
 1. [Step 1]
-
 2. [Step 2]
-
 3. [Step 3]
 
 **Results**:
 
 - [Quantified benefit 1]
-
 - [Quantified benefit 2]
 
 ### Scenario 2: [Technical scenario]
@@ -221,7 +191,6 @@ _Contoso Corporation needs to [business need]. They implement [concept] to:_
 _A development team wants to [technical goal]. They use [concept] because:_
 
 - _[Reason 1]_
-
 - _[Reason 2]_
 
 **Implementation**:
@@ -229,7 +198,7 @@ _A development team wants to [technical goal]. They use [concept] because:_
 ```code
 // Example implementation
 [Relevant code showing the scenario]
-```text
+```
 
 ## Compare with similar approaches
 
@@ -246,9 +215,7 @@ _A development team wants to [technical goal]. They use [concept] because:_
 Choose [concept] when:
 
 - Your priority is [specific need]
-
 - You need [specific capability]
-
 - Your team is comfortable with [specific requirement]
 
 ### When to consider alternatives
@@ -256,9 +223,7 @@ Choose [concept] when:
 Look at alternatives when:
 
 - You need [different priority]
-
 - Your constraints include [specific limitation]
-
 - You're already using [conflicting technology]
 
 ## Frequently asked questions
@@ -282,20 +247,13 @@ concept] emphasizes [difference 2].
 Now that you understand [concept], you're ready to:
 
 - [Try the hands-on tutorial](link) - Build something real
-
 - [Explore advanced features](link) - Go deeper
-
 - [Read the API reference](link) - See all the options
-
 - [Join the community](link) - Connect with other users
 
 ## Additional resources
 
 - 📖 [Official documentation](link)
-
 - 🎥 [Video walkthrough](link)
-
 - 💬 [Community forum](link)
-
 - 📊 [Case studies](link)
-````

@@ -11,12 +11,9 @@ are used to measure the effectiveness of DevOps practices.
 
 1. **Deployment Frequency** - How often an organization successfully releases to
    production
-
 2. **Lead Time for Changes** - Time from code commit to code running in
    production
-
 3. **Mean Time to Recovery (MTTR)** - Time to restore service after an incident
-
 4. **Change Failure Rate** - Percentage of deployments causing a failure in
    production
 
@@ -40,7 +37,7 @@ users.
 
 #### Measurement Implementation
 
-````typescript
+```typescript
 // TypeScript example for tracking deployments
 interface Deployment {
   id: string;
@@ -79,7 +76,7 @@ class DeploymentTracker {
     });
   }
 }
-```text
+```
 
 #### CI/CD Pipeline Integration
 
@@ -88,16 +85,13 @@ class DeploymentTracker {
 name: Deploy to Production
 
 on:
-
   push:
     branches: [main]
 
 jobs:
-
   deploy:
     runs-on: ubuntu-latest
     steps:
-
       - uses: actions/checkout@v3
 
       - name: Deploy to Production
@@ -115,7 +109,7 @@ jobs:
               "version": "&#36;&#123;&#123; github.sha &#125;&#125;",
               "status": "success"
             }'
-```text
+```
 
 ### 2. Lead Time for Changes
 
@@ -131,7 +125,6 @@ from typing import List, Optional
 import statistics
 
 class LeadTimeTracker:
-
     def **init**(self, git*client, deployment*client):
         self.git = git_client
         self.deployments = deployment_client
@@ -178,7 +171,6 @@ import requests
 import json
 
 def track_commit():
-
     commit*hash = subprocess.check*output(['git', 'rev-parse', 'HEAD']).decode().strip()
     commit*time = subprocess.check*output(['git', 'show', '-s', '--format=%ci', commit_hash]).decode().strip()
     author = subprocess.check*output(['git', 'show', '-s', '--format=%ae', commit*hash]).decode().strip()
@@ -192,9 +184,8 @@ def track_commit():
     requests.post('https://metrics.example.com/api/commits', json=data)
 
 if **name** == '**main**':
-
     track_commit()
-```text
+```
 
 ### 3. Mean Time to Recovery (MTTR)
 
@@ -306,7 +297,7 @@ func (m *MTTRTracker) startAutomatedResponse(incidentID string) {
         }
     }()
 }
-```text
+```
 
 #### Monitoring and Alerting Setup
 
@@ -315,10 +306,8 @@ func (m *MTTRTracker) startAutomatedResponse(incidentID string) {
 ```yaml
 # Prometheus alert rules for incident detection
 groups:
-
   - name: production_alerts
     rules:
-
       - alert: HighErrorRate
         expr: rate(http*requests*total{status=~"5.."}[5m]) > 0.05
         for: 2m
@@ -336,7 +325,7 @@ groups:
         annotations:
           summary: "Service is down"
           description: "{{ $labels.instance }} is down"
-```text
+```
 
 {% endraw %}
 
@@ -439,7 +428,7 @@ public class ChangeFailureRateTracker {
         }, 60 * 60 * 1000);
     }
 }
-```text
+```
 
 ## Implementation Strategies
 
@@ -503,7 +492,7 @@ class DORAMetricsCollector {
     }
   }
 }
-```text
+```
 
 ### 2. Dashboard Implementation
 
@@ -516,7 +505,6 @@ from datetime import datetime, timedelta
 app = Flask(**name**)
 
 class DORADashboard:
-
     def **init**(self, metrics_store):
         self.metrics = metrics_store
 
@@ -562,15 +550,13 @@ class DORADashboard:
 
 @app.route('/api/metrics')
 def get_metrics():
-
     dashboard = DORADashboard(metrics_store)
     return jsonify(dashboard.get*current*metrics())
 
 @app.route('/dashboard')
 def show_dashboard():
-
     return render*template('dora*dashboard.html')
-```text
+```
 
 ### 3. Continuous Improvement Process
 
@@ -581,17 +567,13 @@ def show_dashboard():
 name: DORA Metrics Review
 
 on:
-
   schedule:
-
     - cron: "0 9 * * 1" # Every Monday at 9 AM
 
 jobs:
-
   analyze-metrics:
     runs-on: ubuntu-latest
     steps:
-
       - name: Fetch DORA Metrics
         id: metrics
         run: |
@@ -619,13 +601,9 @@ jobs:
             ## Weekly DORA Metrics Review
 
             ### Current Metrics
-
             - **Deployment Frequency**: ${metrics.deployment_frequency.label}
-
             - **Lead Time**: ${metrics.lead_time.value} hours
-
             - **MTTR**: ${metrics.mttr.value} minutes
-
             - **Change Failure Rate**: ${metrics.change*failure*rate.value}%
 
             ### Performance Level: ${metrics.performance_level}
@@ -634,11 +612,8 @@ jobs:
             ${suggestions}
 
             ### Action Items
-
             - [ ] Review metrics with team
-
             - [ ] Identify bottlenecks
-
             - [ ] Create improvement tasks
             `;
 
@@ -649,7 +624,7 @@ jobs:
               body: issueBody,
               labels: ['dora-metrics', 'process-improvement']
             });
-```text
+```
 
 {% endraw %}
 
@@ -658,11 +633,8 @@ jobs:
 ### Open Source Tools
 
 1. **Four Keys** (Google) - Complete DORA metrics platform
-
 2. **Pelorus** (Red Hat) - GitOps-based metrics gathering
-
 3. **DevLake** - Open-source dev data platform
-
 4. **Sleuth** - Deployment tracking and DORA metrics
 
 ### Implementation Stack Example
@@ -674,57 +646,43 @@ jobs:
 version: '3.8'
 
 services:
-
   prometheus:
     image: prom/prometheus:latest
     volumes:
-
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
-
       - prometheus_data:/prometheus
     ports:
-
       - "9090:9090"
 
   grafana:
     image: grafana/grafana:latest
     environment:
-
       - GF*SECURITY*ADMIN_PASSWORD=admin
     volumes:
-
       - grafana_data:/var/lib/grafana
-
       - ./dashboards:/etc/grafana/provisioning/dashboards
     ports:
-
       - "3000:3000"
 
   metrics-collector:
     build: ./metrics-collector
     environment:
-
       - GITHUB_TOKEN=${GITHUB_TOKEN}
-
       - PROMETHEUS_URL=http://prometheus:9090
     depends_on:
-
       - prometheus
 
   webhook-receiver:
     build: ./webhook-receiver
     ports:
-
       - "8080:8080"
     environment:
-
       - METRICS*DB*URL=postgresql://metrics:password@postgres:5432/dora
 
 volumes:
-
   prometheus_data:
   grafana_data:
-```text
+```
 
 {% endraw %}
 
@@ -733,105 +691,87 @@ volumes:
 ### 1. Start Small
 
 - Begin with deployment frequency
-
 - Add other metrics gradually
-
 - Focus on trends, not absolute numbers
 
 ### 2. Automate Everything
 
 - Automated deployment tracking
-
 - Automated incident detection
-
 - Automated metric calculation
 
 ### 3. Make Metrics Visible
 
 - Team dashboards
-
 - Regular reviews
-
 - Celebrate improvements
 
 ### 4. Use Metrics for Improvement
 
 - Identify bottlenecks
-
 - Run experiments
-
 - Measure impact
 
 ### 5. Avoid Gaming
 
 - Focus on outcomes, not metrics
-
 - Balance all four metrics
-
 - Consider additional context
 
 ## Common Pitfalls
 
 ### 1. Focusing on Single Metrics
 
-```text
+```
 ❌ Optimizing deployment frequency while ignoring failure rate
 ✅ Balancing all four metrics together
-```text
+```
 
 ### 2. Manual Data Collection
 
-```text
+```
 ❌ Manually tracking deployments in spreadsheets
 ✅ Automated collection from CI/CD pipelines
-```text
+```
 
 ### 3. Comparing Teams Directly
 
-```text
+```
 ❌ Team A is better because they deploy more
 ✅ Each team improves their own metrics over time
-```text
+```
 
 ### 4. Ignoring Context
 
-```text
+```
 ❌ All teams must achieve elite performance
 ✅ Consider team maturity, technology, and constraints
-```text
+```
 
 ## DORA Metrics Maturity Model
 
 ### Level 1: Baseline
 
 - Manual tracking
-
 - Monthly reviews
-
 - Basic dashboards
 
 ### Level 2: Automated
 
 - Automated collection
-
 - Weekly reviews
-
 - Real-time dashboards
 
 ### Level 3: Integrated
 
 - Metrics drive decisions
-
 - Daily visibility
-
 - Automated alerts
 
 ### Level 4: Optimized
 
 - Predictive analytics
-
 - Continuous improvement
-
 - Cultural integration
 
 ## Future Evolution: DORA+
@@ -839,16 +779,11 @@ volumes:
 Recent additions to DORA metrics include:
 
 1. **Reliability** - Service uptime and SLO performance
-
 2. **Developer Experience** - Time to onboard, tool satisfaction
-
 3. **Security** - Time to remediate vulnerabilities
-
 4. **Documentation** - Coverage and accuracy metrics
-
 5. **Technical Debt** - Code quality trends
 
 Remember: DORA metrics are indicators, not goals. Use them to identify areas for
 improvement and track progress, but always consider the broader context of your
 team and organization.
-````

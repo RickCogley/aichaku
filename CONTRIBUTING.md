@@ -27,13 +27,13 @@ versioning.
 
 ### Commit Message Format
 
-````text
+```text
 <type>[optional scope]: <description>
 
 [optional body]
 
 [optional footer(s)]
-```text
+```
 
 ### Commit Types
 
@@ -66,7 +66,7 @@ git commit -m "build: configure Deno project settings
 - Add development and testing tasks
 - Configure JSR publishing settings
 - Enable documentation generation"
-```text
+```
 
 #### Feature Configuration
 
@@ -78,7 +78,7 @@ git commit -m "feat: add XP methodology templates
 - Add execution mode TDD workflow guides
 - Include improvement mode refactoring checklists
 - Configure AI command suggestions"
-```text
+```
 
 #### CI/CD Configuration
 
@@ -89,7 +89,7 @@ git commit -m "ci: add automated testing and security scanning
 - Configure GitHub Actions for PR testing
 - Add CodeQL and DevSkim security analysis
 - Set up JSR publishing on release tags"
-```text
+```
 
 ### Scopes (Optional)
 
@@ -100,7 +100,7 @@ feat(cli): add --dry-run flag for preview mode
 fix(installer): handle symlink creation on Windows
 docs(shape-up): update bet template examples
 test(lister): add methodology detection tests
-```text
+```
 
 ### Breaking Changes
 
@@ -111,7 +111,7 @@ footer:
 feat!: redesign InstallOptions interface
 
 BREAKING CHANGE: The projectPath option now requires absolute paths
-```text
+```
 
 ### Examples of Good Commits
 
@@ -147,7 +147,7 @@ InfoSec: Prevents directory traversal attacks in file operations
 - Validate all user-provided paths
 - Restrict operations to allowed directories
 - Add comprehensive security tests
-```text
+```
 
 ### Examples of Poor Commits
 
@@ -163,7 +163,7 @@ chore: add new methodology  # Should be feat:
 
 # Missing description
 build: deno.json  # Should describe what the config enables
-```text
+```
 
 ## 🧪 Testing Guidelines
 
@@ -178,7 +178,7 @@ deno task test:watch
 
 # Run specific test file
 deno test src/installer_test.ts
-```text
+```
 
 ### Writing Tests
 
@@ -202,7 +202,7 @@ Deno.test("installer - should reject directory traversal attempts", async () => 
     "Invalid path",
   );
 });
-```text
+```
 
 ## 🏗️ Code Style Guidelines
 
@@ -231,7 +231,7 @@ installer.ts       # Installation logic
 lister.ts         # Listing methodologies
 updater.ts        # Update functionality
 types.ts          # Type definitions
-```text
+```
 
 #### Function Names
 
@@ -240,7 +240,7 @@ types.ts          # Type definitions
 async function validatePath(path: string): Promise<void>;
 function detectMethodology(content: string): string;
 async function copyMethodologyFiles(from: string, to: string): Promise<void>;
-```text
+```
 
 ### Error Handling
 
@@ -258,7 +258,7 @@ if (path.includes("..")) {
 // Security-conscious error
 throw new Error("Installation failed: Invalid methodology name");
 // Not: "Failed to read /home/user/.claude/methodologies/shape-up"
-```text
+```
 
 ## 📋 Pull Request Guidelines
 
@@ -310,7 +310,7 @@ Brief description of what this PR does.
 - [ ] Self-review completed
 - [ ] Documentation updated if needed
 - [ ] No new warnings introduced
-```text
+```
 
 ## 🐛 Reporting Issues
 
@@ -357,4 +357,3 @@ under the [MIT License](LICENSE).
   [CLAUDE.md](./CLAUDE.md) first
 
 Thank you for contributing to Aichaku! 🤖✨
-````

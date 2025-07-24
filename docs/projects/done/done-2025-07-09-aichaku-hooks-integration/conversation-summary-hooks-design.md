@@ -6,15 +6,12 @@ Implement hooks that automatically create conversation summaries at two critical
 points:
 
 - **Stop**: When user pauses/stops a conversation
-
 - **PreCompact**: Before Claude compacts context due to length limits
 
 ## The Problem
 
 - Conversations can lose important context when compacted
-
 - Manual checkpoint creation is often forgotten
-
 - Need deterministic way to preserve conversation state
 
 ## Proposed Solution
@@ -24,51 +21,44 @@ points:
 The existing script accepts:
 
 - Session ID
-
 - Transcript path
-
 - Hook event name (Stop or PreCompact)
 
 ### Script Location Options
 
 #### Option 1: Global Aichaku Directory (Recommended)
 
-````text
+```
 ~/.claude/aichaku/hooks/summarize-conversation.ts
-```text
+```
 
 **Pros:**
 
 - Consistent with Aichaku's new directory structure
-
 - Easy to manage and update
-
 - Clear ownership (Aichaku manages it)
 
 #### Option 2: Deno Bin Directory
 
-```text
+```
 ~/.deno/bin/aichaku-hooks/summarize-conversation.ts
-```text
+```
 
 **Pros:**
 
 - Close to installed binaries **Cons:**
-
 - Mixing data with executables
-
 - Harder to find and manage
 
 #### Option 3: Separate Hooks Directory
 
-```text
+```
 ~/.aichaku/hooks/summarize-conversation.ts
-```text
+```
 
 **Pros:**
 
 - Clean separation **Cons:**
-
 - Yet another directory to manage
 
 ### Implementation Plan
@@ -77,7 +67,7 @@ The existing script accepts:
 
    ```bash
    mkdir -p ~/.claude/aichaku/hooks
-````
+   ```
 
 2. **Install script with proper permissions**
 
@@ -117,7 +107,7 @@ The existing script accepts:
 
 Based on the example-hooks-for-stop-and-precompact.md, the format should be:
 
-````json
+```json
 {
   "hooks": {
     "Stop": [
@@ -144,26 +134,20 @@ Based on the example-hooks-for-stop-and-precompact.md, the format should be:
     ]
   }
 }
-```text
+```
 
 ### Script Improvements Needed
 
 1. **Handle both Stop and PreCompact events**
-
    - Different summary prefixes
-
    - Different output locations?
 
 2. **Error handling**
-
    - What if Claude CLI isn't available?
-
    - What if output directory doesn't exist?
 
 3. **Configuration**
-
    - Allow customizing output directory
-
    - Allow customizing summary format
 
 ## Integration with Aichaku
@@ -176,7 +160,7 @@ aichaku hooks --install conversation-summary
 
 # Configure summary location
 aichaku hooks --config summary-dir ./docs/checkpoints
-```text
+```
 
 ### Hook Categories Update
 
@@ -188,31 +172,23 @@ productivity: {
   description: "Workflow enhancement hooks",
   hooks: ["conversation-summary", "progress-tracker", "status-updater"]
 }
-```text
+```
 
 ## Next Steps
 
 1. Decide on script location (recommend ~/.claude/aichaku/hooks/)
-
 2. Update summarize-conversation.ts for better error handling
-
 3. Add to hooks command as new template
-
 4. Test with actual Stop and PreCompact events
-
 5. Document in user guide
 
 ## Questions to Resolve
 
 1. Should summaries go to project-specific or global location?
-
 2. How to handle multiple active projects?
-
 3. Should we use Claude CLI or internal API for summaries?
-
 4. What format for summary filenames?
 
 ---
 
-*Design created: 2025-01-13*
-````
+_Design created: 2025-01-13_

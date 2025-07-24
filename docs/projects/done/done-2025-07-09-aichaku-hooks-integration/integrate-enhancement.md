@@ -10,11 +10,11 @@ Code.
 
 The `integrate` command currently only adds methodology rules between markers:
 
-````text
+```
 <!-- AICHAKU:START -->
 [methodology rules]
 <!-- AICHAKU:END -->
-```text
+```
 
 ## Enhanced Design
 
@@ -38,11 +38,8 @@ Based on your project configuration, follow these standards:
 #### OWASP Top 10 Web
 
 - Validate all inputs
-
 - Use parameterized queries
-
 - Implement proper authentication
-
 - [full OWASP guidance content]
 
 ### Architecture Standards
@@ -50,9 +47,7 @@ Based on your project configuration, follow these standards:
 #### 15-Factor Apps
 
 - Store config in environment
-
 - Treat backing services as attached resources
-
 - [full 15-factor guidance content]
 
 ### Testing Standards
@@ -60,15 +55,12 @@ Based on your project configuration, follow these standards:
 #### Test-Driven Development
 
 - Write test first (red)
-
 - Make it pass (green)
-
 - Refactor (clean)
-
 - [full TDD guidance content]
 
 <!-- AICHAKU:STANDARDS:END -->
-```text
+```
 
 ### Implementation Steps
 
@@ -77,7 +69,7 @@ Based on your project configuration, follow these standards:
    ```typescript
    const standardsConfig = await loadProjectStandards(projectPath);
    const selectedStandards = standardsConfig.selected;
-````
+   ```
 
 2. **Fetch Standard Content**
 
@@ -89,15 +81,12 @@ Based on your project configuration, follow these standards:
    ```
 
 3. **Update Marker System**
-
    - Support multiple marker pairs
-
    - Maintain backward compatibility
-
    - Update sections independently
 
 4. **Standard Content Storage**
-   ```text
+   ```
    ~/.claude/docs/standards/
    ├── security/
    │   ├── owasp-web.md
@@ -113,7 +102,7 @@ Based on your project configuration, follow these standards:
 
 ### User Experience
 
-````bash
+```bash
 # User selects standards
 aichaku standards --add owasp-web,15-factor,tdd
 
@@ -122,18 +111,14 @@ aichaku integrate
 
 # Result: CLAUDE.md contains both methodology rules AND selected standards
 # Claude Code now generates secure, cloud-native, test-driven code from the start
-```text
+```
 
 ### Benefits
 
 1. **Proactive Quality**: Code is generated correctly from the beginning
-
 2. **Consistency**: Same standards for generation and review
-
 3. **Customization**: Each project gets exactly the standards it needs
-
 4. **Maintainability**: Standards can be updated independently
-
 5. **Clarity**: Claude Code sees explicit guidance, not just abstract rules
 
 ### Integration with MCP
@@ -144,10 +129,6 @@ standards to review against, ensuring consistency between generation and review.
 ## Next Steps
 
 1. Create standard content files
-
 2. Update integrate.ts to support multiple sections
-
 3. Implement standard content loader
-
 4. Test with real projects
-````

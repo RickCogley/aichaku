@@ -5,13 +5,13 @@
 Mermaid diagrams are created using Markdown code blocks with the `mermaid`
 language identifier:
 
-``````markdown
-`````mermaid
+````markdown
+```mermaid
 graph TD
     A[Start] --> B[Process]
     B --> C[End]
-```text
-````text
+```
+````
 
 ## Aichaku Workflow Visualization
 
@@ -30,7 +30,7 @@ graph TB
     Create --> Folder[Named Folder]
     Folder --> Docs[Generate Documents]
     Docs --> Diagram[Include Diagrams]
-```text
+```
 
 ### Methodology Detection
 
@@ -46,7 +46,7 @@ flowchart LR
     ShapeUp --> Output
     Kanban --> Output
     Lean --> Output
-```text
+```
 
 ### Document Generation Pipeline
 
@@ -66,7 +66,7 @@ sequenceDiagram
     Aichaku->>FileSystem: Write pitch.md
     Aichaku->>FileSystem: Write CHANGE-LOG.md
     Claude->>User: Project created
-```text
+```
 
 ## PDF Generation Approaches
 
@@ -76,7 +76,7 @@ sequenceDiagram
 graph LR
     MD[Markdown + Mermaid] -->|mermaid-cli| SVG[SVG Files]
     SVG -->|pandoc| PDF[PDF Document]
-```text
+```
 
 ### Option 2: Inline Processing
 
@@ -84,7 +84,7 @@ graph LR
 graph LR
     MD[Markdown] -->|mermaid filter| Processed[Processed MD]
     Processed -->|pandoc| PDF[PDF Document]
-```text
+```
 
 ## Benefits Visualization
 
@@ -107,7 +107,7 @@ mindmap
       Native markdown
       PDF generation
       Web viewing
-```text
+```
 
 ## Implementation Status
 
@@ -124,7 +124,7 @@ gantt
     PDF Script Enhancement     :2025-07-08, 1d
     section Testing
     Integration Testing        :2025-07-09, 2d
-```text
+```
 
 ## Notes on PDF Generation
 
@@ -140,14 +140,10 @@ mmdc -i document.md -o document-with-svg.md
 
 # Generate PDF with pandoc
 pandoc document-with-svg.md -o document.pdf
-```text
+```
 
 For Aichaku integration, we could:
 
 1. Add this to the existing PDF generation script
-
 2. Make it optional (only if mermaid blocks detected)
-
 3. Cache rendered diagrams for performance
-`````
-``````

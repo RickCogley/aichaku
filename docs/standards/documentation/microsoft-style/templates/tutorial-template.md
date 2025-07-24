@@ -10,9 +10,7 @@ designed for [audience description].
 Before you start, make sure you have:
 
 - [Requirement with specific version if applicable]
-
 - [Access requirement]
-
 - [Knowledge prerequisite]
 
 ## Create your first [thing]
@@ -89,11 +87,8 @@ Nice work! Your [thing] now [what it does].
 Congratulations! In this tutorial, you:
 
 - ✅ Created your first [thing]
-
 - ✅ Modified it to [what they changed]
-
 - ✅ Added [feature] functionality
-
 - ✅ Learned about [key concept]
 
 ## Clean up resources
@@ -101,9 +96,7 @@ Congratulations! In this tutorial, you:
 If you created any resources that might incur charges:
 
 1. Go to [location].
-
 2. Select the resources you created.
-
 3. Select **Delete**.
 
 > [!WARNING]
@@ -114,9 +107,6 @@ If you created any resources that might incur charges:
 Ready for more? Here are some ways to build on what you learned:
 
 - [Link to related tutorial]: Add [feature] to your [thing]
-
 - [Link to how-to guide]: Connect your [thing] to [service]
-
 - [Link to concept]: Understand how [things] work
-
 - [Link to reference]: Explore all [thing] options

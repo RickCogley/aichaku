@@ -6,7 +6,7 @@
 
 ### NIST Cybersecurity Framework
 
-````text
+```
 🛡️ NIST Cybersecurity Framework
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Brought to you by Aichaku (愛着) - Adaptive Methodology Support
@@ -91,11 +91,11 @@ Level 5: Optimized  █████
   • Set up security event logging
   • Create incident response plan
   • Test recovery procedures
-```text
+```
 
 ### Domain-Driven Design (DDD)
 
-```text
+```
 🏗️ Domain-Driven Design (DDD)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Brought to you by Aichaku (愛着) - Adaptive Methodology Support
@@ -182,11 +182,11 @@ AGGREGATE
   You: "Model this as a DDD aggregate"
   You: "What's the bounded context here?"
   You: "Should this be an entity or value object?"
-```text
+```
 
 ### SOLID Principles
 
-```text
+```
 🎯 SOLID Principles
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Brought to you by Aichaku (愛着) - Adaptive Methodology Support
@@ -309,49 +309,38 @@ D ── DEPENDENCY INVERSION ────────────────�
   • Start with S (easiest to apply)
   • Don't over-engineer
   • Pragmatism over dogma
-```text
+```
 
 ## Visual Elements That Work
 
 ### 1. **ASCII Diagrams**
 
 - Architecture overviews
-
 - Flow diagrams
-
 - Hierarchies
-
 - Process cycles
 
 ### 2. **Progress Bars**
 
-```text
+```
 Implementation: ████████░░ 80%
 Testing:        ████░░░░░░ 40%
-```text
+```
 
 ### 3. **Emoji Indicators**
 
 - 🔒 Security
-
 - 🎯 Goals
-
 - 💻 Code examples
-
 - ✅ Good practices
-
 - ❌ Bad practices
-
 - 💡 Tips
 
 ### 4. **Structured Sections**
 
 - Clear headers with separators
-
 - Numbered steps
-
 - Bulleted lists
-
 - Code examples with context
 
 ### 5. **Comparative Examples**
@@ -359,23 +348,16 @@ Testing:        ████░░░░░░ 40%
 Always show:
 
 - ❌ What NOT to do
-
 - ✅ What TO do instead
-
 - Why one is better
 
 ## Implementation Benefits
 
 1. **Terminal-Friendly**: Works in any terminal
-
 2. **Memorable**: Visual elements aid retention
-
 3. **Practical**: Real code examples
-
 4. **Scannable**: Easy to find information
-
 5. **Comprehensive**: Everything in one place
 
 These templates provide a consistent, engaging way to learn about development
 standards directly from the command line!
-````

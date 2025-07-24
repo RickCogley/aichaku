@@ -9,23 +9,14 @@ cases, best practices, and version control considerations.
 ## Table of Contents
 
 1. [System Architecture Diagrams (C4 Model)](#system-architecture-diagrams-c4-model)
-
 2. [Data Flow Diagrams](#data-flow-diagrams)
-
 3. [State Machines](#state-machines)
-
 4. [Sequence Diagrams](#sequence-diagrams)
-
 5. [Entity Relationship Diagrams](#entity-relationship-diagrams)
-
 6. [Deployment Diagrams](#deployment-diagrams)
-
 7. [Component Interaction Diagrams](#component-interaction-diagrams)
-
 8. [Decision Trees](#decision-trees)
-
 9. [Tools and Automation](#tools-and-automation)
-
 10. [Best Practices](#best-practices)
 
 ## System Architecture Diagrams (C4 Model)
@@ -35,7 +26,7 @@ cases, best practices, and version control considerations.
 **When to use**: Show the system in its environment with external actors and
 systems.
 
-`````mermaid
+```mermaid
 graph TB
     User[fa:fa-user User]
     Admin[fa:fa-user-shield Admin]
@@ -55,7 +46,7 @@ graph TB
     style System fill:#1168bd,stroke:#0b4884,color:#ffffff
     style Database fill:#2e7d32,stroke:#1b5e20,color:#ffffff
     style Queue fill:#ff6f00,stroke:#e65100,color:#ffffff
-```text
+```
 
 ### Container Diagram (Level 2)
 
@@ -90,7 +81,7 @@ graph TB
     style Worker fill:#1168bd,stroke:#0b4884,color:#ffffff
     style DB fill:#2e7d32,stroke:#1b5e20,color:#ffffff
     style Cache fill:#d32f2f,stroke:#b71c1c,color:#ffffff
-```text
+```
 
 ### Component Diagram (Level 3)
 
@@ -126,7 +117,7 @@ graph TB
     style AuthCtrl fill:#ff9800,stroke:#f57c00
     style UserCtrl fill:#ff9800,stroke:#f57c00
     style OrderCtrl fill:#ff9800,stroke:#f57c00
-```text
+```
 
 ### Code Diagram (Level 4)
 
@@ -170,7 +161,7 @@ classDiagram
     UserController --> UserService : uses
     UserService --> UserRepository : uses
     UserRepository --> User : manages
-```text
+```
 
 ## Data Flow Diagrams
 
@@ -192,7 +183,7 @@ graph LR
     style Validate fill:#ffd54f,stroke:#f9a825
     style Process fill:#81c784,stroke:#388e3c
     style Error fill:#e57373,stroke:#c62828
-```text
+```
 
 ### Complex Data Pipeline
 
@@ -224,7 +215,7 @@ graph TD
     style Validate fill:#ffd54f,stroke:#f9a825
     style Clean fill:#81c784,stroke:#388e3c
     style Quarantine fill:#ff8a65,stroke:#d84315
-```text
+```
 
 ## State Machines
 
@@ -248,7 +239,7 @@ stateDiagram-v2
     Review: Review State\n- Read only\n- Awaiting approval
     Approved: Approved State\n- Ready to publish\n- Cannot edit
     Published: Published State\n- Live\n- Visible to users
-```text
+```
 
 ### Complex State Machine with Substates
 
@@ -287,7 +278,7 @@ stateDiagram-v2
     In*Transit --> Failed*Delivery: Delivery failed
     Failed*Delivery --> In*Transit: Retry delivery
     Delivered --> [*]
-```text
+```
 
 ## Sequence Diagrams
 
@@ -322,7 +313,7 @@ sequenceDiagram
     LB-->>-C: Response
 
     Note over C,DB: Successful user creation flow
-```text
+```
 
 ### Async Message Processing
 
@@ -357,7 +348,7 @@ sequenceDiagram
 
     deactivate Q
     Note over P,N: Parallel processing complete
-```text
+```
 
 ## Entity Relationship Diagrams
 
@@ -411,7 +402,7 @@ erDiagram
         string name
         string parent_id FK
     }
-```text
+```
 
 ### Domain Model
 
@@ -452,7 +443,7 @@ erDiagram
         datetime timestamp
         string description
     }
-```text
+```
 
 ## Deployment Diagrams
 
@@ -508,7 +499,7 @@ graph TB
     style ALB fill:#ff9800,stroke:#f57c00
     style RDS fill:#1976d2,stroke:#0d47a1,color:#ffffff
     style REDIS fill:#d32f2f,stroke:#b71c1c,color:#ffffff
-```text
+```
 
 ### Kubernetes Deployment
 
@@ -573,7 +564,7 @@ graph TB
     PROM -.->|Metrics| FE1
     PROM -.->|Metrics| BE1
     PROM -.->|Metrics| W1
-```text
+```
 
 ## Component Interaction Diagrams
 
@@ -640,7 +631,7 @@ graph TB
     IS --> ISD
 
     style Gateway fill:#ff9800,stroke:#f57c00
-```text
+```
 
 ### Event-Driven Architecture
 
@@ -690,7 +681,7 @@ graph LR
     PaymentEvents -->|Subscribe| Analytics
 
     style EB fill:#4caf50,stroke:#2e7d32
-```text
+```
 
 ## Decision Trees
 
@@ -731,7 +722,7 @@ graph TD
     style ProcessCC fill:#64b5f6,stroke:#1976d2
     style FulfillOrder fill:#81c784,stroke:#388e3c
     style CancelOrder fill:#e57373,stroke:#c62828
-```text
+```
 
 ### Feature Flag Decision Tree
 
@@ -770,7 +761,7 @@ graph TD
     style NewPath fill:#81c784,stroke:#388e3c
     style OldPath fill:#90caf9,stroke:#1976d2
     style Fallback fill:#ff8a65,stroke:#d84315
-```text
+```
 
 ## Tools and Automation
 
@@ -782,7 +773,7 @@ graph TD
 # Using npm package
 npm install -g plantuml2mermaid
 plantuml2mermaid input.puml > output.mmd
-```text
+```
 
 #### 2. **Code to Diagram Tools**
 
@@ -792,7 +783,7 @@ plantuml2mermaid input.puml > output.mmd
 # Generate class diagrams from TypeScript
 npm install -g tplant
 tplant --input src/**/*.ts --output docs/class-diagram.mmd
-```text
+```
 
 **Database Schema:**
 
@@ -800,7 +791,7 @@ tplant --input src/**/*.ts --output docs/class-diagram.mmd
 # Generate ER diagrams from SQL
 npm install -g sql-to-mermaid
 sql-to-mermaid schema.sql > er-diagram.mmd
-```text
+```
 
 #### 3. **API Documentation Integration**
 
@@ -812,7 +803,7 @@ const sequenceDiagram = OpenAPIToMermaid.generateSequence(openapiSpec, {
   endpoint: "/api/users/{id}",
   method: "GET",
 });
-```text
+```
 
 ### Maintaining Diagram Consistency
 
@@ -835,11 +826,11 @@ Create `.mermaidrc.json`:
     "useMaxWidth": true
   }
 }
-```text
+```
 
 #### 2. **Version Control Best Practices**
 
-```text
+```bash
 # Store diagrams as separate .mmd files
 /docs/diagrams/
   ├── architecture/
@@ -850,7 +841,7 @@ Create `.mermaidrc.json`:
   │   ├── user-registration.mmd
   │   └── order-processing.mmd
   └── README.md
-```text
+```
 
 #### 3. **CI/CD Integration**
 
@@ -858,18 +849,14 @@ Create `.mermaidrc.json`:
 # .github/workflows/diagrams.yml
 name: Update Diagrams
 on:
-
   push:
     paths:
-
       - "docs/diagrams/**/*.mmd"
 
 jobs:
-
   render:
     runs-on: ubuntu-latest
     steps:
-
       - uses: actions/checkout@v3
 
       - name: Render Mermaid Diagrams
@@ -885,7 +872,7 @@ jobs:
           git add docs/images
           git commit -m "chore: update rendered diagrams" || true
           git push
-```text
+```
 
 ### Export Options
 
@@ -900,14 +887,14 @@ await mermaid.run("input.mmd", "output.svg", {
   svgId: "diagram-id",
   outputFormat: "svg",
 });
-```text
+```
 
 #### 2. **PNG Export (For Presentations)**
 
 ```bash
 # Using mmdc (mermaid CLI)
 mmdc -i diagram.mmd -o diagram.png -t dark -b transparent
-```text
+```
 
 #### 3. **PDF Integration**
 
@@ -917,7 +904,7 @@ pandoc README.md \
   --filter mermaid-filter \
   --pdf-engine=xelatex \
   -o documentation.pdf
-```text
+```
 
 ## Best Practices
 
@@ -934,7 +921,7 @@ graph LR
 
 %% Avoid: Too complex in one diagram
 %% Break into multiple focused diagrams instead
-```text
+```
 
 ### 2. **Consistent Styling**
 
@@ -957,7 +944,7 @@ graph TD
     style A fill:#81c784,stroke:#388e3c
     style B fill:#64b5f6,stroke:#1976d2
     style C fill:#e57373,stroke:#c62828
-```text
+```
 
 ### 3. **Progressive Disclosure**
 
@@ -969,9 +956,8 @@ Start with high-level overview diagrams and link to detailed diagrams:
 [High-level architecture diagram]
 
 - See [Container Diagram](./container-diagram.md) for details
-
 - See [Component Diagrams](./components/) for internals
-```text
+```
 
 ### 4. **Accessibility**
 
@@ -983,7 +969,7 @@ graph LR
 
     A -->|Step 1| B
     B -->|Step 2| C
-```text
+```
 
 ### 5. **Documentation Integration**
 
@@ -1007,31 +993,24 @@ sequenceDiagram
     D-->>A: User created
     A-->>F: 201 Created
     F-->>U: Registration successful
-```text
-````text
+```
+````
 
 ### Key Points:
 
 1. User provides registration details
-
 2. Frontend validates input
-
 3. API checks for duplicate emails
-
 4. New user record is created
-
 5. Confirmation sent to user
 
+````
 ### 6. **Version Control Considerations**
 
 1. **Store source files**: Always commit `.mmd` files, not just rendered images
-
 2. **Use meaningful names**: `user-auth-flow.mmd` not `diagram1.mmd`
-
 3. **Document changes**: Include diagram updates in commit messages
-
 4. **Review changes**: Use diff tools that support Mermaid syntax
-
 5. **Tag versions**: Tag major diagram updates for reference
 
 ### 7. **Performance Optimization**
@@ -1050,7 +1029,7 @@ graph TD
     end
 
     A3 --> B1
-```text
+````
 
 ### 8. **Error Handling in Diagrams**
 
@@ -1070,7 +1049,7 @@ graph TD
     style Error fill:#ffcdd2,stroke:#d32f2f
     style Fail fill:#ef5350,stroke:#c62828,color:#fff
     style Success fill:#c8e6c9,stroke:#388e3c
-```text
+```
 
 ## Common Patterns Library
 
@@ -1094,7 +1073,7 @@ sequenceDiagram
     App->>Auth: Validate token
     Auth-->>App: Token valid
     App-->>User: API response
-```text
+```
 
 ### CI/CD Pipeline
 
@@ -1121,7 +1100,7 @@ graph LR
     style Quality fill:#ffd54f,stroke:#f9a825
     style Prod fill:#81c784,stroke:#388e3c
     style Rollback fill:#e57373,stroke:#c62828
-```text
+```
 
 ## Summary
 
@@ -1129,22 +1108,14 @@ This guide provides comprehensive patterns for using Mermaid diagrams in
 technical documentation. Key takeaways:
 
 1. **Choose the right diagram type** for your use case
-
 2. **Keep diagrams focused** and avoid overwhelming complexity
-
 3. **Maintain consistency** in styling and naming
-
 4. **Version control** your diagram sources
-
 5. **Automate** diagram generation where possible
-
 6. **Document** both the happy path and error cases
-
 7. **Make diagrams accessible** with proper labels
-
 8. **Integrate** diagrams into your documentation workflow
 
 Remember: A good diagram is worth a thousand words, but a bad diagram can
 confuse more than clarify. Always prioritize clarity and purpose over
 complexity.
-`````

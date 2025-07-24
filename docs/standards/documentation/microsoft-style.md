@@ -9,13 +9,9 @@ inclusivity, global readability, and user empowerment.
 ### Core Principles
 
 1. **🌍 Global-ready** - Write for international audiences
-
 2. **♿ Accessible** - Design for all abilities and contexts
-
 3. **🤝 Inclusive** - Welcome everyone with bias-free language
-
 4. **💡 Clear** - Prioritize clarity over cleverness
-
 5. **🚀 Empowering** - Help users succeed and feel confident
 
 ## Tutorial Guidelines
@@ -27,7 +23,7 @@ tasks.
 
 ### Structure
 
-``````markdown
+````markdown
 # Learn to [accomplish a goal] with [product]
 
 **Time to complete**: About [X] minutes
@@ -40,9 +36,7 @@ designed for [audience description].
 Before you start, make sure you have:
 
 - [Requirement with specific version if applicable]
-
 - [Access requirement]
-
 - [Knowledge prerequisite]
 
 ## Create your first [thing]
@@ -67,8 +61,8 @@ Let's start by creating a simple [thing] to understand the basics.
    // Your first [thing]
    code example here
    ```
+````
 
-`````text
 6. Select **Save** (or press Ctrl+S).
 
 Great! You created your first [thing]. Notice how [explain what they should
@@ -102,9 +96,7 @@ You should see [expected result]. If you see an error instead, check that
 Congratulations! In this tutorial, you:
 
 - ✅ Created your first [thing]
-
 - ✅ Modified it to [what they changed]
-
 - ✅ Learned about [key concept]
 
 ## Try this next
@@ -112,53 +104,39 @@ Congratulations! In this tutorial, you:
 Ready for more? Here are some ways to build on what you learned:
 
 - [Link to related tutorial]: Add [feature] to your [thing]
-
 - [Link to how-to guide]: Connect your [thing] to [service]
-
 - [Link to concept]: Understand how [things] work
 
-````text
+````
 ### Microsoft Style Notes for Tutorials
 
 - **Use "you" and active voice**: "You create a function" not "A function is created"
-
 - **Be encouraging**: Use "Great!" or "Nice work!" to celebrate progress
-
 - **Explain the why**: Help users understand the purpose, not just the steps
-
 - **Use friendly contractions**: "you'll", "let's", "it's"
-
 - **Include tips and notes**: Help users avoid common pitfalls
 
 ## How-to Guide Guidelines
 
 ### Purpose
-
 Provide focused, task-oriented guidance for users who know what they want to accomplish.
 
 ### Structure
-
 ```markdown
 # [Action verb] [specific task]
 
 This article explains how to [task]. Use this approach when you want to [scenario].
 
 **In this article**
-
 - [Prerequisites](#prerequisites)
-
 - [Main task](#main-task)
-
 - [Verify results](#verify-results)
-
 - [Clean up resources](#clean-up-resources)
 
 ## Prerequisites
 
 - [Specific requirement with version]
-
 - [Permission or access needed]
-
 - Complete [prerequisite task](link) if you haven't already
 
 ## [Main task]
@@ -205,7 +183,7 @@ az resource create \
   --location $LOCATION \
   --type Standard \
   --size Medium
-````text
+````
 
 > [!IMPORTANT]
 > Replace the example values with your actual values. The location must be a
@@ -232,11 +210,8 @@ To avoid unnecessary charges, remove resources you no longer need:
 > This permanently deletes your [resource] and all associated data.
 
 1. Select your [resource].
-
 2. Select **Delete**.
-
 3. Type the resource name to confirm.
-
 4. Select **Delete**.
 
 ## Troubleshooting
@@ -244,9 +219,7 @@ To avoid unnecessary charges, remove resources you no longer need:
 ### [Resource] not appearing
 
 - Wait 2-3 minutes and refresh the page
-
 - Check you're in the correct [scope/filter]
-
 - Verify you have permission to view [resources]
 
 ### Creation fails with error "[specific error]"
@@ -254,38 +227,29 @@ To avoid unnecessary charges, remove resources you no longer need:
 This usually means [explanation]. To fix it:
 
 1. [Solution step 1]
-
 2. [Solution step 2]
 
 ## Next steps
 
 - [Learn about advanced features](link)
-
 - [Configure security settings](link)
-
 - [Set up monitoring](link)
 
-````text
+````
 ### Microsoft Style Notes for How-to Guides
 
 - **Front-load important information**: Put key details early
-
 - **Offer multiple methods**: GUI and command line when applicable
-
 - **Use descriptive headings**: "Configure security settings" not just "Security"
-
 - **Include cleanup**: Help users manage resources and costs
-
 - **Add troubleshooting**: Address common problems proactively
 
 ## Reference Guidelines
 
 ### Purpose
-
 Provide complete, accurate technical information for users who need specific details.
 
 ### Structure
-
 ```markdown
 # [Component/Command] reference
 
@@ -294,12 +258,11 @@ Provide complete, accurate technical information for users who need specific det
 [Brief description of purpose and common use cases]
 
 ### Syntax
-
-````text
+````
 
 command-name [--option] <required-argument> [optional-argument]
 
-````text
+````
 ### Parameters
 
 #### `<required-argument>`
@@ -307,25 +270,21 @@ command-name [--option] <required-argument> [optional-argument]
 *Required*. [Description of the argument and its purpose].
 
 - **Type**: String | Integer | Boolean
-
 - **Valid values**: [List specific values or describe format]
-
 - **Default**: None (required)
 
 **Examples**:
 ```bash
 command-name "example-value"
 command-name 123
-````text
+````
 
 #### `[optional-argument]`
 
 _Optional_. [Description and when to use it].
 
 - **Type**: String
-
 - **Valid values**: [List or describe]
-
 - **Default**: `default-value`
 
 ### Options
@@ -335,18 +294,15 @@ _Optional_. [Description and when to use it].
 [Description of what this option does].
 
 - **Type**: String
-
 - **Valid values**: `value1` | `value2` | `value3`
-
 - **Default**: `value1`
-
 - **Required**: No
 
 **Example**:
 
 ```bash
 command-name --option value2 my-argument
-```text
+```
 
 #### `--verbose`, `-v`
 
@@ -356,7 +312,7 @@ Increase logging verbosity. Use up to three times for more detail.
 
 ```bash
 command-name -vvv my-argument  # Maximum verbosity
-```text
+```
 
 ### Examples
 
@@ -366,15 +322,15 @@ Create a simple [thing]:
 
 ```bash
 command-name my-thing
-```text
+```
 
 Output:
 
-```text
+```
 Created [thing] 'my-thing' successfully.
 ID: 12345
 Status: Active
-```text
+```
 
 #### Advanced usage
 
@@ -385,7 +341,7 @@ command-name my-advanced-thing \
   --option value2 \
   --config ./custom.json \
   --timeout 300
-```text
+```
 
 ### Return values
 
@@ -400,51 +356,38 @@ command-name my-advanced-thing \
 ### Related commands
 
 - [`related-command`](link) - Brief description of relationship
-
 - [`another-command`](link) - How it works with this command
 
 ### See also
 
 - [Conceptual overview of [topic]](link)
-
 - [How to use [command] in common scenarios](link)
-
 - [Best practices for [component]](link)
 
-````text
+````
 ### Microsoft Style Notes for References
 
 - **Be scannable**: Use consistent formatting and clear sections
-
 - **Include all parameters**: Document every option, even deprecated ones
-
 - **Show real examples**: Include actual output where helpful
-
 - **Explain relationships**: How commands and options work together
-
 - **Keep current**: Update for each version change
 
 ## Explanation Guidelines
 
 ### Purpose
-
 Help users understand concepts, architecture, and the reasoning behind design decisions.
 
 ### Structure
-
 ```markdown
 # Understand [concept/technology]
 
 [Engaging introduction that explains why this topic matters to the reader]
 
 **In this article**
-
 - [What is [concept]?](#what-is-concept)
-
 - [How it works](#how-it-works)
-
 - [When to use it](#when-to-use-it)
-
 - [Best practices](#best-practices)
 
 ## What is [concept]?
@@ -456,9 +399,7 @@ Think of [concept] like [familiar analogy]. Just as [analogy explanation], [conc
 ### Key benefits
 
 - **[Benefit 1]**: [How it helps users]
-
 - **[Benefit 2]**: [Specific advantage]
-
 - **[Benefit 3]**: [Business or technical value]
 
 ## How it works
@@ -470,7 +411,7 @@ graph LR
     A[User Request] --> B[Component 1]
     B --> C[Component 2]
     C --> D[Result]
-````text
+````
 
 Let's break this down:
 
@@ -491,17 +432,13 @@ For those interested in the technical details:
 [Concept] works best when:
 
 - ✅ You need to [scenario 1]
-
 - ✅ Your application requires [requirement]
-
 - ✅ You want to [goal]
 
 Consider alternatives when:
 
 - ❌ Your use case involves [conflicting scenario]
-
 - ❌ You need [different requirement]
-
 - ❌ Performance is critical for [specific operation]
 
 ## Compare with similar approaches
@@ -519,17 +456,13 @@ Follow these guidelines to get the most from [concept]:
 ### Do
 
 - ✅ [Specific recommended action]
-
 - ✅ [Another good practice]
-
 - ✅ [Performance tip]
 
 ### Don't
 
 - ❌ [Common mistake to avoid]
-
 - ❌ [Anti-pattern]
-
 - ❌ [Security risk to avoid]
 
 ## Example scenario
@@ -539,7 +472,6 @@ Let's see how [concept] works in practice:
 _Contoso Corporation needs to [business need]. They implement [concept] to:_
 
 - _[Specific goal 1]_
-
 - _[Specific goal 2]_
 
 Here's how they did it: [Concrete example with code/configuration if applicable]
@@ -549,22 +481,16 @@ Here's how they did it: [Concrete example with code/configuration if applicable]
 Now that you understand [concept], you're ready to:
 
 - [Try the hands-on tutorial](link) - Build something real
-
 - [Explore advanced features](link) - Go deeper
-
 - [Read the API reference](link) - See all the options
 
-````text
+````
 ### Microsoft Style Notes for Explanations
 
 - **Start with value**: Why should readers care about this topic?
-
 - **Use progressive disclosure**: Start simple, add complexity gradually
-
 - **Include diagrams**: Visual aids help explain complex concepts
-
 - **Provide concrete examples**: Abstract concepts need real scenarios
-
 - **Connect to user goals**: Always relate back to what users want to achieve
 
 ## General Microsoft Style Guidelines
@@ -572,67 +498,43 @@ Now that you understand [concept], you're ready to:
 ### Voice and Tone
 
 #### Be Warm and Approachable
-
 - ✅ "Let's explore how to..."
-
 - ✅ "You might wonder why..."
-
 - ✅ "Here's a tip that can save you time"
-
 - ❌ "Users must configure..."
-
 - ❌ "It should be noted that..."
 
 #### Empower Users
-
 - ✅ "You can customize this to fit your needs"
-
 - ✅ "Choose the option that works best for you"
-
 - ❌ "You must follow these steps exactly"
-
 - ❌ "Failure to do this will result in errors"
 
 ### Accessibility Guidelines
 
 #### Structure
-
 - Use descriptive headings that stand alone
-
 - Keep paragraphs short (3-4 sentences)
-
 - Use lists to break up complex information
-
 - Provide alt text for all images
 
 #### Language
-
 - Define acronyms on first use: "Artificial Intelligence (AI)"
-
 - Avoid directional language: "Select **Next**" not "Click the button on the right"
-
 - Use device-agnostic terms: "select" not "click", "enter" not "type"
 
 ### Inclusive Language
 
 #### Use Bias-Free Language
-
 - ✅ "They" as singular pronoun
-
 - ✅ "Primary/replica" not "master/slave"
-
 - ✅ "Allowlist/blocklist" not "whitelist/blacklist"
-
 - ✅ "Placeholder text" not "dummy text"
 
 #### Global Audience
-
 - Avoid idioms: "straightforward" not "piece of cake"
-
 - Use global examples: varied names, locations, scenarios
-
 - Specify formats: "MM/DD/YYYY" not just "date"
-
 - Include timezone: "2 PM PST (UTC-8)"
 
 ### Formatting Standards
@@ -654,14 +556,12 @@ Now that you understand [concept], you're ready to:
 
 > [!CAUTION]
 > Serious consequences if ignored.
-````text
+````
 
 #### UI Elements
 
 - **Bold** for UI elements: "Select **File** > **Save**"
-
 - _Italics_ for user input: "In the **Name** box, enter _MyProject_"
-
 - `Code` formatting for code elements, files, and values
 
 #### Tables
@@ -669,9 +569,7 @@ Now that you understand [concept], you're ready to:
 Use tables for:
 
 - Comparing options
-
 - Listing parameters
-
 - Showing settings and values
 
 Keep tables simple and scannable.
@@ -681,31 +579,22 @@ Keep tables simple and scannable.
 #### Quickstarts
 
 - 5-10 minute completion time
-
 - Minimal prerequisites
-
 - One clear outcome
-
 - Links to next steps
 
 #### Concepts
 
 - Explain the why before the how
-
 - Use analogies sparingly and carefully
-
 - Include diagrams for complex topics
-
 - Connect to practical applications
 
 #### Troubleshooting
 
 - Problem-solution format
-
 - Most common issues first
-
 - Clear error messages as headings
-
 - Specific resolution steps
 
 ## Documentation Planning
@@ -713,15 +602,10 @@ Keep tables simple and scannable.
 Before writing, consider:
 
 1. **Audience**: Who needs this information?
-
 2. **Purpose**: What will they do with it?
-
 3. **Context**: When will they need it?
-
 4. **Format**: What type of document serves them best?
 
 Remember: Good documentation anticipates user needs and removes barriers to
 success. Write with empathy, clarity, and respect for your readers' time and
 expertise.
-`````
-``````

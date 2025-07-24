@@ -9,20 +9,16 @@ with clear visual feedback.
 ## Design Principles
 
 1. **ASCII-First**: Use ASCII art for maximum compatibility
-
 2. **Emoji Enhancement**: Optional emoji for richer display when supported
-
 3. **Methodology-Aware**: Different styles for different workflows
-
 4. **STATUS.md Integration**: Seamless updates to tracking files
-
 5. **Clear "You Are Here"**: Obvious current phase indication
 
 ## Core Progress Bar Design
 
 ### ASCII Progress Bar Components
 
-````text
+```
 Basic structure:
 [===========-------] 65% Complete
 
@@ -38,7 +34,7 @@ Detailed view:
 │ [DONE]     [>>>>>>>]   [         ]   │
 │            Week 3/6                  │
 └──────────────────────────────────────┘
-```text
+```
 
 ## Methodology-Specific Progress Indicators
 
@@ -64,7 +60,7 @@ const shapeUpProgress = {
 
   minimal: `[████████████░░░░░░░░] Building - Week 3.5/6`,
 };
-```text
+```
 
 ### Scrum Sprint Progress
 
@@ -89,7 +85,7 @@ const scrumProgress = {
 
   minimal: `[██████░░░░] Day 6/10 - 57% complete`,
 };
-```text
+```
 
 ### Kanban Flow Progress
 
@@ -114,7 +110,7 @@ const kanbanProgress = {
 
   minimal: `[Ready:5|Doing:2*|Review:1] Flow: Normal`,
 };
-```text
+```
 
 ### Lean MVP Progress
 
@@ -140,7 +136,7 @@ const leanProgress = {
 
   minimal: `[B:████░░|M:░░░░░░|L:░░░░░░] Building`,
 };
-```text
+```
 
 ### XP Iteration Progress
 
@@ -168,7 +164,7 @@ const xpProgress = {
 
   minimal: `[████████░░░░░░] Story 5/8 - TDD Active`,
 };
-```text
+```
 
 ## Progress Indicator API
 
@@ -197,7 +193,7 @@ interface ProgressData {
   status: "on-track" | "at-risk" | "blocked";
   metadata?: Record<string, any>;
 }
-```text
+```
 
 ## STATUS.md Integration Format
 
@@ -209,12 +205,12 @@ interface ProgressData {
 ## Progress Indicator
 
 <!-- AICHAKU:PROGRESS:START -->
-```text
+```
 
 Shape Up Cycle: Feature Authentication [Shaping:✓][Building:████░░░░][Cool-down:
 ] Week 3.5 of 6 | 58% Complete | ON TRACK
 
-```text
+```
 <!-- AICHAKU:PROGRESS:END -->
 
 ## Current Phase
@@ -222,7 +218,7 @@ Shape Up Cycle: Feature Authentication [Shaping:✓][Building:████░░
 
 ## Details
 [Rest of STATUS.md content...]
-```text
+```
 
 ## CLI Display Examples
 
@@ -247,14 +243,14 @@ $ aichaku status
 ║     [Ready:5|Doing:2*|Review:1] Flow: Normal   ║
 ║                                                  ║
 ╚══════════════════════════════════════════════════╝
-```text
+```
 
 ### Inline Progress Updates
 
 ```bash
 $ aichaku progress
 Shape Up [Building ████████░░░░] Week 3.5/6 - Creating auth service...
-```text
+```
 
 ## Animation Concepts (for terminal support)
 
@@ -274,7 +270,7 @@ const animations = {
   blocks: "▁▂▃▄▅▆▇█",
   dots: "⣾⣽⣻⢿⡿⣟⣯⣷",
 };
-```text
+```
 
 ## Color Coding (ANSI)
 
@@ -286,34 +282,24 @@ const colors = {
   complete: "\x1b[36m", // Cyan
   current: "\x1b[1m", // Bold
 };
-```text
+```
 
 ## Implementation Priority
 
 1. **Phase 1**: Basic ASCII progress bars
-
    - Simple percentage display
-
    - Methodology detection
-
    - STATUS.md integration
 
 2. **Phase 2**: Methodology-specific layouts
-
    - Custom progress for each method
-
    - Phase indicators
-
    - Time tracking
 
 3. **Phase 3**: Enhanced features
-
    - Color support detection
-
    - Animation options
-
    - Compact/minimal modes
-
    - Dashboard view
 
 ## Benefits Over External Libraries
@@ -322,13 +308,9 @@ While libraries like `ora` or `cli-progress` offer features, our custom solution
 provides:
 
 1. **Zero Dependencies**: Maintains Aichaku's security stance
-
 2. **Methodology-Aware**: Tailored to each workflow's needs
-
 3. **STATUS.md Native**: Direct integration with our tracking
-
 4. **Claude Code Optimized**: Works perfectly in AI environment
-
 5. **Customizable**: Each methodology can have unique indicators
 
 ## Usage Examples
@@ -349,19 +331,13 @@ $ aichaku status --all
 # Generate STATUS.md with progress
 $ aichaku status generate
 ✓ Updated STATUS.md with current progress indicators
-```text
+```
 
 ## Next Steps
 
 1. Implement core progress calculation engine
-
 2. Create ASCII art templates for each methodology
-
 3. Build STATUS.md parser/writer
-
 4. Add CLI commands for progress tracking
-
 5. Test across different terminal environments
-
 6. Document usage in methodology guides
-````

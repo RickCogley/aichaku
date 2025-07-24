@@ -23,11 +23,8 @@ So that I can personalize my experience
 **Acceptance Criteria**:
 
 - [x] Profile photo upload
-
 - [x] Bio text (max 200 chars)
-
 - [x] Privacy settings
-
 - [x] Validation and error handling
 
 ### US-102: Profile Editing
@@ -51,11 +48,8 @@ So that I have a smooth experience
 **Technical Tasks**:
 
 - Implement lazy loading
-
 - Optimize image compression
-
 - Reduce API calls
-
 - Add caching layer
 
 ### US-104: Push Notifications Setup
@@ -77,27 +71,18 @@ So that I have a smooth experience
 ## Team Assignments
 
 - **Sarah & Mike**: US-101 (Profile Creation)
-
 - **Alex**: US-102 (Profile Editing)
-
 - **Team Swarm**: US-103 (Performance)
-
 - **David**: US-104 (Push Notifications)
-
 - **Emma**: US-105 (Accessibility)
 
 ## Definition of Done
 
 - [ ] Code complete and reviewed
-
 - [ ] Unit tests >80% coverage
-
 - [ ] Integration tests passing
-
 - [ ] Accessibility tested
-
 - [ ] Deployed to staging
-
 - [ ] PO acceptance
 
 ## Daily Standup

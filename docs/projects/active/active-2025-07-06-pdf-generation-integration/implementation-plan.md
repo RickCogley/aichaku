@@ -3,11 +3,8 @@
 ## Prerequisites
 
 - TypeScript/Deno development environment
-
 - Understanding of PDF generation tools (pandoc, LaTeX)
-
 - Knowledge of CLI command development
-
 - Familiarity with file system operations
 
 ## Overview
@@ -19,7 +16,7 @@ capabilities into Aichaku.
 
 ### 1. Create PDF generator module
 
-````typescript
+```typescript
 // src/pdf/generator.ts
 export class PDFGenerator {
   async generate(inputPath: string, outputPath?: string): Promise<PDFResult> {
@@ -52,7 +49,7 @@ export class PDFGenerator {
     // Return success/failure with details
   }
 }
-```text
+```
 
 ### 2. Create setup checker
 
@@ -74,7 +71,7 @@ export class PDFSetup {
     // Based on what's missing
   }
 }
-```text
+```
 
 ## Phase 2: Settings Integration (1 hour)
 
@@ -99,7 +96,7 @@ export interface Settings {
   // ... existing settings
   pdf?: PDFSettings;
 }
-```text
+```
 
 ### 2. Default PDF settings
 
@@ -112,7 +109,7 @@ export const DEFAULT*PDF*SETTINGS: PDFSettings = {
   coverPage: false,
   tableOfContents: false,
 };
-```text
+```
 
 ## Phase 3: CLI Integration (1 hour)
 
@@ -151,7 +148,7 @@ pdfCommand
     const status = await setup.check();
     // Display status
   });
-```text
+```
 
 ## Phase 4: Auto-generation Integration (1 hour)
 
@@ -178,14 +175,12 @@ async function completeWork(workDir: string) {
     }
   }
 }
-```text
+```
 
 ### 2. Add to relevant commands
 
 - `aichaku complete` - When marking work as done
-
 - `aichaku close` - When closing a work folder
-
 - Manual trigger via `aichaku pdf generate`
 
 ## Phase 5: Documentation & Testing (1 hour)
@@ -193,9 +188,7 @@ async function completeWork(workDir: string) {
 ### 1. Update documentation
 
 - Add PDF section to README
-
 - Create PDF-GUIDE.md with detailed setup
-
 - Update CLAUDE.md with PDF conventions
 
 ### 2. Create templates
@@ -212,35 +205,25 @@ async function completeWork(workDir: string) {
 ---
 
 Generated with Aichaku
-```text
+```
 
 ### 3. Test scenarios
 
 - Missing dependencies handling
-
 - Unicode character support
-
 - Large document performance
-
 - Cross-platform compatibility
 
 ## Migration Path
 
 1. Move existing PDF scripts to legacy folder
-
 2. Preserve compatibility during transition
-
 3. Auto-detect existing scripts and suggest migration
-
 4. Update methodologies to mention PDF generation
 
 ## Success Metrics
 
 - PDF generation works on 3 major platforms
-
 - Clear error messages for missing dependencies
-
 - < 5 seconds for typical document
-
 - Business-ready output quality
-````

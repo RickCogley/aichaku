@@ -9,7 +9,7 @@ at changing Claude's behavior within a session.
 
 ## Enhanced Feedback Structure
 
-`````typescript
+```typescript
 interface AdvancedClaudeGuidance {
   // Context Setting (Related Information)
   context: {
@@ -51,7 +51,7 @@ interface AdvancedClaudeGuidance {
     implementation: string; // How to implement correctly
   };
 }
-```text
+```
 
 ## Implementation Examples
 
@@ -136,7 +136,7 @@ const typeScriptAnyGuidance: AdvancedClaudeGuidance = {
       "Replace 'any' with your interface, then fix any TypeScript errors that appear. These errors often reveal additional type requirements.",
   },
 };
-```text
+```
 
 ### 2. Security Violations with Decomposition
 
@@ -186,7 +186,7 @@ const securityGuidance: AdvancedClaudeGuidance = {
   },
   // ... continues with full guidance
 };
-```text
+```
 
 ### 3. Methodology Violations with Self-Reflection
 
@@ -223,7 +223,7 @@ const methodologyGuidance: AdvancedClaudeGuidance = {
       "Add 'Appetite: X weeks' section immediately after Problem. Let it guide your solution design.",
   },
 };
-```text
+```
 
 ## MCP Response Format
 
@@ -264,54 +264,46 @@ ${guidance.subtasks.immediate.map((task, i) => `${i + 1}. ${task}`).join("\n")}
 ${guidance.reflection.questions.map((q) => `• ${q}`).join("\n")}
 
 💡 Approach:
-
 1. Analysis: ${guidance.stepByStep.analysis}
-
 2. Strategy: ${guidance.stepByStep.approach}
-
 3. Implementation: ${guidance.stepByStep.implementation}
 
 Remember: ${guidance.reflection.patterns[0]}
 `;
   }
 }
-```text
+```
 
 ## Benefits of Advanced Prompting
 
 ### 1. **Deeper Understanding**
 
 - Claude understands WHY, not just WHAT
-
 - Context helps avoid future violations
 
 ### 2. **Concrete Learning**
 
 - Examples show exact transformations
-
 - Pattern recognition improves
 
 ### 3. **Structured Thinking**
 
 - Decomposition prevents overwhelm
-
 - Sequencing ensures completeness
 
 ### 4. **Behavioral Change**
 
 - Reflection creates awareness
-
 - Questions prompt better habits
 
 ### 5. **Practical Guidance**
 
 - Step-by-step prevents confusion
-
 - Clear path from problem to solution
 
 ## Example Full Response
 
-````text
+````
 🔍 Code Review Results for auth.ts
 
 Found 5 instances of 'any' type usage
@@ -321,7 +313,7 @@ Found 5 instances of 'any' type usage
 📖 Context:
 WHY this matters: TypeScript's type system prevents runtime errors by catching type mismatches at compile time. Using 'any' disables this protection.
 IMPACT if ignored: Code with 'any' types is prone to runtime errors, harder to refactor, and loses IntelliSense support.
-REQUIRED BY: CLAUDE.md, google-TypeScript-style, clean-code
+REQUIRED BY: CLAUDE.md, google-typescript-style, clean-code
 
 📝 Examples to Learn From:
 ❌ AVOID:
@@ -329,7 +321,7 @@ REQUIRED BY: CLAUDE.md, google-TypeScript-style, clean-code
 const processData = (data: any) => {
   return data.items.map((item: any) => item.name);
 }
-````text
+````
 
 Problem: No type safety - could crash if data doesn't have items array
 
@@ -343,16 +335,14 @@ interface ApiResponse {
 const processData = (data: ApiResponse) => {
   return data.items.map((item) => item.name);
 };
-```text
+```
 
 Benefit: Type-safe, auto-completion works, refactoring is safe
 
 🔄 Step-by-Step Fix Process:
 
 1. Examine how each 'any' variable is used in the code
-
 2. Identify the actual properties/methods accessed
-
 3. Create interfaces based on actual usage
 
 Before you fix, check: • Are there existing type definitions to import? • What
@@ -366,29 +356,22 @@ right type from the start?
 
 1. Analysis: First, trace through the code to see exactly how each 'any' typed
    variable is used. Look for property accesses, method calls, and operations.
-
 2. Strategy: Create a minimal interface that includes only the
    properties/methods actually used. Start specific and generalize only if
    needed.
-
 3. Implementation: Replace 'any' with your interface, then fix any TypeScript
    errors that appear. These errors often reveal additional type requirements.
 
 Remember: Using 'any' for API responses instead of defining interfaces
 
-```text
+```
 ## Implementation Priority
 
 1. **Context + Examples** (High impact, easy to implement)
-
 2. **Step-by-Step Guidance** (Helps Claude succeed)
-
 3. **Reflection Questions** (Builds awareness)
-
 4. **Decomposition** (For complex fixes)
-
 5. **Sequencing** (For multi-step fixes)
 
 This approach transforms the MCP from a critic into a teacher, dramatically improving its effectiveness at helping Claude write better code!
-```text
-`````
+```

@@ -5,9 +5,8 @@ this project.
 
 ## Methodologies Quick Reference
 
-````yaml
+```yaml
 methodologies:
-
   shape_up:
     triggers:
       [
@@ -41,18 +40,16 @@ methodologies:
   scrumban:
     triggers: ["scrumban", "hybrid", "sprint flow", "planning triggers"]
     best_for: "Teams transitioning between methods, combining structure with flow"
-```text
+```
 
 # Aichaku Configuration
 
 ```yaml
 aichaku:
-
   version: "2.0.0"
   source: "configuration-as-code"
 
 behavioral_directives:
-
   name: "Aichaku Behavioral Directives"
   version: "1.0.0"
   description: "Core behavioral rules that all Aichaku interactions must follow"
@@ -61,7 +58,6 @@ behavioral_directives:
       name: "Discussion-First Document Creation"
       description: "A three-phase approach to thoughtful project creation"
       phases:
-
         - name: "DISCUSSION MODE"
           triggers: [
             "shape",
@@ -74,29 +70,20 @@ behavioral_directives:
           ]
           actions:
             required:
-
               - "Acknowledge the methodology context: '🪴 Aichaku: I see you're thinking about [topic]'"
-
               - "Ask clarifying questions to understand the goal"
             forbidden:
-
               - "DO NOT create any project folders yet"
-
               - "NEVER say: 'Would you like me to create documents for this?'"
-
         - name: "WAIT FOR READINESS"
           triggers: ["Let's create a project for this", "I'm ready to start"]
-
         - name: "CREATE PROJECT"
           actions:
             required:
-
               - "Create ALL documents in: docs/projects/active/YYYY-MM-DD-{descriptive-name}/"
-
               - "Create STATUS.md FIRST"
 
 visual_identity:
-
   prefix:
     mandatory: true
     format: "🪴 Aichaku:"
@@ -115,7 +102,6 @@ visual_identity:
         Week 2/6 ████████░░░░░░░░░░░░ 33% 🌿
 
 file_organization:
-
   project_structure:
     root: "docs/projects/"
     states:
@@ -131,7 +117,6 @@ file_organization:
     change_logs: "YYYY-MM-DD-{Project-Name}-CHANGE-LOG.md"
 
 diagram_templates:
-
   requirements:
     mandatory: true
     description: "Include Mermaid diagrams in EVERY project documentation"
@@ -145,7 +130,6 @@ diagram_templates:
             C --> D[🍃 Complete]
 
 methodologies:
-
   shape_up:
     name: "Shape Up"
     triggers: ["shape", "pitch", "appetite", "betting", "cool-down"]
@@ -159,30 +143,24 @@ methodologies:
     integration_url: "aichaku://methodology/scrum/guide"
 
 standards:
-
   tdd:
     name: "Test-Driven Development"
     category: "development"
     summary:
       critical: |
-
         - Write failing tests FIRST before any implementation
-
         - Follow Red-Green-Refactor cycle strictly
-
         - Test behavior, not implementation details
     integration_url: "aichaku://standard/development/tdd"
 
 included:
-
   core: true
   methodologies: ["shape-up", "scrum", "kanban", "lean", "xp", "scrumban"]
   standards: ["tdd"]
   doc_standards: []
   has*user*customizations: false
-```text
+```
 
 ## Project Overview
 
 [Add your project-specific information here]
-````

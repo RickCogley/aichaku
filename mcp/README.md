@@ -5,11 +5,11 @@ Claude Code with enhanced capabilities.
 
 ## Directory Structure
 
-````text
+```
 mcp/
 ├── aichaku-mcp-server/     # Code review, security, and methodology compliance
 └── github-mcp-server/      # GitHub operations and workflow management
-```text
+```
 
 ## MCP Servers
 
@@ -57,7 +57,7 @@ aichaku mcp --install
 # Or install specific ones
 aichaku mcp --install-reviewer  # Just code review
 aichaku mcp --install-github    # Just GitHub operations
-```text
+```
 
 ### Manual Setup
 
@@ -79,7 +79,7 @@ Each MCP server can be configured independently in Claude Code:
     }
   }
 }
-```text
+```
 
 ## Development
 
@@ -93,7 +93,7 @@ deno task compile
 # Build GitHub MCP server
 cd mcp/github-mcp-server
 deno task compile
-```text
+```
 
 ### Testing
 
@@ -105,7 +105,7 @@ deno test -A
 # Test GitHub MCP server
 cd mcp/github-mcp-server
 deno test -A
-```text
+```
 
 ## Architecture Benefits
 
@@ -130,4 +130,3 @@ deno test -A
 - [Aichaku MCP Server Documentation](./aichaku-mcp-server/README.md)
 - [GitHub MCP Server Documentation](./github-mcp-server/README.md)
 - [Main Aichaku Documentation](../docs/README.md)
-````

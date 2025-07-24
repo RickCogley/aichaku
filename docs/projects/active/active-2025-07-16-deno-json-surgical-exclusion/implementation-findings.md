@@ -12,19 +12,15 @@ nagare release failures. The solution leverages Deno v2.3.1+ behavior where
 
 - Nagare release process was failing due to type checking errors in deprecated
   v2 files
-
 - Files like `config-manager.ts` had type errors but needed to remain for
   backward compatibility
-
 - Pre-release hooks and nagare's autofix were running different type check
   commands
 
 ### Root Cause
 
 1. `deno check **/*.ts` ignores exclusion configurations
-
 2. `deno check .` also ignores exclusion configurations
-
 3. Only `deno check` (no arguments) respects the top-level exclude
 
 ## Solution Implementation
@@ -33,7 +29,7 @@ nagare release failures. The solution leverages Deno v2.3.1+ behavior where
 
 Added to deno.json:
 
-````json
+```json
 {
   "exclude": [
     ".claude/",
@@ -48,7 +44,7 @@ Added to deno.json:
     "src/utils/migration-helper.ts"
   ]
 }
-```text
+```
 
 ### 2. Pre-Release Hook Update
 
@@ -58,7 +54,7 @@ Updated nagare.config.ts:
 const checkCmd = new Deno.Command("deno", {
   args: ["check"], // No args = respects top-level exclude
 });
-```text
+```
 
 ### 3. Import Chain Consideration
 
@@ -66,9 +62,7 @@ const checkCmd = new Deno.Command("deno", {
 had to exclude:
 
 - `config-manager.ts` (the problematic file)
-
 - `config-manager.test.ts` (imports config-manager)
-
 - `migration-helper.ts` (imports config-manager)
 
 ## Technical Details
@@ -76,7 +70,6 @@ had to exclude:
 ### Deno Version Requirement
 
 - Minimum: Deno v2.3.1
-
 - Tested with: Deno v2.4.1
 
 ### Behavior Matrix
@@ -91,21 +84,16 @@ had to exclude:
 ### Configuration Hierarchy
 
 1. **Top-level exclude**: Affects all tools when they support it
-
 2. **Tool-specific exclude**: Each tool (fmt, lint) can have its own exclude
-
 3. **Best Practice**: Keep all three in sync (top-level, fmt, lint)
 
 ## Lessons Learned
 
 1. **Read the GitHub Issues**: The behavior was documented in
    [denoland/deno#26864](https://github.com/denoland/deno/issues/26864)
-
 2. **Test Exit Codes**: Don't just look at output - check exit codes
-
 3. **Understand Import Graphs**: Excluding a file doesn't help if it's imported
    by included files
-
 4. **Nagare Compatibility**: Nagare respects the project's deno.json
    configuration
 
@@ -117,7 +105,7 @@ For projects experiencing similar issues:
 
    ```bash
    deno check 2>&1 | grep "error:"
-````
+   ```
 
 2. **Add top-level exclude**:
 
@@ -140,13 +128,9 @@ For projects experiencing similar issues:
 ## Future Considerations
 
 1. **Deno Evolution**: This behavior might change in future Deno versions
-
 2. **Alternative Solutions**:
-
    - Fix the type errors (best long-term solution)
-
    - Use `// @ts-ignore` comments (not recommended)
-
    - Separate deprecated code into a different package
 
 3. **Monitoring**: Watch for changes in Deno's exclude behavior in release notes

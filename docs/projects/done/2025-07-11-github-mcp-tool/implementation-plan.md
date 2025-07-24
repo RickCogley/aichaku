@@ -6,83 +6,60 @@ Focus on the operations most critical for the nagare post-release workflow:
 
 ### Essential Tools
 
-1. **`mcp**github**release_upload`** - Upload assets to releases
-
-2. **`mcp**github**release_view`** - Check release status
-
-3. **`mcp**github**run_list`** - List workflow runs
-
-4. **`mcp**github**run_view`** - Get workflow run details
-
-5. **`mcp**github**run_watch`** - Monitor workflow progress
-
-6. **`mcp**github**auth_status`** - Verify authentication
-
-7. **`mcp**github**version_info`** - Version compatibility checking
-
-8. **`mcp**github**version_check`** - System gh CLI compatibility
+1. **`mcp__github__release_upload`** - Upload assets to releases
+2. **`mcp__github__release_view`** - Check release status
+3. **`mcp__github__run_list`** - List workflow runs
+4. **`mcp__github__run_view`** - Get workflow run details
+5. **`mcp__github__run_watch`** - Monitor workflow progress
+6. **`mcp__github__auth_status`** - Verify authentication
+7. **`mcp__github__version_info`** - Version compatibility checking
+8. **`mcp__github__version_check`** - System gh CLI compatibility
 
 ### Use Cases
 
 - **Post-Release Asset Upload**: Replace shell `gh release upload`
-
 - **Workflow Monitoring**: Watch CI/CD workflows after release
-
 - **Release Verification**: Confirm release was published correctly
-
 - **Authentication Check**: Ensure GitHub access before operations
-
 - **Version Compatibility**: Monitor gh CLI version changes and compatibility
 
 ## Phase 2: Repository Management (Priority 2)
 
 ### Key Tools
 
-1. **`mcp**github**repo_view`** - Get repository information
-
-2. **`mcp**github**pr_create`** - Create pull requests
-
-3. **`mcp**github**pr_list`** - List pull requests
-
-4. **`mcp**github**pr_checks`** - Monitor PR status
-
-5. **`mcp**github**issue_create`** - Create issues
-
-6. **`mcp**github**issue_list`** - List issues
+1. **`mcp__github__repo_view`** - Get repository information
+2. **`mcp__github__pr_create`** - Create pull requests
+3. **`mcp__github__pr_list`** - List pull requests
+4. **`mcp__github__pr_checks`** - Monitor PR status
+5. **`mcp__github__issue_create`** - Create issues
+6. **`mcp__github__issue_list`** - List issues
 
 ### Use Cases
 
 - **Automated PR Creation**: Create PRs from release branches
-
 - **Issue Management**: Auto-create issues from release notes
-
 - **Repository Status**: Check repo health and statistics
 
 ## Phase 3: Actions & Workflows (Priority 3)
 
 ### Key Tools
 
-1. **`mcp**github**workflow_run`** - Trigger workflows
-
-2. **`mcp**github**cache_clear`** - Clear Actions caches
-
-3. **`mcp**github**secret_list`** - Manage secrets
-
-4. **`mcp**github**variable_set`** - Set variables
+1. **`mcp__github__workflow_run`** - Trigger workflows
+2. **`mcp__github__cache_clear`** - Clear Actions caches
+3. **`mcp__github__secret_list`** - Manage secrets
+4. **`mcp__github__variable_set`** - Set variables
 
 ### Use Cases
 
 - **Release Workflows**: Trigger additional workflows post-release
-
 - **Cache Management**: Clear caches when needed
-
 - **Secret Management**: Update deployment secrets
 
 ## Implementation Architecture
 
 ### MCP Server Structure
 
-````text
+```
 github-mcp-server/
 ├── src/
 │   ├── server.ts              # Main MCP server
@@ -104,7 +81,7 @@ github-mcp-server/
 │       └── validation.ts     # Input validation
 ├── deno.json
 └── README.md
-```text
+```
 
 ### Key Components
 
@@ -117,7 +94,7 @@ class GitHubAuthManager {
   async refreshToken(): Promise<string>;
   getAuthHeaders(): Record<string, string>;
 }
-```text
+```
 
 #### GitHub Client
 
@@ -127,7 +104,7 @@ class GitHubClient {
   async uploadAsset(releaseId: number, filePath: string): Promise<Asset>;
   async watchWorkflow(runId: number, timeout: number): Promise<WorkflowRun>;
 }
-```text
+```
 
 #### Retry Logic
 
@@ -143,7 +120,7 @@ async function withRetry<T>(
   operation: () => Promise<T>,
   options: RetryOptions,
 ): Promise<T>;
-```text
+```
 
 ## Integration Points
 
@@ -173,16 +150,13 @@ postRelease: [
     }
   },
 ];
-```text
+```
 
 **Issues:**
 
 - Depends on `gh` CLI being in PATH
-
 - No error recovery or retry logic
-
 - Limited visibility into upload progress
-
 - Context dependency can cause failures
 
 ### Updated Nagare Configuration (Solution)
@@ -231,11 +205,11 @@ export default {
 
           // Check GitHub authentication
           console.log("🔍 Checking GitHub authentication...");
-          await useMCPTool("mcp**github**auth_status", {});
+          await useMCPTool("mcp__github__auth_status", {});
 
           // Upload binaries using MCP (deterministic, reliable)
           console.log("📤 Uploading binaries to GitHub release...");
-          await useMCPTool("mcp**github**release_upload", {
+          await useMCPTool("mcp__github__release_upload", {
             tag: `v${VERSION}`,
             assets: [
               `./dist/aichaku-${VERSION}-linux-x64`,
@@ -253,7 +227,7 @@ export default {
 
           // Monitor any active CI/CD workflows
           console.log("🔍 Checking for active workflows...");
-          const activeRuns = await useMCPTool("mcp**github**run_list", {
+          const activeRuns = await useMCPTool("mcp__github__run_list", {
             workflow: "publish.yml",
             status: "in_progress",
             limit: 5,
@@ -265,7 +239,7 @@ export default {
             );
 
             for (const run of activeRuns) {
-              await useMCPTool("mcp**github**run_watch", {
+              await useMCPTool("mcp__github__run_watch", {
                 runId: run.id,
                 timeout: 600000, // 10 minutes
                 pollInterval: 10000, // 10 seconds
@@ -275,7 +249,7 @@ export default {
 
           // Verify final release status
           console.log("✅ Verifying release...");
-          const release = await useMCPTool("mcp**github**release_view", {
+          const release = await useMCPTool("mcp__github__release_view", {
             tag: `v${VERSION}`,
           });
 
@@ -291,7 +265,7 @@ export default {
     ],
   },
 };
-```text
+```
 
 ### Claude Code Settings
 
@@ -302,12 +276,12 @@ export default {
       "command": "/path/to/github-mcp-server",
       "args": [],
       "env": {
-        "GITHUB*TOKEN": "${GITHUB*TOKEN}"
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
       }
     }
   }
 }
-```text
+```
 
 ### Nagare Integration Strategy
 
@@ -367,7 +341,7 @@ const mcpClient = new NagareMCPClient(
 async function useMCPTool(toolName: string, args: any) {
   return await mcpClient.callTool(toolName, args);
 }
-```text
+```
 
 #### Option 2: Enhanced Build Script
 
@@ -387,7 +361,7 @@ async function uploadBinaries() {
     // ... other binaries
   ]);
 }
-```text
+```
 
 #### Option 3: GitHub Actions Integration
 
@@ -397,51 +371,38 @@ Move binary uploads to GitHub Actions workflow:
 # .github/workflows/upload-binaries.yml
 name: Upload Release Binaries
 on:
-
   release:
     types: [published]
 
 jobs:
-
   upload-binaries:
     runs-on: ubuntu-latest
     steps:
-
       - uses: actions/checkout@v4
-
       - uses: denoland/setup-deno@v1
-
       - name: Build binaries
         run: deno run -A scripts/build-binaries.ts
-
       - name: Upload to release
         run: gh release upload ${{ github.event.release.tag_name }} ./dist/*
         env:
-          GITHUB*TOKEN: ${{ secrets.GITHUB*TOKEN }}
-```text
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
 
 #### Recommended Approach
 
 **Option 1 (Standalone MCP Client)** provides the best solution because:
 
 - Reuses existing GitHub MCP server
-
 - Provides deterministic, reliable uploads
-
 - Can be used by other tools beyond nagare
-
 - Maintains consistency with Claude Code workflows
 
 ### Implementation Steps for Nagare Integration
 
 1. **Phase 1**: Create standalone MCP client with version tracking
-
 2. **Phase 2**: Update `build-binaries.ts` to separate build from upload
-
 3. **Phase 3**: Update `nagare.config.ts` to use MCP client
-
 4. **Phase 4**: Test complete workflow
-
 5. **Phase 5**: Document for other nagare users
 
 ### Version Compatibility Integration
@@ -475,7 +436,7 @@ async function buildGitHubMCP() {
 
   console.log("✅ GitHub MCP server built with version compatibility tracking");
 }
-```text
+```
 
 This ensures that the GitHub MCP tool solves the original context dependency
 problem in nagare's postRelease hooks while maintaining awareness of GitHub CLI
@@ -498,7 +459,7 @@ class RateLimitHandler {
     }
   }
 }
-```text
+```
 
 ### Network Errors
 
@@ -513,36 +474,28 @@ class NetworkErrorHandler {
     return true;
   }
 }
-```text
+```
 
 ## Testing Strategy
 
 ### Unit Tests
 
 - Test each tool in isolation
-
 - Mock GitHub API responses
-
 - Test error conditions and retry logic
-
 - Validate input parameters
 
 ### Integration Tests
 
 - Test against real GitHub API (with test repo)
-
 - Test authentication flows
-
 - Test rate limiting behavior
-
 - Test large file uploads
 
 ### End-to-End Tests
 
 - Test complete release workflow
-
 - Test workflow monitoring
-
 - Test error recovery scenarios
 
 ## Deployment
@@ -557,30 +510,23 @@ deno task compile --output ./dist/github-mcp-server
 cp ./dist/github-mcp-server ~/.aichaku/mcp-servers/
 
 # Configure Claude Code
-# Add to claude*desktop*settings.json
-```text
+# Add to claude_desktop_settings.json
+```
 
 ### Distribution
 
 - Include in aichaku CLI as `aichaku mcp --install-github`
-
 - Auto-configure Claude Code settings
-
 - Provide setup wizard for GitHub token
 
 ## Success Metrics
 
 1. **Reliability**: 99.9% success rate for release operations
-
 2. **Performance**: Release asset uploads complete within expected time
-
 3. **Error Recovery**: Automatic recovery from transient failures
-
 4. **User Experience**: Clear progress feedback and error messages
-
 5. **Maintenance**: Minimal configuration required
 
 This implementation plan provides a clear path to building a robust GitHub MCP
 tool that will make all GitHub operations from Claude Code completely reliable
 and deterministic.
-````

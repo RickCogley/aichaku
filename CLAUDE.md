@@ -8,7 +8,7 @@ the Aichaku methodology library.
 This configuration is dynamically assembled from YAML files in your
 ~/.claude/aichaku installation.
 
-````yaml
+```yaml
 aichaku:
   version: 0.33.0
   source: configuration-as-code
@@ -490,5 +490,4 @@ included:
   doc_standards:
     - diataxis-google
   has*user*customizations: false
-```text
-````
+```

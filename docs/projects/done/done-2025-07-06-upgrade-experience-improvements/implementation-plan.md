@@ -5,12 +5,10 @@
 ### Modify `src/commands/upgrade.ts`
 
 1. Check both CLI and methodology versions
-
 2. Detect mismatches
-
 3. Prompt user to update if needed
 
-````typescript
+```typescript
 // At the start of upgrade command
 if (!isGlobal) {
   // Check global version
@@ -24,7 +22,6 @@ if (!isGlobal) {
    Global methodologies: v${globalMetadata.version}
 
 Your methodologies are outdated. Update them first:
-
   aichaku init --global --force
 
 Then run 'aichaku upgrade' again.`);
@@ -36,7 +33,7 @@ Then run 'aichaku upgrade' again.`);
     };
   }
 }
-```text
+```
 
 ## Phase 2: Add Version Status (20 min)
 
@@ -68,7 +65,7 @@ if (args.version) {
 
   Deno.exit(0);
 }
-```text
+```
 
 ## Phase 3: Post-Install Message (30 min)
 
@@ -86,7 +83,7 @@ echo "✅ Aichaku CLI installed!"
 echo ""
 echo "📝 Don't forget to update methodologies:"
 echo "   aichaku init --global --force"
-```text
+```
 
 ### Option C: First-run detection
 
@@ -95,8 +92,5 @@ When CLI version > methodology version, show reminder
 ## Phase 4: Test & Refine (20 min)
 
 1. Test upgrade from 0.4.0 → 0.5.0
-
 2. Test fresh install
-
 3. Refine messages for clarity
-````

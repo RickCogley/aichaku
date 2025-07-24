@@ -80,11 +80,11 @@ Enhancement suggestions are tracked as GitHub issues.
 
 ### 1. Create a Branch
 
-````bash
+```bash
 git checkout -b feature/your-feature-name
 # or
 git checkout -b fix/your-bug-fix
-```text
+```
 
 ### 2. Make Changes
 
@@ -106,13 +106,13 @@ git commit -m "fix: resolve issue with X"
 
 # Documentation
 git commit -m "docs: update installation guide"
-```text
+```
 
 ### 4. Push Changes
 
 ```bash
 git push origin feature/your-feature-name
-```text
+```
 
 ### 5. Create Pull Request
 
@@ -158,7 +158,7 @@ git push origin feature/your-feature-name
 
 # Run with coverage
 [coverage command]
-```text
+```
 
 ### Writing Tests
 
@@ -213,4 +213,3 @@ Contributors are recognized in:
 - Project website
 
 Thank you for contributing to .!
-````

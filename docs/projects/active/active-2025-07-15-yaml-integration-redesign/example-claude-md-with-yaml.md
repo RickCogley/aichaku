@@ -11,9 +11,8 @@ Project instructions for Claude Code.
 
 <!-- AICHAKU:START -->
 
-````yaml
+```yaml
 aichaku:
-
   version: "2.0.0"
   project: "aichaku"
 
@@ -44,30 +43,21 @@ aichaku:
     discussion_first:
       enabled: true
       phases:
-
         - name: "discussion"
           triggers: "${methodologies.*.triggers}"
           actions:
-
             - "acknowledge": "🪴 Aichaku: I see you're thinking about [topic]"
-
             - "ask_clarifying": true
-
             - "help_shape": true
           forbidden:
-
             - "create_folders"
-
             - "create_documents"
 
         - name: "ready"
           triggers: ["let's create", "I'm ready", "set up the project"]
           actions:
-
             - "create_immediately": true
-
             - "no*permission*asking": true
-
             - "use*descriptive*names": true
 
     visual_identity:
@@ -88,9 +78,7 @@ aichaku:
         active: "active/active-YYYY-MM-DD-{name}/"
         done: "done/done-YYYY-MM-DD-{name}/"
       required_files:
-
         - "STATUS.md"
-
         - "{methodology}-specific.md"
 
   # Development standards references
@@ -116,7 +104,7 @@ aichaku:
   # User customizations
   customizations:
     include: ["~/.claude/aichaku/user-config.yaml"]
-```text
+```
 
 <!-- AICHAKU:END -->
 
@@ -131,49 +119,33 @@ aichaku:
 ### Before (Current System)
 
 - **Size**: 50KB+
-
 - **Lines**: 1,500+
-
 - **Content**: Full Markdown guides duplicated inline
-
 - **Maintenance**: Edit multiple places for updates
 
 ### After (YAML Integration)
 
 - **Size**: ~2KB
-
 - **Lines**: ~80
-
 - **Content**: References to external content
-
 - **Maintenance**: Update YAML, behavior follows
 
 ## Key Benefits
 
 1. **Compact**: 96% size reduction
-
 2. **Dynamic**: Content loaded based on context
-
 3. **Maintainable**: Single source of truth
-
 4. **Extensible**: Easy to add new methodologies
-
 5. **Configurable**: User can customize behavior
-
 6. **Readable**: Clear YAML structure
 
 ## How It Works
 
 1. **Triggers**: When Claude sees keywords, it knows which methodology you're
    discussing
-
 2. **Integration URLs**: MCP hooks resolve these to actual content
-
 3. **Directives**: Define Claude's behavior without verbose instructions
-
 4. **Visual Identity**: Consistent presentation across all interactions
-
 5. **Standards**: Reference external documentation dynamically
 
 This is the beautiful future of Aichaku integration! 🪴
-````

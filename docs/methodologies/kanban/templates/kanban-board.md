@@ -70,47 +70,32 @@ Items in progress > 3 days:
 ### Ready to Pull
 
 - [ ] User story clear
-
 - [ ] Acceptance criteria defined
-
 - [ ] No blockers identified
-
 - [ ] Dependencies available
-
 - [ ] Estimated (optional)
 
 ### Pull Policies
 
 1. Respect WIP limits
-
 2. Pull highest priority available
-
 3. Finish before starting
-
 4. Help blocked items first
 
 ### Done Criteria
 
 - [ ] Code complete and merged
-
 - [ ] Tests passing
-
 - [ ] Code reviewed
-
 - [ ] Documentation updated
-
 - [ ] Deployed to staging
 
 ## Team Agreements
 
 - Daily standup at 9:30 AM (walk the board)
-
 - Update board in real-time
-
 - Flag blockers immediately
-
 - Review metrics weekly
-
 - Retrospective monthly
 
 ## Improvement Experiments
@@ -124,9 +109,7 @@ Items in progress > 3 days:
 ### Experiment Backlog
 
 1. Add automated testing column
-
 2. Split development into frontend/backend
-
 3. Implement pair programming for complex items
 
 ## Notes

@@ -8,10 +8,10 @@
 
 Shows both bad and good examples side-by-side:
 
-````text
+```
 ❌ Bad: const data: any = response
 ✅ Good: const data: ApiResponse = response
-```text
+```
 
 Claude learns by seeing the contrast.
 
@@ -19,10 +19,10 @@ Claude learns by seeing the contrast.
 
 Explains WHY rules exist:
 
-```text
+```
 Context: TypeScript's type system prevents runtime errors.
 Using 'any' disables this protection and makes code harder to maintain.
-```text
+```
 
 Understanding the "why" creates lasting behavior change.
 
@@ -30,17 +30,13 @@ Understanding the "why" creates lasting behavior change.
 
 Breaks complex fixes into manageable subtasks:
 
-```text
+```
 Step-by-Step Fix:
-
 1. Look at how the variable is used
-
 2. Create an interface with those properties
-
 3. Replace 'any' with your interface
-
 4. Fix any resulting type errors
-```text
+```
 
 Prevents overwhelm and ensures completeness.
 
@@ -48,16 +44,12 @@ Prevents overwhelm and ensures completeness.
 
 For security issues, emphasizes order:
 
-```text
-
+```
 1. STOP - Do not run this code until fixed
-
 2. Replace string interpolation with array arguments
-
 3. Use execFile instead of exec when possible
-
 4. Validate/sanitize any user input
-```text
+```
 
 Critical issues get proper priority.
 
@@ -65,10 +57,10 @@ Critical issues get proper priority.
 
 Prompts introspection with targeted questions:
 
-```text
+```
 🤔 Reflection: What made me reach for 'any' instead of defining a proper type?
 🤔 Reflection: Am I treating user input as potentially malicious in all cases?
-```text
+```
 
 Builds awareness of patterns.
 
@@ -76,14 +68,11 @@ Builds awareness of patterns.
 
 Guides through the thought process:
 
-```text
-
+```
 1. Analysis: First, trace through the code...
-
 2. Strategy: Create a minimal interface...
-
 3. Implementation: Replace 'any' with your interface...
-```text
+```
 
 Models good problem-solving approach.
 
@@ -91,7 +80,7 @@ Models good problem-solving approach.
 
 When Claude uses 'any' types:
 
-```text
+```
 🌱 Learning Opportunity - Let's fix this properly:
 
 📖 Context: TypeScript's type system prevents runtime errors. Using 'any'
@@ -108,49 +97,41 @@ interface UserData { id: string; name: string; }
 const user: UserData = await getUser(id);
 
 🔄 Step-by-Step Fix:
-
 1. Look at how the variable is used (what properties/methods are accessed)
-
 2. Create an interface with those properties
-
 3. Replace 'any' with your interface
-
 4. Fix any resulting type errors
 
 🤔 Reflection: What made me reach for 'any' instead of defining a proper type?
 
 📌 Note to self: I should follow the TypeScript standards in CLAUDE.md and avoid using 'any' types.
-```text
+```
 
 ## Impact on Claude's Behavior
 
 ### Before (Simple Feedback)
 
-```text
+```
 MCP: "Found 5 'any' types"
 Claude: "I'll fix those type issues"
 [May make same mistake again]
-```text
+```
 
 ### After (Advanced Prompting)
 
-```text
+```
 MCP: [Detailed guidance with examples, context, and steps]
 Claude: "I understand now - using 'any' defeats TypeScript's purpose.
          Let me properly type these by examining usage patterns first..."
 [Less likely to repeat mistake]
-```text
+```
 
 ## Implementation Benefits
 
 1. **Faster Learning**: Examples show exactly what to do
-
 2. **Deeper Understanding**: Context explains why it matters
-
 3. **Practical Guidance**: Steps prevent confusion
-
 4. **Behavioral Change**: Reflection creates awareness
-
 5. **Better Code**: Claude produces higher quality on first try
 
 ## Key Insight
@@ -162,12 +143,8 @@ write better code throughout the session.
 The combination of:
 
 - **WHY** (context)
-
 - **WHAT** (examples)
-
 - **HOW** (steps)
-
 - **REFLECT** (questions)
 
 Creates a powerful learning loop that improves code quality in real-time.
-````

@@ -8,9 +8,9 @@ define features
 
 ## Adaptive Behavior
 
-````text
+```
 DETECT language → BLEND methodologies → OUTPUT natural plan
-```text
+```
 
 ### Language Detection Map
 
@@ -34,34 +34,24 @@ first"
 
 **Response**:
 
-```text
+```
 I'll help you shape the feature first, then fit it into your sprint planning.
 
 ## Feature Shaping (Shape Up style)
-
 1. Problem: [What are we solving?]
-
 2. Appetite: How much time are you willing to invest?
-
    - [ ] Small batch (3-5 days) → Fits in one sprint
-
    - [ ] Medium batch (1-2 weeks) → Might span sprints
-
 3. Solution sketch: [High-level approach]
-
 4. Rabbit holes: [What to avoid]
 
 ## Sprint Planning (Scrum style)
 Once shaped, we'll:
-
 - Estimate story points
-
 - Check team capacity
-
 - Create sprint goal
-
 - Break into tasks
-```text
+```
 
 ### Example 2: Kanban + Cycles
 
@@ -69,7 +59,7 @@ Once shaped, we'll:
 
 **Response**:
 
-```text
+```
 I'll create a Kanban board structured around your Shape Up cycle:
 
 ## Board Structure
@@ -78,15 +68,12 @@ I'll create a Kanban board structured around your Shape Up cycle:
 | [Next cycle] | [Current bet] | [Cool-down] | [Shipped] |
 
 - **Betting Table**: Ideas for next 6-week cycle
-
 - **In Progress**: Current cycle's bet (WIP limit: 1)
-
 - **Small Batch**: 2-week cool-down tasks
-
 - **Done**: Completed this cycle
 
 This blends Shape Up's cycles with Kanban's visual flow.
-```text
+```
 
 ### Example 3: Scrum + Lean
 
@@ -94,36 +81,27 @@ This blends Shape Up's cycles with Kanban's visual flow.
 
 **Response**:
 
-```text
+```
 Let's structure your experiment within the sprint framework:
 
 ## Sprint Experiment Plan
 **Sprint Goal**: Validate [hypothesis]
 
 ### Lean Canvas (1 day)
-
 - Problem: [What we assume]
-
 - Solution: [Minimum test]
-
 - Metrics: [How we'll measure]
-
 - Success: [What validates it]
 
 ### Sprint Backlog
-
 - [ ] Design experiment (2 pts)
-
 - [ ] Build MVP (5 pts)
-
 - [ ] Run test (3 pts)
-
 - [ ] Analyze results (2 pts)
-
 - [ ] Demo learnings (1 pt)
 
 This gives you Lean's learning focus within Scrum's timebox.
-```text
+```
 
 ## Vocabulary Blending
 
@@ -134,32 +112,24 @@ This gives you Lean's learning focus within Scrum's timebox.
 **User**: "Let's do standup and check what's in shaping" **AI Understanding**:
 
 - "standup" → Scrum ceremony
-
 - "shaping" → Shape Up phase
-
 - Blend: Daily check on shaping progress
 
 **Response**:
 
-```text
+```
 Let's run through your standup with a focus on shaping progress:
 
 1. **Shaping Status** (Shape Up focus)
-
    - What problems are we exploring?
-
    - Any solutions taking shape?
-
    - Appetite decisions needed?
 
 2. **Daily Progress** (Scrum focus)
-
    - What did you complete yesterday?
-
    - What will you work on today?
-
    - Any blockers?
-```text
+```
 
 ## Organization Terminology
 
@@ -168,20 +138,17 @@ Let's run through your standup with a focus on shaping progress:
 If users consistently use different terms, adapt:
 
 - "iteration" → Could be sprint or cycle
-
 - "epic" → Could be bet or feature
-
 - "board" → Could be Kanban or Scrum board
-
 - "review" → Could be demo or betting table
 
 ### Learning Patterns
 
-```text
+```
 First mention: Use standard term
 User corrects: Note preference
 Future uses: Adopt their term
-```text
+```
 
 ## Output Adaptation
 
@@ -190,7 +157,7 @@ Future uses: Adopt their term
 When detecting corporate language ("stakeholders", "governance", "steering
 committee"):
 
-```text
+```
 ## Sprint Planning Document
 **Date**: [Date]
 **Attendees**: [List]
@@ -198,19 +165,19 @@ committee"):
 **Commitment**: [Story points]
 **Risks**: [Identified risks]
 **Dependencies**: [External teams]
-```text
+```
 
 ### Startups/Small Teams
 
 When detecting casual language ("let's ship", "quick wins", "MVP"):
 
-```text
+```
 ## What We're Building
 **This week**: Ship [feature]
 **Why**: [User problem]
 **How**: [Simple approach]
 **Success**: [Metric]
-```text
+```
 
 ## Mode Switching Hints
 
@@ -229,12 +196,8 @@ Switching to Improvement Mode..."
 ## Remember
 
 1. **Blend, don't switch** - Mix methodologies based on language
-
 2. **Keep user's vocabulary** - Mirror their terms
-
 3. **Stay flexible** - Adapt to changing contexts
-
 4. **Be helpful, not pedantic** - Focus on value, not methodology purity
 
 The goal is natural collaboration, not methodology enforcement.
-````

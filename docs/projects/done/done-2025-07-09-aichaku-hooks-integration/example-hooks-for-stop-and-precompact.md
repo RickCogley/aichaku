@@ -10,7 +10,7 @@ Question is, where to store the script? In the global aichaku settings folder
 e.g. /Users/rcogley/.aichaku ? In where aichaku is installed e.g.
 /Users/rcogley/.deno/bin/aichaku ?
 
-````json
+```json
 {
   "hooks": [
     {
@@ -23,5 +23,4 @@ e.g. /Users/rcogley/.aichaku ? In where aichaku is installed e.g.
     }
   ]
 }
-```text
-````
+```

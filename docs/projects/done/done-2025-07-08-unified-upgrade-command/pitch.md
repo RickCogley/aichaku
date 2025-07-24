@@ -4,19 +4,17 @@
 
 The current upgrade experience is unnecessarily complex:
 
-````bash
+```bash
 # After upgrading global CLI, users must run TWO commands:
 aichaku upgrade          # Updates project metadata (what metadata??)
 aichaku integrate --force  # Updates CLAUDE.md (sounds like a workaround)
-```text
+```
 
 Users naturally run `aichaku upgrade` expecting everything to be upgraded, but
 they get:
 
 - Confusing messages about running another command
-
 - No clear understanding of what "metadata" means
-
 - Frustration at needing two commands for one conceptual task
 
 ## Solution
@@ -30,13 +28,10 @@ Make `aichaku upgrade` do what users expect - upgrade EVERYTHING:
 aichaku upgrade
 
 # This should:
-
 1. Update project metadata (.aichaku.json) if needed
-
 2. Automatically update CLAUDE.md with latest directives
-
 3. Show what changed
-```text
+```
 
 ### 2. Surgical CLAUDE.md Updates with Markers
 
@@ -51,16 +46,13 @@ This project uses the globally installed Aichaku adaptive methodology system...
 [All the Aichaku content]
 
 <!-- AICHAKU:END -->
-```text
+```
 
 Benefits:
 
 - Clean updates - only touch content between markers
-
 - Version tracking - can show diffs
-
 - User edits preserved - anything outside markers is untouched
-
 - Clear boundaries - obvious what's managed by Aichaku
 
 ## Implementation
@@ -87,7 +79,7 @@ export async function upgrade(options: UpgradeOptions): Promise<UpgradeResult> {
 
   return result;
 }
-```text
+```
 
 ### Phase 2: Marker-Based Updates
 
@@ -130,35 +122,25 @@ export async function integrate(
     // ... insert at appropriate location ...
   }
 }
-```text
+```
 
 ## Benefits
 
 1. **Intuitive**: `upgrade` upgrades everything, as expected
-
 2. **Single command**: No need to remember two commands
-
 3. **Backward compatible**: `integrate` still works for special cases
-
 4. **Clear messaging**: Users understand what's happening
 
 ## Migration
 
 - Keep `integrate` command for:
-
   - Initial setup
-
   - Forcing re-integration
-
   - Special cases
-
 - But normal upgrade flow is just: `aichaku upgrade`
 
 ## Success Metrics
 
 - Users run one command instead of two
-
 - No confusion about what to run after global upgrade
-
 - "Upgrade" means "upgrade everything"
-````

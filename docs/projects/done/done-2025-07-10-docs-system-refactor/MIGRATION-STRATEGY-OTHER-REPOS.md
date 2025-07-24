@@ -12,11 +12,8 @@ Repositories using Aichaku may have:
 
 1. Links to Aichaku documentation (e.g.,
    `/references/tutorials/getting-started.md`)
-
 2. Automated documentation generation expecting certain paths
-
 3. CI/CD pipelines that reference documentation locations
-
 4. Custom scripts or tools that expect the old structure
 
 ## Migration Strategy
@@ -25,26 +22,23 @@ Repositories using Aichaku may have:
 
 **In Aichaku repository:**
 
-````bash
+```bash
 # Create a symlink for backward compatibility
 ln -s docs references
 
 # Add to .gitignore
 echo "references" >> .gitignore
-```text
+```
 
 **Benefits:**
 
 - Existing repos continue to work without changes
-
 - Gives time for gradual migration
-
 - No breaking changes
 
 **Drawbacks:**
 
 - Maintains legacy structure
-
 - May confuse new users
 
 ### Option 2: Version-Locked Migration
@@ -59,7 +53,7 @@ echo "references" >> .gitignore
 
    # Create migration checklist
    grep -r "/references" . > references-migration-checklist.txt
-````
+   ```
 
 2. **Stay on current version until ready:**
 
@@ -108,7 +102,7 @@ echo "references" >> .gitignore
 
 **Create in Aichaku:**
 
-`````typescript
+```typescript
 // src/commands/migrate-docs.ts
 export async function migrateDocsCommand(options: MigrateDocsOptions) {
   // 1. Scan for /references paths
@@ -125,7 +119,7 @@ export async function migrateDocsCommand(options: MigrateDocsOptions) {
   // 4. Verify
   await verifyMigration(options.path);
 }
-```text
+```
 
 **Usage:**
 
@@ -133,7 +127,7 @@ export async function migrateDocsCommand(options: MigrateDocsOptions) {
 # In other repos
 aichaku migrate-docs --dry-run
 aichaku migrate-docs --apply
-```text
+```
 
 ## Communication Plan
 
@@ -150,11 +144,9 @@ convention alignment.
 **Action Required:**
 
 - Review your links to Aichaku documentation
-
 - Use `aichaku migrate-docs` tool (available in v0.5.5)
-
 - Or lock to v0.5.x until ready to migrate
-```text
+```
 
 ### 2. Migration Guide
 
@@ -169,8 +161,8 @@ Run this in your repository:
 
 ```bash
 aichaku migrate-docs --apply
-```text
-````text
+```
+````
 
 ## Manual Migration
 
@@ -178,17 +170,16 @@ aichaku migrate-docs --apply
 
    ```bash
    find . -name "*.md" -exec sed -i 's|/references/|/docs/|g' {} +
-`````
+   ```
 
 2. Update CI/CD: [specific examples]
 
 3. Test thoroughly:
-
    ```bash
    aichaku docs-lint
    ```
 
-`````text
+````
 ### 3. Deprecation Period
 
 **v0.5.5**: Add deprecation warning
@@ -197,28 +188,22 @@ if (existsSync("references")) {
   console.warn("⚠️  /references is deprecated. Please migrate to /docs");
   console.warn("   Run: aichaku migrate-docs");
 }
-````text
+````
 
 **v0.6.0**: Remove /references, keep symlink **v0.7.0**: Remove symlink
 
 ## Recommended Approach
 
 1. **Immediate**: Add symlink in Aichaku for backward compatibility
-
 2. **Next Release**: Include migration tool and documentation
-
 3. **Following Release**: Deprecation warnings
-
 4. **Future Release**: Remove legacy support
 
 This gives users:
 
 - No immediate breaking changes
-
 - Tools to migrate easily
-
 - Clear timeline
-
 - Graceful degradation
 
 ## For the Aichaku Team
@@ -226,15 +211,10 @@ This gives users:
 ### Release Checklist
 
 - [ ] Add backward compatibility symlink
-
 - [ ] Create migration tool command
-
 - [ ] Write migration guide
-
 - [ ] Update CHANGELOG with breaking change notice
-
 - [ ] Create GitHub issue template for migration help
-
 - [ ] Consider creating a migration GitHub Action
 
 ### Testing Migration
@@ -242,13 +222,9 @@ This gives users:
 Before release:
 
 1. Test on internal projects first
-
 2. Create test repository with old structure
-
 3. Run migration tool
-
 4. Verify all links work
-
 5. Check CI/CD compatibility
 
 ## Summary
@@ -256,13 +232,9 @@ Before release:
 The migration from `/references` to `/docs` can be smooth if we:
 
 1. Provide backward compatibility initially
-
 2. Give users tools to migrate
-
 3. Communicate clearly and early
-
 4. Support users through the transition
 
 This approach minimizes disruption while moving to a better, more conventional
 structure.
-`````
