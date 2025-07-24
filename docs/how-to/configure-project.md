@@ -78,7 +78,8 @@ Update your project's `CLAUDE.md` file with your configuration:
 aichaku integrate
 ```
 
-This automatically adds your selected standards and methodology to `CLAUDE.md` in a compact yaml block, so Claude Code can pull your project's preferences into context.
+This automatically adds your selected standards and methodology to `CLAUDE.md` in a compact yaml block, so Claude Code
+can pull your project's preferences into context.
 
 ## Working with Standards
 
@@ -156,7 +157,8 @@ your-project/
 │   └── CLAUDE.md                   # Updated with your config
 ```
 
-Note: The actual standards library is installed globally at `~/.claude/aichaku/docs/standards/` during initial setup and refreshed when you run `aichaku upgrade --global`.
+Note: The actual standards library is installed globally at `~/.claude/aichaku/docs/standards/` during initial setup and
+refreshed when you run `aichaku upgrade --global`.
 
 ### Standards configuration
 
@@ -189,7 +191,7 @@ aichaku:
   discussion_first:
     name: Discussion-First Document Creation
     description: A three-phase approach to thoughtful project creation
-  ...
+      ...
   standards:
     - owasp-web
     - solid
@@ -306,7 +308,6 @@ aichaku integrate --help
 # Use "learn" to learn about the standards
 aichaku learn
 aichaku learn "shape up"
-
 ```
 
 ## Next Steps
@@ -318,6 +319,4 @@ aichaku learn "shape up"
 
 ---
 
-*Created: 2025-07-24*
-*Last updated: 2025-07-24*
-*Standard: Universal (applies to all methodologies)*
+*Created: 2025-07-24* *Last updated: 2025-07-24* *Standard: Universal (applies to all methodologies)*
