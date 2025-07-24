@@ -11,14 +11,14 @@ Before committing any Markdown file, ensure:
 
 ### ✅ Professional Standards (Mandatory)
 
-- [ ] **Code blocks have language specified** (``bash`,``json``, `````text``)
+- [ ] **Code blocks have language specified** (`bash`, `json`, `text`)
 - [ ] **Proper names capitalized** (GitHub, TypeScript, Markdown, JavaScript, Aichaku)
-- [ ] **Emphasis uses underscores** (`_text_`) to match Prettier formatting
+- [ ] **Emphasis uses asterisks** (`*text*`) for consistency
 - [ ] **Strong emphasis uses double asterisks** (`**text**`) not underscores
 - [ ] **Headings surrounded by blank lines** (before and after)
 - [ ] **Lists surrounded by blank lines** (before and after each list)
 - [ ] **Files end with single newline** (no trailing blank lines)
-- [ ] **Fenced code blocks** (``````` not indented blocks)
+- [ ] **Fenced code blocks** (``` not indented blocks)
 - [ ] **Consistent horizontal rules** (use `---`)
 
 ## Detailed Standards
@@ -29,6 +29,7 @@ Before committing any Markdown file, ensure:
 
 **Rule**: Every fenced code block must specify a language.
 
+````
 ```bash
 # ✅ Good - specify bash for commands
 aichaku init --global
@@ -49,6 +50,7 @@ graph TD
 ```Markdown
 <!-- ❌ Bad - no language specified -->
 ```
+````
 
 ### Proper Name Capitalization
 
@@ -56,16 +58,20 @@ graph TD
 
 **Mandatory Names**:
 
-- **Aichaku** (not aichaku)
-- **GitHub** (not GitHub or GitHub)
-- **TypeScript** (not TypeScript or TypeScript)
-- **JavaScript** (not JavaScript or JavaScript)
-- **Markdown** (not Markdown when referring to the language)
+<!-- markdownlint-disable MD044 -->
 
-```Markdown
-✅ Good: "Push your changes to GitHub and run TypeScript checks" ❌ Bad: "Push
-your changes to GitHub and run TypeScript checks"
+- **Aichaku** (not aichaku)
+- **GitHub** (not github or Github)
+- **TypeScript** (not typescript or Typescript)
+- **JavaScript** (not javascript or Javascript)
+- **Markdown** (not markdown when referring to the language)
+
+```md
+✅ Good: "Push your changes to GitHub and run TypeScript checks"
+❌ Bad: "Push your changes to github and run typescript checks"
 ```
+
+<!-- markdownlint-enable MD044 -->
 
 ### Emphasis Style Consistency
 
@@ -73,10 +79,12 @@ your changes to GitHub and run TypeScript checks"
 
 **Rule**: Always use asterisks for emphasis, never underscores.
 
-```Markdown
-✅ Good: Use _emphasis_ and **strong emphasis** with asterisks ❌ Bad: Don't use
-_emphasis_ or **strong emphasis** with underscores
+<!-- markdownlint-disable MD049 MD050 -->
+```md
+✅ Good: Use *emphasis* and **strong emphasis** with asterisks
+❌ Bad: Don't use _emphasis_ or __strong emphasis__ with underscores
 ```
+<!-- markdownlint-enable MD049 MD050 -->
 
 ### Heading Spacing
 
@@ -84,19 +92,21 @@ _emphasis_ or **strong emphasis** with underscores
 
 **Rule**: Always surround headings with blank lines.
 
-```Markdown
-✅ Good: Previous paragraph content.
+<!-- markdownlint-disable MD022 -->
+
+```md
+✅ Good: Previous paragraph content, space after...
 
 ## Section Heading
 
-Next paragraph content.
+Space before, next paragraph content.
 
-❌ Bad: Previous paragraph content.
-
+❌ Bad: Previous paragraph content, right against:
 ## Section Heading
-
-Next paragraph content.
+Then soon followed by, next paragraph content.
 ```
+
+<!-- markdownlint-enable MD022 -->
 
 ### List Spacing
 
@@ -104,26 +114,32 @@ Next paragraph content.
 
 **Rule**: Lists must be preceded and followed by blank lines.
 
-```Markdown
-✅ Good: This is a paragraph.
+<!-- markdownlint-disable MD032 -->
+
+```md
+✅ Good: This is a paragraph, followed by a space then the bullet list.
 
 - List item 1
 - List item 2
 - List item 3
 
-This is another paragraph.
+Then another space, and this paragraph.
 
-❌ Bad: This is a paragraph.
-
+❌ Bad: This is a paragraph, with no space and the bullet list.
 - List item 1
-- List item 2 This is another paragraph.
+- List item 2
+- List item 3
+Then no space again, and another paragraph.
 ```
+
+<!-- markdownlint-enable MD032 -->
 
 ### File Structure Standards
 
 **Rule**: All Markdown files must follow this structure:
 
-```Markdown
+
+```md
 # Document Title
 
 Brief description or purpose statement.
@@ -143,8 +159,10 @@ Use descriptive headings that follow logical hierarchy.
 
 ---
 
-_Created: YYYY-MM-DD_ _Last updated: YYYY-MM-DD_
+*Created: YYYY-MM-DD*
+*Last updated: YYYY-MM-DD*
 ```
+
 
 ## Content Quality Standards
 
@@ -172,22 +190,22 @@ _Created: YYYY-MM-DD_ _Last updated: YYYY-MM-DD_
 
 This repository includes pre-commit hooks that automatically:
 
-1. **Format** Markdown with Prettier
-2. **Lint** with Markdownlint-cli2
+1. **Format** Markdown with `deno fmt` and settings in `deno.json`
+2. **Lint** with `markdownlint-cli2`
 3. **Validate** all standards compliance
 
 ### Editor Integration
 
 The `.vscode/settings.json` and `.editorconfig` files ensure:
 
-- Consistent indentation (2 spaces)
+- Consistent indentation (2 spaces, or 4 spaces for Markdown)
 - Automatic formatting on save
 - Real-time linting feedback
-- Proper line endings (LF)
+- Proper line endings (lf)
 
 ### Document Generation
 
-Use the provided script for new documents:
+You can use the provided script for new documents:
 
 ```bash
 # Create a new document with proper formatting
@@ -221,52 +239,74 @@ While these standards are universal, specific methodologies may add requirements
 ### Common Mistakes to Avoid
 
 1. **Missing language specifications**
-   ````Markdown
-   ❌ Bad:
-   ```text
-   code here
-   ````
-   ✅ Good:
-   ```bash
-   code here
-   ```
+
+<!-- markdownlint-disable MD040 -->
+
+````
+❌ Bad, no language specified after the initial three backticks:
+```
+code here
+```
+
+✅ Good:
+
+```bash
+code here
+```
+````
+
+<!-- markdownlint-enable MD040 -->
 
 2. **Inconsistent emphasis**
-   ```Markdown
-   ❌ Bad: Mix of _underscores_ and _asterisks_ ✅ Good: Consistent _asterisks_
-   throughout
-   ```
+
+<!-- markdownlint-disable MD049 MD050 -->
+
+```md
+❌ Bad: Mix of _underscores_ and *asterisks*
+✅ Good: Consistent **asterisks** throughout *the doc*
+```
+
+<!-- markdownlint-enable MD049 MD050 -->
 
 3. **Poor heading hierarchy**
-   ```Markdown
-   ❌ Bad: Jump from H1 to H3
 
-   # Title
+<!-- markdownlint-disable MD001 -->
 
-   ### Subsection
+```md
+❌ Bad: Jump from H1 to H3
 
-   ✅ Good: Logical progression
+# Title
 
-   # Title
+### Subsection
 
-   ## Section
+✅ Good: Logical progression, from H1 through H3
 
-   ### Subsection
-   ```
+# Title
+
+## Section
+
+### Subsection
+```
+
+<!-- markdownlint-enable MD001 -->
+
 
 ### Validation Commands
 
 Before committing, run:
 
 ```bash
-# Format all Markdown files
-npx prettier --write "**/*.md"
+# Format all files (including Markdown)
+deno fmt
 
-# Lint all Markdown files
-npx Markdownlint-cli2 "**/*.md"
+# Lint and auto-fix Markdown files
+markdownlint-cli2 --fix "**/*.md"
+
+# Combined workflow (recommended)
+deno task fmt:all
 
 # Check specific file
-npx Markdownlint-cli2 "path/to/file.md"
+markdownlint-cli2 "path/to/file.md"
 ```
 
 ## Integration with Aichaku Methodologies
@@ -305,6 +345,6 @@ manual effort.
 
 ---
 
-_Created: 2025-07-23_\
-_Last updated: 2025-07-23_\
-_Standard: Universal (applies to all methodologies)_
+*Created: 2025-07-23*\
+*Last updated: 2025-07-23*\
+*Standard: Universal (applies to all methodologies)*

@@ -65,7 +65,10 @@
     "useTabs": false,
     "indentWidth": 2,
     "semiColons": true,
-    "singleQuote": false
+    "singleQuote": false,
+    "singleBodyPosition": "maintain",
+    "typeLiteral.separatorKind": "semiColon",
+    "jsx.bracketPosition": "nextLine"
   },
   "lint": {
     "exclude": [
