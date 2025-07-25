@@ -23,7 +23,8 @@ Help users learn by doing, building confidence through successful completion of 
 
 Microsoft tutorials follow a hands-on, step-by-step approach with clear outcomes and encouraging tone.
 
-See the complete template: [templates/microsoft-style-tutorial-template.md](./templates/microsoft-style-tutorial-template.md)
+See the complete template:
+[templates/microsoft-style-tutorial-template.md](./templates/microsoft-style-tutorial-template.md)
 
 Key structural elements:
 
@@ -52,7 +53,8 @@ Provide focused, task-oriented guidance for users who know what they want to acc
 
 Microsoft how-to guides follow a problem-solving approach with multiple methods and comprehensive troubleshooting.
 
-See the complete template: [templates/microsoft-style-how-to-template.md](./templates/microsoft-style-how-to-template.md)
+See the complete template:
+[templates/microsoft-style-how-to-template.md](./templates/microsoft-style-how-to-template.md)
 
 Key structural elements:
 
@@ -63,6 +65,7 @@ Key structural elements:
 - **Troubleshooting** section with common issues
 - **Cleanup** guidance for resource management
 - **Next steps** for continued learning
+
 ### Microsoft Style Notes for How-to Guides
 
 - **Front-load important information**: Put key details early
@@ -74,13 +77,16 @@ Key structural elements:
 ## Reference Guidelines
 
 ### Purpose
+
 Provide complete, accurate technical information for users who need specific details.
 
 ### Structure
 
-Microsoft reference documentation provides comprehensive technical information with consistent formatting and complete parameter coverage.
+Microsoft reference documentation provides comprehensive technical information with consistent formatting and complete
+parameter coverage.
 
-See the complete template: [templates/microsoft-style-reference-template.md](./templates/microsoft-style-reference-template.md)
+See the complete template:
+[templates/microsoft-style-reference-template.md](./templates/microsoft-style-reference-template.md)
 
 Key structural elements:
 
@@ -90,6 +96,7 @@ Key structural elements:
 - **Return values table** with status codes
 - **Related commands** section for discoverability
 - **Cross-references** to conceptual content
+
 ### Microsoft Style Notes for References
 
 - **Be scannable**: Use consistent formatting and clear sections
@@ -101,13 +108,16 @@ Key structural elements:
 ## Explanation Guidelines
 
 ### Purpose
+
 Help users understand concepts, architecture, and the reasoning behind design decisions.
 
 ### Structure
 
-Microsoft explanation documentation helps users understand concepts and architecture with engaging introductions and progressive disclosure.
+Microsoft explanation documentation helps users understand concepts and architecture with engaging introductions and
+progressive disclosure.
 
-See the complete template: [templates/microsoft-style-explanation-template.md](./templates/microsoft-style-explanation-template.md)
+See the complete template:
+[templates/microsoft-style-explanation-template.md](./templates/microsoft-style-explanation-template.md)
 
 Key structural elements:
 

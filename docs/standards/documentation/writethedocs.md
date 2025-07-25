@@ -21,7 +21,8 @@ Guide newcomers through their first successful experience with your project.
 
 ### Structure
 
-Write the Docs tutorials focus on community-driven learning experiences that welcome newcomers with empathy and clear guidance.
+Write the Docs tutorials focus on community-driven learning experiences that welcome newcomers with empathy and clear
+guidance.
 
 See the complete template: [templates/writethedocs-tutorial-template.md](./templates/writethedocs-tutorial-template.md)
 
@@ -35,7 +36,6 @@ Key structural elements:
 - **Multiple platform support** (macOS, Linux, Windows)
 - **Celebration of achievements** at each milestone
 
-
 ### Write the Docs Notes for Tutorials
 
 - **Progressive disclosure**: Introduce concepts as needed, not all upfront
@@ -47,6 +47,7 @@ Key structural elements:
 ## How-to Guide Guidelines
 
 ### Purpose
+
 Help users accomplish specific tasks efficiently, assuming basic familiarity with the project.
 
 ### Structure
@@ -75,13 +76,16 @@ Key structural elements:
 ## Reference Guidelines
 
 ### Purpose
+
 Provide comprehensive technical details for users who need complete information.
 
 ### Structure
 
-Write the Docs reference documentation emphasizes community maintenance and accessibility for diverse technical backgrounds.
+Write the Docs reference documentation emphasizes community maintenance and accessibility for diverse technical
+backgrounds.
 
-See the complete template: [templates/writethedocs-reference-template.md](./templates/writethedocs-reference-template.md)
+See the complete template:
+[templates/writethedocs-reference-template.md](./templates/writethedocs-reference-template.md)
 
 Key structural elements:
 
@@ -103,13 +107,16 @@ Key structural elements:
 ## Explanation Guidelines
 
 ### Purpose
+
 Help users understand the why behind the what - concepts, architecture, and design decisions.
 
 ### Structure
 
-Write the Docs explanations foster community understanding by connecting concepts to real-world usage and diverse perspectives.
+Write the Docs explanations foster community understanding by connecting concepts to real-world usage and diverse
+perspectives.
 
-See the complete template: [templates/writethedocs-explanation-template.md](./templates/writethedocs-explanation-template.md)
+See the complete template:
+[templates/writethedocs-explanation-template.md](./templates/writethedocs-explanation-template.md)
 
 Key structural elements:
 
@@ -133,6 +140,7 @@ Key structural elements:
 ### Documentation as Code
 
 #### Version Control
+
 - Keep docs in the same repo as code
 - Review docs changes like code changes
 - Tag documentation versions with releases
@@ -146,8 +154,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'docs/**'
-      - 'src/**'
+      - "docs/**"
+      - "src/**"
 
 jobs:
   build:
@@ -160,7 +168,7 @@ jobs:
         run: make test-links
       - name: Deploy
         run: make deploy-docs
-````
+```
 
 #### Testing Documentation
 

@@ -20,9 +20,11 @@ Tutorials are lessons that take the reader through a series of steps to complete
 
 ### Structure
 
-Diátaxis tutorials are learning-oriented lessons that take beginners through a series of steps to complete a meaningful project.
+Diátaxis tutorials are learning-oriented lessons that take beginners through a series of steps to complete a meaningful
+project.
 
-See the complete template: [templates/diataxis-google-tutorial-template.md](./templates/diataxis-google-tutorial-template.md)
+See the complete template:
+[templates/diataxis-google-tutorial-template.md](./templates/diataxis-google-tutorial-template.md)
 
 Key structural elements:
 
@@ -32,6 +34,7 @@ Key structural elements:
 - **Expected outputs** for verification
 - **Summary** of achievements
 - **Next steps** for continued learning
+
 ### Google Style Notes for Tutorials
 
 - **Use second person**: "You'll create a service" not "We'll create a service"
@@ -43,13 +46,15 @@ Key structural elements:
 ## How-to Guide Guidelines
 
 ### Purpose
+
 How-to guides are recipes that guide the reader through solving a specific problem. They are task-oriented.
 
 ### Structure
 
 Diátaxis how-to guides are task-oriented recipes that help users solve specific problems with multiple approaches.
 
-See the complete template: [templates/diataxis-google-how-to-template.md](./templates/diataxis-google-how-to-template.md)
+See the complete template:
+[templates/diataxis-google-how-to-template.md](./templates/diataxis-google-how-to-template.md)
 
 Key structural elements:
 
@@ -59,6 +64,7 @@ Key structural elements:
 - **Verification steps** to confirm success
 - **Troubleshooting** section for common issues
 - **Related tasks** for continued workflow
+
 ### Google Style Notes for How-to Guides
 
 - **Start with the goal**: Lead with what the user wants to accomplish
@@ -70,13 +76,15 @@ Key structural elements:
 ## Reference Guidelines
 
 ### Purpose
+
 Reference guides are technical descriptions of the machinery and how to operate it. They are information-oriented.
 
 ### Structure
 
 Diátaxis reference guides provide comprehensive technical descriptions of components, APIs, and commands.
 
-See the complete template: [templates/diataxis-google-reference-template.md](./templates/diataxis-google-reference-template.md)
+See the complete template:
+[templates/diataxis-google-reference-template.md](./templates/diataxis-google-reference-template.md)
 
 Key structural elements:
 
@@ -87,6 +95,7 @@ Key structural elements:
 - **Working examples** from basic to advanced
 - **Exit codes** and return values
 - **Cross-references** to related commands
+
 ### Google Style Notes for References
 
 - **Be complete**: Document every option, parameter, and return value
@@ -98,13 +107,17 @@ Key structural elements:
 ## Explanation Guidelines
 
 ### Purpose
-Explanations are understanding-oriented discussions that clarify and illuminate concepts. They provide context and background.
+
+Explanations are understanding-oriented discussions that clarify and illuminate concepts. They provide context and
+background.
 
 ### Structure
 
-Diátaxis explanations are understanding-oriented discussions that provide context, background, and illuminate the "why" behind concepts.
+Diátaxis explanations are understanding-oriented discussions that provide context, background, and illuminate the "why"
+behind concepts.
 
-See the complete template: [templates/diataxis-google-explanation-template.md](./templates/diataxis-google-explanation-template.md)
+See the complete template:
+[templates/diataxis-google-explanation-template.md](./templates/diataxis-google-explanation-template.md)
 
 Key structural elements:
 
@@ -115,6 +128,7 @@ Key structural elements:
 - **Comparison tables** with alternatives
 - **Visual diagrams** for complex relationships
 - **Further reading** for deeper understanding
+
 ### Google Style Notes for Explanations
 
 - **Start with why**: Explain why this concept matters to the reader
@@ -145,20 +159,23 @@ Key structural elements:
 ### Formatting Standards
 
 #### Headings
+
 - Use sentence case: "Configure the database" not "Configure The Database"
 - Make headings descriptive and action-oriented
 - Use heading levels consistently
 
 #### Lists
+
 - Use bulleted lists for unordered items
 - Use numbered lists for sequential steps
 - Keep list items parallel in structure
 
 #### Code Samples
+
 ```language
 # Include a comment explaining what the code does
 actual --code --here
-````
+```
 
 - Test all code samples
 - Show both input and output when relevant

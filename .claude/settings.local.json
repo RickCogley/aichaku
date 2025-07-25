@@ -140,7 +140,8 @@
       "Bash(ln:*)",
       "Bash(.githooks/hooks.d/20-lint-markdown:*)",
       "Bash(markdownlint-cli2:*)",
-      "Bash(npx markdownlint-cli2:*)"
+      "Bash(npx markdownlint-cli2:*)",
+      "mcp__aichaku-reviewer__get_statistics"
     ],
     "deny": []
   }
