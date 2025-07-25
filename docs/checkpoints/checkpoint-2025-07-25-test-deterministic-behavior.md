@@ -199,4 +199,4 @@ template systems for shared documentation patterns
 
 ---
 
-_Checkpoint created: 2025-07-25 10:11:45 JST_
+*Checkpoint created: 2025-07-25 10:11:45 JST*
