@@ -7,6 +7,16 @@ version: "1.0.0"
 description: "Core behavioral rules that all Aichaku interactions must follow"
 
 rules:
+  read_claude_md_in_subfolders:
+    name: "Read Subfolder CLAUDE.md Files"
+    description: "When working on code in any subfolder, automatically read any CLAUDE.md file present to understand the specific context, architecture, and conventions for that code area"
+    mandatory: true
+    purpose: "Ensures code changes are made with full understanding of local context and architectural decisions"
+    implementation:
+      - "Use Glob tool with pattern '**/CLAUDE.md' to discover all subfolder documentation"
+      - "Read subfolder CLAUDE.md before making changes to code in that area"
+      - "Apply subfolder-specific conventions and patterns documented therein"
+      - "Prioritize subfolder context over general project context for local decisions"
   discussion_first:
     name: "Discussion-First Document Creation"
     description: "A three-phase approach to thoughtful project creation"
