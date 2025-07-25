@@ -8,9 +8,23 @@ This configuration is dynamically assembled from YAML files in your ~/.claude/ai
 
 ```yaml
 aichaku:
-  version: 0.33.0
+  version: 0.35.7
   source: configuration-as-code
 behavioral_directives:
+  read_claude_md_in_subfolders:
+    name: Read Subfolder CLAUDE.md Files
+    description: >-
+      When working on code in any subfolder, automatically read any CLAUDE.md file present to
+      understand the specific context, architecture, and conventions for that code area
+    mandatory: true
+    purpose: >-
+      Ensures code changes are made with full understanding of local context and architectural
+      decisions
+    implementation:
+      - Use Glob tool with pattern '**/CLAUDE.md' to discover all subfolder documentation
+      - Read subfolder CLAUDE.md before making changes to code in that area
+      - Apply subfolder-specific conventions and patterns documented therein
+      - Prioritize subfolder context over general project context for local decisions
   discussion_first:
     name: Discussion-First Document Creation
     description: A three-phase approach to thoughtful project creation
@@ -37,7 +51,7 @@ behavioral_directives:
           forbidden:
             - DO NOT create any project folders yet
             - DO NOT create any documents yet
-            - "NEVER say: 'Would you like me to create documents for this?'"
+            - 'NEVER say: ''Would you like me to create documents for this?'''
       - name: WAIT FOR READINESS
         description: Only create documents when user signals explicit readiness
         triggers:
@@ -127,7 +141,7 @@ behavioral_directives:
           - pivot
         discussion_approach: Discuss Lean experiments
         creates: experiment-plan.md
-    discussion*mode*actions:
+    discussion_mode_actions:
       - "Acknowledge: '\U0001FAB4 Aichaku: I see you're interested in [methodology]'"
       - Read the appropriate guide SILENTLY
       - Ask clarifying questions based on the methodology
@@ -300,7 +314,7 @@ standards:
       cycle_discipline: "Tests must fail initially, minimal implementation to pass, refactor without breaking"
       isolation_requirements: "Tests run independently, no shared state, any execution order"
       ci_integration: "All tests pass before merge, coverage reports generated, visible in PRs"
-      test*naming*patterns: "should [behavior] when [condition], returns [result] for [scenario]"
+      test_naming_patterns: "should [behavior] when [condition], returns [result] for [scenario]"
     integration_url: "aichaku://standard/development/tdd"
   test-pyramid:
     name: Test Pyramid
@@ -321,7 +335,7 @@ standards:
       anti_patterns: >-
         Ice cream cone (too many E2E), Hourglass (missing integration), Testing trophy
         (integration-heavy alternative)
-      tools*by*layer: "Unit: Jest/PyTest/JUnit, Integration: Supertest/TestContainers, E2E: Playwright/Cypress"
+      tools_by_layer: "Unit: Jest/PyTest/JUnit, Integration: Supertest/TestContainers, E2E: Playwright/Cypress"
     integration_url: "aichaku://standard/testing/test-pyramid"
   conventional-commits:
     name: Conventional Commits
@@ -349,7 +363,7 @@ standards:
         - Maximize robustness with fast startup and graceful shutdown
       additional_factors: "API first design, comprehensive telemetry, centralized auth"
       container_ready: Designed for Kubernetes and cloud platforms
-      dev*prod*parity: Keep all environments as similar as possible
+      dev_prod_parity: Keep all environments as similar as possible
     integration_url: "aichaku://standard/architecture/15-factor"
   clean-arch:
     name: Clean Architecture
@@ -393,19 +407,6 @@ standards:
       gherkin_keywords: "Feature, Scenario, Given, When, Then, And, But"
       automation: Executable specifications that verify behavior
     integration_url: "aichaku://standard/testing/bdd"
-  dora:
-    name: DORA Metrics
-    category: devops
-    summary:
-      critical: |
-        - Deployment Frequency: How often you deploy to production
-        - Lead Time for Changes: Time from commit to production
-        - Mean Time to Recovery (MTTR): Time to restore service after incident
-        - Change Failure Rate: Percentage of deployments causing failures
-      performance_levels: "Elite, High, Medium, Low performance categories"
-      correlation: Strong correlation with organizational performance
-      automation: Automated measurement through CI/CD and monitoring
-    integration_url: "aichaku://standard/devops/dora"
   owasp-web:
     name: OWASP Top 10 Web Application Security
     category: security
@@ -420,20 +421,6 @@ standards:
       input_validation: "Never trust user input - validate, sanitize, escape"
       error_handling: "Generic error messages, log details server-side only"
     integration_url: "aichaku://standard/security/owasp-web"
-  solid:
-    name: SOLID Principles
-    category: development
-    summary:
-      critical: |
-        - S: Single Responsibility - One reason to change per class
-        - O: Open/Closed - Open for extension, closed for modification
-        - L: Liskov Substitution - Subtypes must be substitutable
-        - I: Interface Segregation - Many specific interfaces > one general
-        - D: Dependency Inversion - Depend on abstractions, not concretions
-      object_oriented: Core principles for maintainable OOP design
-      flexibility: Enables code extension without modification
-      testability: Promotes dependency injection and mocking
-    integration_url: "aichaku://standard/development/solid"
   microsoft-style:
     name: Microsoft Writing Style Guide
     category: documentation
@@ -448,6 +435,33 @@ standards:
       structure: Step-by-step with clear outcomes and verification
       formatting: "Use bold for UI elements, tips and warnings in callouts"
     integration_url: "aichaku://standard/documentation/microsoft-style"
+  solid:
+    name: SOLID Principles
+    category: development
+    summary:
+      critical: |
+        - S: Single Responsibility - One reason to change per class
+        - O: Open/Closed - Open for extension, closed for modification
+        - L: Liskov Substitution - Subtypes must be substitutable
+        - I: Interface Segregation - Many specific interfaces > one general
+        - D: Dependency Inversion - Depend on abstractions, not concretions
+      object_oriented: Core principles for maintainable OOP design
+      flexibility: Enables code extension without modification
+      testability: Promotes dependency injection and mocking
+    integration_url: "aichaku://standard/development/solid"
+  dora:
+    name: DORA Metrics
+    category: devops
+    summary:
+      critical: |
+        - Deployment Frequency: How often you deploy to production
+        - Lead Time for Changes: Time from commit to production
+        - Mean Time to Recovery (MTTR): Time to restore service after incident
+        - Change Failure Rate: Percentage of deployments causing failures
+      performance_levels: "Elite, High, Medium, Low performance categories"
+      correlation: Strong correlation with organizational performance
+      automation: Automated measurement through CI/CD and monitoring
+    integration_url: "aichaku://standard/devops/dora"
   diataxis-google:
     name: Diátaxis + Google Developer Documentation Style
     category: documentation
@@ -480,12 +494,11 @@ included:
     - clean-arch
     - google-style
     - bdd
-    - dora
     - owasp-web
-    - "custom:aichaku-test-standard"
-    - solid
     - microsoft-style
+    - solid
+    - dora
   doc_standards:
     - diataxis-google
-  has*user*customizations: false
+  has_user_customizations: false
 ```
