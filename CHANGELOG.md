@@ -70,7 +70,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - complete .aichaku-behavior preservation in upgrade command (a6b6a22)
 - preserve .aichaku-behavior files during cleanup operations (139631c)
-- remove markdown formatting from CLI output (b9e8024)
+- remove Markdown formatting from CLI output (b9e8024)
 
 ## [0.35.0] - 2025-07-18
 
@@ -154,7 +154,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
-- format checkpoint markdown file (788e112)
+- format checkpoint Markdown file (788e112)
 - add checkpoint for aichaku configuration consolidation session (1bd0a3e)
 
 ### Fixed
@@ -527,7 +527,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - update CodeQL suppression format for useless assignment (2199d59)
 - add CodeQL suppression comments for security alerts (0a200e9)
 - remove duplicate workflow_dispatch in security.yml (a0c345d)
-- exclude .github and .claude from permission checks (6da49d1)
+- exclude .GitHub and .claude from permission checks (6da49d1)
 - exclude docs folder from insecure randomness check (fd82e9c)
 - exclude relative methodologies paths in security workflow (0b9c2b5)
 - add security comments to validated file operations (fc72472)

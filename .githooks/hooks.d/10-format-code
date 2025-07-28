@@ -30,7 +30,7 @@ if command -v deno >/dev/null 2>&1; then
             md_files=$(echo "$deno_files" | grep '\.md$' || true)
             if [ -n "$md_files" ] && command -v markdownlint-cli2 >/dev/null 2>&1; then
                 log_info "Fixing markdown emphasis style..."
-                echo "$md_files" | xargs markdownlint-cli2 --fix >/dev/null 2>&1 || true
+                echo "$md_files" | xargs markdownlint-cli2 --fix --no-globs >/dev/null 2>&1 || true
             fi
             
             # Check if any of the staged files were modified by formatting
