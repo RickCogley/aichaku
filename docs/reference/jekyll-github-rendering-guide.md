@@ -2,8 +2,12 @@
 
 ## The Problem
 
-When publishing Markdown docs on GitHub Pages (which uses Jekyll), code samples containing template syntax (like
-`&#123;&#123; &#125;&#125;` or `&#123;&#37; &#37;&#125;`) can cause issues with Jekyll's Liquid template processor.
+When publishing Markdown docs on GitHub Pages (which uses Jekyll), two main issues can occur:
+
+1. **Liquid Syntax Errors**: Code samples containing template syntax (like `&#123;&#123; &#125;&#125;` or
+   `&#123;&#37; &#37;&#125;`) can cause Jekyll's Liquid template processor to fail
+2. **Recursive Processing**: Jekyll follows relative links in your README and tries to process ALL linked files, causing
+   errors in files you never intended to be part of the Pages site
 
 ## The Short Answer
 
@@ -100,24 +104,63 @@ Then in your Markdown:
 &#123;&#37; include raw-code.html code="&#123;&#123; message &#125;&#125;" &#37;&#125;
 ```
 
+## The Best Solution: External Links
+
+**The most effective solution** for GitHub Pages serving from root is to use absolute GitHub URLs for all documentation
+links. This prevents Jekyll from recursively processing linked files AND enables Mermaid diagram rendering.
+
+### Before (Problematic):
+
+```markdown
+[Documentation](docs/) [How-to Guide](docs/how-to/configure.md)
+```
+
+### After (Solution):
+
+```markdown
+[Documentation](https://github.com/YourName/YourRepo/tree/main/docs)
+[How-to Guide](https://github.com/YourName/YourRepo/blob/main/docs/how-to/configure.md)
+```
+
+**Key Benefits:**
+
+- **Mermaid Diagrams Work!** - GitHub's native rendering supports Mermaid diagrams, but GitHub Pages doesn't without
+  complex setup
+- Jekyll treats these as external links and doesn't process them
+- Users can browse the repository directly with full GitHub features
+- No need to modify your actual documentation files
+- Works perfectly when GitHub Pages serves from repository root
+- Avoids Liquid syntax processing errors
+
+**Important:** If you want to render Mermaid diagrams, linking to the repository directly will allow that, so use the
+absolute URLs and just let visitors browse the repository for the details.
+
+## Alternative Solutions
+
+### For Content Within Your Pages Site
+
+If you DO want certain Markdown files to be part of your Jekyll site:
+
+1. **HTML Entities** - Use for simple inline examples
+2. **Code Fences** - Jekyll usually handles these correctly
+3. **Jekyll Excludes** - Use `_config.yml` to exclude specific directories
+
 ## Recommendation
 
-The **HTML entities approach** is probably your best compromise if you need both environments to render cleanly, though
-it's less readable in the source. For maximum compatibility:
+**For GitHub Pages serving from root:**
 
-1. Use HTML entities for simple, inline examples
-2. Use code fences for larger code blocks (Jekyll usually handles these correctly)
-3. Document your approach in your contributing guidelines
-4. Consider having separate folders for "GitHub viewable" docs vs "Jekyll processed" docs if the problem is severe
+1. Use absolute GitHub URLs for all documentation links in your README
+2. This prevents Jekyll from processing files containing Liquid syntax
+3. Users can still access all documentation via GitHub's native rendering
+4. No need to modify documentation files with `{% raw %}` tags
 
 ## Example Documentation Structure
 
 ```
-docs/
-├── README.md           # Uses HTML entities for compatibility
-├── _config.yml         # Jekyll configuration
-├── guides/             # Jekyll-processed with &#123;&#37; raw &#37;&#125; tags
-│   └── vue-guide.md
-└── examples/           # Excluded from Jekyll, clean markdown
-    └── vue-examples.md
+/                       # GitHub Pages serves from here
+├── README.md           # Landing page with absolute GitHub URLs
+├── docs/               # Not processed by Jekyll (not linked relatively)
+│   ├── guides/         # Contains Liquid syntax, viewed on GitHub
+│   └── examples/       # Clean markdown, viewed on GitHub
+└── _config.yml         # Optional Jekyll config (if needed)
 ```

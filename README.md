@@ -26,7 +26,7 @@ aichaku integrate       # Tell Claude about it
 ```
 
 That's it! Aichaku is now helping Claude understand your development workflow. Read on for details, or jump to
-[full documentation](docs/).
+[full documentation](https://github.com/RickCogley/aichaku/tree/main/docs).
 
 ## What is aichaku?
 
@@ -48,10 +48,13 @@ Shape Up principles - all seamlessly integrated.
 
 ### 📖 Complete Documentation
 
-- [**Full Documentation Hub**](docs/) - Comprehensive guides, tutorials, and reference materials
+- [**Full Documentation Hub**](https://github.com/RickCogley/aichaku/tree/main/docs) - Comprehensive guides, tutorials,
+  and reference materials
 - [**API Documentation**](https://aichaku.esolia.deno.net/) - Complete TypeScript API reference
-- [**How-to Guides**](docs/how-to/) - Task-specific instructions and workflows
-- [**Reference Materials**](docs/reference/) - Technical specifications and options
+- [**How-to Guides**](https://github.com/RickCogley/aichaku/tree/main/docs/how-to) - Task-specific instructions and
+  workflows
+- [**Reference Materials**](https://github.com/RickCogley/aichaku/tree/main/docs/reference) - Technical specifications
+  and options
 
 ### 🔗 Quick Links
 
@@ -205,7 +208,7 @@ The YAML system enables unprecedented flexibility:
 This isn't just a configuration system—it's a paradigm shift that makes Claude Code directives maintainable, consistent,
 and powerful.
 
-[Learn more about YAML configuration →](docs/how-to/configure-yaml-directives.md)
+[Learn more about YAML configuration →](https://github.com/RickCogley/aichaku/blob/main/docs/how-to/configure-yaml-directives.md)
 
 ## How It Works
 
