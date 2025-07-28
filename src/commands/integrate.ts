@@ -13,6 +13,7 @@ import { safeReadTextFile, safeStat } from "../utils/path-security.ts";
 import { assembleYamlConfig } from "../utils/yaml-config-reader.ts";
 import { discoverContent } from "../utils/dynamic-content-discovery.ts";
 import { getAichakuPaths } from "../paths.ts";
+import { generateMethodologyAwareAgents } from "../utils/agent-generator.ts";
 
 // Type definitions
 interface ProjectStandardsConfig {
@@ -45,6 +46,8 @@ interface IntegrateResult {
   message?: string;
   action?: "created" | "updated" | "skipped";
   lineNumber?: number;
+  agentsGenerated?: number;
+  requiresRestart?: boolean;
 }
 
 // YAML block markers
@@ -274,7 +277,8 @@ export async function integrate(
     documentationStandards: selectedDocStandards,
   } = separateStandardsByType(allSelectedStandards);
 
-  // Dynamically discover all methodologies (per spec: "all methodologies, selected standards")
+  // Note: For agents, we use the selected project methodology from aichaku.json
+  // The selectedMethodologies variable below is for CLAUDE.md content only
   const selectedMethodologies = await discoverAllMethodologies();
 
   // Define configuration paths - use development paths for now
@@ -345,16 +349,51 @@ export async function integrate(
       }
     }
 
+    // Get selected methodology from project config
+    const aichakuPaths = paths.get();
+    const projectConfigPath = join(aichakuPaths.project.root, "aichaku.json");
+    let selectedMethodology = "";
+
+    if (await exists(projectConfigPath)) {
+      try {
+        const configContent = await safeReadTextFile(projectConfigPath, projectPath);
+        const config = JSON.parse(configContent);
+        if (config.methodologies?.selected?.length > 0) {
+          selectedMethodology = config.methodologies.selected[0];
+        }
+      } catch (_error) {
+        console.warn("Failed to read project methodology from aichaku.json");
+      }
+    }
+
+    // Generate methodology-aware agents
+    const agentResult = await generateMethodologyAwareAgents({
+      selectedMethodologies: selectedMethodology ? [selectedMethodology] : [],
+      selectedStandards: allSelectedStandards,
+      outputPath: join(Deno.cwd(), ".claude", "agents"),
+      agentPrefix: "aichaku-",
+    });
+
     const standardsMsg = allSelectedStandards.length > 0
       ? ` with ${allSelectedStandards.length} standards (${selectedStandards.length} development + ${selectedDocStandards.length} documentation)`
+      : "";
+
+    const agentsMsg = agentResult.generated > 0 ? ` and ${agentResult.generated} methodology-aware agents` : "";
+
+    const restartMsg = agentResult.generated > 0
+      ? "\n\n🔄 Restart Claude Code to load new agents: Press Ctrl+C and restart"
       : "";
 
     return {
       success: true,
       path: claudeMdPath,
-      message: `${action === "created" ? "Created new" : "Updated"} CLAUDE.md with YAML configuration${standardsMsg}`,
+      message: `${
+        action === "created" ? "Created new" : "Updated"
+      } CLAUDE.md with YAML configuration${standardsMsg}${agentsMsg}${restartMsg}`,
       action,
       lineNumber,
+      agentsGenerated: agentResult.generated,
+      requiresRestart: agentResult.generated > 0,
     };
   } catch (error) {
     return {

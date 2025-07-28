@@ -149,7 +149,7 @@ export class ConfigManager {
       throw new Error("Configuration not loaded");
     }
 
-    this.config = this.deepMerge(this.config, updates);
+    this.config = this.deepMerge(this.config, updates) as AichakuConfig;
     await this.save();
   }
 
