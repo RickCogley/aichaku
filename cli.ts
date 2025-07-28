@@ -33,6 +33,7 @@ import { help } from "./src/commands/help.ts";
 import { learn } from "./src/commands/learn.ts";
 import { hooks } from "./src/commands/hooks.ts";
 import { standards } from "./src/commands/standards.ts";
+import { methodologies } from "./src/commands/methodologies.ts";
 import { docsStandard } from "./src/commands/docs-standard.ts";
 import { runMCPCommand } from "./src/commands/mcp.ts";
 import { createMigrateCommand, showMigrateHelp } from "./src/commands/migrate.ts";
@@ -88,6 +89,7 @@ const args = parseArgs(Deno.args, {
     "testing",
     "devops",
     "methodologies",
+    "reset",
     "config",
     "status",
     "install-mcp",
@@ -106,6 +108,7 @@ const args = parseArgs(Deno.args, {
     "install",
     "add",
     "remove",
+    "set",
     "search",
     "project",
     "create-custom",
@@ -186,6 +189,7 @@ Commands:
   learn       Learn about methodologies and standards (dynamically from YAML)
   hooks       Manage Claude Code hooks for automation
   standards   Choose modular guidance standards for your project
+  methodologies Choose development methodologies for focused context
   docs-standard Choose documentation writing style guides for your project
   docs:lint   Lint documentation against selected standards
   mcp         Manage MCP (Model Context Protocol) server for code review
@@ -244,6 +248,10 @@ Examples:
   # Choose standards for your project
   aichaku standards --list
   aichaku standards --add owasp-web,15-factor
+
+  # Choose methodologies for focused context
+  aichaku methodologies --list
+  aichaku methodologies --set shape-up
 
   # Choose documentation standards
   aichaku docs-standard --list
@@ -531,6 +539,23 @@ ${result.claudeMdReferences.map((ref) => `    Line ${ref.line}: "${ref.text}"`).
       };
 
       await standards(standardsOptions);
+      break;
+    }
+
+    case "methodologies": {
+      const methodologiesOptions = {
+        list: args.list as boolean | undefined,
+        show: args.show as boolean | undefined,
+        add: args.add as string | undefined,
+        remove: args.remove as string | undefined,
+        set: args.set as string | undefined,
+        reset: args.reset as boolean | undefined,
+        search: args.search as string | undefined,
+        projectPath: args.path as string | undefined,
+        dryRun: args["dry-run"] as boolean | undefined,
+      };
+
+      await methodologies(methodologiesOptions);
       break;
     }
 

@@ -98,7 +98,7 @@ communication patterns.
 - Module management
 - Fresh framework expertise
 
-**aichaku-typescript-expert**
+**aichaku-TypeScript-expert**
 
 - Advanced TypeScript patterns
 - Type system mastery

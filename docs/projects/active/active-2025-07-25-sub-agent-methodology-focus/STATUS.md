@@ -81,4 +81,4 @@ Implement specialized sub-agents with methodology-focused context management:
 - Documentation merge requires user approval
 - Expanded vision: Complete development assistant platform for aichaku users
 - Development agents: code-archaeologist, code-reviewer, api-architect, etc.
-- Technology experts: deno-expert, typescript-expert, bash-expert, etc.
+- Technology experts: deno-expert, TypeScript-expert, bash-expert, etc.
