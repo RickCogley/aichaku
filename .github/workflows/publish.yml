@@ -35,7 +35,7 @@ jobs:
           deno-version: ${{ matrix.deno-version }}
 
       - name: Verify formatting
-        run: deno fmt --check
+        run: deno run --allow-run --allow-read scripts/format-check.ts
 
       - name: Run linter
         run: deno lint
