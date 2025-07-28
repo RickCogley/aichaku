@@ -1,7 +1,8 @@
 # Claude and Aichaku
-
-scratch
+.claude/agents/
+.claude/agents.old/
 .claude/settings.local.json
+scratch/
 
 # Logs
 logs
