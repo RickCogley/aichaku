@@ -548,7 +548,8 @@ await integrate({
 
 **⚠️ CRITICAL CONFIGURATION NOTE**: Installing MCP servers via Aichaku does NOT automatically make them available to
 Claude Code. You MUST configure them in Claude Code's MCP system separately. See
-[MCP Configuration Guide](docs/how-to/configure-mcp-servers.md) for details.
+[MCP Configuration Guide](https://github.com/RickCogley/aichaku/blob/main/docs/how-to/configure-mcp-servers.md) for
+details.
 
 Aichaku includes an enhanced Model Context Protocol (MCP) server that provides intelligent project analysis and
 documentation generation capabilities directly within Claude Desktop.
@@ -586,7 +587,7 @@ aichaku mcp --stop-server
 - Works across network (not just local)
 - Firewall-friendly HTTP protocol
 
-See [MCP Server Documentation](docs/MCP-SERVER.md) for details.
+See [MCP Server Documentation](https://github.com/RickCogley/aichaku/blob/main/docs/MCP-SERVER.md) for details.
 
 ### Available MCP Tools
 
