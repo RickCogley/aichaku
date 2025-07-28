@@ -10,6 +10,16 @@ or standards chosen.
 - **api-reference-template.md** - For documenting APIs, libraries, and components
 - **architecture-decision-template.md** - ADR format for capturing architectural decisions
 - **migration-guide-template.md** - For version upgrades or system migrations
+- **technical-specification-template.md** - Comprehensive technical specification format
+
+### Project Management
+
+- **project-retrospective-template.md** - Team retrospective and lessons learned
+- **change-log-template.md** - Release notes and change documentation
+
+### Operations & Incident Management
+
+- **incident-response-template.md** - Incident response and post-mortem analysis
 
 ### Security & Compliance
 

@@ -34,13 +34,13 @@ import { learn } from "./src/commands/learn.ts";
 import { hooks } from "./src/commands/hooks.ts";
 import { standards } from "./src/commands/standards.ts";
 import { methodologies } from "./src/commands/methodologies.ts";
+import { mergeDocs } from "./src/commands/merge-docs.ts";
 import { docsStandard } from "./src/commands/docs-standard.ts";
 import { runMCPCommand } from "./src/commands/mcp.ts";
 import { createMigrateCommand, showMigrateHelp } from "./src/commands/migrate.ts";
 import { runReviewCommand } from "./src/commands/review.ts";
 import { runGitHubCommand } from "./src/commands/github.ts";
 import { cleanup } from "./src/commands/cleanup.ts";
-import { mergeDocs } from "./src/commands/merge-docs.ts";
 import { VERSION } from "./mod.ts";
 import { displayVersionWarning } from "./src/utils/version-checker.ts";
 import { Brand } from "./src/utils/branded-messages.ts";
@@ -682,7 +682,7 @@ ${result.claudeMdReferences.map((ref) => `    Line ${ref.line}: "${ref.text}"`).
     case "merge-docs": {
       const mergeOptions = {
         projectPath: args.path as string | undefined,
-        projectName: args["project-name"] as string | undefined,
+        project: args.project as string | undefined,
         force: args.force as boolean | undefined,
         silent: args.silent as boolean | undefined,
         dryRun: args["dry-run"] as boolean | undefined,
@@ -690,11 +690,14 @@ ${result.claudeMdReferences.map((ref) => `    Line ${ref.line}: "${ref.text}"`).
 
       const result = await mergeDocs(mergeOptions);
       if (!result.success) {
-        console.error(`❌ ${result.message}`);
+        console.error(`❌ Documentation merge failed:`);
+        for (const error of result.errors) {
+          console.error(`   ${error}`);
+        }
         Deno.exit(1);
       }
-      if (!args.silent && result.message) {
-        console.log(`\n✅ ${result.message}`);
+      if (!args.silent && result.mergedFiles > 0) {
+        console.log(`✅ Successfully merged ${result.mergedFiles} documentation files`);
       }
       break;
     }

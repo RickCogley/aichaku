@@ -1,9 +1,3 @@
-<!--
-Merged from: done-2025-07-28-test-merge-docs
-Original path: /Users/rcogley/dev/aichaku/docs/projects/done/done-2025-07-28-test-merge-docs/tutorial-using-merge-command.md
-Merged on: 2025-07-28
--->
-
 # Tutorial: Using the Merge Command
 
 This tutorial shows how to use the `aichaku merge-docs` command to merge documentation from completed projects into the

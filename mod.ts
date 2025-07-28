@@ -111,6 +111,7 @@ export { help } from "./src/commands/help.ts";
 export { learn } from "./src/commands/learn.ts";
 export { standards } from "./src/commands/standards.ts";
 export { methodologies } from "./src/commands/methodologies.ts";
+export { mergeDocs } from "./src/commands/merge-docs.ts";
 export { docsStandard } from "./src/commands/docs-standard.ts";
 export { cleanup } from "./src/commands/cleanup.ts";
 export { hooks } from "./src/commands/hooks.ts";

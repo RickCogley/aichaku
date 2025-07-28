@@ -1,263 +1,335 @@
 /**
- * Merge project documentation back into central repository
- *
- * This command helps merge completed project documentation from
- * docs/projects/done/* back into the appropriate central documentation
- * locations (tutorials, how-tos, references, etc.)
+ * Merge documentation from completed projects into central documentation
  */
 
-import { ensureDir, exists } from "jsr:@std/fs@1";
-import { join, relative } from "jsr:@std/path@1";
+import { exists } from "jsr:@std/fs@1";
+import { basename, join } from "jsr:@std/path@1";
+import { ensureDir } from "jsr:@std/fs@1";
 import { resolveProjectPath } from "../utils/project-paths.ts";
+import { safeReadTextFile } from "../utils/path-security.ts";
 import { Brand } from "../utils/branded-messages.ts";
 
-interface MergeOptions {
+interface MergeDocsOptions {
+  /** Project path to search for documentation */
   projectPath?: string;
-  projectName?: string;
+  /** Force overwrite existing files */
   force?: boolean;
-  silent?: boolean;
+  /** Show what would be done without making changes */
   dryRun?: boolean;
+  /** Suppress output messages */
+  silent?: boolean;
+  /** Specific project directory to merge (instead of scanning all) */
+  project?: string;
 }
 
-interface MergeResult {
+interface MergeDocsResult {
   success: boolean;
-  message?: string;
-  mergedFiles?: string[];
-  conflicts?: string[];
+  mergedFiles: number;
+  skippedFiles: number;
+  errors: string[];
+  mergedPaths: string[];
 }
 
-interface DocumentMapping {
-  source: string;
-  target: string;
-  type: "tutorial" | "how-to" | "reference" | "explanation";
-}
-
-/**
- * Analyze project documentation and suggest merge targets
- */
-async function analyzeProjectDocs(projectDir: string): Promise<DocumentMapping[]> {
-  const mappings: DocumentMapping[] = [];
-
-  // Look for common documentation patterns
-  const patterns = [
-    { pattern: /tutorial.*\.md$/i, type: "tutorial" as const, target: "tutorials" },
-    { pattern: /how[-_]?to.*\.md$/i, type: "how-to" as const, target: "how-to" },
-    { pattern: /reference.*\.md$/i, type: "reference" as const, target: "reference" },
-    { pattern: /explanation.*\.md$/i, type: "explanation" as const, target: "explanation" },
-    { pattern: /guide.*\.md$/i, type: "how-to" as const, target: "how-to" },
-    { pattern: /api.*\.md$/i, type: "reference" as const, target: "reference" },
-  ];
-
-  // Scan project directory for markdown files
-  try {
-    for await (const entry of Deno.readDir(projectDir)) {
-      if (entry.isFile && entry.name.endsWith(".md")) {
-        // Skip status and meta files
-        if (["STATUS.md", "README.md", "CHANGE-LOG.md", "pitch.md"].includes(entry.name)) {
-          continue;
-        }
-
-        // Try to match against patterns
-        for (const { pattern, type, target } of patterns) {
-          if (pattern.test(entry.name)) {
-            mappings.push({
-              source: join(projectDir, entry.name),
-              target: join("docs", target, entry.name),
-              type,
-            });
-            break;
-          }
-        }
-      }
-    }
-  } catch (error) {
-    console.warn(`Failed to scan directory ${projectDir}:`, error);
-  }
-
-  return mappings;
+interface DocumentFile {
+  sourcePath: string;
+  filename: string;
+  type: "tutorial" | "how-to" | "reference" | "explanation" | "other";
+  targetPath: string;
 }
 
 /**
- * Merge documentation from completed projects back to central docs
+ * Merge documentation from completed projects into central docs
  */
-export async function mergeDocs(options: MergeOptions = {}): Promise<MergeResult> {
+export async function mergeDocs(options: MergeDocsOptions = {}): Promise<MergeDocsResult> {
   const projectPath = resolveProjectPath(options.projectPath);
 
-  if (!options.silent) {
-    Brand.log("Starting documentation merge...");
-  }
+  const result: MergeDocsResult = {
+    success: true,
+    mergedFiles: 0,
+    skippedFiles: 0,
+    errors: [],
+    mergedPaths: [],
+  };
 
-  // Determine project directory
-  let projectDir: string;
-
-  if (options.projectName) {
-    // Specific project requested
-    projectDir = join(projectPath, "docs", "projects", "done", options.projectName);
-  } else {
-    // Find most recent done project
-    const doneDir = join(projectPath, "docs", "projects", "done");
-
-    if (!(await exists(doneDir))) {
-      return {
-        success: false,
-        message: "No completed projects found in docs/projects/done/",
-      };
-    }
-
-    // Get most recent project
-    const projects: { name: string; mtime: Date }[] = [];
-    for await (const entry of Deno.readDir(doneDir)) {
-      if (entry.isDirectory) {
-        const stat = await Deno.stat(join(doneDir, entry.name));
-        projects.push({ name: entry.name, mtime: stat.mtime || new Date(0) });
-      }
-    }
-
-    if (projects.length === 0) {
-      return {
-        success: false,
-        message: "No completed projects found",
-      };
-    }
-
-    // Sort by modification time, newest first
-    projects.sort((a, b) => b.mtime.getTime() - a.mtime.getTime());
-    projectDir = join(doneDir, projects[0].name);
-
+  try {
     if (!options.silent) {
-      Brand.info(`Selected most recent project: ${projects[0].name}`);
+      Brand.progress("🔄 Scanning for documentation to merge...", "active");
     }
-  }
 
-  // Check if project exists
-  if (!(await exists(projectDir))) {
-    return {
-      success: false,
-      message: `Project directory not found: ${projectDir}`,
-    };
-  }
+    // Find documentation files to merge
+    const docsToMerge = await findDocumentationFiles(projectPath, options.project);
 
-  // Analyze documentation
-  const mappings = await analyzeProjectDocs(projectDir);
-
-  if (mappings.length === 0) {
-    return {
-      success: false,
-      message: "No documentation files found to merge",
-    };
-  }
-
-  // Show merge plan
-  if (!options.silent) {
-    console.log("\n📋 Merge Plan:");
-    for (const mapping of mappings) {
-      const source = relative(projectPath, mapping.source);
-      const target = relative(projectPath, mapping.target);
-      console.log(`  ${source} → ${target} (${mapping.type})`);
-    }
-  }
-
-  if (options.dryRun) {
-    return {
-      success: true,
-      message: "Dry run completed. No files were moved.",
-      mergedFiles: mappings.map((m) => m.source),
-    };
-  }
-
-  // Confirm merge
-  if (!options.force && !options.silent) {
-    console.log("\n🤔 Proceed with merge? [Y/n]: ");
-    const buf = new Uint8Array(1024);
-    const n = await Deno.stdin.read(buf);
-    const answer = new TextDecoder().decode(buf.subarray(0, n || 0)).trim().toLowerCase();
-
-    if (answer !== "" && answer !== "y" && answer !== "yes") {
-      return {
-        success: false,
-        message: "Merge cancelled by user",
-      };
-    }
-  }
-
-  // Execute merge
-  const mergedFiles: string[] = [];
-  const conflicts: string[] = [];
-
-  for (const mapping of mappings) {
-    try {
-      const targetDir = join(projectPath, mapping.target, "..");
-      await ensureDir(targetDir);
-
-      const targetPath = join(projectPath, mapping.target);
-
-      // Check for conflicts
-      if (await exists(targetPath) && !options.force) {
-        conflicts.push(mapping.target);
-        if (!options.silent) {
-          Brand.warning(`Conflict: ${mapping.target} already exists (use --force to overwrite)`);
-        }
-        continue;
-      }
-
-      // Read source content
-      const content = await Deno.readTextFile(mapping.source);
-
-      // Add merge metadata
-      const metadata = `---
-merged_from: ${relative(projectPath, mapping.source)}
-merged_date: ${new Date().toISOString()}
-project: ${relative(join(projectPath, "docs", "projects", "done"), projectDir)}
----
-
-`;
-
-      // Write to target with metadata
-      await Deno.writeTextFile(targetPath, metadata + content);
-
-      mergedFiles.push(mapping.target);
-
+    if (docsToMerge.length === 0) {
       if (!options.silent) {
-        Brand.success(`Merged: ${relative(projectPath, mapping.target)}`);
+        console.log("📄 No documentation files found to merge");
       }
+      return result;
+    }
 
-      // Add to git
+    // Show merge plan
+    if (!options.silent) {
+      console.log(`\\n📋 Documentation Merge Plan:`);
+      console.log(`   Found ${docsToMerge.length} files to merge\\n`);
+
+      for (const doc of docsToMerge) {
+        const status = await exists(doc.targetPath) && !options.force ? "⚠️  CONFLICT" : "✅";
+        console.log(`   ${status} ${doc.filename} → ${doc.targetPath}`);
+      }
+    }
+
+    if (options.dryRun) {
+      if (!options.silent) {
+        console.log("\\n[DRY RUN] No files were modified.");
+      }
+      return result;
+    }
+
+    // Perform merges
+    for (const doc of docsToMerge) {
       try {
-        const git = new Deno.Command("git", {
-          args: ["add", targetPath],
-          cwd: projectPath,
-        });
-        await git.output();
-      } catch {
-        // Git add failed, but continue
+        await mergeDocumentFile(doc, options.force);
+        result.mergedFiles++;
+        result.mergedPaths.push(doc.targetPath);
+
+        if (!options.silent) {
+          Brand.success(`Merged: ${doc.filename}`);
+        }
+      } catch (error) {
+        const errorMsg = `Failed to merge ${doc.filename}: ${error instanceof Error ? error.message : String(error)}`;
+        result.errors.push(errorMsg);
+        result.success = false;
+
+        if (!options.silent) {
+          console.error(`❌ ${errorMsg}`);
+        }
+      }
+    }
+
+    if (!options.silent && result.mergedFiles > 0) {
+      Brand.success(`Successfully merged ${result.mergedFiles} documentation files`);
+    }
+  } catch (error) {
+    result.success = false;
+    result.errors.push(`Documentation merge failed: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  return result;
+}
+
+/**
+ * Find documentation files in completed projects
+ */
+async function findDocumentationFiles(projectPath: string, specificProject?: string): Promise<DocumentFile[]> {
+  const docsToMerge: DocumentFile[] = [];
+  const projectsPath = join(projectPath, "docs", "projects");
+
+  // Scan done projects directory
+  const doneProjectsPath = join(projectsPath, "done");
+  if (!await exists(doneProjectsPath)) {
+    return docsToMerge;
+  }
+
+  // Get list of completed projects
+  const projects: string[] = [];
+  if (specificProject) {
+    projects.push(specificProject);
+  } else {
+    for await (const entry of Deno.readDir(doneProjectsPath)) {
+      if (entry.isDirectory) {
+        projects.push(entry.name);
+      }
+    }
+  }
+
+  // Scan each project for documentation files
+  for (const project of projects) {
+    const projectDir = join(doneProjectsPath, project);
+    if (!await exists(projectDir)) continue;
+
+    try {
+      for await (const entry of Deno.readDir(projectDir)) {
+        if (!entry.isFile || !entry.name.endsWith(".md")) continue;
+
+        const docFile = classifyDocumentFile(entry.name, join(projectDir, entry.name));
+        if (docFile) {
+          docsToMerge.push(docFile);
+        }
       }
     } catch (error) {
-      if (!options.silent) {
-        Brand.error(`Failed to merge ${mapping.source}: ${error}`);
-      }
+      console.warn(`Warning: Could not scan project ${project}: ${error}`);
     }
   }
 
-  // Summary
-  const message = conflicts.length > 0
-    ? `Merged ${mergedFiles.length} files with ${conflicts.length} conflicts`
-    : `Successfully merged ${mergedFiles.length} files`;
+  return docsToMerge;
+}
 
-  if (!options.silent) {
-    console.log("\n" + Brand.completed(message));
+/**
+ * Classify documentation file and determine target path
+ */
+function classifyDocumentFile(filename: string, sourcePath: string): DocumentFile | null {
+  // Skip internal project files
+  if (
+    filename.toLowerCase().includes("status") ||
+    filename.toLowerCase().includes("pitch") ||
+    filename.toLowerCase().includes("change-log")
+  ) {
+    return null;
+  }
 
-    if (mergedFiles.length > 0) {
-      console.log("\n💡 Next steps:");
-      console.log("  1. Review the merged documentation");
-      console.log("  2. Update any cross-references");
-      console.log("  3. Commit the changes");
-    }
+  let type: DocumentFile["type"] = "other";
+  let targetDir = "docs";
+
+  // Classify by filename patterns
+  if (filename.toLowerCase().startsWith("tutorial-")) {
+    type = "tutorial";
+    targetDir = "docs/tutorials";
+  } else if (filename.toLowerCase().startsWith("how-to-")) {
+    type = "how-to";
+    targetDir = "docs/how-to";
+  } else if (filename.toLowerCase().startsWith("reference-")) {
+    type = "reference";
+    targetDir = "docs/reference";
+  } else if (filename.toLowerCase().startsWith("explanation-") || filename.toLowerCase().startsWith("guide-")) {
+    type = "explanation";
+    targetDir = "docs/explanation";
   }
 
   return {
-    success: true,
-    message,
-    mergedFiles,
-    conflicts: conflicts.length > 0 ? conflicts : undefined,
+    sourcePath,
+    filename,
+    type,
+    targetPath: join(targetDir, filename),
   };
+}
+
+/**
+ * Merge a single documentation file
+ */
+async function mergeDocumentFile(doc: DocumentFile, force: boolean = false): Promise<void> {
+  // Check if target already exists
+  if (await exists(doc.targetPath) && !force) {
+    throw new Error(`Target file already exists: ${doc.targetPath}. Use --force to overwrite.`);
+  }
+
+  // Ensure target directory exists
+  const targetDir = doc.targetPath.substring(0, doc.targetPath.lastIndexOf("/"));
+  await ensureDir(targetDir);
+
+  // Read source content
+  const sourceContent = await safeReadTextFile(doc.sourcePath, doc.sourcePath);
+
+  // Add metadata header
+  const timestamp = new Date().toISOString().split("T")[0];
+  const sourceProject = basename(doc.sourcePath.substring(0, doc.sourcePath.lastIndexOf("/")));
+
+  const mergedContent = `<!-- 
+Merged from: ${sourceProject}
+Original path: ${doc.sourcePath}
+Merged on: ${timestamp}
+-->
+
+${sourceContent}`;
+
+  // Write to target location
+  await Deno.writeTextFile(doc.targetPath, mergedContent);
+}
+
+/**
+ * CLI command handler
+ */
+export async function mergeDocsCommand(args: string[]): Promise<void> {
+  const options: MergeDocsOptions = {
+    projectPath: Deno.cwd(),
+    force: false,
+    dryRun: false,
+    silent: false,
+  };
+
+  // Parse command line arguments
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+
+    switch (arg) {
+      case "--force":
+      case "-f":
+        options.force = true;
+        break;
+      case "--dry-run":
+      case "-n":
+        options.dryRun = true;
+        break;
+      case "--silent":
+      case "-s":
+        options.silent = true;
+        break;
+      case "--project":
+      case "-p":
+        if (i + 1 < args.length) {
+          options.project = args[++i];
+        }
+        break;
+      case "--path":
+        if (i + 1 < args.length) {
+          options.projectPath = args[++i];
+        }
+        break;
+      case "--help":
+      case "-h":
+        showHelp();
+        return;
+      default:
+        if (arg.startsWith("-")) {
+          console.error(`Unknown option: ${arg}`);
+          Deno.exit(1);
+        }
+    }
+  }
+
+  const result = await mergeDocs(options);
+
+  if (!result.success) {
+    console.error("\\n❌ Documentation merge failed:");
+    for (const error of result.errors) {
+      console.error(`   ${error}`);
+    }
+    Deno.exit(1);
+  }
+}
+
+/**
+ * Show help information
+ */
+function showHelp(): void {
+  console.log(`
+🪴 Aichaku: Documentation Merge Command
+
+Merge documentation from completed projects into central documentation structure.
+
+USAGE:
+  aichaku merge-docs [OPTIONS]
+
+OPTIONS:
+  -f, --force         Overwrite existing files
+  -n, --dry-run       Show what would be done without making changes
+  -s, --silent        Suppress output messages
+  -p, --project NAME  Merge specific project only
+      --path PATH     Project path (defaults to current directory)
+  -h, --help          Show this help message
+
+EXAMPLES:
+  aichaku merge-docs                    # Merge all documentation
+  aichaku merge-docs --dry-run          # Preview merge plan
+  aichaku merge-docs --project done-2025-07-28-auth-feature
+  aichaku merge-docs --force            # Overwrite existing files
+
+BEHAVIOR:
+  - Scans docs/projects/done/ for completed projects
+  - Identifies documentation by filename patterns:
+    * tutorial-*.md → docs/tutorials/
+    * how-to-*.md → docs/how-to/
+    * reference-*.md → docs/reference/
+    * explanation-*.md → docs/explanation/
+  - Adds merge metadata to each file
+  - Skips internal project files (STATUS.md, pitch.md, etc.)
+`);
 }
