@@ -13,6 +13,18 @@ Before you start using Aichaku:
 
 ## 🆕 Latest Updates
 
+**v0.35.0+ - Sub-Agent Architecture & Technology Experts**
+
+- **🤖 NEW**: **Sub-Agent System** - Specialized agents for focused assistance (security, docs, API design)
+- **💻 NEW**: **Technology Experts** - Language-specific guidance (TypeScript, Python, Go, React, Deno, etc.)
+- **🔄 IMPROVED**: **Context Optimization** - 70% reduction in context usage (12K→4K tokens)
+- **📚 NEW**: **Agent Templates** - 15+ expert agents with ~10 code examples each
+- **🎯 NEW**: **Smart Delegation** - Agents coordinate and hand off tasks automatically
+- **🧭 NEW**: **Orchestrator Agent** - General workflow coordinator for all projects
+
+**The Context Revolution:** Sub-agents maintain their own focused context windows, enabling long development sessions
+without losing continuity. Each agent specializes in specific domains while coordinating through the orchestrator.
+
 **v0.31.2+ - Foundation Quality & Pre-flight Standards**
 
 - **🏗️ FOUNDATION**: **Configuration-as-code compliance** - All hardcoded lists eliminated for maintainability
@@ -22,9 +34,6 @@ Before you start using Aichaku:
 - **🔧 VISUAL GUIDANCE**: **Contextual feedback framework** - "What did I do and where" + "What's next" patterns
 - **✅ RELIABILITY**: **Help screen compliance** - All commands properly respect --help flag
 - **🔍 TYPE SAFETY**: **Zero TypeScript errors** - Complete type checking compliance
-
-**The Quality Foundation:** This release establishes enterprise-grade code quality standards with automated pre-flight
-checks (format/lint/check/test) and eliminates technical debt to prepare for advanced contextual guidance features.
 
 **v0.29.0 - YAML Configuration Revolution & Enhanced Automation**
 

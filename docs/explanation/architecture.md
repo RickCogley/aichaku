@@ -116,6 +116,33 @@ Aichaku enhances Claude through structure, not restriction:
 2. **Visual language**: Consistent emoji indicators
 3. **Natural triggers**: Keyword detection for modes
 4. **Progressive enhancement**: Complexity only when needed
+5. **Focused expertise**: Sub-agents provide specialized knowledge
+
+### Sub-Agent Architecture
+
+Aichaku employs specialized sub-agents to manage context and provide focused expertise:
+
+**Core Agents**:
+
+- **Orchestrator**: General workflow coordinator
+- **Security Reviewer**: OWASP and security best practices
+- **Documenter**: Documentation generation and lifecycle
+- **Methodology Coach**: Adaptive methodology guidance
+- **Code Explorer**: Codebase discovery and analysis
+- **API Architect**: API design and documentation
+
+**Technology Experts**:
+
+- Language specialists (TypeScript, Python, Go, etc.)
+- Framework experts (React, Deno, Tailwind, etc.)
+- Tool specialists (PostgreSQL, Lume, Vento, etc.)
+
+**Context Management**:
+
+- Each agent maintains focused context (~4K tokens vs 12K)
+- Agents delegate to each other for specialized tasks
+- Orchestrator coordinates multi-agent workflows
+- Methodology-aware loading reduces irrelevant context
 
 ### The two-phase approach
 
@@ -202,6 +229,47 @@ Aichaku requires no network access:
 - Limit concurrent file handles
 - Stream output for large results
 
+## Agent architecture
+
+### Agent Template System
+
+Agents are defined through structured templates that specify:
+
+```yaml
+name: aichaku-{agent-name}
+description: Agent's specialized focus
+tools: ["Read", "Write", "Edit", "Bash", "Grep", "Glob"]
+methodology_aware: true|false
+examples:
+  - context: When to use this agent
+    user: "Example user question"
+    assistant: "How the agent responds"
+delegations:
+  - trigger: When to hand off
+    target: Which agent to delegate to
+```
+
+### Agent Coordination
+
+**Orchestrator Pattern**: The orchestrator agent serves as a general coordinator, routing tasks to appropriate
+specialists based on the work context.
+
+**Delegation Flow**:
+
+1. User request analyzed by current agent
+2. Agent identifies need for specialized knowledge
+3. Delegation to target agent with context
+4. Results flow back through chain
+
+**Context Isolation**: Each agent maintains its own context window, preventing contamination and allowing focused
+expertise.
+
+### Agent Benefits
+
+**Performance**: 70% reduction in context usage enables longer sessions **Expertise**: Deep, focused knowledge in
+specific domains **Scalability**: New agents added without affecting existing ones **Flexibility**: Agents composed for
+complex workflows
+
 ## Extension architecture
 
 ### Adding methodologies
@@ -224,6 +292,17 @@ Standards are even simpler:
 3. Follow the established template format
 
 No registration or configuration needed.
+
+### Adding agents
+
+New agents follow the template pattern:
+
+1. Create directory in `/core/agent-templates/`
+2. Add `base.md` with YAML frontmatter
+3. Include 10+ idiomatic code examples
+4. Define delegation patterns
+
+Agents are automatically available to Claude Code.
 
 ### Future plugin system
 
