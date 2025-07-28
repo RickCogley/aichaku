@@ -13,6 +13,14 @@ Before you start using Aichaku:
 
 ## 🆕 Latest Updates
 
+**v0.36.0+ - Methodology Selection & Enhanced Sub-Agents**
+
+- **🎯 NEW**: **Methodology Selection** - Choose only the methodologies you use during init
+- **📊 NEW**: **Smart Merging** - Selected methodologies intelligently combined in CLAUDE.md
+- **📚 NEW**: **merge-docs Command** - Generate unified guides from your chosen methodologies
+- **🔄 IMPROVED**: **Reduced Context** - Only includes selected methodologies (70% reduction)
+- **🤖 ENHANCED**: **Methodology-Aware Agents** - Agents dynamically load your methodology choices
+
 **v0.35.0+ - Sub-Agent Architecture & Technology Experts**
 
 - **🤖 NEW**: **Sub-Agent System** - Specialized agents for focused assistance (security, docs, API design)
@@ -24,6 +32,7 @@ Before you start using Aichaku:
 
 **The Context Revolution:** Sub-agents maintain their own focused context windows, enabling long development sessions
 without losing continuity. Each agent specializes in specific domains while coordinating through the orchestrator.
+Methodology selection ensures agents and CLAUDE.md only include what you actually use.
 
 **v0.31.2+ - Foundation Quality & Pre-flight Standards**
 

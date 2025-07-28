@@ -22,7 +22,7 @@ First, install the Aichaku CLI and global components:
 
 ```bash
 # Install Aichaku CLI globally
-deno install --allow-all --global --force https://deno.land/x/aichaku/cli.ts
+deno install -g -A -n aichaku jsr:@rick/aichaku/cli
 
 # Initialize global Aichaku (installs methodologies, standards, MCP servers)
 aichaku init --global
@@ -44,11 +44,24 @@ cd your-project
 aichaku init
 ```
 
+**New in v0.36.0+**: During initialization, you'll be prompted to select which methodologies to use:
+
+```bash
+? Select methodologies to use (space to select, enter to confirm)
+❯ ◉ shape-up    - Fixed time, variable scope (6-week cycles)
+  ◯ scrum       - Sprint-based iterative development
+  ◉ kanban      - Visual workflow management
+  ◯ xp          - Extreme Programming practices
+  ◯ lean        - Build-measure-learn cycles
+  ◯ scrumban    - Hybrid sprint + flow approach
+```
+
 This creates:
 
 - `.claude/aichaku/` directory structure
 - Basic project configuration files
 - Links to global Aichaku installation
+- **Only includes selected methodologies** in your CLAUDE.md (reduces context by 70%)
 
 ### 3. Add standards to your project
 
@@ -80,6 +93,22 @@ aichaku integrate
 
 This automatically adds your selected standards and methodology to `CLAUDE.md` in a compact yaml block, so Claude Code
 can pull your project's preferences into context.
+
+### 5. Generate Merged Documentation (Optional)
+
+**New in v0.36.0+**: Create unified documentation that blends your selected methodologies:
+
+```bash
+aichaku merge-docs
+```
+
+This generates comprehensive guides in `docs/merged/`:
+
+- `planning-guide.md` - Blended planning approaches from your methodologies
+- `execution-guide.md` - Combined execution practices
+- `improvement-guide.md` - Unified improvement strategies
+
+The guides intelligently merge content from only the methodologies you selected during init.
 
 ## Working with Standards
 

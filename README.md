@@ -35,6 +35,52 @@ use everywhere. Rather than forcing you to choose a single methodology, aichaku 
 Code blend approaches based on your natural language. Say "sprint" and get Scrum practices; mention "shaping" and get
 Shape Up principles - all seamlessly integrated.
 
+## 🆕 What's New in v0.36.0+
+
+### 🤖 Sub-Agent System
+
+**Revolutionary context management** - Specialized agents that maintain their own focused context windows, enabling long
+development sessions without losing continuity:
+
+- **Security Reviewer** - OWASP Top 10 and NIST-CSF compliance checking
+- **API Architect** - RESTful, GraphQL, and gRPC API design
+- **Documenter** - Automated documentation generation and maintenance
+- **Code Explorer** - Codebase discovery and architecture analysis
+- **Methodology Coach** - Adaptive guidance based on your chosen methodologies
+- **Orchestrator** - General workflow coordinator that routes tasks to appropriate specialists
+
+### 💻 Technology Expert Agents
+
+**Language-specific expertise** with 10+ idiomatic code examples each:
+
+- **TypeScript Expert** - Advanced TypeScript patterns and best practices
+- **Python Expert** - Pythonic code with type hints and modern patterns
+- **Go Expert** - Idiomatic Go with proper error handling and concurrency
+- **React Expert** - Modern React patterns, hooks, and performance optimization
+- **Deno Expert** - Deno-specific APIs and security model
+- **Tailwind Expert** - Utility-first CSS with component patterns
+- **PostgreSQL Expert** - Advanced SQL, performance tuning, and best practices
+- **Lume Expert** - Static site generation with Deno
+- **Vento Expert** - Template engine patterns and optimizations
+
+### 🎯 Methodology Selection & Merging
+
+**Choose your methodologies** and Aichaku intelligently merges their guidance:
+
+```bash
+# During init, select which methodologies to use:
+aichaku init
+? Select methodologies to use (space to select, enter to confirm)
+❯ ◉ shape-up    - Fixed time, variable scope
+  ◯ scrum       - Sprint-based iterative development
+  ◉ kanban      - Visual workflow management
+  ◯ xp          - Extreme Programming practices
+```
+
+- **Smart Merging** - Selected methodologies are intelligently combined in your CLAUDE.md
+- **Context-Aware** - Agents load methodology-specific guidance dynamically
+- **Reduced Context** - Only includes what you actually use (70% reduction: 12K→4K tokens)
+
 ## 📚 Documentation & Resources
 
 ### 🎯 Interactive Methodology Guides (with Mermaid Diagrams)
@@ -408,6 +454,20 @@ aichaku integrate --dry-run
 
 # Force add even if already present
 aichaku integrate --force
+```
+
+### Merge Documentation (v0.36.0+)
+
+```bash
+# Merge selected methodologies into comprehensive documentation
+aichaku merge-docs
+
+# Creates unified guides that blend your chosen methodologies:
+# - docs/merged/planning-guide.md
+# - docs/merged/execution-guide.md
+# - docs/merged/improvement-guide.md
+
+# Only includes content from methodologies you've selected
 ```
 
 ### Hooks - Automate Your Workflow
