@@ -1,12 +1,18 @@
 {
   "name": "@rick/aichaku",
-  "version": "0.35.7",
+  "version": "0.36.0",
   "exports": {
     ".": "./mod.ts",
     "./cli": "./cli.ts"
   },
   "description": "AI-optimized project methodology installer for Claude Code - brings affection (愛着) to your development workflow",
-  "keywords": ["claude", "ai", "methodology", "shape-up", "project-management"],
+  "keywords": [
+    "claude",
+    "ai",
+    "methodology",
+    "shape-up",
+    "project-management"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -85,11 +91,28 @@
       "src/utils/migration-helper.ts"
     ],
     "rules": {
-      "tags": ["recommended", "eqeqeq", "no-await-in-loop", "camelcase", "default-param-last", "no-eval"]
+      "tags": [
+        "recommended",
+        "eqeqeq",
+        "no-await-in-loop",
+        "camelcase",
+        "default-param-last",
+        "no-eval"
+      ]
     }
   },
   "publish": {
-    "include": ["mod.ts", "cli.ts", "version.ts", "deps.ts", "src/", "docs/", "README.md", "LICENSE", "CHANGELOG.md"],
+    "include": [
+      "mod.ts",
+      "cli.ts",
+      "version.ts",
+      "deps.ts",
+      "src/",
+      "docs/",
+      "README.md",
+      "LICENSE",
+      "CHANGELOG.md"
+    ],
     "exclude": [
       "**/*_test.ts",
       "**/*.test.ts",
@@ -114,13 +137,17 @@
     "src/utils/migration-helper.ts"
   ],
   "compilerOptions": {
-    "lib": ["deno.window"],
+    "lib": [
+      "deno.window"
+    ],
     "strict": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
   "test": {
-    "include": ["src/**/*_test.ts"]
+    "include": [
+      "src/**/*_test.ts"
+    ]
   }
 }

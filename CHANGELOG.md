@@ -5,6 +5,63 @@ All notable changes to aichaku (愛着) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.36.0] - 2025-07-28
+
+### Added
+
+- complete sub-agent system with technology expert templates (4a5e2fa)
+- complete sub-agent methodology focus project implementation (772750d)
+- implement methodology-aware installation and merge-docs command (cc13fe8)
+- complete agent template system with cross-functional configuration (ffb7c74)
+- add comprehensive subfolder CLAUDE.md context files (84230de)
+- integrate subfolder CLAUDE.md discovery behavioral directive (de58174)
+- enhance subfolder CLAUDE.md integration (dc34813)
+- implement deno fmt-based markdown workflow (d5598ef)
+- establish professional markdown standards system (3e48b8a)
+- add comprehensive GitHub templates system (9650d86)
+- add development tooling configuration (dbfe076)
+
+### Changed
+
+- add Shape Up methodology selection and untrack settings.local.json (c1d1176)
+- update .gitignore to exclude local agent files and scratch directories (5568530)
+- add ephemerals to gitignore (6ebdc01)
+- add methodologies command to CLI exports and fix TypeScript capitalization (55c2d6f)
+- final formatting cleanup from pre-commit hook execution (508494f)
+- clean up formatting artifacts from pre-commit hook improvements (5f2e9ec)
+- add session work checkpoint (94d390a)
+- add pre-commit hook determinism checkpoint (9a5f621)
+- update deterministic behavior testing checkpoint (7b2fb7d)
+- create checkpoint for deterministic behavior testing session (63d4d3d)
+- verify pre-commit hook fix for staged-only formatting (96ba10b)
+- add comprehensive analysis checkpoint (484133c)
+- apply DRY principle to documentation standards templates (4d3e7e4)
+- fix microsoft-style.md rendering issues with DRY approach (f9e1442)
+- remove obsolete reference documentation (5bade73)
+- apply DRY principle to manage-custom-standards.md (2fbf787)
+- rewrite configure-project.md with correct workflow (0e65b35)
+- update .editorconfig for markdown formatting consistency (ee570a7)
+- Revert "style: apply professional markdown formatting to all documentation" (1548e67)
+- organize root directory files into appropriate locations (005d4ff)
+- apply professional markdown formatting to all documentation (3783ea6)
+- add session checkpoint for GitHub Markdown standards implementation (dbff015)
+- remove archived methodology files (531dbe2)
+- add session checkpoint for dependency updates (b1543e8)
+- bump aichaku version (276a01b)
+
+### Fixed
+
+- use custom format-check script in GitHub Actions (996f6d2)
+- prevent markdown linter from checking entire repository (cc0dd77)
+- resolve markdown formatting conflicts between deno fmt and markdownlint (d8ee724)
+- limit markdown linter to staged files only (be7e309)
+- remove malformed checkpoint file (dfcfb10)
+- limit markdown linting to staged files only (ba9d452)
+- improve pre-commit hook to only format staged files (a56cddc)
+- correct markdownlint emphasis style to match standards (632b3e0)
+- update markdown formatting workflow and hooks (d380933)
+- add language specifications to code blocks in core documentation (367fc31)
+
 ## [0.35.7] - 2025-07-20
 
 ### Changed
