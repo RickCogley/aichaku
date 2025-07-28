@@ -1,0 +1,55 @@
+# Jekyll configuration for GitHub Pages
+# This file tells Jekyll to exclude certain directories from processing
+
+# Exclude directories that contain Liquid-like syntax
+exclude:
+  - docs/
+  - mcp/
+  - scripts/
+  - src/
+  - tests/
+  - node_modules/
+  - vendor/
+  - .git/
+  - .github/
+  - .claude/
+  - .vscode/
+  - "*.ts"
+  - "*.js"
+  - "*.json"
+  - Gemfile
+  - Gemfile.lock
+  - package.json
+  - package-lock.json
+  - yarn.lock
+  - LICENSE
+  - CONTRIBUTING.md
+  - SECURITY.md
+  - CODE_OF_CONDUCT.md
+  - deno.json
+  - deno.lock
+  - nagare.config.ts
+  - .gitignore
+  - .editorconfig
+  - .env
+  - .env.example
+
+# Only process the README.md
+include:
+  - README.md
+
+# GitHub Pages settings
+plugins:
+  - jekyll-relative-links
+  - jekyll-readme-index
+
+# Disable certain Jekyll features that might interfere
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+# Don't show future posts
+future: false
+
+# Timezone
+timezone: UTC
