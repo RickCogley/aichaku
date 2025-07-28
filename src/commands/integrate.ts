@@ -26,6 +26,10 @@ interface AichakuConfig {
   installedAt: string;
   installationType: "global" | "local";
   lastUpgrade: string;
+  methodologies?: {
+    selected: string[];
+    default?: string;
+  };
   standards?: {
     version: string;
     selected: string[];
@@ -54,6 +58,51 @@ interface IntegrateResult {
 const YAML_CONFIG_START = "```yaml";
 const YAML_CONFIG_END = "```";
 const AICHAKU_CONFIG_MARKER = "## Directives for Claude Code from Aichaku";
+
+/**
+ * Load selected methodologies from project or global configuration
+ */
+async function loadSelectedMethodologies(projectPath: string): Promise<string[]> {
+  const aichakuPaths = paths.get();
+  // Check project config first, then global
+  const projectConfigPath = join(aichakuPaths.project.root, "aichaku.json");
+  const globalConfigPath = join(aichakuPaths.global.root, ".aichaku.json");
+
+  // Try project config first
+  if (await exists(projectConfigPath)) {
+    try {
+      const content = await safeReadTextFile(projectConfigPath, projectPath);
+      const config = JSON.parse(content) as AichakuConfig;
+
+      if (config.methodologies?.selected && Array.isArray(config.methodologies.selected)) {
+        return config.methodologies.selected.filter(
+          (id: unknown) => typeof id === "string" && id.length > 0,
+        );
+      }
+    } catch (_error) {
+      console.warn("Failed to load methodologies from project aichaku.json");
+    }
+  }
+
+  // Fall back to global config
+  if (await exists(globalConfigPath)) {
+    try {
+      const content = await Deno.readTextFile(globalConfigPath);
+      const config = JSON.parse(content);
+
+      if (config.methodologies?.selected && Array.isArray(config.methodologies.selected)) {
+        return config.methodologies.selected.filter(
+          (id: unknown) => typeof id === "string" && id.length > 0,
+        );
+      }
+    } catch (_error) {
+      console.warn("Failed to load methodologies from global .aichaku.json");
+    }
+  }
+
+  // Default to shape-up if nothing is configured
+  return ["shape-up"];
+}
 
 /**
  * Load project standards configuration from unified aichaku.json
@@ -277,9 +326,8 @@ export async function integrate(
     documentationStandards: selectedDocStandards,
   } = separateStandardsByType(allSelectedStandards);
 
-  // Note: For agents, we use the selected project methodology from aichaku.json
-  // The selectedMethodologies variable below is for CLAUDE.md content only
-  const selectedMethodologies = await discoverAllMethodologies();
+  // Load selected methodologies from project or global config
+  const selectedMethodologies = await loadSelectedMethodologies(projectPath);
 
   // Define configuration paths - use development paths for now
   const configPaths = {

@@ -314,12 +314,22 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
 
     // Create metadata file
     if (isGlobal && aichakuJsonPath) {
-      // Global: Create config file
+      // Global: Create config file with methodology selection
+      const selectedMethodologies = await promptForMethodologies(options.silent);
+      const selectedStandards = await promptForStandards(options.silent);
+
       const metadata = {
         version: VERSION,
         initializedAt: new Date().toISOString(),
         installationType: "global",
         lastUpgrade: null,
+        methodologies: {
+          selected: selectedMethodologies,
+          default: selectedMethodologies[0] || "shape-up",
+        },
+        standards: {
+          selected: selectedStandards,
+        },
       };
       await Deno.writeTextFile(
         aichakuJsonPath,
@@ -336,6 +346,14 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
         createdAt: new Date().toISOString(),
         customizations: {
           userDir: "./user",
+        },
+        // Inherit methodologies from global by default
+        methodologies: globalMetadata.methodologies || {
+          selected: ["shape-up"],
+          default: "shape-up",
+        },
+        standards: globalMetadata.standards || {
+          selected: [],
         },
       };
       await Deno.writeTextFile(
@@ -580,3 +598,113 @@ IMPORTANT: Creating proper structure is AUTOMATIC, not optional.
 
 // getRulesReminderContent function removed as part of architecture consolidation
 // Legacy file creation eliminated per senior engineer audit
+
+async function promptForMethodologies(silent?: boolean): Promise<string[]> {
+  if (silent) {
+    return ["shape-up"]; // Default to shape-up
+  }
+
+  console.log("\n🎯 Select your primary methodology:");
+  console.log("   We recommend starting with one methodology.\n");
+
+  console.log("1. 🏔️  Shape Up - 6-week cycles, complex features");
+  console.log("2. 🏃  Scrum - Sprints, predictable delivery");
+  console.log("3. 📊  Kanban - Continuous flow, ongoing support");
+  console.log("4. 🚀  Lean Startup - MVPs, new products");
+  console.log("5. 🔄  Scrumban - Hybrid approach");
+  console.log("6. 💡  XP - Extreme Programming, code quality");
+
+  console.log("\nEnter numbers (comma-separated, e.g., 1,2) [1]: ");
+
+  const buf = new Uint8Array(1024);
+  const n = await Deno.stdin.read(buf);
+  const answer = new TextDecoder().decode(buf.subarray(0, n || 0)).trim();
+
+  const methodologyMap: Record<string, string> = {
+    "1": "shape-up",
+    "2": "scrum",
+    "3": "kanban",
+    "4": "lean",
+    "5": "scrumban",
+    "6": "xp",
+  };
+
+  if (!answer || answer === "") {
+    return ["shape-up"]; // Default
+  }
+
+  const selections = answer.split(",").map((s) => s.trim());
+  const selected: string[] = [];
+
+  for (const selection of selections) {
+    if (methodologyMap[selection]) {
+      selected.push(methodologyMap[selection]);
+    }
+  }
+
+  // If nothing valid selected, default to shape-up
+  if (selected.length === 0) {
+    selected.push("shape-up");
+  }
+
+  Brand.success(`Selected methodologies: ${selected.join(", ")}`);
+  return selected;
+}
+
+async function promptForStandards(silent?: boolean): Promise<string[]> {
+  if (silent) {
+    return ["conventional-commits", "test-pyramid", "nist-csf"]; // Sensible defaults
+  }
+
+  console.log("\n📏 Select your standards:");
+  console.log("   Standards help ensure quality and consistency.\n");
+
+  console.log("1. 📝  Conventional Commits - Structured commit messages");
+  console.log("2. 🔺  Test Pyramid - Testing strategy");
+  console.log("3. 🔒  NIST CSF - Security framework");
+  console.log("4. 🏗️  Clean Architecture - Code organization");
+  console.log("5. 📚  Diataxis + Google - Documentation style");
+  console.log("6. 🧪  TDD - Test-Driven Development");
+  console.log("7. 🌐  OWASP Top 10 - Web security");
+  console.log("8. 🔧  SOLID - OOP principles");
+  console.log("9. 📊  DORA - DevOps metrics");
+
+  console.log("\nEnter numbers (comma-separated) [1,2,3]: ");
+
+  const buf = new Uint8Array(1024);
+  const n = await Deno.stdin.read(buf);
+  const answer = new TextDecoder().decode(buf.subarray(0, n || 0)).trim();
+
+  const standardsMap: Record<string, string> = {
+    "1": "conventional-commits",
+    "2": "test-pyramid",
+    "3": "nist-csf",
+    "4": "clean-arch",
+    "5": "diataxis-google",
+    "6": "tdd",
+    "7": "owasp-web",
+    "8": "solid",
+    "9": "dora",
+  };
+
+  if (!answer || answer === "") {
+    return ["conventional-commits", "test-pyramid", "nist-csf"]; // Defaults
+  }
+
+  const selections = answer.split(",").map((s) => s.trim());
+  const selected: string[] = [];
+
+  for (const selection of selections) {
+    if (standardsMap[selection]) {
+      selected.push(standardsMap[selection]);
+    }
+  }
+
+  // If nothing valid selected, use defaults
+  if (selected.length === 0) {
+    selected.push("conventional-commits", "test-pyramid", "nist-csf");
+  }
+
+  Brand.success(`Selected standards: ${selected.join(", ")}`);
+  return selected;
+}

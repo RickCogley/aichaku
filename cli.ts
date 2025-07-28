@@ -40,6 +40,7 @@ import { createMigrateCommand, showMigrateHelp } from "./src/commands/migrate.ts
 import { runReviewCommand } from "./src/commands/review.ts";
 import { runGitHubCommand } from "./src/commands/github.ts";
 import { cleanup } from "./src/commands/cleanup.ts";
+import { mergeDocs } from "./src/commands/merge-docs.ts";
 import { VERSION } from "./mod.ts";
 import { displayVersionWarning } from "./src/utils/version-checker.ts";
 import { Brand } from "./src/utils/branded-messages.ts";
@@ -111,6 +112,7 @@ const args = parseArgs(Deno.args, {
     "set",
     "search",
     "project",
+    "project-name",
     "create-custom",
     "delete-custom",
     "edit-custom",
@@ -196,6 +198,7 @@ Commands:
   review      Review files using MCP server (seamless hook integration)
   github      GitHub operations via MCP (releases, workflows, repos)
   migrate     Migrate from old ~/.claude/ to new ~/.claude/aichaku/ structure
+  merge-docs  Merge completed project documentation back to central docs
 
 Options:
   -g, --global     Apply to global installation (~/.claude)
@@ -274,6 +277,11 @@ Examples:
   aichaku migrate
   aichaku migrate --dry-run
   aichaku migrate --project .
+
+  # Merge completed project docs
+  aichaku merge-docs
+  aichaku merge-docs --project-name done-2025-07-14-my-feature
+  aichaku merge-docs --dry-run
 
 Learn more: https://github.com/RickCogley/aichaku
 `);
@@ -668,6 +676,26 @@ ${result.claudeMdReferences.map((ref) => `    Line ${ref.line}: "${ref.text}"`).
       const githubArgs = args._.slice(1).map(String);
 
       await runGitHubCommand(githubOptions, githubArgs);
+      break;
+    }
+
+    case "merge-docs": {
+      const mergeOptions = {
+        projectPath: args.path as string | undefined,
+        projectName: args["project-name"] as string | undefined,
+        force: args.force as boolean | undefined,
+        silent: args.silent as boolean | undefined,
+        dryRun: args["dry-run"] as boolean | undefined,
+      };
+
+      const result = await mergeDocs(mergeOptions);
+      if (!result.success) {
+        console.error(`❌ ${result.message}`);
+        Deno.exit(1);
+      }
+      if (!args.silent && result.message) {
+        console.log(`\n✅ ${result.message}`);
+      }
       break;
     }
 
