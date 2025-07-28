@@ -456,7 +456,7 @@ export async function integrate(
  * Discover all available methodologies from global installation
  * Per spec: "all methodologies, selected standards" - methodologies should be auto-discovered globally
  */
-async function discoverAllMethodologies(): Promise<string[]> {
+async function _discoverAllMethodologies(): Promise<string[]> {
   try {
     const aichakuPaths = getAichakuPaths();
     const discovered = await discoverContent(

@@ -26,6 +26,13 @@ if command -v deno >/dev/null 2>&1; then
     if [ -n "$deno_files" ]; then
         # Format only the staged files
         if echo "$deno_files" | xargs deno fmt; then
+            # For markdown files, also run markdownlint to fix emphasis style
+            md_files=$(echo "$deno_files" | grep '\.md$' || true)
+            if [ -n "$md_files" ] && command -v markdownlint-cli2 >/dev/null 2>&1; then
+                log_info "Fixing markdown emphasis style..."
+                echo "$md_files" | xargs markdownlint-cli2 --fix >/dev/null 2>&1 || true
+            fi
+            
             # Check if any of the staged files were modified by formatting
             for file in $deno_files; do
                 if [ -f "$file" ] && ! git diff --quiet HEAD -- "$file" 2>/dev/null; then

@@ -27,8 +27,9 @@
   "tasks": {
     "dev": "deno run --watch mod.ts",
     "test": "deno test --allow-read --allow-write --allow-env --allow-run",
-    "fmt": "deno fmt",
-    "fmt:all": "deno fmt && markdownlint-cli2 --fix \"**/*.md\"",
+    "fmt": "deno run --allow-run scripts/format-all.ts",
+    "fmt:ts": "deno fmt",
+    "fmt:md": "markdownlint-cli2 --fix \"**/*.md\"",
     "lint": "deno lint",
     "lint:markdown": "markdownlint-cli2 --fix \"**/*.md\"",
     "check": "deno check src/**/*.ts cli.ts mod.ts version.ts nagare.config.ts nagare-launcher.ts init.ts",

@@ -120,8 +120,9 @@ export default {
     preRelease: [
       async () => {
         console.log("🔍 Running format check...");
+        // Use custom format check script that excludes markdown files
         const fmtCheck = new Deno.Command("deno", {
-          args: ["fmt", "--check"],
+          args: ["run", "--allow-run", "--allow-read", "scripts/format-check.ts"],
         });
         const fmtResult = await fmtCheck.output();
         if (!fmtResult.success) {
