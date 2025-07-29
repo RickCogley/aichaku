@@ -1,6 +1,6 @@
 # Implementation Plan: Aichaku v0.5.0
 
-*"Making Aichaku Truly Superior"*
+_"Making Aichaku Truly Superior"_
 
 ## Vision
 

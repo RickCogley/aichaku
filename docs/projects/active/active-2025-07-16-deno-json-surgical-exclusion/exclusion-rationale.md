@@ -103,4 +103,4 @@ By excluding these files from `deno lint` and `deno check`:
 
 ---
 
-*Last updated: 2025-07-16*
+_Last updated: 2025-07-16_

@@ -344,6 +344,6 @@ manual effort.
 
 ---
 
-*Created: 2025-07-23*\
-*Last updated: 2025-07-23*\
-*Standard: Universal (applies to all methodologies)*
+_Created: 2025-07-23_\
+_Last updated: 2025-07-23_\
+_Standard: Universal (applies to all methodologies)_

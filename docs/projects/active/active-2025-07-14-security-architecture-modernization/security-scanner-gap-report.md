@@ -117,5 +117,5 @@ development.
 
 ---
 
-*Report generated: [Date]*\
-*Next review recommended: [Date + 3 months]*
+_Report generated: [Date]_\
+_Next review recommended: [Date + 3 months]_

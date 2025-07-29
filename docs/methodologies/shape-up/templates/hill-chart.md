@@ -142,4 +142,4 @@ Completed:
 
 [Any additional context, blockers, or decisions that affect progress]
 
-*Last updated: [Date/Time]*
+_Last updated: [Date/Time]_

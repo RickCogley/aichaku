@@ -44,4 +44,4 @@ Consider moving to `done` state.
 
 ---
 
-*Last Updated: 2025-07-16*
+_Last Updated: 2025-07-16_

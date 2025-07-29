@@ -211,7 +211,7 @@ Key structural elements:
 #### UI Elements
 
 - **Bold** for UI elements: "Select **File** > **Save**"
-- *Italics* for user input: "In the **Name** box, enter *MyProject*"
+- _Italics_ for user input: "In the **Name** box, enter _MyProject_"
 - `Code` formatting for code elements, files, and values
 
 #### Tables

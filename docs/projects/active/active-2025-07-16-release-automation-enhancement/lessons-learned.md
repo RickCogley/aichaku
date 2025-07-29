@@ -144,4 +144,4 @@ After implementing improvements, a release should:
 
 ---
 
-*These lessons directly inform the design of the release automation enhancement project.*
+_These lessons directly inform the design of the release automation enhancement project._

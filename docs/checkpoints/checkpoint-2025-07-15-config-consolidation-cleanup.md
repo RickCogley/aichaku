@@ -121,4 +121,4 @@
 
 ---
 
-*Checkpoint created: 2025-07-15 13:50:00 PST*
+_Checkpoint created: 2025-07-15 13:50:00 PST_

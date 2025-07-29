@@ -91,4 +91,4 @@ testing an actual release.
 
 ---
 
-*Checkpoint created: 2025-07-16T10:15:00Z*
+_Checkpoint created: 2025-07-16T10:15:00Z_

@@ -148,4 +148,4 @@ Current hooks will remain inactive until restart.
 
 ---
 
-*Specification created: 2025-01-13*
+_Specification created: 2025-01-13_

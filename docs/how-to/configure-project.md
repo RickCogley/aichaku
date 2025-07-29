@@ -348,4 +348,4 @@ aichaku learn "shape up"
 
 ---
 
-*Created: 2025-07-24* *Last updated: 2025-07-24* *Standard: Universal (applies to all methodologies)*
+_Created: 2025-07-24_ _Last updated: 2025-07-24_ _Standard: Universal (applies to all methodologies)_

@@ -86,7 +86,7 @@ Your project now has:
 Successfully updated CLAUDE.md with Aichaku reference
 ```
 
-*Three redundant messages saying the same thing*
+_Three redundant messages saying the same thing_
 
 #### After:
 
@@ -103,7 +103,7 @@ Successfully updated CLAUDE.md with Aichaku reference
 ✨ Claude Code now understands your methodology preferences!
 ```
 
-*Clear, informative, and beautiful*
+_Clear, informative, and beautiful_
 
 ### `aichaku upgrade --check`
 
@@ -117,7 +117,7 @@ Successfully updated CLAUDE.md with Aichaku reference
 Already on latest version (v0.4.0)
 ```
 
-*Says "upgraded successfully" when nothing was upgraded*
+_Says "upgraded successfully" when nothing was upgraded_
 
 #### After:
 
@@ -130,7 +130,7 @@ Already on latest version (v0.4.0)
 ✓ You're up to date!
 ```
 
-*Clear status check without false success claims*
+_Clear status check without false success claims_
 
 ### `aichaku uninstall --dry-run`
 
@@ -150,7 +150,7 @@ Already on latest version (v0.4.0)
 Dry run completed. No files were modified.
 ```
 
-*Claims success on a dry run*
+_Claims success on a dry run_
 
 #### After:
 
@@ -165,7 +165,7 @@ Dry run completed. No files were modified.
     Run without --dry-run to proceed.
 ```
 
-*Clear dry run indication*
+_Clear dry run indication_
 
 ## 🎯 Git Status
 
@@ -178,7 +178,7 @@ $ git status
 ?? .claude/user/
 ```
 
-*Requires extensive .gitignore configuration*
+_Requires extensive .gitignore configuration_
 
 ### After:
 

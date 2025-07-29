@@ -168,10 +168,10 @@ Keep these security aspects in mind:
 
 ### Scenario 1: [Business scenario]
 
-*Contoso Corporation needs to [business need]. They implement [concept] to:*
+_Contoso Corporation needs to [business need]. They implement [concept] to:_
 
-- *[Specific goal 1]*
-- *[Specific goal 2]*
+- _[Specific goal 1]_
+- _[Specific goal 2]_
 
 **Solution approach**:
 
@@ -186,10 +186,10 @@ Keep these security aspects in mind:
 
 ### Scenario 2: [Technical scenario]
 
-*A development team wants to [technical goal]. They use [concept] because:*
+_A development team wants to [technical goal]. They use [concept] because:_
 
-- *[Reason 1]*
-- *[Reason 2]*
+- _[Reason 1]_
+- _[Reason 2]_
 
 **Implementation**:
 

@@ -275,5 +275,5 @@ historical documentation.
 **Legacy File Format Evolution Complete** - From fragmented configuration files to unified architecture, Aichaku now has
 a clean, maintainable foundation for future development.
 
-*Checkpoint created: 2025-07-17 13:39:12*\
-*Architecture consolidation completed: 2025-07-17 21:15:00*
+_Checkpoint created: 2025-07-17 13:39:12_\
+_Architecture consolidation completed: 2025-07-17 21:15:00_

@@ -1,6 +1,6 @@
 # macOS LuaLaTeX Setup Guide
 
-*Source: [Qiita article by haru52](https://qiita.com/haru52/items/d521d7689c5a1e48a2db)*
+_Source: [Qiita article by haru52](https://qiita.com/haru52/items/d521d7689c5a1e48a2db)_
 
 ## Quick Setup for Aichaku Users
 

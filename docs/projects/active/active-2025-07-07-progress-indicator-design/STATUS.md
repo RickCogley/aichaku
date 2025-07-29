@@ -119,4 +119,4 @@ graph LR
 
 ---
 
-*Last updated: 2025-07-14 by Claude*
+_Last updated: 2025-07-14 by Claude_
