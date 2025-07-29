@@ -117,7 +117,9 @@ async function generateAgent(
 ): Promise<AgentTemplate | null> {
   // Check if agent already exists in output directory
   const existingAgentPath = join(options.outputPath, `${options.agentPrefix}${agentType}.md`);
-  const templateBase = "/Users/rcogley/dev/aichaku/docs/core/agent-templates";
+  // Use global installation path for agent templates
+  const homePath = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
+  const templateBase = join(homePath, ".claude", "aichaku", "docs", "core", "agent-templates");
   const agentBasePath = join(templateBase, agentType, "base.md");
 
   let baseContent: string;
@@ -441,9 +443,10 @@ async function generateStandardsYaml(standards: string[]): Promise<string> {
   for (const standard of standards) {
     const category = await findStandardCategory(standard);
     if (category) {
-      const standardPath = join("/Users/rcogley/dev/aichaku/docs/standards", category, `${standard}.yaml`);
+      const homePath = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
+      const standardPath = join(homePath, ".claude", "aichaku", "docs", "standards", category, `${standard}.yaml`);
       if (await exists(standardPath)) {
-        const yamlContent = await safeReadTextFile(standardPath, "/Users/rcogley/dev/aichaku");
+        const yamlContent = await safeReadTextFile(standardPath, join(homePath, ".claude", "aichaku"));
         const parsedYaml = parseYamlSections(yamlContent, ["summary", "rules"]);
 
         if (!standardsByCategory[category]) standardsByCategory[category] = [];
@@ -495,9 +498,18 @@ async function generateMethodologyYaml(methodologies: string[]): Promise<string>
   }> = [];
 
   for (const methodology of methodologies) {
-    const methodologyPath = join("/Users/rcogley/dev/aichaku/docs/methodologies", methodology, `${methodology}.yaml`);
+    const homePath = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
+    const methodologyPath = join(
+      homePath,
+      ".claude",
+      "aichaku",
+      "docs",
+      "methodologies",
+      methodology,
+      `${methodology}.yaml`,
+    );
     if (await exists(methodologyPath)) {
-      const yamlContent = await safeReadTextFile(methodologyPath, "/Users/rcogley/dev/aichaku");
+      const yamlContent = await safeReadTextFile(methodologyPath, join(homePath, ".claude", "aichaku"));
       const parsedYaml = parseYamlSections(yamlContent, ["summary", "rules", "templates"]);
       methodologyData.push({
         name: methodology,
@@ -623,7 +635,8 @@ function parseYamlValue(content: string): unknown {
  * Find the category for a given standard
  */
 async function findStandardCategory(standard: string): Promise<string | null> {
-  const standardsBase = "/Users/rcogley/dev/aichaku/docs/standards";
+  const homePath = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
+  const standardsBase = join(homePath, ".claude", "aichaku", "docs", "standards");
   const categories = ["security", "development", "testing", "architecture", "documentation", "devops"];
 
   for (const category of categories) {

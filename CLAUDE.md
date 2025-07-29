@@ -8,7 +8,7 @@ This configuration is dynamically assembled from YAML files in your ~/.claude/ai
 
 ```yaml
 aichaku:
-  version: 0.35.7
+  version: 0.37.0
   source: configuration-as-code
 behavioral_directives:
   read_claude_md_in_subfolders:
@@ -213,23 +213,6 @@ file_organization:
       example: done-2025-07-14-consistent-branding
       transition: Rename from active-* to done-* when complete
 methodologies:
-  scrum:
-    name: Scrum
-    triggers: []
-    best_for: Predictable delivery
-    templates:
-      sprint_planning: templates/sprint-planning.md
-      sprint_retrospective: templates/sprint-retrospective.md
-      user_story: templates/user-story.md
-    phases: {}
-    integration_url: "aichaku://methodology/scrum/guide"
-  lean:
-    name: Lean Startup
-    triggers: []
-    best_for: New products
-    templates: {}
-    phases: {}
-    integration_url: "aichaku://methodology/lean/guide"
   shape_up:
     key_concepts:
       - "Fixed time, variable scope"
@@ -245,30 +228,13 @@ methodologies:
       - execution-plan.md
       - hill-chart.md
       - change-summary.md
-  scrumban:
-    name: Scrumban
+  lean:
+    name: Lean Startup
     triggers: []
-    best_for: Hybrid teams
-    templates:
-      planning_trigger: templates/planning-trigger.md
-    phases: {}
-    integration_url: "aichaku://methodology/scrumban/guide"
-  kanban:
-    name: Kanban
-    triggers: []
-    best_for: Ongoing support
-    templates:
-      kanban_board: templates/kanban-board.md
-      flow_metrics: templates/flow-metrics.md
-    phases: {}
-    integration_url: "aichaku://methodology/kanban/guide"
-  xp:
-    name: Extreme Programming
-    triggers: []
-    best_for: Code quality
+    best_for: New products
     templates: {}
     phases: {}
-    integration_url: "aichaku://methodology/xp/guide"
+    integration_url: "aichaku://methodology/lean/guide"
   shape-up:
     name: Shape Up
     triggers: []
@@ -450,7 +416,7 @@ standards:
       testability: Promotes dependency injection and mocking
     integration_url: "aichaku://standard/development/solid"
   dora:
-    name: DORA Metrics
+    name: DORA Metrics (DevOps Research and Assessment)
     category: devops
     summary:
       critical: |
@@ -462,29 +428,11 @@ standards:
       correlation: Strong correlation with organizational performance
       automation: Automated measurement through CI/CD and monitoring
     integration_url: "aichaku://standard/devops/dora"
-  diataxis-google:
-    name: Diátaxis + Google Developer Documentation Style
-    category: documentation
-    summary:
-      critical: |
-        - Four documentation modes: Tutorial, How-to, Reference, Explanation
-        - Tutorial: Learning-oriented, step-by-step lessons
-        - How-to: Task-oriented, problem-solving recipes
-        - Reference: Information-oriented, complete specification
-        - Explanation: Understanding-oriented, concept clarification
-      google_style: "Second person, present tense, active voice, clear outcomes"
-      user_centered: Different modes serve different user needs and contexts
-      separation: Keep modes separate - don't mix tutorial and reference
-    integration_url: "aichaku://standard/documentation/diataxis-google"
 included:
   core: true
   methodologies:
-    - scrum
-    - lean
     - shape-up
-    - scrumban
-    - kanban
-    - xp
+    - lean
   standards:
     - nist-csf
     - tdd
@@ -498,7 +446,6 @@ included:
     - microsoft-style
     - solid
     - dora
-  doc_standards:
-    - diataxis-google
+  doc_standards: []
   has_user_customizations: false
 ```

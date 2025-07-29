@@ -2,7 +2,7 @@ import { ensureDir, exists } from "jsr:@std/fs@1";
 import { join } from "jsr:@std/path@1";
 import { copy } from "jsr:@std/fs@1/copy";
 import { VERSION } from "../../mod.ts";
-import { fetchMethodologies, fetchStandards } from "./content-fetcher.ts";
+import { fetchCore, fetchMethodologies, fetchStandards } from "./content-fetcher.ts";
 import { ensureAichakuDirs, getAichakuPaths } from "../paths.ts";
 import { resolveProjectPath } from "../utils/project-paths.ts";
 import { Brand } from "../utils/branded-messages.ts";
@@ -264,6 +264,54 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
 
         if (!options.silent) {
           Brand.success("Standards library installed");
+        }
+      }
+
+      // Check if core content already exists
+      const corePath = paths.global.core;
+      const coreExists = await exists(corePath);
+
+      // Only copy/fetch core content for global install if they don't exist or force is used
+      if (!coreExists || options.force) {
+        if (isJSR) {
+          // Fetch from GitHub when running from JSR - use global root path
+          if (!options.silent) {
+            Brand.progress("Installing core templates...", "active");
+          }
+
+          const fetchSuccess = await fetchCore(
+            paths.global.core,
+            VERSION,
+            {
+              silent: options.silent,
+              overwrite: options.force,
+            },
+          );
+
+          if (!fetchSuccess) {
+            throw new Error(
+              "Failed to fetch core templates. Check network permissions.",
+            );
+          }
+        } else {
+          // Local development - copy from source
+          const sourceCore = join(
+            new URL(".", import.meta.url).pathname,
+            "../../../docs/core",
+          );
+          const targetCore = paths.global.core;
+
+          if (!options.silent) {
+            Brand.progress("Installing core templates...", "active");
+          }
+
+          await copy(sourceCore, targetCore, {
+            overwrite: options.force,
+          });
+        }
+
+        if (!options.silent) {
+          Brand.success("Core templates installed");
         }
       }
     }

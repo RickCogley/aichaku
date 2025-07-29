@@ -11,8 +11,8 @@ import { basename, dirname, join, relative } from "jsr:@std/path@1";
 import { parse as parseYaml } from "jsr:@std/yaml@1";
 import { safeReadTextFile } from "./path-security.ts";
 
-/** Type of content (methodologies or standards) */
-export type ContentType = "methodologies" | "standards";
+/** Type of content (methodologies, standards, or core) */
+export type ContentType = "methodologies" | "standards" | "core";
 
 /** Metadata for a discoverable content item */
 export interface ContentMetadata {

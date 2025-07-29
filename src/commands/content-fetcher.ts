@@ -8,7 +8,7 @@ interface FetchOptions {
   overwrite?: boolean;
 }
 
-type ContentType = "methodologies" | "standards";
+type ContentType = "methodologies" | "standards" | "core";
 
 /**
  * Fetches content (methodologies or standards) from GitHub for JSR installations
@@ -519,4 +519,12 @@ export function fetchStandards(
   options: FetchOptions = {},
 ): Promise<boolean> {
   return fetchContent("standards", targetPath, version, options);
+}
+
+export function fetchCore(
+  targetPath: string,
+  version: string,
+  options: FetchOptions = {},
+): Promise<boolean> {
+  return fetchContent("core", targetPath, version, options);
 }

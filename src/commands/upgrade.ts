@@ -2,7 +2,7 @@ import { exists } from "jsr:@std/fs@1";
 import { join, resolve } from "jsr:@std/path@1";
 import { copy } from "jsr:@std/fs@1/copy";
 import { VERSION } from "../../mod.ts";
-import { fetchMethodologies, fetchStandards } from "./content-fetcher.ts";
+import { fetchCore, fetchMethodologies, fetchStandards } from "./content-fetcher.ts";
 import { getAichakuPaths } from "../paths.ts";
 import { resolveProjectPath } from "../utils/project-paths.ts";
 import { safeRemove } from "../utils/path-security.ts";
@@ -333,6 +333,68 @@ export async function upgrade(
 
     if (!options.silent) {
       Brand.success("Standards library updated");
+    }
+
+    // Update core content (agent templates, etc.)
+    if (!options.silent) {
+      Brand.progress("Updating core templates...", "active");
+    }
+
+    if (isJSR) {
+      // Fetch from GitHub when running from JSR
+      const fetchSuccess = await fetchCore(
+        paths.global.core,
+        VERSION,
+        {
+          silent: options.silent,
+          overwrite: true, // Always overwrite during upgrades to get latest content
+        },
+      );
+
+      if (!fetchSuccess) {
+        // If fetch fails completely, try removing and re-fetching
+        const targetCore = paths.global.core;
+        if (await exists(targetCore)) {
+          // Security: Use safe remove
+          await safeRemove(targetCore, paths.global.root, {
+            recursive: true,
+          });
+        }
+
+        const retrySuccess = await fetchCore(
+          paths.global.core,
+          VERSION,
+          {
+            silent: options.silent,
+            overwrite: true,
+          },
+        );
+
+        if (!retrySuccess) {
+          throw new Error(
+            "Failed to update core templates. Check network permissions.",
+          );
+        }
+      }
+    } else {
+      // Local development - copy from source
+      const sourceCore = join(
+        new URL(".", import.meta.url).pathname,
+        "../../../docs/core",
+      );
+      const targetCore = paths.global.core;
+
+      // Remove old core for clean copy
+      if (await exists(targetCore)) {
+        // Security: Use safe remove
+        await safeRemove(targetCore, targetPath, { recursive: true });
+      }
+
+      await copy(sourceCore, targetCore);
+    }
+
+    if (!options.silent) {
+      Brand.success("Core templates updated");
     }
 
     // Show what's new in this version

@@ -15,6 +15,7 @@ export interface AichakuPaths {
     root: string;
     methodologies: string;
     standards: string;
+    core: string;
     config: string;
     cache: string;
     user: {
@@ -75,6 +76,7 @@ export function getAichakuPaths(): AichakuPaths {
       root: join(home, ".claude", "aichaku"),
       methodologies: join(home, ".claude", "aichaku", "docs", "methodologies"),
       standards: join(home, ".claude", "aichaku", "docs", "standards"),
+      core: join(home, ".claude", "aichaku", "docs", "core"),
       config: join(home, ".claude", "aichaku", "config.json"),
       cache: join(home, ".claude", "aichaku", "cache"),
       user: {
@@ -128,6 +130,7 @@ export async function ensureAichakuDirs(): Promise<void> {
   await ensureDir(paths.global.root);
   await ensureDir(paths.global.methodologies);
   await ensureDir(paths.global.standards);
+  await ensureDir(paths.global.core);
   await ensureDir(paths.global.cache);
 
   // Ensure user directories
