@@ -295,13 +295,13 @@ async function showProjectMethodologies(projectPath?: string): Promise<void> {
       return;
     }
 
-    const config = configManager.get();
-    const activeMethodology = config.project?.methodology;
+    const activeMethodologies = configManager.getMethodologies();
+    const defaultMethodology = configManager.getDefaultMethodology();
 
     console.log("\n🪴 Aichaku: Project Methodology Configuration\n");
 
-    if (!activeMethodology) {
-      console.log("No methodology currently selected for this project\n");
+    if (!activeMethodologies || activeMethodologies.length === 0) {
+      console.log("No methodologies currently selected for this project\n");
       console.log("💡 To get started:");
       console.log("   • Run 'aichaku methodologies --list' to see available methodologies");
       console.log("   • Run 'aichaku methodologies --add <id>' to select a methodology");
@@ -310,21 +310,30 @@ async function showProjectMethodologies(projectPath?: string): Promise<void> {
       return;
     }
 
-    // Show active methodology
-    const methodology = AVAILABLE_METHODOLOGIES[activeMethodology];
-    if (methodology) {
-      console.log(`Active methodology: ${activeMethodology}`);
-      console.log(`  Name: ${methodology.name}`);
-      console.log(`  Description: ${methodology.description}`);
-      console.log(`  Best for: ${methodology.bestFor}`);
-      console.log(`  Team size: ${methodology.teamSize}`);
-      console.log(`  Key principles:`);
-      methodology.principles.forEach((principle) => {
-        console.log(`    • ${principle}`);
-      });
-    } else {
-      console.log(`Active methodology: ${activeMethodology} (unknown methodology)`);
-      console.log(`  ⚠️  Warning: Methodology not found in available methodologies`);
+    // Show active methodologies
+    console.log(`Active methodologies: ${activeMethodologies.join(", ")}`);
+    if (defaultMethodology) {
+      console.log(`Default methodology: ${defaultMethodology}`);
+    }
+    console.log();
+
+    // Show details for each methodology
+    for (const methodologyId of activeMethodologies) {
+      const methodology = AVAILABLE_METHODOLOGIES[methodologyId];
+      if (methodology) {
+        console.log(`• ${methodologyId}: ${methodology.name}`);
+        console.log(`  Description: ${methodology.description}`);
+        console.log(`  Best for: ${methodology.bestFor}`);
+        console.log(`  Team size: ${methodology.teamSize}`);
+        console.log(`  Key principles:`);
+        methodology.principles.forEach((principle) => {
+          console.log(`    - ${principle}`);
+        });
+        console.log();
+      } else {
+        console.log(`• ${methodologyId} (unknown methodology)`);
+        console.log(`  ⚠️  Warning: Methodology not found in available methodologies\n`);
+      }
     }
 
     // Check integration status and provide options
@@ -390,8 +399,6 @@ async function addMethodologies(
       await defaultConfig.update({
         project: {
           created: new Date().toISOString(),
-          type: "project",
-          installationType: "local",
         },
       });
       // Re-load the config manager to get the updated configuration
@@ -399,25 +406,21 @@ async function addMethodologies(
       await configManager.load();
     }
 
-    // For now, we'll use the first methodology as the primary
-    // In the future, we could support multiple active methodologies
-    const primaryMethodology = ids[0];
+    // Add all specified methodologies
+    const currentMethodologies = configManager.getMethodologies();
+    const newMethodologies = [...new Set([...currentMethodologies, ...ids])];
 
     if (!dryRun) {
-      await configManager.setMethodology(primaryMethodology);
-      console.log(`✅ Set primary methodology: ${primaryMethodology}`);
-
-      if (ids.length > 1) {
-        console.log(`\nℹ️  Additional methodologies noted: ${ids.slice(1).join(", ")}`);
-        console.log(`   Multiple methodology support coming in future version`);
-      }
+      await configManager.setMethodologies(newMethodologies);
+      console.log(`✅ Added methodologies: ${ids.join(", ")}`);
+      console.log(`\nActive methodologies: ${newMethodologies.join(", ")}`);
 
       console.log(`\n💡 What you can do next:`);
       console.log(`   • Run 'aichaku integrate' to apply this methodology to CLAUDE.md`);
       console.log(`   • Run 'aichaku methodologies --show' to review your selection`);
       console.log(`   • Start using methodology-specific language in your conversations`);
     } else {
-      console.log(`[Dry run] Would set methodology: ${primaryMethodology}`);
+      console.log(`[Dry run] Would add methodologies: ${ids.join(", ")}`);
     }
   } catch (error) {
     console.error(`❌ Failed to add methodologies: ${error instanceof Error ? error.message : "Unknown error"}`);
@@ -446,25 +449,40 @@ async function removeMethodologies(
     const configManager = createProjectConfigManager(validatedProjectPath);
     await configManager.load();
 
-    const currentMethodology = configManager.getMethodology();
+    const currentMethodologies = configManager.getMethodologies();
 
-    if (!currentMethodology) {
-      console.log(`⚠️  No methodology currently set for this project`);
+    if (!currentMethodologies || currentMethodologies.length === 0) {
+      console.log(`⚠️  No methodologies currently set for this project`);
       return;
     }
 
-    if (ids.includes(currentMethodology)) {
-      if (!dryRun) {
-        await configManager.setMethodology(""); // Clear methodology
-        console.log(`✅ Removed methodology: ${currentMethodology}`);
-        console.log(`\n💡 Project now has no active methodology`);
+    const toRemove = ids.filter((id) => currentMethodologies.includes(id));
+    const notActive = ids.filter((id) => !currentMethodologies.includes(id));
+
+    if (toRemove.length === 0) {
+      console.log(`⚠️  None of the specified methodologies are currently active`);
+      console.log(`   Current methodologies: ${currentMethodologies.join(", ")}`);
+      return;
+    }
+
+    const remaining = currentMethodologies.filter((m) => !toRemove.includes(m));
+
+    if (!dryRun) {
+      await configManager.setMethodologies(remaining);
+      console.log(`✅ Removed methodologies: ${toRemove.join(", ")}`);
+
+      if (notActive.length > 0) {
+        console.log(`ℹ️  Not active (skipped): ${notActive.join(", ")}`);
+      }
+
+      if (remaining.length === 0) {
+        console.log(`\n💡 Project now has no active methodologies`);
         console.log(`   • Run 'aichaku methodologies --add <id>' to select a new methodology`);
       } else {
-        console.log(`[Dry run] Would remove methodology: ${currentMethodology}`);
+        console.log(`\nRemaining methodologies: ${remaining.join(", ")}`);
       }
     } else {
-      console.log(`⚠️  Methodology '${ids.join(", ")}' not currently active`);
-      console.log(`   Current methodology: ${currentMethodology}`);
+      console.log(`[Dry run] Would remove methodologies: ${toRemove.join(", ")}`);
     }
   } catch (error) {
     console.error(`❌ Failed to remove methodologies: ${error instanceof Error ? error.message : "Unknown error"}`);
@@ -507,26 +525,23 @@ async function setMethodologies(
       // Will create configuration when setting methodology
     }
 
-    const primaryMethodology = ids[0];
-
     if (!dryRun) {
-      await configManager.setMethodology(primaryMethodology);
-      console.log(`✅ Set methodology: ${primaryMethodology}`);
+      await configManager.setMethodologies(ids);
+      console.log(`✅ Set methodologies: ${ids.join(", ")}`);
+      console.log();
 
-      const methodology = AVAILABLE_METHODOLOGIES[primaryMethodology];
-      console.log(`   ${methodology.name}: ${methodology.description}`);
-
-      if (ids.length > 1) {
-        console.log(`\nℹ️  Additional methodologies noted: ${ids.slice(1).join(", ")}`);
-        console.log(`   Multiple methodology support coming in future version`);
+      // Show details for each set methodology
+      for (const id of ids) {
+        const methodology = AVAILABLE_METHODOLOGIES[id];
+        console.log(`   • ${methodology.name}: ${methodology.description}`);
       }
 
       console.log(`\n💡 What you can do next:`);
       console.log(`   • Run 'aichaku integrate' to apply this methodology to CLAUDE.md`);
       console.log(`   • Start using methodology-specific terminology`);
-      console.log(`   • Agents will now load context for: ${primaryMethodology}`);
+      console.log(`   • Agents will now load context for: ${ids.join(", ")}`);
     } else {
-      console.log(`[Dry run] Would set methodology: ${primaryMethodology}`);
+      console.log(`[Dry run] Would set methodologies: ${ids.join(", ")}`);
     }
   } catch (error) {
     console.error(`❌ Failed to set methodologies: ${error instanceof Error ? error.message : "Unknown error"}`);
@@ -549,7 +564,7 @@ async function resetMethodologies(
     const configManager = createProjectConfigManager(validatedProjectPath);
 
     if (!dryRun) {
-      await configManager.setMethodology(defaultMethodology);
+      await configManager.setMethodologies([defaultMethodology]);
       console.log(`✅ Reset to default methodology: ${defaultMethodology}`);
 
       const methodology = AVAILABLE_METHODOLOGIES[defaultMethodology];

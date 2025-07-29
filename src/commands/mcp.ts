@@ -219,7 +219,7 @@ export async function installMCPServer(serverId?: string): Promise<void> {
 }
 
 async function configureMCPServer(): Promise<void> {
-  console.log("🔧 Configuring Claude Code for MCP Server...\n");
+  console.log("🔧 Configuring Claude Code for MCP Servers...\n");
 
   const homeDir = Deno.env.get("HOME") || Deno.env.get("USERPROFILE");
   if (!homeDir) {
@@ -228,30 +228,53 @@ async function configureMCPServer(): Promise<void> {
   }
 
   const platform = Deno.build.os;
-  const mcpBinary = join(
-    homeDir,
-    ".aichaku",
-    "mcp-server",
-    platform === "windows" ? "mcp-code-reviewer.exe" : "mcp-code-reviewer",
-  );
+  const ext = platform === "windows" ? ".exe" : "";
+  const serversPath = join(homeDir, ".aichaku", "mcp-servers");
 
-  // Check if MCP server is installed
-  if (!await exists(mcpBinary)) {
-    console.error("❌ MCP server not installed");
-    console.error("   Run 'aichaku mcp --install' first");
+  // Check for new multi-server structure
+  const reviewerPath = join(serversPath, `aichaku-code-reviewer${ext}`);
+  const githubPath = join(serversPath, `github-operations${ext}`);
+
+  const hasReviewer = await exists(reviewerPath);
+  const hasGithub = await exists(githubPath);
+
+  // Also check old location for backward compatibility
+  const oldPath = join(homeDir, ".aichaku", "mcp-server", `mcp-code-reviewer${ext}`);
+  const hasOldReviewer = await exists(oldPath);
+
+  if (!hasReviewer && !hasGithub && !hasOldReviewer) {
+    console.error("❌ No MCP servers installed");
+    console.error("   Run 'aichaku mcp --install' to install servers");
     return;
   }
 
-  // Create MCP configuration
-  const mcpConfig = {
-    mcpServers: {
-      "aichaku-reviewer": {
-        command: mcpBinary,
-        args: [],
-        env: {},
-      },
-    },
+  // Create MCP configuration for all installed servers
+  const mcpConfig: any = {
+    mcpServers: {},
   };
+
+  if (hasReviewer) {
+    mcpConfig.mcpServers["aichaku-reviewer"] = {
+      command: reviewerPath,
+      args: [],
+      env: {},
+    };
+  } else if (hasOldReviewer) {
+    console.log("⚠️  Using old MCP server location. Consider reinstalling with --install");
+    mcpConfig.mcpServers["aichaku-reviewer"] = {
+      command: oldPath,
+      args: [],
+      env: {},
+    };
+  }
+
+  if (hasGithub) {
+    mcpConfig.mcpServers["github-operations"] = {
+      command: githubPath,
+      args: [],
+      env: {},
+    };
+  }
 
   console.log("📝 Add this configuration to Claude Code's MCP settings:\n");
   console.log(JSON.stringify(mcpConfig, null, 2));
@@ -264,15 +287,33 @@ async function configureMCPServer(): Promise<void> {
 
   console.log("\n💡 After adding the configuration:");
   console.log("   1. Restart Claude Code");
-  console.log("   2. The MCP server will be available as 'aichaku-reviewer'");
-  console.log("   3. Claude can use these MCP tools:");
-  console.log("      • mcp__aichaku-reviewer__review_file");
-  console.log("      • mcp__aichaku-reviewer__review_methodology");
-  console.log("      • mcp__aichaku-reviewer__get_standards");
-  console.log("      • mcp__aichaku-reviewer__analyze_project");
-  console.log("      • mcp__aichaku-reviewer__generate_documentation");
-  console.log("      • mcp__aichaku-reviewer__get_statistics");
-  console.log("      • mcp__aichaku-reviewer__create_doc_template");
+  console.log("   2. The MCP servers will be available:");
+
+  if (hasReviewer || hasOldReviewer) {
+    console.log("\n   📚 aichaku-reviewer tools:");
+    console.log("      • mcp__aichaku-reviewer__review_file");
+    console.log("      • mcp__aichaku-reviewer__review_methodology");
+    console.log("      • mcp__aichaku-reviewer__get_standards");
+    console.log("      • mcp__aichaku-reviewer__analyze_project");
+    console.log("      • mcp__aichaku-reviewer__generate_documentation");
+    console.log("      • mcp__aichaku-reviewer__get_statistics");
+    console.log("      • mcp__aichaku-reviewer__create_doc_template");
+  }
+
+  if (hasGithub) {
+    console.log("\n   🐙 github-operations tools:");
+    console.log("      • mcp__github-operations__auth_status");
+    console.log("      • mcp__github-operations__auth_login");
+    console.log("      • mcp__github-operations__release_upload");
+    console.log("      • mcp__github-operations__release_view");
+    console.log("      • mcp__github-operations__run_list");
+    console.log("      • mcp__github-operations__run_view");
+    console.log("      • mcp__github-operations__run_watch");
+    console.log("      • mcp__github-operations__repo_view");
+    console.log("      • mcp__github-operations__repo_list");
+    console.log("      • mcp__github-operations__version_info");
+    console.log("      • mcp__github-operations__version_check");
+  }
 }
 
 async function _checkMCPStatus(): Promise<void> {

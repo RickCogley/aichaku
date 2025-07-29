@@ -6,7 +6,7 @@
  * The |> safe filter is used to output raw values without escaping.
  */
 
-export const VERSION = "0.36.1";
+export const VERSION = "0.36.2";
 
 export const BUILD_INFO = {
   buildDate: "2025-07-28T19:36:58.826Z",
@@ -15,7 +15,7 @@ export const BUILD_INFO = {
   versionComponents: {
     major: 0,
     minor: 36,
-    patch: 1,
+    patch: 2,
     prerelease: null,
   },
 } as const;
@@ -31,16 +31,26 @@ export const APP_INFO = {
 } as const;
 export const APP_METADATA = {} as const;
 export const RELEASE_NOTES = {
-  "version": "0.36.1",
-  "date": "2025-07-28",
+  "version": "0.36.2",
+  "date": "2025-07-29",
   "added": [],
   "changed": [
-    "bump version to 0.36.0 (1d4656a)",
+    "ConfigManager now supports multiple methodologies with array format",
+    "MCP --config now detects multi-server structure",
+    "Learn --list now shows methodology codes",
   ],
-  "deprecated": [],
-  "removed": [],
+  "deprecated": [
+    "help command - use 'learn' instead",
+  ],
+  "removed": [
+    "docs-standard command - use 'standards' instead",
+  ],
   "fixed": [
-    "include config-manager.ts in publish to resolve JSR exclusion error (81422e3)",
+    "Methodology commands now read/write correct config locations",
+    "Standards command no longer shows 'parse error' incorrectly",
+    "MCP --config can now find both aichaku-reviewer and github-operations",
+    "Learn --compare now shows methodology comparison table correctly",
+    "Help command now forwards to learn with deprecation notice",
   ],
   "security": [],
 } as const;

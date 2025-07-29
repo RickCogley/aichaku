@@ -1,8 +1,8 @@
 {
-  "version": "0.35.7",
+  "version": "0.36.1",
   "installedAt": "2025-07-17T05:45:12.083Z",
   "installationType": "local",
-  "lastUpgrade": "2025-07-20T05:15:48.702Z",
+  "lastUpgrade": "2025-07-28T23:07:05.793Z",
   "standards": {
     "version": "0.31.3",
     "selected": [
@@ -23,6 +23,12 @@
     "customStandards": {}
   },
   "methodologies": {
-    "selected": ["shape-up"]
+    "selected": [
+      "shape-up"
+    ]
+  },
+  "project": {
+    "methodology": "lean",
+    "lastUpdated": "2025-07-28T23:12:38.019Z"
   }
 }

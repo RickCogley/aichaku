@@ -12,6 +12,7 @@ import { ensureAichakuDirs, getAichakuPaths, getUserStandardPath, isPathSafe } f
 import { safeReadDir, safeReadTextFile, safeRemove } from "../utils/path-security.ts";
 import { resolveProjectPath } from "../utils/project-paths.ts";
 import { type ContentMetadata, discoverContent, type DiscoveredContent } from "../utils/dynamic-content-discovery.ts";
+import { createProjectConfigManager } from "../utils/config-manager.ts";
 
 /**
  * Represents a development standard or guideline
@@ -465,110 +466,83 @@ async function searchStandards(query: string): Promise<void> {
  * Show standards selected for current project
  */
 async function showProjectStandards(projectPath?: string): Promise<void> {
-  const configPath = getProjectConfigPath(projectPath);
+  try {
+    const validatedProjectPath = projectPath ? resolveProjectPath(projectPath) : Deno.cwd();
+    const configManager = createProjectConfigManager(validatedProjectPath);
 
-  if (!(await exists(configPath))) {
-    console.log("\n🪴 Aichaku: No standards configured for this project");
-    console.log("Run 'aichaku standards --select' to choose standards");
-    return;
-  }
+    // Try to load existing config
+    try {
+      await configManager.load();
+    } catch {
+      console.log("\n🪴 Aichaku: No configuration found for this project");
+      console.log("Run 'aichaku init' to initialize project with standards selection");
+      return;
+    }
 
-  const config = await loadProjectConfig(configPath);
+    const selectedStandards = configManager.getStandards();
 
-  if (config.selected.length === 0) {
-    console.log("\n🪴 Aichaku: No standards selected for this project");
-    console.log("\n💡 To get started:");
-    console.log(
-      "   • Run 'aichaku standards --list' to see available standards",
-    );
-    console.log(
-      "   • Run 'aichaku standards --search <term>' to find specific standards",
-    );
-    console.log("   • Run 'aichaku standards --add <id>' to select standards");
-    console.log("\nExample: aichaku standards --add owasp-web,15-factor,tdd");
-    return;
-  }
+    if (selectedStandards.length === 0) {
+      console.log("\n🪴 Aichaku: No standards selected for this project");
+      console.log("\n💡 To get started:");
+      console.log(
+        "   • Run 'aichaku standards --list' to see available standards",
+      );
+      console.log(
+        "   • Run 'aichaku standards --search <term>' to find specific standards",
+      );
+      console.log("   • Run 'aichaku standards --add <id>' to select standards");
+      console.log("\nExample: aichaku standards --add owasp-web,15-factor,tdd");
+      return;
+    }
 
-  console.log("\n🪴 Aichaku: Project Standards Configuration\n");
-  console.log(`Selected standards (${config.selected.length}):\n`);
+    console.log("\n🪴 Aichaku: Project Standards Configuration\n");
+    console.log(`Selected standards (${selectedStandards.length}):\n`);
 
-  for (const standardId of config.selected) {
-    // Handle custom standards
-    if (standardId.startsWith("custom:")) {
-      const customId = standardId.replace("custom:", "");
-      const customStandard = config.customStandards?.[customId];
-
-      if (customStandard) {
-        console.log(`• ${standardId}: ${customStandard.name}`);
-        console.log(`  ${customStandard.description}`);
-        console.log(
-          `  📁 Source: ${formatPathForDisplay(customStandard.path)}`,
-        );
-
-        // Check if the custom standard file still exists
-        try {
-          if (!(await exists(customStandard.path))) {
-            console.log(
-              `  ⚠️  Warning: Custom standard file not found at source path`,
-            );
-          }
-        } catch {
-          console.log(
-            `  ⚠️  Warning: Cannot verify custom standard file existence`,
-          );
+    for (const standardId of selectedStandards) {
+      // Handle custom standards
+      if (standardId.startsWith("custom:")) {
+        const customId = standardId.replace("custom:", "");
+        console.log(`• ${standardId} (custom standard)`);
+        console.log(`  ℹ️  Custom standards support coming soon`);
+      } else {
+        // Handle built-in standards
+        const standard = await findStandard(standardId);
+        if (standard) {
+          console.log(`• ${standardId}: ${standard.name}`);
+          console.log(`  ${standard.description}`);
+        } else {
+          console.log(`• ${standardId} (unknown built-in standard)`);
+          console.log(`  ⚠️  Warning: Standard not found in available standards`);
         }
-      } else {
-        console.log(`• ${standardId} (custom - metadata missing)`);
-        console.log(`  ⚠️  Warning: Custom standard metadata not found`);
-      }
-    } else {
-      // Handle built-in standards
-      const standard = await findStandard(standardId);
-      if (standard) {
-        console.log(`• ${standardId}: ${standard.name}`);
-        console.log(`  ${standard.description}`);
-      } else {
-        console.log(`• ${standardId} (unknown built-in standard)`);
-        console.log(`  ⚠️  Warning: Standard not found in available standards`);
       }
     }
-  }
 
-  if (
-    config.customStandards && Object.keys(config.customStandards).length > 0
-  ) {
-    console.log("\nCustom standards:");
-    for (const [id, custom] of Object.entries(config.customStandards)) {
-      console.log(`• ${id}: ${custom.name}`);
-      console.log(`  ${custom.description}`);
-      console.log(`  Path: ${custom.path}`);
+    // Check integration status and provide options
+    const claudeMdPath = join(validatedProjectPath, "CLAUDE.md");
+    const claudeExists = await exists(claudeMdPath);
+    const needsIntegration = !claudeExists ||
+      (claudeExists &&
+        !(await safeReadTextFile(claudeMdPath, validatedProjectPath)).includes(
+          "AICHAKU:STANDARDS",
+        ));
+
+    console.log(`\n💡 What you can do:`);
+    if (needsIntegration) {
+      console.log(
+        `   • Run 'aichaku integrate' to ${claudeExists ? "update" : "create"} CLAUDE.md with these standards`,
+      );
     }
-  }
-
-  // Check integration status and provide options
-  const validatedProjectPath = projectPath ? resolveProjectPath(projectPath) : Deno.cwd();
-  const claudeMdPath = join(validatedProjectPath, "CLAUDE.md");
-  const claudeExists = await exists(claudeMdPath);
-  const needsIntegration = !claudeExists ||
-    (claudeExists &&
-      !(await safeReadTextFile(claudeMdPath, validatedProjectPath)).includes(
-        "AICHAKU:STANDARDS",
-      ));
-
-  console.log(`\n💡 What you can do:`);
-  if (needsIntegration) {
+    console.log(`   • Run 'aichaku standards --add <id>' to add more standards`);
+    console.log(`   • Run 'aichaku standards --remove <id>' to remove standards`);
     console.log(
-      `   • Run 'aichaku integrate' to ${claudeExists ? "update" : "create"} CLAUDE.md with these standards`,
+      `   • Run 'aichaku standards --search <term>' to find specific standards`,
     );
+    console.log(
+      `   • Run 'aichaku standards --list --categories' to browse all available standards`,
+    );
+  } catch (error) {
+    console.error(`❌ Failed to show project standards: ${error instanceof Error ? error.message : "Unknown error"}`);
   }
-  console.log(`   • Run 'aichaku standards --add <id>' to add more standards`);
-  console.log(`   • Run 'aichaku standards --remove <id>' to remove standards`);
-  console.log(
-    `   • Run 'aichaku standards --search <term>' to find specific standards`,
-  );
-  console.log(
-    `   • Run 'aichaku standards --list --categories' to browse all available standards`,
-  );
 }
 
 /**
@@ -584,82 +558,87 @@ async function addStandards(
     : standardIds.includes(",")
     ? standardIds.split(",").map((s) => s.trim())
     : [standardIds];
-  const configPath = getProjectConfigPath(projectPath);
-  const config = await loadProjectConfig(configPath);
 
-  console.log("\n🪴 Aichaku: Adding standards to project...\n");
+  try {
+    const validatedProjectPath = projectPath ? resolveProjectPath(projectPath) : Deno.cwd();
+    const configManager = createProjectConfigManager(validatedProjectPath);
 
-  let added = 0;
-  for (const id of ids) {
-    // Normalize the ID to handle both old and new formats
-    const normalizedId = normalizeStandardId(id);
-
-    if (config.selected.includes(normalizedId)) {
-      console.log(`⚠️  ${id} already selected`);
-      continue;
+    // Try to load existing config
+    try {
+      await configManager.load();
+    } catch {
+      // Initialize if no config exists
+      await configManager.initializeDefault();
     }
 
-    // Check if it's a custom standard (prefixed with "custom:")
-    if (id.startsWith("custom:")) {
-      const customResult = await addCustomStandard(id, config);
-      if (customResult.success) {
-        config.selected.push(id);
-        console.log(`✅ Added custom standard ${id}: ${customResult.name}`);
-        console.log(`   📁 Source: ${customResult.source}`);
-        added++;
-      } else {
-        console.log(
-          `❌ Failed to add custom standard ${id}: ${customResult.error}`,
-        );
+    const currentStandards = configManager.getStandards();
+
+    console.log("\n🪴 Aichaku: Adding standards to project...\n");
+
+    let added = 0;
+    for (const id of ids) {
+      // Normalize the ID to handle both old and new formats
+      const normalizedId = normalizeStandardId(id);
+
+      if (currentStandards.includes(normalizedId)) {
+        console.log(`⚠️  ${id} already selected`);
+        continue;
       }
-      continue;
+
+      // Check if it's a custom standard (prefixed with "custom:")
+      if (id.startsWith("custom:")) {
+        console.log(`ℹ️  Custom standards support coming soon: ${id}`);
+        continue;
+      }
+
+      // Handle built-in standards
+      const standard = await findStandard(id);
+      if (!standard) {
+        console.log(`❌ Unknown standard: ${id}`);
+        console.log(
+          `   💡 Use 'aichaku standards --list' to see available standards`,
+        );
+        console.log(`   💡 Use 'custom:my-standard' for custom standards`);
+        continue;
+      }
+
+      // Store the normalized ID
+      currentStandards.push(normalizedId);
+      console.log(`✅ Added ${normalizedId}: ${standard.name}`);
+      added++;
     }
 
-    // Handle built-in standards
-    const standard = await findStandard(id);
-    if (!standard) {
-      console.log(`❌ Unknown standard: ${id}`);
+    if (!dryRun && added > 0) {
+      await configManager.setStandards(currentStandards);
       console.log(
-        `   💡 Use 'aichaku standards --list' to see available standards`,
+        `\n✅ Updated project configuration (${currentStandards.length} standards)`,
       );
-      console.log(`   💡 Use 'custom:my-standard' for custom standards`);
-      continue;
+
+      // Provide comprehensive next steps
+      console.log(
+        `\n📋 You now have ${currentStandards.length} standards selected`,
+      );
+      console.log(`\n💡 What you can do next:`);
+      console.log(
+        `   • Run 'aichaku integrate' to apply these standards to CLAUDE.md`,
+      );
+      console.log(
+        `   • Run 'aichaku standards --show' to review your selections`,
+      );
+      console.log(
+        `   • Run 'aichaku standards --add <id>' to add more standards`,
+      );
+      console.log(
+        `   • Run 'aichaku standards --remove <id>' to remove standards`,
+      );
+      console.log(
+        `   • Run 'aichaku standards --list' to see all available standards`,
+      );
+    } else if (dryRun) {
+      console.log("\n[Dry run - no changes made]");
     }
-
-    // Store the normalized ID
-    config.selected.push(normalizedId);
-    console.log(`✅ Added ${normalizedId}: ${standard.name}`);
-    added++;
-  }
-
-  if (!dryRun && added > 0) {
-    await saveProjectConfig(configPath, config);
-    console.log(
-      `\n✅ Updated project configuration (${config.selected.length} standards)`,
-    );
-
-    // Provide comprehensive next steps
-    console.log(
-      `\n📋 You now have ${config.selected.length} standards selected`,
-    );
-    console.log(`\n💡 What you can do next:`);
-    console.log(
-      `   • Run 'aichaku integrate' to apply these standards to CLAUDE.md`,
-    );
-    console.log(
-      `   • Run 'aichaku standards --show' to review your selections`,
-    );
-    console.log(
-      `   • Run 'aichaku standards --add <id>' to add more standards`,
-    );
-    console.log(
-      `   • Run 'aichaku standards --remove <id>' to remove standards`,
-    );
-    console.log(
-      `   • Run 'aichaku standards --list' to see all available standards`,
-    );
-  } else if (dryRun) {
-    console.log("\n[Dry run - no changes made]");
+  } catch (error) {
+    console.error(`❌ Failed to add standards: ${error instanceof Error ? error.message : "Unknown error"}`);
   }
 }
 
@@ -676,62 +655,65 @@ async function removeStandards(
     : standardIds.includes(",")
     ? standardIds.split(",").map((s) => s.trim())
     : [standardIds];
-  const configPath = getProjectConfigPath(projectPath);
-  const config = await loadProjectConfig(configPath);
 
-  console.log("\n🪴 Aichaku: Removing standards from project...\n");
+  try {
+    const validatedProjectPath = projectPath ? resolveProjectPath(projectPath) : Deno.cwd();
+    const configManager = createProjectConfigManager(validatedProjectPath);
 
-  let removed = 0;
-  for (const id of ids) {
-    // Normalize the ID to handle both old and new formats
-    const normalizedId = normalizeStandardId(id);
-
-    const index = config.selected.indexOf(normalizedId);
-    if (index === -1) {
-      console.log(`⚠️  ${id} not selected`);
-      continue;
+    // Try to load existing config
+    try {
+      await configManager.load();
+    } catch {
+      console.log("\n🤴 Aichaku: No configuration found for this project");
+      return;
     }
 
-    // Remove from selected array
-    config.selected.splice(index, 1);
+    const currentStandards = configManager.getStandards();
 
-    // If it's a custom standard, also remove from customStandards metadata
-    if (id.startsWith("custom:") && config.customStandards) {
-      const customId = id.replace("custom:", "");
-      if (config.customStandards[customId]) {
-        delete config.customStandards[customId];
-        console.log(`✅ Removed custom standard ${id} and its metadata`);
-      } else {
-        console.log(`✅ Removed ${id} (metadata already cleaned)`);
+    console.log("\n🪴 Aichaku: Removing standards from project...\n");
+
+    let removed = 0;
+    for (const id of ids) {
+      // Normalize the ID to handle both old and new formats
+      const normalizedId = normalizeStandardId(id);
+
+      const index = currentStandards.indexOf(normalizedId);
+      if (index === -1) {
+        console.log(`⚠️  ${id} not selected`);
+        continue;
       }
-    } else {
+
+      // Remove from selected array
+      currentStandards.splice(index, 1);
       console.log(`✅ Removed ${id}`);
+
+      removed++;
     }
 
-    removed++;
-  }
-
-  if (!dryRun && removed > 0) {
-    await saveProjectConfig(configPath, config);
-    console.log(
-      `\n✅ Updated project configuration (${config.selected.length} standards remaining)`,
-    );
-
-    console.log(`\n💡 What you can do next:`);
-    if (config.selected.length > 0) {
+    if (!dryRun && removed > 0) {
+      await configManager.setStandards(currentStandards);
       console.log(
-        `   • Run 'aichaku integrate' to update CLAUDE.md with current standards`,
+        `\n✅ Updated project configuration (${currentStandards.length} standards remaining)`,
       );
+
+      console.log(`\n💡 What you can do next:`);
+      if (currentStandards.length > 0) {
+        console.log(
+          `   • Run 'aichaku integrate' to update CLAUDE.md with current standards`,
+        );
+        console.log(
+          `   • Run 'aichaku standards --show' to review remaining standards`,
+        );
+      }
+      console.log(`   • Run 'aichaku standards --add <id>' to add standards`);
       console.log(
-        `   • Run 'aichaku standards --show' to review remaining standards`,
+        `   • Run 'aichaku standards --search <term>' to find relevant standards`,
       );
+    } else if (dryRun) {
+      console.log("\n[Dry run - no changes made]");
     }
-    console.log(`   • Run 'aichaku standards --add <id>' to add standards`);
-    console.log(
-      `   • Run 'aichaku standards --search <term>' to find relevant standards`,
-    );
-  } else if (dryRun) {
-    console.log("\n[Dry run - no changes made]");
+  } catch (error) {
+    console.error(`❌ Failed to remove standards: ${error instanceof Error ? error.message : "Unknown error"}`);
   }
 }
 
