@@ -142,10 +142,10 @@
     // MD048 - Code fence style (consistent ``` vs ~~~)
     "MD048": { "style": "backtick" },
 
-    // MD049 - Emphasis style (consistent * vs _) - asterisk to match standards
-    "MD049": { "style": "asterisk" },
+    // MD049 - Emphasis style (consistent * vs _) - underscore to match deno fmt
+    "MD049": { "style": "underscore" },
 
-    // MD050 - Strong style (consistent ** vs __) - asterisk for strong
+    // MD050 - Strong style (consistent ** vs __) - asterisk to match deno fmt
     "MD050": { "style": "asterisk" },
 
     // MD051 - Link fragments should be valid (disabled for template fragments)
