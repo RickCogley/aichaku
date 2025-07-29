@@ -486,7 +486,7 @@ ${result.claudeMdReferences.map((ref) => `    Line ${ref.line}: "${ref.text}"`).
         silent: args.silent as boolean | undefined,
       };
 
-      const result = learn(learnOptions);
+      const result = await learn(learnOptions);
       if (!result.success) {
         console.error(`❌ ${result.message}`);
         Deno.exit(1);

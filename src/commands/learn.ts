@@ -73,10 +73,8 @@ export async function learn(options: LearnOptions = {}): Promise<LearnResult> {
   try {
     const paths = getAichakuPaths();
 
-    // Use development directory if running in development mode
-    const isJSR = import.meta.url.startsWith("https://jsr.io") ||
-      !import.meta.url.includes("/aichaku/");
-    const basePath = isJSR ? paths.global.root : Deno.cwd();
+    // Always use global path for reading methodology/standards content
+    const basePath = paths.global.root;
 
     // List all resources
     if (options.all) {
