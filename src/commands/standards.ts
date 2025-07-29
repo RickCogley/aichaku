@@ -501,7 +501,7 @@ async function showProjectStandards(projectPath?: string): Promise<void> {
     for (const standardId of selectedStandards) {
       // Handle custom standards
       if (standardId.startsWith("custom:")) {
-        const customId = standardId.replace("custom:", "");
+        const _customId = standardId.replace("custom:", "");
         console.log(`• ${standardId} (custom standard)`);
         console.log(`  ℹ️  Custom standards support coming soon`);
       } else {
@@ -1079,7 +1079,7 @@ needs - security, architecture, testing, and more.
  * Helper: Get project config path with security validation
  * InfoSec: Prevents path traversal attacks by validating normalized paths
  */
-function getProjectConfigPath(projectPath?: string): string {
+function _getProjectConfigPath(projectPath?: string): string {
   const _paths = getAichakuPaths();
   const base = resolve(projectPath || Deno.cwd());
 
@@ -1098,7 +1098,7 @@ function getProjectConfigPath(projectPath?: string): string {
 /**
  * Helper: Load project configuration with validation
  */
-async function loadProjectConfig(path: string): Promise<ProjectConfig> {
+async function _loadProjectConfig(path: string): Promise<ProjectConfig> {
   if (await exists(path)) {
     // Security: The path should already be validated by the caller,
     // but we'll ensure it's within the project directory
@@ -1154,7 +1154,7 @@ async function loadProjectConfig(path: string): Promise<ProjectConfig> {
  * Helper: Save project configuration with proper permissions
  * InfoSec: Sets appropriate file permissions for configuration files
  */
-async function saveProjectConfig(
+async function _saveProjectConfig(
   path: string,
   config: ProjectConfig,
 ): Promise<void> {
@@ -1245,7 +1245,7 @@ async function findStandard(id: string): Promise<Standard | null> {
 /**
  * Helper: Add a custom standard to project configuration
  */
-async function addCustomStandard(
+async function _addCustomStandard(
   customId: string,
   config: ProjectConfig,
 ): Promise<

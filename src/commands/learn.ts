@@ -204,8 +204,6 @@ async function findStandard(
   basePath: string,
   normalized: string,
 ): Promise<string | null> {
-  const standardsPath = join(basePath, "docs", "standards");
-
   // Direct matches
   const directMatches: Record<string, string> = {
     "owasp": "owasp-web",
@@ -233,7 +231,7 @@ async function findStandard(
     ) || "";
 
     if (itemName === standardName || fileName === standardName) {
-      return join(standardsPath, item.path);
+      return join(basePath, "docs", "standards", item.path);
     }
   }
 
@@ -555,7 +553,7 @@ async function compareMethodologies(basePath: string): Promise<LearnResult> {
       ).padEnd(16);
 
       content += `│ ${name} │ ${cadence} │ ${bestFor} │ ${keyPractice} │\n`;
-    } catch (error) {
+    } catch (_error) {
       // Add fallback row with item data
       const name = item.name.substring(0, 15).padEnd(15);
       const cadence = "Varies".padEnd(16);

@@ -249,7 +249,15 @@ async function configureMCPServer(): Promise<void> {
   }
 
   // Create MCP configuration for all installed servers
-  const mcpConfig: any = {
+  interface MCPConfig {
+    mcpServers: Record<string, {
+      command: string;
+      args: string[];
+      env: Record<string, string>;
+    }>;
+  }
+
+  const mcpConfig: MCPConfig = {
     mcpServers: {},
   };
 
@@ -382,7 +390,7 @@ async function checkCommand(command: string): Promise<boolean> {
     });
     const result = await cmd.output();
     return result.success;
-  } catch {
+  } catch (_error) {
     return false;
   }
 }
@@ -517,10 +525,10 @@ async function stopHTTPServer(): Promise<void> {
     await Deno.remove(pidFile);
 
     console.log("✅ MCP HTTP/SSE Server stopped");
-  } catch (error: unknown) {
+  } catch (error) {
     if (
       error && typeof error === "object" && "code" in error &&
-      error.code === "ENOENT"
+      (error as { code: string }).code === "ENOENT"
     ) {
       console.log("⚠️  MCP HTTP/SSE Server is not running");
     } else {
@@ -555,7 +563,7 @@ async function checkHTTPServerStatus(): Promise<void> {
       const health = await response.json();
       console.log(`   Active review sessions: ${health.sessions}`);
       console.log(`   Process ID: ${health.pid}`);
-    } catch {
+    } catch (_error) {
       // Ignore if health check fails
     }
 

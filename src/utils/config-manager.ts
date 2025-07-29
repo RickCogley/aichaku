@@ -123,7 +123,7 @@ export class ConfigManager {
     // Ensure directory exists
     try {
       await Deno.mkdir(this.aichakuDir, { recursive: true });
-    } catch {
+    } catch (_error) {
       // Directory already exists
     }
 
@@ -145,10 +145,10 @@ export class ConfigManager {
 
     // Clean up any legacy fields
     if (this.config.standards && "version" in this.config.standards) {
-      delete (this.config.standards as any).version;
+      delete (this.config.standards as { version?: string }).version;
     }
     if (this.config.project && "methodology" in this.config.project) {
-      delete (this.config.project as any).methodology;
+      delete (this.config.project as { methodology?: unknown }).methodology;
     }
 
     await this.save();
@@ -306,12 +306,35 @@ export class ConfigManager {
   /**
    * Migrate configuration to latest format
    */
-  private async migrateConfig(rawConfig: any): Promise<AichakuConfig> {
+  private migrateConfig(rawConfig: unknown): AichakuConfig {
+    const typedConfig = rawConfig as {
+      version?: string;
+      installedAt?: string;
+      installDate?: string;
+      installationType?: "global" | "local";
+      lastUpgrade?: string;
+      lastUpdated?: string;
+      methodologies?: {
+        selected?: string[];
+        default?: string;
+      };
+      standards?: {
+        selected?: string[];
+        development?: string[];
+        documentation?: string[];
+      };
+      project?: {
+        methodology?: string;
+        created?: string;
+        lastUpdated?: string;
+      };
+      config?: unknown;
+    };
     const config: AichakuConfig = {
-      version: rawConfig.version || "0.36.2",
-      installedAt: rawConfig.installedAt || rawConfig.installDate || new Date().toISOString(),
-      installationType: rawConfig.installationType || "local",
-      lastUpgrade: rawConfig.lastUpgrade || rawConfig.lastUpdated,
+      version: typedConfig.version || "0.36.2",
+      installedAt: typedConfig.installedAt || typedConfig.installDate || new Date().toISOString(),
+      installationType: (typedConfig.installationType || "local") as "global" | "local",
+      lastUpgrade: typedConfig.lastUpgrade || typedConfig.lastUpdated,
       methodologies: {
         selected: [],
       },
@@ -321,40 +344,40 @@ export class ConfigManager {
     };
 
     // Migrate methodologies
-    if (rawConfig.methodologies?.selected) {
-      config.methodologies!.selected = rawConfig.methodologies.selected;
-    } else if (rawConfig.project?.methodology) {
+    if (typedConfig.methodologies?.selected) {
+      config.methodologies!.selected = typedConfig.methodologies.selected;
+    } else if (typedConfig.project?.methodology) {
       // Migrate from old single methodology format
-      config.methodologies!.selected = [rawConfig.project.methodology];
+      config.methodologies!.selected = [typedConfig.project.methodology];
     }
 
     // Set default methodology
     if (config.methodologies!.selected.length > 0) {
-      config.methodologies!.default = rawConfig.methodologies?.default || config.methodologies!.selected[0];
+      config.methodologies!.default = typedConfig.methodologies?.default || config.methodologies!.selected[0];
     }
 
     // Migrate standards (remove version field)
-    if (rawConfig.standards?.selected) {
-      config.standards!.selected = rawConfig.standards.selected;
-    } else if (rawConfig.standards?.development || rawConfig.standards?.documentation) {
+    if (typedConfig.standards?.selected) {
+      config.standards!.selected = typedConfig.standards.selected;
+    } else if (typedConfig.standards?.development || typedConfig.standards?.documentation) {
       // Migrate from old split standards format
       config.standards!.selected = [
-        ...(rawConfig.standards.development || []),
-        ...(rawConfig.standards.documentation || []),
+        ...(typedConfig.standards.development || []),
+        ...(typedConfig.standards.documentation || []),
       ];
     }
 
     // Migrate project info
-    if (rawConfig.project) {
+    if (typedConfig.project) {
       config.project = {
-        created: rawConfig.project.created || rawConfig.installedAt,
-        lastUpdated: rawConfig.project.lastUpdated,
+        created: typedConfig.project.created || typedConfig.installedAt,
+        lastUpdated: typedConfig.project.lastUpdated,
       };
     }
 
     // Migrate config section if present
-    if (rawConfig.config) {
-      config.config = rawConfig.config;
+    if (typedConfig.config) {
+      config.config = typedConfig.config;
     }
 
     return config;

@@ -29,7 +29,7 @@ import { init } from "./src/commands/init.ts";
 import { upgrade } from "./src/commands/upgrade.ts";
 import { uninstall } from "./src/commands/uninstall.ts";
 import { integrate } from "./src/commands/integrate.ts";
-import { help } from "./src/commands/help.ts";
+import { help as _help } from "./src/commands/help.ts";
 import { learn } from "./src/commands/learn.ts";
 import { hooks } from "./src/commands/hooks.ts";
 import { standards } from "./src/commands/standards.ts";
