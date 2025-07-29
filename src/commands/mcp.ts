@@ -9,6 +9,7 @@ import { VERSION } from "../../version.ts";
 import { MCPProcessManager } from "../utils/mcp/process-manager.ts";
 import { MultiServerMCPManager } from "../utils/mcp/multi-server-manager.ts";
 import { isMCPServerRunning } from "../utils/mcp-http-client.ts";
+import { printFormatted } from "../utils/terminal-formatter.ts";
 
 export interface MCPOptions {
   install?: boolean;
@@ -81,40 +82,60 @@ export async function runMCPCommand(options: MCPOptions): Promise<void> {
 }
 
 function showMCPHelp(): void {
-  console.log(`
-🪴 Aichaku MCP (Model Context Protocol) Server
+  printFormatted(`
+# 🪴 Aichaku MCP - Model Context Protocol Integration
 
-The MCP server provides automated security and standards review for Claude Code.
+Provides automated security and standards review for Claude Code through MCP servers.
 
-Usage:
-  aichaku mcp [options]
+## Usage
+\`aichaku mcp [options]\`
 
-Options:
-  --install       Install all MCP servers
-  --install-aichaku-reviewer  Install Aichaku Code Reviewer
-  --install-github-operations Install GitHub Operations
-  --config        Show Claude Code configuration
-  --status        Check MCP server status (default)
-  --tools         List available MCP tools
-  --help          Show this help message
+## Options
 
-HTTP Bridge Server (for 'aichaku review' command):
-  --start-server  Start HTTP bridge server
-  --stop-server   Stop HTTP bridge server
-  --server-status Check bridge server status
+### Installation
+- **--install** - Install all MCP servers
+- **--install-aichaku-reviewer** - Install Aichaku Code Reviewer
+- **--install-github-operations** - Install GitHub Operations
 
-⚠️  IMPORTANT: Installing MCP servers does NOT make them available to Claude Code!
-   You must configure them in Claude Code's MCP system separately.
-   See: https://docs.anthropic.com/en/docs/claude-code/mcp
+### Configuration & Status
+- **--config** - Show Claude Code configuration
+- **--status** - Check MCP server status (default)
+- **--tools** - List available MCP tools
+- **--help** - Show this help message
 
-Examples:
-  aichaku mcp                   # Show status (default)
-  aichaku mcp --install         # Install all MCP servers
-  aichaku mcp --config          # Show Claude Code configuration
-  aichaku mcp --tools           # List available MCP tools
-  aichaku mcp --start-server    # Start HTTP bridge for 'aichaku review'
+### HTTP Bridge Server
+For the \`aichaku review\` command:
+- **--start-server** - Start HTTP bridge server
+- **--stop-server** - Stop HTTP bridge server
+- **--server-status** - Check bridge server status
 
-Learn more: https://github.com/RickCogley/aichaku/tree/main/mcp-server
+## Important Notes
+
+⚠️  **IMPORTANT**: Installing MCP servers does NOT make them available to Claude Code!
+You must configure them in Claude Code's MCP system separately.
+See: https://docs.anthropic.com/en/docs/claude-code/mcp
+
+## Examples
+
+\`\`\`bash
+# Show status (default)
+aichaku mcp
+
+# Install all MCP servers
+aichaku mcp --install
+
+# Show Claude Code configuration
+aichaku mcp --config
+
+# List available MCP tools
+aichaku mcp --tools
+
+# Start HTTP bridge for 'aichaku review'
+aichaku mcp --start-server
+\`\`\`
+
+## Learn More
+https://github.com/RickCogley/aichaku/tree/main/mcp-server
 `);
 }
 

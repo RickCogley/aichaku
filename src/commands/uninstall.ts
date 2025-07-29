@@ -1,6 +1,7 @@
 import { exists } from "jsr:@std/fs@1";
 import { join, resolve } from "jsr:@std/path@1";
 import { getAichakuPaths } from "../paths.ts";
+import { printFormatted } from "../utils/terminal-formatter.ts";
 
 interface UninstallOptions {
   global?: boolean;
@@ -25,38 +26,42 @@ interface UninstallResult {
  * @returns Promise with uninstall result
  */
 function showUninstallHelp(): void {
-  console.log(`
-🪴 Aichaku Uninstall - Remove Aichaku from your system
+  printFormatted(`
+# 🪴 Aichaku Uninstall - Remove Aichaku from your system
 
-Usage:
-  aichaku uninstall [options]
+## Usage
+\`aichaku uninstall [options]\`
 
-Options:
-  --global         Remove global Aichaku installation (~/.claude/aichaku)
-  --force          Force removal without confirmation
-  --dry-run        Show what would be removed without actually removing
-  --silent         Suppress output
-  --help           Show this help message
+## Options
+- **--global** - Remove global Aichaku installation (~/.claude/aichaku)
+- **--force** - Force removal without confirmation
+- **--dry-run** - Show what would be removed without actually removing
+- **--silent** - Suppress output
+- **--help** - Show this help message
 
-Examples:
-  # Remove global Aichaku installation
-  aichaku uninstall --global
+## Examples
 
-  # Remove local project Aichaku configuration
-  aichaku uninstall
+\`\`\`bash
+# Remove global Aichaku installation
+aichaku uninstall --global
 
-  # Preview what would be removed
-  aichaku uninstall --dry-run --global
+# Remove local project Aichaku configuration
+aichaku uninstall
 
-  # Force removal without confirmation
-  aichaku uninstall --global --force
+# Preview what would be removed
+aichaku uninstall --dry-run --global
 
-⚠️  WARNING: This will permanently remove Aichaku and all user customizations.
-   Consider backing up your customizations before uninstalling.
+# Force removal without confirmation
+aichaku uninstall --global --force
+\`\`\`
 
-User customizations are stored in:
-  • Global: ~/.claude/aichaku/user/
-  • Project: .claude/aichaku/user/
+## ⚠️  WARNING
+This will permanently remove Aichaku and all user customizations.
+Consider backing up your customizations before uninstalling.
+
+## User Customizations
+- **Global**: ~/.claude/aichaku/user/
+- **Project**: .claude/aichaku/user/
 `);
 }
 

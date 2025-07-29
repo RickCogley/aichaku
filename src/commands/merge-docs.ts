@@ -8,6 +8,7 @@ import { ensureDir } from "jsr:@std/fs@1";
 import { resolveProjectPath } from "../utils/project-paths.ts";
 import { safeReadTextFile } from "../utils/path-security.ts";
 import { Brand } from "../utils/branded-messages.ts";
+import { printFormatted } from "../utils/terminal-formatter.ts";
 
 interface MergeDocsOptions {
   /** Project path to search for documentation */
@@ -300,33 +301,43 @@ export async function mergeDocsCommand(args: string[]): Promise<void> {
  * Show help information
  */
 function showHelp(): void {
-  console.log(`
-🪴 Aichaku: Documentation Merge Command
+  printFormatted(`
+# 🪴 Aichaku Documentation Merge Command
 
 Merge documentation from completed projects into central documentation structure.
 
-USAGE:
-  aichaku merge-docs [OPTIONS]
+## Usage
+\`aichaku merge-docs [OPTIONS]\`
 
-OPTIONS:
-  -f, --force         Overwrite existing files
-  -n, --dry-run       Show what would be done without making changes
-  -s, --silent        Suppress output messages
-  -p, --project NAME  Merge specific project only
-      --path PATH     Project path (defaults to current directory)
-  -h, --help          Show this help message
+## Options
+- **-f, --force** - Overwrite existing files
+- **-n, --dry-run** - Show what would be done without making changes
+- **-s, --silent** - Suppress output messages
+- **-p, --project NAME** - Merge specific project only
+- **--path PATH** - Project path (defaults to current directory)
+- **-h, --help** - Show this help message
 
-EXAMPLES:
-  aichaku merge-docs                    # Merge all documentation
-  aichaku merge-docs --dry-run          # Preview merge plan
-  aichaku merge-docs --project done-2025-07-28-auth-feature
-  aichaku merge-docs --force            # Overwrite existing files
+## Examples
 
-BEHAVIOR:
-  - Scans docs/projects/done/ for completed projects
-  - Identifies documentation by filename patterns:
-    * tutorial-*.md → docs/tutorials/
-    * how-to-*.md → docs/how-to/
+\`\`\`bash
+# Merge all documentation
+aichaku merge-docs
+
+# Preview merge plan
+aichaku merge-docs --dry-run
+
+# Merge specific project
+aichaku merge-docs --project done-2025-07-28-auth-feature
+
+# Overwrite existing files
+aichaku merge-docs --force
+\`\`\`
+
+## Behavior
+- Scans **docs/projects/done/** for completed projects
+- Identifies documentation by filename patterns:
+  - **tutorial-*.md** → docs/tutorials/
+  - **how-to-*.md** → docs/how-to/
     * reference-*.md → docs/reference/
     * explanation-*.md → docs/explanation/
   - Adds merge metadata to each file

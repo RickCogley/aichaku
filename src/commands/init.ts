@@ -362,8 +362,51 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
       );
     }
 
-    // For project init, prompt for integration
+    // For project init, prompt for methodology selection
     if (!isGlobal && !options.silent) {
+      // First, prompt for methodology selection
+      console.log(
+        "\n📚 Which methodology would you like to use as default?",
+      );
+      console.log("   Available methodologies:");
+      console.log("   1. Shape Up (6-week cycles, complex features)");
+      console.log("   2. Scrum (2-4 week sprints, predictable delivery)");
+      console.log("   3. Kanban (Continuous flow, ongoing support)");
+      console.log("   4. Lean (MVP focus, new products)");
+      console.log("   5. XP (Code quality, pair programming)");
+      console.log("   6. Scrumban (Hybrid approach)");
+      console.log("\n[1-6, default=1]: ");
+
+      const methodologyBuf = new Uint8Array(1024);
+      const methodologyN = await Deno.stdin.read(methodologyBuf);
+      const methodologyChoice = new TextDecoder().decode(methodologyBuf.subarray(0, methodologyN || 0)).trim();
+
+      const methodologyMap: Record<string, string> = {
+        "1": "shape-up",
+        "2": "scrum",
+        "3": "kanban",
+        "4": "lean",
+        "5": "xp",
+        "6": "scrumban",
+      };
+
+      const selectedMethodology = methodologyMap[methodologyChoice] || "shape-up";
+
+      // Update the project metadata with the selected methodology
+      const projectMarkerPath = join(targetPath, "aichaku.json");
+      const projectMetadata = JSON.parse(await Deno.readTextFile(projectMarkerPath));
+      projectMetadata.methodologies = {
+        selected: [selectedMethodology],
+        default: selectedMethodology,
+      };
+      await Deno.writeTextFile(
+        projectMarkerPath,
+        JSON.stringify(projectMetadata, null, 2),
+      );
+
+      Brand.success(`Selected ${selectedMethodology} as default methodology`);
+
+      // Then prompt for CLAUDE.md integration
       console.log(
         "\n🤔 Would you like to add Aichaku to this project's CLAUDE.md?",
       );

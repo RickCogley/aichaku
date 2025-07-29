@@ -2,6 +2,7 @@ import { exists } from "jsr:@std/fs@1";
 import { join } from "jsr:@std/path@1";
 import { getAichakuPaths } from "../paths.ts";
 import { safeRemove } from "../utils/path-security.ts";
+import { printFormatted } from "../utils/terminal-formatter.ts";
 
 interface CleanupOptions {
   dryRun?: boolean;
@@ -103,29 +104,37 @@ export async function cleanup(
  * Show help information for the cleanup command
  */
 function showCleanupHelp(): void {
-  console.log(`
-🪴 Aichaku Cleanup - Remove legacy files
+  printFormatted(`
+# 🪴 Aichaku Cleanup - Remove legacy files
 
 Removes old Aichaku files from legacy locations (~/.claude/.aichaku.json and old
 methodology/standards directories) to keep your system clean.
 
-Usage:
-  aichaku cleanup [options]
+## Usage
+\`aichaku cleanup [options]\`
 
-Options:
-  -d, --dry-run     Preview what would be cleaned up without removing files
-  -s, --silent      Clean up silently with minimal output
-  -h, --help        Show this help message
+## Options
+- **-d, --dry-run** - Preview what would be cleaned up without removing files
+- **-s, --silent** - Clean up silently with minimal output
+- **-h, --help** - Show this help message
 
-Examples:
-  aichaku cleanup                # Clean up legacy files
-  aichaku cleanup --dry-run      # Preview what would be cleaned
-  aichaku cleanup --silent       # Clean up quietly
+## Examples
 
-Notes:
-  • Only removes files from legacy locations
-  • Does not affect current Aichaku installations
-  • Safe to run multiple times
-  • Shows detailed list of removed files
+\`\`\`bash
+# Clean up legacy files
+aichaku cleanup
+
+# Preview what would be cleaned
+aichaku cleanup --dry-run
+
+# Clean up quietly
+aichaku cleanup --silent
+\`\`\`
+
+## Notes
+- Only removes files from legacy locations
+- Does not affect current Aichaku installations
+- Safe to run multiple times
+- Shows detailed list of removed files
 `);
 }

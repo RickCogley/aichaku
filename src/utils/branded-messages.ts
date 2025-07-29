@@ -140,6 +140,21 @@ export class AichakuBrand {
   }
 
   /**
+   * Format and display branded help content with markdown formatting
+   * @param title - Command title (e.g., "MCP", "Integrate")
+   * @param description - Brief command description
+   * @param content - Main help content (usage, options, examples)
+   */
+  static showHelp(title: string, description: string, content: string): string {
+    return `
+🪴 Aichaku ${title}
+
+${description}
+
+${content}`;
+  }
+
+  /**
    * Project creation message
    * @param projectName - Name of project being created
    */

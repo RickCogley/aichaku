@@ -13,6 +13,7 @@ import { safeReadDir, safeReadTextFile, safeRemove } from "../utils/path-securit
 import { resolveProjectPath } from "../utils/project-paths.ts";
 import { type ContentMetadata, discoverContent, type DiscoveredContent } from "../utils/dynamic-content-discovery.ts";
 import { createProjectConfigManager } from "../utils/config-manager.ts";
+import { printFormatted } from "../utils/terminal-formatter.ts";
 
 /**
  * Represents a development standard or guideline
@@ -1009,65 +1010,74 @@ tags: ["custom", "organization"]
  * Show standards command help
  */
 function showStandardsHelp(): void {
-  console.log(`
-🪴 Aichaku Standards - Choose Your Guidance
+  printFormatted(`
+# 🪴 Aichaku Standards - Choose Your Guidance
 
-Usage:
-  aichaku standards [options]
+## Usage
+\`aichaku standards [options]\`
 
-Options:
-  --list              List all available standards
-  --categories        List standards grouped by category
-  --search <query>    Search standards by keyword
-  --show              Show standards selected for this project
-  --add <ids>         Add standards to project (comma-separated)
-  --remove <ids>      Remove standards from project
-  --select            Interactive selection (coming soon)
+## Options
 
-  Custom Standard Management:
-  --create-custom <name>       Create a new custom standard
-  --delete-custom <name>       Delete a custom standard
-  --edit-custom <name>         Edit a custom standard
-  --copy-custom <src> <target> Copy a custom standard
+### Browse & Manage
+- **--list** - List all available standards
+- **--categories** - List standards grouped by category
+- **--search <query>** - Search standards by keyword
+- **--show** - Show standards selected for this project
+- **--add <ids>** - Add standards to project (comma-separated)
+- **--remove <ids>** - Remove standards from project
+- **--select** - Interactive selection (coming soon)
 
-Examples:
-  # See all available standards
-  aichaku standards --list
+### Custom Standard Management
+- **--create-custom <name>** - Create a new custom standard
+- **--delete-custom <name>** - Delete a custom standard
+- **--edit-custom <name>** - Edit a custom standard
+- **--copy-custom <src> <target>** - Copy a custom standard
 
-  # Search for security standards
-  aichaku standards --search security
+## Examples
 
-  # Add built-in standards to your project
-  aichaku standards --add owasp-web,15-factor,tdd
+\`\`\`bash
+# See all available standards
+aichaku standards --list
 
-  # Add custom standards to your project
-  aichaku standards --add custom:my-company-guidelines
+# Search for security standards
+aichaku standards --search security
 
-  # Mix built-in and custom standards
-  aichaku standards --add owasp-web,custom:internal-standards
+# Add built-in standards to your project
+aichaku standards --add owasp-web,15-factor,tdd
 
-  # See what's selected
-  aichaku standards --show
+# Add custom standards to your project
+aichaku standards --add custom:my-company-guidelines
 
-  # Remove any standard (built-in or custom)
-  aichaku standards --remove pci-dss,custom:old-guidelines
+# Mix built-in and custom standards
+aichaku standards --add owasp-web,custom:internal-standards
 
-  # Create a custom standard
-  aichaku standards --create-custom "My Organization Style"
+# See what's selected
+aichaku standards --show
 
-  # Edit a custom standard
-  aichaku standards --edit-custom my-organization-style
+# Remove any standard (built-in or custom)
+aichaku standards --remove pci-dss,custom:old-guidelines
 
-  # Copy a custom standard
-  aichaku standards --copy-custom my-style company-wide-style
+# Create a custom standard
+aichaku standards --create-custom "My Organization Style"
+\`\`\`
 
-Custom Standards:
-  Custom standards are markdown files you create with your own
-  guidance. They should be placed in:
-  • ~/.claude/aichaku/user/standards/STANDARD-NAME.md
-  • ~/.claude/aichaku/standards/custom/STANDARD-NAME.md (legacy)
-  
-  Use the format: custom:standard-name (lowercase, hyphens allowed)
+# Edit a custom standard
+aichaku standards --edit-custom my-organization-style
+
+# Copy a custom standard
+aichaku standards --copy-custom my-style company-wide-style
+\`\`\`
+
+## Custom Standards
+
+Custom standards are markdown files you create with your own
+guidance. They should be placed in:
+- **~/.claude/aichaku/user/standards/STANDARD-NAME.md**
+- **~/.claude/aichaku/standards/custom/STANDARD-NAME.md** (legacy)
+
+Use the format: **custom:standard-name** (lowercase, hyphens allowed)
+
+## About Standards
 
 Standards provide modular guidance that Claude Code will follow
 when working on your project. Choose standards that match your

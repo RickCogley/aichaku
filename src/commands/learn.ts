@@ -10,6 +10,7 @@ import { discoverContent } from "../utils/dynamic-content-discovery.ts";
 import { safeReadTextFile } from "../utils/path-security.ts";
 import { Brand } from "../utils/branded-messages.ts";
 import { getAichakuPaths } from "../paths.ts";
+import { printFormatted } from "../utils/terminal-formatter.ts";
 
 interface LearnOptions {
   topic?: string;
@@ -536,10 +537,11 @@ async function compareMethodologies(basePath: string): Promise<LearnResult> {
 
   for (const item of discovered.items) {
     // The item already has the YAML path since we're discovering YAML files
+    // Item path is relative to methodologies directory, e.g., "shape-up/shape-up.yaml"
     const yamlPath = join(basePath, "docs", "methodologies", item.path);
 
     try {
-      const yamlContent = await safeReadTextFile(yamlPath, "");
+      const yamlContent = await Deno.readTextFile(yamlPath);
       const data = parseYaml(yamlContent) as MethodologyYaml;
 
       const name = (data.name || item.name).substring(0, 15).padEnd(15);
@@ -553,7 +555,10 @@ async function compareMethodologies(basePath: string): Promise<LearnResult> {
       ).padEnd(16);
 
       content += `│ ${name} │ ${cadence} │ ${bestFor} │ ${keyPractice} │\n`;
-    } catch (_error) {
+    } catch (error) {
+      // Log the error for debugging
+      console.error(`Failed to read YAML for ${item.name}:`, error);
+
       // Add fallback row with item data
       const name = item.name.substring(0, 15).padEnd(15);
       const cadence = "Varies".padEnd(16);
@@ -615,42 +620,54 @@ async function listAllResources(basePath: string): Promise<LearnResult> {
 }
 
 function showDefaultHelp(): LearnResult {
-  return {
-    success: true,
-    content: `${Brand.helpIntro()}
+  const helpContent = `# ${Brand.helpIntro()}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Learn about methodologies and development standards to improve your workflow with Claude Code.
 
-Learn about methodologies and development standards to improve
-your workflow with Claude Code.
+## 📚 Development Methodologies
 
-📚 Development Methodologies
-  aichaku learn shape-up       Learn about Shape Up
-  aichaku learn scrum          Learn about Scrum
-  aichaku learn --methodologies  See all methodologies
-  aichaku learn --compare      Compare methodologies
+\`\`\`bash
+aichaku learn shape-up          # Learn about Shape Up
+aichaku learn scrum             # Learn about Scrum
+aichaku learn --methodologies   # See all methodologies
+aichaku learn --compare         # Compare methodologies
+\`\`\`
 
-🛡️ Standards & Best Practices
-  aichaku learn owasp-web      Learn OWASP Top 10
-  aichaku learn tdd            Learn Test-Driven Development
-  aichaku learn --standards    See all standards
-  aichaku learn --category security  Security standards
+## 🛡️ Standards & Best Practices
 
-📋 Browse Everything
-  aichaku learn --all          List all resources
+\`\`\`bash
+aichaku learn owasp-web         # Learn OWASP Top 10
+aichaku learn tdd               # Learn Test-Driven Development
+aichaku learn --standards       # See all standards
+aichaku learn --category security  # Security standards
+\`\`\`
 
-💡 How It Works with Claude Code
-  Say "let's shape a feature"    → Activates Shape Up mode
-  Say "check for OWASP issues"   → Reviews security risks
-  Say "help me TDD this"         → Guides test-first approach
+## 📋 Browse Everything
+
+\`\`\`bash
+aichaku learn --all             # List all resources
+\`\`\`
+
+## 💡 How It Works with Claude Code
+
+- Say **"let's shape a feature"** → Activates Shape Up mode
+- Say **"check for OWASP issues"** → Reviews security risks  
+- Say **"help me TDD this"** → Guides test-first approach
 
 ✨ All content dynamically loaded from YAML configurations!
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📍 Looking for CLI commands?
-   Run 'aichaku --help' to see all available commands
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 
-📖 Docs: https://github.com/RickCogley/aichaku`,
+📍 **Looking for CLI commands?**  
+Run \`aichaku --help\` to see all available commands
+
+📖 **Docs:** https://github.com/RickCogley/aichaku
+`;
+
+  printFormatted(helpContent);
+
+  return {
+    success: true,
+    content: "", // Content already printed
   };
 }

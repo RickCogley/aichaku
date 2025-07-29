@@ -7,6 +7,7 @@ import { exists } from "@std/fs";
 import { resolve } from "@std/path";
 import { callMCPTool } from "../utils/mcp-client.ts";
 import { getSharedMCPClient, isMCPServerRunning } from "../utils/mcp-http-client.ts";
+import { printFormatted } from "../utils/terminal-formatter.ts";
 
 /**
  * Options for the review command
@@ -282,37 +283,41 @@ async function showStatistics(): Promise<void> {
 }
 
 function showReviewHelp(): void {
-  console.log(`
-🪴 Aichaku Review - Automated code review via MCP
+  printFormatted(`
+# 🪴 Aichaku Review - Automated code review via MCP
 
 Triggers security and standards review for specified files using the 
 Aichaku MCP server.
 
-Usage:
-  aichaku review <file1> [file2] ...
-  aichaku review --file <path>
-  aichaku review --stats
+## Usage
+\`aichaku review <file1> [file2] ...\`
+\`aichaku review --file <path>\`
+\`aichaku review --stats\`
 
-Options:
-  --file <path>  Review a specific file
-  --stats        Show review statistics for current session
-  --help         Show this help message
+## Options
+- **--file <path>** - Review a specific file
+- **--stats** - Show review statistics for current session
+- **--help** - Show this help message
 
-Examples:
-  # Review a single file
-  aichaku review src/main.ts
+## Examples
 
-  # Review multiple files
-  aichaku review src/main.ts src/utils.ts README.md
+\`\`\`bash
+# Review a single file
+aichaku review src/main.ts
 
-  # Review using option syntax
-  aichaku review --file src/main.ts
+# Review multiple files
+aichaku review src/main.ts src/utils.ts README.md
 
-  # Show session statistics
-  aichaku review --stats
+# Review using option syntax
+aichaku review --file src/main.ts
 
-Note: The MCP server must be running. Start it with:
-  aichaku mcp --start
+# Show session statistics
+aichaku review --stats
+\`\`\`
+
+## Note
+The MCP server must be running. Start it with:
+\`aichaku mcp --start\`
 `);
 }
 

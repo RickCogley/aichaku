@@ -22,10 +22,6 @@ export interface AichakuConfig {
     selected: string[];
     customStandards?: Record<string, unknown>;
   };
-  project?: {
-    created?: string;
-    lastUpdated?: string;
-  };
   config?: {
     outputPath?: string;
     enableHooks?: boolean;
@@ -105,9 +101,6 @@ export class ConfigManager {
       standards: {
         selected: [],
       },
-      project: {
-        created: new Date().toISOString(),
-      },
     };
     await this.save();
   }
@@ -147,9 +140,6 @@ export class ConfigManager {
     if (this.config.standards && "version" in this.config.standards) {
       delete (this.config.standards as { version?: string }).version;
     }
-    if (this.config.project && "methodology" in this.config.project) {
-      delete (this.config.project as { methodology?: unknown }).methodology;
-    }
 
     await this.save();
   }
@@ -168,9 +158,6 @@ export class ConfigManager {
       },
       standards: {
         selected: [],
-      },
-      project: {
-        created: new Date().toISOString(),
       },
     };
   }
@@ -227,10 +214,6 @@ export class ConfigManager {
       methodologies: {
         selected: methodologies,
         default: methodologies[0],
-      },
-      project: {
-        ...config.project,
-        lastUpdated: new Date().toISOString(),
       },
     });
   }
@@ -367,13 +350,7 @@ export class ConfigManager {
       ];
     }
 
-    // Migrate project info
-    if (typedConfig.project) {
-      config.project = {
-        created: typedConfig.project.created || typedConfig.installedAt,
-        lastUpdated: typedConfig.project.lastUpdated,
-      };
-    }
+    // Skip migrating project info - no longer needed
 
     // Migrate config section if present
     if (typedConfig.config) {

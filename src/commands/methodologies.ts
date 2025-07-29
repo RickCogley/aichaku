@@ -10,6 +10,7 @@ import { join } from "jsr:@std/path@1";
 import { safeReadTextFile } from "../utils/path-security.ts";
 import { resolveProjectPath } from "../utils/project-paths.ts";
 import { createProjectConfigManager } from "../utils/config-manager.ts";
+import { printFormatted } from "../utils/terminal-formatter.ts";
 
 /**
  * Represents a development methodology
@@ -396,11 +397,7 @@ async function addMethodologies(
     } catch {
       // Create new configuration if none exists
       const defaultConfig = createProjectConfigManager(validatedProjectPath);
-      await defaultConfig.update({
-        project: {
-          created: new Date().toISOString(),
-        },
-      });
+      await defaultConfig.update({});
       // Re-load the config manager to get the updated configuration
       configManager = createProjectConfigManager(validatedProjectPath);
       await configManager.load();
@@ -586,54 +583,63 @@ async function resetMethodologies(
  * Show methodologies command help
  */
 function showMethodologiesHelp(): void {
-  console.log(`
-🪴 Aichaku Methodologies - Choose Your Development Approach
+  printFormatted(`
+# 🪴 Aichaku Methodologies - Choose Your Development Approach
 
-Usage:
-  aichaku methodologies [options]
+Select and manage development methodologies to provide focused context for Claude Code.
 
-Options:
-  --list              List all available methodologies
-  --search <query>    Search methodologies by keyword
-  --show              Show methodology selected for this project
-  --add <ids>         Add methodologies to project (comma-separated)
-  --remove <ids>      Remove methodologies from project
-  --set <ids>         Set specific methodologies (replaces current)
-  --reset             Reset to default methodology (shape-up)
+## Usage
+\`aichaku methodologies [options]\`
 
-Examples:
-  # See all available methodologies
-  aichaku methodologies --list
+## Options
+- **--list** - List all available methodologies
+- **--search <query>** - Search methodologies by keyword
+- **--show** - Show methodology selected for this project
+- **--add <ids>** - Add methodologies to project (comma-separated)
+- **--remove <ids>** - Remove methodologies from project
+- **--set <ids>** - Set specific methodologies (replaces current)
+- **--reset** - Reset to default methodology (shape-up)
+- **select** - Interactive methodology selection (default)
 
-  # Search for agile methodologies
-  aichaku methodologies --search agile
+## Examples
 
-  # Set primary methodology for solo development
-  aichaku methodologies --set shape-up
+\`\`\`bash
+# Interactive selection (default)
+aichaku methodologies select
 
-  # Set methodology for team development
-  aichaku methodologies --set scrum
+# See all available methodologies
+aichaku methodologies --list
 
-  # See what's currently active
-  aichaku methodologies --show
+# Search for agile methodologies
+aichaku methodologies --search agile
 
-  # Remove current methodology
-  aichaku methodologies --remove scrum
+# Set primary methodology for solo development
+aichaku methodologies --set shape-up
 
-  # Reset to default
-  aichaku methodologies --reset
+# Set methodology for team development
+aichaku methodologies --set scrum
 
-Context Optimization:
-  • Each methodology adds ~1500 tokens to agent context
-  • Focused methodology selection reduces context bloat
-  • Agents load only relevant guidance for active methodologies
-  • Better performance and more targeted advice
+# See what's currently active
+aichaku methodologies --show
 
-Methodologies provide focused guidance that agents will use when
-working on your project. Choose methodologies that match your
-team size, project type, and development approach.
+# Remove current methodology
+aichaku methodologies --remove scrum
 
-After selecting methodologies, run 'aichaku integrate' to update
-your CLAUDE.md with the selected methodology context.
+# Reset to default
+aichaku methodologies --reset
+\`\`\`
+
+## Context Optimization
+- Each methodology adds ~1500 tokens to agent context
+- Focused methodology selection reduces context bloat
+- Agents load only relevant guidance for active methodologies
+- Better performance and more targeted advice
+
+## How It Works
+Methodologies provide focused guidance that agents will use when working on your project. 
+Choose methodologies that match your team size, project type, and development approach.
+
+After selecting methodologies, run \`aichaku integrate\` to update your CLAUDE.md with 
+the selected methodology context.
 `);
 }

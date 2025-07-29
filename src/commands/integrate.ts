@@ -14,6 +14,7 @@ import { assembleYamlConfig } from "../utils/yaml-config-reader.ts";
 import { discoverContent } from "../utils/dynamic-content-discovery.ts";
 import { getAichakuPaths } from "../paths.ts";
 import { generateMethodologyAwareAgents } from "../utils/agent-generator.ts";
+import { printFormatted } from "../utils/terminal-formatter.ts";
 
 // Type definitions
 interface ProjectStandardsConfig {
@@ -323,7 +324,6 @@ export async function integrate(
   const allSelectedStandards = await loadProjectStandards(projectPath);
   const {
     developmentStandards: selectedStandards,
-    documentationStandards: selectedDocStandards,
   } = separateStandardsByType(allSelectedStandards);
 
   // Load selected methodologies from project or global config
@@ -342,7 +342,7 @@ export async function integrate(
     paths: configPaths,
     selectedMethodologies,
     selectedStandards,
-    selectedDocStandards,
+    selectedDocStandards: [], // Explicitly exclude doc standards from CLAUDE.md
   });
 
   // Note: methodology quick reference is now included in the main yamlConfig
@@ -357,11 +357,12 @@ export async function integrate(
       `  - Core directives (behavioral, visual, file organization, diagrams)`,
     );
     console.log(`  - ${selectedMethodologies.length} methodologies`);
-    if (allSelectedStandards.length > 0) {
+    if (selectedStandards.length > 0) {
       console.log(
-        `  - ${allSelectedStandards.length} total standards (${selectedStandards.length} development + ${selectedDocStandards.length} documentation)`,
+        `  - ${selectedStandards.length} development standards`,
       );
     }
+    console.log(`  - Methodology-aware agents for code assistance`);
     return {
       success: true,
       path: claudeMdPath,
@@ -422,11 +423,11 @@ export async function integrate(
       agentPrefix: "aichaku-",
     });
 
-    const standardsMsg = allSelectedStandards.length > 0
-      ? ` with ${allSelectedStandards.length} standards (${selectedStandards.length} development + ${selectedDocStandards.length} documentation)`
-      : "";
+    const standardsMsg = selectedStandards.length > 0 ? ` with ${selectedStandards.length} development standards` : "";
 
-    const agentsMsg = agentResult.generated > 0 ? ` and ${agentResult.generated} methodology-aware agents` : "";
+    const agentsMsg = agentResult.generated > 0
+      ? ` and ${agentResult.generated} custom agents for code assistance`
+      : "";
 
     const restartMsg = agentResult.generated > 0
       ? "\n\n🔄 Restart Claude Code to load new agents: Press Ctrl+C and restart"
@@ -500,32 +501,46 @@ async function _checkFileExists(path: string): Promise<boolean> {
  * Show help information for the integrate command
  */
 function showIntegrateHelp(): void {
-  console.log(`
-🪴 Aichaku Integrate - Add Aichaku to project's CLAUDE.md
+  printFormatted(`
+# 🪴 Aichaku Integrate - Add Aichaku to project's CLAUDE.md
 
 Integrates Aichaku configuration-as-code into your project's CLAUDE.md file,
-providing Claude Code with methodology guidance and project standards.
+providing Claude Code with methodology guidance, project standards, and custom agents.
 
-Usage:
-  aichaku integrate [options]
+## Usage
+\`aichaku integrate [options]\`
 
-Options:
-  -p, --project-path <path>  Project path (default: current directory)
-  -f, --force               Force integration even if already exists
-  -s, --silent              Integrate silently with minimal output
-  -d, --dry-run             Preview what would be integrated without applying changes
-  -h, --help                Show this help message
+## Options
+- **-p, --project-path <path>** - Project path (default: current directory)
+- **-f, --force** - Force integration even if already exists
+- **-s, --silent** - Integrate silently with minimal output
+- **-d, --dry-run** - Preview what would be integrated without applying changes
+- **-h, --help** - Show this help message
 
-Examples:
-  aichaku integrate                       # Integrate in current project
-  aichaku integrate --project-path /path  # Integrate in specific project
-  aichaku integrate --dry-run             # Preview integration changes
-  aichaku integrate --force               # Force re-integration
+## Examples
 
-Notes:
-  • Automatically detects selected methodologies and standards
-  • Generates configuration-as-code YAML blocks
-  • Preserves existing CLAUDE.md content
-  • Creates backup before making changes
+\`\`\`bash
+# Integrate in current project
+aichaku integrate
+
+# Integrate in specific project
+aichaku integrate --project-path /path
+
+# Preview integration changes
+aichaku integrate --dry-run
+
+# Force re-integration
+aichaku integrate --force
+\`\`\`
+
+## What It Does
+- Automatically detects selected methodologies and standards
+- Generates configuration-as-code YAML blocks
+- Creates custom agents based on your selected methodologies
+- Preserves existing CLAUDE.md content
+- Requires Claude Code restart after adding agents
+
+## Next Steps
+After integration, restart Claude Code to load the new agents and configuration.
 `);
 }
