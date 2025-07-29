@@ -235,7 +235,22 @@ function getStandardsStructure(): Record<string, unknown> {
       "dora.md": "",
     },
     "security": {
-      "nist-csf.md": "",
+      "nist-csf.md": `# NIST Cybersecurity Framework (CSF 2.0)
+
+## Overview
+The NIST Cybersecurity Framework provides guidance for organizations to manage and reduce cybersecurity risks.
+
+## Core Functions
+- **Govern**: Establish governance and risk management
+- **Identify**: Understand risks to systems and data
+- **Protect**: Implement safeguards for critical services
+- **Detect**: Identify cybersecurity events
+- **Respond**: Take action on detected incidents
+- **Recover**: Restore capabilities after incidents
+
+## Implementation with Claude Code
+When implementing NIST CSF practices, consider using automated controls and code-based policies to ensure consistent application of security measures.
+`,
       "owasp-web.md": "",
     },
     "testing": {
