@@ -5,6 +5,28 @@ All notable changes to aichaku (愛着) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.36.2] - 2025-07-29
+
+### Changed
+
+- remove references to deleted docs-standard command (1158427)
+- reformat all markdown files to use underscore emphasis (366604a)
+- simplify markdown formatting to align with deno fmt defaults (0575336)
+- add implementation summary and status for v0.36.2 release (8b436e3)
+- bump version to 0.36.2 with release notes (4f4350a)
+- add v0.36.0 features and GitHub Pages fix documentation (6778d69)
+
+### Fixed
+
+- update nagare config for simplified formatting and exclude test file (a8cb7b5)
+- resolve linting errors preventing build (b4d17c2)
+- complete remaining v0.36.2 bugfixes (e449697)
+- complete Phase 3-6 of v0.36.2 bugfixes (7caa1a5)
+- complete Phase 1 and partial Phase 2 of v0.36.2 bugfixes (65f892c)
+- convert remaining docs/ links to absolute GitHub URLs (e8d6bca)
+- add Jekyll config to exclude docs directory from GitHub Pages processing (0bbe2bd)
+- convert relative links to absolute GitHub URLs for Pages compatibility (fec7f3c)
+
 ## [0.36.1] - 2025-07-28
 
 ### Changed
