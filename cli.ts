@@ -499,8 +499,9 @@ ${result.claudeMdReferences.map((ref) => `    Line ${ref.line}: "${ref.text}"`).
     }
 
     case "learn": {
-      // Parse topic from remaining args
-      const topic = args._[1]?.toString();
+      // Parse topic from remaining args - join all words for multi-word topics
+      const topicParts = args._.slice(1).map((arg) => arg.toString());
+      const topic = topicParts.length > 0 ? topicParts.join(" ") : undefined;
 
       const learnOptions = {
         topic,

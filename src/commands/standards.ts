@@ -1035,7 +1035,6 @@ function showStandardsHelp(): void {
 
 ## Examples
 
-\`\`\`bash
 # See all available standards
 aichaku standards --list
 
@@ -1059,14 +1058,12 @@ aichaku standards --remove pci-dss,custom:old-guidelines
 
 # Create a custom standard
 aichaku standards --create-custom "My Organization Style"
-\`\`\`
 
 # Edit a custom standard
 aichaku standards --edit-custom my-organization-style
 
 # Copy a custom standard
 aichaku standards --copy-custom my-style company-wide-style
-\`\`\`
 
 ## Custom Standards
 

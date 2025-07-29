@@ -72,7 +72,13 @@ export function formatForTerminal(
     (_, content) => colors.bold + content + colors.reset,
   );
 
-  // Code blocks and inline code
+  // Remove code blocks with triple backticks (including language specifier)
+  formatted = formatted.replace(
+    /```[\w]*\n([\s\S]*?)```/g,
+    (_, content) => content.trim(),
+  );
+
+  // Remove inline code blocks with single backticks
   formatted = formatted.replace(
     /`(.+?)`/g,
     (_, content) => colors.cyan + content + colors.reset,

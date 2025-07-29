@@ -6,7 +6,7 @@
 import { parse as parseYaml } from "jsr:@std/yaml@1";
 import { exists } from "jsr:@std/fs@1";
 import { join } from "jsr:@std/path@1";
-import { discoverContent } from "../utils/dynamic-content-discovery.ts";
+import { type ContentMetadata, discoverContent } from "../utils/dynamic-content-discovery.ts";
 import { safeReadTextFile } from "../utils/path-security.ts";
 import { Brand } from "../utils/branded-messages.ts";
 import { getAichakuPaths } from "../paths.ts";
@@ -216,6 +216,10 @@ async function findStandard(
     "nistcyber": "nist-csf",
     "domaindriven": "ddd",
     "domaindrivendesign": "ddd",
+    "testpyramid": "test-pyramid",
+    "cleanarchitecture": "clean-arch",
+    "cleanarch": "clean-arch",
+    "googlestyle": "google-style",
   };
 
   const standardName = directMatches[normalized] || normalized;
@@ -223,16 +227,32 @@ async function findStandard(
   // Try to discover all standards and find a match
   const discovered = await discoverContent("standards", basePath, true);
 
-  for (const item of discovered.items) {
+  // Build flat list to support numeric lookup
+  const allStandards: Array<{ item: ContentMetadata; path: string }> = [];
+  for (const items of Object.values(discovered.categories)) {
+    for (const item of items) {
+      allStandards.push({ item, path: item.path });
+    }
+  }
+
+  // Check by number (1-based index)
+  const num = parseInt(normalized);
+  if (!isNaN(num) && num >= 1 && num <= allStandards.length) {
+    const { path } = allStandards[num - 1];
+    return join(basePath, "docs", "standards", path);
+  }
+
+  // Check by name match
+  for (const { item, path } of allStandards) {
     // Check if the standard name matches
     const itemName = item.name.toLowerCase().replace(/[\s-_]/g, "");
-    const fileName = item.path.split("/").pop()?.replace(".yaml", "").toLowerCase().replace(
+    const fileName = path.split("/").pop()?.replace(".yaml", "").toLowerCase().replace(
       /[\s-_]/g,
       "",
     ) || "";
 
     if (itemName === standardName || fileName === standardName) {
-      return join(basePath, "docs", "standards", item.path);
+      return join(basePath, "docs", "standards", path);
     }
   }
 
@@ -457,40 +477,57 @@ async function listStandards(basePath: string): Promise<LearnResult> {
   const discovered = await discoverContent("standards", basePath, true);
   let content = `${Brand.PREFIX} Available Standards\n\n`;
 
+  // Build a flat list with indices for easy reference
+  const allStandards: Array<{ item: ContentMetadata; category: string; code: string }> = [];
+
   for (const [category, items] of Object.entries(discovered.categories)) {
-    if (items.length === 0) continue;
-
-    content += `${category.toUpperCase()}\n`;
-    content += `${"─".repeat(category.length + 10)}\n`;
-
     for (const item of items) {
-      // Try to read YAML for icon
-      const yamlPath = join(
-        basePath,
-        "docs",
-        "standards",
-        item.path.replace(".md", ".yaml"),
-      );
-      let icon = "📋";
-
-      if (await exists(yamlPath)) {
-        try {
-          const yamlContent = await safeReadTextFile(yamlPath, "");
-          const data = parseYaml(yamlContent) as StandardYaml;
-          icon = data.display?.icon || icon;
-        } catch {
-          // Ignore errors
-        }
-      }
-
-      const standardName = item.name.replace(category + "/", "");
-      content += `  ${icon} ${standardName.padEnd(20)} - ${item.description}\n`;
+      const code = item.path.split("/").pop()?.replace(".md", "") || "";
+      allStandards.push({ item, category, code });
     }
-    content += "\n";
   }
 
-  content += `📝 Get help using: aichaku learn <standard-name>\n`;
-  content += `✨ Use standards to guide Claude Code's development approach!`;
+  // Display by category with global numbering
+  let index = 1;
+  let currentCategory = "";
+
+  for (const { item, category, code } of allStandards) {
+    if (category !== currentCategory) {
+      if (currentCategory) content += "\n";
+      content += `${category.toUpperCase()}\n`;
+      content += `${"─".repeat(category.length + 10)}\n`;
+      currentCategory = category;
+    }
+
+    // Try to read YAML for icon
+    const yamlPath = join(
+      basePath,
+      "docs",
+      "standards",
+      item.path.replace(".md", ".yaml"),
+    );
+    let icon = "📋";
+
+    if (await exists(yamlPath)) {
+      try {
+        const yamlContent = await safeReadTextFile(yamlPath, "");
+        const data = parseYaml(yamlContent) as StandardYaml;
+        icon = data.display?.icon || icon;
+      } catch {
+        // Ignore errors
+      }
+    }
+
+    const standardName = item.name.replace(category + "/", "");
+    content += `  ${index}. ${icon} ${standardName} (${code})`.padEnd(40) + ` - ${item.description}\n`;
+    index++;
+  }
+
+  content += `\n📝 Get help using:\n`;
+  content += `  • Number: aichaku learn 1\n`;
+  content += `  • Name: aichaku learn "test pyramid"\n`;
+  content += `  • Code: aichaku learn test-pyramid\n`;
+  content += `\n✨ Use standards to guide Claude Code's development approach!`;
 
   return {
     success: true,
@@ -530,46 +567,41 @@ async function compareMethodologies(basePath: string): Promise<LearnResult> {
   let content = `${Brand.PREFIX} Methodology Comparison
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-┌─────────────────┬──────────────────┬─────────────────┬──────────────────┐
-│ Methodology     │ Cadence          │ Best For        │ Key Practice     │
-├─────────────────┼──────────────────┼─────────────────┼──────────────────┤
 `;
 
+  let index = 1;
   for (const item of discovered.items) {
-    // The item already has the YAML path since we're discovering YAML files
-    // Item path is relative to methodologies directory, e.g., "shape-up/shape-up.yaml"
     const yamlPath = join(basePath, "docs", "methodologies", item.path);
 
     try {
       const yamlContent = await Deno.readTextFile(yamlPath);
       const data = parseYaml(yamlContent) as MethodologyYaml;
 
-      const name = (data.name || item.name).substring(0, 15).padEnd(15);
-      const cadence = (data.summary?.cycle_length || "Varies").substring(0, 16)
-        .padEnd(16);
-      const bestFor = (data.summary?.best_for || "General").substring(0, 15)
-        .padEnd(15);
-      const keyPractice = (data.summary?.key_concepts?.[0] || "").substring(
-        0,
-        16,
-      ).padEnd(16);
+      const name = data.name || item.name;
+      const cadence = data.summary?.cycle_length || "Varies";
+      const bestFor = data.summary?.best_for || "General use";
+      const keyPractice = data.summary?.key_concepts?.[0] || "See details";
 
-      content += `│ ${name} │ ${cadence} │ ${bestFor} │ ${keyPractice} │\n`;
+      content += `${index}. ${name}\n`;
+      content += `   📅 Cadence: ${cadence}\n`;
+      content += `   ✅ Best for: ${bestFor}\n`;
+      content += `   🎯 Key practice: ${keyPractice}\n\n`;
+
+      index++;
     } catch (error) {
       // Log the error for debugging
       console.error(`Failed to read YAML for ${item.name}:`, error);
 
-      // Add fallback row with item data
-      const name = item.name.substring(0, 15).padEnd(15);
-      const cadence = "Varies".padEnd(16);
-      const bestFor = "General".padEnd(15);
-      const keyPractice = "See details".padEnd(16);
+      content += `${index}. ${item.name}\n`;
+      content += `   📅 Cadence: Varies\n`;
+      content += `   ✅ Best for: General use\n`;
+      content += `   🎯 Key practice: See details\n\n`;
 
-      content += `│ ${name} │ ${cadence} │ ${bestFor} │ ${keyPractice} │\n`;
+      index++;
     }
   }
 
-  content += `└─────────────────┴──────────────────┴─────────────────┴──────────────────┘`;
+  content += `💡 Get detailed info: aichaku learn <methodology-name or number>`;
 
   return {
     success: true,
@@ -589,17 +621,21 @@ async function listAllResources(basePath: string): Promise<LearnResult> {
 
   let index = 1;
   for (const item of methodologies.items) {
-    content += `  ${index}. ${item.name.padEnd(18)} - ${item.description}\n`;
+    const code = item.path.split("/")[0]; // Get directory name as code
+    content += `  ${index}. ${item.name} (${code})`.padEnd(35) + ` - ${item.description}\n`;
     index++;
   }
 
   content += `\n🛡️ Standards & Best Practices (${standards.count})\n`;
 
+  // Continue numbering for standards
   for (const [category, items] of Object.entries(standards.categories)) {
     if (items.length > 0) {
       content += `\n${category.toUpperCase()}\n`;
       for (const item of items) {
-        content += `  • ${item.name} - ${item.description}\n`;
+        const code = item.path.split("/").pop()?.replace(".md", "") || "";
+        content += `  ${index}. ${item.name} (${code})`.padEnd(35) + ` - ${item.description}\n`;
+        index++;
       }
     }
   }
@@ -607,9 +643,10 @@ async function listAllResources(basePath: string): Promise<LearnResult> {
   content += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   
 📖 Learn More:
-  • Specific methodology: aichaku learn shape-up
-  • Specific standard: aichaku learn owasp-web
-  • Compare approaches: aichaku learn --compare
+  • By number: aichaku learn 1
+  • By name: aichaku learn "shape up" or aichaku learn "test pyramid" 
+  • By code: aichaku learn shape-up or aichaku learn test-pyramid
+  • Compare: aichaku learn --compare
   
 ✨ Dynamic content loaded from YAML configuration files!`;
 
@@ -626,27 +663,21 @@ Learn about methodologies and development standards to improve your workflow wit
 
 ## 📚 Development Methodologies
 
-\`\`\`bash
 aichaku learn shape-up          # Learn about Shape Up
 aichaku learn scrum             # Learn about Scrum
 aichaku learn --methodologies   # See all methodologies
 aichaku learn --compare         # Compare methodologies
-\`\`\`
 
 ## 🛡️ Standards & Best Practices
 
-\`\`\`bash
 aichaku learn owasp-web         # Learn OWASP Top 10
 aichaku learn tdd               # Learn Test-Driven Development
 aichaku learn --standards       # See all standards
 aichaku learn --category security  # Security standards
-\`\`\`
 
 ## 📋 Browse Everything
 
-\`\`\`bash
 aichaku learn --all             # List all resources
-\`\`\`
 
 ## 💡 How It Works with Claude Code
 
