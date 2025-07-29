@@ -277,6 +277,13 @@ async function showStatistics(): Promise<void> {
     } else {
       console.error("Failed to get statistics");
     }
+
+    // Ensure the child process is terminated
+    try {
+      child.kill();
+    } catch {
+      // Ignore errors if process already exited
+    }
   } catch (error) {
     console.error("Error fetching statistics:", error);
   }

@@ -43,6 +43,7 @@ import { cleanup } from "./src/commands/cleanup.ts";
 import { VERSION } from "./mod.ts";
 import { displayVersionWarning } from "./src/utils/version-checker.ts";
 import { Brand } from "./src/utils/branded-messages.ts";
+import { printFormatted } from "./src/utils/terminal-formatter.ts";
 
 const args = parseArgs(Deno.args, {
   boolean: [
@@ -169,117 +170,121 @@ if (command && !["version", "help", "init"].includes(command)) {
 
 // Show help only if no command or general help requested
 if (!command || (args.help && !command)) {
-  console.log(`
-${Brand.PREFIX} (愛着) - Adaptive Methodology Support for Claude Code
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Version ${VERSION} | MIT License | github.com/RickCogley/aichaku
+  const helpContent = `# ${Brand.PREFIX} (愛着) - Adaptive Methodology Support
+
+**Version ${VERSION}** | MIT License | [github.com/RickCogley/aichaku](https://github.com/RickCogley/aichaku)
 
 Bringing affection (愛着) to your development workflow by adapting
 methodologies to how YOU naturally work. Say "sprint" → get Scrum.
 Say "shape" → get Shape Up. It's that simple!
 
-Usage:
-  aichaku <command> [options]
+## Usage
+\`aichaku <command> [options]\`
 
-Commands:
-  init        Initialize Aichaku (global: install, project: setup)
-  upgrade     Upgrade methodologies to latest version
-  uninstall   Remove Aichaku from your system
-  integrate   Add Aichaku reference to project's CLAUDE.md
-  help        Show methodology information and guidance (deprecated - use learn)
-  learn       Learn about methodologies and standards (dynamically from YAML)
-  hooks       Manage Claude Code hooks for automation
-  standards   Choose modular guidance standards for your project
-  methodologies Choose development methodologies for focused context
-  docs:lint   Lint documentation against selected standards
-  mcp         Manage MCP (Model Context Protocol) server for code review
-  review      Review files using MCP server (seamless hook integration)
-  github      GitHub operations via MCP (releases, workflows, repos)
-  migrate     Migrate from old ~/.claude/ to new ~/.claude/aichaku/ structure
-  merge-docs  Merge completed project documentation back to central docs
+## Commands
 
-Options:
-  -g, --global     Apply to global installation (~/.claude)
-  -p, --path       Project path (default: ./.claude)
-  -f, --force      Force overwrite existing files
-  -s, --silent     Silent mode - minimal output
-  -d, --dry-run    Preview changes without applying them
-  -c, --check      Check for updates without installing
-  -h, --help       Show this help message
-  -v, --version    Show version number
+### Getting Started
+- **init** - Initialize Aichaku (global: install, project: setup)
+- **upgrade** - Upgrade methodologies to latest version
+- **uninstall** - Remove Aichaku from your system
+- **integrate** - Add Aichaku reference to project's CLAUDE.md
 
-Examples:
-  # Initialize in current project
-  aichaku init
+### Learning & Configuration
+- **learn** - Learn about methodologies and standards (dynamically from YAML)
+- **methodologies** - Choose development methodologies for focused context
+- **standards** - Choose modular guidance standards for your project
+- **hooks** - Manage Claude Code hooks for automation
 
-  # Initialize globally for all projects
-  aichaku init --global
+### Development Tools
+- **mcp** - Manage MCP (Model Context Protocol) server for code review
+- **review** - Review files using MCP server (seamless hook integration)
+- **github** - GitHub operations via MCP (releases, workflows, repos)
+- **docs:lint** - Lint documentation against selected standards
 
-  # Check for updates
-  aichaku upgrade --check
+### Maintenance
+- **migrate** - Migrate from old ~/.claude/ to new ~/.claude/aichaku/ structure
+- **merge-docs** - Merge completed project documentation back to central docs
+- **cleanup** - Clean up legacy files
 
-  # Upgrade to latest version
-  aichaku upgrade
+## Options
+- **-g, --global** - Apply to global installation (~/.claude)
+- **-p, --path** - Project path (default: ./.claude)
+- **-f, --force** - Force overwrite existing files
+- **-s, --silent** - Silent mode - minimal output
+- **-d, --dry-run** - Preview changes without applying them
+- **-c, --check** - Check for updates without installing
+- **-h, --help** - Show this help message
+- **-v, --version** - Show version number
 
-  # Learn about methodologies & standards
-  aichaku learn
-  aichaku learn shape-up
-  aichaku learn owasp-web
-  aichaku learn --methodologies
-  aichaku learn --standards
-  
-  # Install and configure MCP server
-  aichaku mcp --install
-  aichaku mcp --config
-  aichaku help --all
+## Examples
 
-  # Remove Aichaku
-  aichaku uninstall
+### Getting Started
+\`\`\`bash
+# Initialize in current project
+aichaku init
 
-  # Clean up legacy files
-  aichaku cleanup
+# Initialize globally for all projects
+aichaku init --global
 
-  # Add Aichaku to project's CLAUDE.md
-  aichaku integrate
+# Add Aichaku to project's CLAUDE.md
+aichaku integrate
+\`\`\`
 
-  # Manage Claude Code hooks
-  aichaku hooks --list
-  aichaku hooks --install basic
+### Learning & Configuration
+\`\`\`bash
+# Learn about methodologies & standards
+aichaku learn
+aichaku learn shape-up
+aichaku learn owasp-web
+aichaku learn --methodologies
+aichaku learn --standards
 
-  # Choose standards for your project
-  aichaku standards --list
-  aichaku standards --add owasp-web,15-factor
+# Choose methodologies for focused context
+aichaku methodologies --list
+aichaku methodologies --set shape-up
 
-  # Choose methodologies for focused context
-  aichaku methodologies --list
-  aichaku methodologies --set shape-up
+# Choose standards for your project
+aichaku standards --list
+aichaku standards --add owasp-web,15-factor
+\`\`\`
 
+### Development Tools
+\`\`\`bash
+# Install and configure MCP server
+aichaku mcp --install
+aichaku mcp --config
 
-  # Lint documentation files
-  aichaku docs:lint
-  aichaku docs:lint README.md docs/
-  aichaku docs:lint --standards diataxis,google-style
+# Review code files with MCP
+aichaku review src/main.ts
+aichaku review --stats
 
-  # Review code files with MCP
-  aichaku review src/main.ts
-  aichaku review --stats
+# GitHub operations
+aichaku github release upload dist/*
+aichaku github run list
+\`\`\`
 
-  # GitHub operations
-  aichaku github release upload dist/*
-  aichaku github run list
+### Maintenance
+\`\`\`bash
+# Check for updates
+aichaku upgrade --check
 
-  # Migrate to new folder structure
-  aichaku migrate
-  aichaku migrate --dry-run
-  aichaku migrate --project .
+# Upgrade to latest version
+aichaku upgrade
 
-  # Merge completed project docs
-  aichaku merge-docs
-  aichaku merge-docs --project-name done-2025-07-14-my-feature
-  aichaku merge-docs --dry-run
+# Clean up legacy files
+aichaku cleanup
 
-Learn more: https://github.com/RickCogley/aichaku
-`);
+# Remove Aichaku
+aichaku uninstall
+
+# Migrate to new folder structure
+aichaku migrate --dry-run
+\`\`\`
+
+Learn more: [github.com/RickCogley/aichaku](https://github.com/RickCogley/aichaku)
+`;
+
+  printFormatted(helpContent);
   Deno.exit(0);
 }
 

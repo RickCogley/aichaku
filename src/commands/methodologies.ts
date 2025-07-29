@@ -226,22 +226,28 @@ export async function methodologies(options: MethodologiesOptions = {}): Promise
  * List all available methodologies
  */
 function listMethodologies(): void {
-  console.log("\n🪴 Aichaku: Available Methodologies\n");
+  const content = [`# 🪴 Aichaku Methodologies - Development Approaches\n`];
+  content.push(
+    `Select from ${Object.keys(AVAILABLE_METHODOLOGIES).length} proven methodologies to guide your workflow.\n`,
+  );
 
+  let index = 1;
   for (const [id, methodology] of Object.entries(AVAILABLE_METHODOLOGIES)) {
-    console.log(`• ${id}: ${methodology.name}`);
-    console.log(`  ${methodology.description}`);
-    console.log(`  Best for: ${methodology.bestFor}`);
-    console.log(`  Team size: ${methodology.teamSize}`);
-    console.log(`  Key principles: ${methodology.principles.slice(0, 3).join(", ")}...`);
-    console.log();
+    content.push(`## ${index}. ${methodology.name} (\`${id}\`)\n`);
+    content.push(`${methodology.description}\n`);
+    content.push(`- **Best for:** ${methodology.bestFor}`);
+    content.push(`- **Team size:** ${methodology.teamSize}`);
+    content.push(`- **Key principles:** ${methodology.principles.slice(0, 3).join(", ")}...\n`);
+    index++;
   }
 
-  console.log("💡 Usage tips:");
-  console.log("   • Use 'aichaku methodologies --add shape-up' for focused context");
-  console.log("   • Multiple methodologies can be active simultaneously");
-  console.log("   • Each active methodology adds ~1500 tokens to agent context");
-  console.log("   • Run 'aichaku methodologies --show' to see current selection");
+  content.push(`## 💡 Usage Tips\n`);
+  content.push(`- Use \`aichaku methodologies --add shape-up\` for focused context`);
+  content.push(`- Multiple methodologies can be active simultaneously`);
+  content.push(`- Each active methodology adds ~1500 tokens to agent context`);
+  content.push(`- Run \`aichaku methodologies --show\` to see current selection`);
+
+  printFormatted(content.join("\n"));
 }
 
 /**
@@ -291,49 +297,55 @@ async function showProjectMethodologies(projectPath?: string): Promise<void> {
     try {
       await configManager.load();
     } catch {
-      console.log("\n🪴 Aichaku: No configuration found for this project");
-      console.log("Run 'aichaku init' to initialize project with methodology selection");
+      printFormatted(`# 🪴 Aichaku: No Configuration Found
+
+This project hasn't been initialized with Aichaku yet.
+
+Run \`aichaku init\` to initialize project with methodology selection.`);
       return;
     }
 
     const activeMethodologies = configManager.getMethodologies();
     const defaultMethodology = configManager.getDefaultMethodology();
 
-    console.log("\n🪴 Aichaku: Project Methodology Configuration\n");
+    const content = [`# 🪴 Aichaku: Project Methodology Configuration\n`];
 
     if (!activeMethodologies || activeMethodologies.length === 0) {
-      console.log("No methodologies currently selected for this project\n");
-      console.log("💡 To get started:");
-      console.log("   • Run 'aichaku methodologies --list' to see available methodologies");
-      console.log("   • Run 'aichaku methodologies --add <id>' to select a methodology");
-      console.log("   • Run 'aichaku methodologies --set shape-up' for solo development");
-      console.log("\nExample: aichaku methodologies --add shape-up");
+      content.push(`No methodologies currently selected for this project.\n`);
+      content.push(`## 💡 To Get Started\n`);
+      content.push(`- Run \`aichaku methodologies --list\` to see available methodologies`);
+      content.push(`- Run \`aichaku methodologies --add <id>\` to select a methodology`);
+      content.push(`- Run \`aichaku methodologies --set shape-up\` for solo development\n`);
+      content.push(`**Example:** \`aichaku methodologies --add shape-up\``);
+      printFormatted(content.join("\n"));
       return;
     }
 
     // Show active methodologies
-    console.log(`Active methodologies: ${activeMethodologies.join(", ")}`);
+    content.push(`**Active methodologies:** ${activeMethodologies.join(", ")}`);
     if (defaultMethodology) {
-      console.log(`Default methodology: ${defaultMethodology}`);
+      content.push(`**Default methodology:** ${defaultMethodology}`);
     }
-    console.log();
+    content.push(``);
 
     // Show details for each methodology
+    let index = 1;
     for (const methodologyId of activeMethodologies) {
       const methodology = AVAILABLE_METHODOLOGIES[methodologyId];
       if (methodology) {
-        console.log(`• ${methodologyId}: ${methodology.name}`);
-        console.log(`  Description: ${methodology.description}`);
-        console.log(`  Best for: ${methodology.bestFor}`);
-        console.log(`  Team size: ${methodology.teamSize}`);
-        console.log(`  Key principles:`);
+        content.push(`## ${index}. ${methodology.name} (\`${methodologyId}\`)\n`);
+        content.push(`${methodology.description}\n`);
+        content.push(`- **Best for:** ${methodology.bestFor}`);
+        content.push(`- **Team size:** ${methodology.teamSize}`);
+        content.push(`- **Key principles:**`);
         methodology.principles.forEach((principle) => {
-          console.log(`    - ${principle}`);
+          content.push(`  - ${principle}`);
         });
-        console.log();
+        content.push(``);
+        index++;
       } else {
-        console.log(`• ${methodologyId} (unknown methodology)`);
-        console.log(`  ⚠️  Warning: Methodology not found in available methodologies\n`);
+        content.push(`## ⚠️ ${methodologyId} (Unknown Methodology)\n`);
+        content.push(`Warning: Methodology not found in available methodologies\n`);
       }
     }
 
@@ -346,15 +358,17 @@ async function showProjectMethodologies(projectPath?: string): Promise<void> {
           "AICHAKU:",
         ));
 
-    console.log(`\n💡 What you can do:`);
+    content.push(`## 💡 What You Can Do\n`);
     if (needsIntegration) {
-      console.log(
-        `   • Run 'aichaku integrate' to ${claudeExists ? "update" : "create"} CLAUDE.md with this methodology`,
+      content.push(
+        `- Run \`aichaku integrate\` to ${claudeExists ? "update" : "create"} CLAUDE.md with this methodology`,
       );
     }
-    console.log(`   • Run 'aichaku methodologies --add <id>' to add additional methodologies`);
-    console.log(`   • Run 'aichaku methodologies --set <id>' to change to a different methodology`);
-    console.log(`   • Run 'aichaku methodologies --search <term>' to find specific methodologies`);
+    content.push(`- Run \`aichaku methodologies --add <id>\` to add additional methodologies`);
+    content.push(`- Run \`aichaku methodologies --set <id>\` to change to a different methodology`);
+    content.push(`- Run \`aichaku methodologies --search <term>\` to find specific methodologies`);
+
+    printFormatted(content.join("\n"));
   } catch (error) {
     console.error(
       `❌ Failed to show project methodologies: ${error instanceof Error ? error.message : "Unknown error"}`,

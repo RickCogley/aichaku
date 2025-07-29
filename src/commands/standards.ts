@@ -299,85 +299,104 @@ export async function standards(options: StandardsOptions = {}): Promise<void> {
  * List all available standards (including custom standards)
  */
 async function listStandards(byCategory: boolean = false): Promise<void> {
-  console.log("\n🪴 Aichaku: Available Standards\n");
+  const content = [`# 🪴 Aichaku Standards - Development & Security Guidelines\n`];
 
   // Get dynamically discovered standards
   const discovered = await getDiscoveredStandards();
 
+  // Build a flat list with indices for easy reference
+  const allStandards: Array<{ id: string; item: ContentMetadata; category: string }> = [];
+
+  for (const [categoryId, items] of Object.entries(discovered.categories)) {
+    for (const item of items) {
+      // Remove both .md and .yaml extensions
+      const id = item.path.split("/").pop()?.replace(/\.(md|yaml)$/, "") || "";
+      allStandards.push({ id, item, category: categoryId });
+    }
+  }
+
+  // Sort alphabetically by ID
+  allStandards.sort((a, b) => a.id.localeCompare(b.id));
+
   if (byCategory) {
-    // List by category
-    for (const [categoryId, items] of Object.entries(discovered.categories)) {
-      const categoryName = categoryId.replace(/-/g, " ")
-        .replace(/\b\w/g, (c) => c.toUpperCase()) + " Standards";
+    // Group by category for display
+    const categorized: Record<string, Array<{ id: string; item: ContentMetadata }>> = {};
 
-      console.log(`${categoryName}`);
-      console.log(`  ${categoryName} and best practices\n`);
-
-      for (const item of items) {
-        const standardId = item.path.split("/").pop()?.replace(".md", "") || "";
-        console.log(`  • ${standardId}: ${item.name}`);
-        console.log(`    ${item.description}`);
-        console.log(`    Tags: ${item.tags.join(", ")}`);
+    for (const { id, item, category } of allStandards) {
+      if (!categorized[category]) {
+        categorized[category] = [];
       }
-      console.log();
+      categorized[category].push({ id, item });
+    }
+
+    let globalIndex = 1;
+    for (const [categoryId, standards] of Object.entries(categorized)) {
+      const categoryName = categoryId.replace(/-/g, " ")
+        .replace(/\b\w/g, (c) => c.toUpperCase());
+
+      content.push(`## ${categoryName} Standards\n`);
+      content.push(`${categoryName} best practices and guidelines.\n`);
+
+      for (const { id, item } of standards) {
+        content.push(`### ${globalIndex}. ${item.name} (\`${id}\`)\n`);
+        content.push(`${item.description}\n`);
+        content.push(`- **Tags:** ${item.tags.join(", ")}\n`);
+        globalIndex++;
+      }
     }
 
     // Add custom standards section
     const customStandards = await loadAvailableCustomStandards();
     if (customStandards.length > 0) {
-      console.log("Custom Standards");
-      console.log("  User-defined standards from your configuration\n");
+      content.push(`## Custom Standards\n`);
+      content.push(`User-defined standards from your configuration.\n`);
 
       for (const custom of customStandards) {
-        console.log(`  • custom:${custom.id}: ${custom.name}`);
-        console.log(`    ${custom.description}`);
-        console.log(`    Source: ${formatPathForDisplay(custom.path)}`);
-        console.log(`    Tags: ${custom.tags.join(", ")}`);
+        content.push(`### ${globalIndex}. ${custom.name} (\`custom:${custom.id}\`)\n`);
+        content.push(`${custom.description}\n`);
+        content.push(`- **Source:** ${formatPathForDisplay(custom.path)}`);
+        content.push(`- **Tags:** ${custom.tags.join(", ")}\n`);
+        globalIndex++;
       }
-      console.log();
     }
   } else {
-    // List all standards flat
-    const allStandards: Array<
-      { id: string; item: ContentMetadata; category: string }
-    > = [];
+    content.push(`Select from ${allStandards.length} standards across multiple categories.\n`);
 
-    for (const [categoryId, items] of Object.entries(discovered.categories)) {
-      for (const item of items) {
-        const id = item.path.split("/").pop()?.replace(".md", "") || "";
-        allStandards.push({ id, item, category: categoryId });
-      }
-    }
-
-    // Sort alphabetically by ID
-    allStandards.sort((a, b) => a.id.localeCompare(b.id));
-
+    // List all standards flat with numbering
+    let index = 1;
     for (const { id, item, category } of allStandards) {
       const categoryName = category.replace(/-/g, " ")
-        .replace(/\b\w/g, (c) => c.toUpperCase()) + " Standards";
+        .replace(/\b\w/g, (c) => c.toUpperCase());
 
-      console.log(`• ${id}: ${item.name}`);
-      console.log(`  ${item.description}`);
-      console.log(`  Category: ${categoryName}`);
-      console.log(`  Tags: ${item.tags.join(", ")}`);
-      console.log();
+      content.push(`## ${index}. ${item.name} (\`${id}\`)\n`);
+      content.push(`${item.description}\n`);
+      content.push(`- **Category:** ${categoryName}`);
+      content.push(`- **Tags:** ${item.tags.join(", ")}\n`);
+      index++;
     }
 
     // Add custom standards
     const customStandards = await loadAvailableCustomStandards();
     if (customStandards.length > 0) {
-      console.log("--- Custom Standards ---\n");
+      content.push(`## Custom Standards\n`);
 
       for (const custom of customStandards) {
-        console.log(`• custom:${custom.id}: ${custom.name}`);
-        console.log(`  ${custom.description}`);
-        console.log(`  Category: Custom`);
-        console.log(`  Source: ${formatPathForDisplay(custom.path)}`);
-        console.log(`  Tags: ${custom.tags.join(", ")}`);
-        console.log();
+        content.push(`### ${index}. ${custom.name} (\`custom:${custom.id}\`)\n`);
+        content.push(`${custom.description}\n`);
+        content.push(`- **Category:** Custom`);
+        content.push(`- **Source:** ${formatPathForDisplay(custom.path)}`);
+        content.push(`- **Tags:** ${custom.tags.join(", ")}\n`);
+        index++;
       }
     }
   }
+
+  content.push(`## 📝 Usage Examples\n`);
+  content.push(`- Add standards: \`aichaku standards --add owasp-web,15-factor,tdd\``);
+  content.push(`- View by number: \`aichaku learn 1\``);
+  content.push(`- View by code: \`aichaku learn test-pyramid\``);
+
+  printFormatted(content.join("\n"));
 }
 
 /**
@@ -475,47 +494,50 @@ async function showProjectStandards(projectPath?: string): Promise<void> {
     try {
       await configManager.load();
     } catch {
-      console.log("\n🪴 Aichaku: No configuration found for this project");
-      console.log("Run 'aichaku init' to initialize project with standards selection");
+      printFormatted(`# 🪴 Aichaku: No Configuration Found
+
+This project hasn't been initialized with Aichaku yet.
+
+Run \`aichaku init\` to initialize project with standards selection.`);
       return;
     }
 
     const selectedStandards = configManager.getStandards();
 
+    const content = [`# 🪴 Aichaku: Project Standards Configuration\n`];
+
     if (selectedStandards.length === 0) {
-      console.log("\n🪴 Aichaku: No standards selected for this project");
-      console.log("\n💡 To get started:");
-      console.log(
-        "   • Run 'aichaku standards --list' to see available standards",
-      );
-      console.log(
-        "   • Run 'aichaku standards --search <term>' to find specific standards",
-      );
-      console.log("   • Run 'aichaku standards --add <id>' to select standards");
-      console.log("\nExample: aichaku standards --add owasp-web,15-factor,tdd");
+      content.push(`No standards currently selected for this project.\n`);
+      content.push(`## 💡 To Get Started\n`);
+      content.push(`- Run \`aichaku standards --list\` to see available standards`);
+      content.push(`- Run \`aichaku standards --search <term>\` to find specific standards`);
+      content.push(`- Run \`aichaku standards --add <id>\` to select standards\n`);
+      content.push(`**Example:** \`aichaku standards --add owasp-web,15-factor,tdd\``);
+      printFormatted(content.join("\n"));
       return;
     }
 
-    console.log("\n🪴 Aichaku: Project Standards Configuration\n");
-    console.log(`Selected standards (${selectedStandards.length}):\n`);
+    content.push(`**Selected standards:** ${selectedStandards.length}\n`);
 
+    let index = 1;
     for (const standardId of selectedStandards) {
       // Handle custom standards
       if (standardId.startsWith("custom:")) {
         const _customId = standardId.replace("custom:", "");
-        console.log(`• ${standardId} (custom standard)`);
-        console.log(`  ℹ️  Custom standards support coming soon`);
+        content.push(`## ${index}. Custom Standard (\`${standardId}\`)\n`);
+        content.push(`ℹ️ Custom standards support coming soon\n`);
       } else {
         // Handle built-in standards
         const standard = await findStandard(standardId);
         if (standard) {
-          console.log(`• ${standardId}: ${standard.name}`);
-          console.log(`  ${standard.description}`);
+          content.push(`## ${index}. ${standard.name} (\`${standardId}\`)\n`);
+          content.push(`${standard.description}\n`);
         } else {
-          console.log(`• ${standardId} (unknown built-in standard)`);
-          console.log(`  ⚠️  Warning: Standard not found in available standards`);
+          content.push(`## ${index}. Unknown Standard (\`${standardId}\`)\n`);
+          content.push(`⚠️ Warning: Standard not found in available standards\n`);
         }
       }
+      index++;
     }
 
     // Check integration status and provide options
@@ -527,20 +549,18 @@ async function showProjectStandards(projectPath?: string): Promise<void> {
           "AICHAKU:STANDARDS",
         ));
 
-    console.log(`\n💡 What you can do:`);
+    content.push(`## 💡 What You Can Do\n`);
     if (needsIntegration) {
-      console.log(
-        `   • Run 'aichaku integrate' to ${claudeExists ? "update" : "create"} CLAUDE.md with these standards`,
+      content.push(
+        `- Run \`aichaku integrate\` to ${claudeExists ? "update" : "create"} CLAUDE.md with these standards`,
       );
     }
-    console.log(`   • Run 'aichaku standards --add <id>' to add more standards`);
-    console.log(`   • Run 'aichaku standards --remove <id>' to remove standards`);
-    console.log(
-      `   • Run 'aichaku standards --search <term>' to find specific standards`,
-    );
-    console.log(
-      `   • Run 'aichaku standards --list --categories' to browse all available standards`,
-    );
+    content.push(`- Run \`aichaku standards --add <id>\` to add more standards`);
+    content.push(`- Run \`aichaku standards --remove <id>\` to remove standards`);
+    content.push(`- Run \`aichaku standards --search <term>\` to find specific standards`);
+    content.push(`- Run \`aichaku standards --list --categories\` to browse all available standards`);
+
+    printFormatted(content.join("\n"));
   } catch (error) {
     console.error(`❌ Failed to show project standards: ${error instanceof Error ? error.message : "Unknown error"}`);
   }
