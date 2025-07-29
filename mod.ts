@@ -112,7 +112,6 @@ export { learn } from "./src/commands/learn.ts";
 export { standards } from "./src/commands/standards.ts";
 export { methodologies } from "./src/commands/methodologies.ts";
 export { mergeDocs } from "./src/commands/merge-docs.ts";
-// docs-standard command removed - functionality merged into standards
 export { cleanup } from "./src/commands/cleanup.ts";
 export { hooks } from "./src/commands/hooks.ts";
 export { review } from "./src/commands/review.ts";

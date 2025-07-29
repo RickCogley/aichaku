@@ -15,8 +15,7 @@ commands:
 
   methodology_management:
     - "methodologies.ts: Select and manage active methodologies"
-    - "standards.ts: Choose development standards for projects"
-    - "docs-standard.ts: Documentation style guide selection"
+    - "standards.ts: Choose development and documentation standards for projects"
 
   content_discovery:
     - "learn.ts: Dynamic methodology and standards learning"

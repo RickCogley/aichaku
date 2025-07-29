@@ -130,7 +130,6 @@
     "docs/projects/**/*.ts",
     "examples/**/*.ts",
     "src/commands/*-v2.ts",
-    "src/commands/docs-standard_test.ts",
     "src/utils/config-manager.test.ts",
     "src/utils/migration-helper.ts"
   ],
