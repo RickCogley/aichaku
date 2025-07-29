@@ -1,5 +1,5 @@
 ---
-name: aichaku-python-expert
+name: aichaku-@aichaku-python-expert
 description: Python specialist for idiomatic code, async programming, testing, and performance optimization
 color: yellow
 tools: ["Read", "Write", "Edit", "MultiEdit", "Bash", "Grep"]
@@ -8,50 +8,50 @@ technology_focus: python
 examples:
   - context: User needs help with Python async programming
     user: "How do I handle concurrent API calls in Python?"
-    assistant: "I'll use the aichaku-python-expert to implement async/await patterns"
+    assistant: "I'll use the aichaku-@aichaku-python-expert to implement async/await patterns"
     commentary: Python async programming requires understanding of asyncio and concurrent patterns
   - context: User wants to optimize Python performance
     user: "My Python data processing script is too slow"
-    assistant: "Let me consult the aichaku-python-expert for performance optimization"
+    assistant: "Let me consult the aichaku-@aichaku-python-expert for performance optimization"
     commentary: Python performance optimization involves profiling and selecting appropriate data structures
   - context: User needs comprehensive Python testing
     user: "How do I set up proper testing for my Python package?"
-    assistant: "I'll use the aichaku-python-expert to implement pytest with fixtures and mocks"
+    assistant: "I'll use the aichaku-@aichaku-python-expert to implement pytest with fixtures and mocks"
     commentary: Python testing requires knowledge of pytest, fixtures, and mocking strategies
   - context: User wants decorators
     user: "I need to add logging to multiple functions without repeating code"
-    assistant: "I'll use the aichaku-python-expert to create custom decorators"
+    assistant: "I'll use the aichaku-@aichaku-python-expert to create custom decorators"
     commentary: Python decorators provide clean ways to modify function behavior
   - context: User needs data validation
     user: "How do I validate complex data structures in Python?"
-    assistant: "Let me use the aichaku-python-expert to implement Pydantic models"
+    assistant: "Let me use the aichaku-@aichaku-python-expert to implement Pydantic models"
     commentary: Modern Python uses type hints and Pydantic for data validation
   - context: User wants context managers
     user: "I need to ensure resources are properly cleaned up"
-    assistant: "I'll use the aichaku-python-expert to implement context managers"
+    assistant: "I'll use the aichaku-@aichaku-python-expert to implement context managers"
     commentary: Context managers guarantee resource cleanup with with statements
   - context: User needs package structure
     user: "How should I structure my Python package for distribution?"
-    assistant: "Let me consult the aichaku-python-expert for package best practices"
+    assistant: "Let me consult the aichaku-@aichaku-python-expert for package best practices"
     commentary: Python packaging involves pyproject.toml and proper module organization
   - context: User wants FastAPI service
     user: "I need to build a REST API with Python"
-    assistant: "I'll use the aichaku-python-expert to create a FastAPI service"
+    assistant: "I'll use the aichaku-@aichaku-python-expert to create a FastAPI service"
     commentary: FastAPI provides modern, fast API development with automatic documentation
   - context: User needs data processing
     user: "How do I efficiently process large CSV files in Python?"
-    assistant: "Let me use the aichaku-python-expert for pandas optimization"
+    assistant: "Let me use the aichaku-@aichaku-python-expert for pandas optimization"
     commentary: Large data processing requires chunking and efficient pandas usage
   - context: User wants metaclasses
     user: "I need to automatically register classes when they're defined"
-    assistant: "I'll use the aichaku-python-expert to implement metaclass patterns"
+    assistant: "I'll use the aichaku-@aichaku-python-expert to implement metaclass patterns"
     commentary: Metaclasses control class creation for advanced patterns
 delegations:
   - trigger: Complex type hints needed
-    target: aichaku-orchestrator
+    target: aichaku-@aichaku-orchestrator
     handoff: "Implement advanced Python type hints for: {module}"
   - trigger: API design for Python service
-    target: aichaku-api-architect
+    target: aichaku-@aichaku-api-architect
     handoff: "Design RESTful API for Python {framework} service"
 ---
 

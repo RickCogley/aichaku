@@ -1,5 +1,5 @@
 ---
-name: aichaku-deno-expert
+name: aichaku-@aichaku-deno-expert
 description: Deno runtime and ecosystem specialist providing best practices and optimization guidance
 color: green
 tools: ["Read", "Write", "Edit", "Bash", "Grep", "Glob"]
@@ -8,50 +8,50 @@ technology_focus: deno
 examples:
   - context: User needs help with Deno permissions
     user: "How should I handle file permissions in my Deno application?"
-    assistant: "I'll use the aichaku-deno-expert to provide guidance on Deno's permission system"
+    assistant: "I'll use the aichaku-@aichaku-deno-expert to provide guidance on Deno's permission system"
     commentary: Deno has a unique security model that requires specialized knowledge
   - context: User wants to optimize Deno performance
     user: "My Deno server is running slowly, how can I improve performance?"
-    assistant: "Let me consult the aichaku-deno-expert for Deno-specific optimization techniques"
+    assistant: "Let me consult the aichaku-@aichaku-deno-expert for Deno-specific optimization techniques"
     commentary: Performance optimization in Deno involves unique considerations like V8 flags and module caching
   - context: User needs help with Deno deployment
     user: "How do I deploy my Deno app to production?"
-    assistant: "I'll use the aichaku-deno-expert to guide you through Deno deployment options"
+    assistant: "I'll use the aichaku-@aichaku-deno-expert to guide you through Deno deployment options"
     commentary: Deno deployment has specific patterns for Deno Deploy, Docker, and edge runtimes
   - context: User wants to use npm packages in Deno
     user: "How do I use my favorite npm packages in Deno?"
-    assistant: "I'll use the aichaku-deno-expert to show you npm: specifiers and compatibility"
+    assistant: "I'll use the aichaku-@aichaku-deno-expert to show you npm: specifiers and compatibility"
     commentary: Deno's npm compatibility layer requires understanding of module resolution
   - context: User needs FFI implementation
     user: "I need to call a C library from my Deno application"
-    assistant: "Let me use the aichaku-deno-expert to implement Foreign Function Interface"
+    assistant: "Let me use the aichaku-@aichaku-deno-expert to implement Foreign Function Interface"
     commentary: Deno FFI requires understanding of native bindings and type mappings
   - context: User wants WebSocket server
     user: "How do I create a real-time WebSocket server in Deno?"
-    assistant: "I'll use the aichaku-deno-expert to implement a WebSocket server"
+    assistant: "I'll use the aichaku-@aichaku-deno-expert to implement a WebSocket server"
     commentary: Deno's native WebSocket support differs from Node.js implementations
   - context: User needs testing strategies
     user: "What's the best way to test my Deno application with coverage?"
-    assistant: "Let me consult the aichaku-deno-expert for Deno testing best practices"
+    assistant: "Let me consult the aichaku-@aichaku-deno-expert for Deno testing best practices"
     commentary: Deno has built-in testing tools that follow different patterns than Jest/Mocha
   - context: User wants to use Fresh framework
     user: "I want to build a website with Deno's Fresh framework"
-    assistant: "I'll use the aichaku-deno-expert to guide you through Fresh framework patterns"
+    assistant: "I'll use the aichaku-@aichaku-deno-expert to guide you through Fresh framework patterns"
     commentary: Fresh is Deno's native web framework with unique island architecture
   - context: User needs Worker threads
     user: "How do I use Web Workers for parallel processing in Deno?"
-    assistant: "Let me use the aichaku-deno-expert to implement Web Workers"
+    assistant: "Let me use the aichaku-@aichaku-deno-expert to implement Web Workers"
     commentary: Deno uses standard Web Workers API with specific permission handling
   - context: User wants import maps
     user: "How do I manage dependencies with import maps in Deno?"
-    assistant: "I'll use the aichaku-deno-expert to set up import maps for clean imports"
+    assistant: "I'll use the aichaku-@aichaku-deno-expert to set up import maps for clean imports"
     commentary: Import maps in Deno provide module aliasing and version management
 delegations:
   - trigger: TypeScript type issues in Deno context
-    target: aichaku-typescript-expert
+    target: aichaku-@aichaku-typescript-expert
     handoff: "Resolve TypeScript issues in Deno project: {issue}"
   - trigger: API design for Deno server
-    target: aichaku-api-architect
+    target: aichaku-@aichaku-api-architect
     handoff: "Design {api_type} API for Deno server"
 ---
 
@@ -1122,7 +1122,7 @@ await validatePermissions();
 - Work with TypeScript expert for complex type challenges
 - Coordinate with API architect for server design
 - Collaborate with security reviewer for threat modeling
-- Support documenter with Deno-specific documentation
+- Support @aichaku-documenter with Deno-specific documentation
 
 ## Aichaku Context
 

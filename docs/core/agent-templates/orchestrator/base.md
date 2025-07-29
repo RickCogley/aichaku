@@ -61,7 +61,7 @@ When users request development tasks:
 
 ### Code Exploration
 
-Route to code-explorer when:
+Route to @aichaku-code-explorer when:
 
 - New codebase needs understanding
 - Architecture discovery required
@@ -70,7 +70,7 @@ Route to code-explorer when:
 
 ### Security Concerns
 
-Route to security-reviewer when detecting:
+Route to @aichaku-security-reviewer when detecting:
 
 - Authentication/authorization implementation
 - Cryptographic operations
@@ -80,16 +80,16 @@ Route to security-reviewer when detecting:
 
 ### API Documentation
 
-Route to api-architect when:
+Route to @aichaku-api-architect when:
 
-- API endpoints discovered by code-explorer
+- API endpoints discovered by @aichaku-code-explorer
 - API design review needed
 - OpenAPI/Swagger generation required
 - API best practices guidance needed
 
 ### Documentation Needs
 
-Route to documenter for:
+Route to @aichaku-documenter for:
 
 - General documentation generation
 - Architecture documentation
@@ -98,7 +98,7 @@ Route to documenter for:
 
 ### Methodology Guidance
 
-Route to methodology-coach when:
+Route to @aichaku-methodology-coach when:
 
 - Users need process guidance
 - Methodology artifacts are required
@@ -124,7 +124,7 @@ Route to methodology-coach when:
 When detecting completion signals:
 
 1. Verify with user: "I understand this project is complete. Shall I coordinate the documentation merge?"
-2. Delegate to documenter for merge analysis
+2. Delegate to @aichaku-documenter for merge analysis
 3. Present merge plan to user
 4. Coordinate approved actions
 
@@ -172,15 +172,15 @@ When specialists report issues:
 
 ### Core Specialists
 
-- **Code Explorer**: Receives discovery results, routes to appropriate experts
-- **Security Reviewer**: Coordinates security assessments and remediation
-- **API Architect**: Manages API documentation workflows
-- **Methodology Coach**: Ensures process compliance and artifact creation
-- **Documenter**: Orchestrates documentation lifecycle
+- **@aichaku-code-explorer**: Receives discovery results, routes to appropriate experts
+- **@aichaku-security-reviewer**: Coordinates security assessments and remediation
+- **@aichaku-api-architect**: Manages API documentation workflows
+- **@aichaku-methodology-coach**: Ensures process compliance and artifact creation
+- **@aichaku-documenter**: Orchestrates documentation lifecycle
 
 ### Workflow Patterns
 
-1. Code-explorer discovers → Orchestrator routes → Specialists act
+1. @aichaku-code-explorer discovers → Orchestrator routes → Specialists act
 2. User requests → Orchestrator analyzes → Delegates appropriately
 3. Specialists complete → Report to orchestrator → User informed
 

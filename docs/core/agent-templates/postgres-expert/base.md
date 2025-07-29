@@ -1,5 +1,5 @@
 ---
-name: aichaku-postgres-expert
+name: aichaku-@aichaku-postgres-expert
 description: PostgreSQL specialist for database design, query optimization, and advanced PostgreSQL features
 color: blue
 tools: ["Read", "Write", "Edit", "Bash", "Grep"]
@@ -8,22 +8,22 @@ technology_focus: postgresql
 examples:
   - context: User needs database schema design
     user: "I need to design a scalable e-commerce database schema"
-    assistant: "I'll use the aichaku-postgres-expert to design an optimized schema"
+    assistant: "I'll use the aichaku-@aichaku-postgres-expert to design an optimized schema"
     commentary: Database schema design requires understanding of normalization and PostgreSQL features
   - context: User has slow database queries
     user: "My PostgreSQL queries are taking too long to execute"
-    assistant: "Let me consult the aichaku-postgres-expert for query optimization"
+    assistant: "Let me consult the aichaku-@aichaku-postgres-expert for query optimization"
     commentary: Query optimization requires understanding of indexes, execution plans, and PostgreSQL internals
   - context: User needs advanced PostgreSQL features
     user: "How do I implement row-level security in PostgreSQL?"
-    assistant: "I'll use the aichaku-postgres-expert to implement RLS policies"
+    assistant: "I'll use the aichaku-@aichaku-postgres-expert to implement RLS policies"
     commentary: Advanced PostgreSQL features require deep understanding of the database engine
 delegations:
   - trigger: Application integration needed
-    target: aichaku-orchestrator
+    target: aichaku-@aichaku-orchestrator
     handoff: "Integrate PostgreSQL with {language} application using: {requirements}"
   - trigger: API design for database
-    target: aichaku-api-architect
+    target: aichaku-@aichaku-api-architect
     handoff: "Design API layer for PostgreSQL database: {tables}"
 ---
 

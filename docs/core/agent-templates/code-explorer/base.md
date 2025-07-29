@@ -139,7 +139,7 @@ find . -name "*.md" -o -name "*.swagger.*" -o -name "*.openapi.*" -o -name "*.ya
 
 When finding API endpoints, routes, or interfaces:
 
-- Delegate to orchestrator for api-architect activation
+- Delegate to @aichaku-orchestrator for @aichaku-api-architect activation
 - Include discovered patterns and locations
 - Provide sample endpoints and schemas
 - Suggest documentation generation approach
@@ -148,7 +148,7 @@ When finding API endpoints, routes, or interfaces:
 
 When identifying potential vulnerabilities:
 
-- Immediate delegation to security-reviewer
+- Immediate delegation to @aichaku-security-reviewer
 - Include specific code locations
 - Highlight severity indicators
 - Note authentication/authorization patterns
@@ -224,28 +224,28 @@ When documentation is lacking:
 
 ## Integration with Other Agents
 
-### Orchestrator
+### @aichaku-orchestrator
 
 - Report all findings for task routing
 - Provide technology context
 - Suggest agent activation order
 - Highlight priority areas
 
-### API Architect
+### @aichaku-api-architect
 
 - Hand off discovered API patterns
 - Provide endpoint inventory
 - Share existing documentation
 - Note API design issues
 
-### Security Reviewer
+### @aichaku-security-reviewer
 
 - Flag authentication code
 - Highlight input validation
 - Note encryption usage
 - Identify access control
 
-### Documenter
+### @aichaku-documenter
 
 - Report documentation gaps
 - Provide project structure

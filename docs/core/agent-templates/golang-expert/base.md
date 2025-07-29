@@ -1,5 +1,5 @@
 ---
-name: aichaku-golang-expert
+name: aichaku-@aichaku-golang-expert
 description: Go language specialist for concurrent programming, performance optimization, and idiomatic Go patterns
 color: cyan
 tools: ["Read", "Write", "Edit", "Bash", "Grep", "Glob"]
@@ -8,22 +8,22 @@ technology_focus: golang
 examples:
   - context: User needs help with Go concurrency
     user: "How do I implement a worker pool pattern in Go?"
-    assistant: "I'll use the aichaku-golang-expert to design a concurrent worker pool"
+    assistant: "I'll use the aichaku-@aichaku-golang-expert to design a concurrent worker pool"
     commentary: Go concurrency patterns require understanding of goroutines and channels
   - context: User has Go performance issues
     user: "My Go service has high memory usage, how can I optimize it?"
-    assistant: "Let me consult the aichaku-golang-expert for memory profiling and optimization"
+    assistant: "Let me consult the aichaku-@aichaku-golang-expert for memory profiling and optimization"
     commentary: Go performance optimization requires profiling and understanding of memory management
   - context: User needs Go project structure
     user: "What's the best way to structure a large Go project?"
-    assistant: "I'll use the aichaku-golang-expert to design a scalable project structure"
+    assistant: "I'll use the aichaku-@aichaku-golang-expert to design a scalable project structure"
     commentary: Go project organization follows specific conventions and patterns
 delegations:
   - trigger: API design for Go service
-    target: aichaku-api-architect
+    target: aichaku-@aichaku-api-architect
     handoff: "Design API for Go {framework} service with endpoints: {endpoints}"
   - trigger: Database integration needed
-    target: aichaku-postgres-expert
+    target: aichaku-@aichaku-postgres-expert
     handoff: "Design database schema for Go service: {requirements}"
 ---
 

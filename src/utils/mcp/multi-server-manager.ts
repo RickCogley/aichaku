@@ -7,6 +7,7 @@ import { isAbsolute, join, normalize } from "@std/path";
 import { ensureDir, exists } from "@std/fs";
 import { colors } from "../../utils/ui.ts";
 import { Brand } from "../../utils/branded-messages.ts";
+import { printFormatted } from "../../utils/terminal-formatter.ts";
 
 export interface MCPServerConfig {
   id: string;
@@ -159,99 +160,73 @@ export class MultiServerMCPManager {
   async displayAllStatus(): Promise<void> {
     const statuses = await this.getAllServerStatus();
 
-    // Clear header
-    Brand.log("MCP Integration Status");
-    console.log(colors.dim("Model Context Protocol servers for Claude Code"));
-    console.log("");
-
     // Separate installed and not installed servers
     const installedServers = statuses.filter((s) => s.installed);
     const notInstalledServers = statuses.filter((s) => !s.installed);
 
+    const content = [`# 🪴 Aichaku MCP Integration Status\n`];
+    content.push(`Model Context Protocol servers for Claude Code.\n`);
+
     // Show installed servers
     if (installedServers.length > 0) {
-      console.log(colors.bold("📦 Installed MCP Servers"));
-      console.log(
-        colors.dim("These servers are ready for Claude Code configuration"),
-      );
-      console.log("");
+      content.push(`## 📦 Installed MCP Servers\n`);
+      content.push(`These servers are ready for Claude Code configuration.\n`);
 
       for (const status of installedServers) {
-        console.log(`${colors.green("✓")} ${colors.bold(status.name)}`);
-        console.log(`   ${colors.dim("ID:")} ${status.id}`);
-        console.log(
-          `   ${colors.dim("Type:")} stdio (passive - launched on-demand)`,
-        );
-        console.log(
-          `   ${colors.dim("Tools:")} ${status.tools.length} available`,
-        );
-        console.log(`   ${colors.dim("Path:")} ${status.binaryPath}`);
-        console.log("");
+        content.push(`### ✓ ${status.name}\n`);
+        content.push(`- **ID:** ${status.id}`);
+        content.push(`- **Type:** stdio (passive - launched on-demand)`);
+        content.push(`- **Tools:** ${status.tools.length} available`);
+        content.push(`- **Path:** \`${status.binaryPath}\`\n`);
       }
     }
 
     // Show not installed servers
     if (notInstalledServers.length > 0) {
-      console.log(colors.bold("❌ Not Installed"));
-      console.log("");
+      content.push(`## ❌ Not Installed\n`);
 
       for (const status of notInstalledServers) {
-        console.log(`${colors.red("✗")} ${colors.bold(status.name)}`);
-        console.log(
-          `   Install with: ${colors.cyan(`aichaku mcp --install-${status.id}`)}`,
-        );
-        console.log("");
+        content.push(`### ✗ ${status.name}\n`);
+        content.push(`Install with: \`aichaku mcp --install-${status.id}\`\n`);
       }
     }
 
     // HTTP Bridge Server (this one actually runs)
-    console.log(colors.bold("🌉 HTTP Bridge Server"));
-    console.log(colors.dim("Enables 'aichaku review' command to use MCP"));
+    content.push(`## 🌉 HTTP Bridge Server\n`);
+    content.push(`Enables 'aichaku review' command to use MCP.\n`);
+
     const isHttpServerRunning = await this.checkHttpServerStatus();
     if (isHttpServerRunning) {
-      console.log(`${colors.green("✓")} Running on http://127.0.0.1:7182`);
-      console.log(`   Stop with: ${colors.cyan("aichaku mcp --stop-server")}`);
+      content.push(`✓ Running on http://127.0.0.1:7182`);
+      content.push(`Stop with: \`aichaku mcp --stop-server\`\n`);
     } else {
-      console.log(`${colors.yellow("○")} Not running`);
-      console.log(
-        `   Start with: ${colors.cyan("aichaku mcp --start-server")}`,
-      );
+      content.push(`○ Not running`);
+      content.push(`Start with: \`aichaku mcp --start-server\`\n`);
     }
-    console.log("");
 
     // Configuration section
     if (installedServers.length > 0) {
-      console.log(colors.bold("⚙️  Claude Code Configuration"));
-      console.log("To use these servers in Claude Code:");
-      console.log(
-        `1. Run ${colors.cyan("aichaku mcp --config")} to see the configuration`,
-      );
-      console.log("2. Add it to Claude Code's MCP settings");
-      console.log("3. Restart Claude Code");
-      console.log("");
+      content.push(`## ⚙️ Claude Code Configuration\n`);
+      content.push(`To use these servers in Claude Code:\n`);
+      content.push(`1. Run \`aichaku mcp --config\` to see the configuration`);
+      content.push(`2. Add it to Claude Code's MCP settings`);
+      content.push(`3. Restart Claude Code\n`);
     }
 
     // Quick actions
-    console.log(colors.bold("🚀 Quick Actions"));
+    content.push(`## 🚀 Quick Actions\n`);
     if (notInstalledServers.length > 0) {
-      console.log(
-        `• Install all servers: ${colors.cyan("aichaku mcp --install")}`,
-      );
+      content.push(`- Install all servers: \`aichaku mcp --install\``);
     }
     if (installedServers.length > 0) {
-      console.log(
-        `• Show configuration: ${colors.cyan("aichaku mcp --config")}`,
-      );
-      console.log(
-        `• View available tools: ${colors.cyan("aichaku mcp --tools")}`,
-      );
+      content.push(`- Show configuration: \`aichaku mcp --config\``);
+      content.push(`- View available tools: \`aichaku mcp --tools\``);
     }
     if (!isHttpServerRunning) {
-      console.log(
-        `• Start bridge server: ${colors.cyan("aichaku mcp --start-server")}`,
-      );
+      content.push(`- Start bridge server: \`aichaku mcp --start-server\``);
     }
-    console.log("");
+
+    printFormatted(content.join("\n"));
   }
 
   private async checkHttpServerStatus(): Promise<boolean> {

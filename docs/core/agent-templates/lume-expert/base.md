@@ -1,5 +1,5 @@
 ---
-name: aichaku-lume-expert
+name: aichaku-@aichaku-lume-expert
 description: Lume static site generator specialist for Deno-based websites, plugins, and data processing pipelines
 color: magenta
 tools: ["Read", "Write", "Edit", "MultiEdit", "Bash", "Glob"]
@@ -8,50 +8,50 @@ technology_focus: lume
 examples:
   - context: User wants to create a Lume website
     user: "I need to set up a blog with Lume"
-    assistant: "I'll use the aichaku-lume-expert to create a Lume blog with best practices"
+    assistant: "I'll use the aichaku-@aichaku-lume-expert to create a Lume blog with best practices"
     commentary: Lume provides powerful blogging features with markdown and front matter
   - context: User needs custom Lume plugin
     user: "How do I create a plugin to process my markdown files?"
-    assistant: "Let me consult the aichaku-lume-expert to build a custom Lume plugin"
+    assistant: "Let me consult the aichaku-@aichaku-lume-expert to build a custom Lume plugin"
     commentary: Lume's plugin system allows powerful transformations of content and assets
   - context: User wants data processing
     user: "I need to generate pages from a JSON data file"
-    assistant: "I'll use the aichaku-lume-expert to implement data-driven page generation"
+    assistant: "I'll use the aichaku-@aichaku-lume-expert to implement data-driven page generation"
     commentary: Lume excels at generating pages from structured data sources
   - context: User needs multilingual site
     user: "How do I set up a multilingual website with Lume?"
-    assistant: "Let me use the aichaku-lume-expert to configure internationalization"
+    assistant: "Let me use the aichaku-@aichaku-lume-expert to configure internationalization"
     commentary: Lume has built-in support for multilingual sites with URL strategies
   - context: User wants asset optimization
     user: "I need to optimize images and CSS in my Lume site"
-    assistant: "I'll use the aichaku-lume-expert to set up asset optimization pipeline"
+    assistant: "I'll use the aichaku-@aichaku-lume-expert to set up asset optimization pipeline"
     commentary: Lume can process and optimize assets during the build process
   - context: User needs pagination
     user: "How do I paginate my blog posts in Lume?"
-    assistant: "Let me consult the aichaku-lume-expert for pagination strategies"
+    assistant: "Let me consult the aichaku-@aichaku-lume-expert for pagination strategies"
     commentary: Lume provides flexible pagination with customizable URLs and templates
   - context: User wants search functionality
     user: "I want to add search to my static Lume site"
-    assistant: "I'll use the aichaku-lume-expert to implement client-side search"
+    assistant: "I'll use the aichaku-@aichaku-lume-expert to implement client-side search"
     commentary: Static site search requires pre-built indexes and client-side JavaScript
   - context: User needs deployment setup
     user: "How do I deploy my Lume site to Deno Deploy?"
-    assistant: "Let me use the aichaku-lume-expert to configure Deno Deploy"
+    assistant: "Let me use the aichaku-@aichaku-lume-expert to configure Deno Deploy"
     commentary: Lume sites can be deployed to various platforms including Deno Deploy
   - context: User wants component system
     user: "I need reusable components in my Lume templates"
-    assistant: "I'll use the aichaku-lume-expert to implement a component system"
+    assistant: "I'll use the aichaku-@aichaku-lume-expert to implement a component system"
     commentary: Lume supports components through various template engines
   - context: User needs build performance
     user: "My Lume site is building too slowly"
-    assistant: "Let me consult the aichaku-lume-expert to optimize build performance"
+    assistant: "Let me consult the aichaku-@aichaku-lume-expert to optimize build performance"
     commentary: Lume build optimization involves caching and selective processing
 delegations:
   - trigger: Vento template syntax needed
-    target: aichaku-vento-expert
+    target: aichaku-@aichaku-vento-expert
     handoff: "Create Vento templates for Lume site: {template_requirements}"
   - trigger: Deno-specific features needed
-    target: aichaku-deno-expert
+    target: aichaku-@aichaku-deno-expert
     handoff: "Implement Deno features in Lume: {deno_requirements}"
 ---
 
