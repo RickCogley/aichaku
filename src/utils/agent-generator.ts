@@ -115,38 +115,22 @@ async function generateAgent(
   agentType: string,
   options: AgentGenerationOptions,
 ): Promise<AgentTemplate | null> {
-  // Check if agent already exists in output directory
-  const existingAgentPath = join(options.outputPath, `${options.agentPrefix}${agentType}.md`);
   // Use global installation path for agent templates
   const homePath = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
   const templateBase = join(homePath, ".claude", "aichaku", "docs", "core", "agent-templates");
   const agentBasePath = join(templateBase, agentType, "base.md");
 
-  let baseContent: string;
-  let yaml: ParsedYaml;
-
-  // Load existing agent or base template
-  if (await exists(existingAgentPath)) {
-    // Update existing agent - preserve static content and cross-functional config
-    baseContent = await safeReadTextFile(existingAgentPath, options.outputPath);
-    const parsed = parseAgentTemplate(baseContent);
-    yaml = parsed.yaml;
-
-    // Extract static content (everything before ## Selected Standards)
-    const staticContent = extractStaticContent(baseContent);
-    baseContent = staticContent;
-  } else {
-    // Create new agent from base template
-    if (!(await exists(agentBasePath))) {
-      console.warn(`Base template not found for ${agentType}: ${agentBasePath}`);
-      return null;
-    }
-
-    baseContent = await safeReadTextFile(agentBasePath, templateBase);
-    const parsed = parseAgentTemplate(baseContent);
-    yaml = parsed.yaml;
-    baseContent = parsed.content;
+  // Always use fresh template from global installation
+  // TODO: Implement proper user customization system with clear override mechanism
+  if (!(await exists(agentBasePath))) {
+    console.warn(`Base template not found for ${agentType}: ${agentBasePath}`);
+    return null;
   }
+
+  let baseContent = await safeReadTextFile(agentBasePath, templateBase);
+  const parsed = parseAgentTemplate(baseContent);
+  const yaml = parsed.yaml;
+  baseContent = parsed.content;
 
   // Generate standards YAML section
   const standardsYaml = await generateStandardsYaml(options.selectedStandards);
@@ -166,7 +150,8 @@ async function generateAgent(
     examples?: typeof yaml.examples;
     delegations?: typeof yaml.delegations;
   } = {
-    name: `${options.agentPrefix}${yaml.name}`,
+    // Check if name already has the prefix to avoid double prefixing
+    name: yaml.name.startsWith(options.agentPrefix) ? yaml.name : `${options.agentPrefix}${yaml.name}`,
     description: yaml.description,
     color: getAgentColor(agentType),
     methodology_aware: true,
@@ -403,33 +388,6 @@ function getAgentColor(agentType: string): string {
     "api-architect": "cyan", // Technical/architecture
   };
   return colors[agentType] || "white";
-}
-
-/**
- * Extract static content from existing agent (everything before dynamic sections)
- */
-function extractStaticContent(agentContent: string): string {
-  const standardsMarker = "## Selected Standards";
-  const methodologyMarker = "## Active Methodology";
-
-  // Find the first dynamic marker
-  const standardsIndex = agentContent.indexOf(standardsMarker);
-  const methodologyIndex = agentContent.indexOf(methodologyMarker);
-
-  let cutoffIndex = -1;
-  if (standardsIndex !== -1 && methodologyIndex !== -1) {
-    cutoffIndex = Math.min(standardsIndex, methodologyIndex);
-  } else if (standardsIndex !== -1) {
-    cutoffIndex = standardsIndex;
-  } else if (methodologyIndex !== -1) {
-    cutoffIndex = methodologyIndex;
-  }
-
-  if (cutoffIndex !== -1) {
-    return agentContent.substring(0, cutoffIndex).trim();
-  }
-
-  return agentContent;
 }
 
 /**
