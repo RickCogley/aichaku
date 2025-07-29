@@ -5,6 +5,17 @@ All notable changes to aichaku (愛着) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.37.0] - 2025-07-29
+
+### Added
+
+- update MCP status display and agent templates for Claude Code enhancements (dc5f25d)
+- enhance UI consistency with printFormatted across all commands (08ea911)
+
+### Fixed
+
+- resolve multiple issues in learn command and upgrade process (d94b19f)
+
 ## [0.36.4] - 2025-07-29
 
 ### Fixed
