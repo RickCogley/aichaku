@@ -419,6 +419,7 @@ async function listMethodologies(basePath: string): Promise<LearnResult> {
     let icon = "📚";
     let name = item.name;
     let description = item.description;
+    let code = "";
 
     try {
       const yamlContent = await Deno.readTextFile(yamlPath);
@@ -427,11 +428,19 @@ async function listMethodologies(basePath: string): Promise<LearnResult> {
       name = data.name || name;
       description = data.display?.description ||
         data.summary?.key_concepts?.[0] || description;
+
+      // Extract code from the path or name
+      const pathParts = item.path.split("/");
+      const dirName = pathParts[pathParts.length - 2];
+      code = dirName || name.toLowerCase().replace(/\s+/g, "-");
     } catch {
-      // Ignore errors
+      // Fallback code extraction
+      const pathParts = item.path.split("/");
+      const dirName = pathParts[pathParts.length - 2];
+      code = dirName || name.toLowerCase().replace(/\s+/g, "-");
     }
 
-    content += `  ${index}. ${icon} ${name.padEnd(18)} - ${description}\n`;
+    content += `  ${index}. ${icon} ${name} (${code})`.padEnd(35) + ` - ${description}\n`;
     index++;
   }
 
@@ -530,32 +539,32 @@ async function compareMethodologies(basePath: string): Promise<LearnResult> {
 `;
 
   for (const item of discovered.items) {
-    const yamlPath = join(
-      basePath,
-      "docs",
-      "methodologies",
-      item.path.replace(".md", ".yaml"),
-    );
+    // The item already has the YAML path since we're discovering YAML files
+    const yamlPath = join(basePath, "docs", "methodologies", item.path);
 
-    if (await exists(yamlPath)) {
-      try {
-        const yamlContent = await safeReadTextFile(yamlPath, "");
-        const data = parseYaml(yamlContent) as MethodologyYaml;
+    try {
+      const yamlContent = await safeReadTextFile(yamlPath, "");
+      const data = parseYaml(yamlContent) as MethodologyYaml;
 
-        const name = (data.name || item.name).substring(0, 15).padEnd(15);
-        const cadence = (data.summary.cycle_length || "Varies").substring(0, 16)
-          .padEnd(16);
-        const bestFor = (data.summary.best_for || "General").substring(0, 15)
-          .padEnd(15);
-        const keyPractice = (data.summary.key_concepts?.[0] || "").substring(
-          0,
-          16,
-        ).padEnd(16);
+      const name = (data.name || item.name).substring(0, 15).padEnd(15);
+      const cadence = (data.summary?.cycle_length || "Varies").substring(0, 16)
+        .padEnd(16);
+      const bestFor = (data.summary?.best_for || "General").substring(0, 15)
+        .padEnd(15);
+      const keyPractice = (data.summary?.key_concepts?.[0] || "").substring(
+        0,
+        16,
+      ).padEnd(16);
 
-        content += `│ ${name} │ ${cadence} │ ${bestFor} │ ${keyPractice} │\n`;
-      } catch {
-        // Skip on error
-      }
+      content += `│ ${name} │ ${cadence} │ ${bestFor} │ ${keyPractice} │\n`;
+    } catch (error) {
+      // Add fallback row with item data
+      const name = item.name.substring(0, 15).padEnd(15);
+      const cadence = "Varies".padEnd(16);
+      const bestFor = "General".padEnd(15);
+      const keyPractice = "See details".padEnd(16);
+
+      content += `│ ${name} │ ${cadence} │ ${bestFor} │ ${keyPractice} │\n`;
     }
   }
 

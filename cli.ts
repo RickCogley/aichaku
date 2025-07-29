@@ -35,7 +35,6 @@ import { hooks } from "./src/commands/hooks.ts";
 import { standards } from "./src/commands/standards.ts";
 import { methodologies } from "./src/commands/methodologies.ts";
 import { mergeDocs } from "./src/commands/merge-docs.ts";
-import { docsStandard } from "./src/commands/docs-standard.ts";
 import { runMCPCommand } from "./src/commands/mcp.ts";
 import { createMigrateCommand, showMigrateHelp } from "./src/commands/migrate.ts";
 import { runReviewCommand } from "./src/commands/review.ts";
@@ -192,7 +191,6 @@ Commands:
   hooks       Manage Claude Code hooks for automation
   standards   Choose modular guidance standards for your project
   methodologies Choose development methodologies for focused context
-  docs-standard Choose documentation writing style guides for your project
   docs:lint   Lint documentation against selected standards
   mcp         Manage MCP (Model Context Protocol) server for code review
   review      Review files using MCP server (seamless hook integration)
@@ -256,9 +254,6 @@ Examples:
   aichaku methodologies --list
   aichaku methodologies --set shape-up
 
-  # Choose documentation standards
-  aichaku docs-standard --list
-  aichaku docs-standard --add diataxis-google
 
   # Lint documentation files
   aichaku docs:lint
@@ -462,7 +457,10 @@ ${result.claudeMdReferences.map((ref) => `    Line ${ref.line}: "${ref.text}"`).
     }
 
     case "help": {
-      // Parse topic from remaining args
+      // Show deprecation notice
+      console.log("ℹ️  Note: 'aichaku help' is deprecated. Use 'aichaku learn' instead.\n");
+
+      // Forward all arguments to learn command
       const topic = args._[1]?.toString();
 
       // Check if it's a standard or methodology
@@ -471,10 +469,11 @@ ${result.claudeMdReferences.map((ref) => `    Line ${ref.line}: "${ref.text}"`).
           topic === "tdd" || topic === "nist" || topic === "ddd" ||
           topic === "solid");
 
-      const helpOptions = {
+      const learnOptions = {
         methodology: !isStandard ? topic : undefined,
         standard: isStandard ? topic : undefined,
         list: args.list as boolean | undefined,
+        methodologies: args.methodologies as boolean | undefined,
         standards: args.standards as boolean | undefined,
         compare: args.compare as boolean | undefined,
         all: args.all as boolean | undefined,
@@ -483,10 +482,11 @@ ${result.claudeMdReferences.map((ref) => `    Line ${ref.line}: "${ref.text}"`).
         development: args.development as boolean | undefined,
         testing: args.testing as boolean | undefined,
         devops: args.devops as boolean | undefined,
+        documentation: args.documentation as boolean | undefined,
         silent: args.silent as boolean | undefined,
       };
 
-      const result = help(helpOptions);
+      const result = learn(learnOptions);
       if (!result.success) {
         console.error(`❌ ${result.message}`);
         Deno.exit(1);
@@ -564,23 +564,6 @@ ${result.claudeMdReferences.map((ref) => `    Line ${ref.line}: "${ref.text}"`).
       };
 
       await methodologies(methodologiesOptions);
-      break;
-    }
-
-    case "docs-standard":
-    case "doc-standard":
-    case "docstandard": {
-      const docStandardsOptions = {
-        list: args.list as boolean | undefined,
-        show: args.show as boolean | undefined,
-        add: args.add as string | undefined,
-        remove: args.remove as string | undefined,
-        search: args.search as string | undefined,
-        projectPath: args.path as string | undefined,
-        dryRun: args["dry-run"] as boolean | undefined,
-      };
-
-      await docsStandard(docStandardsOptions);
       break;
     }
 
