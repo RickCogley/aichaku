@@ -1,0 +1,147 @@
+# Example: Unix Philosophy Principle
+# This demonstrates the complete structure for all principles
+
+metadata:
+  name: Unix Philosophy
+  category: software-development
+  description: Write simple, modular programs that do one thing well
+  aliases:
+    - unix-way
+    - unix-principles
+    - posix-philosophy
+
+history:
+  origin: "1978 - Bell Labs, formalized by Doug McIlroy"
+  originators:
+    - Ken Thompson
+    - Dennis Ritchie
+    - Doug McIlroy
+    - Brian Kernighan
+  evolution: |
+    Started as informal guidelines at Bell Labs in the 1970s.
+    Formalized in "The Unix Programming Environment" (1984).
+    Expanded by Eric Raymond in "The Art of Unix Programming" (2003).
+    Continues to influence modern software design, especially in
+    microservices and cloud-native architectures.
+  significance: |
+    The Unix Philosophy fundamentally shaped how we think about
+    software composition, modularity, and the power of simple tools
+    working together. It remains one of the most influential design
+    philosophies in software engineering.
+
+summary:
+  tagline: "Write simple, modular programs that do one thing well"
+  core_tenets:
+    - text: "Make each program do one thing well"
+      guidance: "Focus on a single, well-defined purpose. Resist feature creep."
+    - text: "Expect the output of every program to become the input to another"
+      guidance: "Design for composability. Use text streams for universal interfaces."
+    - text: "Design and build software to be tried early"
+      guidance: "Ship early, iterate based on real usage. Perfection is the enemy of good."
+    - text: "Use tools in preference to unskilled help"
+      guidance: "Automate repetitive tasks. Build tools that multiply effectiveness."
+  anti_patterns:
+    - pattern: "Monolithic applications that do everything"
+      instead: "Modular components with clear boundaries"
+    - pattern: "Complex configuration files"
+      instead: "Sensible defaults with simple overrides"
+    - pattern: "Binary protocols that can't be inspected"
+      instead: "Text-based formats that humans can read and debug"
+
+guidance:
+  spirit: |
+    The Unix Philosophy values simplicity, clarity, and modularity above all else.
+    It's not just about making things small, but making them composable. Each tool
+    should be a sharp knife that cuts cleanly, not a Swiss Army knife that does
+    many things adequately.
+  questions_to_ask:
+    - "Can this be split into smaller, focused tools?"
+    - "Is the interface simple enough for other programs to use?"
+    - "Could someone understand this without reading documentation?"
+    - "Does this follow the principle of least surprise?"
+    - "Can this be tested in isolation?"
+  when_to_apply:
+    - Building command-line tools
+    - Designing microservices
+    - Creating data processing pipelines
+    - Developing API endpoints
+    - Writing utility functions
+  exceptions:
+    - User-facing GUI applications may need integrated functionality
+    - Performance-critical systems may need monolithic design
+    - Security boundaries may prevent decomposition
+  common_mistakes:
+    - "Over-decomposition: Making things too granular"
+    - "Ignoring performance: Piping overhead can matter"
+    - "Text-only dogma: Binary formats have their place"
+
+examples:
+  good:
+    - description: "Classic Unix pipeline"
+      code: |
+        # Count unique IP addresses in log
+        cat access.log | awk '{print $1}' | sort | uniq -c | sort -rn
+      explanation: "Each tool has one job: cat reads, awk extracts, sort orders, uniq counts"
+    
+    - description: "Microservice architecture"
+      code: |
+        # User service only handles user data
+        GET /api/users/:id
+        
+        # Order service only handles orders
+        GET /api/orders/:id
+        
+        # Composed by API gateway or client
+      explanation: "Each service has a single responsibility"
+    
+  bad:
+    - description: "Kitchen sink class"
+      code: |
+        class UserManager:
+            def create_user(self, data): ...
+            def send_email(self, user): ...
+            def generate_report(self): ...
+            def backup_database(self): ...
+      problem: "Too many responsibilities in one class"
+      
+  real_world:
+    - project: "Git"
+      description: "Plumbing vs porcelain commands exemplify Unix philosophy"
+      link: "https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain"
+    
+    - project: "Docker"
+      description: "Each container does one thing, composed via docker-compose"
+      link: "https://docs.docker.com/compose/"
+    
+    - project: "GNU Coreutils"
+      description: "Collection of simple, focused utilities (ls, cat, grep, etc.)"
+      link: "https://www.gnu.org/software/coreutils/"
+
+compatibility:
+  works_well_with:
+    - kiss  # Keep It Simple, Stupid
+    - yagni # You Aren't Gonna Need It
+    - separation-of-concerns
+    - single-responsibility
+    - composition-over-inheritance
+  potential_conflicts:
+    - enterprise-patterns  # May encourage over-engineering
+    - feature-complete    # Conflicts with "do one thing"
+  complements:
+    - microservices
+    - functional-programming
+    - twelve-factor
+
+references:
+  foundational:
+    - "The Unix Programming Environment - Kernighan & Pike (1984)"
+    - "Program Design in the UNIX Environment - Pike & Kernighan (1984)" 
+    - "The UNIX Time-Sharing System - Ritchie & Thompson (1974)"
+  modern:
+    - "The Art of Unix Programming - Eric S. Raymond (2003)"
+    - "The Pragmatic Programmer - Hunt & Thomas (1999)"
+    - "Clean Architecture - Robert C. Martin (2017)"
+  tools:
+    - "GNU Coreutils - ls, cat, grep, sed, awk"
+    - "Plan 9 - Successor to Unix with refined philosophy"
+    - "BusyBox - Unix philosophy in embedded systems"

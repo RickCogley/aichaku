@@ -5,26 +5,21 @@
 The principles system extends aichaku's existing architecture to support guiding philosophies alongside methodologies
 and standards.
 
-```
-┌─────────────────────┐
-│   CLI Interface     │
-│ (aichaku principles)│
-└──────────┬──────────┘
-           │
-┌──────────▼──────────┐
-│  Principles Loader  │
-│  (YAML → TypeScript)│
-└──────────┬──────────┘
-           │
-┌──────────▼──────────┐     ┌─────────────────┐
-│ Principle Selection │────▶│ aichaku.json    │
-│     Manager         │     │ (storage)       │
-└──────────┬──────────┘     └─────────────────┘
-           │
-┌──────────▼──────────┐
-│   Agent Generator   │
-│ (includes principles)│
-└─────────────────────┘
+```mermaid
+graph TD
+    A[CLI Interface<br/>aichaku principles] --> B[Principles Loader<br/>YAML → TypeScript]
+    B --> C[Principle Selection<br/>Manager]
+    C --> D[aichaku.json<br/>storage]
+    C --> E[Agent Generator<br/>includes principles]
+    
+    B --> F[Principle<br/>Compatibility<br/>Checker]
+    F --> C
+    
+    E --> G[CLAUDE.md<br/>Integration]
+    
+    style A fill:#e1f5fe
+    style D fill:#fff3e0
+    style G fill:#f3e5f5
 ```
 
 ## Data Structures
@@ -37,41 +32,71 @@ interface Principle {
   name: string;
   category: "software-development" | "organizational" | "engineering" | "human-centered";
   description: string;
+  aliases?: string[]; // Alternative names
+
+  // Historical Context
+  history: {
+    origin: string; // When and where it originated
+    originators: string[]; // Key figures
+    evolution: string; // How it has evolved
+    significance: string; // Why it matters
+  };
 
   // Core content
   summary: {
-    core_tenets: string[];
-    anti_patterns: string[];
+    tagline: string; // One-line summary
+    core_tenets: Array<{
+      text: string;
+      guidance: string;
+    }>;
+    anti_patterns: Array<{
+      pattern: string;
+      instead: string;
+    }>;
     key_practices?: string[];
   };
 
   // Guidance
   guidance: {
+    spirit: string; // The underlying philosophy
+    questions_to_ask: string[]; // Self-check questions
     when_to_apply: string[];
     exceptions: string[];
     common_mistakes: string[];
   };
 
   // Examples
-  examples?: {
+  examples: {
     good: Array<{
-      scenario: string;
-      approach: string;
+      description: string;
+      code?: string;
+      explanation: string;
     }>;
     bad: Array<{
-      scenario: string;
+      description: string;
+      code?: string;
       problem: string;
+    }>;
+    real_world: Array<{
+      project: string;
+      description: string;
+      link?: string;
     }>;
   };
 
-  // Relationships
-  related_principles?: string[];
-  conflicts_with?: string[];
-  complements?: string[];
+  // Compatibility
+  compatibility: {
+    works_well_with: string[];
+    potential_conflicts: string[];
+    complements: string[];
+  };
 
   // References
-  origin?: string;
-  references?: string[];
+  references: {
+    foundational: string[]; // Original texts/papers
+    modern: string[]; // Contemporary interpretations
+    tools: string[]; // Tools that embody the principle
+  };
 }
 ```
 
@@ -239,9 +264,100 @@ When reviewing code or suggesting improvements:
 3. **Validation**: Validate YAML structure on load
 4. **Recovery**: Allow partial principle loading if some fail
 
+## Principle Selection Flow
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant CLI
+    participant Loader
+    participant Compatibility
+    participant Config
+    participant CLAUDE.md
+    
+    User->>CLI: aichaku principles --select dry,kiss,yagni
+    CLI->>Loader: Load all principles
+    Loader-->>CLI: Return principle data
+    CLI->>Compatibility: Check compatibility
+    Compatibility-->>CLI: Report conflicts/synergies
+    
+    alt Has Conflicts
+        CLI->>User: Warning: Potential conflicts
+        User->>CLI: Confirm or modify selection
+    end
+    
+    CLI->>Config: Save selected principles
+    Config->>CLAUDE.md: Update YAML config
+    CLI->>User: Success + restart reminder
+```
+
+## Compatibility Checking
+
+### Implementation
+
+```typescript
+// src/utils/principle-compatibility.ts
+export class PrincipleCompatibilityChecker {
+  constructor(private principles: Map<string, Principle>) {}
+
+  checkCompatibility(selectedPrinciples: string[]): CompatibilityReport {
+    const conflicts: Array<[string, string, string]> = [];
+    const synergies: Array<[string, string]> = [];
+
+    for (let i = 0; i < selectedPrinciples.length; i++) {
+      for (let j = i + 1; j < selectedPrinciples.length; j++) {
+        const p1 = this.principles.get(selectedPrinciples[i]);
+        const p2 = this.principles.get(selectedPrinciples[j]);
+
+        if (!p1 || !p2) continue;
+
+        // Check for conflicts
+        if (p1.compatibility.potential_conflicts.includes(p2.name)) {
+          conflicts.push([p1.name, p2.name, "May have conflicting approaches"]);
+        }
+
+        // Check for synergies
+        if (p1.compatibility.works_well_with.includes(p2.name)) {
+          synergies.push([p1.name, p2.name]);
+        }
+      }
+    }
+
+    return { conflicts, synergies, score: this.calculateScore(conflicts, synergies) };
+  }
+
+  visualizeMatrix(principles: string[]): string {
+    // Generate compatibility matrix for display
+    // Returns formatted string with symbols: ✓ = works well, ✗ = conflicts, - = neutral
+  }
+}
+```
+
+### Compatibility Matrix Visualization
+
+```mermaid
+graph LR
+    subgraph "Principle Compatibility Matrix"
+        A[unix-philosophy] -.->|✓| B[kiss]
+        A -.->|✓| C[yagni]
+        A -.->|✗| D[enterprise-patterns]
+        B -.->|✓| C
+        B -.->|✓| E[dry]
+        C -.->|✓| E
+        D -.->|✗| C
+        
+        style A fill:#e8f5e9
+        style B fill:#e8f5e9
+        style C fill:#e8f5e9
+        style D fill:#ffebee
+        style E fill:#e8f5e9
+    end
+```
+
 ## Future Extensions
 
 1. **Custom Principles**: Allow users to define their own
 2. **Principle Profiles**: Pre-selected sets for different contexts
-3. **Conflict Resolution**: Handle conflicting principles gracefully
+3. **Advanced Conflict Resolution**: Suggest alternatives when conflicts detected
 4. **Metrics**: Track which principles are most used/helpful
+5. **Principle Evolution**: Track how principles are interpreted over time

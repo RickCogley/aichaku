@@ -204,9 +204,34 @@ expert agents will ensure are followed in spirit, not just letter.
 - No rigid compliance checking
 - No scoring or grading against principles
 
-## Nice-to-haves
+## Core Features (Previously Nice-to-haves)
 
-- Principle compatibility matrix (which work well together)
-- Historical context for each principle
-- Real-world examples of principle application
-- Integration with CLAUDE.md for principle selection
+These features are essential for a complete principles system:
+
+### 1. Principle Compatibility Matrix
+
+- Built into each principle's YAML as `works_well_with` and `potential_conflicts`
+- CLI command: `aichaku principles --compatibility dry,kiss,yagni`
+- Visual matrix in documentation showing principle relationships
+- Warnings when selecting conflicting principles
+
+### 2. Historical Context
+
+- Each principle includes `origin` and `history` sections
+- Understanding the "why" behind each principle
+- Evolution and modern interpretations
+- Key figures and foundational texts
+
+### 3. Real-World Examples
+
+- Extensive `examples` section in each principle
+- Before/after code samples
+- Case studies from popular open-source projects
+- Common pitfalls and how to avoid them
+
+### 4. CLAUDE.md Integration
+
+- Principles automatically included in CLAUDE.md YAML configuration
+- Expert agents receive principle context
+- Principles appear alongside methodologies and standards
+- Seamless integration with existing aichaku workflow

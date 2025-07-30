@@ -15,6 +15,7 @@ This checklist provides a condensed view of all implementation tasks for easy tr
 - [ ] Implement `--select` (comma-separated)
 - [ ] Implement `--select-interactive`
 - [ ] Implement `--current`, `--remove`, `--clear`
+- [ ] Implement `--compatibility` command
 - [ ] Add comprehensive help text
 
 ### Data Model
@@ -29,6 +30,13 @@ This checklist provides a condensed view of all implementation tasks for easy tr
 ## Week 2-3: Content Creation
 
 ### Software Development Principles
+
+Each principle must include:
+
+- Complete compatibility matrix
+- Historical context and origin story
+- Real-world examples from major projects
+- Integration with CLAUDE.md
 
 - [ ] Unix Philosophy (`unix-philosophy.yaml`)
 - [ ] DRY - Don't Repeat Yourself (`dry.yaml`)

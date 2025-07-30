@@ -43,6 +43,12 @@ tasks organized by work stream.
    - [ ] Add `--clear` to remove all selections
    - [ ] Ensure proper error handling
 
+6. **Implement compatibility checking** (1 day)
+   - [ ] Add `--compatibility` command to check principle relationships
+   - [ ] Implement warning system for conflicting principles
+   - [ ] Create visual compatibility matrix output
+   - [ ] Add compatibility checks to selection process
+
 ### 2. Data Structure & Storage (Week 1-2)
 
 **Goal**: Define and implement the principle data model
@@ -80,10 +86,12 @@ tasks organized by work stream.
 #### Software Development Principles:
 
 1. **Unix Philosophy** (2 days)
-   - [ ] Create `unix-philosophy.yaml` with metadata
-   - [ ] Write comprehensive `unix-philosophy.md` guide
-   - [ ] Include historical context and examples
-   - [ ] Add practical application guidance
+   - [ ] Create `unix-philosophy.yaml` with full metadata including:
+     - [ ] Compatibility matrix (works_well_with, conflicts_with)
+     - [ ] Historical context (origin, key figures, evolution)
+     - [ ] Extensive real-world examples from Unix tools
+   - [ ] Write comprehensive guide with practical applications
+   - [ ] Include case studies from successful projects
 
 2. **DRY (Don't Repeat Yourself)** (1 day)
    - [ ] Create YAML and Markdown files
