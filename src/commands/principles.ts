@@ -79,7 +79,7 @@ export async function principles(options: PrinciplesOptions = {}): Promise<void>
     }
 
     // Show details about a specific principle or current selection
-    if (options.show !== undefined) {
+    if (options.show !== undefined && options.show !== false) {
       if (options.show === true || options.show === "") {
         // Bare --show, show current selection
         await showCurrentPrinciples(options.projectPath);
