@@ -21,6 +21,7 @@ interface ConfigPaths {
   core: string;
   methodologies: string;
   standards: string;
+  principles: string;
   user?: string;
 }
 
@@ -172,6 +173,54 @@ async function readStandardsConfigs(
 }
 
 /**
+ * Read selected principles configurations
+ */
+async function readPrinciplesConfigs(
+  principlesPath: string,
+  selected: string[],
+): Promise<YamlConfig> {
+  const principles: YamlConfig = {};
+
+  for (const principle of selected) {
+    // Find the principle in any category
+    const categories = [
+      "engineering",
+      "human-centered",
+      "organizational",
+      "software-development",
+    ];
+    let config: YamlConfig | null = null;
+    let category = "";
+
+    for (const cat of categories) {
+      const yamlPath = join(principlesPath, cat, `${principle}.yaml`);
+      config = await readYamlFile(yamlPath);
+      if (config) {
+        category = cat;
+        break;
+      }
+    }
+
+    if (config) {
+      // Extract relevant fields for CLAUDE.md (compact summary)
+      principles[principle] = {
+        name: config.name,
+        category,
+        summary: {
+          tagline: (config.summary as any)?.tagline || config.description,
+          core_tenets: ((config.summary as any)?.core_tenets || []).slice(0, 3).map((tenet: any) => ({
+            text: tenet.text,
+          })),
+        },
+        integration_url: `aichaku://principle/${category}/${principle}`,
+      };
+    }
+  }
+
+  return { principles };
+}
+
+/**
  * Read user customizations if they exist
  */
 async function readUserCustomizations(userPath?: string): Promise<YamlConfig> {
@@ -216,12 +265,14 @@ export async function assembleYamlConfig(options: {
   selectedMethodologies?: string[];
   selectedStandards?: string[];
   selectedDocStandards?: string[];
+  selectedPrinciples?: string[];
 }): Promise<string> {
   const {
     paths,
     selectedMethodologies = [],
     selectedStandards = [],
     selectedDocStandards = [],
+    selectedPrinciples = [],
   } = options;
 
   // First, get methodology quick reference
@@ -255,6 +306,10 @@ export async function assembleYamlConfig(options: {
     ...selectedStandards,
     ...selectedDocStandards,
   ]);
+  const principlesConfig = await readPrinciplesConfigs(
+    paths.principles,
+    selectedPrinciples,
+  );
   const userConfig = await readUserCustomizations(paths.user);
 
   // Merge in the correct order: core first, then methodology quick ref, then detailed configs
@@ -263,6 +318,7 @@ export async function assembleYamlConfig(options: {
     methodologyQuickRef,
     methodologyConfig,
     standardsConfig,
+    principlesConfig,
     userConfig,
   );
 
@@ -272,6 +328,7 @@ export async function assembleYamlConfig(options: {
     methodologies: selectedMethodologies,
     standards: selectedStandards,
     doc_standards: selectedDocStandards,
+    principles: selectedPrinciples,
     has_user_customizations: Object.keys(userConfig).length > 0,
   };
 

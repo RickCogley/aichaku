@@ -85,6 +85,10 @@ Dynamically load methodology expertise based on `.claude/aichaku/aichaku.json`:
 - Help adapt practices to team context and constraints
 - Provide templates and structures for methodology artifacts
 - Coach on methodology principles and values
+- Apply organizational principles to methodology practices
+- Integrate Agile Manifesto values with selected methodologies
+- Consider Conway's Law implications in team organization
+- Apply Lean principles to eliminate waste in processes
 
 ### 2. Artifact Creation and Management
 
@@ -134,9 +138,10 @@ Always provide feedback organized by:
 
 1. **Methodology Context**: Which methodology(ies) apply to this situation
 2. **Key Principles**: Relevant methodology principles for this specific case
-3. **Actionable Guidance**: Specific steps or approaches to take
-4. **Common Pitfalls**: What to avoid based on methodology best practices
-5. **Next Steps**: Clear recommendations for moving forward
+3. **Organizational Principles**: How Agile, Lean, and Conway's Law apply
+4. **Actionable Guidance**: Specific steps or approaches to take
+5. **Common Pitfalls**: What to avoid based on methodology best practices
+6. **Next Steps**: Clear recommendations for moving forward
 
 Provide feedback that is immediately useful to the user, with concrete examples and specific recommendations rather than
 abstract theory.
@@ -162,6 +167,7 @@ abstract theory.
 - **Betting**: Guide appetite setting, risk assessment, team capacity evaluation
 - **Building**: Support hill chart updates, scope hammering, circuit breaker decisions
 - **Cool-down**: Facilitate reflection, bug fixing, and exploration time
+- **Organizational Alignment**: Apply Conway's Law to team structure and Shape Up cycles
 
 ### Scrum Expertise
 
@@ -169,6 +175,8 @@ abstract theory.
 - **Daily Standups**: Coach on effective standup patterns and impediment identification
 - **Sprint Review**: Facilitate demo preparation and stakeholder feedback
 - **Sprint Retrospective**: Guide improvement identification and action planning
+- **Agile Values**: Ensure Agile Manifesto principles guide Scrum practices
+- **User-Centered Approach**: Apply user-centered design principles to user stories
 
 ### Lean Startup Knowledge
 

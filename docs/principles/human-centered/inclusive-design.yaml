@@ -65,13 +65,13 @@ examples:
     - description: "Xbox Adaptive Controller"
       code: |
         Problem: Traditional game controllers exclude users with limited mobility
-        
+
         Inclusive approach:
         - Interviewed gamers with diverse abilities
         - Designed modular, customizable interface
         - Created ecosystem of compatible accessories
         - Made standard gaming accessible
-        
+
         Impact:
         - Opened gaming to new audiences
         - Improved gaming for all users (customization)
@@ -81,12 +81,12 @@ examples:
     - description: "One-size-fits-all approach"
       code: |
         Problem: Voice interface that only works in quiet environments
-        
+
         Exclusive result:
         - Excludes users in noisy environments
         - Excludes users with speech differences
         - Excludes users who prefer not to speak aloud
-        
+
         Better approach:
         - Multimodal interaction (voice + touch + text)
         - Noise cancellation and speech recognition improvement
@@ -126,7 +126,7 @@ references:
     - "Inclusive Design Persona Spectrum"
     - "Accessibility evaluation tools"
     - Learn from diversity
-  
+
   dimensions_of_exclusion:
     permanent:
       description: "A permanent state affecting the person"
@@ -135,7 +135,7 @@ references:
         - hearing: "Deafness"
         - mobility: "Limb loss"
         - cognitive: "Dyslexia"
-    
+
     temporary:
       description: "Short-term impairment or situation"
       examples:
@@ -143,7 +143,7 @@ references:
         - hearing: "Ear infection"
         - mobility: "Broken arm"
         - cognitive: "Concussion"
-    
+
     situational:
       description: "Context or environment creates barrier"
       examples:
@@ -151,7 +151,7 @@ references:
         - hearing: "Noisy environment"
         - mobility: "Carrying items"
         - cognitive: "Stress or distraction"
-  
+
   inclusive_design_principles:
     equitable_use:
       description: "Usable by people with diverse abilities"
@@ -160,7 +160,7 @@ references:
         - Equivalent when not identical
         - Avoid segregating users
         - Make appealing to all users
-    
+
     flexibility:
       description: "Accommodates wide range of preferences"
       guidelines:
@@ -168,7 +168,7 @@ references:
         - Support different pace
         - Facilitate accuracy
         - Adapt to user needs
-    
+
     simple_intuitive:
       description: "Easy to understand regardless of experience"
       guidelines:
@@ -176,7 +176,7 @@ references:
         - Match user expectations
         - Support multiple languages
         - Provide clear feedback
-    
+
     perceptible_info:
       description: "Communicates effectively to all"
       guidelines:
@@ -184,7 +184,7 @@ references:
         - Adequate contrast
         - Maximize legibility
         - Compatible with assistive tech
-    
+
     tolerance_for_error:
       description: "Minimizes hazards of accidents"
       guidelines:
@@ -192,7 +192,7 @@ references:
         - Provide warnings
         - Fail safe features
         - Discourage unconscious action
-    
+
     low_physical_effort:
       description: "Efficient and comfortable"
       guidelines:
@@ -200,7 +200,7 @@ references:
         - Minimal force
         - Minimize repetition
         - Reduce sustained effort
-    
+
     size_and_space:
       description: "Appropriate for approach and use"
       guidelines:
@@ -208,7 +208,7 @@ references:
         - Comfortable reach
         - Accommodate variations
         - Space for assistance
-  
+
   design_strategies:
     persona_spectrum:
       description: "Design for users across a spectrum of abilities"
@@ -217,7 +217,7 @@ references:
         - Include exclusion scenarios
         - Map ability variations
         - Consider intersectionality
-    
+
     inclusive_research:
       description: "Include diverse participants in research"
       methods:
@@ -225,7 +225,7 @@ references:
         - Accessible research methods
         - Compensate fairly
         - Share findings back
-    
+
     co_design:
       description: "Design with, not for"
       approach:
@@ -233,7 +233,7 @@ references:
         - Value lived experience
         - Share decision making
         - Build long-term relationships
-  
+
   implementation_areas:
     digital_products:
       - Multi-modal interfaces
@@ -241,28 +241,28 @@ references:
       - Clear language
       - Keyboard navigation
       - Screen reader support
-    
+
     physical_spaces:
       - Level entrances
       - Wide doorways
       - Clear wayfinding
       - Quiet spaces
       - Flexible furniture
-    
+
     services:
       - Multiple channels
       - Clear communication
       - Flexible timing
       - Staff training
       - Feedback mechanisms
-    
+
     content:
       - Plain language
       - Multiple formats
       - Captions and transcripts
       - Audio descriptions
       - Translation options
-  
+
   inclusive_design_patterns:
     - Progressive disclosure
     - Clear affordances
@@ -272,20 +272,20 @@ references:
     - Multi-sensory feedback
     - Flexible timing
     - Clear language
-  
+
   measurement:
     quantitative:
       - Diversity of users reached
       - Task completion across groups
       - Error rates by user segment
       - Adoption rates
-    
+
     qualitative:
       - User satisfaction
       - Sense of belonging
       - Reduced friction
       - Increased confidence
-  
+
   common_exclusions:
     - Assuming digital literacy
     - Single language support
@@ -295,37 +295,37 @@ references:
     - Small touch targets
     - Low contrast
     - Culturally specific references
-  
+
   benefits:
     innovation:
       - New solutions from constraints
       - Broader market reach
       - Future-proof designs
-    
+
     business:
       - Larger addressable market
       - Reduced support costs
       - Legal compliance
       - Brand reputation
-    
+
     social:
       - Reduced inequality
       - Increased participation
       - Better communities
       - Human dignity
-  
+
   case_studies:
     - OXO Good Grips (kitchen tools)
     - Xbox Adaptive Controller
     - Closed captions (now used by all)
     - Voice assistants
     - Curb cuts
-  
+
   quotes:
     - "When we solve for one, we extend to many. - Microsoft Inclusive Design"
     - "Disability is not a personal health condition. It is a mismatched interaction between the features of a person's body and the features of the environment in which they live. - WHO"
     - "The power of inclusive design is that it opens up our products to more people. - Kat Holmes"
-  
+
   references:
     - title: "Mismatch: How Inclusion Shapes Design"
       author: "Kat Holmes"

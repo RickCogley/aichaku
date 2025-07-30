@@ -35,6 +35,9 @@ interface AichakuConfig {
     version: string;
     selected: string[];
   };
+  principles?: {
+    selected: string[];
+  };
 }
 
 interface IntegrateOptions {
@@ -167,6 +170,34 @@ async function loadProjectStandards(projectPath: string): Promise<string[]> {
     console.warn("Failed to load project standards configuration");
     return [];
   }
+}
+
+/**
+ * Load project principles configuration from unified aichaku.json
+ */
+async function loadProjectPrinciples(projectPath: string): Promise<string[]> {
+  const aichakuPaths = paths.get();
+  const unifiedConfigPath = join(aichakuPaths.project.root, "aichaku.json");
+
+  if (await exists(unifiedConfigPath)) {
+    try {
+      const content = await safeReadTextFile(unifiedConfigPath, projectPath);
+      const config = JSON.parse(content) as AichakuConfig;
+
+      if (
+        config.principles?.selected && Array.isArray(config.principles.selected)
+      ) {
+        return config.principles.selected.filter(
+          (id: unknown) => typeof id === "string" && id.length > 0,
+        );
+      }
+    } catch (_error) {
+      console.warn("Failed to load principles from unified aichaku.json");
+    }
+  }
+
+  // Default to empty array if no principles are configured
+  return [];
 }
 
 /**
@@ -329,11 +360,15 @@ export async function integrate(
   // Load selected methodologies from project or global config
   const selectedMethodologies = await loadSelectedMethodologies(projectPath);
 
+  // Load selected principles from project config
+  const selectedPrinciples = await loadProjectPrinciples(projectPath);
+
   // Define configuration paths - use development paths for now
   const configPaths = {
     core: join("/Users/rcogley/dev/aichaku", "docs", "core"),
     methodologies: join("/Users/rcogley/dev/aichaku", "docs", "methodologies"),
     standards: join("/Users/rcogley/dev/aichaku", "docs", "standards"),
+    principles: join("/Users/rcogley/dev/aichaku", "docs", "principles"),
     user: aichakuPaths.global.user.root,
   };
 
@@ -343,6 +378,7 @@ export async function integrate(
     selectedMethodologies,
     selectedStandards,
     selectedDocStandards: [], // Explicitly exclude doc standards from CLAUDE.md
+    selectedPrinciples,
   });
 
   // Note: methodology quick reference is now included in the main yamlConfig
@@ -360,6 +396,11 @@ export async function integrate(
     if (selectedStandards.length > 0) {
       console.log(
         `  - ${selectedStandards.length} development standards`,
+      );
+    }
+    if (selectedPrinciples.length > 0) {
+      console.log(
+        `  - ${selectedPrinciples.length} principles`,
       );
     }
     console.log(`  - Methodology-aware agents for code assistance`);
@@ -419,11 +460,13 @@ export async function integrate(
     const agentResult = await generateMethodologyAwareAgents({
       selectedMethodologies: selectedMethodology ? [selectedMethodology] : [],
       selectedStandards: allSelectedStandards,
+      selectedPrinciples: selectedPrinciples,
       outputPath: join(Deno.cwd(), ".claude", "agents"),
       agentPrefix: "aichaku-",
     });
 
     const standardsMsg = selectedStandards.length > 0 ? ` with ${selectedStandards.length} development standards` : "";
+    const principlesMsg = selectedPrinciples.length > 0 ? ` and ${selectedPrinciples.length} principles` : "";
 
     const agentsMsg = agentResult.generated > 0
       ? ` and ${agentResult.generated} custom agents for code assistance`
@@ -438,7 +481,7 @@ export async function integrate(
       path: claudeMdPath,
       message: `${
         action === "created" ? "Created new" : "Updated"
-      } CLAUDE.md with YAML configuration${standardsMsg}${agentsMsg}${restartMsg}`,
+      } CLAUDE.md with YAML configuration${standardsMsg}${principlesMsg}${agentsMsg}${restartMsg}`,
       action,
       lineNumber,
       agentsGenerated: agentResult.generated,

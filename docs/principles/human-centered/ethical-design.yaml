@@ -70,7 +70,7 @@ examples:
         - Allow users to set limits
         - Provide gentle reminders
         - Make it easy to take breaks
-        
+
         Notification Design:
         - Bundle non-urgent notifications
         - Respect "do not disturb" settings
@@ -121,10 +121,10 @@ references:
     - "Dark pattern detection tools"
   description: |
     A design philosophy that prioritizes human well-being, dignity, and rights throughout the design process. It considers the broader societal impact of design decisions and aims to create products that are not only functional but also morally responsible.
-  
+
   core_concept: |
     Ethical Design goes beyond usability and aesthetics to consider the moral implications of design choices. It asks not just "can we?" but "should we?" and considers the long-term consequences of design decisions on individuals, communities, and society as a whole.
-  
+
   key_principles:
     - Human dignity and respect
     - Transparency and honesty
@@ -134,7 +134,7 @@ references:
     - Sustainability and environmental responsibility
     - Social benefit over profit maximization
     - Accountability for consequences
-  
+
   ethical_framework:
     consequentialism:
       description: "Evaluate designs by their outcomes"
@@ -143,7 +143,7 @@ references:
         - "What harm could this cause?"
         - "Who benefits and who might be harmed?"
         - "What are the long-term consequences?"
-    
+
     deontological:
       description: "Follow universal ethical rules"
       principles:
@@ -151,7 +151,7 @@ references:
         - "Never deceive users"
         - "Protect vulnerable populations"
         - "Maintain confidentiality"
-    
+
     virtue_ethics:
       description: "Embody ethical virtues in design"
       virtues:
@@ -159,7 +159,7 @@ references:
         - compassion: "Consider user well-being"
         - justice: "Ensure fair treatment"
         - temperance: "Avoid exploitative features"
-    
+
     care_ethics:
       description: "Focus on relationships and responsibilities"
       considerations:
@@ -167,7 +167,7 @@ references:
         - "Prioritize care for users"
         - "Consider emotional impact"
         - "Build trust through actions"
-  
+
   dark_patterns_to_avoid:
     manipulation:
       - "Bait and switch"
@@ -175,21 +175,21 @@ references:
       - "Forced continuity"
       - "Hidden costs"
       - "Roach motel"
-    
+
     deception:
       - "Disguised ads"
       - "False urgency"
       - "Fake scarcity"
       - "Misleading visuals"
       - "Trick questions"
-    
+
     coercion:
       - "Forced action"
       - "Nagging"
       - "Obstruction"
       - "Privacy Zuckering"
       - "Price comparison prevention"
-  
+
   ethical_design_practices:
     user_empowerment:
       - "Clear, honest communication"
@@ -197,46 +197,46 @@ references:
       - "Transparent pricing"
       - "User control over data"
       - "Respect for user time"
-    
+
     social_responsibility:
       - "Consider societal impact"
       - "Promote digital well-being"
       - "Support vulnerable users"
       - "Environmental sustainability"
       - "Ethical supply chains"
-    
+
     business_ethics:
       - "Align incentives with user benefit"
       - "Transparent business models"
       - "Fair compensation"
       - "Responsible marketing"
       - "Long-term thinking"
-  
+
   design_process_integration:
     research_phase:
       - "Include ethical considerations in user research"
       - "Assess potential negative impacts"
       - "Consult affected communities"
       - "Review existing ethical guidelines"
-    
+
     ideation_phase:
       - "Generate ethically-sound alternatives"
       - "Question assumptions and biases"
       - "Consider diverse perspectives"
       - "Evaluate against ethical principles"
-    
+
     implementation_phase:
       - "Build in ethical safeguards"
       - "Create transparent interfaces"
       - "Implement privacy protections"
       - "Test for unintended consequences"
-    
+
     evaluation_phase:
       - "Monitor actual impact vs intended"
       - "Gather feedback on ethical concerns"
       - "Measure well-being indicators"
       - "Iterate based on ethical findings"
-  
+
   measurement_and_accountability:
     ethical_metrics:
       - "User well-being scores"
@@ -244,61 +244,61 @@ references:
       - "Privacy protection effectiveness"
       - "Accessibility compliance"
       - "Environmental impact"
-    
+
     review_processes:
       - "Ethics review board"
       - "Regular ethical audits"
       - "Stakeholder feedback loops"
       - "Public transparency reports"
-    
+
     continuous_improvement:
       - "Learn from ethical failures"
       - "Update practices based on impact"
       - "Share learnings publicly"
       - "Contribute to industry standards"
-  
+
   common_ethical_dilemmas:
     personalization_vs_privacy:
       issue: "Balancing useful personalization with data collection"
       approach: "Privacy-preserving personalization techniques"
-    
+
     engagement_vs_wellbeing:
       issue: "Features that increase use but may harm users"
       approach: "Prioritize healthy engagement patterns"
-    
+
     profit_vs_accessibility:
       issue: "Cost of making products fully accessible"
       approach: "View accessibility as essential, not optional"
-    
+
     innovation_vs_disruption:
       issue: "New features that may displace workers"
       approach: "Consider transition support and retraining"
-  
+
   implementation_areas:
     ai_and_algorithms:
       - "Explainable AI"
       - "Bias detection and mitigation"
       - "Human oversight"
       - "Consent for automated decisions"
-    
+
     data_practices:
       - "Minimal data collection"
       - "Purpose limitation"
       - "User control and portability"
       - "Secure deletion"
-    
+
     content_moderation:
       - "Clear community guidelines"
       - "Fair appeal processes"
       - "Protection of moderators"
       - "Cultural sensitivity"
-    
+
     business_models:
       - "Ethical monetization"
       - "Transparent advertising"
       - "Fair pricing"
       - "No exploitation of vulnerabilities"
-  
+
   tools_and_methods:
     - Ethical design checklists
     - Impact assessments
@@ -308,31 +308,31 @@ references:
     - Value sensitive design
     - Participatory design
     - Ethics workshops
-  
+
   benefits:
     user_benefits:
       - Increased trust
       - Better well-being
       - Sense of respect
       - Reduced harm
-    
+
     business_benefits:
       - Brand reputation
       - User loyalty
       - Reduced legal risk
       - Sustainable growth
-    
+
     societal_benefits:
       - Reduced inequality
       - Better mental health
       - Stronger communities
       - Environmental protection
-  
+
   quotes:
     - "Ethics is knowing the difference between what you have a right to do and what is right to do. - Potter Stewart"
     - "Design is a way of life, a point of view. It involves the whole complex of visual communications: talent, creative ability, manual skill, and technical knowledge. - Paul Rand"
     - "The ultimate goal of the architect...is to create a paradise. Every house, every product of architecture... should be a fruit of our endeavor to build an earthly paradise for people. - Alvar Aalto"
-  
+
   references:
     - title: "Design Justice: Community-Led Practices to Build the Worlds We Need"
       author: "Sasha Costanza-Chock"

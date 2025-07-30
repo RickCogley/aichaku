@@ -101,19 +101,19 @@ examples:
             return new UserBuilderFactory();
           }
         }
-        
+
         class UserBuilderFactory {
           createBuilder() {
             return new UserBuilder();
           }
         }
-        
+
         class UserBuilder {
           withName(name) { this.name = name; return this; }
           withEmail(email) { this.email = email; return this; }
           build() { return new User(this.name, this.email); }
         }
-        
+
         // Usage:
         const user = AbstractUserFactoryBuilder
           .createBuilderFactory()

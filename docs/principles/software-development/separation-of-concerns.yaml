@@ -81,12 +81,12 @@ examples:
           }
           validateEmail(email) { /* validation logic */ }
         }
-        
+
         // View (presentation)
         class UserView {
           render(user) { /* render user data */ }
         }
-        
+
         // Controller (coordination)
         class UserController {
           createUser(name, email) {
@@ -101,12 +101,12 @@ examples:
         class UserRepository {
           save(user) { /* database operations */ }
         }
-        
+
         // Business layer
         class UserService {
           createUser(userData) { /* business logic */ }
         }
-        
+
         // Presentation layer
         class UserController {
           handleCreateUser(req, res) { /* HTTP handling */ }
@@ -119,14 +119,14 @@ examples:
           createUser(name, email) {
             // Validation (business logic)
             if (!email.includes('@')) throw new Error('Invalid email');
-            
+
             // Database access (data concern)
             const sql = 'INSERT INTO users (name, email) VALUES (?, ?)';
             database.execute(sql, [name, email]);
-            
+
             // UI updates (presentation concern)
             document.getElementById('status').textContent = 'User created';
-            
+
             // Logging (cross-cutting concern)
             console.log(`User ${name} created at ${new Date()}`);
           }

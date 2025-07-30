@@ -76,7 +76,7 @@ examples:
         function validateEmail(email) {
           return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         }
-        
+
         // Used in multiple places
         if (!validateEmail(userEmail)) { /* handle */ }
         if (!validateEmail(adminEmail)) { /* handle */ }
@@ -96,7 +96,7 @@ examples:
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
           throw new Error('Invalid email');
         }
-        
+
         // In password reset
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
           return false;

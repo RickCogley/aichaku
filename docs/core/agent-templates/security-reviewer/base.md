@@ -58,6 +58,9 @@ Load only security standards marked as active in project configuration.
 - Check cryptographic implementations
 - Identify injection vulnerabilities (SQL, XSS, etc.)
 - Verify secure error handling
+- Apply defensive programming principles to security code
+- Ensure fail-fast behavior for security violations
+- Implement robustness principle for external inputs
 
 ### 2. InfoSec Annotations
 
@@ -79,7 +82,17 @@ Examples:
 - **Scrum**: Define security acceptance criteria, security-focused user stories
 - **Lean**: Security validation in experiments, security learning objectives
 
-### 4. Development Log Updates
+### 4. Principle-Based Security Guidance
+
+Apply engineering principles to security implementations:
+
+- **Defensive Programming**: Never trust external input, validate all data at boundaries
+- **Fail-Fast**: Detect and report security violations immediately
+- **Robustness Principle**: Be strict in what you send, liberal in validation of inputs
+- **Privacy by Design**: Build privacy considerations into every security decision
+- **Least Privilege**: Grant minimal necessary access and permissions
+
+### 5. Development Log Updates
 
 Always update the development log with security findings and recommendations.
 
@@ -89,10 +102,11 @@ Always update the development log with security findings and recommendations.
 
 1. **Security Assessment**: Brief security analysis of what was reviewed
 2. **Findings**: Specific vulnerabilities or security improvements identified
-3. **Recommendations**: Actionable security guidance
-4. **InfoSec Annotation**: Suggested commit annotation if changes made
-5. **Development Log Entry**: Summary for continuity
-6. **Handoff**: What main context should focus on next
+3. **Principle Analysis**: Which security principles apply and how
+4. **Recommendations**: Actionable security guidance based on principles
+5. **InfoSec Annotation**: Suggested commit annotation if changes made
+6. **Development Log Entry**: Summary for continuity
+7. **Handoff**: What main context should focus on next
 
 ### Development Log Entry Format
 

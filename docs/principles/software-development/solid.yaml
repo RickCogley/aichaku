@@ -40,7 +40,7 @@ summary:
   key_practices:
     - "Separate data access from business logic"
     - "Use strategy pattern for varying algorithms"
-    - "Design by contract for inheritance"  
+    - "Design by contract for inheritance"
     - "Dependency injection containers"
 
 guidance:
@@ -80,11 +80,11 @@ examples:
             this.validateEmail(user.email);
             this.validatePassword(user.password);
           }
-          
+
           private validateEmail(email) { /* validation logic */ }
           private validatePassword(password) { /* validation logic */ }
         }
-        
+
         class UserRepository {
           save(user) { /* database operations */ }
           findById(id) { /* database operations */ }
@@ -95,10 +95,10 @@ examples:
         interface PaymentProcessor {
           processPayment(amount: number): PaymentResult;
         }
-        
+
         class OrderService {
           constructor(private paymentProcessor: PaymentProcessor) {}
-          
+
           processOrder(order: Order) {
             return this.paymentProcessor.processPayment(order.total);
           }
@@ -112,17 +112,17 @@ examples:
             this.name = name;
             this.email = email;
           }
-          
+
           save() {
             // Database operations - different responsibility
             database.execute('INSERT INTO users...');
           }
-          
+
           sendWelcomeEmail() {
             // Email operations - different responsibility
             emailService.send(this.email, 'Welcome!');
           }
-          
+
           formatForDisplay() {
             // Presentation logic - different responsibility
             return `${this.name} (${this.email})`;

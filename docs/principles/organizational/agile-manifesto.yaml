@@ -85,7 +85,7 @@ examples:
         "What did you do yesterday?"
         "What will you do today?"
         "Any blockers?"
-        
+
         // Focus on collaboration:
         "How can we help each other succeed today?"
         "What do we need to deliver value to our customer?"
@@ -95,7 +95,7 @@ examples:
       code: |
         // Traditional approach:
         "That's a scope change, we need a change request"
-        
+
         // Agile approach:
         "Let's understand the customer need and see how we can adapt"
         "How does this change affect our current sprint goals?"

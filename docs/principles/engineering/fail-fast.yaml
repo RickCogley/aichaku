@@ -90,7 +90,7 @@ examples:
           if (!user.email.includes('@')) {
             throw new Error('User email must be a valid email address');
           }
-          
+
           // Continue with valid data
           return processValidUser(user);
         }
@@ -109,7 +109,7 @@ examples:
             if (!config.database) {
               throw new Error('Database name is required');
             }
-            
+
             this.host = config.host;
             this.port = config.port;
             this.database = config.database;

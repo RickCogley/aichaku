@@ -35,6 +35,7 @@ import { hooks } from "./src/commands/hooks.ts";
 import { standards } from "./src/commands/standards.ts";
 import { methodologies } from "./src/commands/methodologies.ts";
 import { principles } from "./src/commands/principles.ts";
+import { testPrinciples } from "./src/commands/test-principles.ts";
 import { mergeDocs } from "./src/commands/merge-docs.ts";
 import { runMCPCommand } from "./src/commands/mcp.ts";
 import { createMigrateCommand, showMigrateHelp } from "./src/commands/migrate.ts";
@@ -602,6 +603,15 @@ ${result.claudeMdReferences.map((ref) => `    Line ${ref.line}: "${ref.text}"`).
       };
 
       await principles(principlesOptions);
+      break;
+    }
+
+    case "test-principles": {
+      const testOptions = {
+        projectPath: args.path as string | undefined,
+        help: args.help as boolean | undefined,
+      };
+      await testPrinciples(testOptions);
       break;
     }
 

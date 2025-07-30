@@ -71,7 +71,7 @@ examples:
         - Minimal metadata collection
         - Anonymous account creation
         - Open source for transparency
-        
+
         User experience:
         - Privacy protection is invisible to users
         - No complex privacy settings to configure
@@ -86,7 +86,7 @@ examples:
         - Complex, buried privacy settings
         - Opt-out instead of opt-in for data sharing
         - Vague privacy policy language
-        
+
         User impact:
         - Users unaware of data collection extent
         - Difficulty controlling personal information
@@ -125,10 +125,10 @@ references:
     - "Privacy-preserving technologies (differential privacy, homomorphic encryption)"
   description: |
     A framework that embeds privacy considerations into the design and operation of IT systems, networked infrastructure, and business practices from the very beginning, rather than as an afterthought.
-  
+
   core_concept: |
     Privacy by Design (PbD) is a concept developed by Dr. Ann Cavoukian that takes a proactive rather than reactive approach to privacy. It anticipates and prevents privacy invasions before they occur, making privacy the default setting in any system or business practice.
-  
+
   seven_principles:
     proactive_not_reactive:
       description: "Anticipate and prevent privacy invasions before they occur"
@@ -137,7 +137,7 @@ references:
         - Threat modeling for privacy
         - Regular privacy audits
         - Privacy-focused architecture
-    
+
     privacy_as_default:
       description: "Maximum privacy protection without requiring action from the user"
       implementation:
@@ -145,7 +145,7 @@ references:
         - Minimal data collection by default
         - Strictest privacy settings as standard
         - No hidden data processing
-    
+
     full_functionality:
       description: "Accommodate all legitimate interests without unnecessary trade-offs"
       implementation:
@@ -153,7 +153,7 @@ references:
         - Win-win solutions
         - Creative problem solving
         - User empowerment
-    
+
     end_to_end_security:
       description: "Secure data throughout its lifecycle"
       implementation:
@@ -161,7 +161,7 @@ references:
         - Secure data destruction
         - Access controls
         - Regular security updates
-    
+
     visibility_transparency:
       description: "Ensure all stakeholders can verify privacy practices"
       implementation:
@@ -169,7 +169,7 @@ references:
         - Open communication
         - Regular reporting
         - Independent audits
-    
+
     respect_user_privacy:
       description: "Keep user interests paramount"
       implementation:
@@ -177,7 +177,7 @@ references:
         - Strong defaults
         - Clear consent mechanisms
         - Easy privacy controls
-    
+
     privacy_embedded:
       description: "Make privacy an essential component of the system"
       implementation:
@@ -185,57 +185,57 @@ references:
         - Integral to functionality
         - Part of the architecture
         - Built into the culture
-  
+
   implementation_strategies:
     data_minimization:
       - Collect only what's necessary
       - Define clear purposes
       - Set retention limits
       - Regular data purging
-    
+
     purpose_limitation:
       - Use data only for stated purposes
       - Get new consent for new uses
       - Prevent function creep
       - Clear documentation
-    
+
     consent_management:
       - Granular consent options
       - Easy withdrawal mechanisms
       - Clear consent requests
       - Consent versioning
-    
+
     privacy_engineering:
       - Privacy design patterns
       - Differential privacy
       - Homomorphic encryption
       - Privacy-preserving analytics
-  
+
   privacy_patterns:
     data_minimization_patterns:
       - Progressive disclosure
       - Just-in-time data collection
       - Anonymous by default
       - Aggregation over individual data
-    
+
     consent_patterns:
       - Layered privacy notices
       - Just-in-time consent
       - Privacy dashboard
       - Consent receipt
-    
+
     transparency_patterns:
       - Privacy nutrition labels
       - Data flow visualization
       - Privacy indicators
       - Activity logs for users
-    
+
     control_patterns:
       - Privacy settings center
       - Data portability tools
       - Account deletion
       - Granular permissions
-  
+
   common_privacy_risks:
     - Over-collection of data
     - Unclear data usage
@@ -245,7 +245,7 @@ references:
     - Hidden data processing
     - Indefinite retention
     - Cross-device tracking
-  
+
   legal_frameworks:
     gdpr:
       region: "European Union"
@@ -254,7 +254,7 @@ references:
         - Privacy by design mandated
         - Data protection officer
         - Privacy impact assessments
-    
+
     ccpa:
       region: "California, USA"
       key_requirements:
@@ -262,7 +262,7 @@ references:
         - Right to delete
         - Right to opt-out
         - Non-discrimination
-    
+
     pipeda:
       region: "Canada"
       key_requirements:
@@ -270,21 +270,21 @@ references:
         - Limited collection
         - Individual access
         - Challenging compliance
-  
+
   privacy_impact_assessment:
     when_required:
       - New data processing
       - High-risk processing
       - Large scale processing
       - New technologies
-    
+
     components:
       - Data flow mapping
       - Risk identification
       - Mitigation strategies
       - Stakeholder consultation
       - Documentation
-  
+
   metrics_and_monitoring:
     - Data collection volume
     - Consent rates
@@ -294,45 +294,45 @@ references:
     - Breach incidents
     - Third-party data sharing
     - Retention compliance
-  
+
   organizational_aspects:
     roles:
       - Privacy officer
       - Privacy champions
       - Privacy engineers
       - Legal counsel
-    
+
     processes:
       - Privacy review board
       - Privacy training
       - Incident response
       - Vendor assessments
-    
+
     culture:
       - Privacy awareness
       - Ethical considerations
       - User advocacy
       - Continuous improvement
-  
+
   benefits:
     user_benefits:
       - Control over personal data
       - Transparency in data use
       - Reduced privacy risks
       - Trust in services
-    
+
     business_benefits:
       - Competitive advantage
       - Regulatory compliance
       - Reduced breach risk
       - Customer trust
       - Innovation opportunities
-  
+
   quotes:
     - "Privacy is not something that I'm merely entitled to, it's an absolute prerequisite. - Marlon Brando"
     - "Privacy by Design advances the view that the future of privacy cannot be assured solely by compliance with regulatory frameworks. - Ann Cavoukian"
     - "Arguing that you don't care about privacy because you have nothing to hide is no different than saying you don't care about free speech because you have nothing to say. - Edward Snowden"
-  
+
   references:
     - title: "Privacy by Design: The 7 Foundational Principles"
       author: "Ann Cavoukian"

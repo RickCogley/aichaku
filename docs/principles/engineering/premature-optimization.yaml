@@ -84,7 +84,7 @@ examples:
           const sum = numbers.reduce((a, b) => a + b, 0);
           return sum / numbers.length;
         }
-        
+
         // Step 2: Profile shows this is called frequently with large arrays
         // Step 3: Optimize the bottleneck
         function calculateAverageOptimized(numbers) {
@@ -112,12 +112,12 @@ examples:
           }
           return duplicates;
         }
-        
+
         // Better: Algorithmic improvement
         function findDuplicates(arr) {
           const seen = new Set();
           const duplicates = new Set();
-          
+
           for (const item of arr) {
             if (seen.has(item)) {
               duplicates.add(item);
@@ -125,7 +125,7 @@ examples:
               seen.add(item);
             }
           }
-          
+
           return Array.from(duplicates);
         }
       explanation: "Focus on algorithmic improvements (O(n²) → O(n)) rather than micro-optimizations"
@@ -141,7 +141,7 @@ examples:
           }
           return result.slice(0, -1); // Remove last |
         }
-        
+
         // Better: Clear and readable
         function processData(data) {
           return data.map(item => item.value).join('|');

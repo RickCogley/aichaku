@@ -82,17 +82,17 @@ examples:
         - User interviews (15 participants)
         - Contextual inquiry in user environments
         - Journey mapping of current state
-        
+
         Design Phase:
         - Lo-fi prototypes based on research insights
         - User testing with 8 participants
         - Iterate based on feedback
-        
+
         Validation Phase:
         - Hi-fi prototype testing
         - A/B testing of key interactions
         - Accessibility testing with assistive technology users
-        
+
         Launch Phase:
         - Usability metrics tracking
         - Ongoing user feedback collection
@@ -101,17 +101,17 @@ examples:
     - description: "User research informing design decisions"
       code: |
         Problem: Users abandoning checkout process
-        
+
         Research findings:
         - 60% of users confused by shipping options
         - 45% concerned about payment security
         - 30% frustrated by required account creation
-        
+
         Design solutions:
         - Simplified shipping selection with clear costs
         - Added security badges and encryption info
         - Introduced guest checkout option
-        
+
         Results:
         - 25% increase in checkout completion
         - 40% reduction in support tickets
@@ -124,7 +124,7 @@ examples:
         "I think users would prefer this layout"
         "Let's add more features to make it powerful"
         "The CEO wants it to look more modern"
-        
+
         // Result:
         - High bounce rates
         - Low user adoption

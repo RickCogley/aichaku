@@ -8,10 +8,12 @@
 import { exists } from "jsr:@std/fs@1";
 import { join } from "jsr:@std/path@1";
 import { safeReadTextFile } from "./path-security.ts";
+import type { PrincipleCategory } from "../types/principle.ts";
 
 interface AgentGenerationOptions {
   selectedMethodologies: string[];
   selectedStandards: string[];
+  selectedPrinciples: string[];
   outputPath: string;
   agentPrefix: string;
 }
@@ -48,6 +50,50 @@ interface ParsedYaml {
 }
 
 /**
+ * Define which principles each agent type should be aware of
+ */
+const AGENT_PRINCIPLE_MAPPING: Record<string, {
+  categories: PrincipleCategory[];
+  specific?: string[];
+}> = {
+  "orchestrator": {
+    categories: ["software-development", "organizational", "engineering", "human-centered"],
+    // Orchestrator gets all principles for intelligent routing
+  },
+  "security-reviewer": {
+    categories: ["engineering"],
+    specific: ["defensive-programming", "fail-fast", "robustness-principle", "privacy-by-design"],
+  },
+  "code-explorer": {
+    categories: ["software-development", "engineering"],
+    specific: ["dry", "yagni", "kiss", "unix-philosophy", "separation-of-concerns", "solid"],
+  },
+  "methodology-coach": {
+    categories: ["organizational", "human-centered"],
+    specific: ["agile-manifesto", "lean-principles", "conways-law", "user-centered-design", "inclusive-design"],
+  },
+  "documenter": {
+    categories: ["human-centered"],
+    specific: ["accessibility-first", "inclusive-design", "user-centered-design", "dry"],
+  },
+  "api-architect": {
+    categories: ["software-development", "engineering"],
+    specific: [
+      "solid",
+      "separation-of-concerns",
+      "unix-philosophy",
+      "robustness-principle",
+      "defensive-programming",
+      "user-centered-design",
+    ],
+  },
+  "principle-coach": {
+    categories: ["software-development", "organizational", "engineering", "human-centered"],
+    // Principle coach gets all principles for comprehensive guidance
+  },
+};
+
+/**
  * Generate methodology-aware agents based on selected methodologies and standards
  */
 export async function generateMethodologyAwareAgents(
@@ -72,6 +118,7 @@ export async function generateMethodologyAwareAgents(
       "documenter",
       "code-explorer",
       "api-architect",
+      "principle-coach",
     ];
 
     for (const agentType of agentTypes) {
@@ -138,6 +185,9 @@ async function generateAgent(
   // Generate methodology YAML section
   const methodologyYaml = await generateMethodologyYaml(options.selectedMethodologies);
 
+  // Generate principles YAML section
+  const principlesYaml = await generatePrinciplesYaml(options.selectedPrinciples, agentType);
+
   // Sections will be combined later after YAML frontmatter is built
 
   // Build YAML frontmatter with pure YAML structure
@@ -178,6 +228,7 @@ async function generateAgent(
     baseContent.trim(),
     standardsYaml,
     methodologyYaml,
+    principlesYaml,
   ].filter(Boolean);
 
   const finalContent = `---
@@ -587,6 +638,168 @@ function parseYamlValue(content: string): unknown {
   // For complex structures, return as-is for now
   // (Could implement full YAML parsing if needed)
   return trimmed;
+}
+
+/**
+ * Generate principles YAML section from selected principles for specific agent
+ */
+async function generatePrinciplesYaml(principles: string[], agentType: string): Promise<string> {
+  // Get the mapping for this agent type
+  const agentMapping = AGENT_PRINCIPLE_MAPPING[agentType];
+  if (!agentMapping) return "";
+
+  const principlesByCategory: { [key: string]: Record<string, unknown>[] } = {};
+  const homePath = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
+  const principlesBase = join(homePath, ".claude", "aichaku", "docs", "principles");
+
+  // Helper function to check if a principle should be included for this agent
+  const shouldIncludePrinciple = (principleId: string, category: PrincipleCategory): boolean => {
+    // Always include if specifically listed for this agent
+    if (agentMapping.specific?.includes(principleId)) return true;
+
+    // Include if the agent accepts this category AND the principle is selected
+    if (agentMapping.categories.includes(category) && principles.includes(principleId)) return true;
+
+    return false;
+  };
+
+  // Load principles from each category
+  const categories: PrincipleCategory[] = ["software-development", "organizational", "engineering", "human-centered"];
+
+  for (const category of categories) {
+    const categoryPath = join(principlesBase, category);
+
+    if (!await exists(categoryPath)) continue;
+
+    // Find all YAML files in the category
+    try {
+      for await (const entry of Deno.readDir(categoryPath)) {
+        if (entry.isFile && entry.name.endsWith(".yaml")) {
+          const principleId = entry.name.replace(".yaml", "");
+
+          // Check if this principle should be included for this agent
+          if (!shouldIncludePrinciple(principleId, category)) {
+            continue;
+          }
+
+          const yamlPath = join(categoryPath, entry.name);
+          const yamlContent = await safeReadTextFile(yamlPath, principlesBase);
+          const parsedYaml = parseYamlSections(yamlContent, ["summary", "guidance", "application_context"]);
+
+          if (!principlesByCategory[category]) principlesByCategory[category] = [];
+          principlesByCategory[category].push({
+            name: principleId,
+            ...parsedYaml,
+          });
+        }
+      }
+    } catch (error) {
+      console.warn(`Failed to read principles from ${categoryPath}: ${error}`);
+    }
+  }
+
+  if (Object.keys(principlesByCategory).length === 0) return "";
+
+  // Add principle-aware section header with agent-specific context
+  let yamlSection = `## Principle-Aware Guidance
+
+This agent has been configured with relevant software engineering principles to provide 
+context-aware guidance and decision support.
+
+### How to Use Principles
+
+1. **Contextual Application**: Apply principles based on the specific situation
+2. **Trade-off Analysis**: Help users understand when principles conflict
+3. **Practical Examples**: Provide concrete examples from the current context
+4. **Educational Approach**: Explain why a principle matters in this case
+
+<!-- AUTO-GENERATED from docs/principles/ - Do not edit manually -->
+
+\`\`\`yaml
+principles:`;
+
+  for (const [category, categoryPrinciples] of Object.entries(principlesByCategory)) {
+    yamlSection += `\n  ${category}:`;
+    for (const principle of categoryPrinciples) {
+      yamlSection += `\n    ${principle.name}:`;
+      if (principle.summary) {
+        yamlSection += `\n      summary: ${JSON.stringify(principle.summary, null, 6).replace(/^/gm, "      ")}`;
+      }
+      if (principle.guidance) {
+        yamlSection += `\n      guidance: ${JSON.stringify(principle.guidance, null, 6).replace(/^/gm, "      ")}`;
+      }
+      if (principle.application_context) {
+        yamlSection += `\n      application_context: ${
+          JSON.stringify(principle.application_context, null, 6).replace(/^/gm, "      ")
+        }`;
+      }
+    }
+  }
+
+  yamlSection += `\n\`\`\``;
+
+  // Add agent-specific principle application notes
+  yamlSection += `\n\n### Agent-Specific Application Notes\n\n`;
+
+  switch (agentType) {
+    case "orchestrator":
+      yamlSection += `As the orchestrator, use principles to:
+- Guide task decomposition and routing decisions
+- Identify which specialists need principle context
+- Ensure principle compliance across the workflow
+- Detect when principle guidance is needed`;
+      break;
+
+    case "security-reviewer":
+      yamlSection += `As the security reviewer, apply principles to:
+- Enforce defensive programming practices
+- Validate fail-fast implementations
+- Ensure privacy-by-design compliance
+- Guide secure coding practices`;
+      break;
+
+    case "code-explorer":
+      yamlSection += `As the code explorer, use principles to:
+- Identify principle violations in existing code
+- Recognize architectural patterns
+- Detect code smells and anti-patterns
+- Suggest principle-based improvements`;
+      break;
+
+    case "methodology-coach":
+      yamlSection += `As the methodology coach, leverage principles to:
+- Align team practices with principles
+- Guide process improvements
+- Resolve methodology-principle conflicts
+- Foster principle-driven culture`;
+      break;
+
+    case "documenter":
+      yamlSection += `As the documenter, apply principles to:
+- Ensure documentation follows DRY principle
+- Create accessible, inclusive content
+- Design user-centered documentation
+- Maintain principle-based examples`;
+      break;
+
+    case "api-architect":
+      yamlSection += `As the API architect, use principles to:
+- Design SOLID-compliant interfaces
+- Apply separation of concerns
+- Ensure robustness principle in APIs
+- Guide RESTful design decisions`;
+      break;
+
+    case "principle-coach":
+      yamlSection += `As the principle coach, your role is to:
+- Provide deep principle understanding
+- Guide contextual application
+- Resolve principle conflicts
+- Foster principle-based thinking`;
+      break;
+  }
+
+  return yamlSection;
 }
 
 /**

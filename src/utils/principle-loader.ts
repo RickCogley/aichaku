@@ -34,7 +34,7 @@ export class PrincipleLoader {
   constructor() {
     // Try repo location first (for development), then global installation
     const repoPath = join(Deno.cwd(), "docs/principles");
-    const globalPath = join(getAichakuPaths().global.root, "docs/principles");
+    const _globalPath = join(getAichakuPaths().global.root, "docs/principles");
 
     // Use repo path if it exists (development mode), otherwise use global
     this.principlesPath = repoPath;
@@ -158,9 +158,11 @@ export class PrincipleLoader {
     // Basic validation - check required fields
     if (!data || typeof data !== "object") return false;
 
+    const obj = data as Record<string, unknown>;
+
     const required = ["name", "category", "description", "history", "summary", "guidance"];
     for (const field of required) {
-      if (!(field in data)) {
+      if (!(field in obj)) {
         console.warn(`Missing required field: ${field}`);
         return false;
       }
@@ -168,15 +170,15 @@ export class PrincipleLoader {
 
     // Validate category
     const validCategories = ["software-development", "organizational", "engineering", "human-centered"];
-    if (!validCategories.includes(data.category)) {
-      console.warn(`Invalid category: ${data.category}`);
+    if (!validCategories.includes(obj.category as string)) {
+      console.warn(`Invalid category: ${obj.category}`);
       return false;
     }
 
     // Validate nested structures
-    if (!data.history || typeof data.history !== "object") return false;
-    if (!data.summary || typeof data.summary !== "object") return false;
-    if (!data.guidance || typeof data.guidance !== "object") return false;
+    if (!obj.history || typeof obj.history !== "object") return false;
+    if (!obj.summary || typeof obj.summary !== "object") return false;
+    if (!obj.guidance || typeof obj.guidance !== "object") return false;
 
     return true;
   }

@@ -77,7 +77,7 @@ examples:
         - Small, autonomous teams (≤8 people)
         - Each team owns one or more services
         - Teams communicate via APIs only
-        
+
         Resulting Architecture:
         - Service-oriented architecture
         - Clear service boundaries
@@ -89,12 +89,12 @@ examples:
         - Provides shared infrastructure services
         - Focuses on developer experience
         - API-first approach to tooling
-        
+
         Product Teams:
         - Consume platform services
         - Focus on business features
         - Minimal platform interaction
-        
+
         Result: Clear separation of concerns
       explanation: "Team separation creates architectural layers with clear responsibilities"
   bad:
@@ -104,12 +104,12 @@ examples:
         - Large, hierarchical teams
         - Functional silos (frontend, backend, QA)
         - All changes require coordination
-        
+
         Attempted Architecture:
         - Microservices
         - Independent deployments
         - Service autonomy
-        
+
         Reality: Distributed monolith
       problem: "Organizational structure prevents true service independence"
   real_world:

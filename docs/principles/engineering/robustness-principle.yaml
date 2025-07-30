@@ -77,9 +77,9 @@ examples:
       code: |
         // Conservative sending: proper case
         response.setHeader('Content-Type', 'application/json');
-        
+
         // Liberal receiving: case insensitive
-        const contentType = request.headers['content-type'] || 
+        const contentType = request.headers['content-type'] ||
                           request.headers['Content-Type'] ||
                           request.headers['CONTENT-TYPE'];
       explanation: "Sends headers in standard case but accepts any case variation"
@@ -89,13 +89,13 @@ examples:
           // Try standard ISO format first
           let date = new Date(dateString);
           if (!isNaN(date)) return date;
-          
+
           // Accept common variations
           const formats = [
             /^(\d{4})-(\d{2})-(\d{2})$/,  // YYYY-MM-DD
             /^(\d{2})\/(\d{2})\/(\d{4})$/ // MM/DD/YYYY
           ];
-          
+
           // Parse flexibly but validate result
           for (const format of formats) {
             const match = dateString.match(format);
@@ -104,10 +104,10 @@ examples:
               if (!isNaN(date)) return date;
             }
           }
-          
+
           throw new Error('Invalid date format');
         }
-        
+
         // Always output in standard format
         function formatDate(date) {
           return date.toISOString().split('T')[0]; // YYYY-MM-DD

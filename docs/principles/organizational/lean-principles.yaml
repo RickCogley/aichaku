@@ -81,22 +81,22 @@ examples:
     - description: "Value stream mapping for feature delivery"
       code: |
         Current State:
-        Idea → Requirements (5 days) → Design (3 days) → 
-        Dev Queue (2 days) → Development (8 days) → 
-        Test Queue (1 day) → Testing (4 days) → 
+        Idea → Requirements (5 days) → Design (3 days) →
+        Dev Queue (2 days) → Development (8 days) →
+        Test Queue (1 day) → Testing (4 days) →
         Deploy Queue (1 day) → Deployment (1 day)
         Total: 25 days (9 days work, 16 days waiting)
-        
+
         Future State:
-        Idea → Cross-functional Team → 
-        Continuous Development & Testing → 
+        Idea → Cross-functional Team →
+        Continuous Development & Testing →
         Continuous Deployment
         Total: 9 days (9 days work, 0 days waiting)
       explanation: "Mapping reveals waste in handoffs and queues, enabling flow optimization"
     - description: "Pull-based development with Kanban"
       code: |
         Backlog | Ready (3) | In Progress (2) | Review (1) | Done
-        
+
         WIP Limits prevent overproduction
         Team pulls work when capacity available
         Blocked items are made visible immediately
@@ -109,7 +109,7 @@ examples:
         - Assign all features to developers at once
         - Batch testing at the end
         - Big-bang deployment
-        
+
         Result: Long feedback cycles, high WIP, delayed value
       problem: "Creates inventory waste and long lead times"
   real_world:

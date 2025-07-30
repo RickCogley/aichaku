@@ -77,20 +77,20 @@ examples:
       code: |
         <form>
           <label for="email">Email Address (required)</label>
-          <input 
-            type="email" 
-            id="email" 
-            required 
+          <input
+            type="email"
+            id="email"
+            required
             aria-describedby="email-error"
             aria-invalid="false"
           >
           <div id="email-error" role="alert"></div>
         </form>
       explanation: "Proper labels, ARIA attributes, and error handling"
-    
+
     - description: "Accessible button"
       code: |
-        <button 
+        <button
           type="button"
           aria-label="Close dialog"
           aria-expanded="true"
@@ -99,7 +99,7 @@ examples:
           <span aria-hidden="true">×</span>
         </button>
       explanation: "Clear purpose, keyboard accessible, screen reader friendly"
-  
+
   bad:
     - description: "Inaccessible design"
       code: |
@@ -107,7 +107,7 @@ examples:
         <img src="chart.png">
         <span style="color: red">Error</span>
       problem: "No keyboard access, missing alt text, color-only error indication"
-  
+
   real_world:
     - project: "BBC iPlayer"
       description: "Comprehensive accessibility features including audio description and subtitles"

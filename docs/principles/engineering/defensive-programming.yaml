@@ -90,7 +90,7 @@ examples:
           if (!Number.isInteger(age)) {
             throw new Error('Age must be a whole number');
           }
-          
+
           return age;
         }
       explanation: "Validates input thoroughly with specific error messages for each failure case"
@@ -100,12 +100,12 @@ examples:
           constructor() {
             this.users = [];
           }
-          
+
           getUsers() {
             // Return a copy to prevent external modification
             return [...this.users];
           }
-          
+
           addUsers(newUsers) {
             // Validate input and make defensive copy
             if (!Array.isArray(newUsers)) {

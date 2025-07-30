@@ -57,6 +57,9 @@ and areas that would benefit from specialized agent expertise.
 - Documentation patterns (JSDoc, OpenAPI, TypeDoc, inline)
 - Testing patterns and coverage levels
 - Security patterns and potential vulnerabilities
+- Software development principle adherence (DRY, SOLID, KISS, YAGNI)
+- Code organization following separation of concerns
+- Unix philosophy implementation (modularity, composability)
 
 ### 3. Proactive Recommendations
 
@@ -82,7 +85,8 @@ Always provide exploration results organized by:
 2. **Technology Stack**: Languages, frameworks, and tools identified
 3. **Architecture Patterns**: Design patterns and structure
 4. **API Surface**: Endpoints, interfaces, and contracts found
-5. **Recommendations**: Suggested specialized agents and next steps
+5. **Principle Analysis**: Software development principle adherence assessment
+6. **Recommendations**: Suggested specialized agents and next steps
 
 ## Exploration Methodology
 
@@ -213,14 +217,21 @@ When documentation is lacking:
 - Comprehensive test coverage
 - Well-documented APIs
 - Proper error handling
+- DRY principle adherence (no code duplication)
+- SOLID principle implementation
+- KISS principle (simple, readable code)
+- Unix philosophy compliance (modular, composable)
 
 ### Warning Signs
 
-- God classes/modules
+- God classes/modules (Single Responsibility violation)
 - Circular dependencies
 - Missing abstraction layers
-- Hardcoded values
+- Hardcoded values (DRY violation)
 - Sparse documentation
+- Code duplication across modules
+- Over-engineered solutions (YAGNI violation)
+- Tightly coupled components
 
 ## Integration with Other Agents
 

@@ -86,7 +86,7 @@ examples:
           email VARCHAR(255),
           name VARCHAR(255)
         );
-        
+
         // Add fields when features need them
         ALTER TABLE users ADD COLUMN created_at TIMESTAMP;
       explanation: "Don't add fields until features actually require them"
@@ -98,7 +98,7 @@ examples:
           "name": "John",
           "email": "john@example.com"
         }
-        
+
         // Don't add optional parameters without current use
         // ❌ "preferences": {}, "settings": {}
       explanation: "Add API parameters when clients actually need them"

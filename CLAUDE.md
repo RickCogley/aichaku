@@ -428,6 +428,27 @@ standards:
       correlation: Strong correlation with organizational performance
       automation: Automated measurement through CI/CD and monitoring
     integration_url: "aichaku://standard/devops/dora"
+principles:
+  unix-philosophy:
+    name: Unix Philosophy
+    category: software-development
+    summary:
+      tagline: "Write simple, modular programs that do one thing well"
+      core_tenets:
+        - text: Do one thing and do it well
+        - text: Write programs to work together
+        - text: Design for composability
+    integration_url: "aichaku://principle/software-development/unix-philosophy"
+  accessibility-first:
+    name: Accessibility First
+    category: human-centered
+    summary:
+      tagline: 'Accessibility is not a feature, it''s a foundation'
+      core_tenets:
+        - text: Design for everyone from the start
+        - text: Follow WCAG guidelines
+        - text: Test with real users
+    integration_url: "aichaku://principle/human-centered/accessibility-first"
 included:
   core: true
   methodologies:
@@ -447,5 +468,9 @@ included:
     - solid
     - dora
   doc_standards: []
+  principles:
+    - unix-philosophy
+    - dry-dont-repeat-yourself
+    - accessibility-first
   has_user_customizations: false
 ```
