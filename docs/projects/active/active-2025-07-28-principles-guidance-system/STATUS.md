@@ -136,9 +136,13 @@ support. Week 5 now complete with learn command integration - users can now expl
 - ✅ All 18 principles accessible via learn command
 - ✅ Category filtering and search functionality
 
-**Week 6: Testing & Polish**
+**Week 6: Testing & Polish** 🚀 IN PROGRESS
 
-- Comprehensive testing across all use cases
-- Performance optimization and bug fixes
-- Final documentation review
+- Create comprehensive end-to-end tests for all 18 principles
+- Test agent integration and principle-aware responses
+- Performance optimization for principle loading
+- Fix any remaining bugs and edge cases
+- Complete user documentation and release notes
 - Prepare for cool-down phase
+
+See [week-6-plan.md](week-6-plan.md) for detailed task breakdown.

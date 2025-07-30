@@ -1,6 +1,6 @@
 # Hill Chart: Principles Guidance System
 
-## Current Status: End of Week 2 - Building Phase
+## Current Status: End of Week 5 - Building Phase
 
 ```
                     FIGURING OUT                    |                    DONE
@@ -14,12 +14,14 @@
 /                          V                        |                  \
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-CLI Implementation                     ●
-Data Structure                        ●
-Principle Content                    ●
-Agent Integration        ●
-Documentation           ●
-Testing & Polish       ●
+CLI Implementation                                                      ●
+Data Structure                                                         ●
+Principle Content                                                     ●
+Agent Integration                                   ●
+CLAUDE.md Integration                                                ●
+Learn Command Integration                                           ●
+Documentation                                     ●
+Testing & Polish                   ●
 ```
 
 ## Scopes and Their Position
@@ -66,40 +68,66 @@ Completed work:
 
 No remaining work - content is comprehensive and ready
 
-### 4. Agent Integration 🟡
+### 4. Agent Integration ✅
 
-**Position**: Starting - base of hill **Status**: Not started **Confidence**: Medium - needs experimentation
+**Position**: Done - shipped **Status**: Complete **Confidence**: High - fully integrated
 
-Key unknowns:
+Completed work:
 
-- Best way to inject principle context
-- How to make guidance non-intrusive
-- Balancing multiple principles
+- Created principle coach agent template
+- Enhanced agent generator with principle awareness
+- Updated orchestrator to detect principle-related questions
+- Added principle sections to specialist agents
+- Tested principle injection and guidance quality
+
+No remaining work - agents are principle-aware
+
+### 5. CLAUDE.md Integration ✅
+
+**Position**: Done - shipped **Status**: Complete **Confidence**: High - fully working
+
+Completed work:
+
+- Updated yaml-config-reader.ts to support principles
+- Modified integrate command to pass selected principles
+- Successfully tested principle inclusion in CLAUDE.md
+- Principles now appear in generated configuration
+
+No remaining work - integration complete
+
+### 6. Learn Command Integration ✅
+
+**Position**: Done - shipped **Status**: Complete **Confidence**: High - fully working
+
+Completed work:
+
+- Added --principles flag to list all principles
+- Implemented --principle-category filtering
+- Enable individual principle lookup (e.g., aichaku learn dry)
+- Added cross-references to principle documentation
+- Fixed type errors and path issues
+
+No remaining work - learn command fully integrated
+
+### 7. Documentation & Templates 🟡
+
+**Position**: Over the hill **Status**: Partially complete **Confidence**: High - straightforward
+
+Completed work:
+
+- Cross-references added to all principle docs
+- Learn command integration documented
+- Project status documentation kept current
 
 Remaining work:
 
-- Update orchestrator
-- Modify specialist agents
-- Test guidance quality
+- Update main README with principles feature
+- Create user guide for principles
+- Document best practices
 
-### 5. Documentation & Templates 🔴
+### 8. Testing & Polish 🟡
 
-**Position**: Starting - base of hill **Status**: Not started **Confidence**: High - straightforward
-
-Key unknowns resolved:
-
-- Documentation structure clear
-- Template needs identified
-
-Remaining work:
-
-- Write all guides
-- Update existing docs
-- Create templates
-
-### 6. Testing & Polish 🔴
-
-**Position**: Starting - base of hill **Status**: Not started **Confidence**: High - standard process
+**Position**: Climbing the hill **Status**: In progress **Confidence**: High - standard process
 
 Key unknowns resolved:
 
