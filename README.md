@@ -35,6 +35,19 @@ use everywhere. Rather than forcing you to choose a single methodology, aichaku 
 Code blend approaches based on your natural language. Say "sprint" and get Scrum practices; mention "shaping" and get
 Shape Up principles - all seamlessly integrated.
 
+## 🆕 What's New in v0.39.0+
+
+### 🌸 Development Principles System
+
+**Timeless philosophies for thoughtful development** - 18 built-in principles across 4 categories that guide thinking
+without being prescriptive:
+
+- Select principles that resonate with your development philosophy
+- Principles work alongside methodologies and standards
+- Interactive learning with `aichaku learn`
+- Agent awareness - all specialists consider your selected principles
+- Compatibility checking to avoid conflicting approaches
+
 ## 🆕 What's New in v0.36.0+
 
 ### 🤖 Sub-Agent System
@@ -568,6 +581,46 @@ aichaku standards --copy GOOGLE-STYLE
 - **Metrics**: DORA, Code Quality, Performance
 
 Standards are automatically included in your CLAUDE.md when selected.
+
+### Principles - Development Philosophies
+
+🆕 **New in v0.39.0!** Guide your development with timeless principles that shape thinking and decision-making:
+
+```bash
+# List all available principles
+aichaku principles --list
+
+# Filter by category
+aichaku principles --list --category software-development
+
+# Show detailed information about a principle
+aichaku principles --show dry
+aichaku principles --show unix-philosophy --verbose
+
+# Select principles for your project
+aichaku principles --select dry,kiss,yagni,unix-philosophy
+
+# Check principle compatibility
+aichaku principles --compatibility kiss,yagni
+
+# View currently selected principles
+aichaku principles --current
+
+# Interactive learning
+aichaku learn --principles
+aichaku learn dry
+```
+
+**Available Principle Categories:**
+
+- **💻 Software Development** (6): DRY, KISS, YAGNI, SOLID, Unix Philosophy, Separation of Concerns
+- **🏢 Organizational** (3): Agile Manifesto, Lean Principles, Conway's Law
+- **⚙️ Engineering** (4): Fail Fast, Defensive Programming, Robustness Principle, Premature Optimization
+- **👥 Human-Centered** (5): Accessibility First, Privacy by Design, User-Centered Design, Inclusive Design, Ethical
+  Design
+
+Unlike prescriptive standards, principles provide gentle guidance that helps maintain consistency in approach and
+mindset. They work alongside your selected methodologies and standards to create a comprehensive development philosophy.
 
 ### Help Examples
 

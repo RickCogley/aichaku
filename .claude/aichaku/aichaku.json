@@ -29,9 +29,8 @@
   },
   "principles": {
     "selected": [
-      "unix-philosophy",
-      "dry-dont-repeat-yourself",
-      "accessibility-first"
+      "dry",
+      "kiss"
     ]
   }
 }
