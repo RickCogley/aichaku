@@ -598,7 +598,7 @@ aichaku principles --show dry
 aichaku principles --show unix-philosophy --verbose
 
 # Select principles for your project
-aichaku principles --select dry,kiss,yagni,unix-philosophy
+aichaku principles --add dry,kiss,yagni,unix-philosophy
 
 # Check principle compatibility
 aichaku principles --compatibility kiss,yagni

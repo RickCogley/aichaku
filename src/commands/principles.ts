@@ -18,8 +18,8 @@ import type { PrincipleCategory, PrincipleWithDocs } from "../types/principle.ts
 interface PrinciplesOptions {
   list?: boolean;
   show?: string;
-  select?: string;
-  selectInteractive?: boolean;
+  add?: string;
+  addInteractive?: boolean;
   current?: boolean;
   remove?: string;
   clear?: boolean;
@@ -62,7 +62,7 @@ function generatePrincipleId(name: string): string {
  * await principles({ show: "unix-philosophy", verbose: true });
  *
  * // Select principles for current project
- * await principles({ select: "unix-philosophy,dry,yagni" });
+ * await principles({ add: "unix-philosophy,dry,yagni" });
  *
  * // Show currently selected principles
  * await principles({ current: true });
@@ -85,13 +85,13 @@ export async function principles(options: PrinciplesOptions = {}): Promise<void>
     }
 
     // Select principles for project
-    if (options.select) {
-      await selectPrinciples(options.select, options.projectPath, options.dryRun);
+    if (options.add) {
+      await selectPrinciples(options.add, options.projectPath, options.dryRun);
       return;
     }
 
     // Interactive selection
-    if (options.selectInteractive) {
+    if (options.addInteractive) {
       await selectPrinciplesInteractive(options.projectPath);
       return;
     }
@@ -368,7 +368,7 @@ async function showCurrentPrinciples(projectPath?: string): Promise<void> {
       content.push(`## 💡 To Get Started\n`);
       content.push(`- Run \`aichaku principles --list\` to see available principles`);
       content.push(`- Run \`aichaku principles --select <ids>\` to choose principles`);
-      content.push(`- Example: \`aichaku principles --select unix-philosophy,dry,yagni\``);
+      content.push(`- Example: \`aichaku principles --add unix-philosophy,dry,yagni\``);
     } else {
       content.push(`Project follows ${selectedPrinciples.length} guiding principles:\n`);
 
@@ -557,7 +557,7 @@ aichaku principles --show unix-philosophy
 aichaku principles --show unix-philosophy --verbose
 
 # Select principles for your project
-aichaku principles --select unix-philosophy,dry,yagni
+aichaku principles --add unix-philosophy,dry,yagni
 
 # Check if principles work well together
 aichaku principles --compatibility kiss,yagni,unix-philosophy

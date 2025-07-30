@@ -288,5 +288,5 @@ to understand and modify.
 ### Learn More
 
 - Use `aichaku learn dry` for interactive examples
-- Use `aichaku principles --select dry` to add to your project
+- Use `aichaku principles --add dry` to add to your project
 - Read [The Pragmatic Programmer](https://pragprog.com/titles/tpp20/) for the original formulation

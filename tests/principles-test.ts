@@ -108,8 +108,8 @@ class PrinciplesE2ETester {
     console.log("\n🧪 Testing Principle Selection\n");
 
     // Test selection
-    await this.runTest("aichaku principles --select dry,kiss", async () => {
-      const result = await this.runCommand(["principles", "--select", "dry,kiss"]);
+    await this.runTest("aichaku principles --add dry,kiss", async () => {
+      const result = await this.runCommand(["principles", "--add", "dry,kiss"]);
       if (!result.success) throw new Error(`Exit code: ${result.code}`);
       assertStringIncludes(result.stdout, "Selected 2 principles");
     });
@@ -127,7 +127,7 @@ class PrinciplesE2ETester {
     });
 
     // Clean up
-    await this.runCommand(["principles", "--select", ""]);
+    await this.runCommand(["principles", "--add", ""]);
   }
 
   private async testLearnIntegration(): Promise<void> {

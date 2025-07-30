@@ -257,7 +257,7 @@ aichaku standards --add owasp-web,15-factor
 
 # Select guiding principles
 aichaku principles --list
-aichaku principles --select unix-philosophy,dry,yagni
+aichaku principles --add unix-philosophy,dry,yagni
 aichaku principles --show unix-philosophy --verbose
 \`\`\`
 
@@ -592,8 +592,8 @@ ${result.claudeMdReferences.map((ref) => `    Line ${ref.line}: "${ref.text}"`).
       const principlesOptions = {
         list: args.list as boolean | undefined,
         show: args.show as string | undefined,
-        select: args.select as string | undefined,
-        selectInteractive: args["select-interactive"] as boolean | undefined,
+        add: args.add as string | undefined,
+        addInteractive: args["add-interactive"] as boolean | undefined,
         current: args.current as boolean | undefined,
         remove: args.remove as string | undefined,
         clear: args.clear as boolean | undefined,

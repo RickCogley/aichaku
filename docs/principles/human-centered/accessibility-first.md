@@ -976,5 +976,5 @@ design for the norm." - Elise Roy
 ### Learn More
 
 - Use `aichaku learn accessibility-first` for interactive examples
-- Use `aichaku principles --select accessibility-first` to add to your project
+- Use `aichaku principles --add accessibility-first` to add to your project
 - Join the [A11y Project](https://www.a11yproject.com/) community

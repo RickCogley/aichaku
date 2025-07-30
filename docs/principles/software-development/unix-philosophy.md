@@ -315,5 +315,5 @@ algorithms will almost always be self-evident. Data structures, not algorithms, 
 ### Learn More
 
 - Use `aichaku learn unix-philosophy` for interactive examples
-- Use `aichaku principles --select unix-philosophy` to add to your project
+- Use `aichaku principles --add unix-philosophy` to add to your project
 - Explore the [Unix Heritage Society](https://www.tuhs.org/) archives

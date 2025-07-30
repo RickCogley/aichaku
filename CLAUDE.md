@@ -8,7 +8,7 @@ This configuration is dynamically assembled from YAML files in your ~/.claude/ai
 
 ```yaml
 aichaku:
-  version: 0.39.0
+  version: 0.39.1
   source: configuration-as-code
 behavioral_directives:
   read_claude_md_in_subfolders:
@@ -439,16 +439,16 @@ principles:
         - text: Abstract common functionality appropriately
         - text: Use code generation where appropriate
     integration_url: "aichaku://principle/software-development/dry"
-  kiss:
-    name: "KISS (Keep It Simple, Stupid)"
-    category: software-development
+  agile-manifesto:
+    name: Agile Manifesto
+    category: organizational
     summary:
-      tagline: Most systems work best if they are kept simple rather than made complicated
+      tagline: "Individuals and interactions, working software, customer collaboration, responding to change"
       core_tenets:
-        - text: Favor clarity over cleverness
-        - text: Choose simple solutions over complex ones
-        - text: Avoid over-engineering
-    integration_url: "aichaku://principle/software-development/kiss"
+        - text: Individuals and interactions over processes and tools
+        - text: Working software over comprehensive documentation
+        - text: Customer collaboration over contract negotiation
+    integration_url: "aichaku://principle/organizational/agile-manifesto"
 included:
   core: true
   methodologies:
@@ -470,6 +470,6 @@ included:
   doc_standards: []
   principles:
     - dry
-    - kiss
+    - agile-manifesto
   has_user_customizations: false
 ```
