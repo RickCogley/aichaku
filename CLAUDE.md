@@ -8,7 +8,7 @@ This configuration is dynamically assembled from YAML files in your ~/.claude/ai
 
 ```yaml
 aichaku:
-  version: 0.38.1
+  version: 0.39.0
   source: configuration-as-code
 behavioral_directives:
   read_claude_md_in_subfolders:
@@ -429,26 +429,26 @@ standards:
       automation: Automated measurement through CI/CD and monitoring
     integration_url: "aichaku://standard/devops/dora"
 principles:
-  unix-philosophy:
-    name: Unix Philosophy
+  dry:
+    name: DRY (Don't Repeat Yourself)
     category: software-development
     summary:
-      tagline: "Write simple, modular programs that do one thing well"
+      tagline: "Every piece of knowledge must have a single, unambiguous, authoritative representation"
       core_tenets:
-        - text: Do one thing and do it well
-        - text: Write programs to work together
-        - text: Design for composability
-    integration_url: "aichaku://principle/software-development/unix-philosophy"
-  accessibility-first:
-    name: Accessibility First
-    category: human-centered
+        - text: Single source of truth for each piece of knowledge
+        - text: Abstract common functionality appropriately
+        - text: Use code generation where appropriate
+    integration_url: "aichaku://principle/software-development/dry"
+  kiss:
+    name: "KISS (Keep It Simple, Stupid)"
+    category: software-development
     summary:
-      tagline: 'Accessibility is not a feature, it''s a foundation'
+      tagline: Most systems work best if they are kept simple rather than made complicated
       core_tenets:
-        - text: Design for everyone from the start
-        - text: Follow WCAG guidelines
-        - text: Test with real users
-    integration_url: "aichaku://principle/human-centered/accessibility-first"
+        - text: Favor clarity over cleverness
+        - text: Choose simple solutions over complex ones
+        - text: Avoid over-engineering
+    integration_url: "aichaku://principle/software-development/kiss"
 included:
   core: true
   methodologies:
@@ -469,8 +469,7 @@ included:
     - dora
   doc_standards: []
   principles:
-    - unix-philosophy
-    - dry-dont-repeat-yourself
-    - accessibility-first
+    - dry
+    - kiss
   has_user_customizations: false
 ```

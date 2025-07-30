@@ -32,13 +32,9 @@ export class PrincipleLoader {
   private principlesPath: string;
 
   constructor() {
-    // Try repo location first (for development), then global installation
-    const repoPath = join(Deno.cwd(), "docs/principles");
-    const _globalPath = join(getAichakuPaths().global.root, "docs/principles");
-
-    // Use repo path if it exists (development mode), otherwise use global
-    this.principlesPath = repoPath;
-    // TODO: Add exists check when needed
+    // Always use global installation path for principles
+    const paths = getAichakuPaths();
+    this.principlesPath = join(paths.global.root, "docs/principles");
   }
 
   /**
