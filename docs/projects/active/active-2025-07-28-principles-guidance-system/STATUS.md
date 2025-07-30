@@ -1,18 +1,22 @@
 # Status: Principles Guidance System
 
-**Phase**: Shaping\
+**Phase**: Building\
 **Started**: 2025-07-28\
+**Updated**: 2025-07-29\
 **Appetite**: 6 weeks
 
 ## Progress
 
-[Shaping] → [**Betting**] → [Building] → [Cool-down]\
+[Shaping] → [Betting] → [**Building**] → [Cool-down]\
 ▲
+
+Week 1/6 ████░░░░░░░░░░░░░░░░ 17% 🌿
 
 ## Current Status
 
-Just pitched! This feature will add a new "principles" category to aichaku, allowing users to select foundational
-philosophies and mindsets that guide their engineering decisions.
+Building phase has begun! The pitch has been refined with detailed implementation specifications, and work is starting
+on the CLI implementation and data structures. The execution plan breaks down the work into 7 major work streams over 6
+weeks.
 
 ## Key Principles to Add
 
@@ -45,9 +49,17 @@ philosophies and mindsets that guide their engineering decisions.
 - [ ] Accessibility First
 - [ ] Privacy by Design
 
+## Recent Decisions
+
+- Use `--verbose` flag instead of `--examples` for conventional CLI design
+- Integrate principles into the `learn` command for interactive tutorials
+- Add `--with` flag to show how principles work with specific methodologies
+- Principles guide thinking, not enforce rules - gentle suggestions only
+
 ## Next Steps
 
-1. Design YAML structure for principles
-2. Create principle documentation templates
-3. Implement principle selection in CLI
-4. Update expert agents to consider selected principles
+1. ✅ Design YAML structure for principles (completed in pitch)
+2. ✅ Create execution plan with concrete tasks
+3. ✅ Create hill chart for progress tracking
+4. 🚧 Start CLI implementation (Week 1)
+5. 🚧 Create data structures and loader (Week 1)
