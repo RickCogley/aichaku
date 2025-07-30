@@ -10,13 +10,12 @@
 [Shaping] → [Betting] → [**Building**] → [Cool-down]\
 ▲
 
-Week 4/6 ████████████████░░░░ 67% 🌿
+Week 5/6 ████████████████████░ 83% 🌿
 
 ## Current Status
 
-Building phase continues with excellent progress! Weeks 1-3 complete with full CLI, all 18 principles, and agent
-integration. Week 4 now complete with successful CLAUDE.md integration - principles are now included in project
-configurations!
+Building phase nearing completion! Weeks 1-4 complete with full CLI, all 18 principles, agent integration, and CLAUDE.md
+support. Week 5 now complete with learn command integration - users can now explore principles interactively!
 
 ## Completed Work (Week 1-2)
 
@@ -112,13 +111,34 @@ configurations!
 - ✅ Add principle-based guidance to user instructions
 - ✅ Test integration with real projects
 
-**Week 5: Documentation & Learn Command**
+## Week 5 Progress (Learn Command & Documentation)
 
-- Integration with learn command for interactive tutorials
-- Enhanced documentation with cross-references
+### ✅ Completed
+
+- Added principles support to learn command with new options:
+  - `--principles` to list all principles
+  - `--principle-category <category>` to filter by category
+  - Topic support for individual principles (e.g., `aichaku learn dry`)
+- Implemented principle discovery and display functions
+- Created formatted principle help with core tenets, anti-patterns, and compatibility
+- Added principles to `--all` resource listing
+- Updated CLI parser to handle new principle options
+- Fixed development path issues for local testing
+- Added cross-references to principle documentation:
+  - Related principles, methodologies, and standards
+  - Learn more sections with aichaku commands
+  - External resources and communities
+
+**Week 5: Documentation & Learn Command** ✅ COMPLETE
+
+- ✅ Integration with learn command for interactive tutorials
+- ✅ Enhanced documentation with cross-references
+- ✅ All 18 principles accessible via learn command
+- ✅ Category filtering and search functionality
 
 **Week 6: Testing & Polish**
 
 - Comprehensive testing across all use cases
 - Performance optimization and bug fixes
 - Final documentation review
+- Prepare for cool-down phase

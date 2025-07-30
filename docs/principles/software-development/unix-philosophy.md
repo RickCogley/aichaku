@@ -285,9 +285,35 @@ algorithms will almost always be self-evident. Data structures, not algorithms, 
 - "The Cathedral and the Bazaar" by Eric S. Raymond
 - "Program Design in the Unix Environment" by Pike & Kernighan
 
-## Related Principles
+## Related Concepts
 
-- [KISS (Keep It Simple, Stupid)](../kiss.md)
-- [YAGNI (You Aren't Gonna Need It)](../yagni.md)
-- [Separation of Concerns](../../engineering/separation-of-concerns.md)
-- [Composition Over Inheritance](../composition-over-inheritance.md)
+### Related Principles
+
+- **[KISS (Keep It Simple, Stupid)](kiss.md)** - Core Unix value of simplicity
+- **[YAGNI (You Aren't Gonna Need It)](yagni.md)** - Avoid unnecessary features
+- **[Separation of Concerns](separation-of-concerns.md)** - Modular design philosophy
+- **[DRY (Don't Repeat Yourself)](dry.md)** - Create reusable components
+
+### Compatible Methodologies
+
+- **[Lean Development](../../methodologies/lean/lean.md)** - Eliminate waste, build simply
+- **[Extreme Programming](../../methodologies/xp/xp.md)** - Simple design, refactoring
+
+### Supporting Standards
+
+- **[Microservices Architecture](../../standards/architecture/microservices.md)** - Small, focused services
+- **[REST API Design](../../standards/architecture/rest.md)** - Resource-based, composable APIs
+- **[12-Factor App](../../standards/architecture/12-factor.md)** - Modern application principles
+
+### Tools Embodying Unix Philosophy
+
+- Git - Content-addressable storage, composable commands
+- Docker - Single-purpose containers
+- Kubernetes - Declarative, composable infrastructure
+- jq - JSON processing following Unix text stream tradition
+
+### Learn More
+
+- Use `aichaku learn unix-philosophy` for interactive examples
+- Use `aichaku principles --select unix-philosophy` to add to your project
+- Explore the [Unix Heritage Society](https://www.tuhs.org/) archives

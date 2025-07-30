@@ -18,7 +18,9 @@ interface LearnOptions {
   all?: boolean;
   methodologies?: boolean;
   standards?: boolean;
+  principles?: boolean;
   category?: string;
+  principleCategory?: string;
   compare?: boolean;
   silent?: boolean;
 }
@@ -67,6 +69,32 @@ interface StandardYaml {
   [key: string]: unknown;
 }
 
+interface PrincipleYaml {
+  name: string;
+  category: string;
+  description: string;
+  summary: {
+    tagline?: string;
+    core_tenets?: Array<{
+      text: string;
+      guidance: string;
+    }>;
+    anti_patterns?: Array<{
+      pattern: string;
+      instead: string;
+    }>;
+  };
+  application_context?: {
+    when_to_use?: string[];
+    [key: string]: unknown;
+  };
+  compatibility?: {
+    works_well_with?: string[];
+    potential_conflicts?: string[];
+  };
+  [key: string]: unknown;
+}
+
 /**
  * Display methodology and standards information dynamically from YAML
  */
@@ -92,9 +120,19 @@ export async function learn(options: LearnOptions = {}): Promise<LearnResult> {
       return await listStandards(basePath);
     }
 
+    // List principles
+    if (options.principles) {
+      return await listPrinciples(basePath);
+    }
+
     // List by category
     if (options.category) {
       return await listByCategory(basePath, options.category);
+    }
+
+    // List principles by category
+    if (options.principleCategory) {
+      return await listPrinciplesByCategory(basePath, options.principleCategory);
     }
 
     // Compare methodologies
@@ -134,6 +172,12 @@ async function showTopicHelp(
   const standardPath = await findStandard(basePath, normalized);
   if (standardPath) {
     return await showStandardHelp(standardPath);
+  }
+
+  // Try to find in principles
+  const principlePath = await findPrinciple(basePath, normalized);
+  if (principlePath) {
+    return await showPrincipleHelp(principlePath);
   }
 
   return {
@@ -613,6 +657,33 @@ async function listAllResources(basePath: string): Promise<LearnResult> {
   const methodologies = await discoverContent("methodologies", basePath, true);
   const standards = await discoverContent("standards", basePath, true);
 
+  // Discover principles manually since discoverContent doesn't handle them yet
+  const devPath = join(Deno.cwd(), "docs", "principles");
+  const globalPath = join(basePath, "docs", "principles");
+  const principlesPath = await exists(devPath) ? devPath : globalPath;
+  const principleCategories = {
+    "software-development": [],
+    "organizational": [],
+    "engineering": [],
+    "human-centered": [],
+  };
+  let principleCount = 0;
+
+  for (const category of Object.keys(principleCategories)) {
+    const categoryPath = join(principlesPath, category);
+    if (await exists(categoryPath)) {
+      try {
+        for await (const entry of Deno.readDir(categoryPath)) {
+          if (entry.isFile && entry.name.endsWith(".yaml")) {
+            principleCount++;
+          }
+        }
+      } catch {
+        // Skip if error
+      }
+    }
+  }
+
   let content = `${Brand.PREFIX} Complete Knowledge Base
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -639,6 +710,9 @@ async function listAllResources(basePath: string): Promise<LearnResult> {
       }
     }
   }
+
+  content += `\n🎯 Development Principles (${principleCount})\n`;
+  content += `\nUse 'aichaku learn --principles' to see all principles\n`;
 
   content += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   
@@ -675,6 +749,13 @@ aichaku learn tdd               # Learn Test-Driven Development
 aichaku learn --standards       # See all standards
 aichaku learn --category security  # Security standards
 
+## 🎯 Development Principles
+
+aichaku learn dry               # Learn DRY principle
+aichaku learn unix-philosophy   # Learn Unix Philosophy
+aichaku learn --principles      # See all principles
+aichaku learn --principle-category human-centered  # Human-centered principles
+
 ## 📋 Browse Everything
 
 aichaku learn --all             # List all resources
@@ -700,5 +781,299 @@ Run \`aichaku --help\` to see all available commands
   return {
     success: true,
     content: "", // Content already printed
+  };
+}
+
+async function findPrinciple(
+  basePath: string,
+  normalized: string,
+): Promise<string | null> {
+  // For development, use current directory if principles exist locally
+  const devPath = join(Deno.cwd(), "docs", "principles");
+  const globalPath = join(basePath, "docs", "principles");
+  const principlesPath = await exists(devPath) ? devPath : globalPath;
+
+  // Try direct name matches with common variations
+  const categories = ["software-development", "organizational", "engineering", "human-centered"];
+
+  for (const category of categories) {
+    // Try variations of the name
+    const variations = [
+      normalized,
+      normalized.replace(/principle$/, ""),
+      normalized + "-principle",
+      normalized.replace("dont", "do-not"),
+      normalized.replace("donot", "do-not"),
+    ];
+
+    for (const variant of variations) {
+      const yamlPath = join(principlesPath, category, `${variant}.yaml`);
+      if (await exists(yamlPath)) {
+        return yamlPath;
+      }
+    }
+  }
+
+  // Special mappings
+  const mappings: Record<string, string> = {
+    "dry": "software-development/dry",
+    "dontrepeatyourself": "software-development/dry",
+    "kiss": "software-development/kiss",
+    "keepitsimple": "software-development/kiss",
+    "yagni": "software-development/yagni",
+    "youarentgonnaneedit": "software-development/yagni",
+    "solid": "software-development/solid",
+    "unix": "software-development/unix-philosophy",
+    "unixphilosophy": "software-development/unix-philosophy",
+    "soc": "software-development/separation-of-concerns",
+    "separationofconcerns": "software-development/separation-of-concerns",
+    "failfast": "engineering/fail-fast",
+    "defensive": "engineering/defensive-programming",
+    "defensiveprogramming": "engineering/defensive-programming",
+    "robustness": "engineering/robustness-principle",
+    "premature": "engineering/premature-optimization",
+    "prematureoptimization": "engineering/premature-optimization",
+    "agile": "organizational/agile-manifesto",
+    "agilemanifesto": "organizational/agile-manifesto",
+    "lean": "organizational/lean-principles",
+    "leanprinciples": "organizational/lean-principles",
+    "conway": "organizational/conways-law",
+    "conwayslaw": "organizational/conways-law",
+    "accessibility": "human-centered/accessibility-first",
+    "accessibilityfirst": "human-centered/accessibility-first",
+    "privacy": "human-centered/privacy-by-design",
+    "privacybydesign": "human-centered/privacy-by-design",
+    "usercentered": "human-centered/user-centered-design",
+    "ucd": "human-centered/user-centered-design",
+    "inclusive": "human-centered/inclusive-design",
+    "inclusivedesign": "human-centered/inclusive-design",
+    "ethical": "human-centered/ethical-design",
+    "ethicaldesign": "human-centered/ethical-design",
+  };
+
+  if (mappings[normalized]) {
+    const yamlPath = join(principlesPath, `${mappings[normalized]}.yaml`);
+    if (await exists(yamlPath)) {
+      return yamlPath;
+    }
+  }
+
+  return null;
+}
+
+async function showPrincipleHelp(yamlPath: string): Promise<LearnResult> {
+  try {
+    const content = await safeReadTextFile(yamlPath, yamlPath);
+    const data = parseYaml(content) as PrincipleYaml;
+    const mdPath = yamlPath.replace(".yaml", ".md");
+
+    let helpContent = `🎯 ${data.name}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Brought to you by Aichaku (愛着) - Adaptive Methodology Support
+
+${data.summary.tagline || data.description}
+
+`;
+
+    if (data.summary.core_tenets && data.summary.core_tenets.length > 0) {
+      helpContent += `📌 Core Tenets\n`;
+      for (const tenet of data.summary.core_tenets) {
+        helpContent += `\n• ${tenet.text}\n  ${tenet.guidance}\n`;
+      }
+      helpContent += `\n`;
+    }
+
+    if (data.summary.anti_patterns && data.summary.anti_patterns.length > 0) {
+      helpContent += `⚠️ Anti-Patterns to Avoid\n`;
+      for (const ap of data.summary.anti_patterns) {
+        helpContent += `\n• ${ap.pattern}\n  → Instead: ${ap.instead}\n`;
+      }
+      helpContent += `\n`;
+    }
+
+    // Read examples from markdown
+    if (await exists(mdPath)) {
+      const mdContent = await safeReadTextFile(mdPath, mdPath);
+      const sections = extractMarkdownSections(mdContent);
+
+      if (sections.examples || sections.practicalExamples) {
+        helpContent += `\n💡 Practical Examples\n${sections.examples || sections.practicalExamples}\n`;
+      }
+
+      if (sections.withClaude || sections.claudeCode) {
+        helpContent += `\n🤖 With Claude Code\n${sections.withClaude || sections.claudeCode}\n`;
+      }
+    }
+
+    if (data.compatibility) {
+      if (data.compatibility.works_well_with && data.compatibility.works_well_with.length > 0) {
+        helpContent += `\n✅ Works Well With\n`;
+        for (const item of data.compatibility.works_well_with) {
+          helpContent += `  • ${item}\n`;
+        }
+      }
+
+      if (data.compatibility.potential_conflicts && data.compatibility.potential_conflicts.length > 0) {
+        helpContent += `\n⚡ Potential Conflicts\n`;
+        for (const item of data.compatibility.potential_conflicts) {
+          helpContent += `  • ${item}\n`;
+        }
+      }
+    }
+
+    return {
+      success: true,
+      content: helpContent,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `Failed to load principle help: ${error}`,
+    };
+  }
+}
+
+async function listPrinciples(basePath: string): Promise<LearnResult> {
+  // For development, use current directory if principles exist locally
+  const devPath = join(Deno.cwd(), "docs", "principles");
+  const globalPath = join(basePath, "docs", "principles");
+  const principlesPath = await exists(devPath) ? devPath : globalPath;
+  const categories = {
+    "software-development": { name: "Software Development", items: [] as ContentMetadata[] },
+    "organizational": { name: "Organizational", items: [] as ContentMetadata[] },
+    "engineering": { name: "Engineering", items: [] as ContentMetadata[] },
+    "human-centered": { name: "Human-Centered", items: [] as ContentMetadata[] },
+  };
+
+  let totalCount = 0;
+
+  // Discover principles in each category
+  for (const [_catKey, catInfo] of Object.entries(categories)) {
+    const categoryPath = join(principlesPath, _catKey);
+    if (await exists(categoryPath)) {
+      try {
+        for await (const entry of Deno.readDir(categoryPath)) {
+          if (entry.isFile && entry.name.endsWith(".yaml")) {
+            const yamlPath = join(categoryPath, entry.name);
+            const content = await safeReadTextFile(yamlPath, yamlPath);
+            const data = parseYaml(content) as PrincipleYaml;
+
+            catInfo.items.push({
+              name: data.name,
+              description: data.summary.tagline || data.description,
+              path: `${_catKey}/${entry.name}`,
+              tags: [],
+            });
+            totalCount++;
+          }
+        }
+      } catch {
+        // Skip category if error
+      }
+    }
+  }
+
+  let content = `${Brand.PREFIX} Development Principles (${totalCount})
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+`;
+
+  let index = 1;
+  for (const [_catKey, catInfo] of Object.entries(categories)) {
+    if (catInfo.items.length > 0) {
+      content += `🎯 ${catInfo.name}\n`;
+      for (const item of catInfo.items) {
+        const code = item.path.split("/").pop()?.replace(".yaml", "") || "";
+        content += `  ${index}. ${item.name} (${code})`.padEnd(40) + ` - ${item.description}\n`;
+        index++;
+      }
+      content += `\n`;
+    }
+  }
+
+  content += `📚 Learn More
+  • Use 'aichaku learn <principle>' for detailed information
+  • Use 'aichaku principles --select <ids>' to choose for your project
+  • Selected principles guide AI suggestions and code reviews
+`;
+
+  printFormatted(content);
+
+  return {
+    success: true,
+    content: "",
+  };
+}
+
+async function listPrinciplesByCategory(
+  basePath: string,
+  category: string,
+): Promise<LearnResult> {
+  const validCategories = ["software-development", "organizational", "engineering", "human-centered"];
+  const normalized = category.toLowerCase().replace(/[\s_]/g, "-");
+
+  if (!validCategories.includes(normalized)) {
+    return {
+      success: false,
+      message: `Invalid category: ${category}. Valid categories: ${validCategories.join(", ")}`,
+    };
+  }
+
+  // For development, use current directory if principles exist locally
+  const devPath = join(Deno.cwd(), "docs", "principles");
+  const globalPath = join(basePath, "docs", "principles");
+  const basePrinciplesPath = await exists(devPath) ? devPath : globalPath;
+  const principlesPath = join(basePrinciplesPath, normalized);
+  const items: ContentMetadata[] = [];
+
+  if (await exists(principlesPath)) {
+    try {
+      for await (const entry of Deno.readDir(principlesPath)) {
+        if (entry.isFile && entry.name.endsWith(".yaml")) {
+          const yamlPath = join(principlesPath, entry.name);
+          const content = await safeReadTextFile(yamlPath, yamlPath);
+          const data = parseYaml(content) as PrincipleYaml;
+
+          items.push({
+            name: data.name,
+            description: data.summary.tagline || data.description,
+            path: entry.name,
+            tags: [],
+          });
+        }
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: `Failed to list principles: ${error}`,
+      };
+    }
+  }
+
+  const categoryName = normalized.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+
+  let content = `${Brand.PREFIX} ${categoryName} Principles (${items.length})
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+`;
+
+  let index = 1;
+  for (const item of items) {
+    const code = item.path.replace(".yaml", "");
+    content += `${index}. ${item.name} (${code})`.padEnd(40) + ` - ${item.description}\n`;
+    index++;
+  }
+
+  content += `
+📚 Learn More
+  • Use 'aichaku learn <principle>' for detailed information
+  • Use 'aichaku principles --select <ids>' to choose for your project
+`;
+
+  printFormatted(content);
+
+  return {
+    success: true,
+    content: "",
   };
 }

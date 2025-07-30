@@ -527,7 +527,9 @@ ${result.claudeMdReferences.map((ref) => `    Line ${ref.line}: "${ref.text}"`).
         all: args.all as boolean | undefined,
         methodologies: args.methodologies as boolean | undefined,
         standards: args.standards as boolean | undefined,
+        principles: args.principles as boolean | undefined,
         category: args.category as string | undefined,
+        principleCategory: args["principle-category"] as string | undefined,
         compare: args.compare as boolean | undefined,
         silent: args.silent as boolean | undefined,
       };

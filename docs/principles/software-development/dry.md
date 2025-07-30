@@ -264,3 +264,29 @@ DRY is a fundamental principle that improves maintainability, reduces bugs, and 
 must be balanced with other principles and applied judiciously. The goal is not to eliminate all duplication at any
 cost, but to ensure that each piece of knowledge has a single, authoritative representation that makes the system easier
 to understand and modify.
+
+## Related Concepts
+
+### Related Principles
+
+- **[KISS (Keep It Simple, Stupid)](../kiss.md)** - Balance DRY with simplicity
+- **[YAGNI (You Aren't Gonna Need It)](../yagni.md)** - Avoid premature abstraction
+- **[Single Responsibility Principle](../solid.md#single-responsibility)** - Each module should have one reason to
+  change
+- **[Separation of Concerns](../separation-of-concerns.md)** - Organize code by distinct features
+
+### Compatible Methodologies
+
+- **[Extreme Programming (XP)](../../methodologies/xp/xp.md)** - Emphasizes refactoring and code quality
+- **[Lean Development](../../methodologies/lean/lean.md)** - Eliminates waste including code duplication
+
+### Supporting Standards
+
+- **[Clean Code](../../standards/development/clean-code.md)** - Practices for maintainable code
+- **[Test-Driven Development](../../standards/development/tdd.md)** - Refactoring step naturally applies DRY
+
+### Learn More
+
+- Use `aichaku learn dry` for interactive examples
+- Use `aichaku principles --select dry` to add to your project
+- Read [The Pragmatic Programmer](https://pragprog.com/titles/tpp20/) for the original formulation

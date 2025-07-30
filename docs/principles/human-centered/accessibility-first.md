@@ -944,3 +944,37 @@ Key principles to remember:
 
 Remember: "When we design for disability first, we often stumble upon solutions that are better than those when we
 design for the norm." - Elise Roy
+
+## Related Concepts
+
+### Related Principles
+
+- **[User-Centered Design](user-centered-design.md)** - Focus on all users' needs
+- **[Inclusive Design](inclusive-design.md)** - Design for human diversity
+- **[Privacy by Design](privacy-by-design.md)** - Respect user preferences and needs
+- **[Ethical Design](ethical-design.md)** - Consider societal impact
+
+### Compatible Standards
+
+- **[WCAG 2.1](https://www.w3.org/WAI/WCAG21/quickref/)** - Web Content Accessibility Guidelines
+- **[ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/)** - Accessible Rich Internet Applications
+- **[Section 508](https://www.section508.gov/)** - US Federal accessibility standards
+
+### Compatible Methodologies
+
+- **[User-Centered Design Process](../../methodologies/ucd/ucd.md)** - Include users with disabilities
+- **[Agile Development](../../methodologies/agile/agile.md)** - Integrate accessibility into sprints
+
+### Testing Tools
+
+- **axe DevTools** - Browser extension for accessibility testing
+- **WAVE** - Web Accessibility Evaluation Tool
+- **NVDA/JAWS** - Screen readers for Windows
+- **VoiceOver** - Built-in macOS/iOS screen reader
+- **Lighthouse** - Automated accessibility audits
+
+### Learn More
+
+- Use `aichaku learn accessibility-first` for interactive examples
+- Use `aichaku principles --select accessibility-first` to add to your project
+- Join the [A11y Project](https://www.a11yproject.com/) community
