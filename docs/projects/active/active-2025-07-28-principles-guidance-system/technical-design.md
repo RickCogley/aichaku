@@ -120,27 +120,53 @@ docs/
 └── principles/
     ├── index.yaml                    # Principle registry
     ├── software-development/
-    │   ├── unix-philosophy.yaml
+    │   ├── unix-philosophy.yaml      # Structured data
+    │   ├── unix-philosophy.md        # Human-readable guide
     │   ├── dry.yaml
+    │   ├── dry.md
     │   ├── yagni.yaml
+    │   ├── yagni.md
     │   ├── kiss.yaml
-    │   └── zen-of-python.yaml
+    │   ├── kiss.md
+    │   ├── zen-of-python.yaml
+    │   └── zen-of-python.md
     ├── organizational/
     │   ├── agile-manifesto.yaml
+    │   ├── agile-manifesto.md
     │   ├── devops-three-ways.yaml
+    │   ├── devops-three-ways.md
     │   ├── lean-principles.yaml
+    │   ├── lean-principles.md
     │   ├── theory-of-constraints.yaml
-    │   └── conways-law.yaml
+    │   ├── theory-of-constraints.md
+    │   ├── conways-law.yaml
+    │   └── conways-law.md
     ├── engineering/
     │   ├── defensive-programming.yaml
+    │   ├── defensive-programming.md
     │   ├── fail-fast.yaml
+    │   ├── fail-fast.md
     │   ├── least-privilege.yaml
-    │   └── separation-of-concerns.yaml
+    │   ├── least-privilege.md
+    │   ├── separation-of-concerns.yaml
+    │   └── separation-of-concerns.md
     └── human-centered/
         ├── design-thinking.yaml
+        ├── design-thinking.md
         ├── accessibility-first.yaml
-        └── privacy-by-design.yaml
+        ├── accessibility-first.md
+        ├── privacy-by-design.yaml
+        └── privacy-by-design.md
 ```
+
+### File Pairing Strategy
+
+Each principle has two files:
+
+- **`.yaml`** - Structured data for CLI and agent consumption
+- **`.md`** - Rich documentation for GitHub browsing and learning
+
+This matches the pattern used by methodologies and standards.
 
 ## Implementation Patterns
 
@@ -176,21 +202,21 @@ export async function principles(args: string[]): Promise<void> {
 ```typescript
 // src/utils/principles-loader.ts
 export class PrinciplesLoader {
-  private cache: Map<string, Principle> = new Map();
+  private cache: Map<string, PrincipleWithDocs> = new Map();
 
-  async loadAll(): Promise<Principle[]> {
+  async loadAll(): Promise<PrincipleWithDocs[]> {
     const principlesPath = path.join(getAichakuPaths().global.root, "docs/principles");
-    const principles: Principle[] = [];
+    const principles: PrincipleWithDocs[] = [];
 
     for (const category of PRINCIPLE_CATEGORIES) {
       const categoryPath = path.join(principlesPath, category);
-      const files = await glob(`${categoryPath}/*.yaml`);
+      const yamlFiles = await glob(`${categoryPath}/*.yaml`);
 
-      for (const file of files) {
-        const principle = await this.loadPrinciple(file);
+      for (const yamlFile of yamlFiles) {
+        const principle = await this.loadPrincipleWithDocs(yamlFile);
         if (principle) {
           principles.push(principle);
-          this.cache.set(principle.name, principle);
+          this.cache.set(principle.data.name, principle);
         }
       }
     }
@@ -198,23 +224,51 @@ export class PrinciplesLoader {
     return principles;
   }
 
-  private async loadPrinciple(filepath: string): Promise<Principle | null> {
+  private async loadPrincipleWithDocs(yamlPath: string): Promise<PrincipleWithDocs | null> {
     try {
-      const content = await Deno.readTextFile(filepath);
-      const data = parse(content) as Principle;
+      // Load YAML data
+      const yamlContent = await Deno.readTextFile(yamlPath);
+      const data = parse(yamlContent) as Principle;
 
       // Validate against schema
       if (!this.validatePrinciple(data)) {
-        console.warn(`Invalid principle format: ${filepath}`);
+        console.warn(`Invalid principle format: ${yamlPath}`);
         return null;
       }
 
-      return data;
+      // Load corresponding Markdown documentation
+      const mdPath = yamlPath.replace(".yaml", ".md");
+      let documentation = "";
+
+      try {
+        documentation = await Deno.readTextFile(mdPath);
+      } catch {
+        console.warn(`Missing documentation for principle: ${mdPath}`);
+        // Generate basic documentation from YAML data
+        documentation = this.generateBasicDocs(data);
+      }
+
+      return {
+        data,
+        documentation,
+        path: yamlPath,
+      };
     } catch (error) {
-      console.error(`Failed to load principle: ${filepath}`, error);
+      console.error(`Failed to load principle: ${yamlPath}`, error);
       return null;
     }
   }
+
+  private generateBasicDocs(principle: Principle): string {
+    // Fallback documentation generation from YAML data
+    return `# ${principle.name}\n\n${principle.description}\n\n...`;
+  }
+}
+
+interface PrincipleWithDocs {
+  data: Principle;
+  documentation: string;
+  path: string;
 }
 ```
 

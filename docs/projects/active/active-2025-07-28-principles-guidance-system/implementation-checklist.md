@@ -31,18 +31,27 @@ This checklist provides a condensed view of all implementation tasks for easy tr
 
 ### Software Development Principles
 
-Each principle must include:
+Each principle requires TWO files:
+
+**YAML file** (structured data):
 
 - Complete compatibility matrix
-- Historical context and origin story
-- Real-world examples from major projects
-- Integration with CLAUDE.md
+- Historical metadata (dates, people)
+- Core tenets and anti-patterns
+- Structured examples
 
-- [ ] Unix Philosophy (`unix-philosophy.yaml`)
-- [ ] DRY - Don't Repeat Yourself (`dry.yaml`)
-- [ ] YAGNI - You Aren't Gonna Need It (`yagni.yaml`)
-- [ ] KISS - Keep It Simple (`kiss.yaml`)
-- [ ] Zen of Python (`zen-of-python.yaml`)
+**Markdown file** (rich documentation):
+
+- In-depth historical narrative
+- Comprehensive best practices
+- Real-world case studies
+- Code examples and explanations
+
+- [ ] Unix Philosophy (`unix-philosophy.yaml` + `unix-philosophy.md`)
+- [ ] DRY - Don't Repeat Yourself (`dry.yaml` + `dry.md`)
+- [ ] YAGNI - You Aren't Gonna Need It (`yagni.yaml` + `yagni.md`)
+- [ ] KISS - Keep It Simple (`kiss.yaml` + `kiss.md`)
+- [ ] Zen of Python (`zen-of-python.yaml` + `zen-of-python.md`)
 
 ### Organizational Principles
 

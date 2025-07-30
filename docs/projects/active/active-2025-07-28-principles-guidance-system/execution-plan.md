@@ -86,12 +86,17 @@ tasks organized by work stream.
 #### Software Development Principles:
 
 1. **Unix Philosophy** (2 days)
-   - [ ] Create `unix-philosophy.yaml` with full metadata including:
+   - [ ] Create `unix-philosophy.yaml` with structured metadata:
      - [ ] Compatibility matrix (works_well_with, conflicts_with)
      - [ ] Historical context (origin, key figures, evolution)
-     - [ ] Extensive real-world examples from Unix tools
-   - [ ] Write comprehensive guide with practical applications
-   - [ ] Include case studies from successful projects
+     - [ ] Core tenets with guidance
+     - [ ] Examples structure for code/CLI consumption
+   - [ ] Create `unix-philosophy.md` with rich documentation:
+     - [ ] Comprehensive guide with practical applications
+     - [ ] In-depth historical narrative
+     - [ ] Extensive real-world examples
+     - [ ] Best practices and anti-patterns
+     - [ ] Case studies from Git, Docker, GNU tools
 
 2. **DRY (Don't Repeat Yourself)** (1 day)
    - [ ] Create YAML and Markdown files
