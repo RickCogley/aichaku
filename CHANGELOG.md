@@ -5,6 +5,29 @@ All notable changes to aichaku (愛着) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.39.0] - 2025-07-30
+
+### Added
+
+- complete Week 6 - testing, polish, and release preparation (0235831)
+- complete Week 5 - learn command integration (33d3797)
+- complete CLAUDE.md integration for principles (1fbbfae)
+- create complete principle content library (03c0693)
+- implement selection and storage functionality (63e8ef3)
+
+### Changed
+
+- orchestrate Week 6 - testing and polish phase (3bbfa3c)
+- add comprehensive branding requirements to principles system (c338d73)
+- clarify principles use both YAML and Markdown files (190a67e)
+- elevate nice-to-haves to core features for principles system (d9fde8c)
+- shape up principles guidance system for implementation (22c0dbc)
+
+### Fixed
+
+- resolve type errors in test files (82650f0)
+- resolve lint issues in performance test (1f1ffbf)
+
 ## [0.38.1] - 2025-07-29
 
 ### Changed
