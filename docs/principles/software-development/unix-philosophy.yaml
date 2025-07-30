@@ -1,0 +1,141 @@
+name: Unix Philosophy
+category: software-development
+description: Write simple, modular programs that do one thing well
+aliases:
+  - unix-way
+  - unix-principles
+
+history:
+  origin: "1978, Bell Labs"
+  originators:
+    - "Ken Thompson"
+    - "Dennis Ritchie"
+    - "Doug McIlroy"
+    - "Brian Kernighan"
+    - "Rob Pike"
+  evolution: |
+    Emerged from the development of Unix at Bell Labs. Doug McIlroy's
+    summary in 1978 crystallized the philosophy: "Write programs that
+    do one thing and do it well. Write programs to work together."
+  significance: |
+    Influenced countless software systems and remains highly relevant
+    in modern development, from microservices to command-line tools.
+
+summary:
+  tagline: "Write simple, modular programs that do one thing well"
+  core_tenets:
+    - text: "Do one thing and do it well"
+      guidance: "Each component should have a single, well-defined purpose"
+    - text: "Write programs to work together"
+      guidance: "Design for interoperability through clean interfaces"
+    - text: "Design for composability"
+      guidance: "Small tools can be combined to solve complex problems"
+    - text: "Text streams as universal interface"
+      guidance: "Use simple, human-readable text formats when possible"
+    - text: "Choose portability over efficiency"
+      guidance: "Prioritize cross-platform compatibility"
+  anti_patterns:
+    - pattern: "Monolithic design"
+      instead: "Modular components with clear boundaries"
+    - pattern: "Kitchen sink features"
+      instead: "Focused functionality that does one thing well"
+    - pattern: "Complex configuration"
+      instead: "Sensible defaults with simple overrides"
+  key_practices:
+    - "Build modular components"
+    - "Use pipes and filters"
+    - "Prefer composition over inheritance"
+    - "Keep interfaces simple"
+
+guidance:
+  spirit: |
+    The Unix Philosophy emphasizes simplicity, clarity, and modularity.
+    It values small, focused tools over monolithic applications, and
+    believes that complex behavior should emerge from combining simple
+    components rather than building complexity into individual programs.
+  questions_to_ask:
+    - "Could this functionality be split into separate, focused tools?"
+    - "Is the interface simple enough for other programs to use?"
+    - "Does this follow the principle of least surprise?"
+    - "Can this be implemented as a filter?"
+    - "Is the output format consumable by other tools?"
+  when_to_apply:
+    - "Designing command-line tools"
+    - "Creating microservices"
+    - "Building data processing pipelines"
+    - "Developing system utilities"
+    - "Architecting distributed systems"
+  exceptions:
+    - "User-facing GUI applications may need integrated features"
+    - "Performance-critical systems may need monolithic design"
+    - "Security boundaries may prevent decomposition"
+  common_mistakes:
+    - "Over-decomposing into too many tiny programs"
+    - "Ignoring performance implications of modularity"
+    - "Creating inconsistent interfaces between components"
+
+examples:
+  good:
+    - description: "Piping commands together"
+      code: |
+        # Count error lines in log files
+        find . -name "*.log" | xargs grep ERROR | wc -l
+      explanation: "Each tool does one thing: find files, search text, count lines"
+    - description: "Single-purpose tools"
+      code: |
+        ls     # list files
+        grep   # search text
+        sort   # sort lines
+        uniq   # remove duplicates
+      explanation: "Each command has a clear, focused purpose"
+  bad:
+    - description: "Monolithic application"
+      code: |
+        class LogAnalyzer:
+          def find_files(self):
+            # File discovery logic
+          def parse_logs(self):
+            # Log parsing logic
+          def generate_report(self):
+            # Report generation
+          def send_email(self):
+            # Email logic
+      problem: "Too many responsibilities in one class"
+  real_world:
+    - project: "Git"
+      description: "Composed of many small programs (git-add, git-commit, etc.)"
+      link: "https://git-scm.com/"
+    - project: "Docker"
+      description: "Containers follow Unix philosophy of doing one thing well"
+      link: "https://www.docker.com/"
+    - project: "GNU Coreutils"
+      description: "Collection of essential Unix utilities"
+      link: "https://www.gnu.org/software/coreutils/"
+
+compatibility:
+  works_well_with:
+    - kiss
+    - yagni
+    - separation-of-concerns
+    - composition-over-inheritance
+  potential_conflicts:
+    - enterprise-patterns
+    - feature-completeness
+  complements:
+    - microservices
+    - functional-programming
+    - pipe-and-filter
+
+references:
+  foundational:
+    - "The Unix Programming Environment (Kernighan & Pike, 1984)"
+    - "The Art of Unix Programming (Eric S. Raymond, 2003)"
+    - "Program Design in the Unix Environment (Pike & Kernighan, 1983)"
+  modern:
+    - "The Unix Philosophy in 2019 (Brandur Leach)"
+    - "Unix as IDE (Tom Ryder)"
+  tools:
+    - "GNU Coreutils"
+    - "BusyBox"
+    - "Plan 9 tools"
+    - "Suckless tools"

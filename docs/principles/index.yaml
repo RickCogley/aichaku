@@ -1,0 +1,47 @@
+# Aichaku Principles Registry
+# This file provides metadata about available principles
+
+version: "1.0"
+description: "Guiding philosophies and principles for software development"
+
+categories:
+  software-development:
+    name: "Software Development"
+    emoji: "💻"
+    description: "Programming philosophies and coding principles"
+    principles:
+      - unix-philosophy
+      - dry
+      - yagni
+      - kiss
+      - zen-of-python
+
+  organizational:
+    name: "Organizational"
+    emoji: "🏢"
+    description: "Team and process principles"
+    principles:
+      - agile-manifesto
+      - devops-three-ways
+      - lean-principles
+      - theory-of-constraints
+      - conways-law
+
+  engineering:
+    name: "Engineering"
+    emoji: "⚙️"
+    description: "Technical practices and engineering approaches"
+    principles:
+      - defensive-programming
+      - fail-fast
+      - least-privilege
+      - separation-of-concerns
+
+  human-centered:
+    name: "Human-Centered"
+    emoji: "👥"
+    description: "User-focused and accessibility principles"
+    principles:
+      - design-thinking
+      - accessibility-first
+      - privacy-by-design

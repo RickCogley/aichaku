@@ -22,6 +22,10 @@ export interface AichakuConfig {
     selected: string[];
     customStandards?: Record<string, unknown>;
   };
+  principles?: {
+    selected: string[];
+    customPrinciples?: Record<string, unknown>;
+  };
   config?: {
     outputPath?: string;
     enableHooks?: boolean;
@@ -101,6 +105,9 @@ export class ConfigManager {
       standards: {
         selected: [],
       },
+      principles: {
+        selected: [],
+      },
     };
     await this.save();
   }
@@ -157,6 +164,9 @@ export class ConfigManager {
         default: methodologies?.[0],
       },
       standards: {
+        selected: [],
+      },
+      principles: {
         selected: [],
       },
     };
@@ -287,6 +297,49 @@ export class ConfigManager {
   }
 
   /**
+   * Get selected principles
+   */
+  getPrinciples(): string[] {
+    const config = this.get();
+    return config.principles?.selected || [];
+  }
+
+  /**
+   * Set principles for the project
+   */
+  async setPrinciples(principles: string[]): Promise<void> {
+    const config = this.get();
+    await this.update({
+      ...config,
+      principles: {
+        ...config.principles,
+        selected: principles,
+      },
+    });
+  }
+
+  /**
+   * Add a principle to the project
+   */
+  async addPrinciple(principle: string): Promise<void> {
+    const config = this.get();
+    const current = config.principles?.selected || [];
+    if (!current.includes(principle)) {
+      await this.setPrinciples([...current, principle]);
+    }
+  }
+
+  /**
+   * Remove a principle from the project
+   */
+  async removePrinciple(principle: string): Promise<void> {
+    const config = this.get();
+    const current = config.principles?.selected || [];
+    const updated = current.filter((p) => p !== principle);
+    await this.setPrinciples(updated);
+  }
+
+  /**
    * Migrate configuration to latest format
    */
   private migrateConfig(rawConfig: unknown): AichakuConfig {
@@ -306,6 +359,9 @@ export class ConfigManager {
         development?: string[];
         documentation?: string[];
       };
+      principles?: {
+        selected?: string[];
+      };
       project?: {
         methodology?: string;
         created?: string;
@@ -322,6 +378,9 @@ export class ConfigManager {
         selected: [],
       },
       standards: {
+        selected: [],
+      },
+      principles: {
         selected: [],
       },
     };
@@ -348,6 +407,11 @@ export class ConfigManager {
         ...(typedConfig.standards.development || []),
         ...(typedConfig.standards.documentation || []),
       ];
+    }
+
+    // Migrate principles if present
+    if (typedConfig.principles?.selected) {
+      config.principles!.selected = typedConfig.principles.selected;
     }
 
     // Skip migrating project info - no longer needed
@@ -411,6 +475,10 @@ export class ConfigManager {
 
     if (!this.config.standards) {
       errors.push("Missing standards section");
+    }
+
+    if (!this.config.principles) {
+      errors.push("Missing principles section");
     }
 
     return { valid: errors.length === 0, errors };

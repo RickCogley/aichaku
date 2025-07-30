@@ -82,18 +82,18 @@ examples:
         # Count unique IP addresses in log
         cat access.log | awk '{print $1}' | sort | uniq -c | sort -rn
       explanation: "Each tool has one job: cat reads, awk extracts, sort orders, uniq counts"
-    
+
     - description: "Microservice architecture"
       code: |
         # User service only handles user data
         GET /api/users/:id
-        
+
         # Order service only handles orders
         GET /api/orders/:id
-        
+
         # Composed by API gateway or client
       explanation: "Each service has a single responsibility"
-    
+
   bad:
     - description: "Kitchen sink class"
       code: |
@@ -103,30 +103,30 @@ examples:
             def generate_report(self): ...
             def backup_database(self): ...
       problem: "Too many responsibilities in one class"
-      
+
   real_world:
     - project: "Git"
       description: "Plumbing vs porcelain commands exemplify Unix philosophy"
       link: "https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain"
-    
+
     - project: "Docker"
       description: "Each container does one thing, composed via docker-compose"
       link: "https://docs.docker.com/compose/"
-    
+
     - project: "GNU Coreutils"
       description: "Collection of simple, focused utilities (ls, cat, grep, etc.)"
       link: "https://www.gnu.org/software/coreutils/"
 
 compatibility:
   works_well_with:
-    - kiss  # Keep It Simple, Stupid
+    - kiss # Keep It Simple, Stupid
     - yagni # You Aren't Gonna Need It
     - separation-of-concerns
     - single-responsibility
     - composition-over-inheritance
   potential_conflicts:
-    - enterprise-patterns  # May encourage over-engineering
-    - feature-complete    # Conflicts with "do one thing"
+    - enterprise-patterns # May encourage over-engineering
+    - feature-complete # Conflicts with "do one thing"
   complements:
     - microservices
     - functional-programming
@@ -135,7 +135,7 @@ compatibility:
 references:
   foundational:
     - "The Unix Programming Environment - Kernighan & Pike (1984)"
-    - "Program Design in the UNIX Environment - Pike & Kernighan (1984)" 
+    - "Program Design in the UNIX Environment - Pike & Kernighan (1984)"
     - "The UNIX Time-Sharing System - Ritchie & Thompson (1974)"
   modern:
     - "The Art of Unix Programming - Eric S. Raymond (2003)"

@@ -34,6 +34,7 @@ import { learn } from "./src/commands/learn.ts";
 import { hooks } from "./src/commands/hooks.ts";
 import { standards } from "./src/commands/standards.ts";
 import { methodologies } from "./src/commands/methodologies.ts";
+import { principles } from "./src/commands/principles.ts";
 import { mergeDocs } from "./src/commands/merge-docs.ts";
 import { runMCPCommand } from "./src/commands/mcp.ts";
 import { createMigrateCommand, showMigrateHelp } from "./src/commands/migrate.ts";
@@ -59,8 +60,6 @@ const args = parseArgs(Deno.args, {
     "stats",
     "validate",
     "categories",
-    "select",
-    "show",
     "config",
     "status",
     "start",
@@ -102,6 +101,9 @@ const args = parseArgs(Deno.args, {
     "yes",
     "no-global",
     "local",
+    "select-interactive",
+    "current",
+    "clear",
   ],
   string: [
     "path",
@@ -111,6 +113,8 @@ const args = parseArgs(Deno.args, {
     "remove",
     "set",
     "search",
+    "select",
+    "show",
     "project",
     "project-name",
     "create-custom",
@@ -127,6 +131,8 @@ const args = parseArgs(Deno.args, {
     "limit",
     "timeout",
     "pollInterval",
+    "compatibility",
+    "category",
   ],
   alias: {
     h: "help",
@@ -193,6 +199,7 @@ Say "shape" → get Shape Up. It's that simple!
 - **learn** - Learn about methodologies and standards (dynamically from YAML)
 - **methodologies** - Choose development methodologies for focused context
 - **standards** - Choose modular guidance standards for your project
+- **principles** - Select guiding philosophies (Unix, DRY, YAGNI, etc.)
 - **hooks** - Manage Claude Code hooks for automation
 
 ### Development Tools
@@ -246,6 +253,11 @@ aichaku methodologies --set shape-up
 # Choose standards for your project
 aichaku standards --list
 aichaku standards --add owasp-web,15-factor
+
+# Select guiding principles
+aichaku principles --list
+aichaku principles --select unix-philosophy,dry,yagni
+aichaku principles --show unix-philosophy --verbose
 \`\`\`
 
 ### Development Tools
@@ -570,6 +582,26 @@ ${result.claudeMdReferences.map((ref) => `    Line ${ref.line}: "${ref.text}"`).
       };
 
       await methodologies(methodologiesOptions);
+      break;
+    }
+
+    case "principles": {
+      const principlesOptions = {
+        list: args.list as boolean | undefined,
+        show: args.show as string | undefined,
+        select: args.select as string | undefined,
+        selectInteractive: args["select-interactive"] as boolean | undefined,
+        current: args.current as boolean | undefined,
+        remove: args.remove as string | undefined,
+        clear: args.clear as boolean | undefined,
+        compatibility: args.compatibility as string | undefined,
+        verbose: args.verbose as boolean | undefined,
+        category: args.category as string | undefined,
+        projectPath: args.path as string | undefined,
+        dryRun: args["dry-run"] as boolean | undefined,
+      };
+
+      await principles(principlesOptions);
       break;
     }
 
