@@ -10,13 +10,26 @@ This checklist provides a condensed view of all implementation tasks for easy tr
 
 - [ ] Create `src/commands/principles.ts`
 - [ ] Add command to CLI router
+- [ ] Import and use `printFormatted` utility
 - [ ] Implement `--list` with category filter
+  - [ ] Use 🌸 emoji in header
+  - [ ] Category emojis (💻 🏢 ⚙️ 👥)
+  - [ ] Consistent formatting with bold names
 - [ ] Implement `--show` with `--verbose` option
+  - [ ] Use 📚 emoji for details
+  - [ ] Show compatibility with ✅ and ⚠️
 - [ ] Implement `--select` (comma-separated)
+  - [ ] Use 🎯 for selection header
+  - [ ] Show compatibility warnings with ⚠️
 - [ ] Implement `--select-interactive`
 - [ ] Implement `--current`, `--remove`, `--clear`
+  - [ ] Use 🎯 for current selection display
 - [ ] Implement `--compatibility` command
+  - [ ] Visual matrix with ✅ ❌ symbols
+  - [ ] Compatibility score display
 - [ ] Add comprehensive help text
+- [ ] Ensure all error messages use ❌ emoji
+- [ ] Ensure all success messages use ✅ emoji
 
 ### Data Model
 
@@ -116,6 +129,11 @@ Each principle requires TWO files:
 - [ ] Test principle loading and validation
 - [ ] Test agent integration
 - [ ] End-to-end CLI tests
+- [ ] Branding consistency tests
+  - [ ] Verify printFormatted is used
+  - [ ] Check emoji usage is consistent
+  - [ ] Validate Markdown formatting
+  - [ ] Ensure error/success message patterns
 
 ### Polish
 

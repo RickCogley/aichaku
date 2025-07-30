@@ -408,6 +408,85 @@ graph LR
     end
 ```
 
+## Branding and UI Consistency
+
+### Visual Identity Requirements
+
+All principle commands must maintain aichaku's established branding using the `printFormatted` utility:
+
+```typescript
+import { printFormatted } from "../utils/terminal-formatter.ts";
+
+// Example: principles --list output
+function listPrinciples(category?: string): void {
+  const content = [`# 🌸 Aichaku Principles - Guiding Philosophies\n`];
+
+  if (category) {
+    content.push(`Showing principles for category: **${category}**\n`);
+  } else {
+    content.push(`Select from ${principleCount} timeless principles to guide your development.\n`);
+  }
+
+  // Categories with consistent emoji usage
+  content.push(`## 💻 Software Development\n`);
+  content.push(`- **Unix Philosophy** - Do one thing well\n`);
+  content.push(`- **DRY** - Don't Repeat Yourself\n`);
+
+  content.push(`## 🏢 Organizational\n`);
+  content.push(`- **Agile Manifesto** - Individuals over processes\n`);
+
+  printFormatted(content.join(""));
+}
+```
+
+### Command Output Patterns
+
+Follow these patterns for consistent branding:
+
+```typescript
+// Success messages
+printFormatted(`✅ Selected ${count} principles for your project.`);
+
+// Info messages
+printFormatted(`📚 Showing details for principle: **${name}**`);
+
+// Warning messages
+printFormatted(`⚠️  Warning: Potential conflicts detected between principles.`);
+
+// Error messages
+printFormatted(`❌ Error: Principle '${name}' not found.`);
+```
+
+### Branding Elements
+
+1. **Header Format**: Always start with emoji + "Aichaku Principles" + description
+2. **Category Emojis**:
+   - 💻 Software Development
+   - 🏢 Organizational
+   - ⚙️ Engineering
+   - 👥 Human-Centered
+3. **Status Indicators**:
+   - ✅ Success/Selected
+   - ❌ Error/Conflict
+   - ⚠️ Warning
+   - 📚 Information
+   - 🎯 Current selection
+4. **Formatting**:
+   - Bold for emphasis: `**principle-name**`
+   - Code blocks for examples
+   - Consistent spacing and structure
+
+### Integration with Existing Commands
+
+The principles command should feel like a natural extension of existing commands:
+
+```bash
+# Consistent with existing patterns
+aichaku methodologies --list    # 🪴 Aichaku Methodologies
+aichaku standards --list        # 📐 Aichaku Standards  
+aichaku principles --list       # 🌸 Aichaku Principles
+```
+
 ## Future Extensions
 
 1. **Custom Principles**: Allow users to define their own
