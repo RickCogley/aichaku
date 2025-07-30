@@ -1,0 +1,169 @@
+name: "User-Centered Design"
+category: human-centered
+description: |
+  A design philosophy and process that places the user at the center of the design and development process, focusing on understanding user needs, involving users throughout the design process, and iterating based on user feedback.
+
+history:
+  origin: "1980s, Human-Computer Interaction"
+  originators:
+    - "Don Norman"
+    - "Jakob Nielsen"
+    - "Donald A. Norman"
+  evolution: |
+    User-Centered Design emerged from human-computer interaction research in the
+    1980s, formalized by Don Norman and others. It was codified in ISO 9241-210
+    standard for human-centered design. The approach has evolved with digital
+    transformation, incorporating new research methods and design techniques.
+  significance: |
+    Fundamental to modern product design and development, UCD has become essential
+    for creating successful digital products, influencing fields from web design
+    to mobile applications and enterprise software.
+
+summary:
+  tagline: "Design focused on users and their needs throughout the entire design process"
+  core_tenets:
+    - text: "Understand users, tasks, and environments"
+      guidance: "Conduct thorough user research to understand context of use"
+    - text: "Involve users throughout design and development"
+      guidance: "Engage users as partners, not just subjects of testing"
+    - text: "Design is driven by user-centered evaluation"
+      guidance: "Make decisions based on user feedback and testing results"
+    - text: "Process is iterative"
+      guidance: "Continuously refine designs based on user insights"
+    - text: "Address the whole user experience"
+      guidance: "Consider all touchpoints and interactions, not just interfaces"
+  anti_patterns:
+    - pattern: "Designing for yourself instead of users"
+      instead: "Base decisions on user research and testing data"
+    - pattern: "Skipping user research to save time"
+      instead: "Invest in upfront research to avoid costly redesigns"
+    - pattern: "Testing only at the end of development"
+      instead: "Integrate testing throughout the design process"
+  key_practices:
+    - "User interviews and contextual inquiry"
+    - "Iterative prototyping and testing"
+    - "Creating personas and journey maps"
+    - "Usability testing with real users"
+
+guidance:
+  spirit: |
+    User-Centered Design is fundamentally about empathy and understanding.
+    It requires designers to set aside their assumptions and truly understand
+    the people they're designing for. The goal is to create products that not
+    only meet functional requirements but also provide meaningful, satisfying
+    experiences for users in their real contexts.
+  questions_to_ask:
+    - "Who are our users and what do they really need?"
+    - "How do users currently accomplish their goals?"
+    - "What are the pain points in their current experience?"
+    - "How can we test our assumptions with real users?"
+    - "What does success look like from the user's perspective?"
+  when_to_apply:
+    - "Designing new products or features"
+    - "Improving existing user experiences"
+    - "Solving complex user problems"
+    - "Creating accessible and inclusive designs"
+    - "Building products for diverse user groups"
+  exceptions:
+    - "Highly technical internal tools may need less user involvement"
+    - "Emergency fixes may not allow for full UCD process"
+    - "Very small features may use lightweight UCD approaches"
+  common_mistakes:
+    - "Assuming you know what users want without research"
+    - "Testing with internal team members instead of real users"
+    - "Focusing only on what users say, not what they do"
+    - "Not considering users with different abilities or contexts"
+
+examples:
+  good:
+    - description: "Iterative design process with user feedback"
+      code: |
+        Research Phase:
+        - User interviews (15 participants)
+        - Contextual inquiry in user environments
+        - Journey mapping of current state
+        
+        Design Phase:
+        - Lo-fi prototypes based on research insights
+        - User testing with 8 participants
+        - Iterate based on feedback
+        
+        Validation Phase:
+        - Hi-fi prototype testing
+        - A/B testing of key interactions
+        - Accessibility testing with assistive technology users
+        
+        Launch Phase:
+        - Usability metrics tracking
+        - Ongoing user feedback collection
+        - Regular design reviews based on data
+      explanation: "Comprehensive UCD approach with multiple touchpoints for user input"
+    - description: "User research informing design decisions"
+      code: |
+        Problem: Users abandoning checkout process
+        
+        Research findings:
+        - 60% of users confused by shipping options
+        - 45% concerned about payment security
+        - 30% frustrated by required account creation
+        
+        Design solutions:
+        - Simplified shipping selection with clear costs
+        - Added security badges and encryption info
+        - Introduced guest checkout option
+        
+        Results:
+        - 25% increase in checkout completion
+        - 40% reduction in support tickets
+        - Improved user satisfaction scores
+      explanation: "Research directly informs design decisions with measurable outcomes"
+  bad:
+    - description: "Designing without user input"
+      code: |
+        // Internal team meeting:
+        "I think users would prefer this layout"
+        "Let's add more features to make it powerful"
+        "The CEO wants it to look more modern"
+        
+        // Result:
+        - High bounce rates
+        - Low user adoption
+        - Expensive post-launch redesigns
+        - Poor user satisfaction
+      problem: "Decisions based on assumptions rather than user research"
+  real_world:
+    - project: "Airbnb"
+      description: "Extensive user research and testing drives product decisions"
+      link: "https://airbnb.design/"
+    - project: "GOV.UK"
+      description: "Government services designed around user needs, not organizational structure"
+      link: "https://www.gov.uk/service-manual/user-research"
+compatibility:
+  works_well_with:
+    - accessibility-first
+    - inclusive-design
+    - agile-development
+    - design-thinking
+  potential_conflicts:
+    - rapid-prototyping
+    - feature-driven-development
+    - technical-constraints
+  complements:
+    - usability-testing
+    - design-research
+    - human-computer-interaction
+    - service-design
+
+references:
+  foundational:
+    - "ISO 9241-210:2019 Human-centered design for interactive systems"
+    - "The Design of Everyday Things (Don Norman, 2013)"
+    - "User-Centered System Design (Norman & Draper, 1986)"
+  modern:
+    - "Don't Make Me Think (Steve Krug, 2014)"
+    - "Observing the User Experience (Kuniavsky, 2003)"
+    - "About Face (Cooper, Reimann, Cronin, 2014)"
+  tools:
+    - "User research tools (UserTesting, Maze, Lookback)"
+    - "Design tools (Figma, Sketch, Adobe XD)"
+    - "Analytics tools (Google Analytics, Hotjar)"

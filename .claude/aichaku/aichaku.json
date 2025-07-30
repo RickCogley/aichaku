@@ -28,6 +28,10 @@
     ]
   },
   "principles": {
-    "selected": []
+    "selected": [
+      "unix-philosophy",
+      "dry-dont-repeat-yourself",
+      "accessibility-first"
+    ]
   }
 }

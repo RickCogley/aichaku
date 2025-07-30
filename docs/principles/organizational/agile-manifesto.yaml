@@ -1,0 +1,150 @@
+name: "Agile Manifesto"
+category: organizational
+description: |
+  A set of values and principles for software development that emphasizes individuals, collaboration, working software, and responding to change. Created in 2001 by seventeen software developers.
+
+history:
+  origin: "2001, Snowbird, Utah"
+  originators:
+    - "Kent Beck"
+    - "Martin Fowler"
+    - "Robert C. Martin"
+    - "Ken Schwaber"
+    - "Jeff Sutherland"
+    - "Ward Cunningham"
+    - "Ron Jeffries"
+    - "and 10 others"
+  evolution: |
+    Created by seventeen software developers during a meeting at the Snowbird
+    resort in Utah in February 2001. They sought to find common ground between
+    various lightweight development methodologies. The manifesto sparked the
+    agile movement that transformed software development practices worldwide.
+  significance: |
+    The Agile Manifesto fundamentally changed how software is developed,
+    influencing not just development practices but organizational culture
+    and project management across industries.
+
+summary:
+  tagline: "Individuals and interactions, working software, customer collaboration, responding to change"
+  core_tenets:
+    - text: "Individuals and interactions over processes and tools"
+      guidance: "Empower people and foster communication rather than relying solely on processes"
+    - text: "Working software over comprehensive documentation"
+      guidance: "Focus on delivering functional software as the primary measure of progress"
+    - text: "Customer collaboration over contract negotiation"
+      guidance: "Work closely with customers throughout development rather than just at the beginning"
+    - text: "Responding to change over following a plan"
+      guidance: "Adapt to changing requirements rather than rigidly following initial plans"
+  anti_patterns:
+    - pattern: "Heavy process-driven development"
+      instead: "Lightweight, people-focused approaches"
+    - pattern: "Documentation for documentation's sake"
+      instead: "Just enough documentation to support working software"
+    - pattern: "Fixed-scope, waterfall projects"
+      instead: "Iterative development with frequent feedback"
+  key_practices:
+    - "Early and continuous delivery of valuable software"
+    - "Welcome changing requirements throughout development"
+    - "Frequent delivery in short iterations"
+    - "Daily collaboration between business and developers"
+
+guidance:
+  spirit: |
+    The Agile Manifesto represents a fundamental shift from command-and-control
+    to collaborative, adaptive approaches. It values people over processes,
+    outcomes over outputs, and flexibility over rigid planning. The manifesto
+    doesn't reject the items on the right (processes, documentation, contracts,
+    plans) but values the items on the left more.
+  questions_to_ask:
+    - "Are we empowering our team members or constraining them with process?"
+    - "Is our documentation helping or hindering our progress?"
+    - "Are we collaborating with customers or just delivering to specifications?"
+    - "How quickly can we respond to changing requirements?"
+    - "Are we measuring progress by working software or other metrics?"
+  when_to_apply:
+    - "Complex software development projects"
+    - "Environments with changing requirements"
+    - "Projects requiring frequent stakeholder feedback"
+    - "Teams that can self-organize effectively"
+  exceptions:
+    - "Highly regulated industries may require more documentation"
+    - "Safety-critical systems may need more upfront planning"
+    - "Teams lacking necessary skills may need more guidance"
+    - "Fixed-price contracts may limit flexibility"
+  common_mistakes:
+    - "Thinking agile means no planning or documentation"
+    - "Implementing practices without adopting the mindset"
+    - "Using agile as an excuse for lack of discipline"
+    - "Focusing on ceremonies instead of values and principles"
+
+examples:
+  good:
+    - description: "Daily standup focused on collaboration"
+      code: |
+        // Instead of status reporting:
+        "What did you do yesterday?"
+        "What will you do today?"
+        "Any blockers?"
+        
+        // Focus on collaboration:
+        "How can we help each other succeed today?"
+        "What do we need to deliver value to our customer?"
+        "What have we learned that changes our approach?"
+      explanation: "Emphasizes collaboration and value delivery over status reporting"
+    - description: "Responding to change in requirements"
+      code: |
+        // Traditional approach:
+        "That's a scope change, we need a change request"
+        
+        // Agile approach:
+        "Let's understand the customer need and see how we can adapt"
+        "How does this change affect our current sprint goals?"
+        "What's the minimum viable way to address this need?"
+      explanation: "Welcomes change as an opportunity to deliver more value"
+  bad:
+    - description: "Agile theater without substance"
+      code: |
+        // Going through agile motions without embracing values:
+        - Daily standups that are just status meetings
+        - Sprint planning that's just task assignment
+        - Retrospectives that don't lead to change
+        - "Being agile" but not responding to customer feedback
+      problem: "Following agile practices without adopting agile principles"
+  real_world:
+    - project: "Spotify Engineering Culture"
+      description: "Exemplifies agile values with autonomous squads and tribes"
+      link: "https://engineering.atspotify.com/"
+    - project: "ING Bank Transformation"
+      description: "Large-scale organizational transformation using agile principles"
+      link: "https://www.ing.com/"
+
+compatibility:
+  works_well_with:
+    - lean-principles
+    - devops-culture
+    - continuous-improvement
+    - servant-leadership
+  potential_conflicts:
+    - waterfall-methodology
+    - command-and-control
+    - heavy-documentation
+    - fixed-scope-contracts
+  complements:
+    - scrum-framework
+    - kanban-method
+    - extreme-programming
+    - lean-startup
+
+references:
+  foundational:
+    - "Manifesto for Agile Software Development (2001)"
+    - "Agile Software Development (Robert C. Martin, 2002)"
+    - "Extreme Programming Explained (Kent Beck, 1999)"
+  modern:
+    - "Succeeding with Agile (Mike Cohn, 2009)"
+    - "The Lean Startup (Eric Ries, 2011)"
+    - "Accelerate (Forsgren, Humble, Kim, 2018)"
+  tools:
+    - "Jira (issue tracking)"
+    - "Azure DevOps (development platform)"
+    - "Miro (collaboration boards)"

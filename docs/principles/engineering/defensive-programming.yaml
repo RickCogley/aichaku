@@ -1,0 +1,165 @@
+name: "Defensive Programming"
+category: engineering
+description: |
+  A programming approach that anticipates and guards against potential errors, invalid inputs, and unexpected conditions to create robust and reliable software.
+
+history:
+  origin: "1970s, Software Engineering"
+  originators:
+    - "Edsger W. Dijkstra"
+    - "C.A.R. Hoare"
+    - "David Parnas"
+  evolution: |
+    Defensive programming emerged from early software engineering practices
+    focused on reliability and correctness. The approach was formalized through
+    work on program verification, contracts, and structured programming in the
+    1970s. It gained prominence with the rise of commercial software and the
+    need for robust systems.
+  significance: |
+    Essential for building reliable software systems, especially in critical
+    applications. The principle influences modern practices like input validation,
+    error handling, and security-conscious programming.
+
+summary:
+  tagline: "Write code that continues to function predictably despite unexpected conditions"
+  core_tenets:
+    - text: "Never trust external input"
+      guidance: "Validate all data coming from outside your control"
+    - text: "Always validate data at boundaries"
+      guidance: "Check inputs at system and module interfaces"
+    - text: "Handle all error cases explicitly"
+      guidance: "Don't ignore or assume away error conditions"
+    - text: "Make no assumptions about state"
+      guidance: "Verify preconditions and invariants"
+    - text: "Fail gracefully when appropriate"
+      guidance: "Provide meaningful error responses, not crashes"
+  anti_patterns:
+    - pattern: "Trusting all inputs without validation"
+      instead: "Validate and sanitize all external inputs"
+    - pattern: "Catching and ignoring all errors"
+      instead: "Handle errors explicitly with proper logging"
+    - pattern: "Over-defensive code that handles impossible scenarios"
+      instead: "Focus on likely and impactful error conditions"
+  key_practices:
+    - "Input validation with type and range checks"
+    - "Error handling with try-catch blocks"
+    - "Assertions for debugging and contract verification"
+    - "Defensive copying to protect internal state"
+
+guidance:
+  spirit: |
+    Defensive programming is about building robust software that handles the
+    unexpected gracefully. It's not about paranoia, but about recognizing that
+    software operates in an unpredictable world. The goal is to prevent small
+    problems from becoming big disasters while maintaining code clarity and
+    performance.
+  questions_to_ask:
+    - "What could go wrong with this input or operation?"
+    - "How should the system behave if this assumption is violated?"
+    - "What are the security implications of this code path?"
+    - "How can I make this failure visible and debuggable?"
+    - "Is this defensive measure worth the complexity it adds?"
+  when_to_apply:
+    - "Processing external inputs (user data, network, files)"
+    - "Public APIs and library interfaces"
+    - "Security-critical code paths"
+    - "System boundaries and integration points"
+    - "Resource management and cleanup"
+  exceptions:
+    - "Internal helper functions may trust validated inputs"
+    - "Performance-critical code may skip some checks"
+    - "Prototype code can defer defensive measures"
+    - "Over-defensive code can hide real bugs"
+  common_mistakes:
+    - "Trying to handle every conceivable error condition"
+    - "Silently catching and ignoring all exceptions"
+    - "Adding defensive code without understanding the threats"
+    - "Making defensive code so complex it introduces new bugs"
+
+examples:
+  good:
+    - description: "Input validation with clear error messages"
+      code: |
+        function processAge(age) {
+          if (typeof age !== 'number') {
+            throw new TypeError('Age must be a number');
+          }
+          if (age < 0 || age > 150) {
+            throw new RangeError('Age must be between 0 and 150');
+          }
+          if (!Number.isInteger(age)) {
+            throw new Error('Age must be a whole number');
+          }
+          
+          return age;
+        }
+      explanation: "Validates input thoroughly with specific error messages for each failure case"
+    - description: "Defensive copying to protect internal state"
+      code: |
+        class UserManager {
+          constructor() {
+            this.users = [];
+          }
+          
+          getUsers() {
+            // Return a copy to prevent external modification
+            return [...this.users];
+          }
+          
+          addUsers(newUsers) {
+            // Validate input and make defensive copy
+            if (!Array.isArray(newUsers)) {
+              throw new TypeError('Expected array of users');
+            }
+            this.users.push(...newUsers.map(user => ({...user})));
+          }
+        }
+      explanation: "Protects internal state from external modification through defensive copying"
+  bad:
+    - description: "Silent failure hiding problems"
+      code: |
+        function processData(data) {
+          try {
+            return data.map(item => item.value * 2);
+          } catch (error) {
+            // Silent failure - problems are hidden
+            return [];
+          }
+        }
+      problem: "Errors are caught but not handled, making debugging impossible"
+  real_world:
+    - project: "NASA Software"
+      description: "Extensive defensive programming practices for mission-critical systems"
+      link: "https://www.nasa.gov/"
+    - project: "OpenSSL"
+      description: "Defensive coding practices for cryptographic security"
+      link: "https://www.openssl.org/"
+compatibility:
+  works_well_with:
+    - fail-fast
+    - robustness-principle
+    - security-first-design
+    - error-handling-patterns
+  potential_conflicts:
+    - kiss
+    - performance-optimization
+    - rapid-prototyping
+  complements:
+    - input-validation
+    - contract-programming
+    - exception-handling
+    - secure-coding
+
+references:
+  foundational:
+    - "Code Complete (Steve McConnell, 2004)"
+    - "The Practice of Programming (Kernighan & Pike, 1999)"
+    - "Programming Pearls (Jon Bentley, 1986)"
+  modern:
+    - "Secure Coding in C and C++ (Robert Seacord, 2013)"
+    - "Effective Java (Joshua Bloch, 2017)"
+    - "Clean Code (Robert C. Martin, 2008)"
+  tools:
+    - "Static analysis tools (SonarQube, CodeQL)"
+    - "Input validation libraries"
+    - "Fuzz testing tools (AFL, libFuzzer)"

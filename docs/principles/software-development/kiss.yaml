@@ -1,0 +1,164 @@
+name: "KISS (Keep It Simple, Stupid)"
+category: software-development
+description: |
+  Systems work best when they are kept simple rather than made complex. Simplicity should be a key goal in design, and unnecessary complexity should be avoided.
+
+history:
+  origin: "1960s, U.S. Navy (Kelly Johnson)"
+  originators:
+    - "Kelly Johnson (Lockheed Skunk Works)"
+  evolution: |
+    The KISS principle was noted by the U.S. Navy in 1960, based on Kelly Johnson's
+    approach at Lockheed's Skunk Works. Johnson challenged his engineers to design
+    aircraft that could be repaired by average mechanics with only basic tools.
+    The principle has since been adopted across many fields, becoming fundamental
+    to software engineering and design.
+  significance: |
+    KISS has become one of the most widely recognized design principles,
+    influencing everything from user interface design to system architecture
+    and becoming a cornerstone of good software engineering practice.
+
+summary:
+  tagline: "Most systems work best if they are kept simple rather than made complicated"
+  core_tenets:
+    - text: "Favor clarity over cleverness"
+      guidance: "Write code that others can easily understand and maintain"
+    - text: "Choose simple solutions over complex ones"
+      guidance: "When multiple solutions exist, prefer the simpler approach"
+    - text: "Avoid over-engineering"
+      guidance: "Don't build more than what's needed for current requirements"
+    - text: "Make code readable and maintainable"
+      guidance: "Optimize for human understanding, not just machine execution"
+    - text: "Reduce cognitive load for developers"
+      guidance: "Make systems easy to reason about and modify"
+  anti_patterns:
+    - pattern: "Over-abstraction and excessive layers"
+      instead: "Direct, straightforward implementations when appropriate"
+    - pattern: "Clever one-liners that are hard to understand"
+      instead: "Clear, verbose code that explains its purpose"
+    - pattern: "Complex inheritance hierarchies"
+      instead: "Composition and simple relationships"
+  key_practices:
+    - "Use clear, descriptive names"
+    - "Write small, focused functions"
+    - "Minimize dependencies"
+    - "Use standard tools and libraries"
+
+guidance:
+  spirit: |
+    KISS is about finding the right balance between functionality and simplicity.
+    It's not about dumbing things down, but about removing unnecessary complexity
+    that doesn't add value. The goal is to make systems that are easy to
+    understand, maintain, and modify by both current and future developers.
+  questions_to_ask:
+    - "Is this solution as simple as it can be while still solving the problem?"
+    - "Would a new developer understand this code easily?"
+    - "Am I adding complexity that doesn't provide clear value?"
+    - "Can I solve this problem with fewer moving parts?"
+    - "What's the simplest thing that could possibly work?"
+  when_to_apply:
+    - "Designing APIs and interfaces"
+    - "Writing business logic"
+    - "Choosing architecture patterns"
+    - "Selecting tools and frameworks"
+    - "Creating user interfaces"
+  exceptions:
+    - "Complex problems may genuinely require complex solutions"
+    - "Performance requirements may necessitate optimization complexity"
+    - "Domain complexity may require sophisticated modeling"
+    - "Security requirements may add necessary complexity"
+  common_mistakes:
+    - "Oversimplifying to the point of inadequacy"
+    - "Avoiding all abstractions, even beneficial ones"
+    - "Confusing simple with easy or quick"
+    - "Ignoring future maintainability for current simplicity"
+
+examples:
+  good:
+    - description: "Simple function implementation"
+      code: |
+        def calculate_total_price(items):
+            """Calculate total price including tax."""
+            subtotal = sum(item.price for item in items)
+            tax = subtotal * 0.08
+            return subtotal + tax
+      explanation: "Clear, readable function that does one thing well"
+    - description: "Straightforward data structure"
+      code: |
+        class User {
+          constructor(name, email) {
+            this.name = name;
+            this.email = email;
+            this.createdAt = new Date();
+          }
+        }
+      explanation: "Simple class without unnecessary abstractions"
+  bad:
+    - description: "Over-engineered solution"
+      code: |
+        class AbstractUserFactoryBuilder {
+          static createBuilderFactory() {
+            return new UserBuilderFactory();
+          }
+        }
+        
+        class UserBuilderFactory {
+          createBuilder() {
+            return new UserBuilder();
+          }
+        }
+        
+        class UserBuilder {
+          withName(name) { this.name = name; return this; }
+          withEmail(email) { this.email = email; return this; }
+          build() { return new User(this.name, this.email); }
+        }
+        
+        // Usage:
+        const user = AbstractUserFactoryBuilder
+          .createBuilderFactory()
+          .createBuilder()
+          .withName('John')
+          .withEmail('john@example.com')
+          .build();
+      problem: "Excessive abstraction for simple user creation"
+  real_world:
+    - project: "Go Programming Language"
+      description: "Designed with simplicity as a core principle, avoiding many complex features"
+      link: "https://golang.org/"
+    - project: "SQLite"
+      description: "Simple, self-contained database engine focused on ease of use"
+      link: "https://sqlite.org/"
+    - project: "JSON"
+      description: "Simple data format that's easy to read and write"
+      link: "https://json.org/"
+
+compatibility:
+  works_well_with:
+    - yagni
+    - unix-philosophy
+    - separation-of-concerns
+    - dry
+  potential_conflicts:
+    - solid
+    - design-patterns
+    - enterprise-architecture
+    - premature-optimization
+  complements:
+    - readable-code
+    - maintainable-code
+    - user-centered-design
+    - lean-principles
+
+references:
+  foundational:
+    - "The KISS Principle (Kelly Johnson, 1960s)"
+    - "The Art of Unix Programming (Eric S. Raymond, 2003)"
+    - "Clean Code (Robert C. Martin, 2008)"
+  modern:
+    - "Simple Made Easy (Rich Hickey, 2011)"
+    - "The Simplicity Principle (Maeda, 2006)"
+  tools:
+    - "Code complexity analyzers"
+    - "Linting tools for readability"
+    - "Static analysis tools"

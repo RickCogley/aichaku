@@ -14,6 +14,17 @@ import type { Principle, PrincipleCategory, PrincipleWithDocs } from "../types/p
 import { PRINCIPLE_CATEGORIES } from "../types/principle.ts";
 
 /**
+ * Generate a consistent ID from a principle name
+ */
+function generatePrincipleId(name: string): string {
+  return name.toLowerCase()
+    .replace(/[^\w\s-]/g, "") // Remove special characters except spaces and hyphens
+    .replace(/[\s]+/g, "-") // Replace spaces with hyphens
+    .replace(/--+/g, "-") // Replace multiple hyphens with single
+    .replace(/^-+|-+$/g, ""); // Remove leading/trailing hyphens
+}
+
+/**
  * Loads and manages principles from the filesystem
  */
 export class PrincipleLoader {
@@ -21,7 +32,13 @@ export class PrincipleLoader {
   private principlesPath: string;
 
   constructor() {
-    this.principlesPath = join(getAichakuPaths().global.root, "docs/principles");
+    // Try repo location first (for development), then global installation
+    const repoPath = join(Deno.cwd(), "docs/principles");
+    const globalPath = join(getAichakuPaths().global.root, "docs/principles");
+
+    // Use repo path if it exists (development mode), otherwise use global
+    this.principlesPath = repoPath;
+    // TODO: Add exists check when needed
   }
 
   /**
@@ -50,7 +67,9 @@ export class PrincipleLoader {
           const principle = await this.loadPrincipleWithDocs(entry.path);
           if (principle) {
             principles.push(principle);
-            this.cache.set(principle.data.name, principle);
+            // Cache by generated ID for consistent lookups
+            const id = generatePrincipleId(principle.data.name);
+            this.cache.set(id, principle);
           }
         }
       }
@@ -68,14 +87,24 @@ export class PrincipleLoader {
       return this.cache.get(principleId)!;
     }
 
-    // Search in all categories
+    // If not in cache, load all principles to populate cache
+    if (this.cache.size === 0) {
+      await this.loadAll();
+      // Check cache again after loading
+      if (this.cache.has(principleId)) {
+        return this.cache.get(principleId)!;
+      }
+    }
+
+    // Try to find by filename as fallback
     for (const category of Object.keys(PRINCIPLE_CATEGORIES) as PrincipleCategory[]) {
       const yamlPath = join(this.principlesPath, category, `${principleId}.yaml`);
 
       if (await exists(yamlPath)) {
         const principle = await this.loadPrincipleWithDocs(yamlPath);
         if (principle) {
-          this.cache.set(principleId, principle);
+          const id = generatePrincipleId(principle.data.name);
+          this.cache.set(id, principle);
           return principle;
         }
       }

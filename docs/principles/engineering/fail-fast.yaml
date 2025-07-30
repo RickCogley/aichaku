@@ -1,0 +1,170 @@
+name: "Fail Fast"
+category: engineering
+description: |
+  A system design principle that advocates detecting and reporting failures as early as possible, rather than attempting to continue operating in an inconsistent or erroneous state.
+
+history:
+  origin: "1990s, Software Engineering"
+  originators:
+    - "Jim Gray"
+    - "Martin Fowler"
+    - "Andy Hunt & Dave Thomas"
+  evolution: |
+    The Fail Fast principle emerged from distributed systems research and
+    was popularized through books like "The Pragmatic Programmer" (1999).
+    It gained prominence with the rise of agile development, where fast
+    feedback loops became crucial for quality and productivity.
+  significance: |
+    Fundamental to building reliable software systems. The principle influences
+    modern practices from input validation to circuit breakers, helping
+    developers catch bugs early and build resilient systems.
+
+summary:
+  tagline: "Detect and report failures as early as possible to maintain system integrity"
+  core_tenets:
+    - text: "Detect errors at the earliest possible point"
+      guidance: "Don't let invalid conditions propagate through the system"
+    - text: "Stop execution immediately when errors are detected"
+      guidance: "Fail explicitly rather than continuing with corrupt state"
+    - text: "Provide clear error messages about what went wrong"
+      guidance: "Make debugging easier with specific error information"
+    - text: "Prefer compile-time errors over runtime errors"
+      guidance: "Use type systems and static analysis to catch issues early"
+    - text: "Make invalid states unrepresentable"
+      guidance: "Design APIs and data structures to prevent invalid usage"
+  anti_patterns:
+    - pattern: "Silent failures that hide problems"
+      instead: "Fail loudly with clear error messages"
+    - pattern: "Continuing execution with corrupted state"
+      instead: "Stop processing immediately when corruption is detected"
+    - pattern: "Catching all exceptions without handling them"
+      instead: "Only catch exceptions you can meaningfully handle"
+  key_practices:
+    - "Input validation at system boundaries"
+    - "Assertions to check invariants and preconditions"
+    - "Strong typing to prevent invalid states"
+    - "Circuit breakers for external dependencies"
+
+guidance:
+  spirit: |
+    Fail Fast is about building systems that expose problems immediately
+    rather than hiding them. It's based on the understanding that it's
+    better to fail cleanly and predictably than to continue operating
+    in an unknown state. The goal is to make bugs easier to find and fix
+    while preventing small problems from becoming large disasters.
+  questions_to_ask:
+    - "What could go wrong with this input or operation?"
+    - "How quickly can I detect if something is invalid?"
+    - "What would happen if this assumption is violated?"
+    - "Am I propagating potentially corrupt data?"
+    - "How can I make this failure more obvious and debuggable?"
+  when_to_apply:
+    - "Validating inputs at system boundaries"
+    - "Checking preconditions in functions"
+    - "Detecting configuration errors at startup"
+    - "Handling external service failures"
+    - "Processing critical business data"
+  exceptions:
+    - "User-facing interfaces may need graceful degradation"
+    - "High-availability systems may prefer partial functionality"
+    - "Recovery operations may need to continue despite errors"
+    - "Performance-critical paths may defer some validation"
+  common_mistakes:
+    - "Swallowing all exceptions without handling them properly"
+    - "Continuing execution with known invalid state"
+    - "Providing vague or misleading error messages"
+    - "Failing too late after the error has propagated"
+
+examples:
+  good:
+    - description: "Input validation with immediate failure"
+      code: |
+        function processUser(user) {
+          // Fail fast on invalid input
+          if (!user) {
+            throw new Error('User cannot be null or undefined');
+          }
+          if (!user.email || typeof user.email !== 'string') {
+            throw new Error('User email must be a non-empty string');
+          }
+          if (!user.email.includes('@')) {
+            throw new Error('User email must be a valid email address');
+          }
+          
+          // Continue with valid data
+          return processValidUser(user);
+        }
+      explanation: "Validates all preconditions immediately and fails with specific error messages"
+    - description: "Configuration validation at startup"
+      code: |
+        class DatabaseConfig {
+          constructor(config) {
+            // Fail fast during application startup
+            if (!config.host) {
+              throw new Error('Database host is required');
+            }
+            if (!config.port || config.port < 1 || config.port > 65535) {
+              throw new Error('Database port must be between 1 and 65535');
+            }
+            if (!config.database) {
+              throw new Error('Database name is required');
+            }
+            
+            this.host = config.host;
+            this.port = config.port;
+            this.database = config.database;
+          }
+        }
+      explanation: "Validates configuration early so the application doesn't start with invalid config"
+  bad:
+    - description: "Silent failure hiding problems"
+      code: |
+        function saveUser(user) {
+          try {
+            validateUser(user);
+            database.save(user);
+            return { success: true };
+          } catch (error) {
+            // Silent failure - problem is hidden
+            console.log('Something went wrong, but continuing...');
+            return { success: true }; // Lying about success!
+          }
+        }
+      problem: "Hides errors instead of exposing them, making debugging impossible"
+  real_world:
+    - project: "Rust Programming Language"
+      description: "Panic! macro for unrecoverable errors, strong type system prevents many runtime errors"
+      link: "https://doc.rust-lang.org/book/ch09-01-unrecoverable-errors-with-panic.html"
+    - project: "Erlang/OTP"
+      description: "Let-it-crash philosophy with supervisor trees for fault tolerance"
+      link: "https://erlang.org/doc/design_principles/sup_princ.html"
+compatibility:
+  works_well_with:
+    - input-validation
+    - contract-programming
+    - type-safety
+    - circuit-breaker-pattern
+  potential_conflicts:
+    - defensive-programming
+    - robustness-principle
+    - graceful-degradation
+    - high-availability
+  complements:
+    - error-handling
+    - logging-and-monitoring
+    - testing-strategies
+    - system-reliability
+
+references:
+  foundational:
+    - "The Pragmatic Programmer (Hunt & Thomas, 1999)"
+    - "Release It! (Michael Nygard, 2007)"
+    - "Effective Java (Joshua Bloch, 2008)"
+  modern:
+    - "Building Secure and Reliable Systems (Blank-Edelman et al., 2020)"
+    - "Crash-Only Software (Candea & Fox, 2003)"
+    - "The Erlang Programming Language (Armstrong, 2007)"
+  tools:
+    - "Static analysis tools (ESLint, SonarQube)"
+    - "Type checkers (TypeScript, Flow)"
+    - "Testing frameworks with assertion libraries"

@@ -1,0 +1,174 @@
+name: "Separation of Concerns"
+category: software-development
+description: |
+  A design principle for separating a computer program into distinct sections, where each section addresses a separate concern. A concern is a set of information that affects the code of a computer program.
+
+history:
+  origin: "1974, Edsger W. Dijkstra"
+  originators:
+    - "Edsger W. Dijkstra"
+  evolution: |
+    Introduced by Dijkstra in "On the role of scientific thought" (1974).
+    The principle has evolved from simple modular programming to encompass
+    architectural patterns, aspect-oriented programming, and microservices.
+  significance: |
+    One of the most fundamental principles in software engineering, influencing
+    architecture patterns from MVC to microservices and modern component-based design.
+
+summary:
+  tagline: "Organize code so that distinct features are located in distinct areas"
+  core_tenets:
+    - text: "Each module/component handles one concern"
+      guidance: "Focus on a single responsibility or aspect of the system"
+    - text: "Minimize overlap between different concerns"
+      guidance: "Avoid mixing business logic with presentation or data access"
+    - text: "Clear boundaries between different aspects"
+      guidance: "Define explicit interfaces between concerns"
+    - text: "High cohesion within modules"
+      guidance: "Related functionality should be grouped together"
+    - text: "Low coupling between modules"
+      guidance: "Minimize dependencies between different concerns"
+  anti_patterns:
+    - pattern: "Business logic in UI components"
+      instead: "Separate presentation from business rules"
+    - pattern: "Data access mixed with controllers"
+      instead: "Use repository or data access layer patterns"
+    - pattern: "Cross-cutting concerns scattered"
+      instead: "Use aspect-oriented programming or middleware"
+  key_practices:
+    - "Layered architecture (UI, Business, Data)"
+    - "Model-View-Controller (MVC) pattern"
+    - "Dependency injection for loose coupling"
+    - "Aspect-oriented programming for cross-cutting concerns"
+
+guidance:
+  spirit: |
+    Separation of Concerns is about organizing code so that each part has a clear,
+    focused purpose. It's fundamental to managing complexity in software systems.
+    The goal is to create systems where changes to one concern don't ripple
+    through unrelated parts of the codebase.
+  questions_to_ask:
+    - "What is this code's primary responsibility?"
+    - "Are there multiple unrelated concerns mixed together here?"
+    - "Could changes to one concern affect this code?"
+    - "Are the boundaries between concerns clear and well-defined?"
+    - "How can cross-cutting concerns be handled consistently?"
+  when_to_apply:
+    - "Designing system architecture"
+    - "Organizing code into modules and classes"
+    - "Creating layered applications"
+    - "Building component-based UIs"
+    - "Implementing microservices"
+  exceptions:
+    - "Very small applications may not benefit from separation"
+    - "Performance-critical code may need tighter coupling"
+    - "Prototype code can defer separation until patterns emerge"
+  common_mistakes:
+    - "Over-separating into too many tiny modules"
+    - "Creating artificial boundaries that don't reflect real concerns"
+    - "Ignoring cross-cutting concerns"
+    - "Mixing abstraction levels within the same module"
+
+examples:
+  good:
+    - description: "MVC separation"
+      code: |
+        // Model (data and business logic)
+        class User {
+          constructor(name, email) {
+            this.name = name;
+            this.email = this.validateEmail(email);
+          }
+          validateEmail(email) { /* validation logic */ }
+        }
+        
+        // View (presentation)
+        class UserView {
+          render(user) { /* render user data */ }
+        }
+        
+        // Controller (coordination)
+        class UserController {
+          createUser(name, email) {
+            const user = new User(name, email);
+            this.userView.render(user);
+          }
+        }
+      explanation: "Each component handles a distinct concern with clear boundaries"
+    - description: "Layered architecture"
+      code: |
+        // Data layer
+        class UserRepository {
+          save(user) { /* database operations */ }
+        }
+        
+        // Business layer
+        class UserService {
+          createUser(userData) { /* business logic */ }
+        }
+        
+        // Presentation layer
+        class UserController {
+          handleCreateUser(req, res) { /* HTTP handling */ }
+        }
+      explanation: "Concerns separated into distinct layers with defined responsibilities"
+  bad:
+    - description: "Mixed concerns in one class"
+      code: |
+        class UserManager {
+          createUser(name, email) {
+            // Validation (business logic)
+            if (!email.includes('@')) throw new Error('Invalid email');
+            
+            // Database access (data concern)
+            const sql = 'INSERT INTO users (name, email) VALUES (?, ?)';
+            database.execute(sql, [name, email]);
+            
+            // UI updates (presentation concern)
+            document.getElementById('status').textContent = 'User created';
+            
+            // Logging (cross-cutting concern)
+            console.log(`User ${name} created at ${new Date()}`);
+          }
+        }
+      problem: "Multiple unrelated concerns mixed in a single method"
+  real_world:
+    - project: "Spring Framework"
+      description: "Implements separation through layered architecture and dependency injection"
+      link: "https://spring.io/"
+    - project: "React Components"
+      description: "Separates UI concerns from business logic through component architecture"
+      link: "https://reactjs.org/"
+    - project: "Clean Architecture"
+      description: "Robert Martin's approach to separating concerns in enterprise applications"
+      link: "https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html"
+
+compatibility:
+  works_well_with:
+    - single-responsibility
+    - dry
+    - interface-segregation
+    - dependency-inversion
+  potential_conflicts:
+    - performance-optimization
+    - rapid-prototyping
+    - simple-applications
+  complements:
+    - layered-architecture
+    - microservices
+    - component-based-design
+    - aspect-oriented-programming
+
+references:
+  foundational:
+    - "On the role of scientific thought (Dijkstra, 1974)"
+    - "Structured Programming (Dijkstra, 1972)"
+    - "The Mythical Man-Month (Brooks, 1975)"
+  modern:
+    - "Clean Architecture (Robert C. Martin, 2017)"
+    - "Domain-Driven Design (Eric Evans, 2003)"
+    - "Patterns of Enterprise Application Architecture (Martin Fowler, 2002)"
+  tools:
+    - "Dependency injection frameworks"
+    - "Aspect-oriented programming tools"
+    - "Architecture analysis tools"

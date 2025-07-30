@@ -1,0 +1,143 @@
+name: Accessibility First
+category: human-centered
+description: Design and develop products that are usable by everyone, including people with disabilities, from the very beginning of the process rather than as an afterthought.
+aliases:
+  - a11y-first
+  - inclusive-accessibility
+
+history:
+  origin: "1990s, Disability Rights Movement"
+  originators:
+    - "Tim Berners-Lee"
+    - "Disability rights advocates"
+    - "Section 508 legislation"
+    - "W3C Web Accessibility Initiative"
+  evolution: |
+    Accessibility First emerged from the broader disability rights movement and
+    the recognition that digital products must be inclusive from the start.
+    The Web Content Accessibility Guidelines (WCAG) formalized many practices.
+  significance: |
+    Critical for creating truly inclusive digital experiences that serve all users,
+    not just those without disabilities. Improves usability for everyone.
+
+summary:
+  tagline: "Accessibility is not a feature, it's a foundation"
+  core_tenets:
+    - text: "Design for everyone from the start"
+      guidance: "Consider accessibility in every design decision, not as an afterthought"
+    - text: "Follow WCAG guidelines"
+      guidance: "Implement WCAG 2.1 AA standards as minimum requirements"
+    - text: "Test with real users"
+      guidance: "Include users with disabilities in testing and feedback processes"
+    - text: "Use semantic markup"
+      guidance: "Proper HTML structure supports assistive technologies"
+  anti_patterns:
+    - pattern: "Retrofitting accessibility"
+      instead: "Building accessibility in from the beginning"
+    - pattern: "Assuming sighted, hearing users"
+      instead: "Designing for diverse abilities and contexts"
+    - pattern: "Relying only on color"
+      instead: "Using multiple indicators (color, shape, text, icons)"
+  key_practices:
+    - "Alt text for all images"
+    - "Keyboard navigation support"
+    - "Proper heading structure"
+    - "Sufficient color contrast"
+    - "Focus indicators"
+    - "Error handling and form labels"
+
+guidance:
+  spirit: |
+    Accessibility First means recognizing that disability is part of human
+    diversity, and that accessible design often results in better experiences
+    for everyone. It's about removing barriers and creating inclusive experiences.
+  questions_to_ask:
+    - "Can this be used without seeing it?"
+    - "Can this be navigated with only a keyboard?"
+    - "Are instructions clear and simple?"
+    - "Does this work with screen readers?"
+    - "Is the color contrast sufficient?"
+  when_to_apply:
+    - "All digital product development"
+    - "Website and application design"
+    - "Content creation and publishing"
+    - "User interface design"
+    - "Information architecture"
+  exceptions:
+    - "Highly specialized tools may have different requirements"
+    - "Some visual content may need alternative formats"
+  common_mistakes:
+    - "Only considering obvious disabilities"
+    - "Testing accessibility only at the end"
+    - "Assuming accessibility means ugly design"
+
+examples:
+  good:
+    - description: "Accessible form design"
+      code: |
+        <form>
+          <label for="email">Email Address (required)</label>
+          <input 
+            type="email" 
+            id="email" 
+            required 
+            aria-describedby="email-error"
+            aria-invalid="false"
+          >
+          <div id="email-error" role="alert"></div>
+        </form>
+      explanation: "Proper labels, ARIA attributes, and error handling"
+    
+    - description: "Accessible button"
+      code: |
+        <button 
+          type="button"
+          aria-label="Close dialog"
+          aria-expanded="true"
+          onclick="closeDialog()"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      explanation: "Clear purpose, keyboard accessible, screen reader friendly"
+  
+  bad:
+    - description: "Inaccessible design"
+      code: |
+        <div onclick="submit()">Click here</div>
+        <img src="chart.png">
+        <span style="color: red">Error</span>
+      problem: "No keyboard access, missing alt text, color-only error indication"
+  
+  real_world:
+    - project: "BBC iPlayer"
+      description: "Comprehensive accessibility features including audio description and subtitles"
+      link: "https://www.bbc.co.uk/iplayer/features/accessibility"
+    - project: "Microsoft Inclusive Design"
+      description: "Systematic approach to accessibility across all products"
+      link: "https://www.microsoft.com/design/inclusive/"
+
+compatibility:
+  works_well_with:
+    - user-centered-design
+    - inclusive-design
+    - progressive-enhancement
+  potential_conflicts:
+    - rapid-prototyping
+    - aesthetic-first-design
+  complements:
+    - universal-design
+    - usability-testing
+
+references:
+  foundational:
+    - "Web Content Accessibility Guidelines (WCAG) 2.1"
+    - "Section 508 Standards"
+    - "Americans with Disabilities Act (ADA)"
+  modern:
+    - "Accessibility for Everyone (Laura Kalbag, 2017)"
+    - "Inclusive Design Patterns (Heydon Pickering, 2016)"
+    - "Don't Make Me Think Accessibility (Krug, 2014)"
+  tools:
+    - "Screen readers (NVDA, JAWS, VoiceOver)"
+    - "Accessibility testing tools (axe, WAVE)"
+    - "Color contrast checkers (Colour Contrast Analyser)"

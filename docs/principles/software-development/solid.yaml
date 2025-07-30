@@ -1,0 +1,172 @@
+name: "SOLID Principles"
+category: software-development
+description: |
+  Five design principles intended to make software designs more understandable, flexible, and maintainable. Introduced by Robert C. Martin, these principles form the foundation of clean object-oriented design.
+
+history:
+  origin: "2000s, Robert C. Martin"
+  originators:
+    - "Robert C. Martin (Uncle Bob)"
+  evolution: |
+    The SOLID principles were introduced and popularized by Robert C. Martin
+    in the early 2000s, building on earlier work in object-oriented design.
+    The acronym SOLID was later coined by Michael Feathers. These principles
+    have become fundamental to modern object-oriented programming.
+  significance: |
+    SOLID principles are widely considered the foundation of clean object-oriented
+    design, influencing software architecture patterns, frameworks, and development
+    practices across the industry.
+
+summary:
+  tagline: "Five principles for creating maintainable, understandable, and flexible object-oriented software"
+  core_tenets:
+    - text: "Single Responsibility Principle (SRP)"
+      guidance: "A class should have one, and only one, reason to change"
+    - text: "Open/Closed Principle (OCP)"
+      guidance: "Open for extension, closed for modification"
+    - text: "Liskov Substitution Principle (LSP)"
+      guidance: "Objects should be replaceable with instances of their subtypes"
+    - text: "Interface Segregation Principle (ISP)"
+      guidance: "Clients shouldn't depend on interfaces they don't use"
+    - text: "Dependency Inversion Principle (DIP)"
+      guidance: "Depend on abstractions, not concretions"
+  anti_patterns:
+    - pattern: "God classes that do everything"
+      instead: "Single-responsibility classes with clear purposes"
+    - pattern: "Fat interfaces with too many methods"
+      instead: "Small, focused interfaces for specific client needs"
+    - pattern: "Direct instantiation everywhere"
+      instead: "Dependency injection and abstraction"
+  key_practices:
+    - "Separate data access from business logic"
+    - "Use strategy pattern for varying algorithms"
+    - "Design by contract for inheritance"  
+    - "Dependency injection containers"
+
+guidance:
+  spirit: |
+    SOLID principles work together to create software that is easy to maintain,
+    understand, and extend. They guide developers toward creating loosely coupled,
+    highly cohesive code that can evolve with changing requirements. The principles
+    are guidelines, not rigid rules, and should be applied with judgment.
+  questions_to_ask:
+    - "Does this class have more than one reason to change?"
+    - "Can I extend this behavior without modifying existing code?"
+    - "Are subtypes truly substitutable for their parent types?"
+    - "Am I forcing clients to depend on methods they don't use?"
+    - "Am I depending on concrete implementations instead of abstractions?"
+  when_to_apply:
+    - "Designing object-oriented systems"
+    - "Refactoring existing codebases"
+    - "Creating reusable libraries and frameworks"
+    - "Building maintainable enterprise applications"
+  exceptions:
+    - "Very simple applications may not need full SOLID compliance"
+    - "Performance-critical code may require violations"
+    - "Prototype code can defer SOLID until patterns emerge"
+    - "Over-application can lead to unnecessary complexity"
+  common_mistakes:
+    - "Applying all principles rigidly without considering context"
+    - "Creating too many abstractions too early"
+    - "Violating principles without understanding the trade-offs"
+    - "Using SOLID as an excuse for over-engineering"
+
+examples:
+  good:
+    - description: "Single Responsibility - User validation"
+      code: |
+        class UserValidator {
+          validate(user) {
+            this.validateEmail(user.email);
+            this.validatePassword(user.password);
+          }
+          
+          private validateEmail(email) { /* validation logic */ }
+          private validatePassword(password) { /* validation logic */ }
+        }
+        
+        class UserRepository {
+          save(user) { /* database operations */ }
+          findById(id) { /* database operations */ }
+        }
+      explanation: "Each class has a single, well-defined responsibility"
+    - description: "Dependency Inversion - Payment processing"
+      code: |
+        interface PaymentProcessor {
+          processPayment(amount: number): PaymentResult;
+        }
+        
+        class OrderService {
+          constructor(private paymentProcessor: PaymentProcessor) {}
+          
+          processOrder(order: Order) {
+            return this.paymentProcessor.processPayment(order.total);
+          }
+        }
+      explanation: "High-level OrderService depends on abstraction, not concrete payment implementation"
+  bad:
+    - description: "Violating Single Responsibility"
+      code: |
+        class User {
+          constructor(name, email) {
+            this.name = name;
+            this.email = email;
+          }
+          
+          save() {
+            // Database operations - different responsibility
+            database.execute('INSERT INTO users...');
+          }
+          
+          sendWelcomeEmail() {
+            // Email operations - different responsibility
+            emailService.send(this.email, 'Welcome!');
+          }
+          
+          formatForDisplay() {
+            // Presentation logic - different responsibility
+            return `${this.name} (${this.email})`;
+          }
+        }
+      problem: "Single class handling data, persistence, communication, and presentation"
+  real_world:
+    - project: "Spring Framework"
+      description: "Implements dependency inversion through IoC container"
+      link: "https://spring.io/"
+    - project: "ASP.NET Core"
+      description: "Built on SOLID principles with extensive use of dependency injection"
+      link: "https://docs.microsoft.com/aspnet/core/"
+    - project: "Angular"
+      description: "Uses dependency injection and single responsibility in services"
+      link: "https://angular.io/"
+
+compatibility:
+  works_well_with:
+    - separation-of-concerns
+    - dependency-injection
+    - design-patterns
+    - clean-architecture
+  potential_conflicts:
+    - kiss
+    - yagni
+    - rapid-prototyping
+    - performance-optimization
+  complements:
+    - test-driven-development
+    - refactoring
+    - object-oriented-design
+    - clean-code
+
+references:
+  foundational:
+    - "Agile Software Development, Principles, Patterns, and Practices (Robert C. Martin, 2002)"
+    - "Clean Code (Robert C. Martin, 2008)"
+    - "Design Principles and Design Patterns (Robert C. Martin)"
+  modern:
+    - "Clean Architecture (Robert C. Martin, 2017)"
+    - "Adaptive Code (Gary McLean Hall, 2017)"
+    - "Growing Object-Oriented Software (Freeman & Pryce, 2009)"
+  tools:
+    - "Dependency injection frameworks"
+    - "Static analysis tools for OO metrics"
+    - "Refactoring tools"

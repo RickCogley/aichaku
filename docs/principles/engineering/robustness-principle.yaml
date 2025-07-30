@@ -1,0 +1,161 @@
+name: "Robustness Principle (Postel's Law)"
+category: engineering
+description: |
+  Be conservative in what you do, be liberal in what you accept from others. A principle for designing robust systems that can interoperate despite variations in implementation.
+
+history:
+  origin: "1980, Jon Postel (RFC 761)"
+  originators:
+    - "Jon Postel"
+  evolution: |
+    Originally formulated for TCP/IP implementations in RFC 761 (1980), stating
+    "be conservative in what you do, be liberal in what you accept from others."
+    The principle became foundational to Internet protocols and later influenced
+    broader software design, API development, and system integration practices.
+  significance: |
+    Fundamental to Internet interoperability and system integration. The principle
+    has enabled the robustness and flexibility of Internet protocols while
+    sparking ongoing debates about security vs. compatibility trade-offs.
+
+summary:
+  tagline: "Be conservative in output, liberal in input for robust interoperability"
+  core_tenets:
+    - text: "Follow specifications exactly when sending"
+      guidance: "Use standard formats and include all required fields"
+    - text: "Accept reasonable variations when receiving"
+      guidance: "Handle missing optional fields and format variations gracefully"
+    - text: "Balance tolerance with security"
+      guidance: "Don't accept malformed data that could cause security issues"
+    - text: "Document accepted variations"
+      guidance: "Make explicit what deviations you tolerate"
+  anti_patterns:
+    - pattern: "Over-liberal acceptance of any input"
+      instead: "Validate for security first, then be flexible for compatibility"
+    - pattern: "Over-conservative rejection of minor variations"
+      instead: "Accept harmless variations while maintaining correctness"
+    - pattern: "Inconsistent application (liberal output, conservative input)"
+      instead: "Always be conservative in output, liberal in input"
+  key_practices:
+    - "Sanitize and validate input for security"
+    - "Generate output in strict compliance with standards"
+    - "Log non-standard inputs for monitoring"
+    - "Provide migration tools for deprecated formats"
+
+guidance:
+  spirit: |
+    The Robustness Principle is about enabling system interoperability while
+    maintaining correctness and security. It recognizes that perfect compliance
+    is rare in real-world systems, so we should be forgiving in what we accept
+    while being exemplary in what we produce. This creates a virtuous cycle
+    of improving compatibility.
+  questions_to_ask:
+    - "What variations in input are harmless and should be tolerated?"
+    - "Am I generating output that strictly follows the specification?"
+    - "Could being too liberal in parsing create security vulnerabilities?"
+    - "How can I document and monitor the variations I accept?"
+    - "Would a strict mode be beneficial for debugging?"
+  when_to_apply:
+    - "Designing public APIs and protocols"
+    - "Parsing user input or external data"
+    - "Integrating with legacy systems"
+    - "Building data exchange formats"
+    - "Creating backward-compatible systems"
+  exceptions:
+    - "Cryptographic protocols require strict parsing"
+    - "Safety-critical systems may need rigid validation"
+    - "Financial systems may require exact compliance"
+    - "Internal microservices may prefer fail-fast approaches"
+  common_mistakes:
+    - "Being liberal in output and conservative in input (backwards)"
+    - "Accepting dangerous input in the name of compatibility"
+    - "Not documenting what variations are accepted"
+    - "Never deprecating legacy format support"
+
+examples:
+  good:
+    - description: "HTTP header parsing with case insensitivity"
+      code: |
+        // Conservative sending: proper case
+        response.setHeader('Content-Type', 'application/json');
+        
+        // Liberal receiving: case insensitive
+        const contentType = request.headers['content-type'] || 
+                          request.headers['Content-Type'] ||
+                          request.headers['CONTENT-TYPE'];
+      explanation: "Sends headers in standard case but accepts any case variation"
+    - description: "Date parsing with multiple format support"
+      code: |
+        function parseDate(dateString) {
+          // Try standard ISO format first
+          let date = new Date(dateString);
+          if (!isNaN(date)) return date;
+          
+          // Accept common variations
+          const formats = [
+            /^(\d{4})-(\d{2})-(\d{2})$/,  // YYYY-MM-DD
+            /^(\d{2})\/(\d{2})\/(\d{4})$/ // MM/DD/YYYY
+          ];
+          
+          // Parse flexibly but validate result
+          for (const format of formats) {
+            const match = dateString.match(format);
+            if (match) {
+              date = new Date(/* parse based on format */);
+              if (!isNaN(date)) return date;
+            }
+          }
+          
+          throw new Error('Invalid date format');
+        }
+        
+        // Always output in standard format
+        function formatDate(date) {
+          return date.toISOString().split('T')[0]; // YYYY-MM-DD
+        }
+      explanation: "Parses multiple date formats but always outputs in ISO standard"
+  bad:
+    - description: "Over-liberal parsing without security validation"
+      code: |
+        // Dangerous: accepts any input without validation
+        function executeCommand(userInput) {
+          // Being "liberal" but creating security vulnerability
+          return eval(userInput); // Never do this!
+        }
+      problem: "Confuses robustness with lack of security validation"
+  real_world:
+    - project: "HTML Parsers"
+      description: "Browsers parse malformed HTML gracefully while generating valid HTML"
+      link: "https://html.spec.whatwg.org/"
+    - project: "Email Protocols"
+      description: "SMTP implementations handle various address formats while sending standard format"
+      link: "https://tools.ietf.org/html/rfc5321"
+compatibility:
+  works_well_with:
+    - defensive-programming
+    - backward-compatibility
+    - api-versioning
+    - graceful-degradation
+  potential_conflicts:
+    - fail-fast
+    - strict-validation
+    - security-hardening
+    - type-safety
+  complements:
+    - input-validation
+    - error-handling
+    - interoperability
+    - system-integration
+
+references:
+  foundational:
+    - "RFC 761 - Transmission Control Protocol (Jon Postel, 1980)"
+    - "The Design and Implementation of the 4.3BSD UNIX Operating System (Leffler et al., 1989)"
+    - "Internetworking with TCP/IP (Douglas Comer, 1991)"
+  modern:
+    - "The Robustness Principle Reconsidered (Eric Allman, 2011)"
+    - "API Design Patterns (JJ Geewax, 2021)"
+    - "Building Secure and Reliable Systems (Blank-Edelman et al., 2020)"
+  tools:
+    - "Protocol analyzers (Wireshark)"
+    - "API testing tools (Postman, Newman)"
+    - "Input validation libraries"

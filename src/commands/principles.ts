@@ -34,6 +34,17 @@ interface PrinciplesOptions {
 const principleLoader = new PrincipleLoader();
 
 /**
+ * Generate a consistent ID from a principle name
+ */
+function generatePrincipleId(name: string): string {
+  return name.toLowerCase()
+    .replace(/[^\w\s-]/g, "") // Remove special characters except spaces and hyphens
+    .replace(/[\s]+/g, "-") // Replace spaces with hyphens
+    .replace(/--+/g, "-") // Replace multiple hyphens with single
+    .replace(/^-+|-+$/g, ""); // Remove leading/trailing hyphens
+}
+
+/**
  * Browse and manage development principles
  *
  * Allows teams to select guiding philosophies that expert agents
@@ -151,7 +162,7 @@ async function listPrinciples(category?: string): Promise<void> {
     content.push(`## ${categoryInfo.emoji} ${categoryInfo.name}\n`);
 
     for (const principle of principles) {
-      const id = principle.data.name.toLowerCase().replace(/[\s()]/g, "-").replace(/--+/g, "-");
+      const id = generatePrincipleId(principle.data.name);
       content.push(`- **${principle.data.name}** (\`${id}\`)`);
       content.push(`  ${principle.data.description}`);
       const coreTenets = principle.data.summary.core_tenets.slice(0, 2).map((t) => t.text);
@@ -187,7 +198,8 @@ async function showPrinciple(principleId: string, verbose?: boolean): Promise<vo
   content.push(`## Description\n`);
   content.push(`${principle.data.description}\n`);
 
-  if (principle.data.summary.tagline) {
+  // Only show tagline if it's different from description
+  if (principle.data.summary.tagline && principle.data.summary.tagline !== principle.data.description) {
     content.push(`> ${principle.data.summary.tagline}\n`);
   }
 
@@ -279,7 +291,7 @@ async function selectPrinciples(
 
     for (let j = 0; j < validPrinciples.length; j++) {
       if (i === j) continue;
-      const conflictId = validPrinciples[j].data.name.toLowerCase().replace(/[\s()]/g, "-").replace(/--+/g, "-");
+      const conflictId = generatePrincipleId(validPrinciples[j].data.name);
       if (principle.data.compatibility.potential_conflicts.includes(conflictId)) {
         warnings.push(`⚠️  ${principle.data.name} may conflict with ${validPrinciples[j].data.name}`);
       }

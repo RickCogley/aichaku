@@ -1,0 +1,152 @@
+name: "Lean Principles"
+category: organizational
+description: |
+  A systematic approach to eliminating waste and maximizing value in processes. Originating from the Toyota Production System, Lean principles have been adapted for software development and knowledge work.
+
+history:
+  origin: "1950s, Toyota Production System"
+  originators:
+    - "Taiichi Ohno"
+    - "Shigeo Shingo"
+    - "Eiji Toyoda"
+  evolution: |
+    Developed at Toyota in the 1950s as the Toyota Production System (TPS).
+    Lean thinking was popularized globally through "The Machine That Changed
+    the World" (1990) and later adapted for software development by Mary and
+    Tom Poppendieck. The principles have since been applied across many industries.
+  significance: |
+    Lean principles revolutionized manufacturing and have become fundamental
+    to modern operational excellence, influencing agile software development,
+    DevOps practices, and organizational transformation initiatives.
+
+summary:
+  tagline: "Create more value for customers with fewer resources by eliminating waste"
+  core_tenets:
+    - text: "Identify Value from the customer's perspective"
+      guidance: "Define what customers are willing to pay for"
+    - text: "Map the Value Stream to see the whole process"
+      guidance: "Identify all steps and eliminate those that don't create value"
+    - text: "Create Flow by removing interruptions and delays"
+      guidance: "Make value-creating steps flow smoothly without bottlenecks"
+    - text: "Establish Pull based on customer demand"
+      guidance: "Let demand pull value through the system rather than pushing"
+    - text: "Seek Perfection through continuous improvement"
+      guidance: "Continuously eliminate waste and increase value"
+  anti_patterns:
+    - pattern: "Building features customers don't want"
+      instead: "Focus relentlessly on customer value"
+    - pattern: "Large batch processing and handoffs"
+      instead: "Small batches with continuous flow"
+    - pattern: "Ignoring waste in processes"
+      instead: "Systematically identify and eliminate waste"
+  key_practices:
+    - "Value stream mapping to visualize flow"
+    - "Continuous improvement (Kaizen)"
+    - "Just-in-time delivery"
+    - "Respect for people and their capabilities"
+
+guidance:
+  spirit: |
+    Lean thinking is fundamentally about respect for people and continuous
+    improvement. It's not just about eliminating waste, but about creating
+    a culture where everyone is empowered to identify problems and contribute
+    to solutions. The goal is to create sustainable value for customers while
+    developing people's capabilities.
+  questions_to_ask:
+    - "What value does this create for our customer?"
+    - "Where do we see waste in our current process?"
+    - "How can we reduce the time from idea to customer value?"
+    - "What would pull-based demand look like for us?"
+    - "How can we make problems visible to solve them?"
+  when_to_apply:
+    - "Optimizing software development processes"
+    - "Reducing cycle time and increasing throughput"
+    - "Eliminating bottlenecks in value delivery"
+    - "Building a culture of continuous improvement"
+    - "Scaling development practices"
+  exceptions:
+    - "Highly regulated environments may limit some lean practices"
+    - "Safety-critical systems may require additional controls"
+    - "Research and exploration work may not fit lean models"
+    - "Creative processes may need different approaches"
+  common_mistakes:
+    - "Focusing only on tools instead of mindset and culture"
+    - "Cutting necessary activities as 'waste'"
+    - "Local optimization at the expense of system performance"
+    - "Ignoring the people aspects of lean transformation"
+    - "Expecting immediate results from lean implementation"
+
+examples:
+  good:
+    - description: "Value stream mapping for feature delivery"
+      code: |
+        Current State:
+        Idea → Requirements (5 days) → Design (3 days) → 
+        Dev Queue (2 days) → Development (8 days) → 
+        Test Queue (1 day) → Testing (4 days) → 
+        Deploy Queue (1 day) → Deployment (1 day)
+        Total: 25 days (9 days work, 16 days waiting)
+        
+        Future State:
+        Idea → Cross-functional Team → 
+        Continuous Development & Testing → 
+        Continuous Deployment
+        Total: 9 days (9 days work, 0 days waiting)
+      explanation: "Mapping reveals waste in handoffs and queues, enabling flow optimization"
+    - description: "Pull-based development with Kanban"
+      code: |
+        Backlog | Ready (3) | In Progress (2) | Review (1) | Done
+        
+        WIP Limits prevent overproduction
+        Team pulls work when capacity available
+        Blocked items are made visible immediately
+      explanation: "Work flows based on team capacity rather than external pressure"
+  bad:
+    - description: "Push-based development with large batches"
+      code: |
+        // Traditional approach:
+        - Plan entire quarter's features upfront
+        - Assign all features to developers at once
+        - Batch testing at the end
+        - Big-bang deployment
+        
+        Result: Long feedback cycles, high WIP, delayed value
+      problem: "Creates inventory waste and long lead times"
+  real_world:
+    - project: "Spotify Engineering Model"
+      description: "Autonomous squads with minimal waste and fast flow"
+      link: "https://engineering.atspotify.com/"
+    - project: "Toyota Production System"
+      description: "Original lean manufacturing system"
+      link: "https://global.toyota/en/company/vision-philosophy/production-system/"
+
+compatibility:
+  works_well_with:
+    - agile-manifesto
+    - continuous-improvement
+    - systems-thinking
+    - devops-practices
+  potential_conflicts:
+    - waterfall-methodology
+    - command-and-control
+    - perfectionism
+    - local-optimization
+  complements:
+    - kanban-method
+    - scrum-framework
+    - theory-of-constraints
+    - six-sigma
+
+references:
+  foundational:
+    - "The Toyota Way (Jeffrey Liker, 2004)"
+    - "Lean Software Development (Poppendieck & Poppendieck, 2003)"
+    - "The Machine That Changed the World (Womack, Jones, Roos, 1990)"
+  modern:
+    - "Accelerate (Forsgren, Humble, Kim, 2018)"
+    - "The DevOps Handbook (Kim, Humble, Debois, Willis, 2016)"
+    - "This is Lean (Modig & Åhlström, 2012)"
+  tools:
+    - "Value stream mapping tools"
+    - "Kanban boards (Trello, Jira, Azure Boards)"
+    - "Continuous improvement platforms"

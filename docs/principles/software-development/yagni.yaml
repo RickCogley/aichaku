@@ -1,0 +1,156 @@
+name: "YAGNI (You Aren't Gonna Need It)"
+category: software-development
+description: |
+  A principle of extreme programming that states a programmer should not add functionality until deemed necessary. It's a principle against over-engineering and premature feature development.
+
+history:
+  origin: "1999, Extreme Programming"
+  originators:
+    - "Ron Jeffries"
+    - "Kent Beck"
+    - "Ward Cunningham"
+  evolution: |
+    Emerged from Extreme Programming practices in the late 1990s. Ron Jeffries
+    coined the phrase "You aren't gonna need it" as a reminder to avoid
+    speculative programming. The principle gained wider adoption as part of
+    agile methodologies.
+  significance: |
+    Central to agile development and lean thinking, YAGNI helps teams avoid
+    over-engineering and focus on delivering value. It's fundamental to
+    iterative development approaches.
+
+summary:
+  tagline: "Implement things when you actually need them, never when you just foresee them"
+  core_tenets:
+    - text: "Implement only what is needed now"
+      guidance: "Don't build features for imagined future requirements"
+    - text: "Avoid speculative generality"
+      guidance: "Don't create generic solutions without specific use cases"
+    - text: "Defer decisions until the last responsible moment"
+      guidance: "Wait for more information before making architectural choices"
+    - text: "Focus on current requirements"
+      guidance: "Solve today's problems, not tomorrow's hypotheticals"
+    - text: "Trust in refactoring capabilities"
+      guidance: "Rely on your ability to evolve code when needs change"
+  anti_patterns:
+    - pattern: "Adding database fields 'just in case'"
+      instead: "Add fields when features actually need them"
+    - pattern: "Creating generic frameworks for single use case"
+      instead: "Start specific, generalize when you have multiple uses"
+    - pattern: "Over-architecting for imagined scale"
+      instead: "Design for current scale, evolve when growth demands it"
+  key_practices:
+    - "Write code for current requirements only"
+    - "Remove dead code immediately"
+    - "Start with monolith, split when needed"
+    - "Use standard solutions over custom frameworks"
+
+guidance:
+  spirit: |
+    YAGNI is about disciplined restraint - not building things until you have
+    a clear, present need. It's based on the understanding that speculative
+    features often end up unused, wrong, or more complex than needed. The
+    principle trusts in your ability to add functionality later when requirements
+    are clearer.
+  questions_to_ask:
+    - "Do we need this right now for current requirements?"
+    - "Is this solving a real problem or an imagined one?"
+    - "Can we add this later when we actually need it?"
+    - "What's the cost of carrying this unused feature?"
+    - "Are we building this because it's interesting or necessary?"
+  when_to_apply:
+    - "Planning feature development"
+    - "Making architectural decisions"
+    - "Designing APIs and interfaces"
+    - "Database schema design"
+    - "Choosing technology stack"
+  exceptions:
+    - "Truly irreversible architectural decisions"
+    - "Security considerations hard to retrofit"
+    - "Standards compliance requirements"
+    - "External API contracts that can't change"
+    - "Performance optimizations with high refactoring cost"
+  common_mistakes:
+    - "Conflating YAGNI with poor planning"
+    - "Ignoring genuinely hard-to-change decisions"
+    - "Using YAGNI to justify technical debt"
+    - "Not considering refactoring capabilities when applying YAGNI"
+
+examples:
+  good:
+    - description: "Database schema evolution"
+      code: |
+        // Start simple
+        CREATE TABLE users (
+          id SERIAL PRIMARY KEY,
+          email VARCHAR(255),
+          name VARCHAR(255)
+        );
+        
+        // Add fields when features need them
+        ALTER TABLE users ADD COLUMN created_at TIMESTAMP;
+      explanation: "Don't add fields until features actually require them"
+    - description: "API design"
+      code: |
+        // Start with what you need
+        POST /users
+        {
+          "name": "John",
+          "email": "john@example.com"
+        }
+        
+        // Don't add optional parameters without current use
+        // ❌ "preferences": {}, "settings": {}
+      explanation: "Add API parameters when clients actually need them"
+  bad:
+    - description: "Over-engineered configuration"
+      code: |
+        class DatabaseConfig {
+          constructor() {
+            this.maxConnections = config.get('db.maxConnections', 10);
+            this.retryAttempts = config.get('db.retryAttempts', 3);
+            this.circuitBreakerThreshold = config.get('db.circuitBreaker', 5);
+            this.bulkOperationSize = config.get('db.bulkSize', 100);
+            // ... 20 more configuration options
+          }
+        }
+      problem: "Complex configuration for features that don't exist yet"
+  real_world:
+    - project: "Ruby on Rails"
+      description: "Started as extracted patterns from real applications, not speculative framework"
+      link: "https://rubyonrails.org/"
+    - project: "Twitter Bootstrap"
+      description: "Evolved from internal Twitter needs, not hypothetical use cases"
+      link: "https://getbootstrap.com/"
+    - project: "React"
+      description: "Built to solve Facebook's specific UI problems, generalized later"
+      link: "https://reactjs.org/"
+
+compatibility:
+  works_well_with:
+    - kiss
+    - agile-development
+    - lean-principles
+    - iterative-development
+  potential_conflicts:
+    - comprehensive-documentation
+    - upfront-design
+    - enterprise-architecture
+  complements:
+    - refactoring
+    - test-driven-development
+    - continuous-integration
+    - evolutionary-design
+
+references:
+  foundational:
+    - "Extreme Programming Explained (Kent Beck, 1999)"
+    - "Planning Extreme Programming (Beck & Fowler, 2000)"
+    - "The Art of Agile Development (Shore & Warden, 2007)"
+  modern:
+    - "You Aren't Gonna Need It (Martin Fowler, 2015)"
+    - "YAGNI and the Fear of Adding Features (Jeff Atwood)"
+  tools:
+    - "Code coverage tools (identify unused code)"
+    - "Feature flags (for gradual rollout)"
+    - "Refactoring tools (make changes easier)"

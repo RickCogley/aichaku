@@ -1,0 +1,149 @@
+name: "Conway's Law"
+category: organizational
+description: |
+  Organizations which design systems are constrained to produce designs which are copies of the communication structures of these organizations.
+
+history:
+  origin: "1967, Melvin Conway"
+  originators:
+    - "Melvin Conway"
+  evolution: |
+    First stated by computer programmer Melvin Conway in 1967 and published
+    in his paper "How Do Committees Invent?" (1968). The law gained wider
+    recognition through Fred Brooks' "The Mythical Man-Month" and became
+    increasingly relevant with the rise of microservices and distributed systems.
+  significance: |
+    Conway's Law has become fundamental to understanding the relationship
+    between organizational design and system architecture, influencing
+    modern approaches to team topology and system design.
+
+summary:
+  tagline: "System structure mirrors organizational communication structure"
+  core_tenets:
+    - text: "Software architecture reflects organizational structure"
+      guidance: "System boundaries align with team boundaries"
+    - text: "Communication patterns determine system interfaces"
+      guidance: "How teams communicate becomes how systems integrate"
+    - text: "Team boundaries become system boundaries"
+      guidance: "Organizational silos create technical silos"
+    - text: "Organizational design is system design"
+      guidance: "Changing org structure changes system architecture"
+  anti_patterns:
+    - pattern: "Distributed monolith from monolithic organization"
+      instead: "Reorganize teams to match desired service boundaries"
+    - pattern: "Complex integration due to poor team communication"
+      instead: "Improve team collaboration or merge teams"
+    - pattern: "Architecture fighting organizational structure"
+      instead: "Apply Inverse Conway Maneuver to align structure"
+  key_practices:
+    - "Design team topology to match target architecture"
+    - "Minimize cross-team dependencies"
+    - "Create clear ownership boundaries"
+    - "Enable autonomous decision-making"
+
+guidance:
+  spirit: |
+    Conway's Law reveals the deep connection between social and technical
+    architecture. It's not a constraint to fight against, but a force to
+    harness. By understanding this relationship, organizations can intentionally
+    design team structures that naturally produce desired system architectures.
+  questions_to_ask:
+    - "How does our current team structure influence our system design?"
+    - "What communication patterns exist between our teams?"
+    - "Does our organizational structure support our architectural goals?"
+    - "Where do we see organizational boundaries creating technical boundaries?"
+    - "How can we reorganize to better support our target architecture?"
+  when_to_apply:
+    - "Designing system architecture"
+    - "Reorganizing development teams"
+    - "Planning microservices adoption"
+    - "Addressing integration problems"
+    - "Scaling engineering organizations"
+  exceptions:
+    - "Small teams may not exhibit Conway's Law effects"
+    - "Temporary project structures may not affect architecture"
+    - "External constraints may override organizational influence"
+  common_mistakes:
+    - "Ignoring organizational structure when designing systems"
+    - "Trying to force architecture without changing team structure"
+    - "Underestimating the power of organizational influence"
+    - "Creating team structures that fight desired architecture"
+
+examples:
+  good:
+    - description: "Amazon's two-pizza teams and microservices"
+      code: |
+        Team Structure:
+        - Small, autonomous teams (≤8 people)
+        - Each team owns one or more services
+        - Teams communicate via APIs only
+        
+        Resulting Architecture:
+        - Service-oriented architecture
+        - Clear service boundaries
+        - Minimal coupling between services
+      explanation: "Team autonomy and API-first communication creates loosely coupled services"
+    - description: "Platform team enabling self-service"
+      code: |
+        Platform Team:
+        - Provides shared infrastructure services
+        - Focuses on developer experience
+        - API-first approach to tooling
+        
+        Product Teams:
+        - Consume platform services
+        - Focus on business features
+        - Minimal platform interaction
+        
+        Result: Clear separation of concerns
+      explanation: "Team separation creates architectural layers with clear responsibilities"
+  bad:
+    - description: "Microservices with monolithic organization"
+      code: |
+        Organization:
+        - Large, hierarchical teams
+        - Functional silos (frontend, backend, QA)
+        - All changes require coordination
+        
+        Attempted Architecture:
+        - Microservices
+        - Independent deployments
+        - Service autonomy
+        
+        Reality: Distributed monolith
+      problem: "Organizational structure prevents true service independence"
+  real_world:
+    - project: "Spotify Model"
+      description: "Tribes, squads, and guilds structure supporting autonomous teams"
+      link: "https://engineering.atspotify.com/"
+    - project: "Netflix Engineering"
+      description: "Full-cycle development teams owning complete service lifecycle"
+      link: "https://netflixtechblog.com/"
+compatibility:
+  works_well_with:
+    - team-topologies
+    - microservices-architecture
+    - devops-culture
+    - systems-thinking
+  potential_conflicts:
+    - matrix-organizations
+    - shared-services
+    - cross-functional-requirements
+  complements:
+    - inverse-conway-maneuver
+    - domain-driven-design
+    - organizational-design
+
+references:
+  foundational:
+    - "How Do Committees Invent? (Melvin Conway, 1968)"
+    - "The Mythical Man-Month (Fred Brooks, 1975)"
+    - "Design Rules (Baldwin & Clark, 2000)"
+  modern:
+    - "Team Topologies (Skelton & Pais, 2019)"
+    - "Accelerate (Forsgren, Humble, Kim, 2018)"
+    - "The DevOps Handbook (Kim, Debois, Willis, Humble, 2016)"
+  tools:
+    - "Team topology mapping tools"
+    - "Communication analysis tools"
+    - "Dependency mapping tools"

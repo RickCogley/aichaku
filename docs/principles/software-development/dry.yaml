@@ -1,0 +1,139 @@
+name: "DRY (Don't Repeat Yourself)"
+category: software-development
+description: |
+  Every piece of knowledge must have a single, unambiguous, authoritative representation within a system.
+  DRY is about reducing repetition of information of all kinds, not just code.
+
+history:
+  origin: "1999, The Pragmatic Programmer"
+  originators:
+    - "Andy Hunt"
+    - "Dave Thomas"
+  evolution: |
+    Introduced in "The Pragmatic Programmer" (1999), DRY became a fundamental
+    principle of software development. It evolved from simple code reuse concepts
+    to encompass all forms of knowledge duplication in systems.
+  significance: |
+    One of the most widely adopted principles in software development, influencing
+    everything from architecture patterns to documentation practices.
+
+summary:
+  tagline: "Every piece of knowledge must have a single, unambiguous, authoritative representation"
+  core_tenets:
+    - text: "Single source of truth for each piece of knowledge"
+      guidance: "Avoid duplication of logic, not just code"
+    - text: "Abstract common functionality appropriately"
+      guidance: "Extract reusable components without over-engineering"
+    - text: "Use code generation where appropriate"
+      guidance: "Generate repetitive code from single definitions"
+    - text: "Document why, not what"
+      guidance: "Code should be self-documenting for the 'what'"
+  anti_patterns:
+    - pattern: "Copy-paste programming"
+      instead: "Extract common functionality into reusable components"
+    - pattern: "Magic numbers scattered throughout code"
+      instead: "Define constants in one place with meaningful names"
+    - pattern: "Duplicate validation logic"
+      instead: "Create shared validation functions or schemas"
+  key_practices:
+    - "Extract common functionality into functions/methods"
+    - "Create shared libraries for cross-project code"
+    - "Normalize database schemas"
+    - "Use configuration files for settings"
+
+guidance:
+  spirit: |
+    DRY is about reducing repetition of information and knowledge, not just code.
+    When applied successfully, modifications to any single element don't require
+    changes to other logically unrelated elements. The goal is maintainability
+    and consistency through eliminating redundancy.
+  questions_to_ask:
+    - "Is this logic/data/configuration duplicated elsewhere?"
+    - "If I change this, will I need to change it in multiple places?"
+    - "Can this be abstracted without over-engineering?"
+    - "Is this duplication intentional and justified?"
+  when_to_apply:
+    - "Building reusable components and libraries"
+    - "Designing database schemas"
+    - "Creating configuration systems"
+    - "Writing documentation and specifications"
+    - "Implementing validation and business rules"
+  exceptions:
+    - "Performance-critical code may require duplication"
+    - "Test code often benefits from explicitness over DRY"
+    - "Premature abstraction can be worse than duplication"
+    - "Cross-team boundaries may justify some duplication"
+  common_mistakes:
+    - "Over-abstracting too early (premature DRY)"
+    - "Creating overly complex abstractions"
+    - "Ignoring the rule of three (abstract after third duplication)"
+    - "Applying DRY to unrelated similarities"
+
+examples:
+  good:
+    - description: "Extracting common validation logic"
+      code: |
+        function validateEmail(email) {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+        
+        // Used in multiple places
+        if (!validateEmail(userEmail)) { /* handle */ }
+        if (!validateEmail(adminEmail)) { /* handle */ }
+      explanation: "Single validation function prevents duplicate regex patterns"
+    - description: "Configuration constants"
+      code: |
+        const CONFIG = {
+          MAX_RETRY_ATTEMPTS: 3,
+          TIMEOUT_MS: 5000,
+          API_BASE_URL: 'https://api.example.com'
+        };
+      explanation: "Single source of truth for configuration values"
+  bad:
+    - description: "Duplicated validation logic"
+      code: |
+        // In user registration
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          throw new Error('Invalid email');
+        }
+        
+        // In password reset
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          return false;
+        }
+      problem: "Same validation logic duplicated with potential for inconsistency"
+  real_world:
+    - project: "React Components"
+      description: "Reusable UI components avoid duplicating markup and styling"
+      link: "https://reactjs.org/docs/components-and-props.html"
+    - project: "Database Normalization"
+      description: "Eliminates data redundancy and inconsistency"
+      link: "https://en.wikipedia.org/wiki/Database_normalization"
+
+compatibility:
+  works_well_with:
+    - kiss
+    - yagni
+    - single-responsibility
+    - separation-of-concerns
+  potential_conflicts:
+    - performance-optimization
+    - test-explicitness
+    - premature-abstraction
+  complements:
+    - code-reuse
+    - abstraction
+    - modularization
+
+references:
+  foundational:
+    - "The Pragmatic Programmer (Hunt & Thomas, 1999)"
+    - "Clean Code (Robert C. Martin, 2008)"
+    - "Refactoring (Martin Fowler, 1999)"
+  modern:
+    - "The Rule of Three in Programming"
+    - "AHA Programming (Kent C. Dodds)"
+  tools:
+    - "ESLint (no-duplicate-code rules)"
+    - "SonarQube (duplication detection)"
+    - "CodeClimate (code analysis)"

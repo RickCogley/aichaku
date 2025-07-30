@@ -1,0 +1,345 @@
+name: "Privacy by Design"
+category: human-centered
+description: |
+  A privacy framework that embeds privacy considerations into the design and operation of systems from the outset, rather than as an afterthought.
+
+history:
+  origin: "1990s, Ann Cavoukian"
+  originators:
+    - "Ann Cavoukian"
+    - "Information and Privacy Commissioner of Ontario"
+  evolution: |
+    Developed by Ann Cavoukian in the 1990s and formalized through seven
+    foundational principles. Gained international recognition and was
+    incorporated into major privacy regulations like GDPR.
+  significance: |
+    Fundamental to modern privacy protection, influencing legislation and
+    becoming essential for building user trust in digital systems.
+
+summary:
+  tagline: "Embed privacy protection into systems from the ground up"
+  core_tenets:
+    - text: "Proactive not reactive"
+      guidance: "Anticipate and prevent privacy invasions before they occur"
+    - text: "Privacy as the default"
+      guidance: "Maximum privacy protection without requiring user action"
+    - text: "Privacy embedded into design"
+      guidance: "Privacy is a core component, not an add-on"
+    - text: "Full functionality"
+      guidance: "Privacy protection doesn't compromise system functionality"
+  anti_patterns:
+    - pattern: "Collecting data first, considering privacy later"
+      instead: "Design data collection with privacy in mind from the start"
+    - pattern: "Opt-out privacy settings"
+      instead: "Privacy-protective defaults that require opt-in for data sharing"
+  key_practices:
+    - "Data minimization and purpose limitation"
+    - "Strong security measures and encryption"
+    - "Transparent privacy policies and practices"
+    - "User control over personal data"
+
+guidance:
+  spirit: |
+    Privacy by Design recognizes privacy as a fundamental human right that
+    should be protected by default. It's about building systems that respect
+    user privacy without requiring users to be privacy experts.
+  questions_to_ask:
+    - "What personal data do we actually need to collect?"
+    - "How can we minimize data collection and retention?"
+    - "Are privacy protections enabled by default?"
+    - "Can users easily understand and control their privacy?"
+  when_to_apply:
+    - "All systems that handle personal data"
+    - "Product design and development"
+    - "Data architecture and infrastructure"
+    - "Business model and strategy decisions"
+  exceptions:
+    - "Some business models may conflict with privacy principles"
+    - "Legal requirements may mandate certain data collection"
+  common_mistakes:
+    - "Treating privacy as a compliance checkbox"
+    - "Overwhelming users with complex privacy controls"
+    - "Collecting data 'just in case' it might be useful"
+
+examples:
+  good:
+    - description: "Privacy-first messaging app"
+      code: |
+        Design principles:
+        - End-to-end encryption by default
+        - No message storage on servers
+        - Minimal metadata collection
+        - Anonymous account creation
+        - Open source for transparency
+        
+        User experience:
+        - Privacy protection is invisible to users
+        - No complex privacy settings to configure
+        - Clear communication about what data is protected
+      explanation: "Privacy protection built into the core architecture"
+  bad:
+    - description: "Data-harvesting social platform"
+      code: |
+        Problems:
+        - Collects data from all user interactions
+        - Shares data with third parties by default
+        - Complex, buried privacy settings
+        - Opt-out instead of opt-in for data sharing
+        - Vague privacy policy language
+        
+        User impact:
+        - Users unaware of data collection extent
+        - Difficulty controlling personal information
+        - Privacy violations and breaches
+      problem: "Privacy treated as obstacle to data collection rather than core value"
+  real_world:
+    - project: "Signal Messenger"
+      description: "Privacy-by-design messaging with minimal data collection"
+      link: "https://signal.org/"
+
+compatibility:
+  works_well_with:
+    - ethical-design
+    - security-by-design
+    - data-minimization
+    - user-consent
+  potential_conflicts:
+    - data-driven-personalization
+    - advertising-based-models
+    - analytics-heavy-approaches
+  complements:
+    - gdpr-compliance
+    - security-engineering
+    - user-control-mechanisms
+
+references:
+  foundational:
+    - "Privacy by Design: The 7 Foundational Principles (Ann Cavoukian, 2009)"
+    - "The Privacy Engineer's Manifesto (Young & Gellman, 2014)"
+  modern:
+    - "GDPR and Privacy by Design requirements"
+    - "Privacy Engineering: A Dataflow and Ontological Approach (Spiekermann, 2015)"
+  tools:
+    - "Privacy impact assessment tools"
+    - "Data mapping and classification tools"
+    - "Privacy-preserving technologies (differential privacy, homomorphic encryption)"
+  description: |
+    A framework that embeds privacy considerations into the design and operation of IT systems, networked infrastructure, and business practices from the very beginning, rather than as an afterthought.
+  
+  core_concept: |
+    Privacy by Design (PbD) is a concept developed by Dr. Ann Cavoukian that takes a proactive rather than reactive approach to privacy. It anticipates and prevents privacy invasions before they occur, making privacy the default setting in any system or business practice.
+  
+  seven_principles:
+    proactive_not_reactive:
+      description: "Anticipate and prevent privacy invasions before they occur"
+      implementation:
+        - Privacy impact assessments
+        - Threat modeling for privacy
+        - Regular privacy audits
+        - Privacy-focused architecture
+    
+    privacy_as_default:
+      description: "Maximum privacy protection without requiring action from the user"
+      implementation:
+        - Opt-in rather than opt-out
+        - Minimal data collection by default
+        - Strictest privacy settings as standard
+        - No hidden data processing
+    
+    full_functionality:
+      description: "Accommodate all legitimate interests without unnecessary trade-offs"
+      implementation:
+        - Privacy AND functionality
+        - Win-win solutions
+        - Creative problem solving
+        - User empowerment
+    
+    end_to_end_security:
+      description: "Secure data throughout its lifecycle"
+      implementation:
+        - Encryption at rest and in transit
+        - Secure data destruction
+        - Access controls
+        - Regular security updates
+    
+    visibility_transparency:
+      description: "Ensure all stakeholders can verify privacy practices"
+      implementation:
+        - Clear privacy policies
+        - Open communication
+        - Regular reporting
+        - Independent audits
+    
+    respect_user_privacy:
+      description: "Keep user interests paramount"
+      implementation:
+        - User-centric design
+        - Strong defaults
+        - Clear consent mechanisms
+        - Easy privacy controls
+    
+    privacy_embedded:
+      description: "Make privacy an essential component of the system"
+      implementation:
+        - Not bolted on after
+        - Integral to functionality
+        - Part of the architecture
+        - Built into the culture
+  
+  implementation_strategies:
+    data_minimization:
+      - Collect only what's necessary
+      - Define clear purposes
+      - Set retention limits
+      - Regular data purging
+    
+    purpose_limitation:
+      - Use data only for stated purposes
+      - Get new consent for new uses
+      - Prevent function creep
+      - Clear documentation
+    
+    consent_management:
+      - Granular consent options
+      - Easy withdrawal mechanisms
+      - Clear consent requests
+      - Consent versioning
+    
+    privacy_engineering:
+      - Privacy design patterns
+      - Differential privacy
+      - Homomorphic encryption
+      - Privacy-preserving analytics
+  
+  privacy_patterns:
+    data_minimization_patterns:
+      - Progressive disclosure
+      - Just-in-time data collection
+      - Anonymous by default
+      - Aggregation over individual data
+    
+    consent_patterns:
+      - Layered privacy notices
+      - Just-in-time consent
+      - Privacy dashboard
+      - Consent receipt
+    
+    transparency_patterns:
+      - Privacy nutrition labels
+      - Data flow visualization
+      - Privacy indicators
+      - Activity logs for users
+    
+    control_patterns:
+      - Privacy settings center
+      - Data portability tools
+      - Account deletion
+      - Granular permissions
+  
+  common_privacy_risks:
+    - Over-collection of data
+    - Unclear data usage
+    - Third-party sharing
+    - Insufficient security
+    - Lack of user control
+    - Hidden data processing
+    - Indefinite retention
+    - Cross-device tracking
+  
+  legal_frameworks:
+    gdpr:
+      region: "European Union"
+      key_requirements:
+        - Lawful basis for processing
+        - Privacy by design mandated
+        - Data protection officer
+        - Privacy impact assessments
+    
+    ccpa:
+      region: "California, USA"
+      key_requirements:
+        - Right to know
+        - Right to delete
+        - Right to opt-out
+        - Non-discrimination
+    
+    pipeda:
+      region: "Canada"
+      key_requirements:
+        - Meaningful consent
+        - Limited collection
+        - Individual access
+        - Challenging compliance
+  
+  privacy_impact_assessment:
+    when_required:
+      - New data processing
+      - High-risk processing
+      - Large scale processing
+      - New technologies
+    
+    components:
+      - Data flow mapping
+      - Risk identification
+      - Mitigation strategies
+      - Stakeholder consultation
+      - Documentation
+  
+  metrics_and_monitoring:
+    - Data collection volume
+    - Consent rates
+    - Data access requests
+    - Deletion requests
+    - Privacy complaints
+    - Breach incidents
+    - Third-party data sharing
+    - Retention compliance
+  
+  organizational_aspects:
+    roles:
+      - Privacy officer
+      - Privacy champions
+      - Privacy engineers
+      - Legal counsel
+    
+    processes:
+      - Privacy review board
+      - Privacy training
+      - Incident response
+      - Vendor assessments
+    
+    culture:
+      - Privacy awareness
+      - Ethical considerations
+      - User advocacy
+      - Continuous improvement
+  
+  benefits:
+    user_benefits:
+      - Control over personal data
+      - Transparency in data use
+      - Reduced privacy risks
+      - Trust in services
+    
+    business_benefits:
+      - Competitive advantage
+      - Regulatory compliance
+      - Reduced breach risk
+      - Customer trust
+      - Innovation opportunities
+  
+  quotes:
+    - "Privacy is not something that I'm merely entitled to, it's an absolute prerequisite. - Marlon Brando"
+    - "Privacy by Design advances the view that the future of privacy cannot be assured solely by compliance with regulatory frameworks. - Ann Cavoukian"
+    - "Arguing that you don't care about privacy because you have nothing to hide is no different than saying you don't care about free speech because you have nothing to say. - Edward Snowden"
+  
+  references:
+    - title: "Privacy by Design: The 7 Foundational Principles"
+      author: "Ann Cavoukian"
+      organization: "Information and Privacy Commissioner of Ontario"
+    - title: "GDPR Article 25: Data protection by design and by default"
+      organization: "European Union"
+      year: 2018
+    - title: "Privacy Design Strategies"
+      authors: ["Jaap-Henk Hoepman"]
+      publication: "IFIP International Information Security Conference"

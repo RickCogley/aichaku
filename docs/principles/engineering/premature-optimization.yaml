@@ -1,0 +1,185 @@
+name: "Premature Optimization"
+category: engineering
+description: |
+  The principle that optimizing code before understanding actual performance bottlenecks is counterproductive and should be avoided. Often summarized as "premature optimization is the root of all evil."
+
+history:
+  origin: "1974, Donald Knuth"
+  originators:
+    - "Donald Knuth"
+  evolution: |
+    Donald Knuth coined the famous phrase in his 1974 Turing Award lecture
+    "Computer Programming as an Art." The full quote includes important caveats
+    about the "critical 3%" that are often omitted. The principle has become
+    fundamental to software engineering, influencing development practices
+    and the "make it work, make it right, make it fast" philosophy.
+  significance: |
+    One of the most quoted principles in software engineering, helping developers
+    balance performance concerns with code maintainability and development
+    velocity. Influences modern practices like profile-guided optimization.
+
+summary:
+  tagline: "Write clear, correct code first; optimize only proven bottlenecks with measurement"
+  core_tenets:
+    - text: "Write clear, correct code first"
+      guidance: "Prioritize correctness and clarity over unproven performance gains"
+    - text: "Measure before optimizing"
+      guidance: "Use profiling tools to identify actual bottlenecks, not assumptions"
+    - text: "Optimize only proven bottlenecks"
+      guidance: "Focus optimization efforts on the critical 3% that matters"
+    - text: "Consider maintenance cost vs performance gain"
+      guidance: "Complex optimized code is harder to maintain and debug"
+    - text: "Prefer algorithmic improvements over micro-optimizations"
+      guidance: "Better algorithms provide more significant improvements"
+  anti_patterns:
+    - pattern: "Optimizing code before it works correctly"
+      instead: "Make it work, then make it right, then make it fast"
+    - pattern: "Micro-optimizations without measurement"
+      instead: "Profile first to identify real bottlenecks"
+    - pattern: "Sacrificing code clarity for marginal performance gains"
+      instead: "Keep optimization isolated and well-documented"
+  key_practices:
+    - "Profile to identify actual bottlenecks"
+    - "Write performance tests for critical paths"
+    - "Document the reasoning behind optimizations"
+    - "Keep optimized code isolated and reviewable"
+
+guidance:
+  spirit: |
+    The principle recognizes that most performance optimizations are unnecessary
+    and counterproductive when done too early. It's not anti-performance, but
+    pro-measurement. The goal is to focus development effort where it has the
+    most impact - first on correctness, then on measured performance bottlenecks.
+    Remember the full Knuth quote includes "that critical 3%" where optimization
+    is essential.
+  questions_to_ask:
+    - "Do I have actual performance requirements for this code?"
+    - "Have I measured where the real bottlenecks are?"
+    - "Is this optimization in the critical path?"
+    - "What's the maintenance cost of this optimization?"
+    - "Will this optimization still matter in 6 months?"
+  when_to_apply:
+    - "Writing new features and functionality"
+    - "Refactoring existing code"
+    - "Making architectural decisions"
+    - "Choosing between implementation approaches"
+    - "Prioritizing development tasks"
+  exceptions:
+    - "Performance-critical domains (games, real-time systems)"
+    - "Known algorithmic bottlenecks (O(n²) vs O(n log n))"
+    - "Resource-constrained environments (embedded systems)"
+    - "When profiling data clearly shows the bottleneck"
+  common_mistakes:
+    - "Optimizing based on gut feeling rather than measurement"
+    - "Micro-optimizing code that runs rarely"
+    - "Sacrificing code clarity for marginal performance gains"
+    - "Optimizing before the code is correct and complete"
+
+examples:
+  good:
+    - description: "Measured optimization based on profiling data"
+      code: |
+        // Step 1: Make it work
+        function calculateAverage(numbers) {
+          const sum = numbers.reduce((a, b) => a + b, 0);
+          return sum / numbers.length;
+        }
+        
+        // Step 2: Profile shows this is called frequently with large arrays
+        // Step 3: Optimize the bottleneck
+        function calculateAverageOptimized(numbers) {
+          let sum = 0;
+          const length = numbers.length;
+          for (let i = 0; i < length; i++) {
+            sum += numbers[i];
+          }
+          return sum / length;
+        }
+      explanation: "Optimization done after identifying actual performance bottleneck through profiling"
+    - description: "Algorithmic improvement over micro-optimization"
+      code: |
+        // Poor: Micro-optimizing O(n²) algorithm
+        function findDuplicatesMicro(arr) {
+          const duplicates = [];
+          const len = arr.length; // "Optimization"
+          for (let i = 0; i < len; ++i) { // Premature micro-optimization
+            for (let j = i + 1; j < len; ++j) {
+              if (arr[i] === arr[j]) {
+                duplicates.push(arr[i]);
+                break;
+              }
+            }
+          }
+          return duplicates;
+        }
+        
+        // Better: Algorithmic improvement
+        function findDuplicates(arr) {
+          const seen = new Set();
+          const duplicates = new Set();
+          
+          for (const item of arr) {
+            if (seen.has(item)) {
+              duplicates.add(item);
+            } else {
+              seen.add(item);
+            }
+          }
+          
+          return Array.from(duplicates);
+        }
+      explanation: "Focus on algorithmic improvements (O(n²) → O(n)) rather than micro-optimizations"
+  bad:
+    - description: "Premature micro-optimization sacrificing clarity"
+      code: |
+        // Premature optimization: hard to read and maintain
+        function processData(data) {
+          const len = data.length;
+          let result = '';
+          for (let i = 0; i < len; ++i) {
+            result += data[i].value + '|';
+          }
+          return result.slice(0, -1); // Remove last |
+        }
+        
+        // Better: Clear and readable
+        function processData(data) {
+          return data.map(item => item.value).join('|');
+        }
+      problem: "Micro-optimization makes code harder to read without measurable benefit"
+  real_world:
+    - project: "V8 JavaScript Engine"
+      description: "Uses extensive profiling and measurement before implementing optimizations"
+      link: "https://v8.dev/"
+    - project: "Linux Kernel"
+      description: "Performance optimizations backed by benchmarks and profiling data"
+      link: "https://kernel.org/"
+compatibility:
+  works_well_with:
+    - kiss
+    - yagni
+    - tdd
+    - refactoring
+  potential_conflicts:
+    - performance-requirements
+    - real-time-systems
+    - resource-constraints
+  complements:
+    - profiling-tools
+    - performance-testing
+    - algorithmic-analysis
+    - code-quality
+
+references:
+  foundational:
+    - "Computer Programming as an Art (Donald Knuth, 1974)"
+    - "The Art of Computer Programming (Donald Knuth)"
+    - "Structured Programming (Dijkstra, 1972)"
+  modern:
+    - "Code Complete (Steve McConnell, 2004)"
+    - "The Pragmatic Programmer (Hunt & Thomas, 1999)"
+    - "Clean Code (Robert C. Martin, 2008)"
+  tools:
+    - "Profiling tools (gprof, Valgrind, perf)"
+    - "Performance monitoring (New Relic, DataDog)"
+    - "Benchmarking frameworks (JMH, Criterion)"
