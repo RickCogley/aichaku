@@ -17,7 +17,11 @@ interface PerformanceResult {
 class PerformanceTester {
   private results: PerformanceResult[] = [];
   private loader = new PrincipleLoader();
-  private configManager = new ConfigManager();
+  private configManager = new ConfigManager(Deno.cwd());
+
+  get testResults(): PerformanceResult[] {
+    return this.results;
+  }
 
   async runAllTests(): Promise<void> {
     console.log("🏃 Aichaku Principles Performance Test Suite");
@@ -94,7 +98,7 @@ class PerformanceTester {
       allPrinciples.filter((p) =>
         p.data.name.toLowerCase().includes(query) ||
         p.data.description.toLowerCase().includes(query) ||
-        p.docs?.toLowerCase().includes(query)
+        p.documentation?.toLowerCase().includes(query)
       );
     });
 
@@ -102,7 +106,7 @@ class PerformanceTester {
     await this.measurePerformance("Search: 'design pattern architecture'", 20, () => {
       const terms = ["design", "pattern", "architecture"];
       allPrinciples.filter((p) => {
-        const content = `${p.data.name} ${p.data.description} ${p.docs || ""}`.toLowerCase();
+        const content = `${p.data.name} ${p.data.description} ${p.documentation || ""}`.toLowerCase();
         return terms.some((term) => content.includes(term));
       });
     });
@@ -199,6 +203,6 @@ if (import.meta.main) {
   const tester = new PerformanceTester();
   await tester.runAllTests();
 
-  const failed = tester.results.filter((r) => !r.passed).length;
+  const failed = tester.testResults.filter((r) => !r.passed).length;
   Deno.exit(failed > 0 ? 1 : 0);
 }

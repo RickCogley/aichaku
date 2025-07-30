@@ -20,6 +20,10 @@ class PrinciplesE2ETester {
   private results: TestResult[] = [];
   private aichakuPath = "./cli.ts";
 
+  get testResults(): TestResult[] {
+    return this.results;
+  }
+
   async runAllTests(): Promise<void> {
     console.log("🪴 Aichaku Principles E2E Test Suite");
     console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
@@ -223,13 +227,14 @@ class PrinciplesE2ETester {
       console.log(`  ✅ ${name} (${duration.toFixed(1)}ms)`);
     } catch (error) {
       const duration = performance.now() - start;
+      const errorMessage = error instanceof Error ? error.message : String(error);
       this.results.push({
         name,
         passed: false,
-        error: error.message,
+        error: errorMessage,
         duration,
       });
-      console.log(`  ❌ ${name} - ${error.message}`);
+      console.log(`  ❌ ${name} - ${errorMessage}`);
     }
   }
 
@@ -266,6 +271,6 @@ if (import.meta.main) {
   await tester.runAllTests();
 
   // Exit with error code if any tests failed
-  const failedCount = tester.results.filter((r) => !r.passed).length;
+  const failedCount = tester.testResults.filter((r) => !r.passed).length;
   Deno.exit(failedCount > 0 ? 1 : 0);
 }
