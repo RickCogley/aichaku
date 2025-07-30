@@ -6,7 +6,6 @@
 
 import { PrincipleLoader } from "../src/utils/principle-loader.ts";
 import { ConfigManager } from "../src/utils/config-manager.ts";
-import { getAichakuPaths } from "../src/paths.ts";
 
 interface PerformanceResult {
   operation: string;
@@ -90,7 +89,7 @@ class PerformanceTester {
     const allPrinciples = await this.loader.loadAll();
 
     // Test simple search
-    await this.measurePerformance("Search: 'simple'", 10, async () => {
+    await this.measurePerformance("Search: 'simple'", 10, () => {
       const query = "simple";
       allPrinciples.filter((p) =>
         p.data.name.toLowerCase().includes(query) ||
@@ -100,7 +99,7 @@ class PerformanceTester {
     });
 
     // Test complex search
-    await this.measurePerformance("Search: 'design pattern architecture'", 20, async () => {
+    await this.measurePerformance("Search: 'design pattern architecture'", 20, () => {
       const terms = ["design", "pattern", "architecture"];
       allPrinciples.filter((p) => {
         const content = `${p.data.name} ${p.data.description} ${p.docs || ""}`.toLowerCase();
@@ -133,7 +132,7 @@ class PerformanceTester {
   private async measurePerformance(
     operation: string,
     thresholdMs: number,
-    fn: () => Promise<void>,
+    fn: () => Promise<void> | void,
   ): Promise<void> {
     // Run multiple times and take average
     const runs = 5;
