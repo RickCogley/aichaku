@@ -116,6 +116,7 @@ const args = parseArgs(Deno.args, {
     "set",
     "search",
     "select",
+    "show", // Also in boolean - supports both --show and --show <value>
     "project",
     "project-name",
     "create-custom",
@@ -550,7 +551,7 @@ ${result.claudeMdReferences.map((ref) => `    Line ${ref.line}: "${ref.text}"`).
         list: args.list as boolean | undefined,
         categories: args.categories as boolean | undefined,
         select: args.select as boolean | undefined,
-        show: args.show as boolean | undefined,
+        show: args.show === "" ? true : args.show as boolean | undefined,
         add: args.add as string | undefined,
         remove: args.remove as string | undefined,
         search: args.search as string | undefined,
@@ -574,7 +575,7 @@ ${result.claudeMdReferences.map((ref) => `    Line ${ref.line}: "${ref.text}"`).
     case "methodologies": {
       const methodologiesOptions = {
         list: args.list as boolean | undefined,
-        show: args.show as boolean | undefined,
+        show: args.show === "" ? true : args.show as boolean | undefined,
         add: args.add as string | undefined,
         remove: args.remove as string | undefined,
         set: args.set as string | undefined,
@@ -589,9 +590,18 @@ ${result.claudeMdReferences.map((ref) => `    Line ${ref.line}: "${ref.text}"`).
     }
 
     case "principles": {
+      // Handle --show with value specially due to parseArgs behavior
+      let showValue: boolean | string | undefined = args.show as boolean | string | undefined;
+
+      // When --show is followed by a value, parseArgs puts the value in _
+      // Check if --show was used and there's a value after "principles" in _
+      if (showValue === "" && args._.length > 1) {
+        showValue = args._[1] as string;
+      }
+
       const principlesOptions = {
         list: args.list as boolean | undefined,
-        show: args.show as boolean | string | undefined,
+        show: showValue,
         add: args.add as string | undefined,
         addInteractive: args["add-interactive"] as boolean | undefined,
         current: args.current as boolean | undefined,

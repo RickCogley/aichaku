@@ -1,8 +1,8 @@
 {
-  "version": "0.39.3",
+  "version": "0.39.4",
   "installedAt": "2025-07-17T05:45:12.083Z",
   "installationType": "local",
-  "lastUpgrade": "2025-07-30T11:45:38.238Z",
+  "lastUpgrade": "2025-07-30T19:31:01.804Z",
   "methodologies": {
     "selected": [
       "shape-up",
@@ -30,7 +30,7 @@
   "principles": {
     "selected": [
       "dry",
-      "agile-manifesto"
+      "kiss"
     ]
   }
 }
