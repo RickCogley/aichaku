@@ -314,7 +314,7 @@ Run \`aichaku init\` to initialize project with methodology selection.`);
       content.push(`No methodologies currently selected for this project.\n`);
       content.push(`## 💡 To Get Started\n`);
       content.push(`- Run \`aichaku methodologies --list\` to see available methodologies`);
-      content.push(`- Run \`aichaku methodologies --add <id>\` to select a methodology`);
+      content.push(`- Run \`aichaku methodologies --add <id>\` to add a methodology`);
       content.push(`- Run \`aichaku methodologies --set shape-up\` for solo development\n`);
       content.push(`**Example:** \`aichaku methodologies --add shape-up\``);
       printFormatted(content.join("\n"));
@@ -488,7 +488,7 @@ async function removeMethodologies(
 
       if (remaining.length === 0) {
         console.log(`\n💡 Project now has no active methodologies`);
-        console.log(`   • Run 'aichaku methodologies --add <id>' to select a new methodology`);
+        console.log(`   • Run 'aichaku methodologies --add <id>' to add a new methodology`);
       } else {
         console.log(`\nRemaining methodologies: ${remaining.join(", ")}`);
       }
@@ -613,14 +613,10 @@ Select and manage development methodologies to provide focused context for Claud
 - **--remove <ids>** - Remove methodologies from project
 - **--set <ids>** - Set specific methodologies (replaces current)
 - **--reset** - Reset to default methodology (shape-up)
-- **select** - Interactive methodology selection (default)
 
 ## Examples
 
 \`\`\`bash
-# Interactive selection (default)
-aichaku methodologies select
-
 # See all available methodologies
 aichaku methodologies --list
 

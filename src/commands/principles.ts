@@ -17,7 +17,7 @@ import type { PrincipleCategory, PrincipleWithDocs } from "../types/principle.ts
  */
 interface PrinciplesOptions {
   list?: boolean;
-  show?: string;
+  show?: boolean | string;
   add?: string;
   addInteractive?: boolean;
   current?: boolean;
@@ -47,7 +47,7 @@ function generatePrincipleId(name: string): string {
 /**
  * Browse and manage development principles
  *
- * Allows teams to select guiding philosophies that expert agents
+ * Allows teams to add guiding philosophies that expert agents
  * will consider when providing suggestions and reviewing code.
  *
  * @param {PrinciplesOptions} options - Options for browsing and managing principles
@@ -78,9 +78,15 @@ export async function principles(options: PrinciplesOptions = {}): Promise<void>
       return;
     }
 
-    // Show details about a specific principle
-    if (options.show) {
-      await showPrinciple(options.show, options.verbose);
+    // Show details about a specific principle or current selection
+    if (options.show !== undefined) {
+      if (options.show === true || options.show === "") {
+        // Bare --show, show current selection
+        await showCurrentPrinciples(options.projectPath);
+      } else if (typeof options.show === "string") {
+        // --show <id>, show specific principle
+        await showPrinciple(options.show, options.verbose);
+      }
       return;
     }
 
@@ -93,12 +99,6 @@ export async function principles(options: PrinciplesOptions = {}): Promise<void>
     // Interactive selection
     if (options.addInteractive) {
       await selectPrinciplesInteractive(options.projectPath);
-      return;
-    }
-
-    // Show current principles
-    if (options.current) {
-      await showCurrentPrinciples(options.projectPath);
       return;
     }
 
@@ -171,7 +171,7 @@ async function listPrinciples(category?: string): Promise<void> {
   }
 
   content.push(`## 💡 Usage Tips\n`);
-  content.push(`- Use \`aichaku principles --select unix-philosophy,dry\` to choose principles`);
+  content.push(`- Use \`aichaku principles --add unix-philosophy,dry\` to choose principles`);
   content.push(`- Principles guide agent suggestions, not enforce rules`);
   content.push(`- Multiple principles can work together synergistically`);
   content.push(`- Run \`aichaku principles --show <id>\` for detailed information`);
@@ -346,7 +346,7 @@ async function selectPrinciples(
 function selectPrinciplesInteractive(_projectPath?: string): void {
   console.log("\n🌸 Aichaku: Interactive principle selection\n");
   console.log("ℹ️  Interactive selection coming soon!");
-  console.log("   For now, use: aichaku principles --select <principle-ids>");
+  console.log("   For now, use: aichaku principles --add <principle-ids>");
 }
 
 /**
@@ -367,7 +367,7 @@ async function showCurrentPrinciples(projectPath?: string): Promise<void> {
       content.push(`No principles currently selected for this project.\n`);
       content.push(`## 💡 To Get Started\n`);
       content.push(`- Run \`aichaku principles --list\` to see available principles`);
-      content.push(`- Run \`aichaku principles --select <ids>\` to choose principles`);
+      content.push(`- Run \`aichaku principles --add <ids>\` to choose principles`);
       content.push(`- Example: \`aichaku principles --add unix-philosophy,dry,yagni\``);
     } else {
       content.push(`Project follows ${selectedPrinciples.length} guiding principles:\n`);
@@ -383,7 +383,7 @@ async function showCurrentPrinciples(projectPath?: string): Promise<void> {
       }
 
       content.push(`## 💡 Managing Principles\n`);
-      content.push(`- Add more: \`aichaku principles --select <ids>\``);
+      content.push(`- Add more: \`aichaku principles --add <ids>\``);
       content.push(`- Remove: \`aichaku principles --remove <ids>\``);
       content.push(`- Clear all: \`aichaku principles --clear\``);
       content.push(`- Check compatibility: \`aichaku principles --compatibility ${selectedPrinciples.join(",")}\``);
@@ -440,7 +440,7 @@ async function clearPrinciples(projectPath?: string, dryRun?: boolean): Promise<
     if (!dryRun) {
       await configManager.setPrinciples([]);
       console.log(`✅ All principles cleared`);
-      console.log(`   Run 'aichaku principles --select <ids>' to choose new principles`);
+      console.log(`   Run 'aichaku principles --add <ids>' to choose new principles`);
     } else {
       console.log(`[Dry run] Would clear all principles`);
     }
@@ -534,11 +534,11 @@ Select and manage development principles that guide your thinking and decision-m
 ## Options
 - **--list** - List all available principles
 - **--list --category <name>** - List principles in specific category
+- **--show** - Show currently selected principles
 - **--show <id>** - Show details about a specific principle
 - **--show <id> --verbose** - Include compatibility information
-- **--select <ids>** - Select principles (comma-separated)
-- **--select-interactive** - Interactive principle selection
-- **--current** - Show currently selected principles
+- **--add <ids>** - Select principles (comma-separated)
+- **--add-interactive** - Interactive principle selection (coming soon)
 - **--remove <ids>** - Remove specific principles
 - **--clear** - Remove all selected principles
 - **--compatibility <ids>** - Check principle compatibility
@@ -563,7 +563,7 @@ aichaku principles --add unix-philosophy,dry,yagni
 aichaku principles --compatibility kiss,yagni,unix-philosophy
 
 # See what's currently selected
-aichaku principles --current
+aichaku principles --show
 
 # Remove a principle
 aichaku principles --remove dry

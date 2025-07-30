@@ -511,7 +511,7 @@ Run \`aichaku init\` to initialize project with standards selection.`);
       content.push(`## 💡 To Get Started\n`);
       content.push(`- Run \`aichaku standards --list\` to see available standards`);
       content.push(`- Run \`aichaku standards --search <term>\` to find specific standards`);
-      content.push(`- Run \`aichaku standards --add <id>\` to select standards\n`);
+      content.push(`- Run \`aichaku standards --add <id>\` to add standards\n`);
       content.push(`**Example:** \`aichaku standards --add owasp-web,15-factor,tdd\``);
       printFormatted(content.join("\n"));
       return;
@@ -1045,7 +1045,6 @@ function showStandardsHelp(): void {
 - **--show** - Show standards selected for this project
 - **--add <ids>** - Add standards to project (comma-separated)
 - **--remove <ids>** - Remove standards from project
-- **--select** - Interactive selection (coming soon)
 
 ### Custom Standard Management
 - **--create-custom <name>** - Create a new custom standard

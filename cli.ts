@@ -57,6 +57,7 @@ const args = parseArgs(Deno.args, {
     "dry-run",
     "check",
     "list",
+    "show",
     "compare",
     "stats",
     "validate",
@@ -115,7 +116,6 @@ const args = parseArgs(Deno.args, {
     "set",
     "search",
     "select",
-    "show",
     "project",
     "project-name",
     "create-custom",
@@ -591,7 +591,7 @@ ${result.claudeMdReferences.map((ref) => `    Line ${ref.line}: "${ref.text}"`).
     case "principles": {
       const principlesOptions = {
         list: args.list as boolean | undefined,
-        show: args.show as string | undefined,
+        show: args.show as boolean | string | undefined,
         add: args.add as string | undefined,
         addInteractive: args["add-interactive"] as boolean | undefined,
         current: args.current as boolean | undefined,

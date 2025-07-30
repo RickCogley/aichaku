@@ -8,7 +8,7 @@ This configuration is dynamically assembled from YAML files in your ~/.claude/ai
 
 ```yaml
 aichaku:
-  version: 0.39.1
+  version: 0.39.2
   source: configuration-as-code
 behavioral_directives:
   read_claude_md_in_subfolders:
