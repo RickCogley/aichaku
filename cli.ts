@@ -483,8 +483,15 @@ try {
         force: args.force as boolean | undefined,
         check: args.check as boolean | undefined,
       };
+      // The migrate command uses cliffy's Command interface
+      // We need to build the args array from our options
+      const migrateArgs: string[] = [];
+      if (migrateOptions.dryRun) migrateArgs.push("--dry-run");
+      if (migrateOptions.force) migrateArgs.push("--force");
+      if (migrateOptions.check) migrateArgs.push("--check");
+
       const migrateCommand = createMigrateCommand();
-      await (migrateCommand as any).execute(migrateOptions);
+      await migrateCommand.parse(migrateArgs);
       break;
     }
     case "review": {
