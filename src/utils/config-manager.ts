@@ -6,7 +6,7 @@
  */
 
 import { exists } from "jsr:@std/fs@1";
-import { join } from "jsr:@std/path@1";
+import { join, SEPARATOR as sep } from "jsr:@std/path@1";
 
 // Unified schema for Aichaku configuration
 export interface AichakuConfig {
@@ -544,7 +544,18 @@ export class ConfigManager {
 export function createProjectConfigManager(
   projectRoot?: string,
 ): ConfigManager {
-  const root = projectRoot || Deno.cwd();
+  let root = projectRoot || Deno.cwd();
+
+  // Prevent nested .claude/aichaku structures
+  // If we're inside a .claude/aichaku directory, find the actual project root
+  const pathParts = root.split(sep);
+  const claudeIndex = pathParts.lastIndexOf(".claude");
+
+  if (claudeIndex !== -1 && claudeIndex < pathParts.length - 1 && pathParts[claudeIndex + 1] === "aichaku") {
+    // We're inside .claude/aichaku, go back to the actual project root
+    root = pathParts.slice(0, claudeIndex).join(sep);
+  }
+
   return new ConfigManager(root);
 }
 

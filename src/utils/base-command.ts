@@ -9,6 +9,7 @@ import { resolveProjectPath } from "./project-paths.ts";
 import { createProjectConfigManager } from "./config-manager.ts";
 import { printFormatted } from "./terminal-formatter.ts";
 import { AichakuBrand as Brand } from "./branded-messages.ts";
+import { blue, bold, cyan } from "jsr:@std/fmt@1/colors";
 import type { CommandDefinition, ConfigItem } from "../types/command.ts";
 import type { ParsedArgs } from "./argument-parser.ts";
 import type { ConfigManager } from "./config-manager.ts";
@@ -296,22 +297,75 @@ Run \`aichaku init\` to initialize project with ${this.definition.name} selectio
    * Show help for this command
    */
   protected showHelp(): void {
-    const helpContent = `
-# 🪴 Aichaku ${this.definition.name.charAt(0).toUpperCase() + this.definition.name.slice(1)} - ${
+    // Use the full branded header format
+    const title = `${this.definition.name.charAt(0).toUpperCase() + this.definition.name.slice(1)} - ${
       this.definition.helpText?.description || "Command Help"
+    }`;
+
+    // Use colored output with the branded header
+    console.log(blue(bold(`█ ${Brand.PREFIX} ${title}`)));
+    console.log("");
+
+    // Usage section
+    console.log(cyan(bold("◆ Usage")));
+    console.log(cyan(`aichaku ${this.definition.name} [options]`));
+    console.log("");
+
+    // Options section
+    console.log(cyan(bold("◆ Options")));
+    const options = this.generateHelpOptionsFormatted();
+    options.forEach((opt) => console.log(opt));
+    console.log("");
+
+    // Examples section
+    if (this.definition.helpText?.examples && this.definition.helpText.examples.length > 0) {
+      console.log(cyan(bold("◆ Examples")));
+      this.definition.helpText.examples.forEach((example) => {
+        console.log(example);
+      });
+    }
+  }
+
+  /**
+   * Generate formatted help options for colored output
+   */
+  protected generateHelpOptionsFormatted(): string[] {
+    const options: string[] = [];
+
+    options.push(`  • ${bold("--help")} - Show this help message`);
+
+    if (this.definition.supportedOperations?.list) {
+      options.push(`  • ${bold("--list")} - List all available items (shows priority order)`);
     }
 
-## Usage
-\`aichaku ${this.definition.name} [options]\`
+    if (this.definition.supportedOperations?.show) {
+      options.push(`  • ${bold("--show")} - Show current selection`);
+    }
 
-## Options
-${this.generateHelpOptions()}
+    if (this.definition.supportedOperations?.showDetails) {
+      options.push(`  • ${bold("--show <id>")} - Show details about specific item`);
+    }
 
-## Examples
-${this.definition.helpText?.examples.join("\n") || "No examples available"}
-`;
+    if (this.definition.supportedOperations?.add) {
+      options.push(`  • ${bold("--add <ids>")} - Add items to project (order determines priority)`);
+    }
 
-    printFormatted(helpContent);
+    if (this.definition.supportedOperations?.remove) {
+      options.push(`  • ${bold("--remove <ids>")} - Remove items from project`);
+    }
+
+    if (this.definition.supportedOperations?.search) {
+      options.push(`  • ${bold("--search <query>")} - Search items by keyword`);
+    }
+
+    if (this.definition.supportedOperations?.current) {
+      options.push(`  • ${bold("--current")} - Show currently selected items`);
+    }
+
+    options.push(`  • ${bold("--dry-run")} - Preview changes without applying`);
+    options.push(`  • ${bold("--verbose")} - Show detailed information`);
+
+    return options;
   }
 
   /**

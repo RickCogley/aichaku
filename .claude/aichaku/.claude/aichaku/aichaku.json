@@ -1,0 +1,20 @@
+{
+  "version": "0.36.2",
+  "installedAt": "2025-07-31T11:15:40.071Z",
+  "installationType": "local",
+  "methodologies": {
+    "selected": []
+  },
+  "standards": {
+    "selected": []
+  },
+  "principles": {
+    "selected": []
+  },
+  "agents": {
+    "selected": [
+      "deno-expert",
+      "typescript-expert"
+    ]
+  }
+}

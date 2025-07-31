@@ -1,8 +1,8 @@
 {
-  "version": "0.39.4",
+  "version": "0.40.0",
   "installedAt": "2025-07-17T05:45:12.083Z",
   "installationType": "local",
-  "lastUpgrade": "2025-07-30T19:31:01.804Z",
+  "lastUpgrade": "2025-07-31T10:22:03.799Z",
   "methodologies": {
     "selected": [
       "shape-up"
@@ -29,6 +29,12 @@
   "principles": {
     "selected": [
       "dry"
+    ]
+  },
+  "agents": {
+    "selected": [
+      "deno-expert",
+      "typescript-expert"
     ]
   }
 }
