@@ -17,7 +17,7 @@ export class AgentLoader {
   /**
    * Load all available agents (required by ItemLoader interface)
    */
-  async loadAll(): Promise<Agent[]> {
+  loadAll(): Promise<Agent[]> {
     return this.list();
   }
 

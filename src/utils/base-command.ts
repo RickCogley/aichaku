@@ -281,14 +281,14 @@ Run \`aichaku init\` to initialize project with ${this.definition.name} selectio
   /**
    * Handle create custom operation (optional, override in subclasses)
    */
-  protected async handleCreateCustom(_args: ParsedArgs): Promise<void> {
+  protected handleCreateCustom(_args: ParsedArgs): Promise<void> {
     Brand.log(`Custom ${this.definition.name} creation not yet supported`);
   }
 
   /**
    * Handle custom operations specific to each command (override in subclasses)
    */
-  protected async handleCustomOperation(_args: ParsedArgs): Promise<boolean> {
+  protected handleCustomOperation(_args: ParsedArgs): Promise<boolean> {
     return false; // Not handled
   }
 

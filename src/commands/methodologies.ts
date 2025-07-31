@@ -155,7 +155,7 @@ class MethodologyLoader implements ItemLoader<Methodology> {
     return results;
   }
 
-  async getCategories(): Promise<string[]> {
+  getCategories(): Promise<string[]> {
     const categories = new Set(Object.values(AVAILABLE_METHODOLOGIES).map((m) => m.category || "uncategorized"));
     return Array.from(categories).sort();
   }
