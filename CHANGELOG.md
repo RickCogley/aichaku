@@ -5,6 +5,24 @@ All notable changes to aichaku (愛着) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.40.0] - 2025-07-31
+
+### Added
+
+- integrate MCP reviewer for automated code analysis (c8e0889)
+- implement aichaku agents command (6a4c2c4)
+
+### Fixed
+
+- remove no-explicit-any lint violation (71113a9)
+- resolve all remaining TypeScript errors (55c8e50)
+- resolve final test failure and lint issues (b299b2e)
+- resolve TypeScript errors and test failures (b138eee)
+- resolve require-await and no-unused-vars errors (66e7e39)
+- complete agent management system with focused context injection (bda6fef)
+- correct agent template names (53f303a)
+- fix --show parsing and make principles consistent (741333c)
+
 ## [0.39.4] - 2025-07-30
 
 ### Fixed
