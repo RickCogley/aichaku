@@ -2,12 +2,16 @@
  * Formatter for principle display
  */
 
-import type { ItemFormatter } from "../types/command.ts";
+import { BaseFormatter } from "./base-formatter.ts";
 import type { Principle } from "../types/principle.ts";
+import { bold } from "jsr:@std/fmt@1/colors";
 
-export class PrincipleFormatter implements ItemFormatter<Principle> {
+export class PrincipleFormatter extends BaseFormatter<Principle> {
   formatList(principles: Principle[]): string {
-    const content = ["# 🪴 Aichaku: Available Principles\n"];
+    const lines: string[] = [];
+
+    lines.push(this.formatHeader("Available Principles"));
+    lines.push(this.addEmptyLine());
 
     // Group by category
     const byCategory = new Map<string, Principle[]>();
@@ -23,88 +27,115 @@ export class PrincipleFormatter implements ItemFormatter<Principle> {
     const sortedCategories = Array.from(byCategory.keys()).sort();
 
     for (const category of sortedCategories) {
-      content.push(`## ${category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, " ")}\n`);
+      lines.push(this.formatSection(category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, " ")));
       const items = byCategory.get(category)!.sort((a, b) => a.name.localeCompare(b.name));
 
       for (const principle of items) {
-        content.push(`### ${principle.name} (\`${principle.id}\`)`);
-        content.push(principle.summary?.tagline || principle.description || "");
+        lines.push(this.formatItem(`${principle.name} (\`${principle.id}\`)`));
+        if (principle.summary?.tagline || principle.description) {
+          lines.push(`    ${principle.summary?.tagline || principle.description || ""}`);
+        }
         if (principle.summary?.core_tenets) {
-          content.push("\n**Core Tenets:**");
+          lines.push("");
+          lines.push(`    ${bold("Core Tenets:")}`);
           for (const tenet of principle.summary.core_tenets) {
-            content.push(`- ${tenet.text}`);
+            lines.push(`    - ${tenet.text}`);
           }
         }
-        content.push("");
+        lines.push("");
       }
     }
 
-    content.push("\n💡 Use `aichaku principles --show <id>` to see full details");
-    content.push("📝 Use `aichaku principles --add <id>` to select principles");
+    lines.push("💡 Use `aichaku principles --show <id>` to see full details");
+    lines.push("📝 Use `aichaku principles --add <id>` to select principles");
 
-    return content.join("\n");
+    return this.buildOutput(lines);
   }
 
   formatDetails(principle: Principle, verbose?: boolean): string {
-    const content = [`# 🎯 ${principle.name}\n`];
+    const lines: string[] = [];
 
-    content.push(`**ID:** \`${principle.id}\``);
-    content.push(`**Category:** ${principle.category || "uncategorized"}\n`);
+    lines.push(this.formatHeader("Principle", principle.name));
+    lines.push(this.addEmptyLine());
+
+    lines.push(`${bold("ID:")} \`${principle.id}\``);
+    lines.push(`${bold("Category:")} ${principle.category || "uncategorized"}`);
+    lines.push(this.addEmptyLine());
 
     if (principle.summary?.tagline) {
-      content.push(`## ${principle.summary.tagline}\n`);
+      lines.push(this.formatSection(principle.summary.tagline));
+      lines.push(this.addEmptyLine());
     }
 
     if (principle.description) {
-      content.push(`## Description\n`);
-      content.push(principle.description + "\n");
+      lines.push(this.formatSection("Description"));
+      lines.push(principle.description);
+      lines.push(this.addEmptyLine());
     }
 
     if (principle.summary?.core_tenets) {
-      content.push(`## Core Tenets\n`);
+      lines.push(this.formatSection("Core Tenets"));
       for (const tenet of principle.summary.core_tenets) {
-        content.push(`- ${tenet.text}`);
+        lines.push(this.formatItem(tenet.text));
       }
-      content.push("");
+      lines.push(this.addEmptyLine());
+    }
+
+    if (verbose && principle.summary) {
+      for (const [key, value] of Object.entries(principle.summary)) {
+        if (key !== "tagline" && key !== "core_tenets" && typeof value === "string") {
+          const displayKey = key.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+          lines.push(this.formatSection(displayKey));
+          lines.push(value);
+          lines.push(this.addEmptyLine());
+        }
+      }
     }
 
     if (verbose && principle.integration_url) {
-      content.push(`## Integration URL\n`);
-      content.push(principle.integration_url);
+      lines.push(this.formatSection("Integration URL"));
+      lines.push(principle.integration_url);
     }
 
-    return content.join("\n");
+    return this.buildOutput(lines);
   }
 
   formatCurrent(selected: string[]): string {
-    const content = [`# 🪴 Aichaku: Current Principle Selection\n`];
+    const lines: string[] = [];
+
+    lines.push(this.formatHeader("Current Principles Selection"));
+    lines.push(this.addEmptyLine());
 
     if (selected.length === 0) {
-      content.push("ℹ️  No principles currently selected");
-      content.push("\n💡 Use `aichaku principles --add <id>` to select principles");
+      lines.push("ℹ️  No principles currently selected");
+      lines.push("");
+      lines.push("💡 Use `aichaku principles --add <id>` to select principles");
     } else {
-      content.push(`## Active Principles (${selected.length}) - In Priority Order\n`);
+      lines.push(this.formatSection(`Active Principles (${selected.length})`));
       selected.forEach((id, index) => {
-        content.push(`${index + 1}. ${id}`);
+        lines.push(`${index + 1}. ${id}`);
       });
-      content.push("\n💡 First listed has highest priority when principles conflict");
-      content.push("📝 Use `aichaku principles --remove <id>` to deselect principles");
-      content.push("🔄 To change priority, remove and re-add in desired order");
+      lines.push(this.addEmptyLine());
+      lines.push("📝 Use `aichaku principles --remove <id>` to deselect principles");
     }
 
-    return content.join("\n");
+    return this.buildOutput(lines);
   }
 
   formatCategories(categories: string[]): string {
-    const content = [`# 🪴 Aichaku: Principle Categories\n`];
+    const lines: string[] = [];
+
+    lines.push(this.formatHeader("Principle Categories"));
+    lines.push(this.addEmptyLine());
 
     for (const category of categories) {
       const displayName = category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, " ");
-      content.push(`- **${displayName}** (\`${category}\`)`);
+      lines.push(this.formatOption(displayName, `\`${category}\``));
     }
 
-    content.push("\n💡 Use `aichaku principles --list --category <name>` to filter by category");
+    lines.push(this.addEmptyLine());
+    lines.push("💡 Use `aichaku principles --list --category <name>` to filter by category");
 
-    return content.join("\n");
+    return this.buildOutput(lines);
   }
 }
