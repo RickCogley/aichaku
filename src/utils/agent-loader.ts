@@ -1,5 +1,4 @@
 import { join } from "jsr:@std/path@1";
-import { exists } from "jsr:@std/fs@1";
 import { parse as parseYaml } from "jsr:@std/yaml@1";
 import { Agent } from "../types/agent.ts";
 import { paths } from "../paths.ts";
