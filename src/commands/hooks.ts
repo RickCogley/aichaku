@@ -9,6 +9,8 @@ import { exists } from "jsr:@std/fs@1/exists";
 import { ensureDir } from "jsr:@std/fs@1/ensure-dir";
 import { normalize, resolve } from "jsr:@std/path@1";
 import { safeReadTextFile } from "../utils/path-security.ts";
+import { AichakuBrand as Brand } from "../utils/branded-messages.ts";
+import { blue, bold, cyan } from "jsr:@std/fmt@1/colors";
 
 /**
  * Configuration for a Claude Code hook
@@ -301,6 +303,7 @@ interface HookOptions {
   show?: boolean;
   global?: boolean;
   local?: boolean;
+  help?: boolean;
 }
 
 /**
@@ -345,6 +348,12 @@ interface HookOptions {
  */
 export async function hooks(options: HookOptions = {}): Promise<void> {
   try {
+    // Show branded header for default case
+    if (Object.keys(options).length === 0 || options.help) {
+      await showHooksHelp();
+      return;
+    }
+
     // Show installed hooks
     if (options.show) {
       await showInstalledHooks();
@@ -384,11 +393,11 @@ export async function hooks(options: HookOptions = {}): Promise<void> {
     await interactiveHookSelection(options.dryRun);
   } catch (error) {
     // InfoSec: Avoid exposing detailed error messages in production
-    console.error(`❌ Error: An error occurred while processing hooks`);
+    Brand.error(`An error occurred while processing hooks`);
     if (
       error instanceof Error && error.message.includes("directory traversal")
     ) {
-      console.error("Security violation detected");
+      Brand.error("Security violation detected");
     }
     Deno.exit(1);
   }
@@ -398,13 +407,13 @@ export async function hooks(options: HookOptions = {}): Promise<void> {
  * List all available hook templates
  */
 function listHooks(): void {
-  console.log("\n🪴 Available Aichaku Hooks\n");
+  Brand.log("Available Aichaku Hooks\n");
 
   // List hooks by category with their IDs
   for (const [categoryId, category] of Object.entries(HOOK_CATEGORIES)) {
     if (categoryId === "custom") continue;
 
-    console.log(`${category.name.toUpperCase()} HOOKS`);
+    console.log(bold(`${category.name.toUpperCase()} HOOKS`));
 
     for (const hookId of category.hooks) {
       const hook = HOOK_TEMPLATES[hookId as keyof typeof HOOK_TEMPLATES];
@@ -423,7 +432,7 @@ function listHooks(): void {
 
   // Show installation commands
   console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
-  console.log("INSTALL SETS:");
+  console.log(bold("INSTALL SETS:"));
   console.log(
     `  aichaku hooks --install essential     ${HOOK_CATEGORIES.essential.hooks.length} hooks (Recommended)`,
   );
@@ -437,10 +446,10 @@ function listHooks(): void {
     `  aichaku hooks --install github        ${HOOK_CATEGORIES.github.hooks.length} hooks (GitHub Integration)`,
   );
   console.log();
-  console.log("INSTALL INDIVIDUAL HOOKS:");
+  console.log(bold("INSTALL INDIVIDUAL HOOKS:"));
   console.log("  aichaku hooks --install <hook-name> [--global|--local]");
   console.log();
-  console.log("EXAMPLES:");
+  console.log(bold("EXAMPLES:"));
   console.log("  aichaku hooks --install essential --global");
   console.log("  aichaku hooks --install conversation-summary --local");
   console.log('  aichaku hooks --install "path-validator,code-review"');
@@ -600,7 +609,7 @@ switch (hookType) {
   await Deno.writeTextFile(scriptPath, scriptContent);
   await Deno.chmod(scriptPath, 0o755);
 
-  console.log("📝 Installed Aichaku hook runner script");
+  Brand.info("Installed Aichaku hook runner script");
 }
 
 /**
@@ -615,14 +624,14 @@ async function installHooks(
   // Determine installation path
   let settingsPath: string;
   if (global && local) {
-    console.error(`❌ Cannot use both --global and --local flags`);
+    Brand.error("Cannot use both --global and --local flags");
     return;
   } else if (local) {
     settingsPath = ".claude/settings.json";
-    console.log("Installing hooks locally (.claude/settings.json)...");
+    Brand.log("Installing hooks locally (.claude/settings.json)...");
   } else if (global) {
     settingsPath = expandTilde("~/.claude/settings.json");
-    console.log("Installing hooks globally (~/.claude/settings.json)...");
+    Brand.log("Installing hooks globally (~/.claude/settings.json)...");
   } else {
     // Interactive prompt for location
     console.log("\nWhere would you like to install the hooks?");
@@ -634,12 +643,12 @@ async function installHooks(
     const choice = prompt("Enter your choice (1 or 2): ") || "";
     if (choice.trim() === "1") {
       settingsPath = expandTilde("~/.claude/settings.json");
-      console.log("\nInstalling hooks globally...");
+      Brand.log("\nInstalling hooks globally...");
     } else if (choice.trim() === "2") {
       settingsPath = ".claude/settings.json";
-      console.log("\nInstalling hooks locally...");
+      Brand.log("\nInstalling hooks locally...");
     } else {
-      console.error("❌ Invalid choice. Aborting.");
+      Brand.error("Invalid choice. Aborting.");
       return;
     }
   }
@@ -668,8 +677,8 @@ async function installHooks(
       settings = parsed as Settings;
     } catch (_error) {
       // InfoSec: Don't expose raw error messages
-      console.error(`❌ Invalid settings.json format`);
-      console.error(`Tip: Check for syntax errors or trailing commas`);
+      Brand.error("Invalid settings.json format");
+      Brand.tip("Check for syntax errors or trailing commas");
       return;
     }
   }
@@ -687,7 +696,7 @@ async function installHooks(
     hooksToInstall = [...categoryDef.hooks];
     categoryName = categoryDef.name;
     if (input === "custom") {
-      console.log("Custom selection not yet implemented");
+      Brand.info("Custom selection not yet implemented");
       return;
     }
   } else {
@@ -696,7 +705,7 @@ async function installHooks(
     categoryName = "individual";
   }
 
-  console.log(`\n🪴 Aichaku: Installing ${categoryName} hooks...\n`);
+  Brand.log(`Installing ${categoryName} hooks...\n`);
 
   // Ensure hook scripts are installed before installing any hooks
   if (!dryRun) {
@@ -764,10 +773,10 @@ async function installHooks(
       }
 
       if (summaryInstalled > 0) {
-        console.log(`✅ Conversation Summary installed (Stop & PreCompact)`);
+        Brand.success(`Conversation Summary installed (Stop & PreCompact)`);
         installed += summaryInstalled;
       } else {
-        console.log(`⚠️ Conversation Summary already installed`);
+        Brand.warning(`Conversation Summary already installed`);
       }
       continue;
     }
@@ -775,7 +784,7 @@ async function installHooks(
     // Regular hook installation
     const hook = HOOK_TEMPLATES[hookId as keyof typeof HOOK_TEMPLATES];
     if (!hook) {
-      console.log(`❌ Unknown hook: ${hookId}`);
+      Brand.error(`Unknown hook: ${hookId}`);
       notFound++;
       continue;
     }
@@ -809,10 +818,10 @@ async function installHooks(
       };
 
       settings.hooks[hookType].push(hookConfig);
-      console.log(`✅ ${hook.name} installed`);
+      Brand.success(`${hook.name} installed`);
       installed++;
     } else {
-      console.log(`⚠️ ${hook.name} already exists`);
+      Brand.warning(`${hook.name} already exists`);
     }
   }
 
@@ -829,14 +838,14 @@ async function installHooks(
       settingsPath,
       JSON.stringify(settings, null, 2),
     );
-    console.log(`\n✅ Settings updated successfully`);
+    Brand.success("\nSettings updated successfully");
   } else if (dryRun) {
     console.log("\n[Dry run - no changes made]");
   }
 
-  console.log(`\nInstalled ${installed} new hooks`);
+  Brand.info(`\nInstalled ${installed} new hooks`);
   if (notFound > 0) {
-    console.log(`Not found: ${notFound} hooks`);
+    Brand.warning(`Not found: ${notFound} hooks`);
   }
 
   // Show restart reminder if any hooks were installed
@@ -857,7 +866,7 @@ async function removeHooks(
   const paths: string[] = [];
 
   if (global && local) {
-    console.error(`❌ Cannot use both --global and --local flags`);
+    Brand.error("Cannot use both --global and --local flags");
     return;
   } else if (local) {
     paths.push(".claude/settings.json");
@@ -873,7 +882,7 @@ async function removeHooks(
     if (await exists(localPath)) availablePaths.push(localPath);
 
     if (availablePaths.length === 0) {
-      console.log(`⚠️ No settings.json files found`);
+      Brand.warning("No settings.json files found");
       return;
     } else if (availablePaths.length === 1) {
       paths.push(availablePaths[0]);
@@ -895,13 +904,13 @@ async function removeHooks(
       } else if (choice === "3") {
         paths.push(globalPath, localPath);
       } else {
-        console.error("❌ Invalid choice. Aborting.");
+        Brand.error("Invalid choice. Aborting.");
         return;
       }
     }
   }
 
-  console.log("Removing Aichaku hooks...");
+  Brand.log("Removing Aichaku hooks...");
   let totalRemoved = 0;
 
   for (const settingsPath of paths) {
@@ -909,7 +918,7 @@ async function removeHooks(
       continue;
     }
 
-    console.log(`\nProcessing ${settingsPath}...`);
+    Brand.log(`\nProcessing ${settingsPath}...`);
 
     try {
       const content = settingsPath.startsWith(".")
@@ -919,7 +928,7 @@ async function removeHooks(
       const settings = JSON.parse(content);
 
       if (!settings.hooks) {
-        console.log(`  ⚠️ No hooks found`);
+        Brand.warning("  No hooks found");
         continue;
       }
 
@@ -946,16 +955,16 @@ async function removeHooks(
           settingsPath,
           JSON.stringify(settings, null, 2),
         );
-        console.log(`  ✅ Removed ${removed} Aichaku hooks`);
+        Brand.success(`  Removed ${removed} Aichaku hooks`);
       } else if (dryRun) {
         console.log(`  [Dry run - would remove ${removed} hooks]`);
       } else {
-        console.log(`  ⚠️ No Aichaku hooks found`);
+        Brand.warning("  No Aichaku hooks found");
       }
 
       totalRemoved += removed;
     } catch (_error) {
-      console.error(`  ❌ Error processing ${settingsPath}`);
+      Brand.error(`  Error processing ${settingsPath}`);
     }
   }
 
@@ -969,7 +978,7 @@ async function removeHooks(
  * Show installed hooks from both global and local settings
  */
 async function showInstalledHooks(): Promise<void> {
-  console.log("\n🪴 Installed Aichaku Hooks\n");
+  Brand.log("Installed Aichaku Hooks\n");
 
   let foundHooks = false;
 
@@ -986,13 +995,13 @@ async function showInstalledHooks(): Promise<void> {
       const settings = JSON.parse(jsonWithoutComments) as Settings;
 
       if (settings.hooks && Object.keys(settings.hooks).length > 0) {
-        console.log("GLOBAL HOOKS (~/.claude/settings.json):");
+        console.log(bold("GLOBAL HOOKS (~/.claude/settings.json):"));
         console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
         displayHooksFromSettings(settings);
         foundHooks = true;
       }
     } catch (_error) {
-      console.error(`⚠️  Error reading global settings`);
+      Brand.warning("Error reading global settings");
     }
   }
 
@@ -1009,19 +1018,19 @@ async function showInstalledHooks(): Promise<void> {
 
       if (settings.hooks && Object.keys(settings.hooks).length > 0) {
         if (foundHooks) console.log("\n");
-        console.log("LOCAL HOOKS (.claude/settings.json):");
+        console.log(bold("LOCAL HOOKS (.claude/settings.json):"));
         console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
         displayHooksFromSettings(settings);
         foundHooks = true;
       }
     } catch (_error) {
-      console.error(`⚠️  Error reading local settings`);
+      Brand.warning("Error reading local settings");
     }
   }
 
   if (!foundHooks) {
-    console.log("No Aichaku hooks installed.\n");
-    console.log("To install hooks, use:");
+    Brand.info("No Aichaku hooks installed.\n");
+    Brand.tip("To install hooks, use:");
     console.log("  aichaku hooks --install essential --global");
     console.log("  aichaku hooks --install productivity --local");
   }
@@ -1098,11 +1107,11 @@ function displayRestartReminder(): void {
  * Validate existing hooks
  */
 async function validateHooks(): Promise<void> {
-  console.log("Validating hooks...");
+  Brand.log("Validating hooks...");
 
   const settingsPath = expandTilde("~/.claude/settings.json"); // Keep in global .claude for compatibility
   if (!(await exists(settingsPath))) {
-    console.log(`⚠️ No settings.json found`);
+    Brand.warning("No settings.json found");
     return;
   }
 
@@ -1126,14 +1135,14 @@ async function validateHooks(): Promise<void> {
     settings = parsed as Settings;
   } catch (_error) {
     // InfoSec: Don't expose raw error messages
-    console.error(`❌ Invalid JSON in settings.json`);
+    Brand.error("Invalid JSON in settings.json");
     return;
   }
 
-  console.log("\n🔍 Validating Claude Code hooks...\n");
+  Brand.log("\nValidating Claude Code hooks...\n");
 
   if (!settings.hooks || Object.keys(settings.hooks).length === 0) {
-    console.log(`⚠️ No hooks configured`);
+    Brand.warning("No hooks configured");
     return;
   }
 
@@ -1161,78 +1170,75 @@ async function validateHooks(): Promise<void> {
         if (match) {
           const hookId = match[1];
           const template = HOOK_TEMPLATES[hookId as keyof typeof HOOK_TEMPLATES];
-          console.log(`  ✅ ${template?.name || `Aichaku Hook (${hookId})`}`);
+          Brand.success(`  ${template?.name || `Aichaku Hook (${hookId})`}`);
         } else {
-          console.log(`  ✅ Aichaku Hook`);
+          Brand.success(`  Aichaku Hook`);
         }
 
         // Validate hook structure
         if (!hook.hooks || hook.hooks.length === 0) {
-          console.log(`    ❌ Missing hooks array`);
+          Brand.error(`    Missing hooks array`);
           issues++;
         } else if (!hook.hooks[0].command) {
-          console.log(`    ❌ Missing command`);
+          Brand.error(`    Missing command`);
           issues++;
         }
       }
     }
   }
 
-  console.log(`\nTotal hooks: ${totalHooks}`);
-  console.log(`Aichaku hooks: ${aichakuHooks}`);
+  Brand.info(`\nTotal hooks: ${totalHooks}`);
+  Brand.info(`Aichaku hooks: ${aichakuHooks}`);
 
   if (issues > 0) {
     console.log(`Issues found: ${issues}`);
   } else {
-    console.log(`✅ All hooks valid`);
+    Brand.success("All hooks valid");
   }
+}
+
+/**
+ * Show hooks help with consistent branding
+ */
+function showHooksHelp(): Promise<void> {
+  const title = "Hooks - Configure and manage Claude Code hooks for Aichaku automation";
+
+  // Use colored output with the branded header
+  console.log(blue(bold(`█ ${Brand.PREFIX} ${title}`)));
+  console.log("");
+
+  // Usage section
+  console.log(cyan(bold("◆ Usage")));
+  console.log(cyan("aichaku hooks [options]"));
+  console.log("");
+
+  // Options section
+  console.log(cyan(bold("◆ Options")));
+  console.log(`  • ${bold("--help")} - Show this help message`);
+  console.log(`  • ${bold("--list")} - Show available hook templates`);
+  console.log(`  • ${bold("--show")} - Show installed hooks`);
+  console.log(`  • ${bold("--install <set>")} - Install hook set (essential, productivity, security, github)`);
+  console.log(`  • ${bold("--install <names>")} - Install specific hooks (comma-separated)`);
+  console.log(`  • ${bold("--remove")} - Remove Aichaku hooks`);
+  console.log(`  • ${bold("--validate")} - Check hook configuration`);
+  console.log(`  • ${bold("--global")} - Use global settings (~/.claude/settings.json)`);
+  console.log(`  • ${bold("--local")} - Use local settings (.claude/settings.json)`);
+  console.log(`  • ${bold("--dry-run")} - Preview changes without making them`);
+  console.log("");
+
+  // Examples section
+  console.log(cyan(bold("◆ Examples")));
+  console.log("  aichaku hooks --install essential --global");
+  console.log("  aichaku hooks --install path-validator,code-review --local");
+  console.log("  aichaku hooks --show");
+  console.log("  aichaku hooks --list");
+
+  return Promise.resolve();
 }
 
 /**
  * Interactive hook selection (placeholder for now)
  */
 function interactiveHookSelection(_dryRun: boolean = false): void {
-  console.log("\n🪴 Aichaku Hook Manager\n");
-  console.log("Available commands:");
-  console.log(
-    ("  aichaku hooks --show              ") + "Show installed hooks",
-  );
-  console.log(
-    ("  aichaku hooks --list              ") + "Show available hook templates",
-  );
-  console.log(
-    ("  aichaku hooks --install <set>     ") +
-      "Install hook set (essential, productivity, security, github)",
-  );
-  console.log(
-    ("  aichaku hooks --install <names>   ") +
-      "Install specific hooks (comma-separated)",
-  );
-  console.log(
-    ("  aichaku hooks --remove            ") + "Remove Aichaku hooks",
-  );
-  console.log(
-    ("  aichaku hooks --validate          ") + "Check hook configuration",
-  );
-  console.log();
-  console.log("Options:");
-  console.log(
-    ("  --global                          ") +
-      "Use global settings (~/.claude/settings.json)",
-  );
-  console.log(
-    ("  --local                           ") +
-      "Use local settings (.claude/settings.json)",
-  );
-  console.log(
-    ("  --dry-run                         ") +
-      "Preview changes without making them",
-  );
-  console.log();
-  console.log("Examples:");
-  console.log("  aichaku hooks --install essential --global");
-  console.log("  aichaku hooks --install path-validator,code-review --local");
-  console.log("  aichaku hooks --show");
-  console.log();
-  console.log("Interactive selection coming soon!");
+  showHooksHelp();
 }
