@@ -8,55 +8,59 @@
  */
 export interface Principle {
   // Metadata
+  id: string;
   name: string;
-  category: PrincipleCategory;
+  category?: PrincipleCategory;
   description: string;
   aliases?: string[]; // Alternative names
 
   // Historical Context
-  history: {
-    origin: string; // When and where it originated
-    originators: string[]; // Key figures
-    evolution: string; // How it has evolved
-    significance: string; // Why it matters
+  history?: {
+    origin?: string; // When and where it originated
+    originators?: string[]; // Key figures
+    evolution?: string; // How it has evolved
+    significance?: string; // Why it matters
   };
 
   // Core content
-  summary: {
-    tagline: string; // One-line summary
-    core_tenets: Array<{
+  summary?: {
+    tagline?: string; // One-line summary
+    core_tenets?: Array<{
       text: string;
-      guidance: string;
+      guidance?: string;
     }>;
-    anti_patterns: Array<{
+    anti_patterns?: Array<{
       pattern: string;
       instead: string;
     }>;
     key_practices?: string[];
   };
 
+  // Integration URL for reference
+  integration_url?: string;
+
   // Guidance
-  guidance: {
-    spirit: string; // The underlying philosophy
-    questions_to_ask: string[]; // Self-check questions
-    when_to_apply: string[];
-    exceptions: string[];
-    common_mistakes: string[];
+  guidance?: {
+    spirit?: string; // The underlying philosophy
+    questions_to_ask?: string[]; // Self-check questions
+    when_to_apply?: string[];
+    exceptions?: string[];
+    common_mistakes?: string[];
   };
 
   // Examples
-  examples: {
-    good: Array<{
+  examples?: {
+    good?: Array<{
       description: string;
       code?: string;
       explanation: string;
     }>;
-    bad: Array<{
+    bad?: Array<{
       description: string;
       code?: string;
       problem: string;
     }>;
-    real_world: Array<{
+    real_world?: Array<{
       project: string;
       description: string;
       link?: string;
@@ -64,17 +68,17 @@ export interface Principle {
   };
 
   // Compatibility
-  compatibility: {
-    works_well_with: string[];
-    potential_conflicts: string[];
-    complements: string[];
+  compatibility?: {
+    works_well_with?: string[];
+    potential_conflicts?: string[];
+    complements?: string[];
   };
 
   // References
-  references: {
-    foundational: string[]; // Original texts/papers
-    modern: string[]; // Contemporary interpretations
-    tools: string[]; // Tools that embody the principle
+  references?: {
+    foundational?: string[]; // Original texts/papers
+    modern?: string[]; // Contemporary interpretations
+    tools?: string[]; // Tools that embody the principle
   };
 }
 
@@ -90,8 +94,7 @@ export type PrincipleCategory =
 /**
  * Principle with associated documentation
  */
-export interface PrincipleWithDocs {
-  data: Principle;
+export interface PrincipleWithDocs extends Principle {
   documentation: string; // Markdown content
   path: string; // File path
 }

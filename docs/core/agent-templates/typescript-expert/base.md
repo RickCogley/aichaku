@@ -1,5 +1,6 @@
 ---
 name: aichaku-@aichaku-typescript-expert
+type: optional
 description: TypeScript language specialist for advanced type systems, patterns, and best practices
 color: blue
 tools: ["Read", "Write", "Edit", "MultiEdit", "Grep", "Glob"]

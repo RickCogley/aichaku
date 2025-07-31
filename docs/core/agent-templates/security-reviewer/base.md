@@ -1,5 +1,6 @@
 ---
-name: @aichaku-security-reviewer
+name: aichaku-security-reviewer
+type: default
 description: InfoSec specialist for OWASP Top 10 and NIST-CSF compliance. Reviews code for security vulnerabilities, adds InfoSec annotations, and ensures compliance with selected security standards.
 examples:
   - context: User implements authentication

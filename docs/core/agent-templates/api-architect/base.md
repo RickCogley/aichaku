@@ -1,5 +1,6 @@
 ---
-name: @aichaku-api-architect
+name: aichaku-api-architect
+type: default
 description: API design and documentation specialist for REST, GraphQL, gRPC, and other API patterns. Ensures consistent, well-documented, and secure API interfaces across any technology stack.
 tools: ["Read", "Write", "Edit"]
 examples:

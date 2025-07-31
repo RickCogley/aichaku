@@ -109,8 +109,7 @@ async function createProjectStructure(
     "lean": ["experiment-plan.md"],
   };
 
-  const files =
-    methodologyFiles[methodology as keyof typeof methodologyFiles] || [];
+  const files = methodologyFiles[methodology as keyof typeof methodologyFiles] || [];
   for (const file of files) {
     await Deno.writeTextFile(
       join(activeDir, file),

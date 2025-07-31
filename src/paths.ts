@@ -27,6 +27,9 @@ export interface AichakuPaths {
     };
   };
 
+  // User agents path
+  userAgents: string;
+
   // Project paths (.claude/aichaku/)
   project: {
     root: string;
@@ -93,6 +96,9 @@ export function getAichakuPaths(): AichakuPaths {
         config: join(home, ".claude", "aichaku", "user", "config"),
       },
     },
+
+    // User agents path
+    userAgents: join(home, ".claude", "agents"),
 
     // Project paths - config in .claude/aichaku/, docs in docs/projects/
     project: {

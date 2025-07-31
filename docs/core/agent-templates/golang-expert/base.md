@@ -1,5 +1,6 @@
 ---
 name: aichaku-@aichaku-golang-expert
+type: optional
 description: Go language specialist for concurrent programming, performance optimization, and idiomatic Go patterns
 color: cyan
 tools: ["Read", "Write", "Edit", "Bash", "Grep", "Glob"]

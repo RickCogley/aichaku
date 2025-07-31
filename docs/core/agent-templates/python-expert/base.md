@@ -1,5 +1,6 @@
 ---
 name: aichaku-@aichaku-python-expert
+type: optional
 description: Python specialist for idiomatic code, async programming, testing, and performance optimization
 color: yellow
 tools: ["Read", "Write", "Edit", "MultiEdit", "Bash", "Grep"]

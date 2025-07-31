@@ -1,5 +1,6 @@
 ---
 name: aichaku-@aichaku-deno-expert
+type: optional
 description: Deno runtime and ecosystem specialist providing best practices and optimization guidance
 color: green
 tools: ["Read", "Write", "Edit", "Bash", "Grep", "Glob"]

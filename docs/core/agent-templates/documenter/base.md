@@ -1,5 +1,6 @@
 ---
-name: @aichaku-documenter
+name: aichaku-documenter
+type: default
 description: Documentation generation specialist that creates, merges, and maintains project documentation aligned with chosen standards. Handles documentation lifecycle from creation through project completion.
 tools: ["Read", "Write", "Edit", "MultiEdit"]
 examples:

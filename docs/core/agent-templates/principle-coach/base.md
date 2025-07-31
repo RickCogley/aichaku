@@ -1,5 +1,6 @@
 ---
-name: @aichaku-principle-coach
+name: aichaku-principle-coach
+type: default
 description: Software engineering principles specialist providing educational guidance, principle application advice, and architectural decision support based on established software engineering philosophies.
 tools: ["Read", "Write", "Edit", "Glob"]
 examples:

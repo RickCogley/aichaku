@@ -91,8 +91,9 @@ export async function checkVersionMatch(): Promise<VersionCheckResult> {
 /**
  * Display version check warning if needed
  * Non-blocking - just displays warning and continues
+ * @param _command - Optional command name (unused, for compatibility)
  */
-export async function displayVersionWarning(): Promise<void> {
+export async function displayVersionWarning(_command?: string): Promise<void> {
   try {
     const result = await checkVersionMatch();
 

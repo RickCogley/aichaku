@@ -38,10 +38,26 @@ export class PrincipleLoader {
   }
 
   /**
+   * Get unique categories from all principles
+   */
+  async getCategories(): Promise<string[]> {
+    const principles = await this.loadAll();
+    const categories = new Set<string>();
+
+    for (const principle of principles) {
+      if (principle.category) {
+        categories.add(principle.category);
+      }
+    }
+
+    return Array.from(categories).sort();
+  }
+
+  /**
    * Load all available principles
    */
-  async loadAll(): Promise<PrincipleWithDocs[]> {
-    const principles: PrincipleWithDocs[] = [];
+  async loadAll(): Promise<Principle[]> {
+    const principles: Principle[] = [];
 
     // Check if principles directory exists
     if (!await exists(this.principlesPath)) {
@@ -60,12 +76,20 @@ export class PrincipleLoader {
       // Find all YAML files in the category
       for await (const entry of expandGlob(`${categoryPath}/*.yaml`)) {
         if (entry.isFile) {
-          const principle = await this.loadPrincipleWithDocs(entry.path);
-          if (principle) {
+          const principleWithDocs = await this.loadPrincipleWithDocs(entry.path);
+          if (principleWithDocs) {
+            // Convert to Principle with required fields
+            const id = generatePrincipleId(principleWithDocs.name);
+            const principle: Principle = {
+              ...principleWithDocs,
+              id,
+              name: principleWithDocs.name,
+              description: principleWithDocs.description,
+              category: principleWithDocs.category,
+            };
             principles.push(principle);
             // Cache by generated ID for consistent lookups
-            const id = generatePrincipleId(principle.data.name);
-            this.cache.set(id, principle);
+            this.cache.set(id, principleWithDocs);
           }
         }
       }
@@ -77,10 +101,18 @@ export class PrincipleLoader {
   /**
    * Load a specific principle by ID
    */
-  async loadById(principleId: string): Promise<PrincipleWithDocs | null> {
+  async loadById(principleId: string): Promise<Principle | null> {
     // Check cache first
     if (this.cache.has(principleId)) {
-      return this.cache.get(principleId)!;
+      const principleWithDocs = this.cache.get(principleId)!;
+      const principle: Principle = {
+        ...principleWithDocs,
+        id: principleId,
+        name: principleWithDocs.name,
+        description: principleWithDocs.description,
+        category: principleWithDocs.category,
+      };
+      return principle;
     }
 
     // If not in cache, load all principles to populate cache
@@ -88,7 +120,15 @@ export class PrincipleLoader {
       await this.loadAll();
       // Check cache again after loading
       if (this.cache.has(principleId)) {
-        return this.cache.get(principleId)!;
+        const principleWithDocs = this.cache.get(principleId)!;
+        const principle: Principle = {
+          ...principleWithDocs,
+          id: principleId,
+          name: principleWithDocs.name,
+          description: principleWithDocs.description,
+          category: principleWithDocs.category,
+        };
+        return principle;
       }
     }
 
@@ -99,9 +139,16 @@ export class PrincipleLoader {
       if (await exists(yamlPath)) {
         const principle = await this.loadPrincipleWithDocs(yamlPath);
         if (principle) {
-          const id = generatePrincipleId(principle.data.name);
+          const id = generatePrincipleId(principle.name);
           this.cache.set(id, principle);
-          return principle;
+          const principleResult: Principle = {
+            ...principle,
+            id,
+            name: principle.name,
+            description: principle.description,
+            category: principle.category,
+          };
+          return principleResult;
         }
       }
     }
@@ -137,7 +184,7 @@ export class PrincipleLoader {
       }
 
       return {
-        data,
+        ...data,
         documentation,
         path: yamlPath,
       };
@@ -190,27 +237,29 @@ export class PrincipleLoader {
     lines.push(principle.description);
     lines.push("");
 
-    if (principle.summary.tagline) {
+    if (principle.summary?.tagline) {
       lines.push(`> ${principle.summary.tagline}`);
       lines.push("");
     }
 
     lines.push("## Core Tenets");
     lines.push("");
-    principle.summary.core_tenets.forEach((tenet) => {
+    principle.summary?.core_tenets?.forEach((tenet) => {
       lines.push(`- **${tenet.text}**`);
-      lines.push(`  ${tenet.guidance}`);
+      if (tenet.guidance) {
+        lines.push(`  ${tenet.guidance}`);
+      }
     });
     lines.push("");
 
-    if (principle.guidance.spirit) {
+    if (principle.guidance?.spirit) {
       lines.push("## Philosophy");
       lines.push("");
       lines.push(principle.guidance.spirit);
       lines.push("");
     }
 
-    if (principle.summary.anti_patterns.length > 0) {
+    if (principle.summary?.anti_patterns && principle.summary.anti_patterns.length > 0) {
       lines.push("## Anti-Patterns");
       lines.push("");
       principle.summary.anti_patterns.forEach((ap) => {
@@ -226,28 +275,27 @@ export class PrincipleLoader {
   /**
    * Get all principles for a specific category
    */
-  async getByCategory(category: PrincipleCategory): Promise<PrincipleWithDocs[]> {
+  async getByCategory(category: PrincipleCategory): Promise<Principle[]> {
     const allPrinciples = await this.loadAll();
-    return allPrinciples.filter((p) => p.data.category === category);
+    return allPrinciples.filter((p) => p.category === category);
   }
 
   /**
    * Search principles by keyword
    */
-  async search(query: string): Promise<PrincipleWithDocs[]> {
+  async search(query: string): Promise<Principle[]> {
     const lowerQuery = query.toLowerCase();
     const allPrinciples = await this.loadAll();
 
     return allPrinciples.filter((p) => {
-      const data = p.data;
       return (
-        data.name.toLowerCase().includes(lowerQuery) ||
-        data.description.toLowerCase().includes(lowerQuery) ||
-        data.summary.tagline.toLowerCase().includes(lowerQuery) ||
-        data.aliases?.some((alias) => alias.toLowerCase().includes(lowerQuery)) ||
-        data.summary.core_tenets.some((tenet) =>
+        p.name.toLowerCase().includes(lowerQuery) ||
+        p.description.toLowerCase().includes(lowerQuery) ||
+        p.summary?.tagline?.toLowerCase().includes(lowerQuery) ||
+        p.aliases?.some((alias) => alias.toLowerCase().includes(lowerQuery)) ||
+        p.summary?.core_tenets?.some((tenet) =>
           tenet.text.toLowerCase().includes(lowerQuery) ||
-          tenet.guidance.toLowerCase().includes(lowerQuery)
+          tenet.guidance?.toLowerCase().includes(lowerQuery)
         )
       );
     });

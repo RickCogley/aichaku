@@ -26,6 +26,9 @@ export interface AichakuConfig {
     selected: string[];
     customPrinciples?: Record<string, unknown>;
   };
+  agents?: {
+    selected: string[];
+  };
   config?: {
     outputPath?: string;
     enableHooks?: boolean;
@@ -340,6 +343,45 @@ export class ConfigManager {
   }
 
   /**
+   * Add agents to the project
+   */
+  async addAgents(agents: string[]): Promise<void> {
+    const config = this.get();
+    const current = config.agents?.selected || [];
+    const newAgents = agents.filter((a) => !current.includes(a));
+    if (newAgents.length > 0) {
+      await this.update({
+        ...config,
+        agents: {
+          selected: [...current, ...newAgents],
+        },
+      });
+    }
+  }
+
+  /**
+   * Remove agents from the project
+   */
+  async removeAgents(agents: string[]): Promise<void> {
+    const config = this.get();
+    const current = config.agents?.selected || [];
+    const updated = current.filter((a) => !agents.includes(a));
+    await this.update({
+      ...config,
+      agents: {
+        selected: updated,
+      },
+    });
+  }
+
+  /**
+   * Get selected agents
+   */
+  getSelectedAgents(): string[] {
+    return this.get().agents?.selected || [];
+  }
+
+  /**
    * Migrate configuration to latest format
    */
   private migrateConfig(rawConfig: unknown): AichakuConfig {
@@ -362,6 +404,9 @@ export class ConfigManager {
       principles?: {
         selected?: string[];
       };
+      agents?: {
+        selected?: string[];
+      };
       project?: {
         methodology?: string;
         created?: string;
@@ -381,6 +426,9 @@ export class ConfigManager {
         selected: [],
       },
       principles: {
+        selected: [],
+      },
+      agents: {
         selected: [],
       },
     };
@@ -412,6 +460,11 @@ export class ConfigManager {
     // Migrate principles if present
     if (typedConfig.principles?.selected) {
       config.principles!.selected = typedConfig.principles.selected;
+    }
+
+    // Migrate agents if present
+    if (typedConfig.agents?.selected) {
+      config.agents!.selected = typedConfig.agents.selected;
     }
 
     // Skip migrating project info - no longer needed

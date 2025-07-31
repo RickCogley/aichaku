@@ -1,5 +1,6 @@
 ---
-name: @aichaku-methodology-coach
+name: aichaku-methodology-coach
+type: default
 description: Adaptive methodology specialist that provides guidance based on active project methodologies. Dynamically loads expertise for Shape Up, Scrum, Lean, Kanban, and other methodologies as needed.
 tools: ["Read", "Write", "Edit", "Glob"]
 examples:

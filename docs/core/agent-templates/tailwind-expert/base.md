@@ -1,5 +1,6 @@
 ---
 name: aichaku-@aichaku-tailwind-expert
+type: optional
 description: Tailwind CSS specialist for utility-first design, responsive layouts, and component patterns
 color: cyan
 tools: ["Read", "Write", "Edit", "MultiEdit", "Glob"]

@@ -1,5 +1,6 @@
 ---
 name: aichaku-@aichaku-lume-expert
+type: optional
 description: Lume static site generator specialist for Deno-based websites, plugins, and data processing pipelines
 color: magenta
 tools: ["Read", "Write", "Edit", "MultiEdit", "Bash", "Glob"]

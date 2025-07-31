@@ -2,7 +2,8 @@
  * Help command for displaying methodology and standards information
  */
 
-import { STANDARD_CATEGORIES } from "./standards.ts";
+// import { STANDARD_CATEGORIES } from "./standards.ts";
+const STANDARD_CATEGORIES = ["development", "security", "architecture", "testing", "documentation", "devops"];
 import { Brand } from "../utils/branded-messages.ts";
 
 interface HelpOptions {

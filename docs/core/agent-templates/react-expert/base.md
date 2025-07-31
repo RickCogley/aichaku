@@ -1,5 +1,6 @@
 ---
 name: aichaku-@aichaku-react-expert
+type: optional
 description: React and Next.js specialist for component architecture, hooks, state management, and SSR/SSG patterns
 color: cyan
 tools: ["Read", "Write", "Edit", "MultiEdit", "Grep", "Glob"]

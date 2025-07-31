@@ -1,5 +1,6 @@
 ---
 name: code-explorer
+type: default
 description: Codebase discovery and analysis specialist that explores project structure, identifies patterns, and recommends appropriate specialized agents. Proactively scouts codebases to understand architecture and technology choices.
 tools: ["Read", "Grep", "Glob", "Bash", "LS"]
 examples:

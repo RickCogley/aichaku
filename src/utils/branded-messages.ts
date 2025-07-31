@@ -34,6 +34,12 @@ export class AichakuBrand {
   /** Brand name */
   static readonly NAME = "Aichaku";
 
+  /** Short name for version display */
+  static readonly shortName = "aichaku";
+
+  /** Brand tagline */
+  static readonly tagline = "🪴 Aichaku - Adaptive Methodology Support for Claude Code";
+
   /** Brand prefix for major operations */
   static readonly PREFIX = `${AichakuBrand.EMOJI} ${AichakuBrand.NAME}:`;
 
@@ -100,6 +106,14 @@ export class AichakuBrand {
    */
   static info(message: string): void {
     console.log(message);
+  }
+
+  /**
+   * Tip message - helpful guidance with lightbulb emoji
+   * @param message - Helpful tip or suggestion
+   */
+  static tip(message: string): void {
+    console.log(`💡 ${message}`);
   }
 
   /**
