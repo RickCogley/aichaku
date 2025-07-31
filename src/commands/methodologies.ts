@@ -126,15 +126,15 @@ const AVAILABLE_METHODOLOGIES: Record<string, Methodology> = {
  * Methodology loader implementation
  */
 class MethodologyLoader implements ItemLoader<Methodology> {
-  loadAll(): Promise<Methodology[]> {
+  loadAll(): Methodology[] {
     return Object.values(AVAILABLE_METHODOLOGIES);
   }
 
-  loadById(id: string): Promise<Methodology | null> {
+  loadById(id: string): Methodology | null {
     return AVAILABLE_METHODOLOGIES[id] || null;
   }
 
-  search(query: string): Promise<Methodology[]> {
+  search(query: string): Methodology[] {
     const lowerQuery = query.toLowerCase();
     const results: Methodology[] = [];
 
@@ -155,7 +155,7 @@ class MethodologyLoader implements ItemLoader<Methodology> {
     return results;
   }
 
-  getCategories(): Promise<string[]> {
+  getCategories(): string[] {
     const categories = new Set(Object.values(AVAILABLE_METHODOLOGIES).map((m) => m.category || "uncategorized"));
     return Array.from(categories).sort();
   }

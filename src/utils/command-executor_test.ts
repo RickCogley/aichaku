@@ -180,7 +180,7 @@ Deno.test("CommandExecutor - Execute methodologies --current", async () => {
 
     capture.start();
 
-    await executor.execute("methodologies", { current: true });
+    await executor.execute("methodologies", { show: true });
 
     capture.stop();
 

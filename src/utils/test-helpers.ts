@@ -208,9 +208,12 @@ export async function createTestProject(tempDir: string, options?: {
     project: {
       created: new Date().toISOString(),
       installedVersion: "0.39.4",
-      methodology: options?.methodology || "shape-up",
       type: "project",
       installationType: "local",
+    },
+    methodologies: {
+      selected: [options?.methodology || "shape-up"],
+      default: options?.methodology || "shape-up",
     },
     standards: {
       development: options?.standards || ["tdd"],

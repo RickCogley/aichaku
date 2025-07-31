@@ -25,10 +25,10 @@ export interface CommandOptions {
 }
 
 export interface ItemLoader<T extends ConfigItem> {
-  loadAll(): Promise<T[]>;
-  loadById(id: string): Promise<T | null>;
-  search(query: string): Promise<T[]>;
-  getCategories?(): Promise<string[]>;
+  loadAll(): T[] | Promise<T[]>;
+  loadById(id: string): T | null | Promise<T | null>;
+  search(query: string): T[] | Promise<T[]>;
+  getCategories?(): string[] | Promise<string[]>;
 }
 
 export interface ItemFormatter<T extends ConfigItem> {

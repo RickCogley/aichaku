@@ -44,6 +44,13 @@ interface ContextRequirements {
   principlesDefaults?: string[];
 }
 
+interface ConflictDefinition {
+  group: string;
+  exclusive: string[];
+  strategy: string;
+  message: string;
+}
+
 interface ParsedTemplate {
   yaml: {
     name: string;
@@ -190,7 +197,10 @@ function parseAgentTemplate(template: string): ParsedTemplate {
   if (yamlEndIndex > 0) {
     const yamlContent = lines.slice(1, yamlEndIndex).join("\n");
     try {
-      yaml = parseYaml(yamlContent);
+      const parsedYaml = parseYaml(yamlContent);
+      if (parsedYaml && typeof parsedYaml === "object") {
+        yaml = parsedYaml as AgentYaml;
+      }
     } catch (e) {
       console.warn("Failed to parse YAML frontmatter:", e);
     }
@@ -219,13 +229,6 @@ function parseContextRequirements(lines: string[]): ContextRequirements {
   let currentSubsection = "";
   let collectingList = false;
   let currentList: string[] = [];
-  interface ConflictDefinition {
-    group: string;
-    exclusive: string[];
-    strategy: string;
-    message: string;
-  }
-
   let currentConflict: ConflictDefinition | null = null;
   let conflicts: ConflictDefinition[] = [];
 
@@ -322,9 +325,13 @@ function parseConflictLine(line: string): Partial<ConflictDefinition> {
       const [key, value] = pair.split(":").map((s) => s.trim().replace(/,$/, ""));
       if (key === "exclusive") {
         // Parse array value
-        result[key] = value.replace(/[\[\]]/g, "").split(/\s+/);
-      } else {
-        result[key] = value.replace(/["']/g, "");
+        result.exclusive = value.replace(/[\[\]]/g, "").split(/\s+/);
+      } else if (key === "group") {
+        result.group = value.replace(/["']/g, "");
+      } else if (key === "strategy") {
+        result.strategy = value.replace(/["']/g, "");
+      } else if (key === "message") {
+        result.message = value.replace(/["']/g, "");
       }
     }
   }
@@ -367,7 +374,7 @@ function generateAgentWithFocusedContext(
   agentType: string,
   template: ParsedTemplate,
   options: AgentGenerationOptions,
-): Promise<string> {
+): string {
   const { yaml, content, contextRequirements } = template;
 
   // Determine which standards to include
@@ -444,7 +451,7 @@ function resolveContextItems(
   required: string[],
   defaults: string[],
   category: string,
-): Promise<string[]> {
+): string[] {
   const included = new Set<string>();
 
   // 1. Always include required items
@@ -488,7 +495,7 @@ function resolveContextItems(
 function generateFocusedStandardsYaml(
   standards: string[],
   conflicts?: Array<ConflictDefinition>,
-): Promise<string> {
+): string {
   if (standards.length === 0) return "";
 
   let yamlSection = `## Selected Standards
@@ -521,7 +528,7 @@ standards:`;
 /**
  * Generate focused methodology YAML section
  */
-function generateFocusedMethodologyYaml(methodologies: string[]): Promise<string> {
+function generateFocusedMethodologyYaml(methodologies: string[]): string {
   if (methodologies.length === 0) return "";
 
   let yamlSection = `## Active Methodologies
@@ -545,7 +552,7 @@ methodologies:`;
 function generateFocusedPrinciplesYaml(
   principles: string[],
   agentType: string,
-): Promise<string> {
+): string {
   if (principles.length === 0) return "";
 
   let yamlSection = `## Relevant Principles
@@ -624,13 +631,14 @@ function formatYamlFrontmatter(yaml: YamlFrontmatter): string {
   let yamlStr = "";
 
   // Add properties in specific order
-  const orderedProps = ["name", "type", "description", "color", "methodology_aware", "tools"];
+  const orderedProps = ["name", "type", "description", "color", "methodology_aware", "tools"] as const;
   for (const prop of orderedProps) {
-    if (yaml[prop] !== undefined) {
-      if (typeof yaml[prop] === "string") {
-        yamlStr += `${prop}: ${yaml[prop]}\n`;
+    const value = yaml[prop];
+    if (value !== undefined) {
+      if (typeof value === "string") {
+        yamlStr += `${prop}: ${value}\n`;
       } else {
-        yamlStr += `${prop}: ${JSON.stringify(yaml[prop])}\n`;
+        yamlStr += `${prop}: ${JSON.stringify(value)}\n`;
       }
     }
   }

@@ -39,7 +39,7 @@ export class AgentsCommand extends BaseCommand<Agent> {
     });
   }
 
-  protected override handleCustomOperation(_args: ParsedArgs): Promise<boolean> {
+  protected override handleCustomOperation(_args: ParsedArgs): boolean {
     // All standard operations are handled by BaseCommand
     // Return false to let BaseCommand handle standard operations
     return false;

@@ -17,27 +17,31 @@ export class AgentLoader {
   /**
    * Load all available agents (required by ItemLoader interface)
    */
-  loadAll(): Promise<Agent[]> {
+  loadAll(): Agent[] {
     return this.list();
   }
 
   /**
    * List all available agents
    */
-  async list(): Promise<Agent[]> {
+  list(): Agent[] {
     const agents: Agent[] = [];
 
     try {
-      // Read all directories in agent-templates
-      for await (const entry of Deno.readDir(this.templatesPath)) {
+      // Read all directories in agent-templates synchronously
+      for (const entry of Deno.readDirSync(this.templatesPath)) {
         if (!entry.isDirectory) continue;
 
         const templatePath = join(this.templatesPath, entry.name, "base.md");
-        if (!(await exists(templatePath))) continue;
-
-        const agent = await this.loadAgent(entry.name);
-        if (agent) {
-          agents.push(agent);
+        try {
+          Deno.statSync(templatePath); // Check if file exists
+          const agent = this.loadAgentSync(entry.name);
+          if (agent) {
+            agents.push(agent);
+          }
+        } catch {
+          // File doesn't exist, skip
+          continue;
         }
       }
     } catch (error) {
@@ -56,22 +60,22 @@ export class AgentLoader {
   /**
    * Load a specific agent by name
    */
-  load(name: string): Promise<Agent | null> {
-    return this.loadAgent(name);
+  load(name: string): Agent | null {
+    return this.loadAgentSync(name);
   }
 
   /**
    * Load a specific agent by id (same as by name for agents)
    */
-  loadById(id: string): Promise<Agent | null> {
-    return this.loadAgent(id);
+  loadById(id: string): Agent | null {
+    return this.loadAgentSync(id);
   }
 
   /**
    * Search agents by keyword
    */
-  async search(keyword: string): Promise<Agent[]> {
-    const allAgents = await this.list();
+  search(keyword: string): Agent[] {
+    const allAgents = this.list();
     const lowerKeyword = keyword.toLowerCase();
 
     return allAgents.filter((agent) =>
@@ -85,16 +89,16 @@ export class AgentLoader {
   /**
    * Get agents by type
    */
-  async getByType(type: "default" | "optional"): Promise<Agent[]> {
-    const allAgents = await this.list();
+  getByType(type: "default" | "optional"): Agent[] {
+    const allAgents = this.list();
     return allAgents.filter((agent) => agent.type === type);
   }
 
-  private async loadAgent(name: string): Promise<Agent | null> {
+  private loadAgentSync(name: string): Agent | null {
     const templatePath = join(this.templatesPath, name, "base.md");
 
     try {
-      const content = await Deno.readTextFile(templatePath);
+      const content = Deno.readTextFileSync(templatePath);
 
       // Extract YAML frontmatter
       const yamlMatch = content.match(/^---\n([\s\S]+?)\n---/);

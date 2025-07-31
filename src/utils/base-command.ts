@@ -66,12 +66,12 @@ export abstract class BaseCommand<T extends ConfigItem> {
       }
 
       if (args.createCustom) {
-        await this.handleCreateCustom(args);
+        this.handleCreateCustom(args);
         return;
       }
 
       // Additional operations can be handled by subclasses
-      if (await this.handleCustomOperation(args)) {
+      if (this.handleCustomOperation(args)) {
         return;
       }
 
@@ -95,7 +95,7 @@ export abstract class BaseCommand<T extends ConfigItem> {
       throw new Error(`List operation not supported for ${this.definition.name}`);
     }
 
-    const items = await this.definition.loader.loadAll();
+    const items = await Promise.resolve(this.definition.loader.loadAll());
 
     // Filter by category if specified
     const filteredItems = args.category ? items.filter((item) => item.category === args.category) : items;
@@ -118,7 +118,7 @@ export abstract class BaseCommand<T extends ConfigItem> {
         throw new Error(`Show details operation not supported for ${this.definition.name}`);
       }
 
-      const item = await this.definition.loader.loadById(args.show);
+      const item = await Promise.resolve(this.definition.loader.loadById(args.show));
       if (!item) {
         Brand.error(`${this.definition.name.slice(0, -1)} '${args.show}' not found`);
         Brand.tip(`Use 'aichaku ${this.definition.name} --list' to see available items`);
@@ -149,7 +149,7 @@ export abstract class BaseCommand<T extends ConfigItem> {
     // Validate all items exist
     const validItems: T[] = [];
     for (const id of ids) {
-      const item = await this.definition.loader.loadById(id);
+      const item = await Promise.resolve(this.definition.loader.loadById(id));
       if (!item) {
         Brand.error(`Unknown ${this.definition.name.slice(0, -1)}: ${id}`);
         Brand.tip(`Use 'aichaku ${this.definition.name} --list' to see available items`);
@@ -233,7 +233,7 @@ export abstract class BaseCommand<T extends ConfigItem> {
       throw new Error(`Search operation not supported for ${this.definition.name}`);
     }
 
-    const results = await this.definition.loader.search(args.search);
+    const results = await Promise.resolve(this.definition.loader.search(args.search));
 
     if (results.length === 0) {
       Brand.log(`No ${this.definition.name} found matching "${args.search}"`);
@@ -281,14 +281,14 @@ Run \`aichaku init\` to initialize project with ${this.definition.name} selectio
   /**
    * Handle create custom operation (optional, override in subclasses)
    */
-  protected handleCreateCustom(_args: ParsedArgs): Promise<void> {
+  protected handleCreateCustom(_args: ParsedArgs): void {
     Brand.log(`Custom ${this.definition.name} creation not yet supported`);
   }
 
   /**
    * Handle custom operations specific to each command (override in subclasses)
    */
-  protected handleCustomOperation(_args: ParsedArgs): Promise<boolean> {
+  protected handleCustomOperation(_args: ParsedArgs): boolean {
     return false; // Not handled
   }
 
