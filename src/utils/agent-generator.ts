@@ -229,7 +229,7 @@ function parseContextRequirements(lines: string[]): ContextRequirements {
   let currentSubsection = "";
   let collectingList = false;
   let currentList: string[] = [];
-  let currentConflict: ConflictDefinition | null = null;
+  let currentConflict: Partial<ConflictDefinition> | null = null;
   let conflicts: ConflictDefinition[] = [];
 
   for (const line of lines) {
@@ -275,7 +275,7 @@ function parseContextRequirements(lines: string[]): ContextRequirements {
       if (currentSubsection === "Standards Conflicts") {
         if (item.startsWith("group:")) {
           // Start of a new conflict definition
-          if (currentConflict) {
+          if (currentConflict && isCompleteConflict(currentConflict)) {
             conflicts.push(currentConflict);
           }
           currentConflict = parseConflictLine(item);
@@ -302,7 +302,7 @@ function parseContextRequirements(lines: string[]): ContextRequirements {
   if (collectingList && currentList.length > 0) {
     saveList(requirements, currentSubsection, currentList);
   }
-  if (currentConflict) {
+  if (currentConflict && isCompleteConflict(currentConflict)) {
     conflicts.push(currentConflict);
   }
   if (conflicts.length > 0) {
@@ -310,6 +310,13 @@ function parseContextRequirements(lines: string[]): ContextRequirements {
   }
 
   return requirements;
+}
+
+/**
+ * Check if a partial conflict definition is complete
+ */
+function isCompleteConflict(conflict: Partial<ConflictDefinition>): conflict is ConflictDefinition {
+  return !!(conflict.group && conflict.exclusive && conflict.strategy && conflict.message);
 }
 
 /**

@@ -401,15 +401,16 @@ try {
       break;
     }
     case "learn": {
+      const item = args._[1] as string | undefined;
       const learnOptions = {
         methodologies: args.methodologies as boolean | undefined,
         standards: args.standards as boolean | undefined,
         categories: args.categories as boolean | undefined,
         search: args.search as string | undefined,
         principles: args.principles as boolean | undefined,
+        topic: item,
       };
-      const item = args._[1] as string | undefined;
-      await learn(item, learnOptions);
+      await learn(learnOptions);
       break;
     }
     case "hooks": {
@@ -439,7 +440,7 @@ try {
     }
 
     case "test-principles": {
-      await testPrinciples();
+      await testPrinciples({});
       break;
     }
     case "merge-docs": {
@@ -465,7 +466,11 @@ try {
         quiet: args.quiet as boolean | undefined,
         fix: args.fix as boolean | undefined,
       };
-      await runMCPCommand(mcpSubcommand, mcpOptions);
+      const combinedOptions = {
+        ...mcpOptions,
+        subcommand: mcpSubcommand,
+      };
+      await runMCPCommand(combinedOptions);
       break;
     }
     case "migrate": {
@@ -479,7 +484,7 @@ try {
         check: args.check as boolean | undefined,
       };
       const migrateCommand = createMigrateCommand();
-      await migrateCommand.execute(migrateOptions);
+      await (migrateCommand as any).execute(migrateOptions);
       break;
     }
     case "review": {
@@ -496,12 +501,16 @@ try {
         methodologies: args.methodologies as boolean | undefined,
         projectPath: args.path as string | undefined,
       };
-      await runReviewCommand(reviewFiles, reviewOptions);
+      await runReviewCommand(reviewOptions, reviewFiles);
       break;
     }
     case "github": {
       const subcommand = args._[1] as string | undefined;
-      await runGitHubCommand(subcommand, args);
+      const githubOptions = {
+        subcommand,
+        help: args.help as boolean | undefined,
+      };
+      await runGitHubCommand(githubOptions, args._.slice(1).map(String));
       break;
     }
     case "cleanup": {

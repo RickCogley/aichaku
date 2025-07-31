@@ -71,7 +71,7 @@ export abstract class BaseCommand<T extends ConfigItem> {
       }
 
       // Additional operations can be handled by subclasses
-      if (this.handleCustomOperation(args)) {
+      if (await this.handleCustomOperation(args)) {
         return;
       }
 
@@ -288,7 +288,7 @@ Run \`aichaku init\` to initialize project with ${this.definition.name} selectio
   /**
    * Handle custom operations specific to each command (override in subclasses)
    */
-  protected handleCustomOperation(_args: ParsedArgs): boolean {
+  protected handleCustomOperation(_args: ParsedArgs): boolean | Promise<boolean> {
     return false; // Not handled
   }
 

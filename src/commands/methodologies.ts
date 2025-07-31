@@ -440,23 +440,23 @@ export const methodologiesCommand = new MethodologiesCommand();
 export async function methodologies(options: Record<string, unknown> = {}): Promise<void> {
   // Convert old-style options to ParsedArgs format
   const parsedArgs: ParsedArgs = {
-    list: options.list,
-    show: options.show,
-    add: Array.isArray(options.add) ? options.add.join(",") : options.add,
-    remove: Array.isArray(options.remove) ? options.remove.join(",") : options.remove,
-    search: options.search,
+    list: options.list as boolean | undefined,
+    show: options.show as boolean | string | undefined,
+    add: Array.isArray(options.add) ? options.add.join(",") : options.add as string | undefined,
+    remove: Array.isArray(options.remove) ? options.remove.join(",") : options.remove as string | undefined,
+    search: options.search as string | undefined,
     current: false, // Not used by methodologies
-    projectPath: options.projectPath,
-    dryRun: options.dryRun,
-    verbose: options.verbose,
+    projectPath: options.projectPath as string | undefined,
+    dryRun: options.dryRun as boolean | undefined,
+    verbose: options.verbose as boolean | undefined,
     categories: false, // Not used by methodologies
     help: false,
     createCustom: undefined,
     deleteCustom: undefined,
     editCustom: undefined,
     copyCustom: undefined,
-    set: Array.isArray(options.set) ? options.set.join(",") : options.set,
-    reset: options.reset,
+    set: Array.isArray(options.set) ? options.set.join(",") : options.set as string | undefined,
+    reset: options.reset as boolean | undefined,
     clear: false, // Not used by methodologies
     compatibility: undefined,
     category: undefined,
