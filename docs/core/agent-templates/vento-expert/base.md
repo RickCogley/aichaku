@@ -1,5 +1,5 @@
 ---
-name: aichaku-@aichaku-vento-expert
+name: aichaku-vento-expert
 type: optional
 description: Vento template engine specialist for fast, simple templating with powerful features and minimal syntax
 color: green

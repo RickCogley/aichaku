@@ -1,5 +1,5 @@
 ---
-name: aichaku-@aichaku-deno-expert
+name: aichaku-deno-expert
 type: optional
 description: Deno runtime and ecosystem specialist providing best practices and optimization guidance
 color: green

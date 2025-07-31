@@ -1,5 +1,5 @@
 ---
-name: orchestrator
+name: aichaku-orchestrator
 type: default
 description: General workflow coordinator for all aichaku projects, managing task routing and project lifecycle. Routes work to appropriate specialists and ensures smooth handoffs.
 examples:

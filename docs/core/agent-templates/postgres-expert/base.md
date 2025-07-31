@@ -1,5 +1,5 @@
 ---
-name: aichaku-@aichaku-postgres-expert
+name: aichaku-postgres-expert
 type: optional
 description: PostgreSQL specialist for database design, query optimization, and advanced PostgreSQL features
 color: blue

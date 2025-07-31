@@ -1,5 +1,5 @@
 ---
-name: aichaku-@aichaku-typescript-expert
+name: aichaku-typescript-expert
 type: optional
 description: TypeScript language specialist for advanced type systems, patterns, and best practices
 color: blue

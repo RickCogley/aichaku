@@ -1,5 +1,5 @@
 ---
-name: aichaku-@aichaku-python-expert
+name: aichaku-python-expert
 type: optional
 description: Python specialist for idiomatic code, async programming, testing, and performance optimization
 color: yellow
