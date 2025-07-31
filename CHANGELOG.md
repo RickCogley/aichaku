@@ -5,6 +5,17 @@ All notable changes to aichaku (愛着) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.40.1] - 2025-07-31
+
+### Changed
+
+- remove accidentally committed nested .claude/aichaku directory (5bb9aaa)
+
+### Fixed
+
+- update hooks command to use consistent branding (3096355)
+- path resolution and branding consistency issues (e97af71)
+
 ## [0.40.0] - 2025-07-31
 
 ### Added
