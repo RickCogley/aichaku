@@ -23,7 +23,7 @@ export class CommandExecutor {
     switch (commandName) {
       case "methodologies": {
         const { methodologies } = await import("../commands/methodologies.ts");
-        await methodologies(options);
+        await methodologies(options as Record<string, unknown>);
         break;
       }
       case "standards": {

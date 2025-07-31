@@ -9,50 +9,50 @@ technology_focus: lume
 examples:
   - context: User wants to create a Lume website
     user: "I need to set up a blog with Lume"
-    assistant: "I'll use the aichaku-@aichaku-lume-expert to create a Lume blog with best practices"
+    assistant: "I'll use the @aichaku-lume-expert to create a Lume blog with best practices"
     commentary: Lume provides powerful blogging features with markdown and front matter
   - context: User needs custom Lume plugin
     user: "How do I create a plugin to process my markdown files?"
-    assistant: "Let me consult the aichaku-@aichaku-lume-expert to build a custom Lume plugin"
+    assistant: "Let me consult the @aichaku-lume-expert to build a custom Lume plugin"
     commentary: Lume's plugin system allows powerful transformations of content and assets
   - context: User wants data processing
     user: "I need to generate pages from a JSON data file"
-    assistant: "I'll use the aichaku-@aichaku-lume-expert to implement data-driven page generation"
+    assistant: "I'll use the @aichaku-lume-expert to implement data-driven page generation"
     commentary: Lume excels at generating pages from structured data sources
   - context: User needs multilingual site
     user: "How do I set up a multilingual website with Lume?"
-    assistant: "Let me use the aichaku-@aichaku-lume-expert to configure internationalization"
+    assistant: "Let me use the @aichaku-lume-expert to configure internationalization"
     commentary: Lume has built-in support for multilingual sites with URL strategies
   - context: User wants asset optimization
     user: "I need to optimize images and CSS in my Lume site"
-    assistant: "I'll use the aichaku-@aichaku-lume-expert to set up asset optimization pipeline"
+    assistant: "I'll use the @aichaku-lume-expert to set up asset optimization pipeline"
     commentary: Lume can process and optimize assets during the build process
   - context: User needs pagination
     user: "How do I paginate my blog posts in Lume?"
-    assistant: "Let me consult the aichaku-@aichaku-lume-expert for pagination strategies"
+    assistant: "Let me consult the @aichaku-lume-expert for pagination strategies"
     commentary: Lume provides flexible pagination with customizable URLs and templates
   - context: User wants search functionality
     user: "I want to add search to my static Lume site"
-    assistant: "I'll use the aichaku-@aichaku-lume-expert to implement client-side search"
+    assistant: "I'll use the @aichaku-lume-expert to implement client-side search"
     commentary: Static site search requires pre-built indexes and client-side JavaScript
   - context: User needs deployment setup
     user: "How do I deploy my Lume site to Deno Deploy?"
-    assistant: "Let me use the aichaku-@aichaku-lume-expert to configure Deno Deploy"
+    assistant: "Let me use the @aichaku-lume-expert to configure Deno Deploy"
     commentary: Lume sites can be deployed to various platforms including Deno Deploy
   - context: User wants component system
     user: "I need reusable components in my Lume templates"
-    assistant: "I'll use the aichaku-@aichaku-lume-expert to implement a component system"
+    assistant: "I'll use the @aichaku-lume-expert to implement a component system"
     commentary: Lume supports components through various template engines
   - context: User needs build performance
     user: "My Lume site is building too slowly"
-    assistant: "Let me consult the aichaku-@aichaku-lume-expert to optimize build performance"
+    assistant: "Let me consult the @aichaku-lume-expert to optimize build performance"
     commentary: Lume build optimization involves caching and selective processing
 delegations:
   - trigger: Vento template syntax needed
-    target: aichaku-@aichaku-vento-expert
+    target: "@aichaku-vento-expert"
     handoff: "Create Vento templates for Lume site: {template_requirements}"
   - trigger: Deno-specific features needed
-    target: aichaku-@aichaku-deno-expert
+    target: "@aichaku-deno-expert"
     handoff: "Implement Deno features in Lume: {deno_requirements}"
 ---
 
@@ -341,7 +341,7 @@ site.preprocess([".html"], async (page) => {
   // Generate pages from data files
   if (page.src.path === "/products/index.html") {
     const products = page.data.products as Product[];
-    
+
     for (const product of products) {
       site.pages.push({
         url: `/products/${product.slug}/`,
@@ -366,7 +366,7 @@ products:
     images:
       - url: "/img/product1-1.jpg"
         alt: "Product One view 1"
-      - url: "/img/product1-2.jpg"  
+      - url: "/img/product1-2.jpg"
         alt: "Product One view 2"
 ```
 
@@ -426,12 +426,12 @@ nav:
       <li><a href="{{ '/about/' | url }}">{{ nav.about }}</a></li>
       <li><a href="{{ '/contact/' | url }}">{{ nav.contact }}</a></li>
     </ul>
-    
+
     <!-- Language switcher -->
     <ul class="lang-switcher">
       {{ for lang of site.languages }}
         <li>
-          <a href="{{ url | lang(lang) }}" 
+          <a href="{{ url | lang(lang) }}"
              {{ if lang === page.lang }}class="active"{{ /if }}>
             {{ lang }}
           </a>
@@ -439,7 +439,7 @@ nav:
       {{ /for }}
     </ul>
   </nav>
-  
+
   {{ content }}
 </body>
 </html>
@@ -542,11 +542,11 @@ pagination:
   {{ if pagination.previous }}
     <a href="{{ pagination.previous }}" rel="prev">← Newer posts</a>
   {{ /if }}
-  
+
   <span class="page-info">
     Page {{ pagination.page }} of {{ pagination.totalPages }}
   </span>
-  
+
   {{ if pagination.next }}
     <a href="{{ pagination.next }}" rel="next">Older posts →</a>
   {{ /if }}
@@ -681,11 +681,11 @@ site.preprocess([".html", ".md"], async (page) => {
     page.content = page.content.replace(
       `<img src="${img.src}"`,
       `<picture>
-        <source srcset="${srcset.join(", ")}" 
-                sizes="(max-width: 640px) 100vw, 
-                       (max-width: 1024px) 50vw, 
+        <source srcset="${srcset.join(", ")}"
+                sizes="(max-width: 640px) 100vw,
+                       (max-width: 1024px) 50vw,
                        33vw">
-        <img src="${img.src}" 
+        <img src="${img.src}"
              loading="lazy"
              alt="${img.alt}">`,
     );

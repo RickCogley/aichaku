@@ -38,7 +38,7 @@ export interface ItemFormatter<T extends ConfigItem> {
   formatCategories?(categories: string[]): string;
 }
 
-export type ConfigKey = "methodologies" | "standards" | "principles" | "patterns";
+export type ConfigKey = "methodologies" | "standards" | "principles" | "patterns" | "agents";
 
 export interface CommandDefinition<T extends ConfigItem> {
   name: string;

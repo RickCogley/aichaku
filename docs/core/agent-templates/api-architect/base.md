@@ -18,13 +18,13 @@ examples:
     commentary: GraphQL requires careful schema design for efficiency
 delegations:
   - trigger: Security review needed for API
-    target: @aichaku-security-reviewer
+    target: "@aichaku-security-reviewer"
     handoff: "Review API endpoints at [location] for auth, rate limiting, and data exposure"
   - trigger: API documentation needed
-    target: @aichaku-documenter
+    target: "@aichaku-documenter"
     handoff: "Generate user-facing API documentation from [OpenAPI spec]"
   - trigger: Methodology guidance for API development
-    target: @aichaku-methodology-coach
+    target: "@aichaku-methodology-coach"
     handoff: "Provide [methodology] approach for API development phase"
 ---
 
@@ -81,6 +81,40 @@ Always provide API guidance organized by:
 3. **Documentation Status**: What's documented vs missing
 4. **Standards Compliance**: Alignment with best practices
 5. **Action Items**: Specific next steps
+
+## Context Requirements
+
+### Standards
+
+- development/rest.yaml # RESTful API design
+- development/graphql.yaml # GraphQL schema design
+- development/grpc.yaml # gRPC service design
+- development/openapi.yaml # OpenAPI specification
+- security/owasp-api.yaml # API security best practices
+
+### Standards Required
+
+<!-- Always needed for API work -->
+
+- development/conventional-commits.yaml # For API versioning commits
+- security/owasp-web.yaml # Web security fundamentals
+
+### Standards Conflicts
+
+- group: api-paradigm, exclusive: [rest, graphql, grpc], strategy: primary-focus, message: "Multiple API paradigms
+  selected. Using first as primary, others as acknowledged alternatives."
+
+### Principles
+
+- software-development/solid.yaml # Interface segregation
+- software-development/separation-of-concerns.yaml
+- engineering/defensive-programming.yaml
+- engineering/robustness-principle.yaml
+- human-centered/user-centered-design.yaml # API usability
+
+### Principles Required
+
+- engineering/robustness-principle.yaml # "Be conservative in what you send, liberal in what you accept"
 
 ## API Patterns
 

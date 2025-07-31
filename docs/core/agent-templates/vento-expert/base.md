@@ -9,50 +9,50 @@ technology_focus: vento
 examples:
   - context: User needs Vento template basics
     user: "How do I create templates with variables and loops in Vento?"
-    assistant: "I'll use the aichaku-@aichaku-vento-expert to show you Vento's template syntax"
+    assistant: "I'll use the @aichaku-vento-expert to show you Vento's template syntax"
     commentary: Vento uses a clean, minimal syntax inspired by Nunjucks and Liquid
   - context: User wants template inheritance
     user: "I need to set up a base layout with extending templates"
-    assistant: "Let me consult the aichaku-@aichaku-vento-expert for Vento layout patterns"
+    assistant: "Let me consult the @aichaku-vento-expert for Vento layout patterns"
     commentary: Vento supports powerful template inheritance with blocks
   - context: User needs custom filters
     user: "How do I create custom filters for data transformation?"
-    assistant: "I'll use the aichaku-@aichaku-vento-expert to implement custom Vento filters"
+    assistant: "I'll use the @aichaku-vento-expert to implement custom Vento filters"
     commentary: Vento allows extending functionality through custom filters and functions
   - context: User wants conditionals
     user: "I need complex conditional logic in my templates"
-    assistant: "Let me use the aichaku-@aichaku-vento-expert for Vento conditional syntax"
+    assistant: "Let me use the @aichaku-vento-expert for Vento conditional syntax"
     commentary: Vento provides clean if/else syntax with powerful expressions
   - context: User needs template includes
     user: "How do I include partial templates with data?"
-    assistant: "I'll use the aichaku-@aichaku-vento-expert to implement template composition"
+    assistant: "I'll use the @aichaku-vento-expert to implement template composition"
     commentary: Vento supports includes with data passing for modular templates
   - context: User wants async data
     user: "Can I use async functions in Vento templates?"
-    assistant: "Let me consult the aichaku-@aichaku-vento-expert for async template patterns"
+    assistant: "Let me consult the @aichaku-vento-expert for async template patterns"
     commentary: Vento supports async operations natively in templates
   - context: User needs template caching
     user: "How do I optimize Vento template performance?"
-    assistant: "I'll use the aichaku-@aichaku-vento-expert to implement template caching"
+    assistant: "I'll use the @aichaku-vento-expert to implement template caching"
     commentary: Vento compiles templates for optimal runtime performance
   - context: User wants JavaScript in templates
     user: "I need to execute JavaScript code within my templates"
-    assistant: "Let me use the aichaku-@aichaku-vento-expert for JavaScript integration"
+    assistant: "Let me use the @aichaku-vento-expert for JavaScript integration"
     commentary: Vento allows safe JavaScript execution with template literals
   - context: User needs error handling
     user: "How do I handle errors gracefully in Vento templates?"
-    assistant: "I'll use the aichaku-@aichaku-vento-expert to implement error handling"
+    assistant: "I'll use the @aichaku-vento-expert to implement error handling"
     commentary: Vento provides ways to catch and handle template errors
   - context: User wants template debugging
     user: "My Vento templates aren't rendering correctly"
-    assistant: "Let me consult the aichaku-@aichaku-vento-expert for debugging techniques"
+    assistant: "Let me consult the @aichaku-vento-expert for debugging techniques"
     commentary: Vento offers debugging features to troubleshoot template issues
 delegations:
   - trigger: Lume integration needed
-    target: aichaku-@aichaku-lume-expert
+    target: "@aichaku-lume-expert"
     handoff: "Integrate Vento templates with Lume site: {integration_requirements}"
   - trigger: Complex data processing
-    target: aichaku-@aichaku-typescript-expert
+    target: "@aichaku-typescript-expert"
     handoff: "Process data for Vento templates: {data_requirements}"
 ---
 
@@ -216,7 +216,7 @@ You are a Vento template engine specialist, focused on creating fast, maintainab
 
 ```vento
 {# components/button.vto #}
-<button 
+<button
   class="btn {{ class }} {{ if variant }}btn-{{ variant }}{{ /if }}"
   {{ if disabled }}disabled{{ /if }}
 >
@@ -288,7 +288,7 @@ vento.filters.truncate = (str, length = 50) => {
 {# Search results with highlighting #}
 <div class="search-results">
 {{ for result of searchResults }}
-  <article 
+  <article
     data-category="{{ result.category }}"
     data-tags="{{ result.tags |> join(",") }}"
   >
@@ -376,7 +376,7 @@ export const FEATURES = {{ features |> jsonStringify |> safe }} as const;
   <div class="user-profile">
     <img src="{{ userData.avatar }}" alt="{{ userData.name }}">
     <h2>{{ userData.name }}</h2>
-    
+
     {# Fetch related data asynchronously #}
     {{ set posts = await fetchUserPosts(userData.id) }}
     <section class="user-posts">

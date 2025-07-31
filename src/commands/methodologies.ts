@@ -6,10 +6,10 @@
  */
 
 import { BaseCommand } from "../utils/base-command.ts";
-import { printFormatted } from "../utils/terminal-formatter.ts";
 import { AichakuBrand as Brand } from "../utils/branded-messages.ts";
 import type { CommandDefinition, ConfigItem, ItemFormatter, ItemLoader } from "../types/command.ts";
 import type { ParsedArgs } from "../utils/argument-parser.ts";
+import type { ConfigManager } from "../utils/config-manager.ts";
 
 /**
  * Methodology item extending ConfigItem
@@ -126,15 +126,15 @@ const AVAILABLE_METHODOLOGIES: Record<string, Methodology> = {
  * Methodology loader implementation
  */
 class MethodologyLoader implements ItemLoader<Methodology> {
-  async loadAll(): Promise<Methodology[]> {
+  loadAll(): Promise<Methodology[]> {
     return Object.values(AVAILABLE_METHODOLOGIES);
   }
 
-  async loadById(id: string): Promise<Methodology | null> {
+  loadById(id: string): Promise<Methodology | null> {
     return AVAILABLE_METHODOLOGIES[id] || null;
   }
 
-  async search(query: string): Promise<Methodology[]> {
+  search(query: string): Promise<Methodology[]> {
     const lowerQuery = query.toLowerCase();
     const results: Methodology[] = [];
 
@@ -406,7 +406,7 @@ class MethodologiesCommand extends BaseCommand<Methodology> {
   /**
    * Add methodologies to configuration
    */
-  protected override async addItemsToConfig(configManager: any, ids: string[]): Promise<void> {
+  protected override async addItemsToConfig(configManager: ConfigManager, ids: string[]): Promise<void> {
     const current = configManager.getMethodologies();
     const newMethodologies = [...new Set([...current, ...ids])];
     await configManager.setMethodologies(newMethodologies);
@@ -415,7 +415,7 @@ class MethodologiesCommand extends BaseCommand<Methodology> {
   /**
    * Remove methodologies from configuration
    */
-  protected override async removeItemsFromConfig(configManager: any, ids: string[]): Promise<void> {
+  protected override async removeItemsFromConfig(configManager: ConfigManager, ids: string[]): Promise<void> {
     const current = configManager.getMethodologies();
     const remaining = current.filter((m: string) => !ids.includes(m));
     await configManager.setMethodologies(remaining);
@@ -424,7 +424,7 @@ class MethodologiesCommand extends BaseCommand<Methodology> {
   /**
    * Get selected methodologies from configuration
    */
-  protected override getSelectedItems(configManager: any): string[] {
+  protected override getSelectedItems(configManager: ConfigManager): string[] {
     return configManager.getMethodologies();
   }
 }
@@ -437,7 +437,7 @@ export const methodologiesCommand = new MethodologiesCommand();
 /**
  * Main entry point for methodologies command (for backwards compatibility)
  */
-export async function methodologies(options: any = {}): Promise<void> {
+export async function methodologies(options: Record<string, unknown> = {}): Promise<void> {
   // Convert old-style options to ParsedArgs format
   const parsedArgs: ParsedArgs = {
     list: options.list,

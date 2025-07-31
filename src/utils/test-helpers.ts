@@ -114,21 +114,21 @@ export class ConsoleCapture {
   start(): void {
     this.outputs = [];
 
-    console.log = (...args: any[]) => {
+    console.log = (...args: unknown[]) => {
       this.outputs.push({
         type: "log",
         message: args.map((arg) => typeof arg === "string" ? arg : JSON.stringify(arg)).join(" "),
       });
     };
 
-    console.error = (...args: any[]) => {
+    console.error = (...args: unknown[]) => {
       this.outputs.push({
         type: "error",
         message: args.map((arg) => typeof arg === "string" ? arg : JSON.stringify(arg)).join(" "),
       });
     };
 
-    console.warn = (...args: any[]) => {
+    console.warn = (...args: unknown[]) => {
       this.outputs.push({
         type: "warn",
         message: args.map((arg) => typeof arg === "string" ? arg : JSON.stringify(arg)).join(" "),

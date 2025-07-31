@@ -228,13 +228,6 @@ methodologies:
       - execution-plan.md
       - hill-chart.md
       - change-summary.md
-  lean:
-    name: Lean Startup
-    triggers: []
-    best_for: New products
-    templates: {}
-    phases: {}
-    integration_url: "aichaku://methodology/lean/guide"
   shape-up:
     name: Shape Up
     triggers: []
@@ -439,21 +432,10 @@ principles:
         - text: Abstract common functionality appropriately
         - text: Use code generation where appropriate
     integration_url: "aichaku://principle/software-development/dry"
-  agile-manifesto:
-    name: Agile Manifesto
-    category: organizational
-    summary:
-      tagline: "Individuals and interactions, working software, customer collaboration, responding to change"
-      core_tenets:
-        - text: Individuals and interactions over processes and tools
-        - text: Working software over comprehensive documentation
-        - text: Customer collaboration over contract negotiation
-    integration_url: "aichaku://principle/organizational/agile-manifesto"
 included:
   core: true
   methodologies:
     - shape-up
-    - lean
   standards:
     - nist-csf
     - tdd
@@ -470,6 +452,5 @@ included:
   doc_standards: []
   principles:
     - dry
-    - agile-manifesto
   has_user_customizations: false
 ```

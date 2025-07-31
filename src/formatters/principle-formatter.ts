@@ -83,12 +83,13 @@ export class PrincipleFormatter implements ItemFormatter<Principle> {
       content.push("ℹ️  No principles currently selected");
       content.push("\n💡 Use `aichaku principles --add <id>` to select principles");
     } else {
-      content.push(`## Active Principles (${selected.length})\n`);
-      for (const id of selected) {
-        content.push(`- ${id}`);
-      }
-      content.push("\n💡 Use `aichaku principles --list` to see available principles");
+      content.push(`## Active Principles (${selected.length}) - In Priority Order\n`);
+      selected.forEach((id, index) => {
+        content.push(`${index + 1}. ${id}`);
+      });
+      content.push("\n💡 First listed has highest priority when principles conflict");
       content.push("📝 Use `aichaku principles --remove <id>` to deselect principles");
+      content.push("🔄 To change priority, remove and re-add in desired order");
     }
 
     return content.join("\n");

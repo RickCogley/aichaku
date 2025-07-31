@@ -1,15 +1,20 @@
+import type { ConfigItem } from "./command.ts";
+
 /**
- * Agent type definition
+ * Agent type definition - extends ConfigItem for consistency with other commands
  */
-export interface Agent {
-  /** Agent name (without aichaku- prefix) */
-  name: string;
+export interface Agent extends ConfigItem {
+  /** Agent name (without aichaku- prefix) - inherited from ConfigItem */
+  // name: string; // Already defined in ConfigItem
+
+  /** Agent ID - same as name for agents */
+  // id: string; // Already defined in ConfigItem
+
+  /** Short description of agent's purpose - inherited from ConfigItem */
+  // description: string; // Already defined in ConfigItem
 
   /** Agent type: default or optional */
   type: "default" | "optional";
-
-  /** Short description of agent's purpose */
-  description: string;
 
   /** Color for visual identification */
   color?: string;

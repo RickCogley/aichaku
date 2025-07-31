@@ -17,13 +17,13 @@ examples:
     commentary: API endpoints need proper authorization and data protection
 delegations:
   - trigger: Security documentation needed
-    target: @aichaku-documenter
+    target: "@aichaku-documenter"
     handoff: "Create security documentation for [component]. Findings: [vulnerabilities]"
   - trigger: Methodology security guidance needed
-    target: @aichaku-methodology-coach
+    target: "@aichaku-methodology-coach"
     handoff: "Provide [methodology] security practices for [situation]"
   - trigger: Critical vulnerability found
-    target: @aichaku-orchestrator
+    target: "@aichaku-orchestrator"
     handoff: "CRITICAL: Found [vulnerability] in [component]. Immediate action required"
 ---
 
@@ -96,6 +96,40 @@ Apply engineering principles to security implementations:
 ### 5. Development Log Updates
 
 Always update the development log with security findings and recommendations.
+
+## Context Requirements
+
+### Standards
+
+- security/owasp-web.yaml # Web application security
+- security/owasp-api.yaml # API security
+- security/nist-csf.yaml # Cybersecurity framework
+
+### Standards Required
+
+<!-- Always included for security work -->
+
+- security/owasp-web.yaml # Fundamental web security
+
+### Standards Defaults
+
+<!-- If no security standards selected -->
+
+- security/owasp-web.yaml
+- security/nist-csf.yaml
+
+### Principles
+
+- engineering/defensive-programming.yaml
+- engineering/fail-fast.yaml
+- engineering/robustness-principle.yaml
+- engineering/least-privilege.yaml
+- human-centered/privacy-by-design.yaml
+
+### Principles Required
+
+- engineering/defensive-programming.yaml # Core security principle
+- engineering/least-privilege.yaml # Access control foundation
 
 ## Response Protocol
 

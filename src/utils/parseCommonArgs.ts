@@ -4,9 +4,9 @@
 
 import type { CommandOptions } from "../types/command.ts";
 
-export function parseCommonArgs(args: any): CommandOptions {
+export function parseCommonArgs(args: Record<string, unknown> & { _: unknown[] }): CommandOptions {
   // Handle the --show quirk
-  let showValue: boolean | string | undefined = args.show;
+  let showValue: boolean | string | undefined = args.show as boolean | string | undefined;
 
   // When --show is followed by a value, parseArgs puts the value in _
   if (showValue === "" && args._.length > 1) {

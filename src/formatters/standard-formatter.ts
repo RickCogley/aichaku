@@ -86,12 +86,13 @@ export class StandardFormatter implements ItemFormatter<Standard> {
       content.push("ℹ️  No standards currently selected");
       content.push("\n💡 Use `aichaku standards --add <id>` to select standards");
     } else {
-      content.push(`## Active Standards (${selected.length})\n`);
-      for (const id of selected) {
-        content.push(`- ${id}`);
-      }
-      content.push("\n💡 Use `aichaku standards --list` to see available standards");
+      content.push(`## Active Standards (${selected.length}) - In Priority Order\n`);
+      selected.forEach((id, index) => {
+        content.push(`${index + 1}. ${id}`);
+      });
+      content.push("\n💡 First listed has highest priority when standards conflict");
       content.push("📝 Use `aichaku standards --remove <id>` to deselect standards");
+      content.push("🔄 To change priority, remove and re-add in desired order");
     }
 
     return content.join("\n");

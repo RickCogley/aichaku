@@ -15,6 +15,13 @@ export class AgentLoader {
   }
 
   /**
+   * Load all available agents (required by ItemLoader interface)
+   */
+  async loadAll(): Promise<Agent[]> {
+    return this.list();
+  }
+
+  /**
    * List all available agents
    */
   async list(): Promise<Agent[]> {
@@ -34,7 +41,7 @@ export class AgentLoader {
         }
       }
     } catch (error) {
-      Brand.error(`Failed to list agents: ${error.message}`);
+      Brand.error(`Failed to list agents: ${error instanceof Error ? error.message : "Unknown error"}`);
     }
 
     // Sort by type (default first) then by name
@@ -47,23 +54,16 @@ export class AgentLoader {
   }
 
   /**
-   * Load all available agents (alias for list)
-   */
-  async loadAll(): Promise<Agent[]> {
-    return this.list();
-  }
-
-  /**
    * Load a specific agent by name
    */
-  async load(name: string): Promise<Agent | null> {
+  load(name: string): Promise<Agent | null> {
     return this.loadAgent(name);
   }
 
   /**
    * Load a specific agent by id (same as by name for agents)
    */
-  async loadById(id: string): Promise<Agent | null> {
+  loadById(id: string): Promise<Agent | null> {
     return this.loadAgent(id);
   }
 
@@ -104,9 +104,17 @@ export class AgentLoader {
       }
 
       const yamlContent = yamlMatch[1];
-      let yaml: any;
+      interface AgentYaml {
+        name: string;
+        type?: string;
+        description?: string;
+        tools?: string[];
+        [key: string]: unknown;
+      }
+
+      let yaml: AgentYaml;
       try {
-        yaml = parseYaml(yamlContent) as any;
+        yaml = parseYaml(yamlContent) as AgentYaml;
       } catch (yamlError) {
         // If YAML parsing fails, try to extract basic info manually
         const nameMatch = yamlContent.match(/^name:\s*(.+)$/m);
@@ -114,7 +122,9 @@ export class AgentLoader {
         const typeMatch = yamlContent.match(/^type:\s*(.+)$/m);
 
         if (!nameMatch) {
-          Brand.error(`Failed to parse YAML for ${name}: ${yamlError.message}`);
+          Brand.error(
+            `Failed to parse YAML for ${name}: ${yamlError instanceof Error ? yamlError.message : "Unknown error"}`,
+          );
           return null;
         }
 
@@ -129,20 +139,21 @@ export class AgentLoader {
       const cleanName = yaml.name?.replace(/^@?aichaku-/, "") || name;
 
       const agent: Agent = {
+        id: cleanName, // ConfigItem requires id field
         name: cleanName,
-        type: yaml.type || "optional", // Default to optional if not specified
+        type: (yaml.type as "default" | "optional") || "optional", // Default to optional if not specified
         description: yaml.description || "",
-        color: yaml.color,
-        methodology_aware: yaml.methodology_aware,
-        tools: yaml.tools,
-        technology_focus: yaml.technology_focus,
-        examples: yaml.examples,
-        delegations: yaml.delegations,
+        color: yaml.color as string | undefined,
+        methodology_aware: yaml.methodology_aware as boolean | undefined,
+        tools: yaml.tools as string[] | undefined,
+        technology_focus: yaml.technology_focus as string | undefined,
+        examples: yaml.examples as Agent["examples"],
+        delegations: yaml.delegations as Agent["delegations"],
       };
 
       return agent;
     } catch (error) {
-      Brand.error(`Failed to load agent ${name}: ${error.message}`);
+      Brand.error(`Failed to load agent ${name}: ${error instanceof Error ? error.message : "Unknown error"}`);
       return null;
     }
   }

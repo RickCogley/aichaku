@@ -59,7 +59,7 @@ class PerformanceTester {
     // Test loading by category
     await this.measurePerformance("Load by category: software-development", 75, async () => {
       const all = await this.loader.loadAll();
-      all.filter((p) => p.data.category === "software-development");
+      all.filter((p) => p.category === "software-development");
     });
   }
 
@@ -96,9 +96,8 @@ class PerformanceTester {
     await this.measurePerformance("Search: 'simple'", 10, () => {
       const query = "simple";
       allPrinciples.filter((p) =>
-        p.data.name.toLowerCase().includes(query) ||
-        p.data.description.toLowerCase().includes(query) ||
-        p.documentation?.toLowerCase().includes(query)
+        p.name.toLowerCase().includes(query) ||
+        p.description.toLowerCase().includes(query)
       );
     });
 
@@ -106,7 +105,7 @@ class PerformanceTester {
     await this.measurePerformance("Search: 'design pattern architecture'", 20, () => {
       const terms = ["design", "pattern", "architecture"];
       allPrinciples.filter((p) => {
-        const content = `${p.data.name} ${p.data.description} ${p.documentation || ""}`.toLowerCase();
+        const content = `${p.name} ${p.description}`.toLowerCase();
         return terms.some((term) => content.includes(term));
       });
     });

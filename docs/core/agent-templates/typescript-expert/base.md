@@ -9,50 +9,50 @@ technology_focus: typescript
 examples:
   - context: User needs help with complex type definitions
     user: "I need to create a type-safe builder pattern in TypeScript"
-    assistant: "I'll use the aichaku-@aichaku-typescript-expert to design a type-safe builder pattern"
+    assistant: "I'll use the @aichaku-typescript-expert to design a type-safe builder pattern"
     commentary: Advanced TypeScript patterns require deep understanding of the type system
   - context: User has type inference issues
     user: "TypeScript isn't inferring my types correctly in this generic function"
-    assistant: "Let me consult the aichaku-@aichaku-typescript-expert to resolve the type inference issue"
+    assistant: "Let me consult the @aichaku-typescript-expert to resolve the type inference issue"
     commentary: Type inference problems often require specialized TypeScript knowledge
   - context: User wants to improve type safety
     user: "How can I make this JavaScript library type-safe?"
-    assistant: "I'll use the aichaku-@aichaku-typescript-expert to create proper type definitions"
+    assistant: "I'll use the @aichaku-typescript-expert to create proper type definitions"
     commentary: Creating type definitions requires understanding of declaration files and type modeling
   - context: User needs discriminated union patterns
     user: "I have a complex state machine that needs type-safe transitions"
-    assistant: "I'll use the aichaku-@aichaku-typescript-expert to implement discriminated unions for your state machine"
+    assistant: "I'll use the @aichaku-typescript-expert to implement discriminated unions for your state machine"
     commentary: Discriminated unions are essential for type-safe state management in TypeScript
   - context: User wants conditional types
     user: "I need types that change based on other type parameters"
-    assistant: "Let me use the aichaku-@aichaku-typescript-expert to create conditional types for your use case"
+    assistant: "Let me use the @aichaku-typescript-expert to create conditional types for your use case"
     commentary: Conditional types enable powerful type transformations based on conditions
   - context: User needs mapped types
     user: "How do I create a type that makes all properties optional except specific ones?"
-    assistant: "I'll use the aichaku-@aichaku-typescript-expert to design custom mapped types"
+    assistant: "I'll use the @aichaku-typescript-expert to design custom mapped types"
     commentary: Mapped types allow systematic transformation of existing types
   - context: User has decorator issues
     user: "My TypeScript decorators aren't working with the latest TypeScript version"
-    assistant: "Let me consult the aichaku-@aichaku-typescript-expert for modern decorator patterns"
+    assistant: "Let me consult the @aichaku-typescript-expert for modern decorator patterns"
     commentary: Decorators have evolved significantly and require understanding of metadata
   - context: User needs generic constraints
     user: "How do I constrain a generic type to only accept certain shapes?"
-    assistant: "I'll use the aichaku-@aichaku-typescript-expert to implement proper generic constraints"
+    assistant: "I'll use the @aichaku-typescript-expert to implement proper generic constraints"
     commentary: Generic constraints ensure type parameters meet specific requirements
   - context: User wants branded types
     user: "I need to prevent mixing UserId and OrderId even though they're both strings"
-    assistant: "I'll use the aichaku-@aichaku-typescript-expert to implement branded types for type safety"
+    assistant: "I'll use the @aichaku-typescript-expert to implement branded types for type safety"
     commentary: Branded types provide nominal typing in TypeScript's structural type system
   - context: User needs module augmentation
     user: "I want to add types to a third-party library that doesn't have them"
-    assistant: "Let me use the aichaku-@aichaku-typescript-expert for module augmentation techniques"
+    assistant: "Let me use the @aichaku-typescript-expert for module augmentation techniques"
     commentary: Module augmentation allows extending existing type definitions safely
 delegations:
   - trigger: Performance issues with TypeScript compilation
-    target: aichaku-@aichaku-orchestrator
+    target: "@aichaku-orchestrator"
     handoff: "Investigate TypeScript compilation performance: {issue}"
   - trigger: API type definitions needed
-    target: aichaku-@aichaku-api-architect
+    target: "@aichaku-api-architect"
     handoff: "Create TypeScript definitions for {api_name} API"
 ---
 

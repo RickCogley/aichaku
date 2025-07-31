@@ -9,7 +9,7 @@ import {
   type AichakuConfig,
   ConfigManager,
   createProjectConfigManager,
-  getProjectMethodology,
+  getProjectDefaultMethodology,
   isAichakuProject,
 } from "./config-manager.ts";
 
@@ -22,27 +22,27 @@ async function createTempDir(): Promise<string> {
 // Test helper to create test configuration
 function createTestConfig(): AichakuConfig {
   return {
-    version: "2.0.0",
-    project: {
-      created: "2025-07-15T00:00:00.000Z",
-      installedVersion: "0.29.0",
-      methodology: "shape-up",
-      type: "project",
-      installationType: "local",
+    version: "0.39.4",
+    installedAt: "2025-07-15T00:00:00.000Z",
+    installationType: "local",
+    lastUpgrade: "2025-07-15T00:00:00.000Z",
+    methodologies: {
+      selected: ["shape-up"],
+      default: "shape-up",
     },
     standards: {
-      development: ["15-factor"],
-      documentation: [],
-      custom: {},
+      selected: ["15-factor"],
+    },
+    principles: {
+      selected: [],
+    },
+    agents: {
+      selected: [],
     },
     config: {
       customizations: {
         userDir: "./user",
       },
-      globalVersion: "0.29.0",
-    },
-    markers: {
-      isAichakuProject: true,
     },
   };
 }
@@ -144,11 +144,10 @@ Deno.test("ConfigManager - Load from consolidated config", async () => {
     await configManager.load();
     const config = configManager.get();
 
-    assertEquals(config.version, "2.0.0");
-    assertEquals(config.project.installedVersion, "0.29.0");
-    assertEquals(config.project.methodology, "shape-up");
-    assertEquals(config.standards.development, ["15-factor"]);
-    assertEquals(config.markers.isAichakuProject, true);
+    assertEquals(config.version, "0.39.4");
+    assertEquals(config.installedAt, "2025-07-15T00:00:00.000Z");
+    assertEquals(config.methodologies?.selected, ["shape-up"]);
+    assertEquals(config.standards?.selected, ["15-factor"]);
   } finally {
     await cleanup(tempDir);
   }
@@ -164,11 +163,10 @@ Deno.test("ConfigManager - Load from legacy files", async () => {
     await configManager.load();
     const config = configManager.get();
 
-    assertEquals(config.version, "2.0.0");
-    assertEquals(config.project.installedVersion, "0.29.0");
-    assertEquals(config.project.type, "project");
-    assertEquals(config.standards.development, ["15-factor"]);
-    assertEquals(config.markers.isAichakuProject, true);
+    assertEquals(config.version, "0.39.4");
+    assertEquals(config.installedAt, "2025-07-15T00:00:00.000Z");
+    assertEquals(config.installationType, "local");
+    assertEquals(config.standards?.selected, ["15-factor"]);
 
     // Verify consolidated file was created
     const consolidatedPath = join(

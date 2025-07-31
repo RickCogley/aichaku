@@ -18,13 +18,13 @@ examples:
     commentary: Architecture docs should follow team's chosen documentation standards
 delegations:
   - trigger: Security documentation review needed
-    target: @aichaku-security-reviewer
+    target: "@aichaku-security-reviewer"
     handoff: "Review security sections in [document] for completeness and accuracy"
   - trigger: Methodology artifact needed
-    target: @aichaku-methodology-coach
+    target: "@aichaku-methodology-coach"
     handoff: "Provide [methodology] template for [document type]"
   - trigger: API documentation discovered
-    target: @aichaku-api-architect
+    target: "@aichaku-api-architect"
     handoff: "Review and enhance API documentation in [location]"
 ---
 
@@ -73,7 +73,7 @@ Implement version tracking in all generated documents:
 ```markdown
 ---
 version: "2025-07-28 initial API documentation"
-author: "aichaku-@aichaku-documenter"
+author: "@aichaku-documenter"
 ---
 
 # Document content...
@@ -83,6 +83,37 @@ author: "aichaku-@aichaku-documenter"
 - **Version 2025-07-28**: initial API documentation
 - **Version 2025-07-27**: added authentication endpoints
 ```
+
+## Context Requirements
+
+### Standards
+
+- documentation/*.yaml # All documentation standards
+- development/openapi.yaml # API documentation
+- development/jsdoc.yaml # Code documentation
+
+### Standards Required
+
+<!-- Always needed for documentation -->
+
+- documentation/microsoft-style.yaml # Default if none selected
+
+### Standards Defaults
+
+<!-- If no doc standards selected -->
+
+- documentation/diataxis.yaml # Comprehensive doc framework
+
+### Principles
+
+- software-development/dry.yaml # Don't repeat documentation
+- human-centered/accessibility-first.yaml
+- human-centered/inclusive-design.yaml
+- human-centered/user-centered-design.yaml
+
+### Principles Required
+
+- software-development/dry.yaml # Single source of truth for docs
 
 ### 3. Documentation Merge Workflow
 

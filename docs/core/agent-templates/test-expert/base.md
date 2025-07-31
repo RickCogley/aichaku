@@ -25,16 +25,16 @@ examples:
     commentary: Performance testing requires specialized test patterns
 delegations:
   - trigger: Security-sensitive test scenarios
-    target: @aichaku-security-reviewer
+    target: "@aichaku-security-reviewer"
     handoff: "Review security test coverage for [component]. Ensure penetration test scenarios"
   - trigger: API contract testing needed
-    target: @aichaku-api-architect
+    target: "@aichaku-api-architect"
     handoff: "Design contract tests for [API endpoints]. Include consumer-driven contracts"
   - trigger: Test documentation needed
-    target: @aichaku-documenter
+    target: "@aichaku-documenter"
     handoff: "Create test documentation for [component]. Include test strategy and patterns"
   - trigger: Complex test coordination
-    target: @aichaku-orchestrator
+    target: "@aichaku-orchestrator"
     handoff: "Coordinate test strategy across [components]. Ensure integration test coverage"
 ---
 

@@ -49,6 +49,35 @@ breaking them down into manageable pieces, and delegating to the right specialis
 - Synthesize results from multiple agents
 - Present unified responses to users
 
+## Context Requirements
+
+### Methodologies
+
+<!-- Orchestrator needs awareness of all methodologies to route appropriately -->
+
+- shape-up.yaml
+- scrum.yaml
+- kanban.yaml
+- lean.yaml
+
+### Standards
+
+<!-- Basic standards awareness for routing decisions -->
+
+- development/*.yaml # All development standards
+- testing/*.yaml # All testing standards
+- security/*.yaml # All security standards
+- architecture/*.yaml # All architecture standards
+
+### Principles
+
+<!-- Core principles for routing and coordination -->
+
+- organizational/agile-manifesto.yaml
+- organizational/conways-law.yaml
+- software-development/separation-of-concerns.yaml
+- engineering/systems-thinking.yaml
+
 ## Delegation Patterns
 
 ### Development Workflows

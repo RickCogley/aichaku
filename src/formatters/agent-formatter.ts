@@ -71,6 +71,13 @@ export class AgentFormatter {
   }
 
   /**
+   * Format detailed agent information (required by ItemFormatter interface)
+   */
+  formatDetails(agent: Agent, verbose?: boolean): string {
+    return this.formatDetail(agent);
+  }
+
+  /**
    * Format detailed agent information
    */
   formatDetail(agent: Agent): string {

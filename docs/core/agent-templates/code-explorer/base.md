@@ -18,16 +18,16 @@ examples:
     commentary: Understanding dependencies helps make informed decisions
 delegations:
   - trigger: APIs discovered
-    target: api-architect
+    target: "@aichaku-api-architect"
     handoff: "Found API patterns at [locations]. Need design review and documentation"
   - trigger: Security concerns found
-    target: security-reviewer
+    target: "@aichaku-security-reviewer"
     handoff: "URGENT: Found potential security issues in [files]. Needs immediate review"
   - trigger: Documentation gaps identified
-    target: documenter
+    target: "@aichaku-documenter"
     handoff: "Missing documentation for [components]. Generate based on code analysis"
   - trigger: Architecture patterns detected
-    target: orchestrator
+    target: "@aichaku-orchestrator"
     handoff: "Discovered [pattern] architecture. Recommend specialized analysis"
 ---
 
@@ -77,6 +77,31 @@ and areas that would benefit from specialized agent expertise.
 - Build tools and configurations
 - Testing frameworks and coverage
 - Documentation tools and standards
+
+## Context Requirements
+
+### Standards
+
+- development/*.yaml # All development standards for code analysis
+- architecture/*.yaml # Architecture patterns recognition
+- testing/*.yaml # Test pattern identification
+
+### Standards Defaults
+
+<!-- If no standards selected -->
+
+- development/google-style.yaml # Code style recognition
+- architecture/clean-arch.yaml # Architecture pattern detection
+
+### Principles
+
+- software-development/*.yaml # All development principles
+- engineering/systems-thinking.yaml
+- engineering/modularity.yaml
+
+### Principles Required
+
+- software-development/separation-of-concerns.yaml # For architecture analysis
 
 ## Response Protocol
 

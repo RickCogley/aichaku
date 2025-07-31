@@ -1,19 +1,20 @@
 /**
- * Agent Generator Utility
+ * Agent Generator Utility - Focused Context Injection
  *
- * Generates methodology-aware Claude Code agents by combining base templates
- * with methodology and standards extensions.
+ * Generates methodology-aware Claude Code agents with focused context
+ * based on agent-specific requirements defined in templates.
  */
 
 import { exists } from "jsr:@std/fs@1";
 import { join } from "jsr:@std/path@1";
+import { parse as parseYaml } from "jsr:@std/yaml@1";
 import { safeReadTextFile } from "./path-security.ts";
-import type { PrincipleCategory } from "../types/principle.ts";
 
 interface AgentGenerationOptions {
   selectedMethodologies: string[];
   selectedStandards: string[];
   selectedPrinciples: string[];
+  selectedAgents: string[]; // New: which optional agents are selected
   outputPath: string;
   agentPrefix: string;
 }
@@ -25,76 +26,60 @@ interface AgentGenerationResult {
   errors: string[];
 }
 
-interface AgentTemplate {
-  name: string;
-  description: string;
-  tools: string[];
+interface ContextRequirements {
+  standards?: string[];
+  standardsRequired?: string[];
+  standardsDefaults?: string[];
+  standardsConflicts?: Array<{
+    group: string;
+    exclusive: string[];
+    strategy: string;
+    message: string;
+  }>;
+  methodologies?: string[];
+  methodologiesRequired?: string[];
+  methodologiesDefaults?: string[];
+  principles?: string[];
+  principlesRequired?: string[];
+  principlesDefaults?: string[];
+}
+
+interface ParsedTemplate {
+  yaml: {
+    name: string;
+    type: "default" | "optional";
+    description: string;
+    tools?: string[];
+    examples?: Array<{
+      context: string;
+      user: string;
+      assistant: string;
+      commentary: string;
+    }>;
+    delegations?: Array<{
+      trigger: string;
+      target: string;
+      handoff: string;
+    }>;
+  };
   content: string;
+  contextRequirements: ContextRequirements;
 }
 
-interface ParsedYaml {
-  name: string;
-  description: string;
-  tools: string[];
-  examples?: Array<{
-    context: string;
-    user: string;
-    assistant: string;
-    commentary: string;
-  }>;
-  delegations?: Array<{
-    trigger: string;
-    target: string;
-    handoff: string;
-  }>;
-}
+// Default agents that are always included
+const DEFAULT_AGENTS = [
+  "orchestrator",
+  "api-architect",
+  "security-reviewer",
+  "test-expert",
+  "documenter",
+  "code-explorer",
+  "methodology-coach",
+  "principle-coach",
+];
 
 /**
- * Define which principles each agent type should be aware of
- */
-const AGENT_PRINCIPLE_MAPPING: Record<string, {
-  categories: PrincipleCategory[];
-  specific?: string[];
-}> = {
-  "orchestrator": {
-    categories: ["software-development", "organizational", "engineering", "human-centered"],
-    // Orchestrator gets all principles for intelligent routing
-  },
-  "security-reviewer": {
-    categories: ["engineering"],
-    specific: ["defensive-programming", "fail-fast", "robustness-principle", "privacy-by-design"],
-  },
-  "code-explorer": {
-    categories: ["software-development", "engineering"],
-    specific: ["dry", "yagni", "kiss", "unix-philosophy", "separation-of-concerns", "solid"],
-  },
-  "methodology-coach": {
-    categories: ["organizational", "human-centered"],
-    specific: ["agile-manifesto", "lean-principles", "conways-law", "user-centered-design", "inclusive-design"],
-  },
-  "documenter": {
-    categories: ["human-centered"],
-    specific: ["accessibility-first", "inclusive-design", "user-centered-design", "dry"],
-  },
-  "api-architect": {
-    categories: ["software-development", "engineering"],
-    specific: [
-      "solid",
-      "separation-of-concerns",
-      "unix-philosophy",
-      "robustness-principle",
-      "defensive-programming",
-      "user-centered-design",
-    ],
-  },
-  "principle-coach": {
-    categories: ["software-development", "organizational", "engineering", "human-centered"],
-    // Principle coach gets all principles for comprehensive guidance
-  },
-};
-
-/**
- * Generate methodology-aware agents based on selected methodologies and standards
+ * Generate methodology-aware agents with focused context injection
  */
 export async function generateMethodologyAwareAgents(
   options: AgentGenerationOptions,
@@ -110,36 +95,30 @@ export async function generateMethodologyAwareAgents(
     // Ensure output directory exists
     await Deno.mkdir(options.outputPath, { recursive: true });
 
-    // Define agent types to generate
-    const agentTypes = [
-      "orchestrator",
-      "security-reviewer",
-      "methodology-coach",
-      "documenter",
-      "code-explorer",
-      "api-architect",
-      "principle-coach",
+    // Determine which agents to generate (default + selected optional)
+    const agentsToGenerate = [
+      ...DEFAULT_AGENTS,
+      ...options.selectedAgents.filter((agent) => !DEFAULT_AGENTS.includes(agent)),
     ];
 
-    for (const agentType of agentTypes) {
+    for (const agentType of agentsToGenerate) {
       try {
-        const agent = await generateAgent(agentType, options);
-        if (agent) {
-          const agentPath = join(options.outputPath, `${options.agentPrefix}${agentType}.md`);
-
-          // Check if agent already exists
-          if (await exists(agentPath)) {
-            // Update existing agent
-            await Deno.writeTextFile(agentPath, agent.content);
-            result.generated++;
-          } else {
-            // Create new agent
-            await Deno.writeTextFile(agentPath, agent.content);
-            result.generated++;
-          }
-        } else {
+        const template = await loadAgentTemplate(agentType);
+        if (!template) {
+          result.errors.push(`Template not found for ${agentType}`);
           result.skipped++;
+          continue;
         }
+
+        const agentContent = generateAgentWithFocusedContext(
+          agentType,
+          template,
+          options,
+        );
+
+        const agentPath = join(options.outputPath, `${options.agentPrefix}${agentType}.md`);
+        await Deno.writeTextFile(agentPath, agentContent);
+        result.generated++;
       } catch (error) {
         result.errors.push(
           `Failed to generate ${agentType}: ${error instanceof Error ? error.message : String(error)}`,
@@ -156,225 +135,476 @@ export async function generateMethodologyAwareAgents(
 }
 
 /**
- * Generate a single agent by injecting selected standards and methodology YAML
+ * Load and parse agent template with context requirements
  */
-async function generateAgent(
-  agentType: string,
-  options: AgentGenerationOptions,
-): Promise<AgentTemplate | null> {
-  // Use global installation path for agent templates
+async function loadAgentTemplate(agentType: string): Promise<ParsedTemplate | null> {
   const homePath = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
   const templateBase = join(homePath, ".claude", "aichaku", "docs", "core", "agent-templates");
   const agentBasePath = join(templateBase, agentType, "base.md");
 
-  // Always use fresh template from global installation
-  // TODO: Implement proper user customization system with clear override mechanism
   if (!(await exists(agentBasePath))) {
-    console.warn(`Base template not found for ${agentType}: ${agentBasePath}`);
     return null;
   }
 
-  let baseContent = await safeReadTextFile(agentBasePath, templateBase);
-  const parsed = parseAgentTemplate(baseContent);
-  const yaml = parsed.yaml;
-  baseContent = parsed.content;
+  const content = await safeReadTextFile(agentBasePath, templateBase);
+  return parseAgentTemplate(content);
+}
 
-  // Generate standards YAML section
-  const standardsYaml = await generateStandardsYaml(options.selectedStandards);
+/**
+ * Parse agent template including context requirements
+ */
+function parseAgentTemplate(template: string): ParsedTemplate {
+  const lines = template.split("\n");
+  let yamlEndIndex = -1;
 
-  // Generate methodology YAML section
-  const methodologyYaml = await generateMethodologyYaml(options.selectedMethodologies);
+  // Extract YAML frontmatter
+  if (lines[0] === "---") {
+    yamlEndIndex = lines.findIndex((line, index) => index > 0 && line === "---");
+  }
 
-  // Generate principles YAML section
-  const principlesYaml = await generatePrinciplesYaml(options.selectedPrinciples, agentType);
-
-  // Sections will be combined later after YAML frontmatter is built
-
-  // Build YAML frontmatter with pure YAML structure
-  const yamlFrontmatter: {
+  interface AgentYaml {
     name: string;
+    type: "default" | "optional";
     description: string;
-    color: string;
-    methodology_aware: boolean;
     tools?: string[];
-    examples?: typeof yaml.examples;
-    delegations?: typeof yaml.delegations;
-  } = {
-    // Check if name already has the prefix to avoid double prefixing
+    examples?: Array<{
+      context: string;
+      user: string;
+      assistant: string;
+      commentary: string;
+    }>;
+    delegations?: Array<{
+      trigger: string;
+      target: string;
+      handoff: string;
+    }>;
+  }
+
+  let yaml: AgentYaml = {
+    name: "Unknown Agent",
+    type: "default",
+    description: "Generated agent",
+    tools: ["*"],
+  };
+
+  if (yamlEndIndex > 0) {
+    const yamlContent = lines.slice(1, yamlEndIndex).join("\n");
+    try {
+      yaml = parseYaml(yamlContent);
+    } catch (e) {
+      console.warn("Failed to parse YAML frontmatter:", e);
+    }
+  }
+
+  // Extract content after frontmatter
+  const contentStartIndex = yamlEndIndex > 0 ? yamlEndIndex + 1 : 0;
+  const contentLines = lines.slice(contentStartIndex);
+
+  // Parse context requirements from content
+  const contextRequirements = parseContextRequirements(contentLines);
+
+  return {
+    yaml,
+    content: contentLines.join("\n"),
+    contextRequirements,
+  };
+}
+
+/**
+ * Parse context requirements from template content
+ */
+function parseContextRequirements(lines: string[]): ContextRequirements {
+  const requirements: ContextRequirements = {};
+  let inContextSection = false;
+  let currentSubsection = "";
+  let collectingList = false;
+  let currentList: string[] = [];
+  interface ConflictDefinition {
+    group: string;
+    exclusive: string[];
+    strategy: string;
+    message: string;
+  }
+
+  let currentConflict: ConflictDefinition | null = null;
+  let conflicts: ConflictDefinition[] = [];
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+
+    // Check for Context Requirements section
+    if (trimmed === "## Context Requirements") {
+      inContextSection = true;
+      continue;
+    }
+
+    // Exit context section on next major section
+    if (inContextSection && trimmed.startsWith("## ") && !trimmed.includes("Context Requirements")) {
+      inContextSection = false;
+      break;
+    }
+
+    if (!inContextSection) continue;
+
+    // Handle subsections
+    if (trimmed.startsWith("### ")) {
+      // Save any pending list
+      if (collectingList && currentList.length > 0) {
+        saveList(requirements, currentSubsection, currentList);
+        currentList = [];
+      }
+      // Save any pending conflicts
+      if (currentSubsection === "Standards Conflicts" && conflicts.length > 0) {
+        requirements.standardsConflicts = conflicts;
+        conflicts = [];
+      }
+
+      currentSubsection = trimmed.substring(4);
+      collectingList = false;
+      continue;
+    }
+
+    // Handle list items
+    if (trimmed.startsWith("- ")) {
+      const item = trimmed.substring(2);
+
+      // Check if it's a conflict definition
+      if (currentSubsection === "Standards Conflicts") {
+        if (item.startsWith("group:")) {
+          // Start of a new conflict definition
+          if (currentConflict) {
+            conflicts.push(currentConflict);
+          }
+          currentConflict = parseConflictLine(item);
+        }
+      } else {
+        // Regular list item
+        collectingList = true;
+        // Extract just the file name without comments
+        const match = item.match(/^([^#\s]+)/);
+        if (match) {
+          currentList.push(match[1]);
+        }
+      }
+    }
+
+    // Handle conflict properties on continuation lines
+    if (currentConflict && trimmed && !trimmed.startsWith("-")) {
+      const conflictProps = parseConflictLine(trimmed);
+      Object.assign(currentConflict, conflictProps);
+    }
+  }
+
+  // Save any remaining data
+  if (collectingList && currentList.length > 0) {
+    saveList(requirements, currentSubsection, currentList);
+  }
+  if (currentConflict) {
+    conflicts.push(currentConflict);
+  }
+  if (conflicts.length > 0) {
+    requirements.standardsConflicts = conflicts;
+  }
+
+  return requirements;
+}
+
+/**
+ * Parse a conflict definition line
+ */
+function parseConflictLine(line: string): Partial<ConflictDefinition> {
+  const result: Partial<ConflictDefinition> = {};
+
+  // Parse key-value pairs
+  const pairs = line.match(/(\w+):\s*([^,]+)(?:,|$)/g);
+  if (pairs) {
+    for (const pair of pairs) {
+      const [key, value] = pair.split(":").map((s) => s.trim().replace(/,$/, ""));
+      if (key === "exclusive") {
+        // Parse array value
+        result[key] = value.replace(/[\[\]]/g, "").split(/\s+/);
+      } else {
+        result[key] = value.replace(/["']/g, "");
+      }
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Save a parsed list to the requirements object
+ */
+function saveList(requirements: ContextRequirements, subsection: string, list: string[]) {
+  const mapping: Record<string, keyof ContextRequirements> = {
+    "Standards": "standards",
+    "Standards Required": "standardsRequired",
+    "Standards Defaults": "standardsDefaults",
+    "Methodologies": "methodologies",
+    "Methodologies Required": "methodologiesRequired",
+    "Methodologies Defaults": "methodologiesDefaults",
+    "Principles": "principles",
+    "Principles Required": "principlesRequired",
+    "Principles Defaults": "principlesDefaults",
+  };
+
+  const key = mapping[subsection];
+  if (key && key !== "standardsConflicts") {
+    if (
+      key === "standards" || key === "standardsRequired" || key === "standardsDefaults" ||
+      key === "methodologies" || key === "methodologiesRequired" || key === "methodologiesDefaults" ||
+      key === "principles" || key === "principlesRequired" || key === "principlesDefaults"
+    ) {
+      (requirements as ContextRequirements)[key] = [...list];
+    }
+  }
+}
+
+/**
+ * Generate agent content with focused context
+ */
+function generateAgentWithFocusedContext(
+  agentType: string,
+  template: ParsedTemplate,
+  options: AgentGenerationOptions,
+): Promise<string> {
+  const { yaml, content, contextRequirements } = template;
+
+  // Determine which standards to include
+  const standardsToInclude = resolveContextItems(
+    options.selectedStandards,
+    contextRequirements.standards || [],
+    contextRequirements.standardsRequired || [],
+    contextRequirements.standardsDefaults || [],
+    "standards",
+  );
+
+  // Determine which methodologies to include
+  const methodologiesToInclude = resolveContextItems(
+    options.selectedMethodologies,
+    contextRequirements.methodologies || [],
+    contextRequirements.methodologiesRequired || [],
+    contextRequirements.methodologiesDefaults || [],
+    "methodologies",
+  );
+
+  // Determine which principles to include
+  const principlesToInclude = resolveContextItems(
+    options.selectedPrinciples,
+    contextRequirements.principles || [],
+    contextRequirements.principlesRequired || [],
+    contextRequirements.principlesDefaults || [],
+    "principles",
+  );
+
+  // Generate context sections
+  const standardsYaml = generateFocusedStandardsYaml(
+    standardsToInclude,
+    contextRequirements.standardsConflicts,
+  );
+  const methodologyYaml = generateFocusedMethodologyYaml(methodologiesToInclude);
+  const principlesYaml = generateFocusedPrinciplesYaml(principlesToInclude, agentType);
+
+  // Build final YAML frontmatter
+  const yamlFrontmatter = {
     name: yaml.name.startsWith(options.agentPrefix) ? yaml.name : `${options.agentPrefix}${yaml.name}`,
+    type: yaml.type || "default",
     description: yaml.description,
     color: getAgentColor(agentType),
     methodology_aware: true,
+    ...(yaml.tools && JSON.stringify(yaml.tools) !== '["*"]' && { tools: yaml.tools }),
+    ...(yaml.examples && { examples: yaml.examples }),
+    ...(yaml.delegations && { delegations: yaml.delegations }),
   };
 
-  // Only add tools if not all tools (omit for "*")
-  if (yaml.tools && JSON.stringify(yaml.tools) !== '["*"]') {
-    yamlFrontmatter.tools = yaml.tools;
-  }
-
-  // Add cross-functional config from parsed YAML
-  if (yaml.examples) {
-    yamlFrontmatter.examples = yaml.examples;
-  }
-  if (yaml.delegations) {
-    yamlFrontmatter.delegations = yaml.delegations;
-  }
-
-  // Convert to YAML string with proper formatting
+  // Format YAML
   const yamlString = formatYamlFrontmatter(yamlFrontmatter);
 
-  // Combine content sections
+  // Combine all sections
   const contentSections = [
-    baseContent.trim(),
+    content.trim(),
     standardsYaml,
     methodologyYaml,
     principlesYaml,
   ].filter(Boolean);
 
-  const finalContent = `---
+  return `---
 ${yamlString}
 ---
 
 ${contentSections.join("\n\n")}`;
-
-  return {
-    name: yaml.name,
-    description: yaml.description,
-    tools: yaml.tools,
-    content: finalContent,
-  };
 }
 
 /**
- * Parse agent template to extract YAML frontmatter and content
+ * Resolve which items to include based on requirements and user selection
  */
-function parseAgentTemplate(template: string): { yaml: ParsedYaml; content: string } {
-  const lines = template.split("\n");
+function resolveContextItems(
+  userSelected: string[],
+  requested: string[],
+  required: string[],
+  defaults: string[],
+  category: string,
+): Promise<string[]> {
+  const included = new Set<string>();
 
-  // Check if template starts with YAML frontmatter
-  if (lines[0] === "---") {
-    const endIndex = lines.findIndex((line, index) => index > 0 && line === "---");
-    if (endIndex > 0) {
-      const yamlLines = lines.slice(1, endIndex);
-      const contentLines = lines.slice(endIndex + 1);
+  // 1. Always include required items
+  for (const item of required) {
+    included.add(item.replace(/\.yaml$/, ""));
+  }
 
-      // Parse YAML - handle nested structures like examples and delegations
-      const yaml: ParsedYaml = {
-        name: "Unknown Agent",
-        description: "Generated agent",
-        tools: ["*"],
-      };
-      let currentKey = "";
-      let currentIndent = 0;
-      let currentArray: unknown[] | null = null;
-      let currentObject: Record<string, unknown> | null = null;
-
-      for (const line of yamlLines) {
-        const match = line.match(/^(\s*)(.*)$/);
-        if (!match) continue;
-
-        const [, indent, content] = match;
-        const indentLevel = indent.length;
-
-        if (!content.trim()) continue;
-
-        // Top-level key-value pair
-        if (indentLevel === 0 && content.includes(":")) {
-          // Save any in-progress array
-          if (currentKey && currentArray !== null) {
-            if (currentKey === "examples") {
-              yaml.examples = currentArray as typeof yaml.examples;
-            } else if (currentKey === "delegations") {
-              yaml.delegations = currentArray as typeof yaml.delegations;
-            }
-            currentArray = null;
-          }
-
-          const [key, ...valueParts] = content.split(":");
-          const value = valueParts.join(":").trim();
-          currentKey = key.trim();
-
-          if (value) {
-            // Simple value
-            if (currentKey === "tools") {
-              try {
-                yaml.tools = JSON.parse(value);
-              } catch {
-                yaml.tools = ["*"];
-              }
-            } else if (currentKey === "name" || currentKey === "description") {
-              yaml[currentKey] = value.replace(/^["']|["']$/g, "");
-            }
-            currentKey = "";
-          } else {
-            // Start of nested structure
-            currentIndent = indentLevel;
-            if (currentKey === "examples" || currentKey === "delegations") {
-              currentArray = [];
-            }
-          }
-        } // Array item
-        else if (content.trim().startsWith("- ") && currentArray !== null) {
-          const itemContent = content.trim().substring(2);
-          if (itemContent.includes(":")) {
-            // Start of object in array
-            currentObject = {};
-            const [key, ...valueParts] = itemContent.split(":");
-            const value = valueParts.join(":").trim();
-            if (value) {
-              currentObject[key.trim()] = value.replace(/^["']|["']$/g, "");
-            }
-            currentArray.push(currentObject);
-          } else {
-            // Simple array item
-            currentArray.push(itemContent);
-            currentObject = null;
-          }
-        } // Object property in array
-        else if (currentObject && indentLevel > currentIndent) {
-          if (content.includes(":")) {
-            const [key, ...valueParts] = content.split(":");
-            const value = valueParts.join(":").trim();
-            currentObject[key.trim()] = value.replace(/^["']|["']$/g, "");
-          }
-        }
-      }
-
-      // Save any remaining array
-      if (currentKey && currentArray !== null) {
-        if (currentKey === "examples") {
-          yaml.examples = currentArray as typeof yaml.examples;
-        } else if (currentKey === "delegations") {
-          yaml.delegations = currentArray as typeof yaml.delegations;
-        }
-      }
-
-      return {
-        yaml,
-        content: contentLines.join("\n"),
-      };
+  // 2. Include requested items that user has selected
+  for (const item of requested) {
+    const itemId = item.replace(/\.yaml$/, "");
+    // Handle wildcards
+    if (item.includes("*")) {
+      const pattern = item.replace("*", "");
+      const matching = userSelected.filter((s) => s.includes(pattern.replace("/", "")));
+      matching.forEach((m) => included.add(m));
+    } else if (userSelected.includes(itemId)) {
+      included.add(itemId);
     }
   }
 
-  // Fallback: treat entire content as content section
-  return {
-    yaml: {
-      name: "Unknown Agent",
-      description: "Generated agent",
-      tools: ["*"],
-    } as ParsedYaml,
-    content: template,
-  };
+  // 3. If no items in category selected by user, use defaults
+  if (category === "standards") {
+    const hasTestingStandards = userSelected.some((s) => s.includes("test"));
+    if (!hasTestingStandards && defaults.length > 0) {
+      for (const item of defaults) {
+        included.add(item.replace(/\.yaml$/, ""));
+      }
+    }
+  } else if (included.size === 0 && defaults.length > 0) {
+    for (const item of defaults) {
+      included.add(item.replace(/\.yaml$/, ""));
+    }
+  }
+
+  return Array.from(included);
 }
 
 /**
- * Format YAML frontmatter with proper indentation and structure
+ * Generate focused standards YAML section
  */
-function formatYamlFrontmatter(yaml: {
+function generateFocusedStandardsYaml(
+  standards: string[],
+  conflicts?: Array<ConflictDefinition>,
+): Promise<string> {
+  if (standards.length === 0) return "";
+
+  let yamlSection = `## Selected Standards
+
+<!-- AUTO-GENERATED - Focused context for this agent -->
+
+\`\`\`yaml
+standards:`;
+
+  // Add selected standards
+  for (const standard of standards) {
+    yamlSection += `\n  - ${standard}`;
+  }
+
+  // Add conflict information if present
+  if (conflicts && conflicts.length > 0) {
+    yamlSection += `\n\nstandards_conflicts:`;
+    for (const conflict of conflicts) {
+      yamlSection += `\n  - group: ${conflict.group}`;
+      yamlSection += `\n    exclusive: [${conflict.exclusive.join(", ")}]`;
+      yamlSection += `\n    strategy: ${conflict.strategy}`;
+      yamlSection += `\n    message: "${conflict.message}"`;
+    }
+  }
+
+  yamlSection += `\n\`\`\``;
+  return yamlSection;
+}
+
+/**
+ * Generate focused methodology YAML section
+ */
+function generateFocusedMethodologyYaml(methodologies: string[]): Promise<string> {
+  if (methodologies.length === 0) return "";
+
+  let yamlSection = `## Active Methodologies
+
+<!-- AUTO-GENERATED - Focused context for this agent -->
+
+\`\`\`yaml
+methodologies:`;
+
+  for (const methodology of methodologies) {
+    yamlSection += `\n  - ${methodology}`;
+  }
+
+  yamlSection += `\n\`\`\``;
+  return yamlSection;
+}
+
+/**
+ * Generate focused principles YAML section
+ */
+function generateFocusedPrinciplesYaml(
+  principles: string[],
+  agentType: string,
+): Promise<string> {
+  if (principles.length === 0) return "";
+
+  let yamlSection = `## Relevant Principles
+
+<!-- AUTO-GENERATED - Focused context for this agent -->
+
+\`\`\`yaml
+principles:`;
+
+  for (const principle of principles) {
+    yamlSection += `\n  - ${principle}`;
+  }
+
+  yamlSection += `\n\`\`\``;
+
+  // Add agent-specific notes
+  yamlSection += `\n\n### Agent-Specific Principle Application\n\n`;
+  yamlSection += getAgentPrincipleNotes(agentType);
+
+  return yamlSection;
+}
+
+/**
+ * Get agent-specific principle application notes
+ */
+function getAgentPrincipleNotes(agentType: string): string {
+  const notes: Record<string, string> = {
+    "test-expert": `Apply these principles to:
+- Design tests that fail fast and provide clear feedback
+- Keep test code simple (KISS) and avoid over-engineering
+- Follow YAGNI - only test what's actually needed
+- Use defensive programming in test assertions`,
+
+    "security-reviewer": `Use these principles for:
+- Enforce defensive programming practices
+- Apply fail-fast to security validations
+- Ensure privacy-by-design in implementations
+- Guide robustness in security controls`,
+
+    "api-architect": `Apply principles to:
+- Design SOLID-compliant API interfaces
+- Ensure proper separation of concerns
+- Follow robustness principle in API contracts
+- Apply defensive programming to input validation`,
+    // Add more as needed
+  };
+
+  return notes[agentType] || "Apply relevant principles based on context.";
+}
+
+/**
+ * Format YAML frontmatter
+ */
+interface YamlFrontmatter {
   name: string;
+  type?: string;
   description: string;
-  color: string;
-  methodology_aware: boolean;
+  color?: string;
+  methodology_aware?: boolean;
   tools?: string[];
   examples?: Array<{
     context: string;
@@ -387,435 +617,61 @@ function formatYamlFrontmatter(yaml: {
     target: string;
     handoff: string;
   }>;
-}): string {
-  const lines: string[] = [];
+}
 
-  // Simple properties first
-  // Add simple properties
-  lines.push(`name: ${yaml.name}`);
-  lines.push(`description: ${yaml.description}`);
-  lines.push(`color: ${yaml.color}`);
-  lines.push(`methodology_aware: ${yaml.methodology_aware}`);
+function formatYamlFrontmatter(yaml: YamlFrontmatter): string {
+  // Use the YAML library for proper formatting
+  let yamlStr = "";
 
-  // Tools array (if present)
-  if (yaml.tools && Array.isArray(yaml.tools)) {
-    lines.push(`tools: ${JSON.stringify(yaml.tools)}`);
+  // Add properties in specific order
+  const orderedProps = ["name", "type", "description", "color", "methodology_aware", "tools"];
+  for (const prop of orderedProps) {
+    if (yaml[prop] !== undefined) {
+      if (typeof yaml[prop] === "string") {
+        yamlStr += `${prop}: ${yaml[prop]}\n`;
+      } else {
+        yamlStr += `${prop}: ${JSON.stringify(yaml[prop])}\n`;
+      }
+    }
   }
 
-  // Examples array
-  if (yaml.examples && Array.isArray(yaml.examples)) {
-    lines.push("examples:");
+  // Add complex structures
+  if (yaml.examples) {
+    yamlStr += "examples:\n";
     for (const example of yaml.examples) {
-      lines.push("  - context: " + example.context);
-      lines.push('    user: "' + example.user + '"');
-      lines.push('    assistant: "' + example.assistant + '"');
-      lines.push("    commentary: " + example.commentary);
+      yamlStr += "  - context: " + example.context + "\n";
+      yamlStr += '    user: "' + example.user + '"\n';
+      yamlStr += '    assistant: "' + example.assistant + '"\n';
+      yamlStr += "    commentary: " + example.commentary + "\n";
     }
   }
 
-  // Delegations array
-  if (yaml.delegations && Array.isArray(yaml.delegations)) {
-    lines.push("delegations:");
+  if (yaml.delegations) {
+    yamlStr += "delegations:\n";
     for (const delegation of yaml.delegations) {
-      lines.push("  - trigger: " + delegation.trigger);
-      lines.push("    target: " + delegation.target);
-      lines.push('    handoff: "' + delegation.handoff + '"');
+      yamlStr += "  - trigger: " + delegation.trigger + "\n";
+      yamlStr += '    target: "' + delegation.target + '"\n';
+      yamlStr += '    handoff: "' + delegation.handoff + '"\n';
     }
   }
 
-  return lines.join("\n");
+  return yamlStr.trim();
 }
 
 /**
  * Get agent color based on type
  */
 function getAgentColor(agentType: string): string {
-  const colors: { [key: string]: string } = {
-    "orchestrator": "yellow", // Aichaku brand color
-    "security-reviewer": "red", // Security/danger
-    "methodology-coach": "green", // Growth/guidance
-    "documenter": "blue", // Information/docs
-    "code-explorer": "magenta", // Discovery/analysis
-    "api-architect": "cyan", // Technical/architecture
+  const colors: Record<string, string> = {
+    "orchestrator": "yellow",
+    "security-reviewer": "red",
+    "methodology-coach": "green",
+    "documenter": "blue",
+    "code-explorer": "magenta",
+    "api-architect": "cyan",
+    "principle-coach": "purple",
+    "test-expert": "orange",
+    // Add more as needed
   };
   return colors[agentType] || "white";
-}
-
-/**
- * Generate standards YAML section from selected standards
- */
-async function generateStandardsYaml(standards: string[]): Promise<string> {
-  if (standards.length === 0) return "";
-
-  const standardsByCategory: { [key: string]: Record<string, unknown>[] } = {};
-
-  for (const standard of standards) {
-    const category = await findStandardCategory(standard);
-    if (category) {
-      const homePath = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
-      const standardPath = join(homePath, ".claude", "aichaku", "docs", "standards", category, `${standard}.yaml`);
-      if (await exists(standardPath)) {
-        const yamlContent = await safeReadTextFile(standardPath, join(homePath, ".claude", "aichaku"));
-        const parsedYaml = parseYamlSections(yamlContent, ["summary", "rules"]);
-
-        if (!standardsByCategory[category]) standardsByCategory[category] = [];
-        standardsByCategory[category].push({
-          name: standard,
-          ...parsedYaml,
-        });
-      }
-    }
-  }
-
-  if (Object.keys(standardsByCategory).length === 0) return "";
-
-  let yamlSection = `## Selected Standards
-
-<!-- AUTO-GENERATED from docs/standards/ - Do not edit manually -->
-
-\`\`\`yaml
-standards:`;
-
-  for (const [category, categoryStandards] of Object.entries(standardsByCategory)) {
-    yamlSection += `\n  ${category}:`;
-    for (const standard of categoryStandards) {
-      yamlSection += `\n    ${standard.name}:`;
-      if (standard.summary) {
-        yamlSection += `\n      summary: ${JSON.stringify(standard.summary, null, 6).replace(/^/gm, "      ")}`;
-      }
-      if (standard.rules) {
-        yamlSection += `\n      rules: ${JSON.stringify(standard.rules, null, 6).replace(/^/gm, "      ")}`;
-      }
-    }
-  }
-
-  yamlSection += `\n\`\`\``;
-  return yamlSection;
-}
-
-/**
- * Generate methodology YAML section from selected methodologies
- */
-async function generateMethodologyYaml(methodologies: string[]): Promise<string> {
-  if (methodologies.length === 0) return "";
-
-  const methodologyData: Array<{
-    name: string;
-    summary?: unknown;
-    rules?: unknown;
-    templates?: unknown;
-  }> = [];
-
-  for (const methodology of methodologies) {
-    const homePath = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
-    const methodologyPath = join(
-      homePath,
-      ".claude",
-      "aichaku",
-      "docs",
-      "methodologies",
-      methodology,
-      `${methodology}.yaml`,
-    );
-    if (await exists(methodologyPath)) {
-      const yamlContent = await safeReadTextFile(methodologyPath, join(homePath, ".claude", "aichaku"));
-      const parsedYaml = parseYamlSections(yamlContent, ["summary", "rules", "templates"]);
-      methodologyData.push({
-        name: methodology,
-        ...parsedYaml as { summary?: unknown; rules?: unknown; templates?: unknown },
-      });
-    }
-  }
-
-  if (methodologyData.length === 0) return "";
-
-  let yamlSection = `## Active Methodology
-
-<!-- AUTO-GENERATED from docs/methodologies/ - Do not edit manually -->
-
-\`\`\`yaml
-methodology:`;
-
-  for (const methodology of methodologyData) {
-    yamlSection += `\n  ${methodology.name}:`;
-    if (methodology.summary) {
-      yamlSection += `\n    summary: ${JSON.stringify(methodology.summary, null, 4).replace(/^/gm, "    ")}`;
-    }
-    if (methodology.rules) {
-      yamlSection += `\n    rules: ${JSON.stringify(methodology.rules, null, 4).replace(/^/gm, "    ")}`;
-    }
-    if (methodology.templates) {
-      yamlSection += `\n    templates: ${JSON.stringify(methodology.templates, null, 4).replace(/^/gm, "    ")}`;
-    }
-  }
-
-  yamlSection += `\n\`\`\``;
-  return yamlSection;
-}
-
-/**
- * Parse YAML content and extract specific sections
- */
-function parseYamlSections(yamlContent: string, sections: string[]): Record<string, unknown> {
-  const result: Record<string, unknown> = {};
-
-  try {
-    // Simple YAML parsing for the sections we need
-    const lines = yamlContent.split("\n");
-    let currentSection = "";
-    let currentContent: string[] = [];
-    let indentLevel = 0;
-
-    for (const line of lines) {
-      const trimmed = line.trim();
-      if (!trimmed || trimmed.startsWith("#")) continue;
-
-      const match = line.match(/^(\s*)(\w+):\s*(.*)$/);
-      if (match) {
-        const [, indent, key, value] = match;
-        const currentIndent = indent.length;
-
-        // If this is a top-level section we want
-        if (currentIndent === 0 && sections.includes(key)) {
-          // Save previous section
-          if (currentSection && currentContent.length > 0) {
-            result[currentSection] = parseYamlValue(currentContent.join("\n"));
-          }
-
-          currentSection = key;
-          currentContent = [];
-          indentLevel = currentIndent;
-
-          if (value) {
-            currentContent.push(value);
-          }
-        } else if (currentSection && currentIndent > indentLevel) {
-          // Add content to current section
-          currentContent.push(line);
-        } else if (currentSection && currentIndent <= indentLevel && currentIndent > 0) {
-          // Still part of current section
-          currentContent.push(line);
-        } else if (currentIndent === 0) {
-          // New top-level section, save current if we were collecting
-          if (currentSection && currentContent.length > 0) {
-            result[currentSection] = parseYamlValue(currentContent.join("\n"));
-          }
-          currentSection = "";
-          currentContent = [];
-        }
-      } else if (currentSection) {
-        currentContent.push(line);
-      }
-    }
-
-    // Save final section
-    if (currentSection && currentContent.length > 0) {
-      result[currentSection] = parseYamlValue(currentContent.join("\n"));
-    }
-  } catch (error) {
-    console.warn(`Failed to parse YAML sections: ${error}`);
-  }
-
-  return result;
-}
-
-/**
- * Parse a YAML value (handling strings, objects, arrays)
- */
-function parseYamlValue(content: string): unknown {
-  const trimmed = content.trim();
-
-  // Handle multiline string (|)
-  if (trimmed.startsWith("|")) {
-    return trimmed.substring(1).trim();
-  }
-
-  // Handle simple string value
-  if (!trimmed.includes("\n") && !trimmed.includes(":")) {
-    return trimmed;
-  }
-
-  // For complex structures, return as-is for now
-  // (Could implement full YAML parsing if needed)
-  return trimmed;
-}
-
-/**
- * Generate principles YAML section from selected principles for specific agent
- */
-async function generatePrinciplesYaml(principles: string[], agentType: string): Promise<string> {
-  // Get the mapping for this agent type
-  const agentMapping = AGENT_PRINCIPLE_MAPPING[agentType];
-  if (!agentMapping) return "";
-
-  const principlesByCategory: { [key: string]: Record<string, unknown>[] } = {};
-  const homePath = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
-  const principlesBase = join(homePath, ".claude", "aichaku", "docs", "principles");
-
-  // Helper function to check if a principle should be included for this agent
-  const shouldIncludePrinciple = (principleId: string, category: PrincipleCategory): boolean => {
-    // Always include if specifically listed for this agent
-    if (agentMapping.specific?.includes(principleId)) return true;
-
-    // Include if the agent accepts this category AND the principle is selected
-    if (agentMapping.categories.includes(category) && principles.includes(principleId)) return true;
-
-    return false;
-  };
-
-  // Load principles from each category
-  const categories: PrincipleCategory[] = ["software-development", "organizational", "engineering", "human-centered"];
-
-  for (const category of categories) {
-    const categoryPath = join(principlesBase, category);
-
-    if (!await exists(categoryPath)) continue;
-
-    // Find all YAML files in the category
-    try {
-      for await (const entry of Deno.readDir(categoryPath)) {
-        if (entry.isFile && entry.name.endsWith(".yaml")) {
-          const principleId = entry.name.replace(".yaml", "");
-
-          // Check if this principle should be included for this agent
-          if (!shouldIncludePrinciple(principleId, category)) {
-            continue;
-          }
-
-          const yamlPath = join(categoryPath, entry.name);
-          const yamlContent = await safeReadTextFile(yamlPath, principlesBase);
-          const parsedYaml = parseYamlSections(yamlContent, ["summary", "guidance", "application_context"]);
-
-          if (!principlesByCategory[category]) principlesByCategory[category] = [];
-          principlesByCategory[category].push({
-            name: principleId,
-            ...parsedYaml,
-          });
-        }
-      }
-    } catch (error) {
-      console.warn(`Failed to read principles from ${categoryPath}: ${error}`);
-    }
-  }
-
-  if (Object.keys(principlesByCategory).length === 0) return "";
-
-  // Add principle-aware section header with agent-specific context
-  let yamlSection = `## Principle-Aware Guidance
-
-This agent has been configured with relevant software engineering principles to provide 
-context-aware guidance and decision support.
-
-### How to Use Principles
-
-1. **Contextual Application**: Apply principles based on the specific situation
-2. **Trade-off Analysis**: Help users understand when principles conflict
-3. **Practical Examples**: Provide concrete examples from the current context
-4. **Educational Approach**: Explain why a principle matters in this case
-
-<!-- AUTO-GENERATED from docs/principles/ - Do not edit manually -->
-
-\`\`\`yaml
-principles:`;
-
-  for (const [category, categoryPrinciples] of Object.entries(principlesByCategory)) {
-    yamlSection += `\n  ${category}:`;
-    for (const principle of categoryPrinciples) {
-      yamlSection += `\n    ${principle.name}:`;
-      if (principle.summary) {
-        yamlSection += `\n      summary: ${JSON.stringify(principle.summary, null, 6).replace(/^/gm, "      ")}`;
-      }
-      if (principle.guidance) {
-        yamlSection += `\n      guidance: ${JSON.stringify(principle.guidance, null, 6).replace(/^/gm, "      ")}`;
-      }
-      if (principle.application_context) {
-        yamlSection += `\n      application_context: ${
-          JSON.stringify(principle.application_context, null, 6).replace(/^/gm, "      ")
-        }`;
-      }
-    }
-  }
-
-  yamlSection += `\n\`\`\``;
-
-  // Add agent-specific principle application notes
-  yamlSection += `\n\n### Agent-Specific Application Notes\n\n`;
-
-  switch (agentType) {
-    case "orchestrator":
-      yamlSection += `As the orchestrator, use principles to:
-- Guide task decomposition and routing decisions
-- Identify which specialists need principle context
-- Ensure principle compliance across the workflow
-- Detect when principle guidance is needed`;
-      break;
-
-    case "security-reviewer":
-      yamlSection += `As the security reviewer, apply principles to:
-- Enforce defensive programming practices
-- Validate fail-fast implementations
-- Ensure privacy-by-design compliance
-- Guide secure coding practices`;
-      break;
-
-    case "code-explorer":
-      yamlSection += `As the code explorer, use principles to:
-- Identify principle violations in existing code
-- Recognize architectural patterns
-- Detect code smells and anti-patterns
-- Suggest principle-based improvements`;
-      break;
-
-    case "methodology-coach":
-      yamlSection += `As the methodology coach, leverage principles to:
-- Align team practices with principles
-- Guide process improvements
-- Resolve methodology-principle conflicts
-- Foster principle-driven culture`;
-      break;
-
-    case "documenter":
-      yamlSection += `As the documenter, apply principles to:
-- Ensure documentation follows DRY principle
-- Create accessible, inclusive content
-- Design user-centered documentation
-- Maintain principle-based examples`;
-      break;
-
-    case "api-architect":
-      yamlSection += `As the API architect, use principles to:
-- Design SOLID-compliant interfaces
-- Apply separation of concerns
-- Ensure robustness principle in APIs
-- Guide RESTful design decisions`;
-      break;
-
-    case "principle-coach":
-      yamlSection += `As the principle coach, your role is to:
-- Provide deep principle understanding
-- Guide contextual application
-- Resolve principle conflicts
-- Foster principle-based thinking`;
-      break;
-  }
-
-  return yamlSection;
-}
-
-/**
- * Find the category for a given standard
- */
-async function findStandardCategory(standard: string): Promise<string | null> {
-  const homePath = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
-  const standardsBase = join(homePath, ".claude", "aichaku", "docs", "standards");
-  const categories = ["security", "development", "testing", "architecture", "documentation", "devops"];
-
-  for (const category of categories) {
-    const standardPath = join(standardsBase, category, `${standard}.md`);
-    if (await exists(standardPath)) {
-      return category;
-    }
-  }
-
-  return null;
 }

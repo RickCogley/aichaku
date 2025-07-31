@@ -9,53 +9,53 @@ technology_focus: react
 examples:
   - context: User needs complex React component architecture
     user: "I need to build a data table with sorting, filtering, and pagination"
-    assistant: "I'll use the aichaku-@aichaku-react-expert to design a performant data table component"
+    assistant: "I'll use the @aichaku-react-expert to design a performant data table component"
     commentary: Complex React components require understanding of performance optimization and state management
   - context: User wants to implement server-side rendering
     user: "How do I set up SSR with React for SEO optimization?"
-    assistant: "Let me consult the aichaku-@aichaku-react-expert for Next.js SSR implementation"
+    assistant: "Let me consult the @aichaku-react-expert for Next.js SSR implementation"
     commentary: SSR/SSG patterns require specialized React and Next.js knowledge
   - context: User has React performance issues
     user: "My React app is re-rendering too much and feels slow"
-    assistant: "I'll use the aichaku-@aichaku-react-expert to optimize your React performance"
+    assistant: "I'll use the @aichaku-react-expert to optimize your React performance"
     commentary: React performance optimization requires deep understanding of rendering behavior
   - context: User needs custom hooks
     user: "I want to create reusable logic for data fetching with loading states"
-    assistant: "I'll use the aichaku-@aichaku-react-expert to design custom hooks for data fetching"
+    assistant: "I'll use the @aichaku-react-expert to design custom hooks for data fetching"
     commentary: Custom hooks encapsulate complex stateful logic for reuse across components
   - context: User wants React Server Components
     user: "How do I use React Server Components in my Next.js app?"
-    assistant: "Let me use the aichaku-@aichaku-react-expert to implement Server Components"
+    assistant: "Let me use the @aichaku-react-expert to implement Server Components"
     commentary: Server Components require understanding of client-server boundaries
   - context: User needs form handling
     user: "What's the best way to handle complex forms with validation in React?"
-    assistant: "I'll use the aichaku-@aichaku-react-expert to implement form handling patterns"
+    assistant: "I'll use the @aichaku-react-expert to implement form handling patterns"
     commentary: React forms involve controlled components, validation, and error handling
   - context: User wants animation in React
     user: "How do I add smooth animations to my React components?"
-    assistant: "Let me consult the aichaku-@aichaku-react-expert for React animation techniques"
+    assistant: "Let me consult the @aichaku-react-expert for React animation techniques"
     commentary: React animations require understanding of lifecycle and performance
   - context: User needs routing setup
     user: "I need client-side routing with protected routes in my React app"
-    assistant: "I'll use the aichaku-@aichaku-react-expert to set up routing with authentication"
+    assistant: "I'll use the @aichaku-react-expert to set up routing with authentication"
     commentary: React routing involves route guards, code splitting, and navigation
   - context: User wants state management
     user: "Should I use Context API or Redux for my application state?"
-    assistant: "Let me use the aichaku-@aichaku-react-expert to design your state management"
+    assistant: "Let me use the @aichaku-react-expert to design your state management"
     commentary: State management choice depends on app complexity and team preferences
   - context: User needs testing strategy
     user: "How do I test my React components effectively?"
-    assistant: "I'll use the aichaku-@aichaku-react-expert to implement comprehensive React testing"
+    assistant: "I'll use the @aichaku-react-expert to implement comprehensive React testing"
     commentary: React testing involves component tests, integration tests, and mocking
 delegations:
   - trigger: Complex state management needed
-    target: aichaku-@aichaku-orchestrator
+    target: "@aichaku-orchestrator"
     handoff: "Implement Redux/Zustand/Context for: {state_requirements}"
   - trigger: TypeScript types for React components
-    target: aichaku-@aichaku-typescript-expert
+    target: "@aichaku-typescript-expert"
     handoff: "Create type-safe React component definitions for: {components}"
   - trigger: Styling with Tailwind needed
-    target: aichaku-@aichaku-tailwind-expert
+    target: "@aichaku-tailwind-expert"
     handoff: "Style React components using Tailwind: {component_list}"
 ---
 

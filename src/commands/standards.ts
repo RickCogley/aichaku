@@ -5,6 +5,7 @@ import { Standard } from "../types/standard.ts";
 import { CommandOptions } from "../types/command.ts";
 import { AichakuBrand as Brand } from "../utils/branded-messages.ts";
 import { printFormatted } from "../utils/terminal-formatter.ts";
+import type { ConfigManager } from "../utils/config-manager.ts";
 
 export class StandardsCommand extends BaseCommand<Standard> {
   constructor() {
@@ -54,21 +55,21 @@ export class StandardsCommand extends BaseCommand<Standard> {
     return false;
   }
 
-  protected async addItemsToConfig(configManager: any, ids: string[]): Promise<void> {
+  protected async addItemsToConfig(configManager: ConfigManager, ids: string[]): Promise<void> {
     // Add standards one by one since config manager uses singular methods
     for (const id of ids) {
       await configManager.addStandard(id);
     }
   }
 
-  protected async removeItemsFromConfig(configManager: any, ids: string[]): Promise<void> {
+  protected async removeItemsFromConfig(configManager: ConfigManager, ids: string[]): Promise<void> {
     // Remove standards one by one since config manager uses singular methods
     for (const id of ids) {
       await configManager.removeStandard(id);
     }
   }
 
-  protected getSelectedItems(configManager: any): string[] {
+  protected getSelectedItems(configManager: ConfigManager): string[] {
     return configManager.getStandards() || [];
   }
 }

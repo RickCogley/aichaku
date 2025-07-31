@@ -9,22 +9,22 @@ technology_focus: golang
 examples:
   - context: User needs help with Go concurrency
     user: "How do I implement a worker pool pattern in Go?"
-    assistant: "I'll use the aichaku-@aichaku-golang-expert to design a concurrent worker pool"
+    assistant: "I'll use the @aichaku-golang-expert to design a concurrent worker pool"
     commentary: Go concurrency patterns require understanding of goroutines and channels
   - context: User has Go performance issues
     user: "My Go service has high memory usage, how can I optimize it?"
-    assistant: "Let me consult the aichaku-@aichaku-golang-expert for memory profiling and optimization"
+    assistant: "Let me consult the @aichaku-golang-expert for memory profiling and optimization"
     commentary: Go performance optimization requires profiling and understanding of memory management
   - context: User needs Go project structure
     user: "What's the best way to structure a large Go project?"
-    assistant: "I'll use the aichaku-@aichaku-golang-expert to design a scalable project structure"
+    assistant: "I'll use the @aichaku-golang-expert to design a scalable project structure"
     commentary: Go project organization follows specific conventions and patterns
 delegations:
   - trigger: API design for Go service
-    target: aichaku-@aichaku-api-architect
+    target: "@aichaku-api-architect"
     handoff: "Design API for Go {framework} service with endpoints: {endpoints}"
   - trigger: Database integration needed
-    target: aichaku-@aichaku-postgres-expert
+    target: "@aichaku-postgres-expert"
     handoff: "Design database schema for Go service: {requirements}"
 ---
 
@@ -142,22 +142,22 @@ func (wp *WorkerPool) Start() {
 // worker processes jobs from the queue
 func (wp *WorkerPool) worker(id int) {
     defer wp.wg.Done()
-    
+
     for {
         select {
         case job, ok := <-wp.jobQueue:
             if !ok {
                 return
             }
-            
+
             result := wp.processJob(job)
-            
+
             select {
             case wp.results <- result:
             case <-wp.ctx.Done():
                 return
             }
-            
+
         case <-wp.ctx.Done():
             return
         }
@@ -168,7 +168,7 @@ func (wp *WorkerPool) worker(id int) {
 func (wp *WorkerPool) processJob(job Job) Result {
     // Simulate work
     time.Sleep(100 * time.Millisecond)
-    
+
     return Result{
         JobID:  job.ID,
         Output: fmt.Sprintf("Processed: %s", job.Data),
@@ -255,7 +255,7 @@ func validateUser(userID string) error {
             WithDetail("field", "userID").
             WithDetail("value", userID)
     }
-    
+
     // Simulate database error
     dbErr := fmt.Errorf("connection timeout")
     return NewAppError("DATABASE_ERROR", "Failed to fetch user").
@@ -331,21 +331,21 @@ func (s *UserService) GetUser(ctx context.Context, userID string) (*User, error)
             return &user, nil
         }
     }
-    
+
     // Query database
-    rows, err := s.db.Query(ctx, 
-        "SELECT id, name, email, created_at FROM users WHERE id = $1", 
+    rows, err := s.db.Query(ctx,
+        "SELECT id, name, email, created_at FROM users WHERE id = $1",
         userID,
     )
     if err != nil {
         s.logger.Error("Failed to query user", err, "userID", userID)
         return nil, err
     }
-    
+
     if len(rows) == 0 {
         return nil, fmt.Errorf("user not found: %s", userID)
     }
-    
+
     // Map result to User struct
     user := &User{
         ID:        rows[0]["id"].(string),
@@ -353,12 +353,12 @@ func (s *UserService) GetUser(ctx context.Context, userID string) (*User, error)
         Email:     rows[0]["email"].(string),
         CreatedAt: rows[0]["created_at"].(time.Time),
     }
-    
+
     // Cache the result
     if data, err := json.Marshal(user); err == nil {
         _ = s.cache.Set(ctx, cacheKey, data, 5*time.Minute)
     }
-    
+
     return user, nil
 }
 ```
@@ -395,37 +395,37 @@ func NewAPIClient(baseURL string, timeout time.Duration) *APIClient {
 // FetchDataWithRetry fetches data with retry logic and context handling
 func (c *APIClient) FetchDataWithRetry(ctx context.Context, endpoint string, maxRetries int) ([]byte, error) {
     var lastErr error
-    
+
     for attempt := 0; attempt <= maxRetries; attempt++ {
         // Create a timeout context for this attempt
         attemptCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
         defer cancel()
-        
+
         // Check if main context is already cancelled
         select {
         case <-ctx.Done():
             return nil, ctx.Err()
         default:
         }
-        
+
         // Make the request
         data, err := c.fetchData(attemptCtx, endpoint)
         if err == nil {
             return data, nil
         }
-        
+
         lastErr = err
-        
+
         // Don't retry on context cancellation
         if ctx.Err() != nil {
             return nil, ctx.Err()
         }
-        
+
         // Exponential backoff
         if attempt < maxRetries {
             backoff := time.Duration(attempt+1) * time.Second
             log.Printf("Attempt %d failed, retrying in %v: %v", attempt+1, backoff, err)
-            
+
             select {
             case <-time.After(backoff):
                 // Continue to next attempt
@@ -434,7 +434,7 @@ func (c *APIClient) FetchDataWithRetry(ctx context.Context, endpoint string, max
             }
         }
     }
-    
+
     return nil, fmt.Errorf("all retries exhausted: %w", lastErr)
 }
 
@@ -444,17 +444,17 @@ func (c *APIClient) fetchData(ctx context.Context, endpoint string) ([]byte, err
     if err != nil {
         return nil, fmt.Errorf("creating request: %w", err)
     }
-    
+
     resp, err := c.client.Do(req)
     if err != nil {
         return nil, fmt.Errorf("executing request: %w", err)
     }
     defer resp.Body.Close()
-    
+
     if resp.StatusCode != http.StatusOK {
         return nil, fmt.Errorf("unexpected status: %d", resp.StatusCode)
     }
-    
+
     return io.ReadAll(resp.Body)
 }
 ```
@@ -520,12 +520,12 @@ func (s *Stack[T]) Push(item T) {
 func (s *Stack[T]) Pop() (T, bool) {
     s.mu.Lock()
     defer s.mu.Unlock()
-    
+
     var zero T
     if len(s.items) == 0 {
         return zero, false
     }
-    
+
     item := s.items[len(s.items)-1]
     s.items = s.items[:len(s.items)-1]
     return item, true
@@ -555,7 +555,7 @@ func (c *Calculator) Divide(a, b float64) (float64, error) {
 
 func TestCalculator_Divide(t *testing.T) {
     calc := &Calculator{}
-    
+
     tests := []struct {
         name      string
         a         float64
@@ -596,21 +596,21 @@ func TestCalculator_Divide(t *testing.T) {
             want: 0,
         },
     }
-    
+
     for _, tt := range tests {
         t.Run(tt.name, func(t *testing.T) {
             got, err := calc.Divide(tt.a, tt.b)
-            
+
             if (err != nil) != tt.wantErr {
                 t.Errorf("Divide() error = %v, wantErr %v", err, tt.wantErr)
                 return
             }
-            
+
             if tt.wantErr && err.Error() != tt.errString {
                 t.Errorf("Divide() error = %q, want %q", err.Error(), tt.errString)
                 return
             }
-            
+
             if !tt.wantErr && got != tt.want {
                 t.Errorf("Divide() = %v, want %v", got, tt.want)
             }
@@ -677,16 +677,16 @@ func NewJSONEncoder() *JSONEncoder {
 func (e *JSONEncoder) Encode(v interface{}) ([]byte, error) {
     buf := e.pool.Get()
     defer e.pool.Put(buf)
-    
+
     encoder := json.NewEncoder(buf)
     if err := encoder.Encode(v); err != nil {
         return nil, err
     }
-    
+
     // Copy the result to avoid returning pooled buffer
     result := make([]byte, buf.Len())
     copy(result, buf.Bytes())
-    
+
     return result, nil
 }
 ```
@@ -747,11 +747,11 @@ func Transform[T, U any](ctx context.Context, in <-chan T, fn TransformFunc[T, U
 // FanOut distributes input to multiple outputs
 func FanOut[T any](ctx context.Context, in <-chan T, n int) []<-chan T {
     outputs := make([]<-chan T, n)
-    
+
     for i := 0; i < n; i++ {
         ch := make(chan T)
         outputs[i] = ch
-        
+
         go func(out chan<- T) {
             defer close(out)
             for {
@@ -771,14 +771,14 @@ func FanOut[T any](ctx context.Context, in <-chan T, n int) []<-chan T {
             }
         }(ch)
     }
-    
+
     return outputs
 }
 
 // Example usage
 func ProcessFiles(files []string) error {
     pipe := NewPipeline()
-    
+
     // Source: emit file paths
     source := Source(pipe.ctx, func(ctx context.Context, out chan<- string) {
         for _, file := range files {
@@ -789,7 +789,7 @@ func ProcessFiles(files []string) error {
             }
         }
     })
-    
+
     // Transform: read file contents
     contents := Transform(pipe.ctx, source, func(ctx context.Context, in <-chan string, out chan<- []byte) {
         for path := range in {
@@ -805,7 +805,7 @@ func ProcessFiles(files []string) error {
             }
         }
     })
-    
+
     // Process results
     return processContents(pipe.ctx, contents)
 }
@@ -844,10 +844,10 @@ func RequestID() Middleware {
             if id == "" {
                 id = generateID()
             }
-            
+
             ctx := context.WithValue(r.Context(), "requestID", id)
             w.Header().Set("X-Request-ID", id)
-            
+
             next.ServeHTTP(w, r.WithContext(ctx))
         })
     }
@@ -858,14 +858,14 @@ func Logger() Middleware {
     return func(next http.Handler) http.Handler {
         return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
             start := time.Now()
-            
+
             wrapped := &responseWriter{
                 ResponseWriter: w,
                 statusCode:     http.StatusOK,
             }
-            
+
             next.ServeHTTP(wrapped, r)
-            
+
             log.Printf(
                 "[%s] %s %s %d %v",
                 r.Context().Value("requestID"),
@@ -881,7 +881,7 @@ func Logger() Middleware {
 // RateLimit implements a simple rate limiter
 func RateLimit(requests int, per time.Duration) Middleware {
     limiter := NewRateLimiter(requests, per)
-    
+
     return func(next http.Handler) http.Handler {
         return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
             if !limiter.Allow() {
@@ -941,7 +941,7 @@ func NewServer(addr string, db *sql.DB) *Server {
         workers: NewWorkerPool(10),
         db:      db,
     }
-    
+
     srv.setupRoutes()
     return srv
 }
@@ -950,40 +950,40 @@ func NewServer(addr string, db *sql.DB) *Server {
 func (s *Server) Start() error {
     // Start background workers
     s.workers.Start()
-    
+
     // Start HTTP server
     log.Printf("Starting server on %s", s.httpServer.Addr)
     if err := s.httpServer.ListenAndServe(); err != http.ErrServerClosed {
         return err
     }
-    
+
     return nil
 }
 
 // Shutdown gracefully shuts down the server
 func (s *Server) Shutdown(ctx context.Context) error {
     log.Println("Starting graceful shutdown...")
-    
+
     // Stop accepting new requests
     if err := s.httpServer.Shutdown(ctx); err != nil {
         log.Printf("HTTP server shutdown error: %v", err)
     }
-    
+
     // Stop worker pool
     s.workers.Shutdown()
-    
+
     // Close database connections
     if err := s.db.Close(); err != nil {
         log.Printf("Database close error: %v", err)
     }
-    
+
     // Wait for all goroutines to finish
     done := make(chan struct{})
     go func() {
         s.wg.Wait()
         close(done)
     }()
-    
+
     select {
     case <-done:
         log.Println("Graceful shutdown complete")
@@ -999,27 +999,27 @@ func main() {
     if err != nil {
         log.Fatal("Failed to connect to database:", err)
     }
-    
+
     server := NewServer(":8080", db)
-    
+
     // Handle shutdown signals
     shutdown := make(chan os.Signal, 1)
     signal.Notify(shutdown, os.Interrupt, syscall.SIGTERM)
-    
+
     // Start server in background
     go func() {
         if err := server.Start(); err != nil {
             log.Fatal("Server failed to start:", err)
         }
     }()
-    
+
     // Wait for shutdown signal
     <-shutdown
-    
+
     // Allow 30 seconds for graceful shutdown
     ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
     defer cancel()
-    
+
     if err := server.Shutdown(ctx); err != nil {
         log.Fatal("Failed to shutdown gracefully:", err)
     }

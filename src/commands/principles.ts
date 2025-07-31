@@ -4,6 +4,7 @@ import { PrincipleFormatter } from "../formatters/principle-formatter.ts";
 import { Principle } from "../types/principle.ts";
 import { CommandOptions } from "../types/command.ts";
 import { printFormatted } from "../utils/terminal-formatter.ts";
+import type { ConfigManager } from "../utils/config-manager.ts";
 
 export class PrinciplesCommand extends BaseCommand<Principle> {
   constructor() {
@@ -50,17 +51,17 @@ export class PrinciplesCommand extends BaseCommand<Principle> {
     return false;
   }
 
-  protected async addItemsToConfig(configManager: any, ids: string[]): Promise<void> {
+  protected async addItemsToConfig(configManager: ConfigManager, ids: string[]): Promise<void> {
     await configManager.setPrinciples(ids);
   }
 
-  protected async removeItemsFromConfig(configManager: any, ids: string[]): Promise<void> {
+  protected async removeItemsFromConfig(configManager: ConfigManager, ids: string[]): Promise<void> {
     const current = configManager.getPrinciples() || [];
     const updated = current.filter((id: string) => !ids.includes(id));
     await configManager.setPrinciples(updated);
   }
 
-  protected getSelectedItems(configManager: any): string[] {
+  protected getSelectedItems(configManager: ConfigManager): string[] {
     return configManager.getPrinciples() || [];
   }
 }

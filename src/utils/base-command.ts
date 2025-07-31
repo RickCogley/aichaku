@@ -9,15 +9,9 @@ import { resolveProjectPath } from "./project-paths.ts";
 import { createProjectConfigManager } from "./config-manager.ts";
 import { printFormatted } from "./terminal-formatter.ts";
 import { AichakuBrand as Brand } from "./branded-messages.ts";
-import type {
-  CommandDefinition,
-  CommandOptions,
-  ConfigItem,
-  ConfigKey,
-  ItemFormatter,
-  ItemLoader,
-} from "../types/command.ts";
+import type { CommandDefinition, ConfigItem } from "../types/command.ts";
 import type { ParsedArgs } from "./argument-parser.ts";
+import type { ConfigManager } from "./config-manager.ts";
 
 /**
  * Abstract base class for all Aichaku commands
@@ -275,7 +269,7 @@ export abstract class BaseCommand<T extends ConfigItem> {
       const selected = this.getSelectedItems(configManager);
       const content = this.definition.formatter.formatCurrent(selected);
       printFormatted(content);
-    } catch (error) {
+    } catch (_error) {
       printFormatted(`# 🪴 Aichaku: No Configuration Found
 
 This project hasn't been initialized with Aichaku yet.
@@ -329,7 +323,7 @@ ${this.definition.helpText?.examples.join("\n") || "No examples available"}
     ];
 
     if (this.definition.supportedOperations?.list) {
-      options.push("- **--list** - List all available items");
+      options.push("- **--list** - List all available items (shows priority order)");
     }
 
     if (this.definition.supportedOperations?.show) {
@@ -341,7 +335,7 @@ ${this.definition.helpText?.examples.join("\n") || "No examples available"}
     }
 
     if (this.definition.supportedOperations?.add) {
-      options.push("- **--add <ids>** - Add items to project (comma-separated)");
+      options.push("- **--add <ids>** - Add items to project (order determines priority)");
     }
 
     if (this.definition.supportedOperations?.remove) {
@@ -392,7 +386,7 @@ ${this.definition.helpText?.examples.join("\n") || "No examples available"}
   }
 
   // Abstract methods that subclasses must implement
-  protected abstract addItemsToConfig(configManager: any, ids: string[]): Promise<void>;
-  protected abstract removeItemsFromConfig(configManager: any, ids: string[]): Promise<void>;
-  protected abstract getSelectedItems(configManager: any): string[];
+  protected abstract addItemsToConfig(configManager: ConfigManager, ids: string[]): Promise<void>;
+  protected abstract removeItemsFromConfig(configManager: ConfigManager, ids: string[]): Promise<void>;
+  protected abstract getSelectedItems(configManager: ConfigManager): string[];
 }

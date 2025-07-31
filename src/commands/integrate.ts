@@ -38,6 +38,9 @@ interface AichakuConfig {
   principles?: {
     selected: string[];
   };
+  agents?: {
+    selected: string[];
+  };
 }
 
 interface IntegrateOptions {
@@ -197,6 +200,34 @@ async function loadProjectPrinciples(projectPath: string): Promise<string[]> {
   }
 
   // Default to empty array if no principles are configured
+  return [];
+}
+
+/**
+ * Load project agents configuration from unified aichaku.json
+ */
+async function loadProjectAgents(projectPath: string): Promise<string[]> {
+  const aichakuPaths = paths.get();
+  const unifiedConfigPath = join(aichakuPaths.project.root, "aichaku.json");
+
+  if (await exists(unifiedConfigPath)) {
+    try {
+      const content = await safeReadTextFile(unifiedConfigPath, projectPath);
+      const config = JSON.parse(content) as AichakuConfig;
+
+      if (
+        config.agents?.selected && Array.isArray(config.agents.selected)
+      ) {
+        return config.agents.selected.filter(
+          (id: unknown) => typeof id === "string" && id.length > 0,
+        );
+      }
+    } catch (_error) {
+      console.warn("Failed to load agents from unified aichaku.json");
+    }
+  }
+
+  // Default to empty array - only default agents will be included
   return [];
 }
 
@@ -363,6 +394,9 @@ export async function integrate(
   // Load selected principles from project config
   const selectedPrinciples = await loadProjectPrinciples(projectPath);
 
+  // Load selected agents from project config
+  const selectedAgents = await loadProjectAgents(projectPath);
+
   // Define configuration paths - use development paths for now
   const configPaths = {
     core: join("/Users/rcogley/dev/aichaku", "docs", "core"),
@@ -456,11 +490,12 @@ export async function integrate(
       }
     }
 
-    // Generate methodology-aware agents
+    // Generate methodology-aware agents with focused context
     const agentResult = await generateMethodologyAwareAgents({
       selectedMethodologies: selectedMethodology ? [selectedMethodology] : [],
       selectedStandards: allSelectedStandards,
       selectedPrinciples: selectedPrinciples,
+      selectedAgents: selectedAgents,
       outputPath: join(Deno.cwd(), ".claude", "agents"),
       agentPrefix: "aichaku-",
     });

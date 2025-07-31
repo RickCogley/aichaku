@@ -18,13 +18,13 @@ examples:
     commentary: Kanban focuses on visualizing work and limiting WIP
 delegations:
   - trigger: Security practices for methodology needed
-    target: @aichaku-security-reviewer
+    target: "@aichaku-security-reviewer"
     handoff: "Review [methodology] security practices for [phase/activity]"
   - trigger: Documentation templates needed
-    target: @aichaku-documenter
+    target: "@aichaku-documenter"
     handoff: "Generate [methodology] documentation templates for [phase]"
   - trigger: Complex workflow coordination
-    target: @aichaku-orchestrator
+    target: "@aichaku-orchestrator"
     handoff: "Coordinate [methodology] workflow for [project phase]"
 ---
 
@@ -77,6 +77,35 @@ Dynamically load methodology expertise based on `.claude/aichaku/aichaku.json`:
 
 - Load: WIP limits, flow metrics, continuous improvement
 - Focus: Visualizing work, optimizing flow, reducing cycle time
+
+## Context Requirements
+
+### Methodologies
+
+<!-- All methodologies - coach needs comprehensive knowledge -->
+
+- shape-up.yaml
+- scrum.yaml
+- kanban.yaml
+- lean.yaml
+- xp.yaml
+- scrumban.yaml
+
+### Methodologies Required
+
+<!-- Default if no methodology selected -->
+
+- shape-up.yaml # Aichaku default methodology
+
+### Principles
+
+- organizational/*.yaml # All organizational principles
+- human-centered/user-centered-design.yaml
+- software-development/continuous-improvement.yaml
+
+### Principles Required
+
+- organizational/agile-manifesto.yaml # Foundation for all methodologies
 
 ## Primary Responsibilities
 

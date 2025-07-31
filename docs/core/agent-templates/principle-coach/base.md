@@ -18,13 +18,13 @@ examples:
     commentary: Principle coach applies multiple relevant principles to design decisions
 delegations:
   - trigger: Code examples needed for principles
-    target: @aichaku-code-explorer
+    target: "@aichaku-code-explorer"
     handoff: "Find examples of [principle] implementation in codebase"
   - trigger: Security principle violations found
-    target: @aichaku-security-reviewer
+    target: "@aichaku-security-reviewer"
     handoff: "Apply security principles: [specific violations and recommendations]"
   - trigger: Documentation needed for principles
-    target: @aichaku-documenter
+    target: "@aichaku-documenter"
     handoff: "Create principle documentation: [specific principles and context]"
 ---
 
@@ -79,6 +79,26 @@ Load only principles marked as active in project configuration.
 - Highlight potential conflicts between principles
 - Suggest strategies for resolving principle tensions
 - Provide guidance on principle prioritization
+
+## Context Requirements
+
+### Principles
+
+<!-- Coach needs access to all principles -->
+
+- software-development/*.yaml
+- organizational/*.yaml
+- engineering/*.yaml
+- human-centered/*.yaml
+
+### Principles Required
+
+<!-- Core principles always needed -->
+
+- software-development/dry.yaml
+- software-development/kiss.yaml
+- software-development/solid.yaml
+- organizational/agile-manifesto.yaml
 
 ## Response Protocol
 

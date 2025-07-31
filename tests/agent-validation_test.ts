@@ -2,7 +2,7 @@
 
 import { join } from "https://deno.land/std@0.208.0/path/mod.ts";
 import { parse } from "https://deno.land/std@0.208.0/yaml/mod.ts";
-import { getAichakuPaths } from "../src/paths.ts";
+import { paths } from "../src/paths.ts";
 
 interface AgentConfig {
   name: string;
@@ -97,7 +97,7 @@ async function validateOrchestratorReferences(): Promise<void> {
 
     for (const ref of uniqueRefs) {
       const agentName = ref.substring(1); // Remove @
-      const agentFile = join(paths.userAgents, `${agentName}.md`);
+      const agentFile = join(paths.get().userAgents, `${agentName}.md`);
 
       try {
         await Deno.stat(agentFile);

@@ -9,22 +9,22 @@ technology_focus: tailwind-css
 examples:
   - context: User needs help with responsive design
     user: "How do I create a responsive grid layout with Tailwind?"
-    assistant: "I'll use the aichaku-@aichaku-tailwind-expert to design a responsive grid system"
+    assistant: "I'll use the @aichaku-tailwind-expert to design a responsive grid system"
     commentary: Tailwind's responsive utilities require understanding of mobile-first design
   - context: User wants to optimize Tailwind bundle size
     user: "My Tailwind CSS file is too large, how can I reduce it?"
-    assistant: "Let me consult the aichaku-@aichaku-tailwind-expert for optimization strategies"
+    assistant: "Let me consult the @aichaku-tailwind-expert for optimization strategies"
     commentary: Tailwind optimization involves purging, JIT mode, and careful configuration
   - context: User needs custom design system
     user: "How do I extend Tailwind with my brand's design tokens?"
-    assistant: "I'll use the aichaku-@aichaku-tailwind-expert to configure custom design tokens"
+    assistant: "I'll use the @aichaku-tailwind-expert to configure custom design tokens"
     commentary: Extending Tailwind requires understanding of its configuration system
 delegations:
   - trigger: Component architecture for Tailwind components
-    target: aichaku-@aichaku-orchestrator
+    target: "@aichaku-orchestrator"
     handoff: "Design component architecture for Tailwind-based {component_type}"
   - trigger: TypeScript types for Tailwind config
-    target: aichaku-@aichaku-typescript-expert
+    target: "@aichaku-typescript-expert"
     handoff: "Create type-safe Tailwind configuration"
 ---
 

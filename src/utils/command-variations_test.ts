@@ -3,7 +3,7 @@
  * Comprehensive coverage of all 28 command variants mentioned in the project
  */
 
-import { assertEquals, assertRejects } from "jsr:@std/assert";
+import { assertEquals } from "jsr:@std/assert";
 import { CommandExecutor } from "./command-executor.ts";
 import { parseCommonArgs } from "./parseCommonArgs.ts";
 import {
@@ -77,9 +77,9 @@ Deno.test("Command variations - All --show flag variants", async () => {
       await executor.execute(command, { show: true });
       capture.stop();
 
-      const output = capture.getAllOutput();
+      const _output = capture.getAllOutput();
       CommandAssertions.assertCommandSuccess(capture, `${command} --show should succeed`);
-      CommandAssertions.assertOutputNotContains(output, "Error:", `${command} --show should not error`);
+      CommandAssertions.assertOutputNotContains(_output, "Error:", `${command} --show should not error`);
 
       capture.clear();
     }
@@ -110,13 +110,13 @@ Deno.test("Command variations - All --list flag variants", async () => {
       await executor.execute(command, { list: true });
       capture.stop();
 
-      const output = capture.getAllOutput();
+      const _output = capture.getAllOutput();
       CommandAssertions.assertCommandSuccess(capture, `${command} --list should succeed`);
       // Different commands have different headers, but all should show some kind of list
       if (command === "methodologies") {
-        CommandAssertions.assertOutputContains(output, "Methodologies", `${command} should show available items`);
+        CommandAssertions.assertOutputContains(_output, "Methodologies", `${command} should show available items`);
       } else {
-        CommandAssertions.assertOutputContains(output, "Available", `${command} should show available items`);
+        CommandAssertions.assertOutputContains(_output, "Available", `${command} should show available items`);
       }
 
       capture.clear();
@@ -139,7 +139,7 @@ Deno.test("Command variations - All --current flag variants", async () => {
       await executor.execute(command, { current: true });
       capture.stop();
 
-      const output = capture.getAllOutput();
+      const _output = capture.getAllOutput();
       CommandAssertions.assertCommandSuccess(capture, `${command} --current should succeed`);
 
       capture.clear();
@@ -234,7 +234,7 @@ Deno.test("Command variations - Valid flag combinations", async () => {
     await executor.execute("standards", { list: true, verbose: true });
     capture.stop();
 
-    const output = capture.getAllOutput();
+    const _output = capture.getAllOutput();
     CommandAssertions.assertCommandSuccess(capture, "standards --list --verbose should succeed");
 
     capture.clear();
@@ -244,7 +244,7 @@ Deno.test("Command variations - Valid flag combinations", async () => {
     await executor.execute("methodologies", { current: true, verbose: true });
     capture.stop();
 
-    const currentOutput = capture.getAllOutput();
+    const _currentOutput = capture.getAllOutput();
     CommandAssertions.assertCommandSuccess(capture, "methodologies --current --verbose should succeed");
   } finally {
     capture.stop();
@@ -264,10 +264,10 @@ Deno.test("Command variations - Empty options handling", async () => {
       await executor.execute(command, {});
       capture.stop();
 
-      const output = capture.getAllOutput();
+      const _output = capture.getAllOutput();
       CommandAssertions.assertCommandSuccess(capture, `${command} with empty options should succeed`);
       // Should default to showing some helpful information
-      CommandAssertions.assertOutputNotContains(output, "Error:", `${command} should not error with empty options`);
+      CommandAssertions.assertOutputNotContains(_output, "Error:", `${command} should not error with empty options`);
 
       capture.clear();
     }
@@ -333,7 +333,7 @@ Deno.test("Command variations - Different project paths", async () => {
     });
     capture.stop();
 
-    const output = capture.getAllOutput();
+    const _output2 = capture.getAllOutput();
     CommandAssertions.assertCommandSuccess(capture, "methodologies with explicit project path should succeed");
   } finally {
     capture.stop();

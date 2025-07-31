@@ -217,6 +217,26 @@ your-project/.claude/aichaku/
 └── local-standards.yaml    # Additional standards for this project
 ```
 
+### Selection Priority System
+
+When you select multiple standards or methodologies that might conflict, Aichaku uses **selection order priority**:
+
+```bash
+# REST gets priority over GraphQL
+aichaku standards --add api/rest api/graphql
+
+# GraphQL gets priority over REST  
+aichaku standards --add api/graphql api/rest
+```
+
+The order you add items determines their priority - first added has highest priority. This allows you to:
+
+- Choose your preferred approach when standards conflict
+- Let agents know which patterns to emphasize
+- Maintain flexibility without confusion
+
+See [Understanding Selection Priority](./docs/how-to/understand-selection-priority.md) for details.
+
 ### Real-World Impact
 
 **Before Aichaku:**

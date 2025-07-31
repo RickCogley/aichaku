@@ -44,9 +44,9 @@ export async function testPrinciples(options: TestPrinciplesOptions) {
 
   // Group by category
   const byCategory = principles.reduce((acc, p) => {
-    const cat = p.data.category;
+    const cat = p.category || "uncategorized";
     if (!acc[cat]) acc[cat] = [];
-    acc[cat].push(p.data.name);
+    acc[cat].push(p.name);
     return acc;
   }, {} as Record<string, string[]>);
 
@@ -81,6 +81,7 @@ export async function testPrinciples(options: TestPrinciplesOptions) {
       selectedMethodologies: testMethodologies,
       selectedStandards: testStandards,
       selectedPrinciples: testPrinciples,
+      selectedAgents: [], // No optional agents for test
       outputPath,
       agentPrefix: "test-aichaku-",
     });

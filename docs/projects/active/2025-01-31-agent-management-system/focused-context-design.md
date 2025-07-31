@@ -310,12 +310,11 @@ This creates three tiers:
 
 <!-- Mutually exclusive - warn if both selected -->
 
-- group: api-style exclusive: [rest, graphql, grpc] priority: rest # Explicit priority message: "Multiple API paradigms
-  selected. Agent will prioritize REST."
+- group: api-style exclusive: [rest, graphql, grpc] strategy: selection-order # Priority determined by user's selection
+  order message: "Multiple API paradigms selected. Agent will prioritize based on selection order."
 
-- group: css-approach\
-  exclusive: [tailwind, styled-components, css-modules] priority: tailwind # Explicit priority message: "Conflicting CSS
-  approaches. Agent will focus on Tailwind."
+- group: css-approach exclusive: [tailwind, styled-components, css-modules] strategy: selection-order # Priority
+  determined by user's selection order message: "Conflicting CSS approaches. Agent will focus on the first selected."
 ```
 
 Integration can:
@@ -358,8 +357,8 @@ Example output:
 
 ### Standards Conflicts
 
-- group: test-philosophy exclusive: [tdd, bdd] priority: tdd # TDD takes precedence strategy: complement # But they can
-  work together message: "Both TDD and BDD selected. Agent will use TDD for unit tests, BDD for integration tests."
+- group: test-philosophy exclusive: [tdd, bdd] strategy: complement # They can work together message: "Both TDD and BDD
+  selected. Agent will use based on selection order, complementing where appropriate."
 ```
 
 This ensures agents have the essential knowledge while handling edge cases gracefully.
