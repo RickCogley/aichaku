@@ -12,7 +12,7 @@ import { parse as parseYaml } from "jsr:@std/yaml@1";
 import { safeReadTextFile } from "./path-security.ts";
 
 /** Type of content (methodologies, standards, or core) */
-export type ContentType = "methodologies" | "standards" | "core";
+export type ContentType = "methodologies" | "standards" | "principles" | "core";
 
 /** Metadata for a discoverable content item */
 export interface ContentMetadata {

@@ -1,46 +1,44 @@
-import { join } from "jsr:@std/path@1";
-import { parse as parseYaml } from "jsr:@std/yaml@1";
 import { Agent } from "../types/agent.ts";
 import { paths } from "../paths.ts";
 import { AichakuBrand as Brand } from "./branded-messages.ts";
+import type { ItemLoader } from "../types/command.ts";
+import { smartSearch } from "./fuzzy-search.ts";
+import { type ContentMetadata, discoverContent } from "./dynamic-content-discovery.ts";
 
-export class AgentLoader {
-  private templatesPath: string;
+export class AgentLoader implements ItemLoader<Agent> {
+  private basePath: string;
 
   constructor() {
     // Agent templates are in the aichaku source directory
     const aichakuPaths = paths.get();
-    this.templatesPath = join(aichakuPaths.global.root, "docs", "core", "agent-templates");
+    this.basePath = aichakuPaths.global.root;
   }
 
   /**
-   * Load all available agents (required by ItemLoader interface)
+   * Load all available agents using dynamic content discovery
    */
-  loadAll(): Agent[] {
-    return this.list();
+  async loadAll(): Promise<Agent[]> {
+    return await this.list();
   }
 
   /**
-   * List all available agents
+   * List all available agents using dynamic content discovery
    */
-  list(): Agent[] {
+  async list(): Promise<Agent[]> {
     const agents: Agent[] = [];
 
     try {
-      // Read all directories in agent-templates synchronously
-      for (const entry of Deno.readDirSync(this.templatesPath)) {
-        if (!entry.isDirectory) continue;
+      const discovered = await discoverContent("core", this.basePath, true);
 
-        const templatePath = join(this.templatesPath, entry.name, "base.md");
-        try {
-          Deno.statSync(templatePath); // Check if file exists
-          const agent = this.loadAgentSync(entry.name);
-          if (agent) {
-            agents.push(agent);
-          }
-        } catch {
-          // File doesn't exist, skip
-          continue;
+      // Filter for agent-templates only
+      const agentItems = discovered.items.filter((item) =>
+        item.path.startsWith("agent-templates/") && item.path.endsWith("/base.md")
+      );
+
+      for (const item of agentItems) {
+        const agent = this.metadataToAgent(item);
+        if (agent) {
+          agents.push(agent);
         }
       }
     } catch (error) {
@@ -59,104 +57,62 @@ export class AgentLoader {
   /**
    * Load a specific agent by name
    */
-  load(name: string): Agent | null {
-    return this.loadAgentSync(name);
+  async load(name: string): Promise<Agent | null> {
+    return await this.loadById(name);
   }
 
   /**
    * Load a specific agent by id (same as by name for agents)
    */
-  loadById(id: string): Agent | null {
-    return this.loadAgentSync(id);
+  async loadById(id: string): Promise<Agent | null> {
+    const all = await this.loadAll();
+    return all.find((agent) => agent.id === id) || null;
   }
 
   /**
-   * Search agents by keyword
+   * Search agents using fuzzy search
    */
-  search(keyword: string): Agent[] {
-    const allAgents = this.list();
-    const lowerKeyword = keyword.toLowerCase();
-
-    return allAgents.filter((agent) =>
-      agent.name.toLowerCase().includes(lowerKeyword) ||
-      agent.description.toLowerCase().includes(lowerKeyword) ||
-      agent.technology_focus?.toLowerCase().includes(lowerKeyword) ||
-      false
-    );
+  async search(keyword: string): Promise<Agent[]> {
+    const all = await this.loadAll();
+    return smartSearch(all, keyword, "agents");
   }
 
   /**
    * Get agents by type
    */
-  getByType(type: "default" | "optional"): Agent[] {
-    const allAgents = this.list();
+  async getByType(type: "default" | "optional"): Promise<Agent[]> {
+    const allAgents = await this.list();
     return allAgents.filter((agent) => agent.type === type);
   }
 
-  private loadAgentSync(name: string): Agent | null {
-    const templatePath = join(this.templatesPath, name, "base.md");
-
+  /**
+   * Convert ContentMetadata to Agent object
+   */
+  private metadataToAgent(metadata: ContentMetadata): Agent | null {
     try {
-      const content = Deno.readTextFileSync(templatePath);
+      // Extract agent name from path (e.g., "agent-templates/code-explorer/base.md")
+      const pathParts = metadata.path.split("/");
+      const agentName = pathParts[1]; // Should be like "code-explorer"
 
-      // Extract YAML frontmatter
-      const yamlMatch = content.match(/^---\n([\s\S]+?)\n---/);
-      if (!yamlMatch) {
-        Brand.error(`No YAML frontmatter found in ${name} template`);
+      if (!agentName) {
+        console.warn(`Invalid agent path: ${metadata.path}`);
         return null;
       }
 
-      const yamlContent = yamlMatch[1];
-      interface AgentYaml {
-        name: string;
-        type?: string;
-        description?: string;
-        tools?: string[];
-        [key: string]: unknown;
-      }
-
-      let yaml: AgentYaml;
-      try {
-        yaml = parseYaml(yamlContent) as AgentYaml;
-      } catch (yamlError) {
-        // If YAML parsing fails, try to extract basic info manually
-        const nameMatch = yamlContent.match(/^name:\s*(.+)$/m);
-        const descMatch = yamlContent.match(/^description:\s*(.+)$/m);
-        const typeMatch = yamlContent.match(/^type:\s*(.+)$/m);
-
-        if (!nameMatch) {
-          Brand.error(
-            `Failed to parse YAML for ${name}: ${yamlError instanceof Error ? yamlError.message : "Unknown error"}`,
-          );
-          return null;
-        }
-
-        yaml = {
-          name: nameMatch[1].trim(),
-          description: descMatch?.[1]?.trim() || "",
-          type: typeMatch?.[1]?.trim() || "optional",
-        };
-      }
-
-      // Clean the name (remove @aichaku- prefix if present)
-      const cleanName = yaml.name?.replace(/^@?aichaku-/, "") || name;
+      // Clean the name (remove @aichaku- prefix if present from metadata.name)
+      const cleanName = metadata.name?.replace(/^@?aichaku-/, "") || agentName;
 
       const agent: Agent = {
-        id: cleanName, // ConfigItem requires id field
+        id: cleanName,
         name: cleanName,
-        type: (yaml.type as "default" | "optional") || "optional", // Default to optional if not specified
-        description: yaml.description || "",
-        color: yaml.color as string | undefined,
-        methodology_aware: yaml.methodology_aware as boolean | undefined,
-        tools: yaml.tools as string[] | undefined,
-        technology_focus: yaml.technology_focus as string | undefined,
-        examples: yaml.examples as Agent["examples"],
-        delegations: yaml.delegations as Agent["delegations"],
+        type: "optional", // Default type, will be enhanced from metadata if needed
+        description: metadata.description || "No description available",
+        // Additional fields will be populated from YAML frontmatter on demand
       };
 
       return agent;
     } catch (error) {
-      Brand.error(`Failed to load agent ${name}: ${error instanceof Error ? error.message : "Unknown error"}`);
+      console.error(`Failed to convert metadata to agent: ${metadata.path}`, error);
       return null;
     }
   }

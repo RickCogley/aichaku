@@ -25,7 +25,7 @@ Before you start using Aichaku:
 
 - **🤖 NEW**: **Sub-Agent System** - Specialized agents for focused assistance (security, docs, API design)
 - **💻 NEW**: **Technology Experts** - Language-specific guidance (TypeScript, Python, Go, React, Deno, etc.)
-- **🔄 IMPROVED**: **Context Optimization** - 70% reduction in context usage (12K→4K tokens)
+- **🔄 IMPROVED**: **Context Optimization** - 70% reduction in context usage vs monolithic approaches (12K→4K tokens)
 - **📚 NEW**: **Agent Templates** - 15+ expert agents with ~10 code examples each
 - **🎯 NEW**: **Smart Delegation** - Agents coordinate and hand off tasks automatically
 - **🧭 NEW**: **Orchestrator Agent** - General workflow coordinator for all projects
@@ -46,7 +46,8 @@ Methodology selection ensures agents and CLAUDE.md only include what you actuall
 
 **v0.29.0 - YAML Configuration Revolution & Enhanced Automation**
 
-- **🔧 REVOLUTIONARY**: **YAML-based "configuration as code"** - 96% reduction in file sizes (50KB→2KB)
+- **🔧 REVOLUTIONARY**: **YAML-based "configuration as code"** - 96% reduction in file sizes vs verbose Markdown
+  (50KB→2KB)
 - **🏗️ NEW**: Modular configuration system with dynamic assembly and smart merging
 - **🎯 NEW**: Project-specific overrides with inheritance from global configuration
 - **📝 NEW**: **Automatic session summaries** - Never lose context with automatic checkpoint creation

@@ -9,28 +9,56 @@ you naturally work**
 
 ## ⚡ Quick Start
 
+### Step 1: Install aichaku
+
 ```bash
-# Install aichaku CLI from JSR
+# Install the CLI from JSR
 deno install -g -A -n aichaku jsr:@rick/aichaku/cli
-
-# Set up once globally, use everywhere
-aichaku init --global
-cd your-project
-aichaku init
-aichaku integrate
-
-# Now Claude Code understands your methodology!
-# Say "let's shape up a feature" or "start a sprint" - Claude adapts
 ```
+
+### Step 2: Global Setup (one-time)
+
+```bash
+# Initialize aichaku globally
+aichaku init --global
+```
+
+### Step 3: Project Setup
+
+```bash
+# Navigate to your project
+cd /path/to/your-project
+
+# Initialize aichaku for this project
+aichaku init
+
+# Select a methodology when prompted (e.g., shape-up for solo dev)
+# Add standards that match your project
+aichaku standards --add tdd,clean-arch
+
+# Add principles you follow
+aichaku principles --add dry,kiss
+
+# Generate CLAUDE.md with your selections
+aichaku integrate
+```
+
+### Step 4: Start Coding!
+
+Now Claude Code understands your workflow:
+
+- Say "let's shape up a feature" → Shape Up mode
+- Say "write tests first" → TDD approach
+- Say "keep it simple" → KISS principle applied
 
 ## What is aichaku?
 
 Aichaku (愛着 - "affection/attachment") helps Claude Code understand your development workflow.
 
 - **Install once globally** - Works across all your projects
-- **Natural language** - Say "sprint" → get Scrum, "shaping" → get Shape Up
-- **Adaptive blending** - Mix methodologies based on your language
-- **Compact context** - Reduces Claude memory from 12K→4K tokens via YAML config
+- **Natural language aware** - Claude responds to your language within loaded methodologies
+- **Context-efficient** - Load only what you need, reducing from 50K+ tokens (traditional Markdown docs) to ~4K
+- **Methodology blending** - Mix multiple approaches when needed
 - **Current version:** 0.40.1
 
 ### Key Features
@@ -56,6 +84,24 @@ aichaku hooks --install essential  # Auto session summaries
 aichaku mcp --install      # Advanced project analysis
 ```
 
+## 🔄 Upgrading aichaku
+
+To upgrade to the latest version of aichaku, you need to refresh Deno's cache and reinstall:
+
+```bash
+# Refresh cache and force reinstall
+deno cache --reload jsr:@rick/aichaku/cli && deno install -g -A -n aichaku --force jsr:@rick/aichaku/cli
+
+# Verify the upgrade
+aichaku --version
+
+# Update your global installation's content
+aichaku upgrade --global
+```
+
+**Why the cache reload?** Deno aggressively caches modules. Without `--reload`, you might get the old version even with
+`--force`.
+
 ## 🏗️ What You Get
 
 **Methodologies:** Shape Up, Scrum, Kanban, XP, Lean, Scrumban **Standards:** OWASP, TDD, Clean Architecture, Google
@@ -70,18 +116,24 @@ Explorer, Methodology Coach
 
 ## 🚀 How It Works
 
-Aichaku uses **natural language detection**:
+Aichaku works by loading your selected methodologies, then Claude responds naturally to your language:
 
 ```text
+# With Shape Up loaded:
 You: "Let's shape up this feature"
 Claude: [Uses Shape Up methodology]
 
+# With Scrum loaded:
 You: "Time for our sprint planning"
 Claude: [Uses Scrum practices]
 
-You: "Show me our kanban board"
-Claude: [Creates Kanban workflow]
+# With multiple methodologies:
+You: "Show me our kanban board" 
+Claude: [Uses Kanban if loaded, or suggests adding it]
 ```
+
+**The key difference from early versions:** You explicitly choose which methodologies to load (keeping context lean),
+then Claude naturally responds to your language within those loaded frameworks.
 
 **3-Mode System:**
 
@@ -113,13 +165,13 @@ claude mcp add -s user aichaku-reviewer ~/.aichaku/mcp-servers/aichaku-code-revi
 
 - 50KB+ CLAUDE.md files with repetitive content
 - Manual updates across multiple projects
-- Methodology vendor lock-in
+- Context overload from loading everything
 
 **Aichaku solution:**
 
-- **96% size reduction** - YAML config generates compact directives
+- **96% size reduction vs verbose Markdown** - YAML-based config instead of repetitive explanations
 - **One-command updates** - Global installation, project references
-- **Methodology freedom** - Blend approaches naturally
+- **Smart selection** - Choose what you need, blend when necessary
 
 ## 🔄 Development
 

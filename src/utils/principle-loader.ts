@@ -1,17 +1,15 @@
 /**
  * Principle loader utility for Aichaku
- * Loads and validates principle definitions from YAML files
+ * Uses dynamic content discovery to load principle definitions
  * @module
  */
 
-import { exists } from "jsr:@std/fs@1/exists";
-import { join } from "jsr:@std/path@1";
-import { parse } from "jsr:@std/yaml@1";
-import { expandGlob } from "jsr:@std/fs@1/expand-glob";
 import { getAichakuPaths } from "../paths.ts";
-import { safeReadTextFile } from "./path-security.ts";
 import type { Principle, PrincipleCategory, PrincipleWithDocs } from "../types/principle.ts";
 import { PRINCIPLE_CATEGORIES } from "../types/principle.ts";
+import type { ItemLoader } from "../types/command.ts";
+import { smartSearch } from "./fuzzy-search.ts";
+import { type ContentMetadata, discoverContent } from "./dynamic-content-discovery.ts";
 
 /**
  * Generate a consistent ID from a principle name
@@ -25,73 +23,54 @@ function generatePrincipleId(name: string): string {
 }
 
 /**
- * Loads and manages principles from the filesystem
+ * Loads and manages principles from the filesystem using dynamic content discovery
  */
-export class PrincipleLoader {
+export class PrincipleLoader implements ItemLoader<Principle> {
   private cache: Map<string, PrincipleWithDocs> = new Map();
-  private principlesPath: string;
+  private basePath: string;
 
   constructor() {
     // Always use global installation path for principles
     const paths = getAichakuPaths();
-    this.principlesPath = join(paths.global.root, "docs/principles");
+    this.basePath = paths.global.root;
   }
 
   /**
    * Get unique categories from all principles
    */
   async getCategories(): Promise<string[]> {
-    const principles = await this.loadAll();
-    const categories = new Set<string>();
+    const discovered = await discoverContent("principles", this.basePath, true);
+    const principleCategories = new Set<string>();
 
-    for (const principle of principles) {
-      if (principle.category) {
-        categories.add(principle.category);
+    // Extract categories from principle paths
+    discovered.items.forEach((item) => {
+      const pathParts = item.path.split("/");
+      if (pathParts.length > 0) {
+        principleCategories.add(pathParts[0]);
       }
-    }
+    });
 
-    return Array.from(categories).sort();
+    return Array.from(principleCategories).sort();
   }
 
   /**
-   * Load all available principles
+   * Load all available principles using dynamic content discovery
    */
   async loadAll(): Promise<Principle[]> {
+    const discovered = await discoverContent("principles", this.basePath, true);
+
     const principles: Principle[] = [];
-
-    // Check if principles directory exists
-    if (!await exists(this.principlesPath)) {
-      console.warn(`Principles directory not found: ${this.principlesPath}`);
-      return principles;
-    }
-
-    // Load principles from each category
-    for (const category of Object.keys(PRINCIPLE_CATEGORIES) as PrincipleCategory[]) {
-      const categoryPath = join(this.principlesPath, category);
-
-      if (!await exists(categoryPath)) {
-        continue;
-      }
-
-      // Find all YAML files in the category
-      for await (const entry of expandGlob(`${categoryPath}/*.yaml`)) {
-        if (entry.isFile) {
-          const principleWithDocs = await this.loadPrincipleWithDocs(entry.path);
-          if (principleWithDocs) {
-            // Convert to Principle with required fields
-            const id = generatePrincipleId(principleWithDocs.name);
-            const principle: Principle = {
-              ...principleWithDocs,
-              id,
-              name: principleWithDocs.name,
-              description: principleWithDocs.description,
-              category: principleWithDocs.category,
-            };
-            principles.push(principle);
-            // Cache by generated ID for consistent lookups
-            this.cache.set(id, principleWithDocs);
-          }
-        }
+    for (const item of discovered.items) {
+      const principle = this.metadataToPrinciple(item);
+      if (principle) {
+        principles.push(principle);
+        // Cache the full principle with docs
+        const principleWithDocs: PrincipleWithDocs = {
+          ...principle,
+          documentation: "", // Will be loaded on demand
+          path: item.path,
+        };
+        this.cache.set(principle.id, principleWithDocs);
       }
     }
 
@@ -102,12 +81,17 @@ export class PrincipleLoader {
    * Load a specific principle by ID
    */
   async loadById(principleId: string): Promise<Principle | null> {
-    // Check cache first
+    // Ensure cache is loaded
+    if (this.cache.size === 0) {
+      await this.loadAll();
+    }
+
+    // Check cache first with exact match
     if (this.cache.has(principleId)) {
       const principleWithDocs = this.cache.get(principleId)!;
       const principle: Principle = {
         ...principleWithDocs,
-        id: principleId,
+        id: principleWithDocs.id,
         name: principleWithDocs.name,
         description: principleWithDocs.description,
         category: principleWithDocs.category,
@@ -115,15 +99,15 @@ export class PrincipleLoader {
       return principle;
     }
 
-    // If not in cache, load all principles to populate cache
-    if (this.cache.size === 0) {
-      await this.loadAll();
-      // Check cache again after loading
-      if (this.cache.has(principleId)) {
-        const principleWithDocs = this.cache.get(principleId)!;
+    // If no exact match, try partial matching for common shortcuts
+    const lowerPrincipleId = principleId.toLowerCase();
+    for (const [id, principleWithDocs] of this.cache.entries()) {
+      // Match if the ID starts with the search term
+      // This allows "dry" to match "dry-dont-repeat-yourself"
+      if (id.toLowerCase().startsWith(lowerPrincipleId + "-") || id.toLowerCase() === lowerPrincipleId) {
         const principle: Principle = {
           ...principleWithDocs,
-          id: principleId,
+          id: principleWithDocs.id,
           name: principleWithDocs.name,
           description: principleWithDocs.description,
           category: principleWithDocs.category,
@@ -132,145 +116,57 @@ export class PrincipleLoader {
       }
     }
 
-    // Try to find by filename as fallback
-    for (const category of Object.keys(PRINCIPLE_CATEGORIES) as PrincipleCategory[]) {
-      const yamlPath = join(this.principlesPath, category, `${principleId}.yaml`);
-
-      if (await exists(yamlPath)) {
-        const principle = await this.loadPrincipleWithDocs(yamlPath);
-        if (principle) {
-          const id = generatePrincipleId(principle.name);
-          this.cache.set(id, principle);
-          const principleResult: Principle = {
-            ...principle,
-            id,
-            name: principle.name,
-            description: principle.description,
-            category: principle.category,
-          };
-          return principleResult;
-        }
-      }
-    }
-
     return null;
   }
 
   /**
-   * Load principle from YAML with associated markdown documentation
+   * Convert ContentMetadata to Principle object
    */
-  private async loadPrincipleWithDocs(yamlPath: string): Promise<PrincipleWithDocs | null> {
+  private metadataToPrinciple(metadata: ContentMetadata): Principle | null {
     try {
-      // Load YAML data
-      const yamlContent = await safeReadTextFile(yamlPath, this.principlesPath);
-      const data = parse(yamlContent) as Principle;
+      // Extract category from path (e.g., "software-development/dry.yaml")
+      const pathParts = metadata.path.split("/");
+      const categoryPart = pathParts[0]; // Should be like "software-development"
 
-      // Validate against schema
-      if (!this.validatePrinciple(data)) {
-        console.warn(`Invalid principle format: ${yamlPath}`);
+      // Validate category
+      if (!categoryPart || !(categoryPart in PRINCIPLE_CATEGORIES)) {
+        console.warn(`Invalid principle category from path: ${metadata.path}`);
         return null;
       }
 
-      // Load corresponding Markdown documentation
-      const mdPath = yamlPath.replace(".yaml", ".md");
-      let documentation = "";
+      const category = categoryPart as PrincipleCategory;
+      const id = generatePrincipleId(metadata.name);
 
-      try {
-        documentation = await safeReadTextFile(mdPath, this.principlesPath);
-      } catch {
-        console.warn(`Missing documentation for principle: ${mdPath}`);
-        // Generate basic documentation from YAML data
-        documentation = this.generateBasicDocs(data);
-      }
-
-      return {
-        ...data,
-        documentation,
-        path: yamlPath,
+      // Create a basic principle from metadata
+      // Full principle data will be loaded from YAML on demand
+      const principle: Principle = {
+        id,
+        name: metadata.name,
+        description: metadata.description,
+        category,
+        history: {
+          origin: "Dynamic discovery",
+          evolution: "Loaded from dynamic content discovery",
+        },
+        summary: {
+          tagline: metadata.description,
+          core_tenets: [],
+        },
+        guidance: {
+          spirit: metadata.description,
+        },
+        aliases: metadata.tags, // Store tags as aliases for fuzzy search compatibility
       };
+
+      return principle;
     } catch (error) {
-      console.error(`Failed to load principle: ${yamlPath}`, error);
+      console.error(`Failed to convert metadata to principle: ${metadata.path}`, error);
       return null;
     }
   }
 
-  /**
-   * Validate principle structure
-   */
-  private validatePrinciple(data: unknown): data is Principle {
-    // Basic validation - check required fields
-    if (!data || typeof data !== "object") return false;
-
-    const obj = data as Record<string, unknown>;
-
-    const required = ["name", "category", "description", "history", "summary", "guidance"];
-    for (const field of required) {
-      if (!(field in obj)) {
-        console.warn(`Missing required field: ${field}`);
-        return false;
-      }
-    }
-
-    // Validate category
-    const validCategories = ["software-development", "organizational", "engineering", "human-centered"];
-    if (!validCategories.includes(obj.category as string)) {
-      console.warn(`Invalid category: ${obj.category}`);
-      return false;
-    }
-
-    // Validate nested structures
-    if (!obj.history || typeof obj.history !== "object") return false;
-    if (!obj.summary || typeof obj.summary !== "object") return false;
-    if (!obj.guidance || typeof obj.guidance !== "object") return false;
-
-    return true;
-  }
-
-  /**
-   * Generate basic documentation from YAML data
-   */
-  private generateBasicDocs(principle: Principle): string {
-    const lines: string[] = [];
-
-    lines.push(`# ${principle.name}`);
-    lines.push("");
-    lines.push(principle.description);
-    lines.push("");
-
-    if (principle.summary?.tagline) {
-      lines.push(`> ${principle.summary.tagline}`);
-      lines.push("");
-    }
-
-    lines.push("## Core Tenets");
-    lines.push("");
-    principle.summary?.core_tenets?.forEach((tenet) => {
-      lines.push(`- **${tenet.text}**`);
-      if (tenet.guidance) {
-        lines.push(`  ${tenet.guidance}`);
-      }
-    });
-    lines.push("");
-
-    if (principle.guidance?.spirit) {
-      lines.push("## Philosophy");
-      lines.push("");
-      lines.push(principle.guidance.spirit);
-      lines.push("");
-    }
-
-    if (principle.summary?.anti_patterns && principle.summary.anti_patterns.length > 0) {
-      lines.push("## Anti-Patterns");
-      lines.push("");
-      principle.summary.anti_patterns.forEach((ap) => {
-        lines.push(`- **Avoid**: ${ap.pattern}`);
-        lines.push(`  **Instead**: ${ap.instead}`);
-      });
-      lines.push("");
-    }
-
-    return lines.join("\n");
-  }
+  // Validation and documentation generation methods removed -
+  // now handled by dynamic content discovery
 
   /**
    * Get all principles for a specific category
@@ -281,24 +177,26 @@ export class PrincipleLoader {
   }
 
   /**
-   * Search principles by keyword
+   * Search principles using fuzzy search
    */
   async search(query: string): Promise<Principle[]> {
-    const lowerQuery = query.toLowerCase();
-    const allPrinciples = await this.loadAll();
+    const all = await this.loadAll();
 
-    return allPrinciples.filter((p) => {
-      return (
-        p.name.toLowerCase().includes(lowerQuery) ||
-        p.description.toLowerCase().includes(lowerQuery) ||
-        p.summary?.tagline?.toLowerCase().includes(lowerQuery) ||
-        p.aliases?.some((alias) => alias.toLowerCase().includes(lowerQuery)) ||
-        p.summary?.core_tenets?.some((tenet) =>
-          tenet.text.toLowerCase().includes(lowerQuery) ||
-          tenet.guidance?.toLowerCase().includes(lowerQuery)
-        )
-      );
-    });
+    // Convert principles to FuzzySearchItem format for search
+    const searchableItems = all.map((p) => ({
+      id: p.id,
+      name: p.name,
+      description: p.description,
+      category: p.category,
+      tags: p.aliases || [],
+    }));
+
+    const searchResults = smartSearch(searchableItems, query, "principles");
+
+    // Map search results back to full Principle objects
+    return searchResults.map((result) => all.find((p) => p.id === result.id)).filter((p): p is Principle =>
+      p !== undefined
+    );
   }
 
   /**

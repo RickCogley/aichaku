@@ -1,109 +1,72 @@
 /**
- * Standard loader utility
+ * Standard loader utility using dynamic content discovery
+ * Consolidates YAML parsing patterns to reduce duplication
  */
 
 import { getAichakuPaths } from "../paths.ts";
-import { join } from "jsr:@std/path@1";
-import { exists } from "jsr:@std/fs@1";
-import { parse } from "jsr:@std/yaml@1";
 import type { Standard } from "../types/standard.ts";
 import type { ItemLoader } from "../types/command.ts";
+import { smartSearch } from "./fuzzy-search.ts";
+import { type ContentMetadata, discoverContent } from "./dynamic-content-discovery.ts";
 
 export class StandardLoader implements ItemLoader<Standard> {
-  private standardsPath: string;
+  private basePath: string;
 
   constructor() {
     const paths = getAichakuPaths();
-    this.standardsPath = join(paths.global.root, "docs/standards");
+    this.basePath = paths.global.root;
   }
 
   async loadAll(): Promise<Standard[]> {
+    const discovered = await discoverContent("standards", this.basePath, true);
+
+    // Convert ContentMetadata to Standard objects
     const standards: Standard[] = [];
-
-    if (!await exists(this.standardsPath)) {
-      return standards;
-    }
-
-    // Read all YAML files in standards subdirectories
-    for await (const categoryEntry of Deno.readDir(this.standardsPath)) {
-      if (categoryEntry.isDirectory) {
-        const categoryPath = join(this.standardsPath, categoryEntry.name);
-
-        for await (const entry of Deno.readDir(categoryPath)) {
-          // Skip metadata.yaml files - they contain category metadata, not standards
-          if (entry.isFile && entry.name.endsWith(".yaml") && entry.name !== "metadata.yaml") {
-            try {
-              const content = await Deno.readTextFile(join(categoryPath, entry.name));
-              const data = parse(content) as Standard;
-              if (!data.id) {
-                data.id = entry.name.replace(".yaml", "");
-              }
-              // Ensure required fields exist
-              data.category = data.category || categoryEntry.name;
-              data.name = data.name || data.id;
-              data.description = data.description || "";
-              standards.push(data);
-            } catch {
-              // Skip invalid files
-            }
-          }
-        }
+    for (const item of discovered.items) {
+      const standard = this.metadataToStandard(item);
+      if (standard) {
+        standards.push(standard);
       }
     }
 
     return standards;
   }
 
-  async loadById(id: string): Promise<Standard | null> {
-    // Search for the standard in all category subdirectories
-    for await (const categoryEntry of Deno.readDir(this.standardsPath)) {
-      if (categoryEntry.isDirectory) {
-        const filePath = join(this.standardsPath, categoryEntry.name, `${id}.yaml`);
+  /**
+   * Convert ContentMetadata to Standard object
+   */
+  private metadataToStandard(metadata: ContentMetadata): Standard | null {
+    try {
+      // The path will be like "development/tdd.yaml"
+      const id = metadata.path.split("/").pop()?.replace(".yaml", "") ||
+        metadata.name.toLowerCase().replace(/\s+/g, "-");
 
-        if (await exists(filePath)) {
-          try {
-            const content = await Deno.readTextFile(filePath);
-            const data = parse(content) as Standard;
-            if (!data.id) {
-              data.id = id;
-            }
-            // Ensure required fields exist
-            data.category = data.category || categoryEntry.name;
-            data.name = data.name || data.id;
-            data.description = data.description || "";
-            return data;
-          } catch {
-            // Continue searching in other directories
-          }
-        }
-      }
+      const standard: Standard = {
+        id,
+        name: metadata.name,
+        description: metadata.description,
+        category: metadata.category,
+        tags: metadata.tags,
+      };
+
+      return standard;
+    } catch {
+      return null;
     }
+  }
 
-    return null;
+  async loadById(id: string): Promise<Standard | null> {
+    const all = await this.loadAll();
+    return all.find((standard) => standard.id === id) || null;
   }
 
   async search(query: string): Promise<Standard[]> {
     const all = await this.loadAll();
-    const lowerQuery = query.toLowerCase();
-
-    return all.filter((standard) =>
-      standard.id.toLowerCase().includes(lowerQuery) ||
-      standard.name.toLowerCase().includes(lowerQuery) ||
-      (standard.description?.toLowerCase().includes(lowerQuery) ?? false) ||
-      (standard.tags?.some((tag) => tag.toLowerCase().includes(lowerQuery)) ?? false)
-    );
+    return smartSearch(all, query, "standards");
   }
 
   async getCategories(): Promise<string[]> {
-    const standards = await this.loadAll();
-    const categories = new Set<string>();
-
-    for (const standard of standards) {
-      if (standard.category) {
-        categories.add(standard.category);
-      }
-    }
-
-    return Array.from(categories).sort();
+    const discovered = await discoverContent("standards", this.basePath, true);
+    return Object.keys(discovered.categories).sort();
   }
 }

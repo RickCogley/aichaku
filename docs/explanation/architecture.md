@@ -139,7 +139,7 @@ Aichaku employs specialized sub-agents to manage context and provide focused exp
 
 **Context Management**:
 
-- Each agent maintains focused context (~4K tokens vs 12K)
+- Each agent maintains focused context (~4K tokens vs 12K+ for monolithic approaches)
 - Agents delegate to each other for specialized tasks
 - Orchestrator coordinates multi-agent workflows
 - Methodology-aware loading reduces irrelevant context
@@ -266,9 +266,9 @@ expertise.
 
 ### Agent Benefits
 
-**Performance**: 70% reduction in context usage enables longer sessions **Expertise**: Deep, focused knowledge in
-specific domains **Scalability**: New agents added without affecting existing ones **Flexibility**: Agents composed for
-complex workflows
+**Performance**: 70% reduction in context usage vs loading all methodologies enables longer sessions **Expertise**:
+Deep, focused knowledge in specific domains **Scalability**: New agents added without affecting existing ones
+**Flexibility**: Agents composed for complex workflows
 
 ## Extension architecture
 

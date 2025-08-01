@@ -28,7 +28,8 @@
     "@std/async": "jsr:@std/async@^1.0.13",
     "@std/json": "jsr:@std/json@^1.0.2",
     "@std/crypto": "jsr:@std/crypto@^1.0.5",
-    "@modelcontextprotocol/sdk": "npm:@modelcontextprotocol/sdk@1.15.1"
+    "@modelcontextprotocol/sdk": "npm:@modelcontextprotocol/sdk@1.15.1",
+    "fuse.js": "npm:fuse.js@7.0.0"
   },
   "tasks": {
     "dev": "deno run --watch mod.ts",

@@ -7,7 +7,7 @@ Instead of large static Markdown files, directives are now modular YAML configur
 
 ## Key Benefits
 
-- **96% smaller files**: From 50KB+ Markdown to ~2KB YAML
+- **96% smaller files**: From 50KB+ verbose Markdown instructions to ~2KB YAML configuration
 - **Modular updates**: Change specific behaviors without rewriting everything
 - **Single source of truth**: One place to update behavior across all projects
 - **Customizable**: Override defaults for your specific needs
