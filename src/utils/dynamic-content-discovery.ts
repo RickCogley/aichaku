@@ -62,11 +62,11 @@ export async function discoverContent(
     return { categories, items, count: 0 };
   }
 
-  // Walk through the content directory looking for YAML files
+  // Walk through the content directory looking for YAML and Markdown files
   for await (
     const entry of walk(contentPath, {
       includeDirs: false,
-      exts: [".yaml", ".yml"],
+      exts: [".yaml", ".yml", ".md"],
       skip: [/\/templates\//, /\/scripts\//, /\/archive\//, /metadata\.yaml$/],
     })
   ) {

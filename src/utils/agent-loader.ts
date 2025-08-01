@@ -28,11 +28,13 @@ export class AgentLoader implements ItemLoader<Agent> {
     const agents: Agent[] = [];
 
     try {
+      // Discover core content which includes agent templates
       const discovered = await discoverContent("core", this.basePath, true);
 
-      // Filter for agent-templates only
+      // Filter for agent template base.md files
       const agentItems = discovered.items.filter((item) =>
-        item.path.startsWith("agent-templates/") && item.path.endsWith("/base.md")
+        item.path.startsWith("agent-templates/") &&
+        (item.path.endsWith("/base.md") || item.path === "agent-templates/base.md")
       );
 
       for (const item of agentItems) {

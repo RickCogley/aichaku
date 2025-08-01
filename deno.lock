@@ -2,6 +2,7 @@
   "version": "5",
   "specifiers": {
     "jsr:@davidbonnet/astring@1.8.6": "1.8.6",
+    "jsr:@rick/aichaku@*": "0.41.1",
     "jsr:@rick/nagare@2.13.2": "2.13.2",
     "jsr:@std/assert@*": "1.0.13",
     "jsr:@std/assert@1": "1.0.13",
@@ -37,6 +38,22 @@
   "jsr": {
     "@davidbonnet/astring@1.8.6": {
       "integrity": "98b4914c8863cdf8c0ff83bb5c528caa67a8dca6020ad6234113499f00583e3a"
+    },
+    "@rick/aichaku@0.41.1": {
+      "integrity": "d24fb1d8945acc4a5d443ada779e76d7ff11a6635659accfe0c735150071f46b",
+      "dependencies": [
+        "jsr:@std/assert@1",
+        "jsr:@std/cli@^1.0.20",
+        "jsr:@std/fmt",
+        "jsr:@std/fs@1",
+        "jsr:@std/fs@1.0.0",
+        "jsr:@std/fs@^1.0.19",
+        "jsr:@std/path@1",
+        "jsr:@std/path@1.0.0",
+        "jsr:@std/path@^1.1.1",
+        "jsr:@std/yaml",
+        "npm:fuse.js"
+      ]
     },
     "@rick/nagare@2.13.2": {
       "integrity": "33b9bf40fd2d85553720f9e6da79fac6df64c64e48477a4bec0fc16420387b10",

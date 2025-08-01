@@ -7,89 +7,113 @@
 
 import { BaseCommand } from "../utils/base-command.ts";
 import { AichakuBrand as Brand } from "../utils/branded-messages.ts";
-import type { CommandDefinition, ItemFormatter } from "../types/command.ts";
+import type { CommandDefinition } from "../types/command.ts";
 import type { ParsedArgs } from "../utils/argument-parser.ts";
 import type { ConfigManager } from "../utils/config-manager.ts";
 import { type Methodology, MethodologyLoader } from "../utils/methodology-loader.ts";
+import { BaseFormatter } from "../formatters/base-formatter.ts";
+import { bold } from "jsr:@std/fmt@1/colors";
 
 // Hardcoded methodologies replaced with dynamic loader
 
 /**
  * Methodology formatter implementation
  */
-class MethodologyFormatter implements ItemFormatter<Methodology> {
+class MethodologyFormatter extends BaseFormatter<Methodology> {
   private loader: MethodologyLoader;
 
   constructor(loader: MethodologyLoader) {
+    super();
     this.loader = loader;
   }
   formatList(methodologies: Methodology[]): string {
-    const content = [`# 🪴 Aichaku Methodologies - Development Approaches\n`];
-    content.push(
-      `Select from ${methodologies.length} proven methodologies to guide your workflow.\n`,
-    );
+    const lines: string[] = [];
+
+    lines.push(this.formatHeader("Available Methodologies"));
+    lines.push(this.addEmptyLine());
+    lines.push(`Select from ${methodologies.length} proven methodologies to guide your workflow.`);
+    lines.push(this.addEmptyLine());
 
     let index = 1;
     for (const methodology of methodologies) {
-      content.push(`## ${index}. ${methodology.name} (\`${methodology.id}\`)\n`);
-      content.push(`${methodology.description}\n`);
-      content.push(`- **Best for:** ${methodology.bestFor}`);
-      content.push(`- **Team size:** ${methodology.teamSize}`);
-      content.push(`- **Key principles:** ${methodology.principles.slice(0, 3).join(", ")}...\n`);
+      lines.push(this.formatSection(`${index}. ${methodology.name} (\`${methodology.id}\`)`));
+      lines.push(this.addEmptyLine());
+      lines.push(methodology.description);
+      lines.push(this.addEmptyLine());
+      lines.push(this.formatItem(`Best for: ${methodology.bestFor}`));
+      lines.push(this.formatItem(`Team size: ${methodology.teamSize}`));
+      lines.push(this.formatItem(`Key principles: ${methodology.principles.slice(0, 3).join(", ")}...`));
+      lines.push(this.addEmptyLine());
       index++;
     }
 
-    content.push(`## 💡 Usage Tips\n`);
-    content.push(`- Use \`aichaku methodologies --add shape-up\` for focused context`);
-    content.push(`- Multiple methodologies can be active simultaneously`);
-    content.push(`- Each active methodology adds ~1500 tokens to agent context`);
-    content.push(`- Run \`aichaku methodologies --show\` to see current selection`);
+    lines.push(this.formatSection("💡 Usage Tips"));
+    lines.push(this.formatItem(`Use \`aichaku methodologies --add shape-up\` for focused context`));
+    lines.push(this.formatItem(`Multiple methodologies can be active simultaneously`));
+    lines.push(this.formatItem(`Each active methodology adds ~1500 tokens to agent context`));
+    lines.push(this.formatItem(`Run \`aichaku methodologies --show\` to see current selection`));
 
-    return content.join("\n");
+    return this.buildOutput(lines);
   }
 
   formatDetails(methodology: Methodology, _verbose?: boolean): string {
-    const content = [`# 📚 ${methodology.name}\n`];
-    content.push(`**ID:** \`${methodology.id}\``);
-    content.push(`**Category:** ${methodology.category}\n`);
+    const lines: string[] = [];
 
-    content.push(`## Description\n`);
-    content.push(`${methodology.description}\n`);
+    lines.push(this.formatHeader("Methodology", methodology.name));
+    lines.push(this.addEmptyLine());
 
-    content.push(`**Best for:** ${methodology.bestFor}`);
-    content.push(`**Team size:** ${methodology.teamSize}\n`);
+    lines.push(`${bold("ID:")} \`${methodology.id}\``);
+    lines.push(`${bold("Category:")} ${methodology.category || "general"}`);
+    lines.push(this.addEmptyLine());
 
-    content.push(`## Key Principles\n`);
+    lines.push(this.formatSection("Description"));
+    lines.push(methodology.description);
+    lines.push(this.addEmptyLine());
+
+    lines.push(`${bold("Best for:")} ${methodology.bestFor}`);
+    lines.push(`${bold("Team size:")} ${methodology.teamSize}`);
+    lines.push(this.addEmptyLine());
+
+    lines.push(this.formatSection("Key Principles"));
     methodology.principles.forEach((principle) => {
-      content.push(`- ${principle}`);
+      lines.push(this.formatItem(principle));
     });
+    lines.push(this.addEmptyLine());
 
-    content.push(`\n## Tags\n`);
-    content.push(`${methodology.tags?.join(", ") || "None"}`);
+    if (methodology.tags && methodology.tags.length > 0) {
+      lines.push(this.formatSection("Tags"));
+      lines.push(methodology.tags.join(", "));
+    }
 
-    return content.join("\n");
+    return this.buildOutput(lines);
   }
 
   formatCurrent(selected: string[]): string {
-    const content = [`# 🪴 Aichaku: Project Methodology Configuration\n`];
+    const lines: string[] = [];
+
+    lines.push(this.formatHeader("Current Methodology Selection"));
+    lines.push(this.addEmptyLine());
 
     if (selected.length === 0) {
-      content.push(`No methodologies currently selected for this project.\n`);
-      content.push(`## 💡 To Get Started\n`);
-      content.push(`- Run \`aichaku methodologies --list\` to see available methodologies`);
-      content.push(`- Run \`aichaku methodologies --add <id>\` to add a methodology`);
-      content.push(`- Run \`aichaku methodologies --set shape-up\` for solo development\n`);
-      content.push(`**Example:** \`aichaku methodologies --add shape-up\``);
+      lines.push("ℹ️  No methodologies currently selected for this project.");
+      lines.push(this.addEmptyLine());
+      lines.push(this.formatSection("💡 To Get Started"));
+      lines.push(this.formatItem(`Run \`aichaku methodologies --list\` to see available methodologies`));
+      lines.push(this.formatItem(`Run \`aichaku methodologies --add <id>\` to add a methodology`));
+      lines.push(this.formatItem(`Run \`aichaku methodologies --set shape-up\` for solo development`));
+      lines.push(this.addEmptyLine());
+      lines.push(`${bold("Example:")} \`aichaku methodologies --add shape-up\``);
     } else {
-      content.push(`**Active methodologies:** ${selected.join(", ")}\n`);
-      content.push(`## 💡 What You Can Do\n`);
-      content.push(`- Run \`aichaku integrate\` to update CLAUDE.md with methodologies`);
-      content.push(`- Run \`aichaku methodologies --add <id>\` to add additional methodologies`);
-      content.push(`- Run \`aichaku methodologies --set <id>\` to change to a different methodology`);
-      content.push(`- Run \`aichaku methodologies --search <term>\` to find specific methodologies`);
+      lines.push(`${bold("Active methodologies:")} ${selected.join(", ")}`);
+      lines.push(this.addEmptyLine());
+      lines.push(this.formatSection("💡 What You Can Do"));
+      lines.push(this.formatItem(`Run \`aichaku integrate\` to update CLAUDE.md with methodologies`));
+      lines.push(this.formatItem(`Run \`aichaku methodologies --add <id>\` to add additional methodologies`));
+      lines.push(this.formatItem(`Run \`aichaku methodologies --set <id>\` to change to a different methodology`));
+      lines.push(this.formatItem(`Run \`aichaku methodologies --search <term>\` to find specific methodologies`));
     }
 
-    return content.join("\n");
+    return this.buildOutput(lines);
   }
 
   /**
@@ -138,25 +162,7 @@ class MethodologyFormatter implements ItemFormatter<Methodology> {
     return content.join("\n");
   }
 
-  formatAddHeader(commandName: string): string {
-    return `# 🪴 Aichaku: Adding ${commandName}`;
-  }
-
-  formatRemoveHeader(commandName: string): string {
-    return `# 🪴 Aichaku: Removing ${commandName}`;
-  }
-
-  formatSearchHeader(query: string, commandName: string): string {
-    return `# 🔍 Aichaku: Searching ${commandName} for "${query}"`;
-  }
-
-  formatSearchResult(item: Methodology): string {
-    return `## ${item.name} (\`${item.id}\`)\n${item.description}\n- Best for: ${item.bestFor}`;
-  }
-
-  formatNoResults(query: string, commandName: string): string {
-    return `No ${commandName} found matching "${query}". Try a different search term.`;
-  }
+  // Override only if we need custom formatting, otherwise inherit from BaseFormatter
 }
 
 /**
