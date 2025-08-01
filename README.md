@@ -65,7 +65,7 @@ Explorer, Methodology Coach
 ## 📖 Documentation
 
 - **[API Docs](https://aichaku.esolia.deno.net/)** - Complete TypeScript reference
-- **[GitHub](https://github.com/RickCogley/aichaku)** - Full documentation and guides
+- **[GitHub](https://github.com/RickCogley/aichaku/tree/main/docs)** - Full documentation and guides
 - **[JSR Package](https://jsr.io/@rick/aichaku)** - Package registry
 
 ## 🚀 How It Works

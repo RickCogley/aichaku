@@ -30,7 +30,8 @@ export class StandardLoader implements ItemLoader<Standard> {
         const categoryPath = join(this.standardsPath, categoryEntry.name);
 
         for await (const entry of Deno.readDir(categoryPath)) {
-          if (entry.isFile && entry.name.endsWith(".yaml")) {
+          // Skip metadata.yaml files - they contain category metadata, not standards
+          if (entry.isFile && entry.name.endsWith(".yaml") && entry.name !== "metadata.yaml") {
             try {
               const content = await Deno.readTextFile(join(categoryPath, entry.name));
               const data = parse(content) as Standard;
