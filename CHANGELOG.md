@@ -5,6 +5,17 @@ All notable changes to aichaku (愛着) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.41.1] - 2025-08-01
+
+### Changed
+
+- rename DynamicMethodologyLoader to MethodologyLoader for consistency (1e39136)
+
+### Fixed
+
+- complete migration to dynamic content discovery and fix --show command (498166d)
+- skip metadata.yaml files in standards loader to prevent confusing display (7152d1d)
+
 ## [0.41.0] - 2025-08-01
 
 ### Added
