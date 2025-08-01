@@ -1,3 +1,8 @@
+/**
+ * Principles management command for development philosophies
+ * @module
+ */
+
 import { BaseCommand } from "../utils/base-command.ts";
 import { PrincipleLoader } from "../utils/principle-loader.ts";
 import { PrincipleFormatter } from "../formatters/principle-formatter.ts";
@@ -6,6 +11,14 @@ import { CommandOptions } from "../types/command.ts";
 import { printFormatted } from "../utils/terminal-formatter.ts";
 import type { ConfigManager } from "../utils/config-manager.ts";
 
+/**
+ * Command class for managing development principles
+ *
+ * Provides operations to select and apply development principles like DRY, KISS,
+ * YAGNI, and SOLID. Principles guide thinking without being prescriptive.
+ *
+ * @public
+ */
 export class PrinciplesCommand extends BaseCommand<Principle> {
   constructor() {
     super({

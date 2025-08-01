@@ -1,104 +1,70 @@
 /**
- * Aichaku (愛着) provides adaptive methodology support for Claude Code that blends
- * approaches based on how you naturally work. Rather than forcing you to choose a
- * methodology, Aichaku installs all of them and helps Claude Code adapt to your
- * terminology and context.
+ * Aichaku (愛着) - Adaptive methodology support for Claude Code
  *
- * | **Aichaku** | **Specifications** |
- * | :------- | :------- |
- * | Version | 0.40.1 |
- * | Repository | {@link https://github.com/RickCogley/aichaku} |
- * | JSR Package | {@link https://jsr.io/@rick/aichaku} |
- * | License | MIT |
- * | Author | Rick Cogley |
+ * Helps Claude Code understand your development workflow by providing natural language
+ * methodology detection and YAML-based configuration management. Install once globally,
+ * use across all projects with 96% context reduction (12K→4K tokens).
  *
- * ## Core Features
- *
- * - **🔄 Adaptive Blending** - Methodologies adapt to your natural language
- * - **📦 All-in-One Install** - Shape Up, Scrum, Kanban, Lean, XP, and Scrumban included
- * - **🧠 Context Aware** - AI responds to your terminology and needs
- * - **📁 User Customization** - Your modifications survive upgrades
- * - **🚀 Simple Lifecycle** - Just init, upgrade, and uninstall
- * - **🔄 Auto-updating** - Upgrade command always fetches latest methodology content
- * - **🔒 Security First** - Path validation, no network operations, minimal permissions
- * - **🎯 Zero Configuration** - Works out of the box with sensible defaults
- *
- * ## Quick Start
- *
- * @example Install globally via CLI
+ * @example Quick start via CLI
  * ```bash
- * # Install aichaku CLI globally
+ * # Install from JSR
  * deno install -g -A -n aichaku jsr:@rick/aichaku/cli
  *
- * # Initialize global methodologies (one time)
+ * # Set up once globally
  * aichaku init --global
+ * cd your-project
+ * aichaku init
+ * aichaku integrate
  *
- * # In any project:
- * aichaku init  # Creates minimal setup
- * # Prompts to integrate with CLAUDE.md automatically
+ * # Now Claude understands "let's shape up a feature" or "start a sprint"
  * ```
  *
  * @example Programmatic usage
  * ```typescript
- * import { init } from "jsr:@rick/aichaku";
+ * import { init, integrate, standards } from "jsr:@rick/aichaku";
  *
- * // Initialize with all methodologies
- * const result = await init({
- *   global: false,
- *   force: false,
- *   silent: false
- * });
+ * // Initialize project with methodologies
+ * await init({ global: false });
  *
- * if (result.success) {
- *   console.log(`Initialized at ${result.path}`);
- * }
+ * // Add standards and integrate
+ * await standards({ add: ["tdd", "owasp-web"] });
+ * await integrate();
  * ```
  *
- * @example Upgrade to latest version
+ * @example Advanced features
  * ```typescript
- * import { upgrade } from "jsr:@rick/aichaku";
+ * import { hooks, review } from "jsr:@rick/aichaku";
  *
- * // Upgrade global installation (updates all methodology files)
- * const result = await upgrade({ global: true });
+ * // Auto session summaries
+ * await hooks({ install: "essential", global: true });
  *
- * // Upgrade project (updates methodologies + CLAUDE.md)
- * const projectResult = await upgrade();
- * console.log(`Upgraded to ${projectResult.version}`);
- *
- * // Note: Upgrades always download the latest methodology files
- * // to ensure you have the most up-to-date content
+ * // Code review with OWASP/NIST compliance
+ * const results = await review("src/auth.ts");
  * ```
  *
- * @example Add Aichaku reference to project
- * ```typescript
- * import { integrate } from "jsr:@rick/aichaku";
+ * ## Core Capabilities
  *
- * // Add to current project's CLAUDE.md
- * const result = await integrate();
+ * - **Natural Language** - Say "sprint" → Scrum, "shaping" → Shape Up
+ * - **YAML Configuration** - Compact, modular, version-controlled directives
+ * - **Methodology Blending** - Mix Shape Up, Scrum, Kanban, XP, Lean
+ * - **Standards Integration** - OWASP, TDD, Clean Architecture, NIST-CSF
+ * - **Specialized Agents** - Security, API, Documentation, Code Explorer
+ * - **MCP Server** - Advanced project analysis and documentation generation
+ * - **Session Management** - Auto-summaries, hooks, progress tracking
  *
- * // Add to specific project
- * const result = await integrate({ projectPath: "/path/to/project" });
- * ```
+ * ## Architecture
  *
- * ## Adaptive System
+ * Global installation (`~/.claude/aichaku/`) stores methodologies and config.
+ * Projects reference globally, never copy files. Updates propagate instantly.
+ * YAML-based config system replaces massive markdown with compact directives.
  *
- * Aichaku uses a simple 3-mode system that adapts to your context:
+ * Current version: 0.40.1
  *
- * - **PLANNING MODE** - When starting something new (shaping, sprint planning)
- * - **EXECUTION MODE** - When actively working (building, coding, testing)
- * - **IMPROVEMENT MODE** - When reflecting and optimizing (retrospectives, refactoring)
- *
- * The AI blends methodologies based on your language. Say "sprint" and get Scrum
- * practices; mention "shaping" and get Shape Up principles - all seamlessly integrated.
- *
- * ## Security
- *
- * Following OWASP principles adapted for CLI tools:
- * - All file paths are validated against directory traversal
- * - No network operations or external dependencies
- * - Conservative file permissions on generated content
- * - No storage or logging of sensitive information
- *
+ * @author Rick Cogley
+ * @license MIT
+ * @see {@link https://github.com/RickCogley/aichaku} Repository
+ * @see {@link https://jsr.io/@rick/aichaku} JSR Package
+ * @see {@link https://aichaku.esolia.deno.net/} API Documentation
  * @module
  */
 

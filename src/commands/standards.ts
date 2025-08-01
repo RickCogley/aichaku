@@ -1,3 +1,8 @@
+/**
+ * Standards management command for development standards and methodologies
+ * @module
+ */
+
 import { BaseCommand } from "../utils/base-command.ts";
 import { StandardLoader } from "../utils/standard-loader.ts";
 import { StandardFormatter } from "../formatters/standard-formatter.ts";
@@ -7,6 +12,14 @@ import { AichakuBrand as Brand } from "../utils/branded-messages.ts";
 import { printFormatted } from "../utils/terminal-formatter.ts";
 import type { ConfigManager } from "../utils/config-manager.ts";
 
+/**
+ * Command class for managing development standards
+ *
+ * Provides operations to list, add, remove, and search development standards
+ * such as OWASP, TDD, Clean Architecture, and Google Style guides.
+ *
+ * @public
+ */
 export class StandardsCommand extends BaseCommand<Standard> {
   constructor() {
     super({
