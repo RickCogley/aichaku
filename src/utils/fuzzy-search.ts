@@ -254,7 +254,7 @@ export function smartSearch<T extends FuzzySearchItem>(
   contentType: string,
 ): T[] {
   const expandedQueries = expandQueryWithSynonyms(query);
-  const allResults = new Set<T>();
+  const resultMap = new Map<string, T>(); // Use Map with ID as key for deduplication
 
   // Search with each expanded query
   for (const expandedQuery of expandedQueries) {
@@ -272,8 +272,13 @@ export function smartSearch<T extends FuzzySearchItem>(
       );
     });
 
-    results.forEach((result) => allResults.add(result));
+    // Add to map using ID as key to prevent duplicates
+    results.forEach((result) => {
+      if (!resultMap.has(result.id)) {
+        resultMap.set(result.id, result);
+      }
+    });
   }
 
-  return Array.from(allResults);
+  return Array.from(resultMap.values());
 }
