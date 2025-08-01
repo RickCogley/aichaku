@@ -5,6 +5,17 @@ All notable changes to aichaku (愛着) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.41.0] - 2025-08-01
+
+### Added
+
+- add model specification to agent templates (048f7de)
+- standardize colorful branding across all formatters (bca23d7)
+
+### Changed
+
+- major documentation and formatting improvements (2845a0f)
+
 ## [0.40.1] - 2025-07-31
 
 ### Changed
