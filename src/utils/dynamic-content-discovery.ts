@@ -62,7 +62,13 @@ export async function discoverContent(
     return { categories, items, count: 0 };
   }
 
+  // Track which base names we've already processed (prefer YAML over MD)
+  const processedBaseNames = new Set<string>();
+
   // Walk through the content directory looking for YAML and Markdown files
+  // Collect all entries first to sort by extension (YAML first)
+  const entries: Array<{ path: string; ext: string }> = [];
+
   for await (
     const entry of walk(contentPath, {
       includeDirs: false,
@@ -70,9 +76,31 @@ export async function discoverContent(
       skip: [/\/templates\//, /\/scripts\//, /\/archive\//, /metadata\.yaml$/],
     })
   ) {
+    entries.push({
+      path: entry.path,
+      ext: entry.path.substring(entry.path.lastIndexOf(".")),
+    });
+  }
+
+  // Sort entries to process YAML files before markdown files
+  entries.sort((a, b) => {
+    if ((a.ext === ".yaml" || a.ext === ".yml") && b.ext === ".md") return -1;
+    if (a.ext === ".md" && (b.ext === ".yaml" || b.ext === ".yml")) return 1;
+    return 0;
+  });
+
+  for (const entry of entries) {
     const relativePath = relative(contentPath, entry.path);
     const dir = dirname(relativePath);
     const category = dir === "." ? "uncategorized" : dir.split("/")[0];
+
+    // Get the base name without extension to check for duplicates
+    const baseName = join(dirname(relativePath), basename(relativePath, entry.ext));
+
+    // Skip markdown files if we already have YAML for the same base name
+    if (entry.ext === ".md" && processedBaseNames.has(baseName)) {
+      continue;
+    }
 
     // Try to load metadata
     const metadata = await loadContentMetadata(
@@ -82,6 +110,8 @@ export async function discoverContent(
     );
 
     if (metadata) {
+      processedBaseNames.add(baseName);
+
       // Check for template subdirectory
       const templatesDir = join(dirname(entry.path), "templates");
       if (await exists(templatesDir)) {
@@ -294,7 +324,15 @@ function extractMarkdownMetadata(
   if (!metadata.description) {
     const descMatch = content.match(/^#\s+.+\n\n([^#\n].+)$/m);
     if (descMatch) {
-      metadata.description = descMatch[1].trim();
+      // Strip common markdown formatting from description
+      let desc = descMatch[1].trim();
+      // Remove bold markers
+      desc = desc.replace(/\*\*([^*]+)\*\*/g, "$1");
+      // Remove italic markers
+      desc = desc.replace(/\*([^*]+)\*/g, "$1");
+      // Remove inline code markers
+      desc = desc.replace(/`([^`]+)`/g, "$1");
+      metadata.description = desc;
     } else {
       metadata.description = "No description available";
     }
