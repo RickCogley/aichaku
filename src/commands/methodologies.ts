@@ -10,7 +10,7 @@ import { AichakuBrand as Brand } from "../utils/branded-messages.ts";
 import type { CommandDefinition, ItemFormatter } from "../types/command.ts";
 import type { ParsedArgs } from "../utils/argument-parser.ts";
 import type { ConfigManager } from "../utils/config-manager.ts";
-import { DynamicMethodologyLoader, type Methodology } from "../utils/methodology-loader.ts";
+import { type Methodology, MethodologyLoader } from "../utils/methodology-loader.ts";
 
 // Hardcoded methodologies replaced with dynamic loader
 
@@ -18,9 +18,9 @@ import { DynamicMethodologyLoader, type Methodology } from "../utils/methodology
  * Methodology formatter implementation
  */
 class MethodologyFormatter implements ItemFormatter<Methodology> {
-  private loader: DynamicMethodologyLoader;
+  private loader: MethodologyLoader;
 
-  constructor(loader: DynamicMethodologyLoader) {
+  constructor(loader: MethodologyLoader) {
     this.loader = loader;
   }
   formatList(methodologies: Methodology[]): string {
@@ -117,7 +117,7 @@ class MethodologyFormatter implements ItemFormatter<Methodology> {
           content.push(`- **Best for:** ${methodology.bestFor}`);
           content.push(`- **Team size:** ${methodology.teamSize}`);
           content.push(`- **Key principles:**`);
-          methodology.principles.forEach((principle) => {
+          methodology.principles.forEach((principle: string) => {
             content.push(`  - ${principle}`);
           });
           content.push(``);
@@ -164,7 +164,7 @@ class MethodologyFormatter implements ItemFormatter<Methodology> {
  */
 class MethodologiesCommand extends BaseCommand<Methodology> {
   constructor() {
-    const loader = new DynamicMethodologyLoader();
+    const loader = new MethodologyLoader();
     const definition: CommandDefinition<Methodology> = {
       name: "methodologies",
       configKey: "methodologies",

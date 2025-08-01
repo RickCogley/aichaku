@@ -28,9 +28,9 @@ export interface Methodology extends FuzzySearchItem {
 // MethodologyYaml interface removed - now using dynamic content discovery
 
 /**
- * Dynamic methodology loader implementation using dynamic content discovery
+ * Methodology loader implementation using dynamic content discovery
  */
-export class DynamicMethodologyLoader implements ItemLoader<Methodology> {
+export class MethodologyLoader implements ItemLoader<Methodology> {
   private basePath: string;
   private cache: Map<string, Methodology> = new Map();
   private lastLoad: number = 0;
