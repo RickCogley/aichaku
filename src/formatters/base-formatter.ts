@@ -73,6 +73,47 @@ export abstract class BaseFormatter<T extends ConfigItem> implements ItemFormatt
     return lines.join("\n");
   }
 
+  /**
+   * Format add operation header with colorful branding
+   */
+  formatAddHeader(commandName: string): string {
+    return this.formatHeader(`Adding ${commandName}`, "Project Configuration");
+  }
+
+  /**
+   * Format remove operation header with colorful branding
+   */
+  formatRemoveHeader(commandName: string): string {
+    return this.formatHeader(`Removing ${commandName}`, "Project Configuration");
+  }
+
+  /**
+   * Format search operation header with colorful branding
+   */
+  formatSearchHeader(query: string, commandName: string): string {
+    return this.formatHeader(`Search Results`, `${commandName} matching "${query}"`);
+  }
+
+  /**
+   * Format search result item
+   */
+  formatSearchResult(item: T): string {
+    const lines: string[] = [];
+    lines.push(this.formatItem(`${bold(item.id)}: ${item.name}`));
+    lines.push(`    ${item.description}`);
+    if (item.category) {
+      lines.push(`    ${cyan("Category:")} ${item.category}`);
+    }
+    return lines.join("\n");
+  }
+
+  /**
+   * Format no results message
+   */
+  formatNoResults(query: string, commandName: string): string {
+    return this.formatHeader(`No Results`, `No ${commandName} found matching "${query}"`);
+  }
+
   // Abstract methods that subclasses must implement
   abstract formatList(items: T[]): string;
   abstract formatDetails(item: T, verbose?: boolean): string;

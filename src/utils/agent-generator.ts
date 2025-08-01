@@ -73,17 +73,29 @@ interface ParsedTemplate {
   contextRequirements: ContextRequirements;
 }
 
-// Default agents that are always included
-const DEFAULT_AGENTS = [
-  "orchestrator",
-  "api-architect",
-  "security-reviewer",
-  "test-expert",
-  "documenter",
-  "code-explorer",
-  "methodology-coach",
-  "principle-coach",
-];
+// No more hardcoded default agents - all agent metadata comes from templates
+
+/**
+ * Discover available agent templates from the templates directory
+ */
+async function discoverAgentTemplates(templateBase: string): Promise<string[]> {
+  const agents: string[] = [];
+
+  try {
+    for await (const entry of Deno.readDir(templateBase)) {
+      if (entry.isDirectory) {
+        const basePath = join(templateBase, entry.name, "base.md");
+        if (await exists(basePath)) {
+          agents.push(entry.name);
+        }
+      }
+    }
+  } catch (error) {
+    console.warn(`Failed to discover agent templates: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  return agents;
+}
 
 /**
  * Generate methodology-aware agents with focused context injection
@@ -102,17 +114,25 @@ export async function generateMethodologyAwareAgents(
     // Ensure output directory exists
     await Deno.mkdir(options.outputPath, { recursive: true });
 
-    // Determine which agents to generate (default + selected optional)
-    const agentsToGenerate = [
-      ...DEFAULT_AGENTS,
-      ...options.selectedAgents.filter((agent) => !DEFAULT_AGENTS.includes(agent)),
-    ];
+    // Get all available agent templates from the agent-templates directory
+    const homePath = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
+    const templateBase = join(homePath, ".claude", "aichaku", "docs", "core", "agent-templates");
+    const agentsToGenerate = await discoverAgentTemplates(templateBase);
 
     for (const agentType of agentsToGenerate) {
       try {
         const template = await loadAgentTemplate(agentType);
         if (!template) {
           result.errors.push(`Template not found for ${agentType}`);
+          result.skipped++;
+          continue;
+        }
+
+        // Only generate agents that are default type or explicitly selected
+        const isDefault = template.yaml.type === "default";
+        const isSelected = options.selectedAgents.includes(agentType);
+
+        if (!isDefault && !isSelected) {
           result.skipped++;
           continue;
         }
@@ -173,7 +193,11 @@ function parseAgentTemplate(template: string): ParsedTemplate {
     name: string;
     type: "default" | "optional";
     description: string;
+    color?: string;
+    model?: "opus" | "sonnet" | "haiku";
     tools?: string[];
+    technology_focus?: string;
+    methodology_aware?: boolean;
     examples?: Array<{
       context: string;
       user: string;
@@ -185,6 +209,7 @@ function parseAgentTemplate(template: string): ParsedTemplate {
       target: string;
       handoff: string;
     }>;
+    [key: string]: unknown; // Allow any other fields from template
   }
 
   let yaml: AgentYaml = {
@@ -419,16 +444,12 @@ function generateAgentWithFocusedContext(
   const methodologyYaml = generateFocusedMethodologyYaml(methodologiesToInclude);
   const principlesYaml = generateFocusedPrinciplesYaml(principlesToInclude, agentType);
 
-  // Build final YAML frontmatter
+  // Build final YAML frontmatter - copy all fields from template
   const yamlFrontmatter = {
+    ...yaml, // Copy all fields from template
+    // Only modify the name to add prefix if not already present
     name: yaml.name.startsWith(options.agentPrefix) ? yaml.name : `${options.agentPrefix}${yaml.name}`,
-    type: yaml.type || "default",
-    description: yaml.description,
-    color: getAgentColor(agentType),
     methodology_aware: true,
-    ...(yaml.tools && JSON.stringify(yaml.tools) !== '["*"]' && { tools: yaml.tools }),
-    ...(yaml.examples && { examples: yaml.examples }),
-    ...(yaml.delegations && { delegations: yaml.delegations }),
   };
 
   // Format YAML
@@ -613,80 +634,60 @@ function getAgentPrincipleNotes(agentType: string): string {
 /**
  * Format YAML frontmatter
  */
-interface YamlFrontmatter {
-  name: string;
-  type?: string;
-  description: string;
-  color?: string;
-  methodology_aware?: boolean;
-  tools?: string[];
-  examples?: Array<{
-    context: string;
-    user: string;
-    assistant: string;
-    commentary: string;
-  }>;
-  delegations?: Array<{
-    trigger: string;
-    target: string;
-    handoff: string;
-  }>;
-}
+function formatYamlFrontmatter(yaml: Record<string, unknown>): string {
+  // Simply stringify the YAML object preserving all fields
+  // This ensures we copy everything from the template without modification
+  // Remove internal fields that shouldn't be in frontmatter
+  const frontmatter = { ...yaml } as Record<string, unknown>;
 
-function formatYamlFrontmatter(yaml: YamlFrontmatter): string {
-  // Use the YAML library for proper formatting
+  // Convert JavaScript object notation to YAML
   let yamlStr = "";
 
-  // Add properties in specific order
-  const orderedProps = ["name", "type", "description", "color", "methodology_aware", "tools"] as const;
-  for (const prop of orderedProps) {
-    const value = yaml[prop];
-    if (value !== undefined) {
-      if (typeof value === "string") {
-        yamlStr += `${prop}: ${value}\n`;
-      } else {
-        yamlStr += `${prop}: ${JSON.stringify(value)}\n`;
-      }
+  // Simple fields first
+  const simpleFields = ["name", "type", "description", "color", "methodology_aware", "model", "technology_focus"];
+  for (const field of simpleFields) {
+    if (frontmatter[field] !== undefined) {
+      yamlStr += `${field}: ${
+        typeof frontmatter[field] === "string" ? frontmatter[field] : JSON.stringify(frontmatter[field])
+      }\n`;
     }
   }
 
-  // Add complex structures
-  if (yaml.examples) {
+  // Array fields
+  if (frontmatter.tools) {
+    yamlStr += `tools: ${JSON.stringify(frontmatter.tools)}\n`;
+  }
+
+  // Complex structures
+  if (frontmatter.examples && Array.isArray(frontmatter.examples)) {
     yamlStr += "examples:\n";
-    for (const example of yaml.examples) {
-      yamlStr += "  - context: " + example.context + "\n";
-      yamlStr += '    user: "' + example.user + '"\n';
-      yamlStr += '    assistant: "' + example.assistant + '"\n';
-      yamlStr += "    commentary: " + example.commentary + "\n";
+    for (
+      const example of frontmatter.examples as Array<
+        { context: string; user: string; assistant: string; commentary: string }
+      >
+    ) {
+      yamlStr += `  - context: ${example.context}\n`;
+      yamlStr += `    user: "${example.user}"\n`;
+      yamlStr += `    assistant: "${example.assistant}"\n`;
+      yamlStr += `    commentary: ${example.commentary}\n`;
     }
   }
 
-  if (yaml.delegations) {
+  if (frontmatter.delegations && Array.isArray(frontmatter.delegations)) {
     yamlStr += "delegations:\n";
-    for (const delegation of yaml.delegations) {
-      yamlStr += "  - trigger: " + delegation.trigger + "\n";
-      yamlStr += '    target: "' + delegation.target + '"\n';
-      yamlStr += '    handoff: "' + delegation.handoff + '"\n';
+    for (const delegation of frontmatter.delegations as Array<{ trigger: string; target: string; handoff: string }>) {
+      yamlStr += `  - trigger: ${delegation.trigger}\n`;
+      yamlStr += `    target: "${delegation.target}"\n`;
+      yamlStr += `    handoff: "${delegation.handoff}"\n`;
+    }
+  }
+
+  // Include any other fields that might be in the template
+  for (const [key, value] of Object.entries(frontmatter)) {
+    if (!simpleFields.includes(key) && key !== "tools" && key !== "examples" && key !== "delegations") {
+      yamlStr += `${key}: ${JSON.stringify(value)}\n`;
     }
   }
 
   return yamlStr.trim();
-}
-
-/**
- * Get agent color based on type
- */
-function getAgentColor(agentType: string): string {
-  const colors: Record<string, string> = {
-    "orchestrator": "yellow",
-    "security-reviewer": "red",
-    "methodology-coach": "green",
-    "documenter": "blue",
-    "code-explorer": "magenta",
-    "api-architect": "cyan",
-    "principle-coach": "purple",
-    "test-expert": "orange",
-    // Add more as needed
-  };
-  return colors[agentType] || "white";
 }

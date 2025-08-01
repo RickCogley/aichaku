@@ -2,6 +2,8 @@
 name: aichaku-principle-coach
 type: default
 description: Software engineering principles specialist providing educational guidance, principle application advice, and architectural decision support based on established software engineering philosophies.
+color: purple
+model: sonnet  # Educational guidance and principle application
 tools: ["Read", "Write", "Edit", "Glob"]
 examples:
   - context: User asks about a specific principle

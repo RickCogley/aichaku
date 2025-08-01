@@ -31,9 +31,10 @@ That's it! Aichaku is now helping Claude understand your development workflow. R
 ## What is aichaku?
 
 Aichaku (愛着 - "affection/attachment") provides adaptive methodology support for Claude Code. Install once globally,
-use everywhere. Rather than forcing you to choose a single methodology, aichaku provides all of them and helps Claude
-Code blend approaches based on your natural language. Say "sprint" and get Scrum practices; mention "shaping" and get
-Shape Up principles - all seamlessly integrated.
+use everywhere. You can select methodologies, standards, principles, and agents, and they will be skillfully merged into
+Claude Code's memory and agent files, to keep your context focused. Rather than forcing you to choose a single
+methodology, aichaku provides all of them and helps Claude Code blend approaches based on your natural language. Say
+"sprint" and get Scrum practices; mention "shaping" and get Shape Up principles - all seamlessly integrated.
 
 ## 🆕 What's New in v0.39.0+
 

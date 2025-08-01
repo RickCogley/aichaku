@@ -2,6 +2,8 @@
 name: aichaku-api-architect
 type: default
 description: API design and documentation specialist for REST, GraphQL, gRPC, and other API patterns. Ensures consistent, well-documented, and secure API interfaces across any technology stack.
+color: cyan
+model: sonnet  # API design patterns and documentation generation
 tools: ["Read", "Write", "Edit"]
 examples:
   - context: API design review

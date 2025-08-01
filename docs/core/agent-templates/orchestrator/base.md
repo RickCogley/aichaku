@@ -2,6 +2,8 @@
 name: aichaku-orchestrator
 type: default
 description: General workflow coordinator for all aichaku projects, managing task routing and project lifecycle. Routes work to appropriate specialists and ensures smooth handoffs.
+color: yellow
+model: opus  # Complex orchestration and decision-making capabilities
 examples:
   - context: Complex development task
     user: "I need to add authentication to my API with proper security"

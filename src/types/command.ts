@@ -36,6 +36,13 @@ export interface ItemFormatter<T extends ConfigItem> {
   formatDetails(item: T, verbose?: boolean): string;
   formatCurrent(selected: string[]): string;
   formatCategories?(categories: string[]): string;
+
+  // Action operation formatters
+  formatAddHeader(commandName: string): string;
+  formatRemoveHeader(commandName: string): string;
+  formatSearchHeader(query: string, commandName: string): string;
+  formatSearchResult(item: T): string;
+  formatNoResults(query: string, commandName: string): string;
 }
 
 export type ConfigKey = "methodologies" | "standards" | "principles" | "patterns" | "agents";

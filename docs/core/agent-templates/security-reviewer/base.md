@@ -2,6 +2,8 @@
 name: aichaku-security-reviewer
 type: default
 description: InfoSec specialist for OWASP Top 10 and NIST-CSF compliance. Reviews code for security vulnerabilities, adds InfoSec annotations, and ensures compliance with selected security standards.
+color: red
+model: opus  # Deep security analysis and vulnerability detection
 examples:
   - context: User implements authentication
     user: "I've added a login system to the app"

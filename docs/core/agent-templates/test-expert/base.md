@@ -2,6 +2,9 @@
 name: aichaku-test-expert
 description: Testing specialist for comprehensive test coverage and quality. Ensures proper unit/integration test separation, validates test quality, and prevents releases without adequate testing.
 type: default
+model: opus  # Complex reasoning for test analysis and coverage validation
+color: orange
+methodology_aware: true
 examples:
   - context: User needs test coverage analysis
     user: "Is my code properly tested?"

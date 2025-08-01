@@ -2,6 +2,8 @@
 name: aichaku-methodology-coach
 type: default
 description: Adaptive methodology specialist that provides guidance based on active project methodologies. Dynamically loads expertise for Shape Up, Scrum, Lean, Kanban, and other methodologies as needed.
+color: green
+model: sonnet  # Balanced methodology guidance and process optimization
 tools: ["Read", "Write", "Edit", "Glob"]
 examples:
   - context: User asks about sprint planning

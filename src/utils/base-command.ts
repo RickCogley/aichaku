@@ -145,7 +145,9 @@ export abstract class BaseCommand<T extends ConfigItem> {
     const ids = this.parseListArgument(args.add);
     const validatedProjectPath = args.projectPath ? resolveProjectPath(args.projectPath) : Deno.cwd();
 
-    Brand.log(`Adding ${this.definition.name} to project...\n`);
+    // Use formatter for colorful header
+    console.log(this.definition.formatter.formatAddHeader(this.definition.name));
+    console.log();
 
     // Validate all items exist
     const validItems: T[] = [];
@@ -204,7 +206,9 @@ export abstract class BaseCommand<T extends ConfigItem> {
     const ids = this.parseListArgument(args.remove);
     const validatedProjectPath = args.projectPath ? resolveProjectPath(args.projectPath) : Deno.cwd();
 
-    Brand.log(`Removing ${this.definition.name} from project...\n`);
+    // Use formatter for colorful header
+    console.log(this.definition.formatter.formatRemoveHeader(this.definition.name));
+    console.log();
 
     try {
       const configManager = createProjectConfigManager(validatedProjectPath);
@@ -237,19 +241,18 @@ export abstract class BaseCommand<T extends ConfigItem> {
     const results = await Promise.resolve(this.definition.loader.search(args.search));
 
     if (results.length === 0) {
-      Brand.log(`No ${this.definition.name} found matching "${args.search}"`);
+      console.log(this.definition.formatter.formatNoResults(args.search, this.definition.name));
       return;
     }
 
-    Brand.log(`${this.definition.name} matching "${args.search}"\n`);
+    // Use formatter for colorful header
+    console.log(this.definition.formatter.formatSearchHeader(args.search, this.definition.name));
+    console.log();
 
+    // Use formatter for each result
     for (const item of results) {
-      Brand.info(`• ${item.id}: ${item.name}`);
-      Brand.info(`  ${item.description}`);
-      if (item.category) {
-        Brand.info(`  Category: ${item.category}`);
-      }
-      Brand.info("");
+      console.log(this.definition.formatter.formatSearchResult(item));
+      console.log();
     }
   }
 

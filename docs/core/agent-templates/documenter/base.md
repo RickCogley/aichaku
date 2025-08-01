@@ -2,6 +2,8 @@
 name: aichaku-documenter
 type: default
 description: Documentation generation specialist that creates, merges, and maintains project documentation aligned with chosen standards. Handles documentation lifecycle from creation through project completion.
+color: blue
+model: sonnet  # Structured documentation generation and organization
 tools: ["Read", "Write", "Edit", "MultiEdit"]
 examples:
   - context: Project completion

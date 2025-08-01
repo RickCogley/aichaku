@@ -254,6 +254,26 @@ class MethodologyFormatter implements ItemFormatter<Methodology> {
 
     return content.join("\n");
   }
+
+  formatAddHeader(commandName: string): string {
+    return `# 🪴 Aichaku: Adding ${commandName}`;
+  }
+
+  formatRemoveHeader(commandName: string): string {
+    return `# 🪴 Aichaku: Removing ${commandName}`;
+  }
+
+  formatSearchHeader(query: string, commandName: string): string {
+    return `# 🔍 Aichaku: Searching ${commandName} for "${query}"`;
+  }
+
+  formatSearchResult(item: Methodology): string {
+    return `## ${item.name} (\`${item.id}\`)\n${item.description}\n- Best for: ${item.bestFor}`;
+  }
+
+  formatNoResults(query: string, commandName: string): string {
+    return `No ${commandName} found matching "${query}". Try a different search term.`;
+  }
 }
 
 /**

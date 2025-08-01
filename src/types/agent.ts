@@ -28,6 +28,9 @@ export interface Agent extends ConfigItem {
   /** Technology focus (e.g., "deno", "typescript") */
   technology_focus?: string;
 
+  /** Model to use for this agent (opus, sonnet, haiku) */
+  model?: "opus" | "sonnet" | "haiku";
+
   /** Usage examples */
   examples?: AgentExample[];
 

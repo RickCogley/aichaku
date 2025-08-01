@@ -2,6 +2,8 @@
 name: aichaku-code-explorer
 type: default
 description: Codebase discovery and analysis specialist that explores project structure, identifies patterns, and recommends appropriate specialized agents. Proactively scouts codebases to understand architecture and technology choices.
+color: magenta
+model: sonnet  # Efficient codebase analysis and pattern recognition
 tools: ["Read", "Grep", "Glob", "Bash", "LS"]
 examples:
   - context: New codebase exploration
