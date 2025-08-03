@@ -105,6 +105,47 @@ cd mcp/github-mcp-server
 deno test -A
 ```
 
+## What is MCP?
+
+The Model Context Protocol (MCP) is a standardized protocol for AI assistants to interact with external tools and
+services. It provides a consistent interface between AI systems (like Claude) and various development tools.
+
+### Why MCP?
+
+MCP acts as an abstraction layer that:
+
+- **Standardizes tool interfaces** - One protocol for many tools
+- **Enables AI integration** - Claude can use any MCP-compliant tool
+- **Supports multiple transports** - stdio, HTTP, WebSocket, TCP
+- **Provides tool discovery** - AI can query available capabilities
+
+### HTTP Bridge Server
+
+The HTTP bridge server enables shared access for multiple tools and services:
+
+```
+Multiple Consumers → HTTP API (port 7182) → MCP Servers → Tools
+```
+
+**Commands**:
+
+- `aichaku mcp --server-start` - Start the HTTP bridge server
+- `aichaku mcp --server-stop` - Stop the HTTP bridge server
+- `aichaku mcp --server-status` - Check server status
+
+**Files**:
+
+- Script: `~/.aichaku/mcp-servers/aichaku-mcp-http-bridge-server.ts`
+- Logs: `~/.aichaku/aichaku-mcp-http-bridge-server.log`
+- PID: `~/.aichaku/aichaku-mcp-http-bridge-server.pid`
+
+**Benefits**:
+
+- **Shared service** - One instance serves git hooks, editors, CI/CD
+- **Performance** - Tools stay loaded, results cached
+- **Centralized config** - One place for all settings
+- **Easy discovery** - Process searchable with `ps aux | grep "aichaku-mcp-http-bridge-server"`
+
 ## Architecture Benefits
 
 **Separation of Concerns**: Each MCP server has a focused responsibility

@@ -193,15 +193,15 @@ export class MultiServerMCPManager {
 
     // HTTP Bridge Server (this one actually runs)
     content.push(`## 🌉 HTTP Bridge Server\n`);
-    content.push(`Enables 'aichaku review' command to use MCP.\n`);
+    content.push(`Used by 'aichaku review' and other tools to connect to MCP.\n`);
 
     const isHttpServerRunning = await this.checkHttpServerStatus();
     if (isHttpServerRunning) {
       content.push(`✓ Running on http://127.0.0.1:7182`);
-      content.push(`Stop with: \`aichaku mcp --stop-server\`\n`);
+      content.push(`Stop with: \`aichaku mcp --server-stop\`\n`);
     } else {
       content.push(`○ Not running`);
-      content.push(`Start with: \`aichaku mcp --start-server\`\n`);
+      content.push(`Start with: \`aichaku mcp --server-start\`\n`);
     }
 
     // Configuration section
@@ -223,7 +223,7 @@ export class MultiServerMCPManager {
       content.push(`- View available tools: \`aichaku mcp --tools\``);
     }
     if (!isHttpServerRunning) {
-      content.push(`- Start bridge server: \`aichaku mcp --start-server\``);
+      content.push(`- Start bridge server: \`aichaku mcp --server-start\``);
     }
 
     printFormatted(content.join("\n"));
@@ -267,10 +267,15 @@ export class MultiServerMCPManager {
       for (const [category, tools] of Object.entries(toolsByCategory)) {
         console.log(`  ${colors.cyan(category)}:`);
         for (const tool of tools) {
-          const shortName = tool.replace(
-            `mcp__${status.id.replace("-", "_")}__`,
-            "",
-          );
+          // Handle both aichaku-reviewer and github naming patterns
+          let shortName = tool;
+          if (tool.includes("mcp__aichaku-reviewer__")) {
+            shortName = tool.replace("mcp__aichaku-reviewer__", "");
+          } else if (tool.includes("mcp__github__")) {
+            shortName = tool.replace("mcp__github__", "");
+          } else if (tool.includes("mcp__github-operations__")) {
+            shortName = tool.replace("mcp__github-operations__", "");
+          }
           console.log(`    • ${colors.green(tool)}`);
           console.log(
             `      ${colors.dim(this.getToolDescription(shortName))}`,
@@ -321,7 +326,26 @@ export class MultiServerMCPManager {
       categories[category].push(tool);
     }
 
-    return categories;
+    // Sort categories for consistent display
+    const sortedCategories: Record<string, string[]> = {};
+    const categoryOrder = [
+      "Code Review & Analysis",
+      "Documentation",
+      "Analytics",
+      "Authentication",
+      "Release Management",
+      "GitHub Actions",
+      "Repository Management",
+      "General",
+    ];
+
+    for (const category of categoryOrder) {
+      if (categories[category]) {
+        sortedCategories[category] = categories[category];
+      }
+    }
+
+    return sortedCategories;
   }
 
   private getToolDescription(toolName: string): string {

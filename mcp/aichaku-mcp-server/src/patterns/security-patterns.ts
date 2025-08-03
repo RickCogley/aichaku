@@ -187,19 +187,19 @@ export class SecurityPatterns {
       {
         id: "weak-hash-md5",
         name: "MD5 is a weak hashing algorithm",
-        pattern: /crypto\.createHash\s*\(\s*["']md5["']\s*\)/,
+        pattern: /crypto\.createHash\s*\(\s*["']md5["']\s*\)/, // DevSkim: ignore DS126858
         severity: "high",
-        description: "MD5 is a weak hashing algorithm",
+        description: "MD5 is a weak hashing algorithm", // DevSkim: ignore DS126858
         fix: "Use SHA-256 or stronger hashing algorithms",
         category: "security",
         owaspMapping: "A02",
       },
       {
         id: "weak-hash-sha1",
-        name: "SHA1 is deprecated for security use",
-        pattern: /crypto\.createHash\s*\(\s*["']sha1["']\s*\)/,
+        name: "SHA1 is deprecated for security use", // DevSkim: ignore DS126858
+        pattern: /crypto\.createHash\s*\(\s*["']sha1["']\s*\)/, // DevSkim: ignore DS126858
         severity: "medium",
-        description: "SHA1 is deprecated for security use",
+        description: "SHA1 is deprecated for security use", // DevSkim: ignore DS126858
         fix: "Use SHA-256 or stronger hashing algorithms",
         category: "security",
         owaspMapping: "A02",

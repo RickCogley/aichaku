@@ -43,6 +43,20 @@ export class ScannerController {
         timeout: 20000,
         parse: this.parseSemgrepOutput.bind(this),
       },
+      {
+        name: "gitleaks",
+        command: "gitleaks",
+        available: false,
+        timeout: 10000,
+        parse: this.parseGitleaksOutput.bind(this),
+      },
+      {
+        name: "trivy",
+        command: "trivy",
+        available: false,
+        timeout: 30000,
+        parse: this.parseTrivyOutput.bind(this),
+      },
     ];
   }
 
@@ -117,7 +131,7 @@ export class ScannerController {
   private async runScanner(
     scanner: Scanner,
     filePath: string,
-    _content: string,
+    content: string,
   ): Promise<Finding[]> {
     try {
       // Create a temporary file for scanning
@@ -138,15 +152,46 @@ export class ScannerController {
             "ℹ️  CodeQL requires a database to be built first, skipping",
           );
           return [];
+        case "gitleaks":
+          // GitLeaks needs to scan from stdin or git history
+          args = ["detect", "--no-git", "--pipe", "--report-format", "json"];
+          break;
+        case "trivy":
+          // Trivy for filesystem scanning
+          args = ["fs", "--security-checks", "vuln,secret", "-f", "json", "--quiet", filePath];
+          break;
       }
+
+      // Special handling for GitLeaks which needs stdin
+      const stdin = scanner.name === "gitleaks" ? "piped" : "null";
 
       const process = new Deno.Command(scanner.command, {
         args,
         stdout: "piped",
         stderr: "piped",
+        stdin: stdin as "piped" | "null",
       });
 
-      const { stdout, stderr, code } = await process.output();
+      let stdout: Uint8Array;
+      let stderr: Uint8Array;
+      let code: number;
+
+      if (scanner.name === "gitleaks") {
+        // For GitLeaks, write content to stdin
+        const proc = process.spawn();
+        const writer = proc.stdin!.getWriter();
+        await writer.write(new TextEncoder().encode(content));
+        await writer.close();
+        const output = await proc.output();
+        stdout = output.stdout;
+        stderr = output.stderr;
+        code = output.code;
+      } else {
+        const output = await process.output();
+        stdout = output.stdout;
+        stderr = output.stderr;
+        code = output.code;
+      }
 
       // DevSkim with -E flag returns the number of issues as exit code
       // Other scanners may return 1 when findings exist
@@ -306,5 +351,104 @@ export class ScannerController {
 
   getAvailableScanners(): string[] {
     return Array.from(this.scanners.keys());
+  }
+
+  private parseGitleaksOutput(output: string, filePath: string): Finding[] {
+    const findings: Finding[] = [];
+
+    try {
+      const results = JSON.parse(output);
+
+      if (Array.isArray(results)) {
+        for (const result of results) {
+          findings.push({
+            severity: "critical", // Secrets are always critical
+            rule: result.RuleID || "secret-detected",
+            message: result.Description || "Potential secret detected",
+            file: filePath,
+            line: result.StartLine || 1,
+            column: result.StartColumn,
+            suggestion: "Remove secrets from code and use environment variables or secret management systems",
+            tool: "gitleaks",
+            category: "security",
+          });
+        }
+      }
+    } catch (error) {
+      console.error(
+        `Failed to parse GitLeaks output: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
+
+    return findings;
+  }
+
+  private parseTrivyOutput(output: string, filePath: string): Finding[] {
+    const findings: Finding[] = [];
+
+    try {
+      const results = JSON.parse(output);
+
+      // Trivy outputs results in a nested structure
+      if (results.Results) {
+        for (const result of results.Results) {
+          // Parse vulnerabilities
+          if (result.Vulnerabilities) {
+            for (const vuln of result.Vulnerabilities) {
+              findings.push({
+                severity: this.mapTrivySeverity(vuln.Severity),
+                rule: vuln.VulnerabilityID || vuln.PkgID,
+                message: vuln.Description || vuln.Title || `Vulnerability in ${vuln.PkgName}`,
+                file: filePath,
+                line: 1, // Trivy doesn't provide line numbers for vulnerabilities
+                suggestion: vuln.FixedVersion
+                  ? `Update ${vuln.PkgName} to version ${vuln.FixedVersion}`
+                  : "Check for available patches or mitigations",
+                tool: "trivy",
+                category: "security",
+              });
+            }
+          }
+
+          // Parse secrets
+          if (result.Secrets) {
+            for (const secret of result.Secrets) {
+              findings.push({
+                severity: "critical",
+                rule: secret.RuleID || "secret-detected",
+                message: secret.Title || "Secret detected in code",
+                file: filePath,
+                line: secret.StartLine || 1,
+                column: secret.StartColumn,
+                suggestion: "Remove secrets and use secure secret management",
+                tool: "trivy",
+                category: "security",
+              });
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.error(
+        `Failed to parse Trivy output: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
+
+    return findings;
+  }
+
+  private mapTrivySeverity(severity: string): Finding["severity"] {
+    switch (severity?.toUpperCase()) {
+      case "CRITICAL":
+        return "critical";
+      case "HIGH":
+        return "high";
+      case "MEDIUM":
+        return "medium";
+      case "LOW":
+        return "low";
+      default:
+        return "info";
+    }
   }
 }

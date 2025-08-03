@@ -6,31 +6,107 @@
 
 echo "    🔒 Running security checks..."
 
-case "$(detect_project_type)" in
-    "node")
-        if [ -f "package.json" ] && command -v npm >/dev/null 2>&1; then
-            log_info "Running npm audit..."
-            if npm audit --audit-level=moderate; then
-                log_success "No security issues found"
-            else
-                log_warn "Security issues detected - review npm audit output"
-                # Don't fail the commit for security issues, just warn
+# Check if aichaku MCP reviewer binary is available locally
+MCP_BINARY="$HOME/.aichaku/mcp-servers/aichaku-code-reviewer"
+if [ -x "$MCP_BINARY" ]; then
+    log_info "Using Aichaku MCP security scanning (CodeQL, DevSkim, Semgrep)..."
+    
+    # Get list of staged files
+    staged_files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(ts|js|py|go|java|cs|rb)$')
+    
+    if [ -n "$staged_files" ]; then
+        # Create temporary directory for scanning
+        scan_dir=$(mktemp -d)
+        trap "rm -rf $scan_dir" EXIT
+        
+        # Copy staged files to temp directory (preserving paths)
+        for file in $staged_files; do
+            mkdir -p "$scan_dir/$(dirname "$file")"
+            git show ":$file" > "$scan_dir/$file"
+        done
+        
+        log_info "Scanning ${#staged_files[@]} staged files..."
+        
+        # Run MCP security scan locally (no API calls, no tokens)
+        scan_results=$("$MCP_BINARY" scan-local \
+            --path "$scan_dir" \
+            --format json \
+            --security-only \
+            --no-telemetry \
+            2>/dev/null)
+        
+        # Check if scan succeeded
+        if [ $? -eq 0 ] && [ -n "$scan_results" ]; then
+            # Parse results
+            critical_count=$(echo "$scan_results" | jq -r '.findings | map(select(.severity == "critical")) | length' 2>/dev/null || echo "0")
+            high_count=$(echo "$scan_results" | jq -r '.findings | map(select(.severity == "high")) | length' 2>/dev/null || echo "0")
+            
+            if [ "$critical_count" -gt 0 ]; then
+                log_error "Found $critical_count critical security issues!"
+                echo "$scan_results" | jq -r '.findings[] | select(.severity == "critical") | "  [\(.severity)] \(.file):\(.line) - \(.message)"' 2>/dev/null
+                exit 1
             fi
-        fi
-        ;;
-    "rust")
-        if command -v cargo >/dev/null 2>&1 && command -v cargo-audit >/dev/null 2>&1; then
-            log_info "Running cargo audit..."
-            if cargo audit; then
-                log_success "No security issues found"
-            else
-                log_warn "Security issues detected - review cargo audit output"
+            
+            if [ "$high_count" -gt 0 ]; then
+                log_warn "Found $high_count high severity issues"
+                echo "$scan_results" | jq -r '.findings[] | select(.severity == "high") | "  [\(.severity)] \(.file):\(.line) - \(.message)"' 2>/dev/null
             fi
+            
+            log_success "MCP security scan passed"
+        else
+            log_warn "MCP scan failed, falling back to direct scanners"
+            # Fall through to direct scanner execution below
         fi
-        ;;
-    *)
-        log_info "No security scanner configured for this project type"
-        ;;
-esac
+    else
+        log_info "No code files to scan"
+    fi
+else
+    # Fall back to basic security checks
+    log_info "Aichaku MCP not available, using basic security checks..."
+    
+    case "$(detect_project_type)" in
+        "node")
+            if [ -f "package.json" ] && command -v npm >/dev/null 2>&1; then
+                log_info "Running npm audit..."
+                if npm audit --audit-level=moderate; then
+                    log_success "No security issues found"
+                else
+                    log_warn "Security issues detected - review npm audit output"
+                    # Don't fail the commit for security issues, just warn
+                fi
+            fi
+            ;;
+        "rust")
+            if command -v cargo >/dev/null 2>&1 && command -v cargo-audit >/dev/null 2>&1; then
+                log_info "Running cargo audit..."
+                if cargo audit; then
+                    log_success "No security issues found"
+                else
+                    log_warn "Security issues detected - review cargo audit output"
+                fi
+            fi
+            ;;
+        *)
+            # Check for individual scanners
+            if command -v semgrep >/dev/null 2>&1; then
+                log_info "Running Semgrep security scan..."
+                if semgrep --config=auto --json --quiet . 2>/dev/null | jq -e '.results | length == 0' >/dev/null; then
+                    log_success "Semgrep: No security issues found"
+                else
+                    log_warn "Semgrep found security issues"
+                fi
+            fi
+            
+            if command -v devskim >/dev/null 2>&1; then
+                log_info "Running DevSkim security scan..."
+                if devskim analyze -I . -f json -E 2>/dev/null | jq -e '. | length == 0' >/dev/null; then
+                    log_success "DevSkim: No security issues found"
+                else
+                    log_warn "DevSkim found security issues"
+                fi
+            fi
+            ;;
+    esac
+fi
 
 exit 0

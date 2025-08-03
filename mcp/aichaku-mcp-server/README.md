@@ -13,6 +13,62 @@ Aichaku methodologies and standards.
 - **External Tool Integration**: Supports CodeQL, DevSkim, Semgrep (if installed)
 - **Privacy-First**: All scanning happens locally, no code leaves your machine
 
+## What Makes This MCP Server Special?
+
+### Security Scanner Abstraction
+
+**1. Unified Scanner Interface**
+
+- Wraps multiple security scanners (DevSkim, Semgrep, CodeQL) into one consistent interface
+- Without MCP: You'd need to call each scanner separately and parse their different output formats
+- With MCP: One API, normalized results from all scanners
+
+**2. Standardized Output**
+
+- Each scanner has different JSON/text output structures
+- MCP normalizes findings into a consistent format
+- Makes it easy to switch or add scanners without changing consuming code
+
+**3. Configuration Management**
+
+- Single place to configure which scanners to run, severity levels, exclusions
+- Without MCP: Configure each scanner individually with different formats
+- With MCP: One configuration for all security scanning
+
+### HTTP Bridge Server Benefits
+
+The HTTP bridge server provides additional advantages for shared access:
+
+**1. Shared Security Service**
+
+```
+Multiple Consumers → HTTP API (port 7182) → MCP Server → Multiple Scanners
+```
+
+- Git hooks, VS Code, CI/CD, and CLI can all use the same service
+- No duplicate scanner processes or configurations
+
+**2. Performance Benefits**
+
+- **Scanner Process Reuse**: Scanners stay loaded in memory
+- **No Startup Overhead**: Each scan doesn't restart scanners
+- **Shared Cache**: Results cached across all consumers
+- **Warm Instances**: Immediate response times after first scan
+
+**3. Multiple Access Points**
+
+- Git pre-commit hooks
+- Editor integrations (VS Code extensions, vim plugins)
+- CI/CD pipelines
+- Manual CLI checks (`aichaku review`)
+- Web dashboards or monitoring tools
+
+**4. Centralized Security Policy**
+
+- One place to update security rules
+- Consistent enforcement across all tools
+- Easy to audit and maintain
+
 ## Installation
 
 ### Prerequisites
@@ -49,6 +105,30 @@ deno install -A -n mcp-code-reviewer https://raw.githubusercontent.com/RickCogle
 ```
 
 ## Usage
+
+### HTTP Bridge Server
+
+For shared access from multiple tools (git hooks, CLI, editors):
+
+```bash
+# Start the HTTP bridge server
+aichaku mcp --server-start
+
+# Check server status
+aichaku mcp --server-status
+
+# Stop the server
+aichaku mcp --server-stop
+```
+
+The HTTP bridge server:
+
+- Runs on port 7182
+- Script: `~/.aichaku/mcp-servers/aichaku-mcp-http-bridge-server.ts`
+- Logs: `~/.aichaku/aichaku-mcp-http-bridge-server.log`
+- Process searchable with: `ps aux | grep "aichaku-mcp-http-bridge-server"`
+
+### MCP Tools
 
 Once configured, the MCP server provides these tools to Claude:
 

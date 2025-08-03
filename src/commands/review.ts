@@ -116,7 +116,7 @@ export async function runReviewCommand(
         "❌ Failed to connect to HTTP server:",
         error instanceof Error ? error.message : String(error),
       );
-      console.error("💡 Try: aichaku mcp --start-server");
+      console.error("💡 Try: aichaku mcp --server-start");
     }
   } else {
     // Fall back to spawning process

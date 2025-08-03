@@ -62,7 +62,7 @@ export class MCPHttpClient {
       ) {
         throw new Error(
           `MCP server not running at ${this.config.baseUrl}. ` +
-            `Run 'aichaku mcp --start-server' first.`,
+            `Run 'aichaku mcp --server-start' first.`,
         );
       }
       throw error;

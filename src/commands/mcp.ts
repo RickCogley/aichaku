@@ -104,9 +104,9 @@ Provides automated security and standards review for Claude Code through MCP ser
 - **--help** - Show this help message
 
 ### HTTP Bridge Server
-For the \`aichaku review\` command:
-- **--start-server** - Start HTTP bridge server
-- **--stop-server** - Stop HTTP bridge server
+Used by \`aichaku review\` and other tools to connect to MCP:
+- **--server-start** - Start HTTP bridge server
+- **--server-stop** - Stop HTTP bridge server
 - **--server-status** - Check bridge server status
 
 ## Important Notes
@@ -131,11 +131,11 @@ aichaku mcp --config
 aichaku mcp --tools
 
 # Start HTTP bridge for 'aichaku review'
-aichaku mcp --start-server
+aichaku mcp --server-start
 \`\`\`
 
 ## Learn More
-https://github.com/RickCogley/aichaku/tree/main/mcp-server
+https://github.com/RickCogley/aichaku/tree/main/mcp
 `);
 }
 
@@ -316,33 +316,9 @@ async function configureMCPServer(): Promise<void> {
 
   console.log("\n💡 After adding the configuration:");
   console.log("   1. Restart Claude Code");
-  console.log("   2. The MCP servers will be available:");
-
-  if (hasReviewer || hasOldReviewer) {
-    console.log("\n   📚 aichaku-reviewer tools:");
-    console.log("      • mcp__aichaku-reviewer__review_file");
-    console.log("      • mcp__aichaku-reviewer__review_methodology");
-    console.log("      • mcp__aichaku-reviewer__get_standards");
-    console.log("      • mcp__aichaku-reviewer__analyze_project");
-    console.log("      • mcp__aichaku-reviewer__generate_documentation");
-    console.log("      • mcp__aichaku-reviewer__get_statistics");
-    console.log("      • mcp__aichaku-reviewer__create_doc_template");
-  }
-
-  if (hasGithub) {
-    console.log("\n   🐙 github-operations tools:");
-    console.log("      • mcp__github-operations__auth_status");
-    console.log("      • mcp__github-operations__auth_login");
-    console.log("      • mcp__github-operations__release_upload");
-    console.log("      • mcp__github-operations__release_view");
-    console.log("      • mcp__github-operations__run_list");
-    console.log("      • mcp__github-operations__run_view");
-    console.log("      • mcp__github-operations__run_watch");
-    console.log("      • mcp__github-operations__repo_view");
-    console.log("      • mcp__github-operations__repo_list");
-    console.log("      • mcp__github-operations__version_info");
-    console.log("      • mcp__github-operations__version_check");
-  }
+  console.log("   2. The MCP servers will be available");
+  console.log("\n📚 To see available tools:");
+  console.log("   Run: aichaku mcp --tools");
 }
 
 async function _checkMCPStatus(): Promise<void> {
@@ -439,7 +415,7 @@ async function startHTTPServer(): Promise<void> {
     homeDir,
     ".aichaku",
     "mcp-servers",
-    "http-server.ts",
+    "aichaku-mcp-http-bridge-server.ts",
   );
 
   // Check if HTTP server script already exists, if not try to copy it
@@ -455,20 +431,22 @@ async function startHTTPServer(): Promise<void> {
         const serverCode = await Deno.readTextFile(serverScript);
         await ensureDir(join(homeDir, ".aichaku", "mcp-servers"));
         await Deno.writeTextFile(httpServerPath, serverCode);
+        console.log("📝 Installed HTTP bridge server script");
       } catch {
         // If we can't find it locally, fetch from GitHub
-        console.log("📥 Downloading HTTP server from GitHub...");
+        console.log("📥 Downloading HTTP bridge server from GitHub...");
         const response = await fetch(
           "https://raw.githubusercontent.com/RickCogley/aichaku/main/mcp/aichaku-mcp-server/src/http-server.ts",
         );
         if (!response.ok) {
           throw new Error(
-            `Failed to download HTTP server: ${response.statusText}`,
+            `Failed to download HTTP bridge server: ${response.statusText}`,
           );
         }
         const serverCode = await response.text();
         await ensureDir(join(homeDir, ".aichaku", "mcp-servers"));
         await Deno.writeTextFile(httpServerPath, serverCode);
+        console.log("📝 Installed HTTP bridge server script");
       }
     }
   } catch (error) {
@@ -479,12 +457,14 @@ async function startHTTPServer(): Promise<void> {
     return;
   }
 
-  // Start the server in background using nohup to detach it
+  // Start the server in background using nohup for proper detachment
+  const logPath = join(homeDir, ".aichaku", "aichaku-mcp-http-bridge-server.log");
   const cmd = new Deno.Command("sh", {
     args: [
       "-c",
-      `nohup deno run --allow-read --allow-write --allow-env --allow-run --allow-net "${httpServerPath}" > "${homeDir}/.aichaku/mcp-http-server.log" 2>&1 &`,
+      `nohup deno run --allow-read --allow-write --allow-env --allow-run --allow-net "${httpServerPath}" > "${logPath}" 2>&1 & echo $!`,
     ],
+    stdout: "piped",
   });
 
   const output = await cmd.output();
@@ -492,6 +472,9 @@ async function startHTTPServer(): Promise<void> {
     console.error("❌ Failed to start server");
     return;
   }
+
+  // Get the PID from the output (for debugging if needed)
+  const _pid = new TextDecoder().decode(output.stdout).trim();
 
   // Give it a moment to start
   await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -524,7 +507,7 @@ async function stopHTTPServer(): Promise<void> {
     return;
   }
 
-  const pidFile = join(homeDir, ".aichaku", "mcp-http-server.pid");
+  const pidFile = join(homeDir, ".aichaku", "aichaku-mcp-http-bridge-server.pid");
 
   try {
     const pid = parseInt(await Deno.readTextFile(pidFile));
@@ -569,6 +552,7 @@ async function checkHTTPServerStatus(): Promise<void> {
   console.log("");
 
   const isRunning = await isMCPServerRunning();
+  const homeDir = Deno.env.get("HOME") || Deno.env.get("USERPROFILE");
 
   if (isRunning) {
     console.log("✅ Code Review Bridge Server is running");
@@ -584,6 +568,12 @@ async function checkHTTPServerStatus(): Promise<void> {
       const health = await response.json();
       console.log(`   Active review sessions: ${health.sessions}`);
       console.log(`   Process ID: ${health.pid}`);
+
+      // Show how to find the process
+      console.log("");
+      console.log("💡 To see the process:");
+      console.log(`   ps aux | grep ${health.pid}`);
+      console.log(`   ps aux | grep "aichaku-mcp-http-bridge-server"`);
     } catch (_error) {
       // Ignore if health check fails
     }
@@ -591,10 +581,15 @@ async function checkHTTPServerStatus(): Promise<void> {
     console.log("");
     console.log("   Use: aichaku review <file> to analyze code");
     console.log("   The review command will automatically use this bridge");
+
+    if (homeDir) {
+      console.log("");
+      console.log(`📝 Logs: ${join(homeDir, ".aichaku", "aichaku-mcp-http-bridge-server.log")}`);
+    }
   } else {
     console.log("❌ Code Review Bridge Server is not running");
     console.log("   Purpose: Required for 'aichaku review' command to work");
     console.log("");
-    console.log("💡 Start it with: aichaku mcp --start-server");
+    console.log("💡 Start it with: aichaku mcp --server-start");
   }
 }

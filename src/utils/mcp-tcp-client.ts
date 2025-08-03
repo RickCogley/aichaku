@@ -55,7 +55,7 @@ export class MCPTcpClient {
       if (errorMessage.includes("Connection refused")) {
         throw new Error(
           `MCP server not running on ${this.config.host}:${this.config.port}. ` +
-            `Run 'aichaku mcp --start-server' first.`,
+            `Run 'aichaku mcp --server-start' first.`,
         );
       }
       throw new Error(`Failed to connect to MCP server: ${errorMessage}`);

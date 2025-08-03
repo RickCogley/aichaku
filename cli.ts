@@ -47,8 +47,8 @@ const args = parseArgs(Deno.args, {
     "stop",
     "restart",
     "upgrade",
-    "start-server",
-    "stop-server",
+    "server-start",
+    "server-stop",
     "server-status",
     "authStatus",
     "authLogin",
@@ -71,9 +71,13 @@ const args = parseArgs(Deno.args, {
     "devops",
     "methodologies",
     "reset",
-    "config",
-    "status",
-    "install-mcp",
+    "install",
+    "install-aichaku-reviewer",
+    "install-github-operations",
+    "start-all",
+    "stop-all",
+    "restart-all",
+    "tools",
     "quiet",
     "fix",
     "backup",
@@ -175,8 +179,11 @@ if (args.version) {
   Deno.exit(0);
 }
 
-// Handle help flag or no command
-if (args.help || !command) {
+// Commands that handle their own help
+const commandsWithOwnHelp = ["mcp", "hooks", "review", "github", "migrate"];
+
+// Handle help flag or no command (but not for commands that handle their own help)
+if ((args.help && !commandsWithOwnHelp.includes(command || "")) || !command) {
   const helpContent = `
 ${Brand.tagline}
 
@@ -456,21 +463,26 @@ try {
       break;
     }
     case "mcp": {
-      const mcpSubcommand = args._[1] as string | undefined;
       const mcpOptions = {
-        install: args["install-mcp"] as boolean | undefined,
+        install: args.install as boolean | undefined,
+        installReviewer: args["install-aichaku-reviewer"] as boolean | undefined,
+        installGithub: args["install-github-operations"] as boolean | undefined,
         config: args.config as boolean | undefined,
         status: args.status as boolean | undefined,
-        start: args["start-server"] as boolean | undefined,
-        stop: args["stop-server"] as boolean | undefined,
-        quiet: args.quiet as boolean | undefined,
-        fix: args.fix as boolean | undefined,
+        help: args.help as boolean | undefined,
+        start: args.start as boolean | undefined,
+        stop: args.stop as boolean | undefined,
+        restart: args.restart as boolean | undefined,
+        upgrade: args.upgrade as boolean | undefined,
+        startAll: args["start-all"] as boolean | undefined,
+        stopAll: args["stop-all"] as boolean | undefined,
+        restartAll: args["restart-all"] as boolean | undefined,
+        startServer: args["server-start"] as boolean | undefined,
+        stopServer: args["server-stop"] as boolean | undefined,
+        serverStatus: args["server-status"] as boolean | undefined,
+        tools: args.tools as boolean | undefined,
       };
-      const combinedOptions = {
-        ...mcpOptions,
-        subcommand: mcpSubcommand,
-      };
-      await runMCPCommand(combinedOptions);
+      await runMCPCommand(mcpOptions);
       break;
     }
     case "migrate": {

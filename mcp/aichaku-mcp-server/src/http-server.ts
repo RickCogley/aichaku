@@ -24,7 +24,7 @@ class MCPHttpServer {
 
   constructor(private port: number = DEFAULT_PORT) {
     const homeDir = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || ".";
-    this.pidFile = `${homeDir}/.aichaku/mcp-http-server.pid`;
+    this.pidFile = `${homeDir}/.aichaku/aichaku-mcp-http-bridge-server.pid`;
   }
 
   async start(): Promise<void> {
@@ -59,7 +59,7 @@ class MCPHttpServer {
             `✅ MCP HTTP/SSE Server ready on http://${hostname}:${port}`,
           );
           console.log(`📝 PID: ${Deno.pid}`);
-          console.log(`🛑 Stop with: aichaku mcp --stop-server`);
+          console.log(`🛑 Stop with: aichaku mcp --server-stop`);
           console.log(`\nEndpoints:`);
           console.log(`  POST   /rpc        - Send JSON-RPC requests`);
           console.log(`  GET    /sse        - Server-Sent Events stream`);
