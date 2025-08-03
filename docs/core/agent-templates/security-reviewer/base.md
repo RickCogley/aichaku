@@ -158,7 +158,7 @@ For entire files that should be excluded from security scanning:
 
 **.devskim.json**:
 
-```jsonjson
+```json
 {
   "Globs": [
     "!**/scratch/**",
@@ -179,7 +179,7 @@ paths-ignore:
 
 **.gitleaks.toml**:
 
-```tomltoml
+```toml
 [allowlist]
 paths = [
   '''tests/.*''',
@@ -206,7 +206,7 @@ tests/*
 
 **trivy.yaml**:
 
-```yamlyaml
+```yaml
 vulnerability:
   ignore-unfixed: true
   severity:
