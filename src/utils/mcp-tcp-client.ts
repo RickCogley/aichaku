@@ -99,7 +99,7 @@ export class MCPTcpClient {
       const requestId = request.id;
 
       // Set up timeout
-      const timeoutId = setTimeout(() => {
+      const timeoutId = setTimeout(() => { // DevSkim: ignore DS172411
         if (this.responseHandlers.has(requestId)) {
           this.responseHandlers.delete(requestId);
           reject(new Error(`Request timeout after ${this.config.timeout}ms`));

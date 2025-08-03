@@ -148,21 +148,21 @@ export class ProgressManager {
 
   private scheduleProgressiveFeedback(state: ProgressState): void {
     // 1.5s - Show progress indicator
-    state.progressTimer = setTimeout(() => {
+    state.progressTimer = setTimeout(() => { // DevSkim: ignore DS172411
       if (this.states.has(state.operationId)) {
         this.showProgressIndicator(state);
       }
     }, this.config.progress) as unknown as number;
 
     // 2s - Show detailed updates
-    state.detailedTimer = setTimeout(() => {
+    state.detailedTimer = setTimeout(() => { // DevSkim: ignore DS172411
       if (this.states.has(state.operationId)) {
         this.showDetailedUpdate(state);
       }
     }, this.config.detailed) as unknown as number;
 
     // 3s - Show timing information
-    state.timingTimer = setTimeout(() => {
+    state.timingTimer = setTimeout(() => { // DevSkim: ignore DS172411
       if (this.states.has(state.operationId)) {
         this.showTimingInfo(state);
       }
@@ -201,7 +201,9 @@ export class ProgressManager {
     elapsed: number,
     success: boolean,
   ): void {
-    const icon = success ? AICHAKU_BRANDING.ACTIVITIES.SUCCESS : AICHAKU_BRANDING.ACTIVITIES.WARNING;
+    const icon = success
+      ? AICHAKU_BRANDING.ACTIVITIES.SUCCESS
+      : AICHAKU_BRANDING.ACTIVITIES.WARNING;
     const phase = success ? AICHAKU_BRANDING.PHASES.HARVEST : AICHAKU_BRANDING.PHASES.HARVEST;
 
     // Always show completion

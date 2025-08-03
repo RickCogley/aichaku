@@ -86,7 +86,9 @@ export class AichakuFormatter {
   }
 
   static resultsReady(findingCount: number): string {
-    const icon = findingCount === 0 ? AICHAKU_BRANDING.ACTIVITIES.SUCCESS : AICHAKU_BRANDING.ACTIVITIES.WARNING;
+    const icon = findingCount === 0
+      ? AICHAKU_BRANDING.ACTIVITIES.SUCCESS
+      : AICHAKU_BRANDING.ACTIVITIES.WARNING;
 
     return this.formatBrandedMessage(
       icon,
@@ -148,7 +150,7 @@ export class FeedbackManager {
 
     // Show progress indicator for longer operations
     if (state.estimatedDuration > 1500) {
-      const timer = setTimeout(() => {
+      const timer = setTimeout(() => { // DevSkim: ignore DS172411
         this.showProgress(operationId);
       }, 1500);
       this.timers.set(operationId, timer);

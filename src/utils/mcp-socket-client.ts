@@ -34,7 +34,9 @@ export class MCPSocketClient {
       await this.initialize();
     } catch (error) {
       throw new Error(
-        `Failed to connect to MCP server: ${error instanceof Error ? error.message : String(error)}`,
+        `Failed to connect to MCP server: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
       );
     }
   }
@@ -86,7 +88,7 @@ export class MCPSocketClient {
       });
 
       // Set timeout
-      setTimeout(() => {
+      setTimeout(() => { // DevSkim: ignore DS172411
         if (this.responseHandlers.has(request.id)) {
           this.responseHandlers.delete(request.id);
           reject(new Error("Request timeout"));
