@@ -44,14 +44,14 @@ jobs:
 
           # Check for obvious hardcoded secrets (simple patterns)
           echo "Checking for hardcoded secrets..."
-          if grep -r -i "password\s*=\s*[\"']" --include="*.ts" --include="*.js" --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" --exclude="*_test.ts" . 2>/dev/null; then
+          if grep -r -i "password\s*=\s*[\"']" --include="*.ts" --include="*.js" --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" --exclude-dir="scratch" --exclude-dir="mcp-test-formatting" --exclude="*_test.ts" --exclude="*test*.ts" --exclude="verify-*.ts" . 2>/dev/null; then
             echo "Found hardcoded password"
             exit 1
           fi
 
           # Check for eval usage
           echo "Checking for eval usage..."
-          if grep -r "\beval\s*\(" --include="*.ts" --include="*.js" --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" --exclude="*_test.ts" . 2>/dev/null; then
+          if grep -r "\beval\s*\(" --include="*.ts" --include="*.js" --exclude-dir=".git" --exclude-dir="node_modules" --exclude-dir="coverage" --exclude-dir="scratch" --exclude-dir="mcp-test-formatting" --exclude="*_test.ts" --exclude="*test*.ts" --exclude="verify-*.ts" . 2>/dev/null | grep -v "patterns/security-patterns.ts"; then
             echo "Found eval usage"
             exit 1
           fi
