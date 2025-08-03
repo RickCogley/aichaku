@@ -5,6 +5,33 @@ All notable changes to aichaku (愛着) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.43.0] - 2025-08-03
+
+### Added
+
+- add app description YAML feature for Claude Code context (76abbad)
+
+### Changed
+
+- update KNOWN_ISSUES to reflect MultiEdit issue is likely user error (37abeed)
+- add KNOWN_ISSUES.md to track external tool issues (eb7bcf4)
+- improve security scanner example comments and code block languages (d677040)
+- add trivy and gitleaks configuration examples to security-reviewer (2eaabf0)
+- exclude security patterns file from security scanners (3f53e2c)
+
+### Fixed
+
+- correct doubled language specifiers in code blocks (d3b2a6c)
+- resolve remaining security scanning alerts (953b83f)
+- add DevSkim ignore comments for legitimate timeouts (71e65c7)
+- address security scanning alerts from July (60ed8ca)
+- update .devskim.json to use correct Globs format (a0aa65f)
+- address remaining GitHub security scanning alerts (5acf146)
+- resolve GitHub security scanning alerts (6e058bb)
+- remove hardcoded development paths from integrate command (e34ff49)
+- critical security vulnerabilities in command execution and path handling (18d6401)
+- exclude test files from security workflow checks (37fcdc9)
+
 ## [0.42.0] - 2025-08-03
 
 ### Added
