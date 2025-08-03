@@ -1,4 +1,4 @@
-import { exists } from "jsr:@std/fs@1";
+import { ensureDir, exists } from "jsr:@std/fs@1";
 import { join, resolve } from "jsr:@std/path@1";
 import { copy } from "jsr:@std/fs@1/copy";
 import { VERSION } from "../../mod.ts";
@@ -649,6 +649,18 @@ export async function upgrade(
       ? "\n\n💡 All your projects now have the latest methodologies!"
       : "\n\n💡 Your project now uses the latest methodologies from ~/.claude/aichaku/";
 
+    // Check for new features and prompt for app description
+    const oldVersion = metadata.version;
+    if (
+      !options.silent && oldVersion && compareVersions(oldVersion, "0.41.0") < 0 &&
+      compareVersions(VERSION, "0.41.0") >= 0
+    ) {
+      console.log("\n🆕 New feature available: App Description YAML");
+      console.log("   Provide Claude Code with rich context about your application.");
+
+      await promptForAppDescription(targetPath, isGlobal);
+    }
+
     return {
       success: true,
       path: targetPath,
@@ -669,6 +681,143 @@ export async function upgrade(
       action: "error",
     };
   }
+}
+
+function compareVersions(v1: string, v2: string): number {
+  const parts1 = v1.split(".").map(Number);
+  const parts2 = v2.split(".").map(Number);
+
+  for (let i = 0; i < 3; i++) {
+    const p1 = parts1[i] || 0;
+    const p2 = parts2[i] || 0;
+    if (p1 !== p2) return p1 - p2;
+  }
+  return 0;
+}
+
+async function promptForAppDescription(targetPath: string, isGlobal: boolean): Promise<void> {
+  console.log("\n📝 Would you like to add an app description? (Y/n): ");
+
+  const buf = new Uint8Array(1024);
+  const n = await Deno.stdin.read(buf);
+  const answer = new TextDecoder().decode(buf.subarray(0, n || 0)).trim().toLowerCase();
+
+  if (answer === "" || answer === "y" || answer === "yes") {
+    console.log("\n🔍 What type of application is this?");
+    console.log("1. Web Application (React, Vue, etc.)");
+    console.log("2. API Service (REST, GraphQL, microservice)");
+    console.log("3. Static Site (Blog, docs, marketing)");
+    console.log("4. CLI Tool (Command line application)");
+    console.log("5. General/Other");
+    console.log("\n[1-5, default=5]: ");
+
+    const typeBuf = new Uint8Array(1024);
+    const typeN = await Deno.stdin.read(typeBuf);
+    const typeChoice = new TextDecoder().decode(typeBuf.subarray(0, typeN || 0)).trim();
+
+    const appTypeMap: Record<string, string> = {
+      "1": "web-app",
+      "2": "api-service",
+      "3": "static-site",
+      "4": "cli-tool",
+      "5": "base",
+    };
+
+    const selectedType = appTypeMap[typeChoice] || "base";
+    const templateName = selectedType === "base" ? "base" : selectedType;
+
+    try {
+      Brand.progress("Creating app description template...", "active");
+
+      const userDir = join(targetPath, "user");
+      await ensureDir(userDir);
+      const appDescPath = join(userDir, "app-description.yaml");
+
+      // Check if app description already exists
+      if (await exists(appDescPath)) {
+        Brand.info("App description already exists. Skipping template creation.");
+        return;
+      }
+
+      // Check if running from JSR or local
+      // codeql[js/incomplete-url-substring-sanitization] Safe because import.meta.url is trusted
+      const isJSR = import.meta.url.startsWith("https://jsr.io") ||
+        !import.meta.url.includes("/aichaku/");
+
+      if (isJSR) {
+        // Fetch template from GitHub
+        const templateUrl =
+          `https://raw.githubusercontent.com/RickCogley/aichaku/v${VERSION}/docs/core/templates/app-descriptions/${templateName}-template.yaml`;
+
+        try {
+          const response = await fetch(templateUrl);
+          if (!response.ok) {
+            throw new Error(`Failed to fetch template: ${response.statusText}`);
+          }
+          const templateContent = await response.text();
+          await Deno.writeTextFile(appDescPath, templateContent);
+        } catch {
+          // Fallback to basic template if fetch fails
+          await Deno.writeTextFile(appDescPath, getBasicAppDescriptionTemplate());
+          Brand.warning("Using basic template (network fetch failed)");
+        }
+      } else {
+        // Local development - copy from source
+        const sourceTemplate = join(
+          new URL(".", import.meta.url).pathname,
+          "../../../docs/core/templates/app-descriptions",
+          `${templateName}-template.yaml`,
+        );
+
+        try {
+          await copy(sourceTemplate, appDescPath);
+        } catch {
+          // Fallback to basic template if file not found
+          await Deno.writeTextFile(appDescPath, getBasicAppDescriptionTemplate());
+        }
+      }
+
+      Brand.success(
+        `Created ${
+          isGlobal ? "~/.claude/aichaku" : ".claude/aichaku"
+        }/user/app-description.yaml (${selectedType} template)`,
+      );
+
+      console.log("\n📝 Next steps:");
+      console.log(
+        `1. Edit ${isGlobal ? "~/.claude/aichaku" : ".claude/aichaku"}/user/app-description.yaml to describe your app`,
+      );
+      console.log("2. Run 'aichaku integrate' to update your CLAUDE.md");
+      console.log("3. See the template for examples and documentation");
+    } catch (error) {
+      Brand.warning(
+        `Could not create app description template: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
+  }
+}
+
+function getBasicAppDescriptionTemplate(): string {
+  return `# Aichaku App Description
+# This file helps Claude Code understand your specific application context
+
+application:
+  name: "My Application"
+  type: "web-application"
+  description: "Brief description"
+  version: "1.0.0"
+  
+  stack:
+    language: "typescript"
+    runtime: "node"
+    framework: "express"
+    
+  architecture:
+    pattern: "monolith"
+    
+  security:
+    standards: ["owasp-web"]
+`;
 }
 
 /**

@@ -266,6 +266,7 @@ export async function assembleYamlConfig(options: {
   selectedStandards?: string[];
   selectedDocStandards?: string[];
   selectedPrinciples?: string[];
+  appDescription?: { application: unknown } | null;
 }): Promise<string> {
   const {
     paths,
@@ -273,6 +274,7 @@ export async function assembleYamlConfig(options: {
     selectedStandards = [],
     selectedDocStandards = [],
     selectedPrinciples = [],
+    appDescription = null,
   } = options;
 
   // First, get methodology quick reference
@@ -312,15 +314,22 @@ export async function assembleYamlConfig(options: {
   );
   const userConfig = await readUserCustomizations(paths.user);
 
-  // Merge in the correct order: core first, then methodology quick ref, then detailed configs
-  const finalConfig = mergeConfigs(
+  // Merge in the correct order: core first, then methodology quick ref, then detailed configs, then app description
+  const configsToMerge = [
     coreConfig,
     methodologyQuickRef,
     methodologyConfig,
     standardsConfig,
     principlesConfig,
     userConfig,
-  );
+  ];
+
+  // Add app description if provided
+  if (appDescription && appDescription.application) {
+    configsToMerge.push(appDescription as YamlConfig);
+  }
+
+  const finalConfig = mergeConfigs(...configsToMerge);
 
   // Add metadata about what was included
   finalConfig.included = {

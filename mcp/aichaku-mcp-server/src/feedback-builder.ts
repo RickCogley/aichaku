@@ -117,10 +117,9 @@ exec('ls', [userPath])`,
     const count = result.findings.filter((f) => f.rule === finding.rule).length;
 
     return {
-      reminder:
-        `Your CLAUDE.md explicitly states to avoid 'any' types, but you used it ${count} time${
-          count > 1 ? "s" : ""
-        }.`,
+      reminder: `Your CLAUDE.md explicitly states to avoid 'any' types, but you used it ${count} time${
+        count > 1 ? "s" : ""
+      }.`,
       pattern: "Using 'any' type instead of proper TypeScript types",
       correction: "Define proper interfaces or use 'unknown' with type guards",
 
@@ -155,8 +154,7 @@ if (isResponseData(data)) {
       reflection:
         "What prevented you from defining a proper type? Was it time pressure or uncertainty about the structure?",
 
-      reinforcement:
-        "TypeScript is most valuable when we use its type system. Take the time to define proper types.",
+      reinforcement: "TypeScript is most valuable when we use its type system. Take the time to define proper types.",
     };
   }
 
@@ -165,8 +163,7 @@ if (isResponseData(data)) {
     _result: ReviewResult,
   ): ClaudeGuidance {
     return {
-      reminder:
-        "Path traversal vulnerabilities can expose sensitive files outside the intended directory.",
+      reminder: "Path traversal vulnerabilities can expose sensitive files outside the intended directory.",
       pattern: "Using '..' in file paths without validation",
       correction: "Validate and normalize all file paths before use",
 
@@ -316,8 +313,7 @@ if (!API_URL) {
 
       reflection: "What can you learn from this to avoid similar issues in the future?",
 
-      reinforcement:
-        "Following established patterns and standards leads to more maintainable and secure code.",
+      reinforcement: "Following established patterns and standards leads to more maintainable and secure code.",
     };
   }
 }

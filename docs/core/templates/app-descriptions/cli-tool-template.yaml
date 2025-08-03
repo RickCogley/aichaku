@@ -1,0 +1,245 @@
+# Aichaku App Description Template - CLI Tool
+# Optimized for command-line tools and utilities
+# Copy to .claude/aichaku/user/app-description.yaml and customize
+
+application:
+  # === BASIC INFORMATION (Required) ===
+  name: "My CLI Tool"
+  type: "cli-tool"
+  description: "Command-line utility for task automation"
+  version: "1.0.0"
+
+  # === TECHNOLOGY STACK ===
+  stack:
+    # Core Technologies
+    language: "typescript" # typescript, go, rust, python, ruby, bash
+    runtime: "node" # node, deno, native, python, ruby
+    framework: "commander" # commander, yargs, oclif, cobra, clap, click
+
+    # CLI-specific
+    shell_integration: true # Shell completions, aliases
+    config_format: "yaml" # yaml, json, toml, ini
+
+    # Dependencies
+    database: "none" # Usually none, or sqlite for local storage
+    external_apis: ["github", "npm"] # APIs the CLI interacts with
+
+    # Distribution
+    package_manager: "npm" # npm, brew, apt, snap, cargo, pip
+    distribution: ["npm", "homebrew", "binary"]
+
+  # === CLI ARCHITECTURE ===
+  architecture:
+    # Command Structure
+    pattern: "multi-command" # single-command, multi-command, git-style
+
+    # Core Components
+    components:
+      - name: "commands"
+        description: "Individual command implementations"
+        location: "/src/commands"
+
+      - name: "utils"
+        description: "Shared utilities and helpers"
+        location: "/src/utils"
+
+      - name: "config"
+        description: "Configuration management"
+        location: "/src/config"
+
+      - name: "plugins"
+        description: "Plugin system for extensibility"
+        location: "/src/plugins"
+
+  # === COMMAND STRUCTURE ===
+  commands:
+    # Main Commands
+    structure:
+      - name: "init"
+        description: "Initialize a new project"
+        flags: ["--template", "--force"]
+        interactive: true
+
+      - name: "build"
+        description: "Build the project"
+        flags: ["--watch", "--production"]
+        subcommands: ["build:css", "build:js"]
+
+      - name: "deploy"
+        description: "Deploy to production"
+        flags: ["--env", "--dry-run"]
+        requires_auth: true
+
+    # Global Flags
+    global_flags:
+      - "--verbose, -v: Verbose output"
+      - "--quiet, -q: Suppress output"
+      - "--config, -c: Config file path"
+      - "--help, -h: Show help"
+      - "--version: Show version"
+
+    # Interactive Features
+    interactive:
+      prompts: true # Interactive prompts
+      progress_bars: true # Progress indicators
+      spinners: true # Loading spinners
+      colors: true # Colored output
+
+  # === USER INTERFACE ===
+  ui:
+    # Output Formatting
+    output:
+      format: "pretty" # pretty, json, table, csv
+      colors: "auto" # auto, always, never
+      unicode: true # Unicode characters support
+
+    # Error Handling
+    errors:
+      format: "friendly" # friendly, stack-trace, json
+      suggestions: true # Did you mean...?
+      exit_codes: true # Proper exit codes
+
+    # Help System
+    help:
+      auto_generated: true
+      examples: true
+      man_pages: true # Generate man pages
+
+  # === CONFIGURATION ===
+  configuration:
+    # Config Management
+    storage:
+      location: "~/.config/mycli" # Config directory
+      format: "yaml" # yaml, json, toml
+
+    # Config Options
+    options:
+      api_key: "string"
+      default_env: "string"
+      output_format: "enum"
+      plugins: "array"
+
+    # Environment Variables
+    env_vars:
+      prefix: "MYCLI_" # MYCLI_API_KEY, etc.
+      dotenv: true # Support .env files
+
+  # === PLUGIN SYSTEM ===
+  plugins:
+    enabled: true
+
+    # Plugin Architecture
+    architecture:
+      discovery: "directory" # directory, npm, registry
+      loading: "dynamic" # dynamic, static
+      isolation: "subprocess" # subprocess, same-process
+
+    # Plugin Interface
+    interface:
+      hooks: ["pre-command", "post-command", "error"]
+      apis: ["config", "logger", "http"]
+
+  # === DISTRIBUTION ===
+  distribution:
+    # Package Formats
+    packages:
+      - type: "npm"
+        registry: "https://registry.npmjs.org"
+        scope: "@myorg"
+
+      - type: "homebrew"
+        tap: "myorg/tools"
+        formula: "mycli"
+
+      - type: "binary"
+        platforms: ["darwin-x64", "linux-x64", "win32-x64"]
+
+    # Installation Methods
+    installation:
+      npm: "npm install -g @myorg/mycli"
+      brew: "brew install myorg/tools/mycli"
+      curl: "curl -fsSL https://install.mycli.dev | sh"
+
+    # Auto-update
+    updates:
+      check: true # Check for updates
+      interval: "weekly" # Check frequency
+      channel: "stable" # stable, beta, nightly
+
+  # === INTEGRATIONS ===
+  integrations:
+    # External Services
+    services:
+      - name: "GitHub API"
+        purpose: "Repository operations"
+        authentication: "token"
+
+      - name: "npm Registry"
+        purpose: "Package publishing"
+        authentication: "token"
+
+    # Shell Integration
+    shell:
+      completions: ["bash", "zsh", "fish"]
+      aliases: true
+      path_setup: true
+
+  # === SECURITY ===
+  security:
+    # Credential Storage
+    credentials:
+      storage: "keychain" # keychain, file, env
+      encryption: true
+
+    # Secure Operations
+    operations:
+      confirm_destructive: true
+      audit_log: true
+
+  # === TESTING ===
+  testing:
+    # Test Strategy
+    frameworks: ["jest"]
+
+    # Test Types
+    types:
+      unit: true
+      integration: true
+      snapshot: true # Output snapshot testing
+
+    # CLI Testing
+    cli_testing:
+      mock_fs: true # Mock file system
+      mock_process: true # Mock process.exit
+      capture_output: true # Capture stdout/stderr
+
+  # === DEVELOPMENT ===
+  development:
+    # Development Tools
+    tools:
+      repl: true # Interactive REPL
+      debug_mode: true # Debug output
+      dev_commands: true # Development-only commands
+
+    # Documentation
+    docs:
+      readme: true
+      cli_reference: true
+      api_docs: false # Usually not needed for CLI
+
+  # === PERFORMANCE ===
+  performance:
+    # Startup Performance
+    startup:
+      target: "< 100ms" # Fast startup time
+      lazy_loading: true # Lazy load commands
+
+    # Runtime Performance
+    runtime:
+      async: true # Async operations
+      streaming: true # Stream large outputs
+
+    # Resource Usage
+    resources:
+      memory_limit: "512MB"
+      cpu_cores: 1

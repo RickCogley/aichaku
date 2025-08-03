@@ -1,0 +1,173 @@
+# Aichaku App Description Template - Web Application
+# Optimized for frontend applications (React, Vue, Angular, etc.)
+# Copy to .claude/aichaku/user/app-description.yaml and customize
+
+application:
+  # === BASIC INFORMATION (Required) ===
+  name: "My Web App" # Your application name
+  type: "web-application" # Keep as web-application
+  description: "Modern web application with rich user interface"
+  version: "1.0.0"
+
+  # === TECHNOLOGY STACK ===
+  stack:
+    # Frontend Technologies
+    language: "typescript"
+    runtime: "browser" # or "node" for SSR
+    framework: "react" # react, vue, angular, svelte, nextjs, nuxt, etc.
+    ui_library: "material-ui" # material-ui, ant-design, chakra-ui, tailwind, bootstrap
+    state_management: "redux" # redux, mobx, vuex, context-api, zustand, recoil
+
+    # Backend (if full-stack)
+    backend_framework: "express" # express, fastify, koa, none
+    database: "postgresql" # or "none" for frontend-only
+
+    # Build & Development
+    bundler: "webpack" # webpack, vite, parcel, rollup, esbuild
+    package_manager: "npm" # npm, yarn, pnpm, bun
+
+    # Infrastructure
+    deployment: "static" # static, docker, serverless
+    hosting: "vercel" # vercel, netlify, aws-s3, cloudflare-pages
+    cdn: "cloudflare" # cloudflare, fastly, aws-cloudfront
+
+  # === ARCHITECTURE ===
+  architecture:
+    pattern: "spa" # spa, mpa, pwa, ssr, ssg, jamstack
+
+    # Frontend Architecture
+    structure:
+      - name: "components"
+        description: "Reusable UI components"
+        pattern: "atomic-design" # atomic-design, feature-based, domain-driven
+      - name: "pages"
+        description: "Route-based page components"
+      - name: "hooks"
+        description: "Custom React hooks for logic"
+      - name: "services"
+        description: "API client and external integrations"
+      - name: "store"
+        description: "Global state management"
+
+    # Routing
+    routing:
+      type: "client-side" # client-side, server-side, hybrid
+      library: "react-router" # react-router, vue-router, angular-router
+
+  # === API INTEGRATION ===
+  api:
+    # Backend API details
+    backend_url: "https://api.example.com"
+    api_style: "rest" # rest, graphql
+    authentication: "jwt" # jwt, session, api-key
+
+    # API Client
+    client:
+      library: "axios" # axios, fetch, apollo-client, swr, react-query
+      error_handling: "interceptors"
+      retry_strategy: "exponential-backoff"
+
+  # === USER INTERFACE ===
+  ui:
+    # Design System
+    design_system:
+      name: "custom" # custom, material-design, ant-design, fluent
+      theme: "light-dark" # light, dark, light-dark
+
+    # Responsive Design
+    responsive:
+      breakpoints: ["mobile", "tablet", "desktop"]
+      approach: "mobile-first"
+
+    # Accessibility
+    accessibility:
+      wcag_level: "AA" # A, AA, AAA
+      testing_tools: ["axe", "lighthouse"]
+
+    # Browser Support
+    browsers:
+      - "Chrome (last 2 versions)"
+      - "Firefox (last 2 versions)"
+      - "Safari (last 2 versions)"
+      - "Edge (last 2 versions)"
+
+  # === PERFORMANCE ===
+  performance:
+    # Web Vitals Targets
+    targets:
+      lcp: "2.5s" # Largest Contentful Paint
+      fid: "100ms" # First Input Delay
+      cls: "0.1" # Cumulative Layout Shift
+
+    # Optimization Techniques
+    optimizations:
+      - "Code splitting"
+      - "Lazy loading"
+      - "Image optimization"
+      - "Bundle size monitoring"
+      - "Service worker caching"
+
+  # === SECURITY ===
+  security:
+    standards: ["owasp-web"]
+
+    # Client-side Security
+    client_security:
+      csp: true # Content Security Policy
+      sri: true # Subresource Integrity
+      secure_storage: "encrypted-localstorage"
+
+    # Authentication
+    authentication:
+      method: "oauth2"
+      providers: ["google", "github"]
+      token_storage: "httponly-cookie"
+
+  # === DEVELOPMENT PRACTICES ===
+  practices:
+    # Testing
+    testing:
+      unit: "jest" # jest, vitest, mocha
+      component: "react-testing-library"
+      e2e: "cypress" # cypress, playwright, selenium
+      visual: "chromatic" # chromatic, percy, applitools
+
+    # Code Quality
+    code_quality:
+      linting: "eslint"
+      formatting: "prettier"
+      type_checking: "typescript"
+      css_linting: "stylelint"
+
+    # Development Workflow
+    workflow:
+      hot_reload: true
+      dev_server: "webpack-dev-server"
+      mock_api: true
+      storybook: true
+
+  # === DEPLOYMENT ===
+  deployment:
+    # Build Process
+    build:
+      command: "npm run build"
+      output_dir: "dist"
+      source_maps: true
+
+    # Environments
+    environments:
+      - name: "development"
+        url: "http://localhost:3000"
+        api_url: "http://localhost:8080"
+      - name: "staging"
+        url: "https://staging.example.com"
+        api_url: "https://api-staging.example.com"
+      - name: "production"
+        url: "https://example.com"
+        api_url: "https://api.example.com"
+
+    # CI/CD
+    ci_cd:
+      preview_deployments: true
+      auto_deploy: ["main"]
+      checks: ["lint", "test", "build", "lighthouse"]

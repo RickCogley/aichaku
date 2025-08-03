@@ -86,9 +86,7 @@ export class AichakuFormatter {
   }
 
   static resultsReady(findingCount: number): string {
-    const icon = findingCount === 0
-      ? AICHAKU_BRANDING.ACTIVITIES.SUCCESS
-      : AICHAKU_BRANDING.ACTIVITIES.WARNING;
+    const icon = findingCount === 0 ? AICHAKU_BRANDING.ACTIVITIES.SUCCESS : AICHAKU_BRANDING.ACTIVITIES.WARNING;
 
     return this.formatBrandedMessage(
       icon,

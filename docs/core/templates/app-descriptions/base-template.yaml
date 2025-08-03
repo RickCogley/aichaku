@@ -1,0 +1,295 @@
+# Aichaku App Description Template (Comprehensive)
+# This template includes all available options with extensive documentation
+# Copy to .claude/aichaku/user/app-description.yaml and customize for your app
+
+application:
+  # === BASIC INFORMATION (Required) ===
+  name: "My Application" # REQUIRED: Your application's name
+  type: "web-application" # REQUIRED: Choose one: web-application, api-service, cli-tool, mobile-app, desktop-app, library
+  description: "Brief description of what this application does" # REQUIRED
+  version: "1.0.0" # Your application version
+
+  # === TECHNOLOGY STACK ===
+  # Helps Claude understand your technical choices
+  stack:
+    # Core Technologies
+    language: "typescript" # Primary language: typescript, javascript, python, java, go, rust, csharp, etc.
+    runtime: "node" # Runtime environment: node, deno, browser, python, jvm, dotnet, etc.
+    framework: "express" # Main framework: react, vue, angular, express, fastapi, spring, asp.net, etc.
+
+    # Data Layer (if applicable)
+    database: "postgresql" # Database: postgresql, mysql, mongodb, sqlite, redis, none, etc.
+    orm: "prisma" # ORM/ODM: prisma, sequelize, typeorm, mongoose, sqlalchemy, none, etc.
+    cache: "redis" # Caching layer: redis, memcached, none
+
+    # Infrastructure
+    deployment: "docker" # Deployment method: docker, kubernetes, serverless, traditional, static
+    hosting: "aws" # Hosting platform: aws, gcp, azure, vercel, netlify, heroku, self-hosted
+    ci_cd: "github-actions" # CI/CD platform: github-actions, gitlab-ci, jenkins, circle-ci, azure-devops
+
+    # Monitoring & Observability
+    logging: "winston" # Logging library: winston, pino, bunyan, log4j, serilog, console
+    monitoring: "datadog" # Monitoring platform: datadog, prometheus, newrelic, cloudwatch, none
+    error_tracking: "sentry" # Error tracking: sentry, rollbar, bugsnag, raygun, none
+
+  # === ARCHITECTURE PATTERNS ===
+  # Helps Claude understand your system design
+  architecture:
+    pattern: "monolith" # Architecture pattern: monolith, microservices, serverless, clean-architecture, mvc, jamstack
+
+    # For Monoliths and Clean Architecture
+    layers:
+      - name: "presentation"
+        description: "User interface, API endpoints, controllers"
+        technologies: ["react", "express", "graphql"]
+      - name: "business"
+        description: "Business logic, use cases, domain models"
+        technologies: ["typescript"]
+      - name: "data"
+        description: "Database access, repositories, external APIs"
+        technologies: ["prisma", "redis"]
+
+    # For Microservices (remove if not applicable)
+    services:
+      - name: "user-service"
+        description: "User management and authentication"
+        technology: "node"
+        endpoints: ["/users", "/auth"]
+        dependencies: ["database", "cache"]
+
+    # Communication Patterns
+    communication:
+      internal: "direct-calls" # How services communicate: direct-calls, rest-api, grpc, message-queue, event-bus
+      external: "rest-api" # External API style: rest-api, graphql, grpc, websocket, webhook
+
+  # === API DESIGN (remove if not applicable) ===
+  api:
+    style: "rest" # API style: rest, graphql, grpc, soap, none
+    base_url: "/api/v1" # Base URL path
+    version_strategy: "url" # Versioning: url (/v1/), header (api-version), query (?version=1)
+
+    # Authentication & Authorization
+    authentication: "jwt" # Auth method: jwt, oauth2, api-key, basic, session, none
+    authorization: "rbac" # Auth model: rbac, abac, simple, none
+
+    # Example Endpoints (customize for your API)
+    endpoints:
+      - path: "/users"
+        methods: ["GET", "POST"]
+        description: "User management endpoints"
+        authentication_required: true
+        roles_required: ["admin"]
+      - path: "/products"
+        methods: ["GET"]
+        description: "Public product listing"
+        authentication_required: false
+
+    # API Documentation
+    documentation:
+      format: "openapi" # Doc format: openapi, swagger, postman, raml, custom
+      url: "/docs" # Documentation URL
+      auto_generated: true # Whether docs are auto-generated
+
+  # === BUSINESS DOMAIN ===
+  # Helps Claude understand your business context
+  domain:
+    industry: "technology" # Industry: healthcare, finance, e-commerce, education, technology, etc.
+
+    # Compliance Requirements
+    compliance: [] # Compliance standards: hipaa, gdpr, pci-dss, sox, ferpa, etc.
+
+    # Key Business Entities (your domain models)
+    entities:
+      - name: "User"
+        description: "System user with authentication"
+        key_attributes: ["id", "email", "role", "profile"]
+      - name: "Product"
+        description: "Items available in the system"
+        key_attributes: ["id", "name", "price", "category"]
+
+    # Business Rules (domain logic)
+    rules:
+      - "Users must verify email before accessing features"
+      - "Products require admin approval before publishing"
+
+  # === SECURITY REQUIREMENTS ===
+  security:
+    # Applicable Security Standards
+    standards: ["owasp-web"] # Standards: owasp-web, owasp-api, nist-csf, iso-27001, cis
+
+    # Authentication Configuration
+    authentication:
+      primary: "oauth2" # Primary auth: oauth2, saml, ldap, email-password, magic-link
+      providers: ["google", "github"] # OAuth providers if applicable
+      mfa_required: false # Multi-factor authentication
+      session_timeout: "24h" # Session duration
+
+    # Data Protection
+    encryption:
+      in_transit: "tls-1.2" # TLS version: tls-1.2, tls-1.3
+      at_rest: "aes-256" # Encryption standard
+      key_management: "env" # Key storage: env, vault, kms, hsm
+
+    # Access Control
+    access_control:
+      model: "rbac" # Access model: rbac, abac, mac, dac
+      roles: ["admin", "user", "guest"] # Available roles
+      default_role: "user" # Default role for new users
+
+    # Security Headers (web applications)
+    headers:
+      csp: true # Content Security Policy
+      hsts: true # HTTP Strict Transport Security
+      xframe: "sameorigin" # X-Frame-Options: deny, sameorigin, allow
+
+  # === DEVELOPMENT PRACTICES ===
+  practices:
+    # Testing Approach
+    testing:
+      frameworks: ["jest", "cypress"] # Test frameworks
+      strategies: ["tdd", "bdd"] # Testing strategies: tdd, bdd, none
+      coverage_target: 80 # Target coverage percentage
+      types: ["unit", "integration", "e2e"] # Test types
+
+    # Code Quality Tools
+    code_quality:
+      linting: "eslint" # Linter: eslint, tslint, pylint, rubocop, golint
+      formatting: "prettier" # Formatter: prettier, black, gofmt, rustfmt
+      type_checking: "typescript" # Type system: typescript, flow, mypy, none
+      static_analysis: ["sonarqube"] # Additional analysis tools
+
+    # Version Control
+    version_control:
+      platform: "github" # Platform: github, gitlab, bitbucket
+      branching: "git-flow" # Strategy: git-flow, github-flow, gitlab-flow, trunk-based
+      commit_style: "conventional-commits" # Commit convention
+      pr_checks: ["tests", "lint", "security"] # Required PR checks
+
+    # CI/CD Pipeline
+    ci_cd:
+      platform: "github-actions" # CI platform
+      stages: ["lint", "test", "build", "deploy"] # Pipeline stages
+      deployment_strategy: "rolling" # Deploy strategy: rolling, blue-green, canary
+      auto_deploy_branches: ["main"] # Branches that auto-deploy
+
+  # === EXTERNAL INTEGRATIONS ===
+  integrations:
+    # Third-party Services
+    services:
+      - name: "Stripe"
+        type: "payment"
+        purpose: "Payment processing"
+        authentication: "api-key"
+      - name: "SendGrid"
+        type: "email"
+        purpose: "Transactional emails"
+        authentication: "api-key"
+
+    # Internal APIs/Services
+    internal_apis:
+      - name: "legacy-system"
+        type: "rest-api"
+        purpose: "Data synchronization"
+        authentication: "basic-auth"
+
+  # === DEPLOYMENT & INFRASTRUCTURE ===
+  deployment:
+    # Environment Configuration
+    environments:
+      - name: "development"
+        url: "http://localhost:3000"
+        type: "local"
+      - name: "staging"
+        url: "https://staging.example.com"
+        type: "cloud"
+      - name: "production"
+        url: "https://api.example.com"
+        type: "cloud"
+
+    # Container Configuration (if applicable)
+    containerization:
+      platform: "docker"
+      orchestration: "kubernetes" # kubernetes, docker-swarm, ecs, none
+      registry: "dockerhub" # dockerhub, ecr, gcr, acr, self-hosted
+
+    # Scaling Configuration
+    scaling:
+      type: "horizontal" # horizontal, vertical, both, none
+      auto_scaling: true
+      min_instances: 2
+      max_instances: 10
+      metrics: ["cpu", "memory", "requests"]
+
+  # === MONITORING & OBSERVABILITY ===
+  observability:
+    # Metrics Collection
+    metrics:
+      platform: "prometheus" # prometheus, datadog, cloudwatch, newrelic
+      custom_metrics: ["business_transactions", "user_signups"]
+
+    # Log Management
+    logging:
+      platform: "elk" # elk, splunk, datadog, cloudwatch
+      structured: true # Using structured logging
+      retention: "30d" # Log retention period
+
+    # Distributed Tracing
+    tracing:
+      platform: "jaeger" # jaeger, zipkin, datadog-apm, newrelic-apm
+      sampling_rate: 0.1 # Percentage of requests traced
+
+    # Alerting
+    alerting:
+      platform: "pagerduty" # pagerduty, opsgenie, victorops
+      channels: ["email", "slack"]
+
+  # === PERFORMANCE REQUIREMENTS ===
+  performance:
+    # Response Time Targets
+    targets:
+      api_response_p50: "100ms"
+      api_response_p95: "500ms"
+      api_response_p99: "1000ms"
+      page_load_time: "3s"
+
+    # Capacity Planning
+    capacity:
+      requests_per_second: 1000
+      concurrent_users: 5000
+      data_volume: "1TB"
+
+    # Optimization Strategies
+    optimizations:
+      - "Database query optimization"
+      - "Redis caching layer"
+      - "CDN for static assets"
+      - "API response compression"
+
+  # === DATA MANAGEMENT ===
+  data:
+    # Database Configuration
+    storage:
+      primary: "postgresql"
+      secondary: ["redis", "s3"]
+      backup_strategy: "daily snapshots"
+      disaster_recovery: "multi-region replication"
+
+    # Data Governance
+    governance:
+      retention_period: "7 years"
+      deletion_policy: "soft delete with purge"
+      audit_trail: true
+      versioning: true
+
+    # Privacy & Compliance
+    privacy:
+      pii_handling: "encryption at rest"
+      data_masking: ["email", "phone", "ssn"]
+      gdpr_compliant: true
+      data_portability: true
+
+# === NOTES ===
+# - Remove sections that don't apply to your application
+# - Add custom sections as needed for your specific domain
+# - Keep descriptions concise but informative
+# - Update this file as your architecture evolves

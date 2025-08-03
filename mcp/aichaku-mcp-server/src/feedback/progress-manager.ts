@@ -201,9 +201,7 @@ export class ProgressManager {
     elapsed: number,
     success: boolean,
   ): void {
-    const icon = success
-      ? AICHAKU_BRANDING.ACTIVITIES.SUCCESS
-      : AICHAKU_BRANDING.ACTIVITIES.WARNING;
+    const icon = success ? AICHAKU_BRANDING.ACTIVITIES.SUCCESS : AICHAKU_BRANDING.ACTIVITIES.WARNING;
     const phase = success ? AICHAKU_BRANDING.PHASES.HARVEST : AICHAKU_BRANDING.PHASES.HARVEST;
 
     // Always show completion

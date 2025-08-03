@@ -21,6 +21,7 @@ import { createMigrateCommand, showMigrateHelp } from "./src/commands/migrate.ts
 import { runReviewCommand } from "./src/commands/review.ts";
 import { runGitHubCommand } from "./src/commands/github.ts";
 import { cleanup } from "./src/commands/cleanup.ts";
+import { appDescription } from "./src/commands/app-description.ts";
 import { VERSION } from "./mod.ts";
 import { displayVersionWarning } from "./src/utils/version-checker.ts";
 import { Brand } from "./src/utils/branded-messages.ts";
@@ -40,6 +41,7 @@ const args = parseArgs(Deno.args, {
     "compare",
     "stats",
     "validate",
+    "init",
     "categories",
     "config",
     "status",
@@ -94,7 +96,6 @@ const args = parseArgs(Deno.args, {
     "set",
     "add",
     "remove",
-    "show",
     "search",
     "hook",
     "disable",
@@ -214,6 +215,7 @@ ${Brand.tagline}
 - **migrate** - Migrate from old ~/.claude/ to new ~/.claude/aichaku/ structure
 - **merge-docs** - Merge completed project documentation back to central docs
 - **cleanup** - Clean up legacy files
+- **app-description** - Manage application description for Claude Code context
 
 ## Options
 - **-g, --global** - Apply to global installation (~/.claude)
@@ -539,6 +541,22 @@ try {
         projectPath: args.path as string | undefined,
       };
       await cleanup(cleanupOptions);
+      break;
+    }
+    case "app-description": {
+      const appDescOptions = {
+        init: args.init as boolean | undefined,
+        validate: args.validate as boolean | undefined,
+        show: args.show as boolean | undefined,
+        projectPath: args.path as string | undefined,
+        silent: args.silent as boolean | undefined,
+        type: args.type as string | undefined,
+      };
+      const result = await appDescription(appDescOptions);
+      if (!result.success) {
+        console.error(result.message);
+        Deno.exit(1);
+      }
       break;
     }
     case "version": {

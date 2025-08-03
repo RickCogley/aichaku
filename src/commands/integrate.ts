@@ -406,6 +406,21 @@ export async function integrate(
     user: aichakuPaths.global.user.root,
   };
 
+  // Check for app description
+  const appDescriptionPath = join(projectPath, ".claude", "aichaku", "user", "app-description.yaml");
+  let appDescription = null;
+  if (await exists(appDescriptionPath)) {
+    try {
+      const appDescContent = await safeReadTextFile(appDescriptionPath, projectPath);
+      const { parse } = await import("jsr:@std/yaml@1");
+      appDescription = parse(appDescContent) as { application: unknown };
+    } catch (error) {
+      if (!options.silent) {
+        console.warn(`⚠️  Could not read app description: ${error instanceof Error ? error.message : String(error)}`);
+      }
+    }
+  }
+
   // Assemble YAML configuration
   const yamlConfig = await assembleYamlConfig({
     paths: configPaths,
@@ -413,6 +428,7 @@ export async function integrate(
     selectedStandards,
     selectedDocStandards: [], // Explicitly exclude doc standards from CLAUDE.md
     selectedPrinciples,
+    appDescription,
   });
 
   // Note: methodology quick reference is now included in the main yamlConfig

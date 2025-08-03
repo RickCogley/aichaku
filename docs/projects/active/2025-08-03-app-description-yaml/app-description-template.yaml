@@ -1,0 +1,138 @@
+# Application Description Template for Aichaku
+# This file helps Claude Code understand your specific application context
+# Copy this to .claude/aichaku/user/app-description.yaml and customize
+
+application:
+  # === BASIC INFORMATION (Required) ===
+  name: "My Application" # Your application's name
+  type: "web-application" # Options: web-application, api-service, cli-tool, mobile-app, desktop-app, library
+  description: "Brief description of what this application does"
+  version: "1.0.0" # Your application version
+
+  # === TECHNOLOGY STACK ===
+  stack:
+    # Core Technologies
+    language: "typescript" # typescript, javascript, python, java, go, rust, etc.
+    runtime: "node" # node, browser, python, jvm, etc.
+    framework: "react" # react, vue, angular, express, fastapi, spring, etc.
+
+    # Data Layer
+    database: "postgresql" # postgresql, mysql, mongodb, sqlite, none, etc.
+    orm: "prisma" # prisma, sequelize, typeorm, sqlalchemy, none, etc.
+    cache: "redis" # redis, memcached, none
+
+    # Infrastructure
+    deployment: "docker" # docker, kubernetes, serverless, traditional
+    hosting: "aws" # aws, gcp, azure, vercel, netlify, self-hosted
+    ci_cd: "github-actions" # github-actions, gitlab-ci, jenkins, circle-ci, etc.
+
+    # Monitoring & Observability
+    logging: "winston" # winston, pino, logrus, bunyan, etc.
+    monitoring: "prometheus" # prometheus, datadog, newrelic, cloudwatch, etc.
+    error_tracking: "sentry" # sentry, rollbar, bugsnag, none, etc.
+
+  # === ARCHITECTURE PATTERNS ===
+  architecture:
+    pattern: "clean-architecture" # monolith, microservices, clean-architecture, layered, hexagonal
+
+    # For Clean Architecture or Layered approaches
+    layers:
+      - name: "presentation"
+        description: "User interface, API routes, controllers"
+        technologies: ["react", "express"]
+      - name: "application"
+        description: "Use cases, business logic orchestration"
+        technologies: ["typescript"]
+      - name: "domain"
+        description: "Business entities and rules"
+        technologies: ["typescript"]
+      - name: "infrastructure"
+        description: "Database, external APIs, file system"
+        technologies: ["prisma", "postgresql"]
+
+    # Communication Patterns
+    communication:
+      internal: "direct-calls" # direct-calls, message-queue, event-bus
+      external: "rest-api" # rest-api, graphql, grpc, webhooks
+
+  # === API DESIGN (if applicable) ===
+  api:
+    style: "rest" # rest, graphql, grpc, webhook
+    base_url: "/api/v1"
+    version_strategy: "url" # url, header, query-param
+
+    # Authentication & Authorization
+    authentication: "jwt" # jwt, oauth2, api-key, session, none
+    authorization: "rbac" # rbac, abac, simple, none
+
+    # Key Endpoints (examples - add your own)
+    endpoints:
+      - path: "/users"
+        methods: ["GET", "POST"]
+        description: "User management"
+        authentication_required: true
+      - path: "/health"
+        methods: ["GET"]
+        description: "Health check endpoint"
+        authentication_required: false
+
+    # API Documentation
+    documentation:
+      format: "openapi" # openapi, postman, custom
+      url: "/docs"
+
+  # === BUSINESS DOMAIN ===
+  domain:
+    industry: "technology" # healthcare, finance, e-commerce, education, etc.
+
+    # Compliance Requirements (if any)
+    compliance: [] # hipaa, gdpr, sox, pci-dss, etc.
+
+    # Key Business Entities
+    entities:
+      - name: "User"
+        description: "Application user"
+        key_attributes: ["id", "email", "name"]
+
+    # Business Rules (examples)
+    rules: []
+
+  # === SECURITY REQUIREMENTS ===
+  security:
+    # Applicable Standards
+    standards: ["owasp-web"] # owasp-web, nist-csf, etc.
+
+    # Authentication Methods
+    authentication:
+      primary: "email-password" # oauth2, saml, jwt, session, etc.
+      providers: [] # google, microsoft, auth0, etc.
+      mfa_required: false
+
+    # Data Protection
+    encryption:
+      in_transit: "tls-1.2"
+      at_rest: "aes-256"
+
+    # Access Control
+    access_control:
+      model: "rbac" # rbac, abac, mac, dac
+      roles: ["admin", "user"]
+
+  # === DEVELOPMENT PRACTICES ===
+  practices:
+    # Testing Strategy
+    testing:
+      frameworks: ["jest"] # jest, mocha, pytest, junit, etc.
+      strategies: ["tdd"] # tdd, bdd, none
+      coverage_target: 80
+
+    # Code Quality
+    code_quality:
+      linting: "eslint" # eslint, pylint, golint, etc.
+      formatting: "prettier" # prettier, black, gofmt, etc.
+      type_checking: "typescript"
+
+    # Version Control
+    version_control:
+      branching: "github-flow" # git-flow, github-flow, gitlab-flow
+      commit_style: "conventional-commits"

@@ -1,0 +1,229 @@
+# Example: Lume Static Site Description
+# This shows an app description for a static website built with Lume SSG
+
+application:
+  name: "eSolia Blog"
+  type: "web-application" # Even though it's static, it's still a web app
+  description: "Corporate blog and news site built with Lume static site generator"
+  version: "2.0.0"
+
+  stack:
+    language: "typescript"
+    runtime: "deno"
+    framework: "lume" # Deno-based static site generator
+    database: "none" # No database for static site
+    deployment: "static" # Static file deployment
+    hosting: "netlify"
+    ci_cd: "github-actions"
+
+    # Static site specific
+    ssg: "lume"
+    cms: "lume-cms" # Lume's built-in CMS
+    cdn: "netlify" # Netlify's built-in CDN
+
+  architecture:
+    pattern: "jamstack" # JavaScript, APIs, Markup
+
+    # Static site architecture
+    components:
+      - name: "content"
+        description: "Markdown files, data files, and media assets"
+        location: "/src/posts, /src/pages, /_data"
+        technologies: ["markdown", "yaml", "json"]
+
+      - name: "templates"
+        description: "Nunjucks/JSX templates for page layouts"
+        location: "/_includes"
+        technologies: ["nunjucks", "typescript"]
+
+      - name: "assets"
+        description: "CSS, images, and client-side JavaScript"
+        location: "/assets, /styles"
+        technologies: ["css", "typescript"]
+
+      - name: "cms"
+        description: "Lume CMS for content management"
+        location: "/_cms"
+        technologies: ["lume-cms", "basic-auth"]
+
+    # Build process
+    build_pipeline:
+      - "TypeScript compilation"
+      - "Markdown processing"
+      - "Asset optimization"
+      - "HTML generation"
+      - "Sitemap generation"
+
+  # API section minimal for static site
+  api:
+    style: "none" # No backend API
+    external_apis: # Third-party APIs used
+      - name: "Netlify Forms"
+        purpose: "Contact form submissions"
+        authentication: "none" # Handled by Netlify
+
+      - name: "Comments API"
+        purpose: "Blog comments (if using external service)"
+        authentication: "api-key"
+
+  domain:
+    industry: "technology"
+    content_types:
+      - name: "BlogPost"
+        description: "Blog articles and news updates"
+        attributes: ["title", "date", "author", "tags", "content"]
+        location: "/src/posts/"
+
+      - name: "Page"
+        description: "Static pages like About, Services"
+        attributes: ["title", "layout", "content"]
+        location: "/src/pages/"
+
+      - name: "Author"
+        description: "Blog post authors"
+        attributes: ["name", "bio", "avatar", "social"]
+        location: "/_data/authors.yml"
+
+    content_workflow:
+      - "Draft content in Markdown"
+      - "Review via pull request"
+      - "Merge triggers build"
+      - "Auto-deploy to Netlify"
+
+  security:
+    standards: ["owasp-web"] # Still relevant for static sites
+
+    # CMS authentication
+    authentication:
+      cms: "basic-auth" # Lume CMS basic authentication
+      cms_users: ["admin", "editor"]
+
+    # Static site security
+    headers: # Configured in netlify.toml
+      csp: true
+      hsts: true
+      xframe: "sameorigin"
+      x_content_type: "nosniff"
+
+    # No server-side concerns but client-side security matters
+    client_security:
+      - "No sensitive data in JavaScript"
+      - "External API keys use serverless functions"
+      - "Form submissions via Netlify Forms"
+
+  practices:
+    # Testing for static sites
+    testing:
+      frameworks: ["deno test"]
+      strategies: ["unit"] # Test helpers and build scripts
+      types:
+        - "build tests" # Ensure site builds correctly
+        - "link tests" # Check for broken links
+        - "lighthouse" # Performance and accessibility
+
+    code_quality:
+      linting: "deno lint"
+      formatting: "deno fmt"
+      type_checking: "typescript"
+
+    version_control:
+      branching: "github-flow"
+      commit_style: "conventional-commits"
+
+    # Content management
+    content_management:
+      editor: "vscode" # Or any markdown editor
+      preview: "lume serve" # Local development server
+      cms_access: "/_cms" # Lume CMS endpoint
+
+  deployment:
+    environments:
+      - name: "development"
+        url: "http://localhost:3000"
+        command: "deno task serve"
+
+      - name: "preview"
+        url: "https://deploy-preview-*.netlify.app"
+        trigger: "pull request"
+
+      - name: "production"
+        url: "https://blog.esolia.pro"
+        trigger: "merge to main"
+
+    # Static site deployment
+    build:
+      command: "deno task build"
+      output_directory: "_site"
+      node_version: "not-applicable" # Using Deno
+      deno_version: "1.40.0"
+
+    # Netlify-specific
+    netlify:
+      site_id: "blog-esolia-pro"
+      build_command: "deno task build"
+      publish_directory: "_site"
+      functions_directory: "netlify/functions" # If using serverless
+
+    # Performance optimizations
+    optimizations:
+      - "Image optimization via Lume plugins"
+      - "CSS/JS minification"
+      - "HTML minification"
+      - "Preload critical resources"
+      - "Service worker for offline"
+
+  integrations:
+    services:
+      - name: "Netlify"
+        type: "hosting-platform"
+        purpose: "Static hosting, CDN, forms, analytics"
+        features_used:
+          - "Deploy previews"
+          - "Form handling"
+          - "Split testing"
+          - "Analytics"
+
+      - name: "GitHub"
+        type: "version-control"
+        purpose: "Source code repository, CI/CD triggers"
+
+      - name: "Cloudinary"
+        type: "media-cdn"
+        purpose: "Image optimization and delivery"
+        authentication: "api-key"
+
+  performance:
+    # Static site performance targets
+    targets:
+      lighthouse_score: 95
+      page_weight: "< 500KB"
+      time_to_interactive: "< 2s"
+      first_contentful_paint: "< 1s"
+
+    # CDN configuration
+    cdn:
+      provider: "netlify"
+      cache_control:
+        html: "no-cache"
+        assets: "max-age=31536000" # 1 year
+
+  # Lume-specific configuration
+  lume_config:
+    plugins:
+      - "postcss" # CSS processing
+      - "terser" # JS minification
+      - "sass" # Sass support
+      - "date" # Date formatting
+      - "feed" # RSS/Atom feeds
+      - "sitemap" # Sitemap generation
+      - "paginate" # Blog pagination
+
+    data_formats:
+      - "yaml"
+      - "json"
+      - "csv"
+
+    template_engines:
+      - "nunjucks"
+      - "jsx"
+      - "markdown"

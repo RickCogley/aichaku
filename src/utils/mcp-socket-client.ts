@@ -34,9 +34,7 @@ export class MCPSocketClient {
       await this.initialize();
     } catch (error) {
       throw new Error(
-        `Failed to connect to MCP server: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
+        `Failed to connect to MCP server: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
   }

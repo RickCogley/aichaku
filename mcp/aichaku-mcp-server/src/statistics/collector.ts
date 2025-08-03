@@ -324,9 +324,7 @@ export class StatisticsCollector {
     // Update common issues
     if (result?.findings) {
       for (const finding of result.findings) {
-        const existingIssue = fileAnalysis.commonIssues.find((issue) =>
-          issue.rule === finding.rule
-        );
+        const existingIssue = fileAnalysis.commonIssues.find((issue) => issue.rule === finding.rule);
         if (existingIssue) {
           existingIssue.count++;
         } else {
@@ -393,9 +391,7 @@ export class StatisticsCollector {
 
       // Update common violations
       for (const finding of result.findings) {
-        const existingViolation = standardsUsage.commonViolations.find((v) =>
-          v.rule === finding.rule
-        );
+        const existingViolation = standardsUsage.commonViolations.find((v) => v.rule === finding.rule);
         if (existingViolation) {
           existingViolation.count++;
         } else {

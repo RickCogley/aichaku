@@ -1,0 +1,220 @@
+# Aichaku App Description Template - Static Site
+# Optimized for SSG sites, blogs, documentation, JAMstack
+# Copy to .claude/aichaku/user/app-description.yaml and customize
+
+application:
+  # === BASIC INFORMATION (Required) ===
+  name: "My Static Site"
+  type: "web-application" # Static sites are still web applications
+  description: "Static site built with modern SSG tools"
+  version: "2.0.0"
+
+  # === TECHNOLOGY STACK ===
+  stack:
+    # Static Site Generator
+    language: "typescript" # typescript, javascript, ruby, python, go
+    runtime: "deno" # deno, node, ruby, python, go
+    framework: "lume" # lume, gatsby, nextjs, hugo, jekyll, 11ty, astro
+
+    # No Backend Services
+    database: "none" # Static sites have no database
+    api: "none" # May use external APIs
+
+    # Build & Deploy
+    deployment: "static" # Always static for SSG
+    hosting: "netlify" # netlify, vercel, github-pages, cloudflare-pages, s3
+    cdn: "netlify" # Built-in CDN with most static hosts
+
+    # Content Management
+    cms: "markdown" # markdown, netlify-cms, forestry, contentful, none
+
+  # === ARCHITECTURE ===
+  architecture:
+    pattern: "jamstack" # JAMstack (JavaScript, APIs, Markup)
+
+    # Site Structure
+    structure:
+      - name: "content"
+        description: "Markdown files and data"
+        location: "/content, /_data"
+        formats: ["markdown", "yaml", "json"]
+
+      - name: "templates"
+        description: "Page templates and layouts"
+        location: "/_includes, /layouts"
+        engine: "nunjucks" # nunjucks, liquid, jsx, vue
+
+      - name: "assets"
+        description: "Static assets (CSS, JS, images)"
+        location: "/assets, /static"
+        processing: ["minification", "optimization"]
+
+      - name: "components"
+        description: "Reusable UI components"
+        location: "/components"
+        format: "jsx" # jsx, vue, web-components
+
+    # Build Pipeline
+    build_process:
+      - "Content processing (Markdown → HTML)"
+      - "Template rendering"
+      - "Asset optimization"
+      - "Static file generation"
+
+  # === CONTENT MANAGEMENT ===
+  content:
+    # Content Types
+    types:
+      - name: "posts"
+        location: "/content/posts"
+        format: "markdown"
+        frontmatter: ["title", "date", "tags", "author"]
+
+      - name: "pages"
+        location: "/content/pages"
+        format: "markdown"
+        frontmatter: ["title", "layout", "permalink"]
+
+    # Content Features
+    features:
+      syntax_highlighting: true
+      table_of_contents: true
+      reading_time: true
+      related_posts: true
+
+    # Media Management
+    media:
+      storage: "local" # local, cloudinary, s3
+      optimization: "build-time"
+      formats: ["webp", "avif"]
+      lazy_loading: true
+
+  # === SITE FEATURES ===
+  features:
+    # Core Features
+    search: "lunr" # lunr, algolia, elasticsearch, none
+    comments: "disqus" # disqus, utterances, commento, none
+    analytics: "plausible" # google-analytics, plausible, fathom, matomo
+
+    # SEO & Meta
+    seo:
+      sitemap: true
+      robots_txt: true
+      structured_data: true
+      open_graph: true
+      twitter_cards: true
+
+    # Feeds
+    feeds:
+      rss: true
+      atom: true
+      json_feed: true
+
+    # Progressive Enhancement
+    pwa:
+      enabled: true
+      offline_mode: true
+      install_prompt: true
+
+  # === PERFORMANCE ===
+  performance:
+    # Build Optimization
+    build:
+      incremental: true # Only rebuild changed files
+      parallel: true # Parallel processing
+      cache: true # Cache unchanged assets
+
+    # Output Optimization
+    optimization:
+      html_minification: true
+      css_minification: true
+      js_minification: true
+      image_optimization: true
+      critical_css: true
+
+    # Performance Targets
+    targets:
+      build_time: "< 60s"
+      page_weight: "< 500KB"
+      lighthouse_score: 95
+
+  # === DEPLOYMENT ===
+  deployment:
+    # Build Configuration
+    build:
+      command: "deno task build" # Build command
+      output_directory: "_site" # Output folder
+      node_version: "n/a" # Using Deno
+      deno_version: "1.40.0"
+
+    # Hosting Configuration
+    hosting_config:
+      headers:
+        cache_control:
+          html: "public, max-age=0, must-revalidate"
+          assets: "public, max-age=31536000, immutable"
+      redirects: "/_redirects" # Netlify redirects file
+
+    # Preview Deployments
+    previews:
+      enabled: true
+      branch_deploys: true
+      deploy_previews: true
+
+    # Environments
+    environments:
+      - name: "development"
+        url: "http://localhost:3000"
+        command: "deno task serve"
+
+      - name: "preview"
+        url: "https://preview--site.netlify.app"
+        trigger: "pull request"
+
+      - name: "production"
+        url: "https://example.com"
+        trigger: "push to main"
+
+  # === INTEGRATIONS ===
+  integrations:
+    # External Services
+    services:
+      - name: "Cloudinary"
+        type: "media-cdn"
+        purpose: "Image optimization and delivery"
+
+      - name: "Algolia"
+        type: "search"
+        purpose: "Site search functionality"
+
+      - name: "Formspree"
+        type: "forms"
+        purpose: "Contact form handling"
+
+    # Build Plugins
+    plugins:
+      - "sitemap" # Generate sitemap.xml
+      - "feed" # Generate RSS/Atom feeds
+      - "reading-time" # Calculate reading time
+      - "related-posts" # Find related content
+
+  # === DEVELOPMENT ===
+  development:
+    # Local Development
+    local:
+      server: "deno task serve"
+      port: 3000
+      live_reload: true
+
+    # Content Workflow
+    workflow:
+      editor: "vscode"
+      preview: "localhost"
+      git_based: true
+
+    # Testing
+    testing:
+      link_checking: true
+      html_validation: true
+      accessibility: true
+      visual_regression: false

@@ -6,11 +6,7 @@
 
 import { ensureDir } from "@std/fs/ensure-dir";
 import { dirname, join, normalize } from "@std/path";
-import type {
-  DirectoryStructure,
-  ProjectAnalysis,
-  ProjectType,
-} from "../analysis/project-analyzer.ts";
+import type { DirectoryStructure, ProjectAnalysis, ProjectType } from "../analysis/project-analyzer.ts";
 import { safeWriteTextFileSync, validatePath } from "../utils/path-security.ts";
 import process from "node:process";
 
@@ -111,9 +107,7 @@ export class DocGenerator {
         validatePath(fullPath, options.projectAnalysis.rootPath);
       } catch (error) {
         console.error(
-          `Skipping invalid path: ${fullPath} - ${
-            error instanceof Error ? error.message : String(error)
-          }`,
+          `Skipping invalid path: ${fullPath} - ${error instanceof Error ? error.message : String(error)}`,
         );
         continue;
       }
@@ -603,9 +597,7 @@ ${this.generateTreeView(analysis.structure)}
 |--------|------|-------------|
 `;
       for (const endpoint of analysis.apiEndpoints.slice(0, 5)) {
-        readme += `| ${endpoint.method} | \`${endpoint.path}\` | ${
-          endpoint.description || "TBD"
-        } |\n`;
+        readme += `| ${endpoint.method} | \`${endpoint.path}\` | ${endpoint.description || "TBD"} |\n`;
       }
 
       if (analysis.apiEndpoints.length > 5) {
@@ -792,9 +784,7 @@ This documentation follows the **${
 **Learning-oriented** - Start here if you're new to the project
 
 - [Getting Started](tutorials/getting-started.md)
-- [Your First ${
-      analysis.type.includes("library") ? "Integration" : "Application"
-    }](tutorials/first-app.md)
+- [Your First ${analysis.type.includes("library") ? "Integration" : "Application"}](tutorials/first-app.md)
 
 ### 🛠️ [How-to Guides](how-to/index.md)
 **Task-oriented** - Guides for specific tasks
@@ -814,11 +804,7 @@ ${analysis.apiEndpoints.length > 0 ? "- [API Reference](reference/api.md)" : ""}
 **Understanding-oriented** - Discussions and concepts
 
 - [Key Concepts](explanation/concepts.md)
-${
-      analysis.architecture.pattern
-        ? `- [${analysis.architecture.pattern} Architecture](explanation/architecture.md)`
-        : ""
-    }
+${analysis.architecture.pattern ? `- [${analysis.architecture.pattern} Architecture](explanation/architecture.md)` : ""}
 - [Design Decisions](explanation/decisions.md)
 
 ## Quick Links
@@ -940,11 +926,7 @@ You should see:
 
 \`\`\`
 Hello from ${projectName}!
-${
-      analysis.type.includes("library")
-        ? "Library loaded successfully"
-        : "Application started successfully"
-    }
+${analysis.type.includes("library") ? "Library loaded successfully" : "Application started successfully"}
 \`\`\`
 
 ## Step 4: Understanding the Code
@@ -982,9 +964,7 @@ Congratulations! You've successfully:
 
 Ready to learn more? Continue with:
 - [Basic Concepts](basic-concepts.md) - Understand core concepts
-- [Your First ${
-      analysis.type.includes("library") ? "Integration" : "Application"
-    }](first-app.md) - Build something real
+- [Your First ${analysis.type.includes("library") ? "Integration" : "Application"}](first-app.md) - Build something real
 
 ## Getting Help
 
@@ -1157,11 +1137,7 @@ Technical reference for ${analysis.rootPath.split("/").pop()}.
 
 ## API Reference
 
-${
-      analysis.apiEndpoints.length > 0
-        ? `- [REST API](api.md) - Complete API documentation`
-        : "- No API endpoints found"
-    }
+${analysis.apiEndpoints.length > 0 ? `- [REST API](api.md) - Complete API documentation` : "- No API endpoints found"}
 - [Configuration](configuration.md) - All configuration options
 - [CLI Commands](cli.md) - Command-line interface reference
 
@@ -1182,9 +1158,7 @@ ${
 ## Configuration Files
 
 ${
-      analysis.configFiles.map((config) =>
-        `- [\`${config.path}\`](configs/${config.type}.md) - ${config.purpose}`
-      )
+      analysis.configFiles.map((config) => `- [\`${config.path}\`](configs/${config.type}.md) - ${config.purpose}`)
         .slice(0, 5).join("\n")
     }
 
@@ -1340,9 +1314,7 @@ Understanding the design and architecture of ${analysis.rootPath.split("/").pop(
 
 ${
       analysis.architecture.layers.map((layer) =>
-        `- [${layer.name}](layers/${
-          layer.name.toLowerCase().replace(/\s+/g, "-")
-        }.md) - ${layer.purpose}`
+        `- [${layer.name}](layers/${layer.name.toLowerCase().replace(/\s+/g, "-")}.md) - ${layer.purpose}`
       ).join("\n")
     }
 
@@ -1387,9 +1359,7 @@ ${this.generateLimitationsExplanation(analysis)}
 
 ## ${architecture.pattern || "System"} Architecture
 
-${analysis.rootPath.split("/").pop()} follows the **${
-      architecture.pattern || "modular"
-    }** architecture pattern.
+${analysis.rootPath.split("/").pop()} follows the **${architecture.pattern || "modular"}** architecture pattern.
 
 ## Architecture Diagram
 
@@ -1430,11 +1400,7 @@ ${
 **Purpose**: ${layer.purpose}
 
 **Components**:
-${
-        layer.directories.map((dir) =>
-          `- \`${dir}\` - ${this.inferDirectoryPurpose(dir.split("/").pop() || "")}`
-        ).join("\n")
-      }
+${layer.directories.map((dir) => `- \`${dir}\` - ${this.inferDirectoryPurpose(dir.split("/").pop() || "")}`).join("\n")}
 
 **Responsibilities**:
 - ${this.generateLayerResponsibilities(layer.name).join("\n- ")}

@@ -1,0 +1,19 @@
+# Aichaku App Description
+# This file helps Claude Code understand your specific application context
+
+application:
+  name: "My Application"
+  type: "web-application" # web-application, api-service, cli-tool, mobile-app, desktop-app, library
+  description: "Brief description of what this application does"
+  version: "1.0.0"
+  
+  stack:
+    language: "typescript"
+    runtime: "node"
+    framework: "express"
+    
+  architecture:
+    pattern: "monolith"
+    
+  security:
+    standards: ["owasp-web"]

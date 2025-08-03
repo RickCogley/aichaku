@@ -141,6 +141,37 @@ const isJSR = import.meta.url.startsWith("https://jsr.io");
 
 // Test secret for scanner validation
 const apiKey = "sk_test_1234567890"; // gitleaks:allow
+
+// Legitimate setTimeout for timeout handling
+setTimeout(() => cleanup(), 5000); // DevSkim: ignore DS181021
+
+// Localhost URL in example code
+const devUrl = "http://localhost:3000"; // DevSkim: ignore DS137138
+```
+
+#### Configuration File Exclusions
+
+For entire files that should be excluded from security scanning:
+
+**.devskim.json**:
+
+```json
+{
+  "Globs": [
+    "!**/scratch/**",
+    "!**/docs/api/**",
+    "!**/test/**"
+  ]
+}
+```
+
+**.GitHub/codeql/codeql-config.yml**:
+
+```yaml
+paths-ignore:
+  - scratch/
+  - test/
+  - "**/*_test.ts"
 ```
 
 ### 6. Development Log Updates

@@ -193,8 +193,7 @@ export async function installMCPServer(serverId?: string): Promise<void> {
       targetPath = join(mcpDir, `github-operations${ext}`);
     }
 
-    const downloadUrl =
-      `https://github.com/RickCogley/aichaku/releases/download/v${VERSION}/${binaryName}`;
+    const downloadUrl = `https://github.com/RickCogley/aichaku/releases/download/v${VERSION}/${binaryName}`;
 
     console.log(
       `📥 Downloading MCP server v${VERSION} for ${platform}-${arch}...`,
@@ -476,20 +475,50 @@ async function startHTTPServer(): Promise<void> {
       "--allow-net",
       httpServerPath,
     ],
-    stdout: logFile.rid,
-    stderr: logFile.rid,
+    stdout: "piped",
+    stderr: "piped",
     stdin: "null",
   });
 
   const child = cmd.spawn();
 
+  // Redirect stdout and stderr to log file
+  // Handle stdout
+  (async () => {
+    const reader = child.stdout?.getReader();
+    if (reader) {
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          await logFile.write(value);
+        }
+      } catch {
+        // Ignore errors from closed reader
+      }
+    }
+  })();
+
+  // Handle stderr
+  (async () => {
+    const reader = child.stderr?.getReader();
+    if (reader) {
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          await logFile.write(value);
+        }
+      } catch {
+        // Ignore errors from closed reader
+      }
+    }
+  })();
+
   // Detach the process so it continues after parent exits
   // Write PID to file for tracking
   const pidPath = join(homeDir, ".aichaku", "aichaku-mcp-http-bridge-server.pid");
   await Deno.writeTextFile(pidPath, String(child.pid));
-
-  // Close log file handle
-  logFile.close();
 
   // Give it a moment to start
   await new Promise((resolve) => setTimeout(resolve, 2000));

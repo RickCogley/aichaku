@@ -1,0 +1,255 @@
+# Example: Healthcare Application Description
+# This shows a complete app description for a healthcare portal
+
+application:
+  name: "MediCare Portal"
+  type: "web-application"
+  description: "Comprehensive healthcare management system for clinics and hospitals"
+  version: "3.2.0"
+
+  stack:
+    language: "typescript"
+    runtime: "node"
+    framework: "react"
+    database: "postgresql"
+    orm: "prisma"
+    cache: "redis"
+    deployment: "kubernetes"
+    hosting: "aws"
+    ci_cd: "github-actions"
+    logging: "winston"
+    monitoring: "datadog"
+    error_tracking: "sentry"
+
+  architecture:
+    pattern: "clean-architecture"
+    layers:
+      - name: "presentation"
+        description: "React UI components, Express API routes"
+        technologies: ["react", "tailwindcss", "express"]
+      - name: "application"
+        description: "Use cases for patient management, appointments, billing"
+        technologies: ["typescript", "zod"]
+      - name: "domain"
+        description: "Healthcare business logic, HIPAA compliance rules"
+        technologies: ["typescript"]
+      - name: "infrastructure"
+        description: "Database access, external APIs, file storage"
+        technologies: ["prisma", "aws-sdk", "stripe"]
+
+    communication:
+      internal: "direct-calls"
+      external: "rest-api"
+
+  api:
+    style: "rest"
+    base_url: "/api/v2"
+    version_strategy: "url"
+    authentication: "jwt"
+    authorization: "rbac"
+
+    endpoints:
+      - path: "/patients"
+        methods: ["GET", "POST"]
+        description: "Patient registration and search"
+        authentication_required: true
+      - path: "/patients/{id}"
+        methods: ["GET", "PUT", "DELETE"]
+        description: "Individual patient management"
+        authentication_required: true
+      - path: "/appointments"
+        methods: ["GET", "POST", "PUT"]
+        description: "Appointment scheduling"
+        authentication_required: true
+      - path: "/medical-records/{patientId}"
+        methods: ["GET", "POST"]
+        description: "Medical record access"
+        authentication_required: true
+      - path: "/billing/invoices"
+        methods: ["GET", "POST"]
+        description: "Billing and invoicing"
+        authentication_required: true
+
+    documentation:
+      format: "openapi"
+      url: "/api/docs"
+
+  domain:
+    industry: "healthcare"
+    compliance: ["hipaa", "gdpr", "hitech"]
+
+    entities:
+      - name: "Patient"
+        description: "Individual receiving medical care"
+        key_attributes: ["id", "mrn", "firstName", "lastName", "dateOfBirth", "insurance"]
+      - name: "Provider"
+        description: "Healthcare professional (doctor, nurse, therapist)"
+        key_attributes: ["id", "npi", "name", "specialty", "credentials"]
+      - name: "Appointment"
+        description: "Scheduled patient visit"
+        key_attributes: ["id", "patientId", "providerId", "dateTime", "type", "status"]
+      - name: "MedicalRecord"
+        description: "Patient health information"
+        key_attributes: ["id", "patientId", "encounterId", "diagnosis", "treatment", "notes"]
+      - name: "Invoice"
+        description: "Billing record"
+        key_attributes: ["id", "patientId", "amount", "status", "insuranceClaim"]
+
+    rules:
+      - "Patient data access requires explicit consent or treatment relationship"
+      - "Medical records must be retained for 7 years minimum"
+      - "All PHI access must be logged for audit"
+      - "Appointment scheduling limited to business hours unless emergency"
+      - "Insurance verification required before non-emergency procedures"
+
+  security:
+    standards: ["owasp-web", "nist-csf", "hipaa-security-rule"]
+
+    authentication:
+      primary: "oauth2"
+      providers: ["auth0"]
+      mfa_required: true
+      session_timeout: "15-minutes"
+
+    encryption:
+      in_transit: "tls-1.3"
+      at_rest: "aes-256-gcm"
+      key_management: "aws-kms"
+
+    access_control:
+      model: "rbac"
+      roles: ["admin", "physician", "nurse", "receptionist", "billing", "patient"]
+      permissions:
+        - "view-patients"
+        - "edit-patients"
+        - "view-medical-records"
+        - "edit-medical-records"
+        - "schedule-appointments"
+        - "manage-billing"
+        - "view-reports"
+        - "system-admin"
+
+    headers:
+      csp: true
+      hsts: true
+      xframe: "deny"
+
+  practices:
+    testing:
+      frameworks: ["jest", "react-testing-library", "playwright"]
+      strategies: ["tdd", "bdd"]
+      coverage_target: 90
+      test_types: ["unit", "integration", "e2e", "security"]
+
+    code_quality:
+      linting: "eslint"
+      formatting: "prettier"
+      type_checking: "typescript"
+      security_scanning: "snyk"
+
+    version_control:
+      branching: "git-flow"
+      commit_style: "conventional-commits"
+      pr_requirements: ["tests-pass", "coverage-met", "security-scan", "code-review"]
+
+    ci_cd:
+      platform: "github-actions"
+      stages: ["lint", "test", "security", "build", "deploy"]
+      deployment_strategy: "blue-green"
+      environments: ["dev", "staging", "production"]
+
+  integrations:
+    services:
+      - name: "Auth0"
+        type: "authentication"
+        purpose: "User authentication and SSO"
+        authentication: "client-credentials"
+
+      - name: "Stripe"
+        type: "payment-processor"
+        purpose: "Patient payment processing"
+        authentication: "api-key"
+
+      - name: "Twilio"
+        type: "communication"
+        purpose: "Appointment reminders via SMS"
+        authentication: "api-key"
+
+      - name: "Epic FHIR API"
+        type: "ehr-integration"
+        purpose: "Electronic health record exchange"
+        authentication: "oauth2"
+
+      - name: "AWS S3"
+        type: "file-storage"
+        purpose: "Medical imaging and document storage"
+        authentication: "iam-role"
+
+  deployment:
+    environments:
+      - name: "development"
+        url: "https://dev.medicare-portal.internal"
+        database: "postgresql-dev"
+      - name: "staging"
+        url: "https://staging.medicare-portal.internal"
+        database: "postgresql-staging"
+      - name: "production"
+        url: "https://portal.medicare-health.com"
+        database: "postgresql-prod-primary"
+
+    containerization:
+      platform: "docker"
+      orchestration: "kubernetes"
+      registry: "aws-ecr"
+
+    scaling:
+      type: "horizontal"
+      auto_scaling: true
+      min_instances: 3
+      max_instances: 20
+      cpu_threshold: 70
+      memory_threshold: 80
+
+  observability:
+    metrics:
+      system: "datadog"
+      custom_metrics: ["patient-registrations", "appointment-bookings", "api-response-time"]
+
+    logging:
+      aggregation: "datadog"
+      retention: "90-days"
+      phi_filtering: true
+      audit_logs: "7-years"
+
+    tracing:
+      system: "datadog-apm"
+      sampling_rate: 0.1
+      sensitive_data_masking: true
+
+  performance:
+    response_times:
+      api_p50: "100ms"
+      api_p95: "300ms"
+      api_p99: "500ms"
+      page_load: "1.5s"
+
+    throughput:
+      requests_per_second: 1000
+      concurrent_users: 500
+
+    availability:
+      sla: "99.9%"
+      maintenance_window: "Sunday 2-4 AM EST"
+
+  data:
+    database:
+      type: "relational"
+      schema_management: "prisma-migrations"
+      backup_strategy: "continuous-replication"
+      disaster_recovery: "multi-region"
+
+    privacy:
+      retention_policy: "7-years-medical"
+      anonymization: true
+      right_to_deletion: "with-medical-exceptions"
+      audit_trail: "immutable"

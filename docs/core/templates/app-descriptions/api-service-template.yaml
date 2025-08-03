@@ -1,0 +1,248 @@
+# Aichaku App Description Template - API Service
+# Optimized for REST APIs, GraphQL services, and microservices
+# Copy to .claude/aichaku/user/app-description.yaml and customize
+
+application:
+  # === BASIC INFORMATION (Required) ===
+  name: "My API Service"
+  type: "api-service"
+  description: "RESTful API service for data management"
+  version: "1.0.0"
+
+  # === TECHNOLOGY STACK ===
+  stack:
+    # Core Technologies
+    language: "typescript" # typescript, javascript, python, java, go, rust
+    runtime: "node" # node, python, jvm, dotnet, go
+    framework: "express" # express, fastify, fastapi, spring-boot, gin, actix
+
+    # Data Layer
+    database: "postgresql" # postgresql, mysql, mongodb, dynamodb, redis
+    orm: "prisma" # prisma, typeorm, sequelize, mongoose, sqlalchemy
+    cache: "redis" # redis, memcached, hazelcast, none
+    message_queue: "rabbitmq" # rabbitmq, kafka, sqs, redis-pubsub, none
+
+    # Infrastructure
+    deployment: "docker"
+    orchestration: "kubernetes"
+    hosting: "aws"
+    service_mesh: "istio" # istio, linkerd, consul, none
+
+  # === API ARCHITECTURE ===
+  architecture:
+    pattern: "microservices" # microservices, monolith, serverless
+    style: "rest" # rest, graphql, grpc, soap
+
+    # Service Definition (for microservices)
+    service:
+      name: "user-service"
+      domain: "user-management"
+      bounded_context: "identity"
+      dependencies: ["auth-service", "notification-service"]
+
+    # API Layers
+    layers:
+      - name: "routes"
+        description: "API endpoint definitions"
+      - name: "controllers"
+        description: "Request handling logic"
+      - name: "services"
+        description: "Business logic"
+      - name: "repositories"
+        description: "Data access layer"
+      - name: "models"
+        description: "Data models and DTOs"
+
+  # === API SPECIFICATION ===
+  api:
+    # Base Configuration
+    base_url: "/api/v1"
+    versioning: "url" # url, header, content-type
+    format: "json" # json, xml, protobuf
+
+    # Documentation
+    documentation:
+      format: "openapi" # openapi, swagger, raml, api-blueprint
+      url: "/docs"
+      version: "3.0"
+      auto_generated: true
+
+    # Resources/Endpoints
+    resources:
+      - name: "users"
+        path: "/users"
+        methods: ["GET", "POST", "PUT", "DELETE"]
+        description: "User management"
+        rate_limit: "100/minute"
+
+      - name: "products"
+        path: "/products"
+        methods: ["GET", "POST", "PUT", "DELETE"]
+        description: "Product catalog"
+        cache_ttl: "5m"
+
+    # Authentication & Authorization
+    security:
+      authentication: "jwt" # jwt, oauth2, api-key, basic, mtls
+      token_location: "header" # header, cookie, query
+      authorization: "rbac" # rbac, abac, scope-based
+
+    # Rate Limiting
+    rate_limiting:
+      strategy: "token-bucket"
+      default_limit: "1000/hour"
+      authenticated_limit: "5000/hour"
+
+  # === DATA MANAGEMENT ===
+  data:
+    # Database Schema
+    schema_management: "migrations" # migrations, schema-first, code-first
+    migration_tool: "prisma" # prisma, flyway, liquibase, alembic
+
+    # Data Patterns
+    patterns:
+      - "Repository pattern"
+      - "Unit of Work"
+      - "CQRS"
+      - "Event Sourcing"
+
+    # Caching Strategy
+    caching:
+      strategy: "cache-aside" # cache-aside, write-through, write-behind
+      ttl_default: "5m"
+      invalidation: "event-based"
+
+  # === INTEGRATION PATTERNS ===
+  integrations:
+    # Communication Patterns
+    communication:
+      sync: "rest" # rest, grpc, graphql
+      async: "message-queue" # message-queue, event-stream, webhooks
+
+    # External Services
+    external:
+      - name: "payment-gateway"
+        type: "rest-api"
+        authentication: "api-key"
+        retry_policy: "exponential-backoff"
+
+      - name: "email-service"
+        type: "smtp"
+        provider: "sendgrid"
+
+    # Event System
+    events:
+      bus: "rabbitmq"
+      patterns: ["pub-sub", "request-reply"]
+      serialization: "json"
+
+  # === RELIABILITY & PERFORMANCE ===
+  reliability:
+    # Health Checks
+    health_checks:
+      - name: "liveness"
+        path: "/health/live"
+        interval: "10s"
+      - name: "readiness"
+        path: "/health/ready"
+        dependencies: ["database", "cache"]
+
+    # Circuit Breakers
+    circuit_breakers:
+      enabled: true
+      threshold: 5
+      timeout: "30s"
+
+    # Retry Policies
+    retry:
+      max_attempts: 3
+      backoff: "exponential"
+      max_delay: "10s"
+
+  # === MONITORING & OBSERVABILITY ===
+  observability:
+    # Logging
+    logging:
+      format: "json"
+      level: "info"
+      correlation_id: true
+      sensitive_data_masking: true
+
+    # Metrics
+    metrics:
+      provider: "prometheus"
+      custom_metrics:
+        - "api_requests_total"
+        - "api_request_duration"
+        - "business_operations_total"
+
+    # Tracing
+    tracing:
+      provider: "jaeger"
+      sampling_rate: 0.1
+      propagation: "w3c-trace-context"
+
+  # === SECURITY ===
+  security:
+    standards: ["owasp-api"]
+
+    # API Security
+    api_security:
+      https_only: true
+      cors:
+        enabled: true
+        origins: ["https://app.example.com"]
+      headers:
+        - "X-Content-Type-Options: nosniff"
+        - "X-Frame-Options: DENY"
+        - "X-XSS-Protection: 1; mode=block"
+
+    # Input Validation
+    validation:
+      framework: "joi" # joi, yup, class-validator, zod
+      sanitization: true
+      max_payload_size: "1MB"
+
+    # Secrets Management
+    secrets:
+      storage: "environment" # environment, vault, aws-secrets-manager
+      rotation: "manual"
+
+  # === TESTING ===
+  testing:
+    # Test Types
+    strategies:
+      unit: "jest"
+      integration: "supertest"
+      contract: "pact"
+      load: "k6"
+
+    # Test Data
+    test_data:
+      strategy: "fixtures" # fixtures, factories, builders
+      database: "in-memory"
+
+    # Coverage
+    coverage:
+      target: 80
+      exclude: ["migrations", "generated"]
+
+  # === DEPLOYMENT ===
+  deployment:
+    # Container Configuration
+    container:
+      base_image: "node:alpine"
+      size_limit: "500MB"
+      health_check: true
+
+    # Scaling
+    scaling:
+      strategy: "horizontal"
+      min_replicas: 2
+      max_replicas: 10
+      target_cpu: 70
+
+    # Database Migrations
+    migrations:
+      strategy: "init-container"
+      rollback: "manual"
