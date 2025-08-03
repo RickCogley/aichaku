@@ -268,7 +268,6 @@ function parseContextRequirements(lines: string[]): ContextRequirements {
 
     // Exit context section on next major section
     if (inContextSection && trimmed.startsWith("## ") && !trimmed.includes("Context Requirements")) {
-      inContextSection = false;
       break;
     }
 
@@ -492,8 +491,10 @@ function resolveContextItems(
     const itemId = item.replace(/\.yaml$/, "");
     // Handle wildcards
     if (item.includes("*")) {
-      const pattern = item.replace("*", "");
-      const matching = userSelected.filter((s) => s.includes(pattern.replace("/", "")));
+      // InfoSec: Escape special regex chars to prevent injection (OWASP A03)
+      const pattern = item.replace(/\*/g, "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const cleanPattern = pattern.replace(/\//g, "");
+      const matching = userSelected.filter((s) => s.includes(cleanPattern));
       matching.forEach((m) => included.add(m));
     } else if (userSelected.includes(itemId)) {
       included.add(itemId);
