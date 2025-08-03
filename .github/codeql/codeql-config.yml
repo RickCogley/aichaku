@@ -6,6 +6,7 @@ paths-ignore:
   - .claude/**
   - "**/*_test.ts"
   - "**/test/**"
+  - mcp/aichaku-mcp-server/src/patterns/security-patterns.ts
 
 # Additional queries to run
 queries:

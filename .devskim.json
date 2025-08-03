@@ -1,0 +1,6 @@
+{
+  "IgnoreFiles": [
+    "mcp/aichaku-mcp-server/src/patterns/security-patterns.ts"
+  ],
+  "IgnoreRulesList": []
+}
