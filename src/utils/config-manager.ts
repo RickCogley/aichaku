@@ -7,6 +7,7 @@
 
 import { exists } from "jsr:@std/fs@1";
 import { join, SEPARATOR as sep } from "jsr:@std/path@1";
+import { safeReadTextFile, safeWriteTextFile, validatePath } from "./path-security.ts";
 
 // Unified schema for Aichaku configuration
 export interface AichakuConfig {
@@ -49,8 +50,9 @@ export class ConfigManager {
   private configPath: string;
 
   constructor(projectRoot: string) {
-    this.projectRoot = projectRoot;
-    this.aichakuDir = join(projectRoot, ".claude", "aichaku");
+    // InfoSec: Validate project root to prevent path traversal (OWASP A01)
+    this.projectRoot = validatePath(projectRoot, Deno.cwd());
+    this.aichakuDir = join(this.projectRoot, ".claude", "aichaku");
     this.configPath = join(this.aichakuDir, "aichaku.json");
   }
 
@@ -61,7 +63,8 @@ export class ConfigManager {
     // Try to load from consolidated file first
     if (await exists(this.configPath)) {
       try {
-        const content = await Deno.readTextFile(this.configPath);
+        // InfoSec: Use safe file read to prevent path traversal (OWASP A01)
+        const content = await safeReadTextFile(this.configPath, this.projectRoot);
         const rawConfig = JSON.parse(content);
 
         // Migrate config if needed
@@ -130,9 +133,11 @@ export class ConfigManager {
       // Directory already exists
     }
 
-    await Deno.writeTextFile(
+    // InfoSec: Use safe file write to prevent path traversal (OWASP A01)
+    await safeWriteTextFile(
       this.configPath,
       JSON.stringify(this.config, null, 2),
+      this.projectRoot,
     );
   }
 

@@ -457,24 +457,38 @@ async function startHTTPServer(): Promise<void> {
     return;
   }
 
-  // Start the server in background using nohup for proper detachment
+  // Start the server in background - spawn detached process
+  // InfoSec: Using spawn with detached to prevent command injection (OWASP A03)
   const logPath = join(homeDir, ".aichaku", "aichaku-mcp-http-bridge-server.log");
-  const cmd = new Deno.Command("sh", {
+
+  // Create log file if it doesn't exist
+  const logFile = await Deno.open(logPath, { write: true, create: true, append: true });
+
+  // Spawn detached process without shell
+  const cmd = new Deno.Command("deno", {
     args: [
-      "-c",
-      `nohup deno run --allow-read --allow-write --allow-env --allow-run --allow-net "${httpServerPath}" > "${logPath}" 2>&1 & echo $!`,
+      "run",
+      "--allow-read",
+      "--allow-write",
+      "--allow-env",
+      "--allow-run",
+      "--allow-net",
+      httpServerPath,
     ],
-    stdout: "piped",
+    stdout: logFile.rid,
+    stderr: logFile.rid,
+    stdin: "null",
   });
 
-  const output = await cmd.output();
-  if (!output.success) {
-    console.error("❌ Failed to start server");
-    return;
-  }
+  const child = cmd.spawn();
 
-  // Get the PID from the output (for debugging if needed)
-  const _pid = new TextDecoder().decode(output.stdout).trim();
+  // Detach the process so it continues after parent exits
+  // Write PID to file for tracking
+  const pidPath = join(homeDir, ".aichaku", "aichaku-mcp-http-bridge-server.pid");
+  await Deno.writeTextFile(pidPath, String(child.pid));
+
+  // Close log file handle
+  logFile.close();
 
   // Give it a moment to start
   await new Promise((resolve) => setTimeout(resolve, 2000));
