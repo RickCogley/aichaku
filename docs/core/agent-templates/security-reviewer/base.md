@@ -95,7 +95,7 @@ Load only security standards marked as active in project configuration.
 
 Add InfoSec comments to all security-relevant commits:
 
-```
+```text
 InfoSec: [security impact/consideration]
 ```
 
@@ -133,13 +133,13 @@ When security scanners flag intentional patterns or test code, use these inline 
 Examples:
 
 ```typescript
-// Intentional weak hash for testing detection
+// Example: Intentional weak hash for testing detection
 const hash = crypto.createHash("md5"); // DevSkim: ignore DS126858
 
 // codeql[js/incomplete-url-substring-sanitization] Safe because import.meta.url is trusted
 const isJSR = import.meta.url.startsWith("https://jsr.io");
 
-// Test secret for scanner validation
+// Example: Test secret for scanner validation
 const apiKey = "sk_test_1234567890"; // gitleaks:allow
 
 // Legitimate setTimeout for timeout handling
@@ -158,7 +158,7 @@ For entire files that should be excluded from security scanning:
 
 **.devskim.json**:
 
-```json
+```jsonjson
 {
   "Globs": [
     "!**/scratch/**",
@@ -179,7 +179,7 @@ paths-ignore:
 
 **.gitleaks.toml**:
 
-```toml
+```tomltoml
 [allowlist]
 paths = [
   '''tests/.*''',
@@ -195,7 +195,7 @@ regexes = [
 
 **.trivyignore**:
 
-```
+```text
 # Ignore specific vulnerabilities
 CVE-2022-12345
 
@@ -206,7 +206,7 @@ tests/*
 
 **trivy.yaml**:
 
-```yaml
+```yamlyaml
 vulnerability:
   ignore-unfixed: true
   severity:
