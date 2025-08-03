@@ -193,7 +193,8 @@ export async function installMCPServer(serverId?: string): Promise<void> {
       targetPath = join(mcpDir, `github-operations${ext}`);
     }
 
-    const downloadUrl = `https://github.com/RickCogley/aichaku/releases/download/v${VERSION}/${binaryName}`;
+    const downloadUrl =
+      `https://github.com/RickCogley/aichaku/releases/download/v${VERSION}/${binaryName}`;
 
     console.log(
       `📥 Downloading MCP server v${VERSION} for ${platform}-${arch}...`,
@@ -496,7 +497,7 @@ async function startHTTPServer(): Promise<void> {
   // Check if it started successfully
   if (await isMCPServerRunning()) {
     console.log("✅ MCP HTTP/SSE Server started successfully!");
-    console.log("   URL: http://127.0.0.1:7182");
+    console.log("   URL: http://127.0.0.1:7182"); // DevSkim: ignore DS137138
     console.log(
       "\n💡 Multiple Claude Code instances can now connect to this server",
     );
@@ -573,12 +574,12 @@ async function checkHTTPServerStatus(): Promise<void> {
     console.log(
       "   Purpose: Bridges 'aichaku review' commands to MCP Code Reviewer",
     );
-    console.log("   URL: http://127.0.0.1:7182");
+    console.log("   URL: http://127.0.0.1:7182"); // DevSkim: ignore DS137138
     console.log("   Protocol: HTTP/SSE (Server-Sent Events)");
 
     // Try to get server health info
     try {
-      const response = await fetch("http://127.0.0.1:7182/health");
+      const response = await fetch("http://127.0.0.1:7182/health"); // DevSkim: ignore DS137138
       const health = await response.json();
       console.log(`   Active review sessions: ${health.sessions}`);
       console.log(`   Process ID: ${health.pid}`);

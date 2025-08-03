@@ -324,7 +324,9 @@ export class StatisticsCollector {
     // Update common issues
     if (result?.findings) {
       for (const finding of result.findings) {
-        const existingIssue = fileAnalysis.commonIssues.find((issue) => issue.rule === finding.rule);
+        const existingIssue = fileAnalysis.commonIssues.find((issue) =>
+          issue.rule === finding.rule
+        );
         if (existingIssue) {
           existingIssue.count++;
         } else {
@@ -391,7 +393,9 @@ export class StatisticsCollector {
 
       // Update common violations
       for (const finding of result.findings) {
-        const existingViolation = standardsUsage.commonViolations.find((v) => v.rule === finding.rule);
+        const existingViolation = standardsUsage.commonViolations.find((v) =>
+          v.rule === finding.rule
+        );
         if (existingViolation) {
           existingViolation.count++;
         } else {
@@ -452,7 +456,8 @@ export class StatisticsCollector {
     const userId = await UserIdentifierAnonymizer.getAnonymousUserId(
       this.config,
     );
-    const random = Math.random().toString(36).substring(2, 8);
+    // Use crypto.randomUUID for secure random ID generation
+    const random = crypto.randomUUID().substring(0, 8);
     return `${timestamp}-${userId}-${random}`;
   }
 

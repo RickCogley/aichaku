@@ -231,7 +231,7 @@ export class MultiServerMCPManager {
 
   private async checkHttpServerStatus(): Promise<boolean> {
     try {
-      const response = await fetch("http://127.0.0.1:7182/health", {
+      const response = await fetch("http://127.0.0.1:7182/health", { // DevSkim: ignore DS137138
         signal: AbortSignal.timeout(1000), // 1 second timeout
       });
       return response.ok;

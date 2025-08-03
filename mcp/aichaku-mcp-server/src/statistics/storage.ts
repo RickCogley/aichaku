@@ -222,7 +222,7 @@ export class JSONFileStorage implements StorageBackend {
   }
 
   private extractTimestamp(value: unknown): Date | null {
-    if (value && typeof value === "object" && value !== null) {
+    if (value && typeof value === "object") {
       const obj = value as Record<string, unknown>;
       if ("timestamp" in obj && obj.timestamp) {
         return new Date(obj.timestamp as string | number);
@@ -317,7 +317,7 @@ export class MemoryStorage implements StorageBackend {
   }
 
   private extractTimestamp(value: unknown): Date | null {
-    if (value && typeof value === "object" && value !== null) {
+    if (value && typeof value === "object") {
       const obj = value as Record<string, unknown>;
       if ("timestamp" in obj && obj.timestamp) {
         return new Date(obj.timestamp as string | number);

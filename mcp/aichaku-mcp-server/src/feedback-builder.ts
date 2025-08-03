@@ -117,9 +117,10 @@ exec('ls', [userPath])`,
     const count = result.findings.filter((f) => f.rule === finding.rule).length;
 
     return {
-      reminder: `Your CLAUDE.md explicitly states to avoid 'any' types, but you used it ${count} time${
-        count > 1 ? "s" : ""
-      }.`,
+      reminder:
+        `Your CLAUDE.md explicitly states to avoid 'any' types, but you used it ${count} time${
+          count > 1 ? "s" : ""
+        }.`,
       pattern: "Using 'any' type instead of proper TypeScript types",
       correction: "Define proper interfaces or use 'unknown' with type guards",
 
@@ -154,7 +155,8 @@ if (isResponseData(data)) {
       reflection:
         "What prevented you from defining a proper type? Was it time pressure or uncertainty about the structure?",
 
-      reinforcement: "TypeScript is most valuable when we use its type system. Take the time to define proper types.",
+      reinforcement:
+        "TypeScript is most valuable when we use its type system. Take the time to define proper types.",
     };
   }
 
@@ -163,7 +165,8 @@ if (isResponseData(data)) {
     _result: ReviewResult,
   ): ClaudeGuidance {
     return {
-      reminder: "Path traversal vulnerabilities can expose sensitive files outside the intended directory.",
+      reminder:
+        "Path traversal vulnerabilities can expose sensitive files outside the intended directory.",
       pattern: "Using '..' in file paths without validation",
       correction: "Validate and normalize all file paths before use",
 
@@ -260,12 +263,12 @@ app.get('/api/users/:id',
         "Hardcoded values make it impossible to run the same code in different environments (dev, staging, production) without modification.",
 
       badExample: `// ❌ Hardcoded configuration
-const API_URL = "http://localhost:3000";
-const DB_HOST = "127.0.0.1:5432";`,
+const API_URL = "http://localhost:3000"; // DevSkim: ignore DS137138
+const DB_HOST = "127.0.0.1:5432";`, // DevSkim: ignore DS137138
 
       goodExample: `// ✅ Environment-based configuration
-const API_URL = Deno.env.get("API_URL") || "http://localhost:3000";
-const DB_HOST = Deno.env.get("DB_HOST") || "localhost:5432";
+const API_URL = Deno.env.get("API_URL") || "http://localhost:3000"; // DevSkim: ignore DS137138
+const DB_HOST = Deno.env.get("DB_HOST") || "localhost:5432"; // DevSkim: ignore DS137138
 
 // Even better with validation
 const API_URL = Deno.env.get("API_URL");
@@ -313,7 +316,8 @@ if (!API_URL) {
 
       reflection: "What can you learn from this to avoid similar issues in the future?",
 
-      reinforcement: "Following established patterns and standards leads to more maintainable and secure code.",
+      reinforcement:
+        "Following established patterns and standards leads to more maintainable and secure code.",
     };
   }
 }

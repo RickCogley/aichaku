@@ -49,7 +49,7 @@ class MCPTcpServer {
       // Set up signal handlers
       this.setupSignalHandlers();
 
-      console.log(`✅ MCP TCP Server ready on 127.0.0.1:${this.port}`);
+      console.log(`✅ MCP TCP Server ready on 127.0.0.1:${this.port}`); // DevSkim: ignore DS137138
       console.log(`📝 PID: ${Deno.pid}`);
       console.log(`🛑 Stop with: aichaku mcp --stop-server`);
 

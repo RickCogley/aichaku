@@ -56,7 +56,7 @@ class MCPHttpServer {
         port: this.port,
         onListen: ({ hostname, port }) => {
           console.log(
-            `✅ MCP HTTP/SSE Server ready on http://${hostname}:${port}`,
+            `✅ MCP HTTP/SSE Server ready on http://${hostname}:${port}`, // DevSkim: ignore DS137138
           );
           console.log(`📝 PID: ${Deno.pid}`);
           console.log(`🛑 Stop with: aichaku mcp --server-stop`);
@@ -402,7 +402,7 @@ class MCPHttpServer {
 
     try {
       // Try to connect to the HTTP server
-      const response = await fetch(`http://127.0.0.1:${this.port}/health`);
+      const response = await fetch(`http://127.0.0.1:${this.port}/health`); // DevSkim: ignore DS137138
       await response.text();
       return true;
     } catch {
