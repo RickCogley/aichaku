@@ -47,7 +47,7 @@ export async function sendMCPRequests(
 
   // Set up timeout
   const timeoutPromise = new Promise<never>((_, reject) => {
-    setTimeout(() => {
+    setTimeout(() => { // DevSkim: ignore DS172411
       child.kill();
       reject(new Error(`MCP server timeout after ${timeoutMs}ms`));
     }, timeoutMs);

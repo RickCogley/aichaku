@@ -1,5 +1,7 @@
 {
   "Globs": [
-    "**/mcp/aichaku-mcp-server/src/patterns/security-patterns.ts"
+    "**/mcp/aichaku-mcp-server/src/patterns/security-patterns.ts",
+    "**/scratch/**",
+    "**/docs/api/**"
   ]
 }
