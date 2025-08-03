@@ -147,6 +147,9 @@ setTimeout(() => cleanup(), 5000); // DevSkim: ignore DS181021
 
 // Localhost URL in example code
 const devUrl = "http://localhost:3000"; // DevSkim: ignore DS137138
+
+// Path operations with proper validation
+const safePath = join(baseDir, userInput); // trivy:ignore:AVD-JS-0001
 ```
 
 #### Configuration File Exclusions
@@ -172,6 +175,44 @@ paths-ignore:
   - scratch/
   - test/
   - "**/*_test.ts"
+```
+
+**.gitleaks.toml**:
+
+```toml
+[allowlist]
+paths = [
+  '''tests/.*''',
+  '''docs/.*\.md'''
+]
+
+# Allow specific patterns
+regexes = [
+  '''(sk|SK)[-_]?test''',
+  '''example[-_]?api[-_]?key'''
+]
+```
+
+**.trivyignore**:
+
+```
+# Ignore specific vulnerabilities
+CVE-2022-12345
+
+# Ignore by file pattern
+docs/*
+tests/*
+```
+
+**trivy.yaml**:
+
+```yaml
+vulnerability:
+  ignore-unfixed: true
+  severity:
+    - HIGH
+    - CRITICAL
+  ignorefile: .trivyignore
 ```
 
 ### 6. Development Log Updates
