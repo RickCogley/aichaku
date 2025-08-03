@@ -287,7 +287,7 @@ export class ReviewEngine {
     // Factor III: Config
     lines.forEach((line, index) => {
       // Check for hardcoded config values
-      if (/localhost:\d+/.test(line) || /127\.0\.0\.1:\d+/.test(line)) {
+      if (/localhost:\d+/.test(line) || /127\.0\.0\.1:\d+/.test(line)) { // DevSkim: ignore DS137138
         findings.push({
           severity: "medium",
           rule: "15factor-config",

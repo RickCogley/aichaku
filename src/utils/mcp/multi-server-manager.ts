@@ -197,7 +197,7 @@ export class MultiServerMCPManager {
 
     const isHttpServerRunning = await this.checkHttpServerStatus();
     if (isHttpServerRunning) {
-      content.push(`✓ Running on http://127.0.0.1:7182`);
+      content.push(`✓ Running on http://127.0.0.1:7182`); // DevSkim: ignore DS137138
       content.push(`Stop with: \`aichaku mcp --server-stop\`\n`);
     } else {
       content.push(`○ Not running`);

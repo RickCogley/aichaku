@@ -121,7 +121,29 @@ Apply engineering principles to security implementations:
 - **Privacy by Design**: Build privacy considerations into every security decision
 - **Least Privilege**: Grant minimal necessary access and permissions
 
-### 5. Development Log Updates
+### 5. Security Tool Comment Syntax
+
+When security scanners flag intentional patterns or test code, use these inline comments:
+
+- **DevSkim**: `// DevSkim: ignore DS######` (at end of line)
+- **CodeQL**: `// codeql[rule-id] Explanation` (on line before code)
+- **Semgrep**: `// nosemgrep: rule-id` (at end of line)
+- **GitLeaks**: `// gitleaks:allow` (at end of line)
+
+Examples:
+
+```typescript
+// Intentional weak hash for testing detection
+const hash = crypto.createHash("md5"); // DevSkim: ignore DS126858
+
+// codeql[js/incomplete-url-substring-sanitization] Safe because import.meta.url is trusted
+const isJSR = import.meta.url.startsWith("https://jsr.io");
+
+// Test secret for scanner validation
+const apiKey = "sk_test_1234567890"; // gitleaks:allow
+```
+
+### 6. Development Log Updates
 
 Always update the development log with security findings and recommendations.
 

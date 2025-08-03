@@ -447,7 +447,7 @@ export async function integrate(
   }
 
   try {
-    let action: "created" | "updated" = "created";
+    let action: "created" | "updated";
 
     if (await exists(claudeMdPath)) {
       // Update existing file

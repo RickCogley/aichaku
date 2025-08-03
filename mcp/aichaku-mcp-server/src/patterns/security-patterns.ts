@@ -186,7 +186,7 @@ export class SecurityPatterns {
       // Insufficient Cryptography
       {
         id: "weak-hash-md5",
-        name: "MD5 is a weak hashing algorithm",
+        name: "MD5 is a weak hashing algorithm", // DevSkim: ignore DS126858
         pattern: /crypto\.createHash\s*\(\s*["']md5["']\s*\)/, // DevSkim: ignore DS126858
         severity: "high",
         description: "MD5 is a weak hashing algorithm", // DevSkim: ignore DS126858
