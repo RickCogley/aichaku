@@ -397,12 +397,12 @@ export async function integrate(
   // Load selected agents from project config
   const selectedAgents = await loadProjectAgents(projectPath);
 
-  // Define configuration paths - use development paths for now
+  // Define configuration paths - use proper installation paths
   const configPaths = {
-    core: join("/Users/rcogley/dev/aichaku", "docs", "core"),
-    methodologies: join("/Users/rcogley/dev/aichaku", "docs", "methodologies"),
-    standards: join("/Users/rcogley/dev/aichaku", "docs", "standards"),
-    principles: join("/Users/rcogley/dev/aichaku", "docs", "principles"),
+    core: join(aichakuPaths.global.root, "docs", "core"),
+    methodologies: join(aichakuPaths.global.root, "methodologies"),
+    standards: join(aichakuPaths.global.root, "standards"),
+    principles: join(aichakuPaths.global.root, "principles"),
     user: aichakuPaths.global.user.root,
   };
 
