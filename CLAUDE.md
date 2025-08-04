@@ -7,169 +7,106 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 This configuration is dynamically assembled from YAML files in your ~/.claude/aichaku installation.
 
 ```yaml
-aichaku:
-  version: 0.40.1
-  source: configuration-as-code
+application:
+  name: Aichaku
+  type: cli-tool
+  description: >-
+    AI-optimized project methodology installer for Claude Code - brings affection (愛着) to your
+    development workflow
+  version: 0.43.0
+  stack:
+    language: typescript
+    runtime: deno
+    framework: none
+    database: none
+  architecture:
+    pattern: modular-cli
+    components:
+      - CLI commands in src/commands/
+      - MCP server integration
+      - YAML-based configuration
+      - Plugin system for methodologies/standards
+  security:
+    standards:
+      - owasp-cli
+      - secure-defaults
+  testing:
+    framework: deno-test
+    coverage_target: 80
+  deployment:
+    method: jsr-registry
+    ci_cd: github-actions
 behavioral_directives:
-  read_claude_md_in_subfolders:
-    name: Read Subfolder CLAUDE.md Files
-    description: >-
-      When working on code in any subfolder, automatically read any CLAUDE.md file present to
-      understand the specific context, architecture, and conventions for that code area
+  context_awareness:
+    name: Context-First Development
+    priority: HIGHEST
     mandatory: true
-    purpose: >-
-      Ensures code changes are made with full understanding of local context and architectural
-      decisions
+    description: Always read and understand all available context before any action
     implementation:
-      - Use Glob tool with pattern '**/CLAUDE.md' to discover all subfolder documentation
-      - Read subfolder CLAUDE.md before making changes to code in that area
-      - Apply subfolder-specific conventions and patterns documented therein
-      - Prioritize subfolder context over general project context for local decisions
-  discussion_first:
-    name: Discussion-First Document Creation
-    description: A three-phase approach to thoughtful project creation
-    phases:
-      - name: DISCUSSION MODE
-        description: Default when methodology keywords detected
-        triggers:
-          - shape
-          - pitch
-          - appetite
-          - sprint
-          - scrum
-          - kanban
-          - board
-          - mvp
-          - lean
-          - experiment
-        actions:
-          required:
-            - "Acknowledge the methodology context: '\U0001FAB4 Aichaku: I see you're thinking about [topic]'"
-            - Ask clarifying questions to understand the goal
-            - Help shape and refine the idea
-            - Read appropriate guide SILENTLY from ~/.claude/aichaku/methodologies/
-          forbidden:
-            - DO NOT create any project folders yet
-            - DO NOT create any documents yet
-            - 'NEVER say: ''Would you like me to create documents for this?'''
-      - name: WAIT FOR READINESS
-        description: Only create documents when user signals explicit readiness
-        triggers:
-          - Let's create a project for this
-          - I'm ready to start
-          - Set up the project
-          - Create the documentation
-          - Any direct request for project creation
-        actions:
-          required:
-            - Wait for explicit readiness signal from user
-          forbidden:
-            - Do not create anything before user signals readiness
-      - name: CREATE PROJECT
-        description: "After user signals readiness, create immediately without asking"
-        actions:
-          required:
-            - "Confirm name: '\U0001FAB4 Aichaku: Based on our discussion, creating project: [descriptive-name]'"
-            - "Create ALL documents in: docs/projects/active/YYYY-MM-DD-{descriptive-name}/"
-            - Create STATUS.md FIRST
-            - Create methodology-specific documents
-            - Read guides from ~/.claude/aichaku/methodologies/
-          forbidden:
-            - NEVER create documents in the project root directory
-            - NEVER create documents in .claude/user/
-            - NEVER ask where to put files
-            - NEVER ask for permission after readiness signal
-  critical_behavior:
-    name: Critical Behavioral Rules
-    rules:
-      - name: No asking after readiness
-        description: "Once user signals readiness, CREATE IMMEDIATELY without asking"
-        examples:
-          do:
-            - "\U0001FAB4 Aichaku: Creating project: [descriptive-name]"
-            - Setting up Shape Up documentation...
-            - Generating sprint planning templates...
-          dont:
-            - Would you like me to...
-            - Shall I create...
-            - Should I go ahead and...
-      - name: Discussion mode responses
-        description: "During discussion phase, focus on understanding and refinement"
-        examples:
-          do:
-            - "\U0001FAB4 Aichaku: I understand you're exploring [topic]. Let me help you think through this..."
-            - What specific challenges are you looking to address?
-          dont:
-            - Would you like me to create documents for this?
-  methodology_detection:
-    name: Methodology Detection & Discussion
-    description: How to respond when methodology keywords are detected
-    planning_keywords:
-      shape_up:
-        triggers:
-          - shape
-          - pitch
-          - appetite
-          - betting
-          - cool-down
-        discussion_approach: Discuss Shape Up approach
-        creates: pitch.md
-      scrum:
-        triggers:
-          - sprint
-          - scrum
-          - backlog
-          - velocity
-          - standup
-        discussion_approach: Discuss Scrum planning
-        creates: sprint-planning.md
-      kanban:
-        triggers:
-          - kanban
-          - board
-          - WIP
-          - flow
-          - continuous
-        discussion_approach: Discuss Kanban flow
-        creates: kanban-board.md
-      lean:
-        triggers:
-          - mvp
-          - lean
-          - experiment
-          - validate
-          - pivot
-        discussion_approach: Discuss Lean experiments
-        creates: experiment-plan.md
-    discussion_mode_actions:
-      - "Acknowledge: '\U0001FAB4 Aichaku: I see you're interested in [methodology]'"
-      - Read the appropriate guide SILENTLY
-      - Ask clarifying questions based on the methodology
-      - Help refine the approach
-      - WAIT for explicit 'create project' signal
-  error_recovery:
-    name: Error Recovery
-    description: How to handle mistakes in file placement
-    steps:
-      - "Move file immediately: mv [file] docs/projects/active/*/"
-      - Update STATUS.md noting the correction
-      - Continue without asking
-    principle: >-
-      This is AUTOMATIC behavior. Users expect documents to appear in the right place without
-      asking.
-  git_automation:
-    name: Git Automation
-    description: How to handle git operations when work is complete
-    when: Work is confirmed complete
-    commands:
-      - "git add docs/projects/active/[current-project]/"
-      - 'git commit -m ''[type]: [description]\n\n- [what was done]\n- [key changes]'''
-      - "git push origin [current-branch]"
-    commit_types:
-      - feat
-      - fix
-      - docs
-      - refactor
+      - Read the main CLAUDE.md immediately to understand project configuration
+      - Use Glob tool with pattern '**/CLAUDE.md' to find all context files
+      - Read subfolder CLAUDE.md files before working in those areas
+      - Prioritize local context over general patterns
+    why: >-
+      Context determines everything - the app type, selected methodologies, standards, and
+      project-specific patterns
+  respect_user_selection:
+    name: Respect User Selections
+    priority: CRITICAL
+    description: "Users have explicitly chosen their methodologies, standards, and principles"
+    implementation:
+      - Check 'application' section first - understand what kind of app this is
+      - Check 'methodologies' section - work within the selected approach
+      - Check 'standards' section - follow the selected guidelines
+      - Check 'principles' section - respect the chosen philosophies
+      - NEVER suggest alternatives or try to detect different approaches
+    triggers:
+      - "When user mentions methodology concepts, respond within their selection"
+      - Reference the methodology's specific triggers and templates
+      - 'Guide using the patterns they''ve chosen, not what you think is best'
+  project_creation:
+    name: Project Creation Workflow
+    description: "Simple two-step process: Discuss then Create"
+    workflow:
+      discuss:
+        when: User mentions project ideas or methodology concepts
+        do:
+          - "Acknowledge their selected methodology: '\U0001FAB4 Aichaku: I see you're working with [methodology]'"
+          - Ask clarifying questions to understand their goal
+          - Help refine ideas using their methodology's principles
+        dont:
+          - Create any files or folders
+          - Ask 'Would you like me to create...?'
+          - Suggest different methodologies
+      create:
+        when: 'User explicitly says: ''create project'', ''let''s start'', ''set it up'''
+        do:
+          - "State what you're doing: '\U0001FAB4 Aichaku: Creating project: [descriptive-name]'"
+          - "Create in: docs/projects/active/YYYY-MM-DD-{descriptive-name}/"
+          - "Create STATUS.md first, then methodology-specific documents"
+          - Use the templates from their selected methodology
+        dont:
+          - Ask for confirmation after they've signaled readiness
+          - Create files in the root directory
+          - Deviate from the selected methodology's structure
+  automation:
+    name: Automatic Behaviors
+    description: Things that happen without asking
+    behaviors:
+      error_recovery:
+        when: File created in wrong location
+        do: Move it immediately to docs/projects/active/*/ and update STATUS.md
+      git_operations:
+        when: Work confirmed complete
+        do: |
+          git add docs/projects/active/[current-project]/
+          git commit -m '[type]: [description]
+
+          - [what was done]
+          - [key changes]'
+      progress_tracking:
+        when: Working on any task
+        do: Update STATUS.md with progress automatically
 visual_identity:
   prefix:
     mandatory: true
@@ -213,24 +150,14 @@ file_organization:
       example: done-2025-07-14-consistent-branding
       transition: Rename from active-* to done-* when complete
 methodologies:
-  shape_up:
-    key_concepts:
-      - "Fixed time, variable scope"
-      - 6-week cycles with 2-week cooldown
-      - Betting table for project selection
-      - Shaping work before betting
-      - No backlogs or sprints
-    cycle_length: 6 weeks
-    best_for: Complex features
-    templates:
-      - pitch.md
-      - cycle-plan.md
-      - execution-plan.md
-      - hill-chart.md
-      - change-summary.md
   shape-up:
     name: Shape Up
-    triggers: []
+    triggers:
+      - shape
+      - pitch
+      - appetite
+      - betting
+      - cool-down
     best_for: Complex features
     templates:
       pitch: templates/pitch.md
@@ -426,12 +353,15 @@ principles:
     name: DRY (Don't Repeat Yourself)
     category: software-development
     summary:
-      tagline: "Every piece of knowledge must have a single, unambiguous, authoritative representation"
+      tagline: "Every piece of knowledge should have a single, authoritative representation"
       core_tenets:
-        - text: Single source of truth for each piece of knowledge
-        - text: Abstract common functionality appropriately
-        - text: Use code generation where appropriate
+        - text: Avoid code duplication
+        - text: Single source of truth
+        - text: Eliminate redundancy
     integration_url: "aichaku://principle/software-development/dry"
+aichaku:
+  version: 0.43.0
+  source: configuration-as-code
 included:
   core: true
   methodologies:
@@ -449,8 +379,7 @@ included:
     - microsoft-style
     - solid
     - dora
-  doc_standards: []
   principles:
     - dry
-  has_user_customizations: false
+  has_user_customizations: true
 ```

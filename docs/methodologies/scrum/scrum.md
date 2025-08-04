@@ -2,7 +2,7 @@
 
 **BEST FOR**: Teams needing predictable delivery, client visibility, regular rhythm
 
-**TRIGGERS**: "sprint", "scrum", "velocity", "standup", "product owner"
+**TRIGGERS**: sprint, scrum, backlog, velocity, standup
 
 ## Core Rules
 

@@ -47,12 +47,7 @@ async function readYamlFile(filePath: string): Promise<YamlConfig | null> {
  * Read all core configuration files
  */
 async function readCoreConfigs(corePath: string): Promise<YamlConfig> {
-  const coreConfig: YamlConfig = {
-    aichaku: {
-      version: VERSION,
-      source: "configuration-as-code",
-    },
-  };
+  const coreConfig: YamlConfig = {};
 
   // Read metadata to know which files to include
   const metadataPath = join(corePath, "metadata.yaml");
@@ -115,7 +110,7 @@ async function readMethodologyConfigs(
       // Extract relevant fields for CLAUDE.md
       methodologies[methodology] = {
         name: config.name,
-        triggers: (config.summary as any)?.triggers || [],
+        triggers: config.triggers || (config.summary as any)?.triggers || [],
         best_for: (config.summary as any)?.best_for || "",
         templates: config.templates || [],
         phases: config.phases || {},
@@ -277,26 +272,7 @@ export async function assembleYamlConfig(options: {
     appDescription = null,
   } = options;
 
-  // First, get methodology quick reference
-  const allMethodologies = selectedMethodologies.length > 0 ? selectedMethodologies : getDefaultMethodologies();
-  const methodologyQuickRef: YamlConfig = { methodologies: {} };
-
-  for (const methodology of allMethodologies) {
-    const yamlPath = join(
-      paths.methodologies,
-      methodology,
-      `${methodology}.yaml`,
-    );
-    const config = await readYamlFile(yamlPath);
-
-    if (config?.summary) {
-      if (methodologyQuickRef.methodologies) {
-        (methodologyQuickRef.methodologies as any)[
-          methodology.replace("-", "_")
-        ] = config.summary;
-      }
-    }
-  }
+  // Don't create a separate quick reference - let the detailed configs handle it
 
   // Read all configurations
   const coreConfig = await readCoreConfigs(paths.core);
@@ -314,31 +290,38 @@ export async function assembleYamlConfig(options: {
   );
   const userConfig = await readUserCustomizations(paths.user);
 
-  // Merge in the correct order: core first, then methodology quick ref, then detailed configs, then app description
-  const configsToMerge = [
-    coreConfig,
-    methodologyQuickRef,
-    methodologyConfig,
-    standardsConfig,
-    principlesConfig,
-    userConfig,
-  ];
+  // Merge in the correct order: app description first (most important context), then core, then detailed configs
+  const configsToMerge = [];
 
-  // Add app description if provided
+  // Put app description first if provided - this is the most important context
   if (appDescription && appDescription.application) {
     configsToMerge.push(appDescription as YamlConfig);
   }
 
+  // Then add the rest
+  configsToMerge.push(
+    coreConfig,
+    methodologyConfig,
+    standardsConfig,
+    principlesConfig,
+    userConfig,
+  );
+
   const finalConfig = mergeConfigs(...configsToMerge);
+
+  // Add aichaku version info after merging (so it appears after application info)
+  finalConfig.aichaku = {
+    version: VERSION,
+    source: "configuration-as-code",
+  };
 
   // Add metadata about what was included
   finalConfig.included = {
     core: true,
     methodologies: selectedMethodologies,
     standards: selectedStandards,
-    doc_standards: selectedDocStandards,
     principles: selectedPrinciples,
-    has_user_customizations: Object.keys(userConfig).length > 0,
+    has_user_customizations: Object.keys(userConfig).length > 0 || (appDescription !== null),
   };
 
   // Convert to YAML string with nice formatting
@@ -371,7 +354,7 @@ export async function getMethodologyQuickReference(
     if (config?.summary) {
       if (quickRef.methodologies) {
         (quickRef.methodologies as any)[methodology.replace("-", "_")] = {
-          triggers: (config.summary as any).triggers || [],
+          triggers: config.triggers || (config.summary as any).triggers || [],
           best_for: (config.summary as any).best_for || "",
         };
       }

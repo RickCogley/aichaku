@@ -95,7 +95,7 @@ interface ProjectAnalysis {
     outdated?: number;
   };
   methodology: {
-    detected: string[];
+    identified: string[];
     confidence: number;
     suggestions: string[];
   };
@@ -146,7 +146,7 @@ if (analysis.structure.hasTests && !analysis.structure.hasDocs) {
 }
 
 // Check methodology alignment
-if (analysis.methodology.detected.includes("shape-up")) {
+if (analysis.methodology.identified.includes("shape-up")) {
   console.log("Project appears to follow Shape Up methodology");
   // Create Shape Up specific documentation
 }
@@ -162,7 +162,7 @@ Creates customized documentation templates that match your project's:
 
 - Technology stack
 - Project structure
-- Detected methodology
+- Identified methodology
 - Documentation standards (from Aichaku configuration)
 
 ### Parameters
@@ -372,13 +372,13 @@ const shapeUpDocs = await mcp__aichaku__generate_documentation({
 The MCP tools integrate seamlessly with Aichaku's methodology support:
 
 ```typescript
-// 1. Analyze project to detect methodology
+// 1. Analyze project to identify methodology patterns
 const analysis = await mcp__aichaku__analyze_project({
   projectPath: ".",
 });
 
 // 2. Create appropriate templates
-if (analysis.methodology.detected.includes("scrum")) {
+if (analysis.methodology.identified.includes("scrum")) {
   // Generate Scrum-aligned documentation
   const template = await mcp__aichaku__create_doc_template({
     projectPath: ".",
@@ -392,7 +392,7 @@ if (analysis.methodology.detected.includes("scrum")) {
 const docs = await mcp__aichaku__generate_documentation({
   projectPath: ".",
   analysis: analysis,
-  methodology: analysis.methodology.detected[0],
+  methodology: analysis.methodology.identified[0],
   types: ["all"],
 });
 ```

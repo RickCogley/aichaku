@@ -16,6 +16,13 @@ summary:
     - execution-plan.md
     - hill-chart.md
     - change-summary.md
+  triggers:
+    - shape
+    - pitch
+    - appetite
+    - betting
+    - cool-down
+  creates: pitch.md
 
 display:
   description: "Basecamp's methodology for fixed-time, variable-scope projects with autonomous teams"

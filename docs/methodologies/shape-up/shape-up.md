@@ -2,7 +2,7 @@
 
 **BEST FOR**: Features with unclear solutions, fixed timeline projects, avoiding scope creep
 
-**TRIGGERS**: "shape", "appetite", "pitch", "betting table", "6 weeks"
+**TRIGGERS**: shape, pitch, appetite, betting, cool-down
 
 ## Core Rules
 

@@ -30,7 +30,7 @@ Open Claude and describe what you want to build:
 "I need to add user profiles to our web app. Users should be able to upload an avatar, set a bio, and choose privacy settings."
 ```
 
-Claude recognizes you're planning and enters discussion mode:
+Claude responds based on your selected methodology and enters discussion mode:
 
 ```
 🪴 Aichaku: I see you're thinking about user profiles. Let me help you explore this feature.

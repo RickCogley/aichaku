@@ -19,7 +19,7 @@ The Aichaku MCP server works as a **global service**, not a per-project tool. Th
 - **Install once** - The MCP server lives in `~/.aichaku/mcp-server/`
 - **Use everywhere** - All projects on your machine can use the same server
 - **Single configuration** - Configure Claude Code once for all projects
-- **Automatic detection** - Projects with Aichaku automatically benefit
+- **Automatic availability** - Projects with Aichaku can use the MCP server
 - **No port conflicts** - MCP uses stdio by default (HTTP/SSE mode available on port 7182)
 
 ## Understanding the architecture
@@ -118,7 +118,7 @@ When Claude asks the MCP server to review a file, the server:
 3. **Detects methodologies** from project structure
 4. **Applies the correct rules** for that specific project
 
-Example project detection:
+Example project identification:
 
 ```text
 /Users/yourname/projects/web-app/src/auth.ts
@@ -266,7 +266,7 @@ All projects automatically use the updated server.
 
 ## Troubleshooting multiple projects
 
-### Projects not detected
+### Projects not found
 
 **Problem:** MCP server doesn't find project configuration
 
@@ -276,7 +276,7 @@ All projects automatically use the updated server.
 project-root/
 ├── .claude/                     # Required
 │   ├── .aichaku-standards.json  # Required for standards
-│   └── CLAUDE.md               # Required for methodology detection
+│   └── CLAUDE.md               # Required for methodology configuration
 ```
 
 ### Wrong standards applied

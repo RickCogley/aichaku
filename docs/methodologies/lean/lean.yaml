@@ -11,6 +11,13 @@ summary:
   cycle_length: "Variable (experiment-driven)"
   best_for: "New products"
   templates: []
+  triggers:
+    - mvp
+    - lean
+    - experiment
+    - validate
+    - pivot
+  creates: experiment-plan.md
 
 display:
   description: "Startup methodology focused on rapid experimentation, validated learning, and iterative product development"

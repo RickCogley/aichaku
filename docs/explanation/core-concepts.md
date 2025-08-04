@@ -10,7 +10,7 @@ by thoughtful tooling.
 
 ## The fundamental design principle
 
-Aichaku recognizes that teams need two different types of resources:
+Aichaku provides teams with two different types of resources:
 
 ### All methodologies available
 
@@ -43,7 +43,7 @@ cycle.
 
 ## The three modes
 
-Instead of complex workflows, Aichaku recognizes three natural modes of work:
+Instead of complex workflows, Aichaku supports three natural modes of work:
 
 ### Planning mode 🎯
 
@@ -115,7 +115,7 @@ Aichaku respects user autonomy through a two-phase approach:
 
 ### Phase 1: Discussion
 
-When methodology keywords are detected:
+When you mention concepts from your selected methodology:
 
 - Claude acknowledges the context
 - Enters exploratory conversation

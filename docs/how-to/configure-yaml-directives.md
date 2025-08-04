@@ -58,7 +58,7 @@ directives:
       - "docs/checkpoints/"
     naming_convention: "YYYY-MM-DD-descriptive-name"
 
-  methodology_detection:
+  methodology_triggers:
     shape_up:
       triggers: ["shape", "appetite", "pitch", "betting table", "6 weeks"]
       documents: ["pitch.md", "betting-table.md"]
@@ -106,7 +106,7 @@ directives:
   visual_identity:
     prefix: "🚀 MyProject:" # Custom prefix instead of Aichaku
 
-  methodology_detection:
+  methodology_triggers:
     custom_method:
       triggers: ["our-process", "company-way"]
       documents: ["company-process.md"]
@@ -130,7 +130,7 @@ This will regenerate your `CLAUDE.md` with the new configuration.
 ### Core Directives
 
 - `project_structure`: Directory requirements and naming conventions
-- `methodology_detection`: Keyword triggers and document templates
+- `methodology_triggers`: Keyword triggers and document templates
 - `visual_identity`: Branding, emojis, and progress indicators
 - `git_automation`: Commit message formats and branching rules
 - `required_diagrams`: Mermaid diagram templates

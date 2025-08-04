@@ -20,7 +20,7 @@ This is automatic - users shouldn't need to ask!
 ## Quick Start
 
 ```
-DETECT context → APPLY methodology rules → OUTPUT actionable plan
+UNDERSTAND context → APPLY methodology rules → OUTPUT actionable plan
 ```
 
 ## Universal Planning Flow
@@ -126,7 +126,7 @@ OUTPUT: mvp-plan.md
 ### "What should we build next?"
 
 ```
-Based on: [detected context]
+Based on: [current context]
 Options ranked by value:
 1. [Highest value] - [effort] - [why]
 2. [Next value] - [effort] - [why]
@@ -139,7 +139,7 @@ Start with: [specific next action]
 ### "How should we scope this?"
 
 ```
-Detected complexity: [Simple/Medium/Complex]
+Estimated complexity: [Simple/Medium/Complex]
 Suggested approach:
 - Shape Up: [2/6 week appetite]
 - Scrum: [1-3 sprints]
@@ -176,7 +176,7 @@ Start: When current task done
 
 ## Anti-Patterns to Avoid
 
-❌ Over-planning for simple tasks ❌ Under-planning for complex work ❌ Skipping context detection ❌ Using wrong
+❌ Over-planning for simple tasks ❌ Under-planning for complex work ❌ Skipping context understanding ❌ Using wrong
 methodology for situation ❌ Creating plans without clear next actions
 
 ## Remember

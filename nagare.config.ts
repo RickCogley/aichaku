@@ -51,6 +51,16 @@ export default {
         );
       },
     },
+    {
+      path: "./.claude/aichaku/user/app-description.yaml",
+      updateFn: (content: string, data: { version: string }) => {
+        // Update the version field in the YAML
+        return content.replace(
+          /^(\s*version:\s*)"[^"]+"/m,
+          `$1"${data.version}"`,
+        );
+      },
+    },
   ],
 
   releaseNotes: {

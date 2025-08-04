@@ -42,7 +42,7 @@ Aichaku provides two primary interfaces:
 - Consistent flags across commands
 - Clear error messages that guide users
 
-**Claude interface**: Natural language through methodology detection
+**Claude interface**: Natural language within selected methodology
 
 - No commands to memorize
 - Context-aware responses
@@ -114,7 +114,7 @@ Aichaku enhances Claude through structure, not restriction:
 
 1. **Persistent memory**: Projects live in predictable locations
 2. **Visual language**: Consistent emoji indicators
-3. **Natural triggers**: Keyword detection for modes
+3. **Natural triggers**: Keywords from selected methodologies
 4. **Progressive enhancement**: Complexity only when needed
 5. **Focused expertise**: Sub-agents provide specialized knowledge
 

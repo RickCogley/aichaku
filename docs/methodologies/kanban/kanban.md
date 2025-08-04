@@ -2,7 +2,7 @@
 
 **BEST FOR**: Continuous flow work, support teams, varying priorities, starting simply
 
-**TRIGGERS**: "kanban", "flow", "WIP limit", "continuous", "pull"
+**TRIGGERS**: kanban, board, WIP, flow, continuous
 
 ## Core Rules
 

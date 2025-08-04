@@ -307,7 +307,7 @@ const result = await mcp.callTool("send_feedback", {
 
 // Send warning feedback
 const result = await mcp.callTool("send_feedback", {
-  message: "Potential security issue detected",
+  message: "Potential security issue found",
   level: "warning",
 });
 
@@ -372,7 +372,7 @@ const result = await mcp.callTool("get_standards", {
 - **Languages**: Multi-language support
 - **Configuration**: `.semgrep.yml` or default rules
 - **Key Features**:
-  - OWASP Top 10 detection
+  - OWASP Top 10 patterns
   - Custom rule support
   - Auto-fix suggestions
 
@@ -381,8 +381,8 @@ const result = await mcp.callTool("get_standards", {
 - **Purpose**: JavaScript/TypeScript security linting
 - **Configuration**: `.eslintrc` with security rules
 - **Key Rules**:
-  - `no-eval`: Detects eval usage
-  - `no-implied-eval`: Detects implied eval
+  - `no-eval`: Checks for eval usage
+  - `no-implied-eval`: Checks for implied eval
   - `detect-non-literal-regexp`: RegExp injection
   - `detect-buffer-noassert`: Buffer security
 
@@ -400,7 +400,7 @@ const result = await mcp.callTool("get_standards", {
 
 ### Server Mode Selection
 
-The Aichaku CLI automatically detects and uses the HTTP/SSE server if it's running:
+The Aichaku CLI automatically uses the HTTP/SSE server if it's running:
 
 ```bash
 # Start the HTTP/SSE server (one time)
@@ -712,7 +712,7 @@ this.scanners.push(new MyScanner());
 \```typescript // Example implementation \```
 ````
 
-2. The standard will be automatically detected and available for use.
+2. The standard will be automatically available for use.
 
 ### Testing
 

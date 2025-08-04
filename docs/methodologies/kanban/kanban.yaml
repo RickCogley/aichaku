@@ -13,6 +13,13 @@ summary:
   templates:
     - kanban-board.md
     - flow-metrics.md
+  triggers:
+    - kanban
+    - board
+    - WIP
+    - flow
+    - continuous
+  creates: kanban-board.md
 
 display:
   description: "Visual workflow management system for continuous flow and limiting work in progress"

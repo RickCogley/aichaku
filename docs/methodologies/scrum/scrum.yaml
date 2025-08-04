@@ -14,6 +14,13 @@ summary:
     - sprint-planning.md
     - sprint-retrospective.md
     - user-story.md
+  triggers:
+    - sprint
+    - scrum
+    - backlog
+    - velocity
+    - standup
+  creates: sprint-planning.md
 
 display:
   description: "Agile framework with time-boxed sprints for predictable delivery and team rhythm"

@@ -1,18 +1,18 @@
 # Simple Agile Methodologies for Claude Code
 
-A lightweight, mode-based system that helps Claude Code adapt to any development methodology without complex personas or
-verbose documentation.
+A lightweight, mode-based system that helps Claude Code work within your selected development methodology without
+complex personas or verbose documentation.
 
 ## Quick Start
 
-Just describe what you want to do. Claude Code automatically:
+Aichaku users select their methodology through `aichaku methodologies --set [methodology]`. Claude Code then:
 
-- Detects your intent (planning, building, or improving)
-- Identifies the best methodology
-- Applies the right constraints
-- Guides you to success
+- Responds based on your selected methodology
+- Works within the methodology when you mention its concepts (planning, building, or improving)
+- Applies the constraints of your chosen approach
+- Guides you within your selected framework
 
-**No complex commands. No personas. Just natural conversation.**
+**You select the methodology. Claude Code works within your choice.**
 
 ## The Three Modes
 
@@ -92,9 +92,9 @@ flow
 "Define an MVP" → Minimum experiment to test hypothesis
 ```
 
-## Smart Context Detection
+## Methodology-Aware Response
 
-Claude Code automatically adjusts based on:
+Claude Code responds within your selected methodology based on:
 
 **Team Size**
 
@@ -121,7 +121,7 @@ Claude Code automatically adjusts based on:
 
 ```text
 You: "I need to add user authentication"
-Claude: Detects feature work, checks context, suggests Shape Up with 2-week appetite
+Claude: Responds based on your selected methodology (e.g., Shape Up with 2-week appetite)
 Output: Pitch document with rough solution
 ```
 
@@ -129,7 +129,7 @@ Output: Pitch document with rough solution
 
 ```text
 You: "We're getting lots of bug reports"
-Claude: Detects support work, suggests Kanban board
+Claude: Works within your selected methodology (if Kanban, uses board approach)
 Output: WIP-limited board setup for bug flow
 ```
 

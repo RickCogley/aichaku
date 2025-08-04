@@ -56,7 +56,7 @@ Now Claude Code understands your workflow:
 Aichaku (愛着 - "affection/attachment") helps Claude Code understand your development workflow.
 
 - **Install once globally** - Works across all your projects
-- **Natural language aware** - Claude responds to your language within loaded methodologies
+- **Natural language aware** - Claude responds to your language within your selected methodologies
 - **Context-efficient** - Load only what you need, reducing from 50K+ tokens (traditional Markdown docs) to ~4K
 - **Methodology blending** - Mix multiple approaches when needed
 - **Current version:** 0.40.1
@@ -134,6 +134,8 @@ Claude: [Uses Kanban if loaded, or suggests adding it]
 
 **The key difference from early versions:** You explicitly choose which methodologies to load (keeping context lean),
 then Claude naturally responds to your language within those loaded frameworks.
+
+**The key:** You select what you want to use. Claude works within your selections, not through magic detection.
 
 **3-Mode System:**
 

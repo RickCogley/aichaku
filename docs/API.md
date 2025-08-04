@@ -195,10 +195,10 @@ Check if your project follows the specified methodology patterns and practices.
 
 ##### Parameters
 
-| Parameter     | Type   | Required | Default | Description                                                  |
-| ------------- | ------ | -------- | ------- | ------------------------------------------------------------ |
-| `projectPath` | string | Yes      | -       | Path to your project root directory                          |
-| `methodology` | string | No       | -       | Methodology to check against (auto-detects if not specified) |
+| Parameter     | Type   | Required | Default | Description                                                   |
+| ------------- | ------ | -------- | ------- | ------------------------------------------------------------- |
+| `projectPath` | string | Yes      | -       | Path to your project root directory                           |
+| `methodology` | string | No       | -       | Methodology to check against (uses selected if not specified) |
 
 ##### Supported Methodologies
 
@@ -247,7 +247,7 @@ Retrieve the currently selected standards for your project.
     available: string[];     // All available standards
     version: string;         // Configuration version
   };
-  methodologies: string[];   // Detected methodologies
+  methodologies: string[];   // Selected methodologies
 }
 ```
 
@@ -293,7 +293,7 @@ Analyze your project directory to understand its structure, technologies, and pa
     outdated?: number;
   };
   methodology: {
-    detected: string[];
+    selected: string[];
     confidence: number;
     suggestions: string[];
   };
@@ -325,7 +325,7 @@ const deepAnalysis = await mcp__aichaku__analyze_project({
 
 #### `create_doc_template`
 
-Generate documentation templates based on your project type and detected patterns.
+Generate documentation templates based on your project type and configuration.
 
 ##### Parameters
 
@@ -697,7 +697,7 @@ const availableStandards = await standards.list();
 
 ## Security Patterns
 
-The MCP server includes built-in patterns for detecting security vulnerabilities:
+The MCP server includes built-in patterns for identifying security vulnerabilities:
 
 ### OWASP Top 10 (2021)
 

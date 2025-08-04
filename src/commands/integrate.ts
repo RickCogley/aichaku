@@ -400,9 +400,9 @@ export async function integrate(
   // Define configuration paths - use proper installation paths
   const configPaths = {
     core: join(aichakuPaths.global.root, "docs", "core"),
-    methodologies: join(aichakuPaths.global.root, "methodologies"),
-    standards: join(aichakuPaths.global.root, "standards"),
-    principles: join(aichakuPaths.global.root, "principles"),
+    methodologies: join(aichakuPaths.global.root, "docs", "methodologies"),
+    standards: join(aichakuPaths.global.root, "docs", "standards"),
+    principles: join(aichakuPaths.global.root, "docs", "principles"),
     user: aichakuPaths.global.user.root,
   };
 

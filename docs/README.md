@@ -19,7 +19,7 @@ Before you start using Aichaku:
 - **📊 NEW**: **Smart Merging** - Selected methodologies intelligently combined in CLAUDE.md
 - **📚 NEW**: **merge-docs Command** - Generate unified guides from your chosen methodologies
 - **🔄 IMPROVED**: **Reduced Context** - Only includes selected methodologies (70% reduction)
-- **🤖 ENHANCED**: **Methodology-Aware Agents** - Agents dynamically load your methodology choices
+- **🤖 ENHANCED**: **Methodology-Aware Agents** - Agents work within your methodology choices
 
 **v0.35.0+ - Sub-Agent Architecture & Technology Experts**
 
@@ -60,6 +60,15 @@ Methodology selection ensures agents and CLAUDE.md only include what you actuall
 
 **The Game Changer:** Instead of massive, hardcoded CLAUDE.md files, Aichaku now uses modular YAML configurations that
 are dynamically assembled. Update one YAML file, and all your projects benefit instantly!
+
+## 🎯 Core Philosophy
+
+**You select, Claude follows.** Aichaku is built on user agency:
+
+- You choose which methodologies to use
+- You select which standards to enforce
+- You pick which principles to follow
+- Claude Code works within your selections, not through automatic detection
 
 ## 📚 Documentation Types
 

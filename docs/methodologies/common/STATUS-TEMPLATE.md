@@ -1,6 +1,6 @@
 # Status: {Change Description}
 
-**Status**: ACTIVE - {Current Mode} **Started**: {YYYY-MM-DD} **Methodology**: {Detected blend}
+**Status**: ACTIVE - {Current Mode} **Started**: {YYYY-MM-DD} **Methodology**: {Selected blend}
 
 ## 🎯 Objective
 

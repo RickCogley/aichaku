@@ -2,18 +2,32 @@
 # This file helps Claude Code understand your specific application context
 
 application:
-  name: "My Application"
-  type: "web-application" # web-application, api-service, cli-tool, mobile-app, desktop-app, library
-  description: "Brief description of what this application does"
-  version: "1.0.0"
+  name: "Aichaku"
+  type: "cli-tool" # web-application, api-service, cli-tool, mobile-app, desktop-app, library
+  description: "AI-optimized project methodology installer for Claude Code - brings affection (愛着) to your development workflow"
+  version: "0.43.0"
   
   stack:
     language: "typescript"
-    runtime: "node"
-    framework: "express"
+    runtime: "deno"
+    framework: "none"
+    database: "none"
     
   architecture:
-    pattern: "monolith"
+    pattern: "modular-cli"
+    components:
+      - "CLI commands in src/commands/"
+      - "MCP server integration"
+      - "YAML-based configuration"
+      - "Plugin system for methodologies/standards"
     
   security:
-    standards: ["owasp-web"]
+    standards: ["owasp-cli", "secure-defaults"]
+    
+  testing:
+    framework: "deno-test"
+    coverage_target: 80
+    
+  deployment:
+    method: "jsr-registry"
+    ci_cd: "github-actions"

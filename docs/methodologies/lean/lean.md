@@ -2,7 +2,7 @@
 
 **BEST FOR**: Startups, MVPs, experimentation, uncertainty, learning fast
 
-**TRIGGERS**: "MVP", "lean", "experiment", "validate", "pivot"
+**TRIGGERS**: mvp, lean, experiment, validate, pivot
 
 ## Core Rules
 
