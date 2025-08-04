@@ -117,7 +117,21 @@ export async function generateMethodologyAwareAgents(
     // Get all available agent templates from the agent-templates directory
     const homePath = Deno.env.get("HOME") || Deno.env.get("USERPROFILE") || "";
     const templateBase = join(homePath, ".claude", "aichaku", "docs", "core", "agent-templates");
+
+    // Verify template directory exists
+    if (!await exists(templateBase)) {
+      result.errors.push(`Agent template directory not found: ${templateBase}`);
+      result.success = false;
+      return result;
+    }
+
     const agentsToGenerate = await discoverAgentTemplates(templateBase);
+
+    if (agentsToGenerate.length === 0) {
+      result.errors.push("No agent templates found");
+      result.success = false;
+      return result;
+    }
 
     for (const agentType of agentsToGenerate) {
       try {

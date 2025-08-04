@@ -519,9 +519,13 @@ export async function integrate(
     const standardsMsg = selectedStandards.length > 0 ? ` with ${selectedStandards.length} development standards` : "";
     const principlesMsg = selectedPrinciples.length > 0 ? ` and ${selectedPrinciples.length} principles` : "";
 
-    const agentsMsg = agentResult.generated > 0
-      ? ` and ${agentResult.generated} custom agents for code assistance`
-      : "";
+    // Log agent generation results for debugging
+    if (!agentResult.success && agentResult.errors.length > 0) {
+      console.warn("⚠️  Agent generation encountered issues:");
+      agentResult.errors.forEach((error) => console.warn(`   - ${error}`));
+    }
+
+    const agentsMsg = agentResult.generated > 0 ? ` and ${agentResult.generated} agents (including defaults)` : "";
 
     const restartMsg = agentResult.generated > 0
       ? "\n\n🔄 Restart Claude Code to load new agents: Press Ctrl+C and restart"
