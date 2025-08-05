@@ -22,7 +22,7 @@
     "url": "https://github.com/RickCogley/aichaku.git"
   },
   "imports": {
-    "@rick/nagare": "jsr:@rick/nagare@2.16.0",
+    "@rick/nagare": "jsr:@rick/nagare@2.17.1",
     "@std/semver": "jsr:@std/semver@^1.0.5",
     "@std/cli": "jsr:@std/cli@^1.0.21",
     "@std/fs": "jsr:@std/fs@^1.0.19",

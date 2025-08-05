@@ -31,7 +31,18 @@ if command -v deno >/dev/null 2>&1; then
 
     if [ -n "$deno_files" ]; then
         # Format only the staged files
-        if echo "$deno_files" | xargs deno fmt; then
+        # Capture both stdout and stderr, and the exit code
+        fmt_output=$(echo "$deno_files" | xargs deno fmt 2>&1)
+        fmt_exit_code=$?
+        
+        # Check if the error is just "No target files found" which happens when files are excluded
+        if [ $fmt_exit_code -ne 0 ] && echo "$fmt_output" | grep -q "No target files found"; then
+            log_info "All staged files are excluded from formatting (e.g., in .claude/, docs/, etc.)"
+        elif [ $fmt_exit_code -ne 0 ]; then
+            log_error "deno fmt failed"
+            echo "$fmt_output"
+            exit 1
+        else
             # Check if any of the staged files were modified by formatting
             for file in $deno_files; do
                 if [ -f "$file" ] && ! git diff --quiet HEAD -- "$file" 2>/dev/null; then
@@ -39,15 +50,12 @@ if command -v deno >/dev/null 2>&1; then
                     break
                 fi
             done
-
+            
             if [ "$files_changed" = true ]; then
                 log_success "Staged files formatted with Deno"
             else
                 log_info "Staged files already formatted"
             fi
-        else
-            log_error "deno fmt failed"
-            exit 1
         fi
     else
         log_info "No Deno-supported files in staging area"
