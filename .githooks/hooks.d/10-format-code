@@ -7,8 +7,8 @@
 echo "    🎨 Formatting code..."
 files_changed=false
 
-# Get list of staged files to limit formatting scope
-staged_files=$(git diff --cached --name-only)
+# Get list of staged files to limit formatting scope (excluding deleted files)
+staged_files=$(git diff --cached --name-only --diff-filter=d)
 if [ -z "$staged_files" ]; then
     log_info "No staged files to format"
     exit 0
@@ -19,10 +19,16 @@ log_info "Staged files: $(echo $staged_files | tr '\n' ' ')"
 # Format with Deno (includes TypeScript, JavaScript, Markdown, JSON)
 if command -v deno >/dev/null 2>&1; then
     log_info "Formatting with deno fmt..."
-    
-    # Filter staged files for Deno-supported extensions
-    deno_files=$(echo "$staged_files" | grep -E '\.(ts|js|tsx|jsx|md|json|jsonc)$' || true)
-    
+
+    # Filter staged files for Deno-supported extensions and ensure they exist
+    deno_files=""
+    for file in $staged_files; do
+        if echo "$file" | grep -qE '\.(ts|js|tsx|jsx|md|json|jsonc)$' && [ -f "$file" ]; then
+            deno_files="$deno_files $file"
+        fi
+    done
+    deno_files=$(echo "$deno_files" | sed 's/^ //')  # trim leading space
+
     if [ -n "$deno_files" ]; then
         # Format only the staged files
         if echo "$deno_files" | xargs deno fmt; then
@@ -33,7 +39,7 @@ if command -v deno >/dev/null 2>&1; then
                     break
                 fi
             done
-            
+
             if [ "$files_changed" = true ]; then
                 log_success "Staged files formatted with Deno"
             else
@@ -49,10 +55,16 @@ if command -v deno >/dev/null 2>&1; then
 elif [ -f "package.json" ] && command -v prettier >/dev/null 2>&1; then
     # Fallback: Node.js project without Deno - use prettier
     log_info "Formatting with prettier..."
-    
-    # Filter staged files for Prettier-supported extensions
-    prettier_files=$(echo "$staged_files" | grep -E '\.(js|ts|tsx|jsx|md)$' || true)
-    
+
+    # Filter staged files for Prettier-supported extensions and ensure they exist
+    prettier_files=""
+    for file in $staged_files; do
+        if echo "$file" | grep -qE '\.(js|ts|tsx|jsx|md)$' && [ -f "$file" ]; then
+            prettier_files="$prettier_files $file"
+        fi
+    done
+    prettier_files=$(echo "$prettier_files" | sed 's/^ //')  # trim leading space
+
     if [ -n "$prettier_files" ]; then
         if echo "$prettier_files" | xargs prettier --write --print-width=120 --prose-wrap=preserve; then
             for file in $prettier_files; do
@@ -61,7 +73,7 @@ elif [ -f "package.json" ] && command -v prettier >/dev/null 2>&1; then
                     break
                 fi
             done
-            
+
             if [ "$files_changed" = true ]; then
                 log_success "Staged files formatted with Prettier"
             fi
@@ -107,9 +119,20 @@ case "$(detect_project_type)" in
         ;;
 esac
 
-# Stage any changes (only for the originally staged files)
+# Stage any changes (only for the originally staged files that still exist)
 if [ "$files_changed" = true ]; then
-    stage_changes "$staged_files"
+    # Filter out any files that no longer exist before staging
+    existing_files=""
+    for file in $staged_files; do
+        if [ -f "$file" ]; then
+            existing_files="$existing_files $file"
+        fi
+    done
+    existing_files=$(echo "$existing_files" | sed 's/^ //')  # trim leading space
+
+    if [ -n "$existing_files" ]; then
+        stage_changes "$existing_files"
+    fi
 fi
 
 exit 0
