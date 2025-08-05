@@ -3,7 +3,7 @@ import { TemplateFormat } from "@rick/nagare/types";
 
 export default {
   project: {
-    name: "Aichaku",
+    name: "Aichaku (愛着)",
     description:
       "AI-optimized project methodology installer for Claude Code - brings affection (愛着) to your development workflow",
     repository: "https://github.com/RickCogley/aichaku",
