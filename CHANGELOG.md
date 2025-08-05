@@ -5,6 +5,16 @@ All notable changes to aichaku (愛着) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.44.0] - 2025-08-05
+
+### Added
+
+- improve security scanning with MCP HTTP bridge integration (46d8581)
+
+### Changed
+
+- bump versions in deno.lock (7f071c7)
+
 ## [0.43.2] - 2025-08-04
 
 ### Fixed
