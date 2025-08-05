@@ -10,7 +10,7 @@ case "$(detect_project_type)" in
     "deno")
         if command -v deno >/dev/null 2>&1; then
             log_info "Running Deno tests..."
-            if deno test; then
+            if deno test --unstable-raw-imports --allow-read --allow-write --allow-run --allow-env; then
                 log_success "All tests passed"
             else
                 log_error "Tests failed"

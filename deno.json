@@ -8,8 +8,11 @@
   "description": "AI-optimized project methodology installer for Claude Code - brings affection (愛着) to your development workflow",
   "keywords": [
     "claude",
+    "claude-code",
     "ai",
     "methodology",
+    "standard",
+    "principles",
     "shape-up",
     "project-management"
   ],
@@ -19,17 +22,17 @@
     "url": "https://github.com/RickCogley/aichaku.git"
   },
   "imports": {
-    "@rick/nagare": "jsr:@rick/nagare@2.13.2",
+    "@rick/nagare": "jsr:@rick/nagare@2.16.0",
     "@std/semver": "jsr:@std/semver@^1.0.5",
-    "@std/cli": "jsr:@std/cli@^1.0.20",
+    "@std/cli": "jsr:@std/cli@^1.0.21",
     "@std/fs": "jsr:@std/fs@^1.0.19",
     "@std/path": "jsr:@std/path@^1.1.1",
     "@std/assert": "jsr:@std/assert@^1.0.13",
-    "@std/async": "jsr:@std/async@^1.0.13",
+    "@std/async": "jsr:@std/async@^1.0.14",
     "@std/json": "jsr:@std/json@^1.0.2",
     "@std/crypto": "jsr:@std/crypto@^1.0.5",
-    "@modelcontextprotocol/sdk": "npm:@modelcontextprotocol/sdk@1.15.1",
-    "fuse.js": "npm:fuse.js@7.0.0"
+    "@modelcontextprotocol/sdk": "npm:@modelcontextprotocol/sdk@1.17.1",
+    "fuse.js": "npm:fuse.js@7.1.0"
   },
   "tasks": {
     "dev": "deno run --watch mod.ts",
