@@ -5,6 +5,17 @@ All notable changes to aichaku (愛着) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.44.1] - 2025-08-05
+
+### Changed
+
+- update format hook and bump nagare to v2.17.1 (91c30b9)
+- update name of app for nagare (8dbee59)
+
+### Fixed
+
+- exclude deleted files from format-code git hook (598d9e0)
+
 ## [0.44.0] - 2025-08-05
 
 ### Added
