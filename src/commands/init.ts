@@ -312,6 +312,23 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
 
         if (!options.silent) {
           Brand.success("Core templates installed");
+
+          // Count available agents
+          const agentTemplatesPath = join(paths.global.core, "agent-templates");
+          let agentCount = 0;
+          try {
+            for await (const entry of Deno.readDir(agentTemplatesPath)) {
+              if (entry.isDirectory) {
+                agentCount++;
+              }
+            }
+            if (agentCount > 0) {
+              Brand.info(`🤖 Installed ${agentCount} Aichaku agents (aichaku-deno-expert, aichaku-test-expert, etc.)`);
+              Brand.info(`   These will be available when you run 'aichaku integrate' in a project`);
+            }
+          } catch {
+            // Silent fail if can't count agents
+          }
         }
       }
     }

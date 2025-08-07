@@ -395,6 +395,23 @@ export async function upgrade(
 
     if (!options.silent) {
       Brand.success("Core templates updated");
+
+      // Count available agents
+      const agentTemplatesPath = join(paths.global.core, "agent-templates");
+      let agentCount = 0;
+      try {
+        for await (const entry of Deno.readDir(agentTemplatesPath)) {
+          if (entry.isDirectory) {
+            agentCount++;
+          }
+        }
+        if (agentCount > 0) {
+          Brand.info(`🤖 Updated ${agentCount} Aichaku agents (aichaku-deno-expert, aichaku-test-expert, etc.)`);
+          Brand.info(`   Run 'aichaku integrate' in your projects to update their agents`);
+        }
+      } catch {
+        // Silent fail if can't count agents
+      }
     }
 
     // Show what's new in this version
