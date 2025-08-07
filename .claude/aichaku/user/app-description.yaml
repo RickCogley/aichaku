@@ -6,13 +6,13 @@ application:
   type: "cli-tool" # web-application, api-service, cli-tool, mobile-app, desktop-app, library
   description: "AI-optimized project methodology installer for Claude Code - brings affection (愛着) to your development workflow"
   version: "0.44.1"
-  
+
   stack:
     language: "typescript"
     runtime: "deno"
     framework: "none"
     database: "none"
-    
+
   architecture:
     pattern: "modular-cli"
     components:
@@ -21,14 +21,14 @@ application:
       - "YAML-based configuration"
       - "Plugin system for methodologies/standards"
       - "Zod runtime validation for external data"
-    
+
   security:
     standards: ["owasp-cli", "secure-defaults"]
-    
+
   testing:
     framework: "deno-test"
     coverage_target: 80
-    
+
   deployment:
     method: "jsr-registry"
     ci_cd: "github-actions"

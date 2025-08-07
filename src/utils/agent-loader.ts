@@ -9,9 +9,35 @@ export class AgentLoader implements ItemLoader<Agent> {
   private basePath: string;
 
   constructor() {
-    // Agent templates are in the aichaku source directory
+    // For testing and development, use local docs directory if it exists
+    // Otherwise fall back to global installation
     const aichakuPaths = paths.get();
-    this.basePath = aichakuPaths.global.root;
+
+    // Check if we're in the source repository (has docs/core/agent-templates)
+    // Try multiple possible locations
+    const possiblePaths = [
+      // Current working directory (for tests)
+      `${Deno.cwd()}/docs`,
+      // Relative to the source file location
+      new URL("../../docs", import.meta.url).pathname,
+      // Global installation
+      `${aichakuPaths.global.root}/docs`,
+    ];
+
+    this.basePath = aichakuPaths.global.root; // Default
+
+    for (const docsPath of possiblePaths) {
+      try {
+        const agentTemplatesPath = `${docsPath}/core/agent-templates`;
+        const stat = Deno.statSync(agentTemplatesPath);
+        if (stat.isDirectory) {
+          this.basePath = docsPath.replace("/docs", ""); // Remove /docs suffix to get root
+          break;
+        }
+      } catch {
+        // Try next path
+      }
+    }
   }
 
   /**
