@@ -13,7 +13,7 @@ application:
   description: >-
     AI-optimized project methodology installer for Claude Code - brings affection (愛着) to your
     development workflow
-  version: 0.44.1
+  version: 0.45.0
   stack:
     language: typescript
     runtime: deno
@@ -26,6 +26,7 @@ application:
       - MCP server integration
       - YAML-based configuration
       - Plugin system for methodologies/standards
+      - Zod runtime validation for external data
   security:
     standards:
       - owasp-cli
@@ -360,7 +361,7 @@ principles:
         - text: Eliminate redundancy
     integration_url: "aichaku://principle/software-development/dry"
 aichaku:
-  version: 0.44.1
+  version: 0.45.0
   source: configuration-as-code
 included:
   core: true

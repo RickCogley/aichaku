@@ -28,6 +28,8 @@ export interface ContentMetadata {
   path: string;
   /** Subdirectory templates if any */
   templates?: string[];
+  /** Type field for agents (default/optional) */
+  type?: string;
 }
 
 /** Structure representing discovered content */
@@ -318,6 +320,10 @@ function extractMarkdownMetadata(
       }
       if (Array.isArray(frontmatter.tags)) {
         metadata.tags = frontmatter.tags as string[];
+      }
+      // Extract type for agents (default/optional)
+      if (typeof frontmatter.type === "string") {
+        metadata.type = frontmatter.type;
       }
     } catch {
       // Ignore YAML parsing errors

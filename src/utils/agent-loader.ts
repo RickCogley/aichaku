@@ -181,7 +181,7 @@ export class AgentLoader implements ItemLoader<Agent> {
       const agent: Agent = {
         id: agentId,
         name: displayName,
-        type: "optional", // Default type, will be enhanced from metadata if needed
+        type: metadata.type === "default" ? "default" : "optional", // Use type from metadata
         description: metadata.description || "No description available",
         // Additional fields will be populated from YAML frontmatter on demand
       };
