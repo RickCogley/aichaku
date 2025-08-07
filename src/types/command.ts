@@ -65,6 +65,8 @@ export interface ItemLoader<T extends ConfigItem> {
   search(query: string): T[] | Promise<T[]>;
   /** Get available categories (optional) */
   getCategories?(): string[] | Promise<string[]>;
+  /** Find items by partial ID (optional - for handling ambiguous matches) */
+  findByPartialId?(partialId: string): T[] | Promise<T[]>;
 }
 
 /**

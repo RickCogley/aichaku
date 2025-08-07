@@ -157,8 +157,8 @@ export abstract class BaseCommand<T extends ConfigItem> {
       if (!item) {
         // Check if there are multiple matches (ambiguous)
         // Only agents have findByPartialId method, so check if it exists
-        if ("findByPartialId" in this.definition.loader) {
-          const matches = await (this.definition.loader as any).findByPartialId(id);
+        if (this.definition.loader.findByPartialId) {
+          const matches = await this.definition.loader.findByPartialId(id);
           if (matches && matches.length > 1) {
             Brand.error(`Ambiguous ${this.definition.name.slice(0, -1)}: '${id}' matches multiple items:`);
             for (const match of matches) {

@@ -1,9 +1,6 @@
 import { assertEquals, assertExists } from "jsr:@std/assert@1";
 import { AgentLoader } from "./agent-loader.ts";
 
-// Mock path module to avoid actual file system access
-const originalPaths = await import("../paths.ts");
-
 Deno.test("AgentLoader - loadById with fuzzy search", async (t) => {
   const loader = new AgentLoader();
 
