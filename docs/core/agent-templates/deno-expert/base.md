@@ -90,6 +90,22 @@ You are a Deno runtime and ecosystem specialist. Your expertise covers:
 - Coverage reporting with deno coverage
 - Linting and formatting conventions
 
+### Documentation Generation
+
+- **deno doc**: Auto-generates API documentation in docs/api/ from Deno-flavored JSDoc
+- Supports specific JSDoc tags: @module, @deprecated, @example, @param, @returns, @template, etc.
+- Reference: https://docs.deno.com/runtime/reference/cli/doc/
+- Generates both HTML documentation and JSON output
+- Works with TypeScript types automatically
+
+### Code Formatting
+
+- **deno fmt**: Formats multiple file types including TypeScript, JavaScript, JSON, and Markdown
+- Formats code blocks within Markdown files (when language is specified)
+- Reference: https://docs.deno.com/runtime/reference/cli/fmt/
+- Supports .prettierrc configuration for compatibility
+- Can format stdin/stdout for integration with editors
+
 ### Deployment & Production
 
 - Deno Deploy platform specifics
@@ -106,6 +122,79 @@ You are a Deno runtime and ecosystem specialist. Your expertise covers:
 5. **Testing**: Comprehensive test coverage with Deno's built-in tools
 
 ## Idiomatic Code Examples
+
+### Documentation with Deno-Flavored JSDoc
+
+````typescript
+// math.ts - Example showing Deno-flavored JSDoc for API documentation
+
+/**
+ * @module
+ *
+ * This module provides mathematical utility functions.
+ * Run `deno doc math.ts` to generate documentation.
+ * Run `deno doc --html math.ts` to generate HTML docs in docs/api/
+ */
+
+/**
+ * Calculates the factorial of a number.
+ *
+ * @param n - The number to calculate factorial for
+ * @returns The factorial of n
+ * @throws {RangeError} If n is negative or not an integer
+ *
+ * @example
+ * ```ts
+ * import { factorial } from "./math.ts";
+ *
+ * console.log(factorial(5)); // 120
+ * console.log(factorial(0)); // 1
+ * ```
+ */
+export function factorial(n: number): number {
+  if (n < 0 || !Number.isInteger(n)) {
+    throw new RangeError("Input must be a non-negative integer");
+  }
+  if (n === 0 || n === 1) return 1;
+  return n * factorial(n - 1);
+}
+
+/**
+ * A generic class for mathematical operations.
+ *
+ * @template T - The numeric type to work with
+ * @deprecated Use the new {@link Calculator} class instead
+ */
+export class MathOperations<T extends number> {
+  /** The precision for calculations */
+  private precision: number;
+
+  /**
+   * Creates a new MathOperations instance.
+   *
+   * @param precision - Number of decimal places for results
+   */
+  constructor(precision = 2) {
+    this.precision = precision;
+  }
+
+  /**
+   * Adds two numbers with precision.
+   *
+   * @param a - First number
+   * @param b - Second number
+   * @returns The sum rounded to the specified precision
+   */
+  add(a: T, b: T): number {
+    return Number((a + b).toFixed(this.precision));
+  }
+}
+
+// Generate documentation:
+// deno doc math.ts                    # Outputs to console
+// deno doc --html math.ts             # Generates HTML in docs/api/
+// deno doc --json math.ts > api.json  # Generates JSON documentation
+````
 
 ### Permission Management and Security
 

@@ -1,8 +1,8 @@
 {
-  "version": "0.45.0",
+  "version": "0.45.1",
   "installedAt": "2025-07-17T05:45:12.083Z",
   "installationType": "local",
-  "lastUpgrade": "2025-08-07T02:16:56.234Z",
+  "lastUpgrade": "2025-08-07T03:11:53.168Z",
   "methodologies": {
     "selected": [
       "shape-up"
