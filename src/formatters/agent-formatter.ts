@@ -20,8 +20,13 @@ export class AgentFormatter extends BaseFormatter<Agent> {
       lines.push(this.formatSubsection("Default Agents (automatically included):"));
       lines.push(this.formatSeparator());
       for (const agent of defaultAgents) {
+        // Show the ID (aichaku-orchestrator) and clean name
+        const displayId = agent.id;
+        const displayName = agent.name.replace(/^@?aichaku-/i, "").replace(/-/g, " ")
+          .split(" ").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
         const colorIndicator = agent.color ? `[${agent.color}]` : "";
-        lines.push(this.formatItem(`${agent.name} ${colorIndicator}`));
+
+        lines.push(this.formatItem(`${displayId} - ${displayName} ${colorIndicator}`));
         lines.push(`    ${agent.description}`);
         if (agent.technology_focus) {
           lines.push(`    Focus: ${agent.technology_focus}`);
@@ -34,8 +39,13 @@ export class AgentFormatter extends BaseFormatter<Agent> {
       lines.push(this.formatSubsection("Optional Agents (add as needed):"));
       lines.push(this.formatSeparator(34));
       for (const agent of optionalAgents) {
+        // Show the ID (aichaku-deno-expert) and clean name
+        const displayId = agent.id;
+        const displayName = agent.name.replace(/^@?aichaku-/i, "").replace(/-/g, " ")
+          .split(" ").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
         const colorIndicator = agent.color ? `[${agent.color}]` : "";
-        lines.push(this.formatItem(`${agent.name} ${colorIndicator}`));
+
+        lines.push(this.formatItem(`${displayId} - ${displayName} ${colorIndicator}`));
         lines.push(`    ${agent.description}`);
         if (agent.technology_focus) {
           lines.push(`    Focus: ${agent.technology_focus}`);
@@ -152,7 +162,12 @@ export class AgentFormatter extends BaseFormatter<Agent> {
       lines.push(`Found ${agents.length} agent${agents.length > 1 ? "s" : ""}:`);
       lines.push(this.addEmptyLine());
       for (const agent of agents) {
-        lines.push(this.formatItem(`${agent.name} (${agent.type})`));
+        // Consistent display format: ID and clean name
+        const displayId = agent.id;
+        const displayName = agent.name.replace(/^@?aichaku-/i, "").replace(/-/g, " ")
+          .split(" ").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+
+        lines.push(this.formatItem(`${displayId} - ${displayName} (${agent.type})`));
         lines.push(`    ${agent.description}`);
       }
     }

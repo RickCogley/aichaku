@@ -309,6 +309,10 @@ function extractMarkdownMetadata(
         string,
         unknown
       >;
+      // Extract name from frontmatter if present
+      if (typeof frontmatter.name === "string") {
+        metadata.name = frontmatter.name;
+      }
       if (typeof frontmatter.description === "string") {
         metadata.description = frontmatter.description;
       }

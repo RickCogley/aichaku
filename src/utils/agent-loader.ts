@@ -64,11 +64,24 @@ export class AgentLoader implements ItemLoader<Agent> {
   }
 
   /**
-   * Load a specific agent by id (same as by name for agents)
+   * Load a specific agent by id (supports both full ID and short name)
    */
   async loadById(id: string): Promise<Agent | null> {
     const all = await this.loadAll();
-    return all.find((agent) => agent.id === id) || null;
+
+    // Support both full ID (aichaku-deno-expert) and short name (deno-expert or deno)
+    const normalizedId = id.startsWith("aichaku-") ? id : `aichaku-${id}`;
+
+    // First try exact match
+    let agent = all.find((a) => a.id === normalizedId);
+
+    // If not found and doesn't have -expert suffix, try adding it
+    if (!agent && !id.includes("-expert")) {
+      const expertId = id.startsWith("aichaku-") ? `${id}-expert` : `aichaku-${id}-expert`;
+      agent = all.find((a) => a.id === expertId);
+    }
+
+    return agent || null;
   }
 
   /**
@@ -101,12 +114,19 @@ export class AgentLoader implements ItemLoader<Agent> {
         return null;
       }
 
-      // Clean the name (remove @aichaku- prefix if present from metadata.name)
-      const cleanName = metadata.name?.replace(/^@?aichaku-/, "") || agentName;
+      // Always use aichaku- prefix for all agents to prevent collisions
+      const agentId = `aichaku-${agentName}`;
+
+      // Extract display name from metadata or generate from agent name
+      const displayName = metadata.name || `Aichaku ${
+        agentName.split("-").map(
+          (word) => word.charAt(0).toUpperCase() + word.slice(1),
+        ).join(" ")
+      }`;
 
       const agent: Agent = {
-        id: cleanName,
-        name: cleanName,
+        id: agentId,
+        name: displayName,
         type: "optional", // Default type, will be enhanced from metadata if needed
         description: metadata.description || "No description available",
         // Additional fields will be populated from YAML frontmatter on demand
