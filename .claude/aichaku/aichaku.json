@@ -34,9 +34,7 @@
   "agents": {
     "selected": [
       "deno-expert",
-      "typescript-expert",
-      "Aichaku Deno Expert",
-      "deno"
+      "typescript-expert"
     ]
   }
 }
