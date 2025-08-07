@@ -111,6 +111,98 @@ aichaku agents --add deno-expert typescript-expert
 
 ## How Agents Work
 
+### Agent Template Flow
+
+Understanding how agents move from source to your project is crucial:
+
+#### First Time Installation
+
+1. **Install CLI from JSR**
+   ```bash
+   deno install -g -A -n aichaku jsr:@rick/aichaku/cli
+   ```
+   - Downloads CLI code from JSR registry
+   - Creates executable binary (e.g., `/usr/local/bin/aichaku`)
+
+2. **Initialize Global Installation**
+   ```bash
+   aichaku init --global
+   ```
+   - Downloads agent templates from GitHub
+   - Stores in `~/.claude/aichaku/docs/core/agent-templates/`
+   - These are SOURCE templates (never modified)
+   - Shows: "🤖 Installed 20 Aichaku agents"
+
+3. **Initialize Project**
+   ```bash
+   cd /path/to/project
+   aichaku init
+   ```
+   - Creates `.claude/aichaku/` project structure
+   - Does NOT copy agents yet
+   - Creates `aichaku.json` configuration
+
+4. **Generate Agents**
+   ```bash
+   aichaku integrate
+   ```
+   - Reads templates from `~/.claude/aichaku/docs/core/agent-templates/`
+   - Enriches with your selected methodologies/standards/principles
+   - Writes customized agents to `project/.claude/agents/aichaku-*.md`
+
+#### Upgrade Flow
+
+1. **Update CLI**
+   ```bash
+   # Clear cache and reinstall
+   deno cache --reload jsr:@rick/aichaku/cli
+   deno install -g -A -n aichaku --force jsr:@rick/aichaku/cli
+   ```
+
+2. **Update Global Templates**
+   ```bash
+   aichaku upgrade --global
+   ```
+   - Downloads latest templates from GitHub
+   - Updates `~/.claude/aichaku/docs/core/agent-templates/`
+   - Shows: "🤖 Updated 20 Aichaku agents"
+
+3. **Update Project & Regenerate**
+   ```bash
+   cd /path/to/project
+   aichaku upgrade        # Updates project config
+   aichaku integrate      # Regenerates agents with latest templates
+   ```
+
+#### Key Directories
+
+**Global Installation** (source templates):
+
+```
+~/.claude/aichaku/
+└── docs/
+    └── core/
+        └── agent-templates/        # SOURCE templates
+            ├── deno-expert/
+            │   └── base.md         # Template with YAML frontmatter
+            ├── test-expert/
+            │   └── base.md
+            └── ...
+```
+
+**Project Structure** (generated agents):
+
+```
+project/
+└── .claude/
+    ├── agents/                     # GENERATED agents (customized)
+    │   ├── aichaku-deno-expert.md
+    │   ├── aichaku-test-expert.md
+    │   └── ...
+    └── aichaku/
+        └── aichaku.json            # Project configuration
+```
+
 ### Automatic Invocation
 
 Claude Code automatically invokes appropriate agents based on:
@@ -134,12 +226,22 @@ delegations:
 
 ### Dynamic Customization
 
-When you run `aichaku integrate`, the system:
+When you run `aichaku integrate`, the system performs intelligent context injection:
 
-1. Reads your selected methodology from `aichaku.json`
-2. Reads your selected standards from `aichaku.json`
-3. Generates custom agents in `.claude/agents/` directory
-4. Injects relevant standards and methodologies into each agent
+1. **Load Template**: Reads from `~/.claude/aichaku/docs/core/agent-templates/{agent}/base.md`
+2. **Extract Metadata**: Parses YAML frontmatter for agent configuration
+3. **Inject Context**: Adds sections based on your selections:
+   - Selected methodologies (e.g., Shape Up concepts)
+   - Selected standards (e.g., TDD practices, OWASP checks)
+   - Selected principles (e.g., DRY, KISS guidelines)
+4. **Generate Output**: Writes to `project/.claude/agents/aichaku-{agent}.md`
+
+**Important Notes:**
+
+- Templates are **never modified** - they remain clean references
+- Agents are **completely regenerated** each time you run `integrate`
+- Context injection is **dynamic** - different projects get different agent configurations
+- All agents use `aichaku-` prefix to prevent collisions with custom agents
 
 Example customization flow:
 
@@ -364,6 +466,26 @@ ls .claude/agents/
 ```
 
 ## Troubleshooting
+
+### Verifying Agent Installation
+
+Check that agents are properly installed:
+
+```bash
+# Verify global templates exist
+ls ~/.claude/aichaku/docs/core/agent-templates/
+# Should show: deno-expert, test-expert, etc.
+
+# Verify project agents after integrate
+ls .claude/agents/
+# Should show: aichaku-deno-expert.md, aichaku-test-expert.md, etc.
+
+# View a source template (unmodified)
+cat ~/.claude/aichaku/docs/core/agent-templates/deno-expert/base.md
+
+# View a generated agent (customized with your selections)
+cat .claude/agents/aichaku-deno-expert.md
+```
 
 ### Agent Not Available
 
