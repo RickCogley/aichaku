@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Prevent accidental documentation generation in wrong location
+
+# Check if any generated doc files are being committed from the wrong location
+if git diff --cached --name-only | grep -E '^docs/(index\.html|all_symbols\.html|.*\.(css|js))$'; then
+    echo "❌ Error: Documentation files detected in docs/ root directory!"
+    echo ""
+    echo "API documentation should only be generated in docs/api/"
+    echo "Please use the following commands instead:"
+    echo ""
+    echo "  deno task docs:api    # Generate API documentation"
+    echo "  deno task docs:check  # Check JSDoc syntax"
+    echo ""
+    echo "To fix this:"
+    echo "1. Remove the incorrectly placed files: git clean -fdx docs/*.html docs/*.css docs/*.js"
+    echo "2. Generate docs correctly: deno task docs:api"
+    echo ""
+    exit 1
+fi
+
+# Check if running deno doc command without output flag
+if grep -r "deno doc" . --include="*.md" --include="*.ts" --include="*.sh" | grep -v "\-\-output" | grep -v "deno task" | grep -v "scripts/generate-docs.ts"; then
+    echo "⚠️  Warning: Found 'deno doc' commands without --output flag"
+    echo "Please use 'deno task docs:api' or specify --output=./docs/api"
+    echo ""
+    # This is a warning, not an error
+fi
+
+exit 0

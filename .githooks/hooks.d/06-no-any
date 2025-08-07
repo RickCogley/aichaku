@@ -1,0 +1,38 @@
+#!/bin/sh
+# 06-no-any - Enforce no 'any' types in TypeScript
+
+set -e
+
+echo "  🚫 Checking for 'any' types..."
+
+# Get staged TypeScript files
+STAGED_TS_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.ts$' || true)
+
+if [ -z "$STAGED_TS_FILES" ]; then
+  exit 0
+fi
+
+ANY_COUNT=0
+for file in $STAGED_TS_FILES; do
+  # Check for various any patterns, excluding comments and suppressed lines
+  if grep -E ':\s*any(\s|,|\)|;|$)|<any>|as\s+any|\bany\[\]|Array<any>|Promise<any>|Record<[^,]+,\s*any>' "$file" 2>/dev/null | \
+     grep -v "// DevSkim:" | \
+     grep -v "// codeql" | \
+     grep -v "// eslint-disable" | \
+     grep -v "// @ts-ignore" > /dev/null; then
+    
+    echo "     ⚠️  Found 'any' in $file:"
+    grep -n -E ':\s*any(\s|,|\)|;|$)|<any>|as\s+any' "$file" | head -2 | sed 's/^/        /'
+    ANY_COUNT=$((ANY_COUNT + 1))
+  fi
+done
+
+if [ $ANY_COUNT -gt 0 ]; then
+  echo "     ❌ Found 'any' types in $ANY_COUNT file(s)"
+  echo "     Replace with specific types or 'unknown'"
+  exit 1
+else
+  echo "     ✅ No 'any' types found"
+fi
+
+exit 0

@@ -1,0 +1,28 @@
+#!/bin/sh
+# 05-type-check - Strict TypeScript type checking
+
+set -e
+
+# Source common functions
+. "$(dirname "$0")/../lib/common.sh" 2>/dev/null || true
+
+echo "  🔍 TypeScript Type Checking..."
+
+# Get staged TypeScript files
+STAGED_TS_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.ts$' || true)
+
+if [ -z "$STAGED_TS_FILES" ]; then
+  echo "     No TypeScript files to check"
+  exit 0
+fi
+
+# Run strict type checking
+if deno check --unstable-raw-imports $STAGED_TS_FILES 2>/dev/null; then
+  echo "     ✅ Type checking passed"
+else
+  echo "     ❌ Type checking failed"
+  echo "     Run 'deno check' for details"
+  exit 1
+fi
+
+exit 0
