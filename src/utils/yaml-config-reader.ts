@@ -5,17 +5,29 @@
  * It implements true "configuration as code" by reading from source YAML files
  * rather than generating content programmatically.
  */
-// deno-lint-ignore-file no-explicit-any
 
 import { parse, stringify } from "jsr:@std/yaml@1";
 import { join } from "jsr:@std/path@1";
 import { exists } from "jsr:@std/fs@1";
 import { VERSION } from "../../version.ts";
 import { getDefaultMethodologies } from "../config/methodology-defaults.ts";
+import { z } from "zod";
 
-interface YamlConfig {
-  [key: string]: unknown;
-}
+// Zod schema for YAML configuration
+const YamlConfigSchema = z.record(z.unknown());
+type YamlConfig = z.infer<typeof YamlConfigSchema>;
+
+// Schema for metadata component
+const ComponentSchema = z.object({
+  file: z.string(),
+  order: z.number().optional(),
+  mandatory: z.boolean().optional(),
+});
+
+// Schema for metadata
+const MetadataSchema = z.object({
+  core_components: z.record(ComponentSchema).optional(),
+}).passthrough();
 
 interface ConfigPaths {
   core: string;
@@ -36,7 +48,8 @@ async function readYamlFile(filePath: string): Promise<YamlConfig | null> {
     }
 
     const content = await Deno.readTextFile(filePath);
-    return parse(content) as YamlConfig;
+    const parsed = parse(content);
+    return YamlConfigSchema.parse(parsed);
   } catch (error) {
     console.error(`Error reading YAML file ${filePath}:`, error);
     return null;
@@ -51,22 +64,28 @@ async function readCoreConfigs(corePath: string): Promise<YamlConfig> {
 
   // Read metadata to know which files to include
   const metadataPath = join(corePath, "metadata.yaml");
-  const metadata = await readYamlFile(metadataPath);
+  const metadataRaw = await readYamlFile(metadataPath);
+  const metadata = metadataRaw ? MetadataSchema.safeParse(metadataRaw) : null;
 
-  if (metadata?.core_components) {
-    const components = metadata.core_components as Record<string, unknown>;
+  if (metadata?.success && metadata.data.core_components) {
+    const components = metadata.data.core_components;
 
     // Sort by order if specified
     const sortedComponents = Object.entries(components)
       .sort(([, a], [, b]) => {
-        const aOrder = typeof (a as any).order === "number" ? (a as any).order : 999;
-        const bOrder = typeof (b as any).order === "number" ? (b as any).order : 999;
+        const aOrder = typeof a === "object" && a !== null && "order" in a && typeof a.order === "number"
+          ? a.order
+          : 999;
+        const bOrder = typeof b === "object" && b !== null && "order" in b && typeof b.order === "number"
+          ? b.order
+          : 999;
         return aOrder - bOrder;
       });
 
     for (const [key, component] of sortedComponents) {
-      if ((component as any).mandatory !== false) {
-        const configPath = join(corePath, (component as any).file);
+      const comp = ComponentSchema.safeParse(component);
+      if (comp.success && comp.data.mandatory !== false) {
+        const configPath = join(corePath, comp.data.file);
         const config = await readYamlFile(configPath);
 
         if (config) {

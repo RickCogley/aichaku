@@ -14,7 +14,7 @@ interface TestPrinciplesOptions {
   help?: boolean;
 }
 
-export async function testPrinciples(options: TestPrinciplesOptions) {
+export async function testPrinciples(options: TestPrinciplesOptions): Promise<void> {
   if (options.help) {
     const help = {
       title: "🧪 Test Principle Integration",

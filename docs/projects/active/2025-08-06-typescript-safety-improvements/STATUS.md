@@ -40,8 +40,8 @@ Three-layer defense strategy:
 - [x] Fix cli.ts type assertions
 - [x] Configure stricter TypeScript in deno.json
 - [x] Search for any types (none found!)
-- [ ] Add missing return types to functions
-- [ ] Implement runtime validation with Zod
+- [x] Add missing return types to functions (3 functions updated)
+- [x] Implement runtime validation with Zod (config-manager, yaml-config-reader)
 
 ## Notes
 

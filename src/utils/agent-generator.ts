@@ -387,7 +387,7 @@ function parseConflictLine(line: string): Partial<ConflictDefinition> {
 /**
  * Save a parsed list to the requirements object
  */
-function saveList(requirements: ContextRequirements, subsection: string, list: string[]) {
+function saveList(requirements: ContextRequirements, subsection: string, list: string[]): void {
   const mapping: Record<string, keyof ContextRequirements> = {
     "Standards": "standards",
     "Standards Required": "standardsRequired",

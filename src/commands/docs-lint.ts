@@ -169,7 +169,7 @@ async function findMarkdownFiles(paths: string[]): Promise<string[]> {
 /**
  * Main command function
  */
-export async function main(cliArgs?: string[]) {
+export async function main(cliArgs?: string[]): Promise<void> {
   const args = parseArgs(cliArgs || Deno.args, {
     boolean: ["help", "quiet", "fix"],
     string: ["standards", "config"],

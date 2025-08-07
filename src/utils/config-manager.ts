@@ -8,36 +8,40 @@
 import { exists } from "jsr:@std/fs@1";
 import { join, SEPARATOR as sep } from "jsr:@std/path@1";
 import { safeReadTextFile, safeWriteTextFile, validatePath } from "./path-security.ts";
+import { z } from "zod";
+
+// Zod schema for runtime validation
+const AichakuConfigSchema = z.object({
+  version: z.string(),
+  installedAt: z.string().optional(),
+  installationType: z.enum(["global", "local"]).optional(),
+  lastUpgrade: z.string().optional(),
+  methodologies: z.object({
+    selected: z.array(z.string()),
+    default: z.string().optional(),
+  }).optional(),
+  standards: z.object({
+    selected: z.array(z.string()),
+    customStandards: z.record(z.unknown()).optional(),
+  }).optional(),
+  principles: z.object({
+    selected: z.array(z.string()),
+    customPrinciples: z.record(z.unknown()).optional(),
+  }).optional(),
+  agents: z.object({
+    selected: z.array(z.string()),
+  }).optional(),
+  config: z.object({
+    outputPath: z.string().optional(),
+    enableHooks: z.boolean().optional(),
+    autoCommit: z.boolean().optional(),
+    gitIntegration: z.boolean().optional(),
+    customizations: z.record(z.unknown()).optional(),
+  }).optional(),
+});
 
 // Unified schema for Aichaku configuration
-export interface AichakuConfig {
-  version: string;
-  installedAt?: string;
-  installationType?: "global" | "local";
-  lastUpgrade?: string;
-  methodologies?: {
-    selected: string[];
-    default?: string;
-  };
-  standards?: {
-    selected: string[];
-    customStandards?: Record<string, unknown>;
-  };
-  principles?: {
-    selected: string[];
-    customPrinciples?: Record<string, unknown>;
-  };
-  agents?: {
-    selected: string[];
-  };
-  config?: {
-    outputPath?: string;
-    enableHooks?: boolean;
-    autoCommit?: boolean;
-    gitIntegration?: boolean;
-    customizations?: Record<string, unknown>;
-  };
-}
+export type AichakuConfig = z.infer<typeof AichakuConfigSchema>;
 
 /**
  * Configuration Manager Class
@@ -67,8 +71,15 @@ export class ConfigManager {
         const content = await safeReadTextFile(this.configPath, this.projectRoot);
         const rawConfig = JSON.parse(content);
 
-        // Migrate config if needed
-        this.config = await this.migrateConfig(rawConfig);
+        // Validate and migrate config
+        const validatedConfig = AichakuConfigSchema.safeParse(rawConfig);
+        if (validatedConfig.success) {
+          this.config = await this.migrateConfig(validatedConfig.data);
+        } else {
+          // Attempt migration first, then validate
+          const migrated = await this.migrateConfig(rawConfig);
+          this.config = AichakuConfigSchema.parse(migrated);
+        }
 
         // Save if migration occurred
         if (rawConfig !== this.config) {
