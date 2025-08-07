@@ -144,9 +144,8 @@ export async function generateMethodologyAwareAgents(
 
         // Only generate agents that are default type or explicitly selected
         const isDefault = template.yaml.type === "default";
-        // Check if selected - handle both with and without aichaku- prefix
-        const isSelected = options.selectedAgents.includes(agentType) ||
-          options.selectedAgents.includes(`aichaku-${agentType}`);
+        // Check if selected - agents should always be stored with full canonical ID
+        const isSelected = options.selectedAgents.includes(`aichaku-${agentType}`);
 
         if (!isDefault && !isSelected) {
           result.skipped++;
