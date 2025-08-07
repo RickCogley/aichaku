@@ -1,8 +1,8 @@
 {
-  "version": "0.43.2",
+  "version": "0.44.1",
   "installedAt": "2025-07-17T05:45:12.083Z",
   "installationType": "local",
-  "lastUpgrade": "2025-08-04T08:51:39.044Z",
+  "lastUpgrade": "2025-08-05T08:58:24.168Z",
   "methodologies": {
     "selected": [
       "shape-up"
@@ -34,7 +34,9 @@
   "agents": {
     "selected": [
       "deno-expert",
-      "typescript-expert"
+      "typescript-expert",
+      "Aichaku Deno Expert",
+      "deno"
     ]
   }
 }
