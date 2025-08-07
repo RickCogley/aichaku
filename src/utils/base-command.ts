@@ -149,8 +149,9 @@ export abstract class BaseCommand<T extends ConfigItem> {
     console.log(this.definition.formatter.formatAddHeader(this.definition.name));
     console.log();
 
-    // Validate all items exist
+    // Validate all items exist and collect their canonical IDs
     const validItems: T[] = [];
+    const canonicalIds: string[] = [];
     for (const id of ids) {
       const item = await Promise.resolve(this.definition.loader.loadById(id));
       if (!item) {
@@ -159,6 +160,7 @@ export abstract class BaseCommand<T extends ConfigItem> {
         return;
       }
       validItems.push(item);
+      canonicalIds.push(item.id); // Use the canonical ID from the loaded item
     }
 
     try {
@@ -173,10 +175,10 @@ export abstract class BaseCommand<T extends ConfigItem> {
       }
 
       if (!args.dryRun) {
-        // Add items using the appropriate config manager method
-        await this.addItemsToConfig(configManager, ids);
+        // Add items using the appropriate config manager method with canonical IDs
+        await this.addItemsToConfig(configManager, canonicalIds);
 
-        Brand.success(`Added ${this.definition.name}: ${ids.join(", ")}`);
+        Brand.success(`Added ${this.definition.name}: ${canonicalIds.join(", ")}`);
 
         // Show what was added
         Brand.info(`\nAdded ${this.definition.name}:`);
@@ -186,7 +188,7 @@ export abstract class BaseCommand<T extends ConfigItem> {
 
         this.showNextSteps("add");
       } else {
-        Brand.info(`[Dry run] Would add ${this.definition.name}: ${ids.join(", ")}`);
+        Brand.info(`[Dry run] Would add ${this.definition.name}: ${canonicalIds.join(", ")}`);
       }
     } catch (error) {
       Brand.error(
@@ -210,18 +212,31 @@ export abstract class BaseCommand<T extends ConfigItem> {
     console.log(this.definition.formatter.formatRemoveHeader(this.definition.name));
     console.log();
 
+    // Normalize IDs to canonical form (e.g., "deno" -> "deno-expert")
+    const canonicalIds: string[] = [];
+    for (const id of ids) {
+      // Try to load the item to get its canonical ID
+      const item = await Promise.resolve(this.definition.loader.loadById(id));
+      if (item) {
+        canonicalIds.push(item.id);
+      } else {
+        // If not found, use the ID as-is (it might be in the config with the wrong format)
+        canonicalIds.push(id);
+      }
+    }
+
     try {
       const configManager = createProjectConfigManager(validatedProjectPath);
       await configManager.load();
 
       if (!args.dryRun) {
-        // Remove items using the appropriate config manager method
-        await this.removeItemsFromConfig(configManager, ids);
+        // Remove items using the appropriate config manager method with canonical IDs
+        await this.removeItemsFromConfig(configManager, canonicalIds);
 
-        Brand.success(`Removed ${this.definition.name}: ${ids.join(", ")}`);
+        Brand.success(`Removed ${this.definition.name}: ${canonicalIds.join(", ")}`);
         this.showNextSteps("remove");
       } else {
-        Brand.info(`[Dry run] Would remove ${this.definition.name}: ${ids.join(", ")}`);
+        Brand.info(`[Dry run] Would remove ${this.definition.name}: ${canonicalIds.join(", ")}`);
       }
     } catch (error) {
       Brand.error(
