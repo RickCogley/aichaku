@@ -5,6 +5,14 @@ All notable changes to aichaku (愛着) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.45.1] - 2025-08-07
+
+### Fixed
+
+- ensure agent IDs are always stored with full canonical prefix (56883fc)
+- handle both prefixed and unprefixed agent IDs in selection (a53a1f3)
+- agent-loader now correctly identifies default vs optional agents (eaad439)
+
 ## [0.45.0] - 2025-08-07
 
 ### Added
