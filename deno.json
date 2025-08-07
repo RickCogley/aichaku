@@ -53,6 +53,7 @@
     "version": "deno run --allow-read version-check.ts",
     "docs": "deno task nagare docs",
     "docs:serve": "deno task nagare docs --serve",
+    "docs:api": "deno doc --html --name=\"Aichaku (愛着) - AI-Optimized Methodology Library\" --output=./docs/api ./mod.ts",
     "changelog": "deno task nagare changelog --preview",
     "validate": "deno task nagare validate",
     "build": "deno run -A scripts/build-binaries.ts",

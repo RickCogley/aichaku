@@ -194,6 +194,9 @@ export class MathOperations<T extends number> {
 // deno doc math.ts                    # Outputs to console
 // deno doc --html math.ts             # Generates HTML in docs/api/
 // deno doc --json math.ts > api.json  # Generates JSON documentation
+
+// Best practice: Add to deno.json tasks for consistent API doc generation:
+// "docs:api": "deno doc --html --name=\"Your Project Name\" --output=./docs/api ./mod.ts"
 ````
 
 ### Permission Management and Security

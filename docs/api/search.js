@@ -61,7 +61,7 @@ function debounce(func, delay) {
 
     clearTimeout(timerId);
 
-    timerId = setTimeout(function () { // DevSkim: ignore DS172411
+    timerId = setTimeout(function () {
       func.apply(context, args);
     }, delay);
   };
