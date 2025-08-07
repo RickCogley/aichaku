@@ -69,19 +69,45 @@ export class AgentLoader implements ItemLoader<Agent> {
   async loadById(id: string): Promise<Agent | null> {
     const all = await this.loadAll();
 
-    // Support both full ID (aichaku-deno-expert) and short name (deno-expert or deno)
-    const normalizedId = id.startsWith("aichaku-") ? id : `aichaku-${id}`;
+    // Clean up the input ID (trim whitespace, lowercase for comparison)
+    const searchId = id.trim().toLowerCase();
 
-    // First try exact match
-    let agent = all.find((a) => a.id === normalizedId);
+    // Strategy 1: Exact match (with or without aichaku- prefix)
+    const exactId = searchId.startsWith("aichaku-") ? searchId : `aichaku-${searchId}`;
+    let agent = all.find((a) => a.id.toLowerCase() === exactId);
 
-    // If not found and doesn't have -expert suffix, try adding it
-    if (!agent && !id.includes("-expert")) {
-      const expertId = id.startsWith("aichaku-") ? `${id}-expert` : `aichaku-${id}-expert`;
-      agent = all.find((a) => a.id === expertId);
+    if (agent) return agent;
+
+    // Strategy 2: Try common suffixes if input has no suffix
+    // Only try suffixes if the input doesn't already have one
+    const commonSuffixes = ["-expert", "-architect", "-explorer", "-reviewer", "-coach", "-model-agent"];
+    const singleWordAgents = ["documenter", "orchestrator"]; // Agents that are single words
+    const hasAnySuffix = commonSuffixes.some((suffix) => searchId.includes(suffix)) ||
+      singleWordAgents.includes(searchId.replace("aichaku-", ""));
+
+    if (!hasAnySuffix) {
+      for (const suffix of commonSuffixes) {
+        const candidateId = searchId.startsWith("aichaku-") ? `${searchId}${suffix}` : `aichaku-${searchId}${suffix}`;
+        agent = all.find((a) => a.id.toLowerCase() === candidateId);
+        if (agent) return agent;
+      }
     }
 
-    return agent || null;
+    // Strategy 3: Partial match (e.g., "api" matches "aichaku-api-architect")
+    // Only use this for very short inputs (1-2 segments) to avoid false positives
+    const segments = searchId.replace("aichaku-", "").split("-");
+    if (segments.length <= 2) {
+      agent = all.find((a) => {
+        const agentIdLower = a.id.toLowerCase();
+        // Must start with aichaku-{searchTerm}
+        return agentIdLower.startsWith(`aichaku-${searchId.replace("aichaku-", "")}`) ||
+          // Or contain the search term as a complete segment
+          agentIdLower.split("-").includes(searchId.replace("aichaku-", ""));
+      });
+      if (agent) return agent;
+    }
+
+    return null;
   }
 
   /**
