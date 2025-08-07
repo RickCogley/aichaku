@@ -5,6 +5,30 @@ All notable changes to aichaku (愛着) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.45.0] - 2025-08-07
+
+### Added
+
+- implement comprehensive TypeScript safety improvements (6b3d59b)
+- implement TypeScript safety improvements (c4bc5c3)
+- improve agent ID resolution with smarter matching strategies (9f56822)
+- add agent installation feedback during init/upgrade (f400a4f)
+
+### Changed
+
+- add comprehensive Zod runtime validation documentation (6ff5ac8)
+- use fuzzy search for agent resolution with ambiguity handling (aa7612c)
+- clean up and reorganize project documentation (651d390)
+- add comprehensive agent flow documentation (96d214b)
+
+### Fixed
+
+- make agent-loader work in test environments (d42f068)
+- resolve lint issues for release (0febf8b)
+- normalize agent IDs to canonical form when adding/removing (b278da8)
+- clean up duplicate agent entries in aichaku.json (c4176dc)
+- comprehensive agent system fixes (0340bf7)
+
 ## [0.44.1] - 2025-08-05
 
 ### Changed
