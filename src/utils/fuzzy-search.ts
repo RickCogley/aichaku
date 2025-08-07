@@ -87,12 +87,12 @@ const DEFAULT_CONFIGS: Record<string, FuzzySearchConfig> = {
   },
   agents: {
     keys: [
-      { name: "id", weight: 0.4 },
+      { name: "id", weight: 0.5 }, // Higher weight on ID for agents
       { name: "name", weight: 0.3 },
-      { name: "description", weight: 0.2 },
-      { name: "tags", weight: 0.1 },
+      { name: "description", weight: 0.15 },
+      { name: "tags", weight: 0.05 },
     ],
-    threshold: 0.4,
+    threshold: 0.25, // Lower threshold = stricter matching
     includeScore: true,
     limit: 8,
   },
@@ -153,8 +153,9 @@ export class FuzzySearchEngine<T extends FuzzySearchItem> {
   searchWithFallback(query: string, literalSearchFn: (query: string) => T[]): T[] {
     const fuzzyResults = this.search(query);
 
-    // If fuzzy search returns good results (score < 0.5), use those
-    const goodFuzzyResults = fuzzyResults.filter((r) => (r.score || 1) < 0.5);
+    // If fuzzy search returns good results (score < 0.3 for agents, < 0.5 for others), use those
+    const scoreThreshold = this.config.threshold === 0.25 ? 0.3 : 0.5; // Stricter for agents
+    const goodFuzzyResults = fuzzyResults.filter((r) => (r.score || 1) < scoreThreshold);
     if (goodFuzzyResults.length > 0) {
       return goodFuzzyResults.map((r) => r.item);
     }

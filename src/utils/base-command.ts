@@ -155,6 +155,19 @@ export abstract class BaseCommand<T extends ConfigItem> {
     for (const id of ids) {
       const item = await Promise.resolve(this.definition.loader.loadById(id));
       if (!item) {
+        // Check if there are multiple matches (ambiguous)
+        // Only agents have findByPartialId method, so check if it exists
+        if ("findByPartialId" in this.definition.loader) {
+          const matches = await (this.definition.loader as any).findByPartialId(id);
+          if (matches && matches.length > 1) {
+            Brand.error(`Ambiguous ${this.definition.name.slice(0, -1)}: '${id}' matches multiple items:`);
+            for (const match of matches) {
+              Brand.info(`   • ${match.id}: ${match.name}`);
+            }
+            Brand.tip(`Please be more specific or use the full ID`);
+            return;
+          }
+        }
         Brand.error(`Unknown ${this.definition.name.slice(0, -1)}: ${id}`);
         Brand.tip(`Use 'aichaku ${this.definition.name} --list' to see available items`);
         return;

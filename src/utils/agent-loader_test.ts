@@ -4,110 +4,73 @@ import { AgentLoader } from "./agent-loader.ts";
 // Mock path module to avoid actual file system access
 const originalPaths = await import("../paths.ts");
 
-Deno.test("AgentLoader - loadById resolution strategies", async (t) => {
+Deno.test("AgentLoader - loadById with fuzzy search", async (t) => {
   const loader = new AgentLoader();
 
   await t.step("Exact match with full ID", async () => {
     const agent = await loader.loadById("aichaku-deno-expert");
-    if (agent) {
-      assertEquals(agent.id, "aichaku-deno-expert");
-    }
+    assertExists(agent);
+    assertEquals(agent?.id, "aichaku-deno-expert");
   });
 
-  await t.step("Short form resolution - expert suffix", async () => {
-    const agent = await loader.loadById("deno");
-    if (agent) {
-      assertEquals(agent.id, "aichaku-deno-expert");
-    }
+  await t.step("Exact match without prefix", async () => {
+    const agent = await loader.loadById("deno-expert");
+    assertExists(agent);
+    assertEquals(agent?.id, "aichaku-deno-expert");
   });
 
-  await t.step("Short form resolution - typescript", async () => {
-    const agent = await loader.loadById("typescript");
-    if (agent) {
-      assertEquals(agent.id, "aichaku-typescript-expert");
-    }
-  });
-
-  await t.step("Short form resolution - orchestrator (single word)", async () => {
-    const agent = await loader.loadById("orchestrator");
-    if (agent) {
-      assertEquals(agent.id, "aichaku-orchestrator");
-    }
-  });
-
-  await t.step("Short form resolution - documenter (single word)", async () => {
-    const agent = await loader.loadById("documenter");
-    if (agent) {
-      assertEquals(agent.id, "aichaku-documenter");
-    }
-  });
-
-  await t.step("Short form resolution - api (architect suffix)", async () => {
-    const agent = await loader.loadById("api");
-    if (agent) {
-      assertEquals(agent.id, "aichaku-api-architect");
-    }
-  });
-
-  await t.step("Short form resolution - code (explorer suffix)", async () => {
-    const agent = await loader.loadById("code");
-    if (agent) {
-      assertEquals(agent.id, "aichaku-code-explorer");
-    }
-  });
-
-  await t.step("Short form resolution - security (reviewer suffix)", async () => {
-    const agent = await loader.loadById("security");
-    if (agent) {
-      assertEquals(agent.id, "aichaku-security-reviewer");
-    }
-  });
-
-  await t.step("Short form resolution - methodology (coach suffix)", async () => {
-    const agent = await loader.loadById("methodology");
-    if (agent) {
-      assertEquals(agent.id, "aichaku-methodology-coach");
-    }
-  });
-
-  await t.step("Short form resolution - principle (coach suffix)", async () => {
-    const agent = await loader.loadById("principle");
-    if (agent) {
-      assertEquals(agent.id, "aichaku-principle-coach");
-    }
-  });
-
-  await t.step("Case insensitive matching", async () => {
-    const agent = await loader.loadById("DENO");
-    if (agent) {
-      assertEquals(agent.id, "aichaku-deno-expert");
-    }
+  await t.step("Case insensitive exact match", async () => {
+    const agent = await loader.loadById("DENO-EXPERT");
+    assertExists(agent);
+    assertEquals(agent?.id, "aichaku-deno-expert");
   });
 
   await t.step("Whitespace trimming", async () => {
-    const agent = await loader.loadById("  deno  ");
-    if (agent) {
-      assertEquals(agent.id, "aichaku-deno-expert");
-    }
+    const agent = await loader.loadById("  deno-expert  ");
+    assertExists(agent);
+    assertEquals(agent?.id, "aichaku-deno-expert");
   });
 
-  await t.step("Already has suffix - no double suffix", async () => {
-    const agent = await loader.loadById("deno-expert");
-    if (agent) {
-      assertEquals(agent.id, "aichaku-deno-expert");
-    }
-  });
+  await t.step("Fuzzy match - single word agents", async () => {
+    const agent1 = await loader.loadById("orchestrator");
+    assertExists(agent1);
+    assertEquals(agent1?.id, "aichaku-orchestrator");
 
-  await t.step("Full ID provided - no modification", async () => {
-    const agent = await loader.loadById("aichaku-typescript-expert");
-    if (agent) {
-      assertEquals(agent.id, "aichaku-typescript-expert");
-    }
+    const agent2 = await loader.loadById("documenter");
+    assertExists(agent2);
+    assertEquals(agent2?.id, "aichaku-documenter");
   });
 
   await t.step("Non-existent agent returns null", async () => {
-    const agent = await loader.loadById("nonexistent");
+    const agent = await loader.loadById("nonexistent-agent-xyz");
     assertEquals(agent, null);
+  });
+});
+
+Deno.test("AgentLoader - findByPartialId for ambiguous matches", async (t) => {
+  const loader = new AgentLoader();
+
+  await t.step("Find all agents with 'expert' in name", async () => {
+    const matches = await loader.findByPartialId("expert");
+    assertExists(matches);
+    // Should find multiple expert agents
+    const expertAgents = matches.filter((a) => a.id.includes("expert"));
+    assertEquals(expertAgents.length > 1, true, "Should find multiple expert agents");
+  });
+
+  await t.step("Find agents matching 'test'", async () => {
+    const matches = await loader.findByPartialId("test");
+    assertExists(matches);
+    // Should find at least test-expert
+    const hasTestExpert = matches.some((a) => a.id === "aichaku-test-expert");
+    assertEquals(hasTestExpert, true, "Should find test-expert");
+  });
+
+  await t.step("Partial match 'coach' finds coach agents", async () => {
+    const matches = await loader.findByPartialId("coach");
+    assertExists(matches);
+    const coachAgents = matches.filter((a) => a.id.includes("coach"));
+    assertEquals(coachAgents.length >= 2, true, "Should find methodology-coach and principle-coach");
   });
 });
 
