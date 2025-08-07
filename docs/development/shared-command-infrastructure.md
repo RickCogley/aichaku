@@ -218,6 +218,16 @@ Deno.test("MyCommand - List operation", async () => {
 });
 ```
 
+## Runtime Validation
+
+Commands use Zod for runtime validation of external inputs:
+
+- **Configuration Loading**: Validates aichaku.json structure
+- **CLI Arguments**: Type-safe argument parsing with validation
+- **YAML Content**: Ensures YAML files match expected schemas
+
+See [Runtime Validation Strategy](./runtime-validation-strategy.md) for detailed information.
+
 ## Benefits
 
 1. **Code Reuse**: ~65% reduction in command implementation code
@@ -225,6 +235,7 @@ Deno.test("MyCommand - List operation", async () => {
 3. **Maintainability**: Bug fixes apply to all commands
 4. **Testability**: Shared test utilities and patterns
 5. **Extensibility**: Easy to add new commands
+6. **Type Safety**: Runtime validation via Zod schemas
 
 ## Example Commands
 

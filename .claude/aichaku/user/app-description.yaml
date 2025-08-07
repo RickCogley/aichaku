@@ -20,6 +20,7 @@ application:
       - "MCP server integration"
       - "YAML-based configuration"
       - "Plugin system for methodologies/standards"
+      - "Zod runtime validation for external data"
     
   security:
     standards: ["owasp-cli", "secure-defaults"]

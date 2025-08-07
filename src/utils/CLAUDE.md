@@ -8,8 +8,9 @@ module:
 
 categories:
   configuration:
-    - "config-manager.ts: Unified aichaku.json configuration handling"
-    - "yaml-config-reader.ts: YAML content discovery and parsing"
+    - "config-manager.ts: Unified aichaku.json configuration handling with Zod validation"
+    - "config-schemas.ts: Zod runtime validation schemas for all config types"
+    - "yaml-config-reader.ts: YAML content discovery and parsing with type safety"
     - "dynamic-content-discovery.ts: Methodology/standards content loading"
 
   security:

@@ -129,8 +129,14 @@ async function readMethodologyConfigs(
       // Extract relevant fields for CLAUDE.md
       methodologies[methodology] = {
         name: config.name,
-        triggers: config.triggers || (config.summary as any)?.triggers || [],
-        best_for: (config.summary as any)?.best_for || "",
+        triggers: config.triggers ||
+          (typeof config.summary === "object" && config.summary !== null && "triggers" in config.summary
+            ? config.summary.triggers
+            : undefined) ||
+          [],
+        best_for: (typeof config.summary === "object" && config.summary !== null && "best_for" in config.summary
+          ? config.summary.best_for
+          : undefined) || "",
         templates: config.templates || [],
         phases: config.phases || {},
         integration_url: `aichaku://methodology/${methodology}/guide`,
@@ -221,10 +227,18 @@ async function readPrinciplesConfigs(
         name: config.name,
         category,
         summary: {
-          tagline: (config.summary as any)?.tagline || config.description,
-          core_tenets: ((config.summary as any)?.core_tenets || []).slice(0, 3).map((tenet: any) => ({
-            text: tenet.text,
-          })),
+          tagline: (typeof config.summary === "object" && config.summary !== null && "tagline" in config.summary
+            ? config.summary.tagline
+            : undefined) || config.description,
+          core_tenets:
+            ((typeof config.summary === "object" && config.summary !== null && "core_tenets" in config.summary &&
+                Array.isArray(config.summary.core_tenets)
+              ? config.summary.core_tenets
+              : []) || []).slice(0, 3).map((tenet: unknown) => ({
+                text: typeof tenet === "object" && tenet !== null && "text" in tenet
+                  ? (tenet as { text: string }).text
+                  : String(tenet),
+              })),
         },
         integration_url: `aichaku://principle/${category}/${principle}`,
       };
@@ -372,10 +386,19 @@ export async function getMethodologyQuickReference(
 
     if (config?.summary) {
       if (quickRef.methodologies) {
-        (quickRef.methodologies as any)[methodology.replace("-", "_")] = {
-          triggers: config.triggers || (config.summary as any).triggers || [],
-          best_for: (config.summary as any).best_for || "",
-        };
+        const methodologyKey = methodology.replace("-", "_");
+        if (typeof quickRef.methodologies === "object" && quickRef.methodologies !== null) {
+          (quickRef.methodologies as Record<string, unknown>)[methodologyKey] = {
+            triggers: config.triggers ||
+              (typeof config.summary === "object" && config.summary !== null && "triggers" in config.summary
+                ? config.summary.triggers
+                : undefined) ||
+              [],
+            best_for: (typeof config.summary === "object" && config.summary !== null && "best_for" in config.summary
+              ? config.summary.best_for
+              : undefined) || "",
+          };
+        }
       }
     }
   }
