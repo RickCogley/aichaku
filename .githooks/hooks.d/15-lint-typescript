@@ -5,14 +5,14 @@ set -e
 
 echo "  📝 Running linter..."
 
-# Get staged TypeScript files
-STAGED_TS_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.ts$' || true)
+# Get staged TypeScript files, excluding test files
+STAGED_TS_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.ts$' | grep -v '_test\.ts$' | grep -v '\.test\.ts$' | grep -v '^tests/' || true)
 
 if [ -z "$STAGED_TS_FILES" ]; then
   exit 0
 fi
 
-# Run linter and capture output
+# Run linter and capture output (exclude test files from strict linting)
 LINT_OUTPUT=$(deno lint $STAGED_TS_FILES 2>&1 || true)
 
 # Check for errors

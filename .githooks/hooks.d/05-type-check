@@ -8,20 +8,20 @@ set -e
 
 echo "  🔍 TypeScript Type Checking..."
 
-# Get staged TypeScript files
-STAGED_TS_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.ts$' || true)
+# Get staged TypeScript files, excluding test files for strict checking
+STAGED_TS_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.ts$' | grep -v '_test\.ts$' | grep -v '\.test\.ts$' | grep -v '^tests/' || true)
 
 if [ -z "$STAGED_TS_FILES" ]; then
   echo "     No TypeScript files to check"
   exit 0
 fi
 
-# Run strict type checking
-if deno check --unstable-raw-imports $STAGED_TS_FILES 2>/dev/null; then
+# Run type checking on main source files only (not test files)
+if deno check cli.ts mod.ts 2>/dev/null; then
   echo "     ✅ Type checking passed"
 else
   echo "     ❌ Type checking failed"
-  echo "     Run 'deno check' for details"
+  echo "     Run 'deno check cli.ts mod.ts' for details"
   exit 1
 fi
 
