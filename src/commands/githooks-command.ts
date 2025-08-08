@@ -43,17 +43,36 @@ export async function runGitHooksCommand(options: GitHooksOptions): Promise<void
   if (options.install) {
     console.log(colors.blue("🪝 Aichaku Git Hooks Installer\n"));
 
-    if (await manager.isInstalled()) {
-      console.log(colors.yellow("⚠️  Git hooks are already installed"));
-      console.log("Use --uninstall first to remove existing hooks");
+    if (await manager.isInstalled() && !options.force) {
+      const existingDir = await manager.getHooksDirectory();
+      if (existingDir === ".aichaku-githooks") {
+        console.log(colors.yellow("⚠️  Aichaku git hooks are already installed"));
+      } else {
+        console.log(colors.yellow(`⚠️  Git hooks already exist in: ${existingDir}/`));
+        console.log(colors.gray("    These appear to be custom hooks not managed by Aichaku"));
+      }
+      console.log("\nOptions:");
+      console.log("  • Use --uninstall first to remove existing hooks");
+      console.log("  • Use --force to override existing hooks (⚠️  will delete current hooks)");
       Deno.exit(1);
     }
 
-    console.log("Installing git hooks to: .aichaku-githooks/");
+    if (options.force && await manager.isInstalled()) {
+      const existingDir = await manager.getHooksDirectory();
+      console.log(colors.yellow(`⚠️  Force overriding existing hooks in: ${existingDir}/`));
+      console.log(colors.blue("📦 Creating backup first..."));
+
+      // Uninstall existing hooks (which creates a backup)
+      await manager.uninstall();
+      console.log("");
+    }
+
+    const targetDir = ".aichaku-githooks"; // Default directory for Aichaku installations
+    console.log(`Installing git hooks to: ${targetDir}/`);
     console.log("This will:");
-    console.log("  • Create .aichaku-githooks/ directory");
+    console.log(`  • Create ${targetDir}/ directory`);
     console.log("  • Copy hook templates");
-    console.log("  • Set git core.hooksPath to .aichaku-githooks");
+    console.log(`  • Set git core.hooksPath to ${targetDir}`);
     console.log("");
 
     await manager.install({ force: options.force });
@@ -94,36 +113,63 @@ export async function runGitHooksCommand(options: GitHooksOptions): Promise<void
   // Handle listing
   if (options.list) {
     const hooks = await manager.list();
+    const hooksDir = await manager.getHooksDirectory();
+    const templatesPath = manager.getTemplatesPath();
 
     if (hooks.length === 0) {
       console.log(colors.yellow("No hooks found"));
       return;
     }
 
-    console.log(colors.blue("🪝 Installed Git Hooks:\n"));
+    console.log(colors.blue("🪝 Git Hooks Status:\n"));
 
-    // Group by category
-    const categories = new Map<string, typeof hooks>();
-    for (const hook of hooks) {
-      if (!categories.has(hook.category)) {
-        categories.set(hook.category, []);
-      }
-      categories.get(hook.category)!.push(hook);
+    // Show what type of hooks were found
+    if (hooksDir === ".aichaku-githooks") {
+      console.log(colors.green("✓ Aichaku-managed git hooks"));
+      console.log(colors.gray(`  Location: ${hooksDir}/`));
+    } else {
+      console.log(colors.yellow(`⚠ Found existing git hooks (not Aichaku-managed)`));
+      console.log(colors.gray(`  Location: ${hooksDir}/`));
     }
 
-    // Display by category
-    for (const [category, categoryHooks] of categories) {
-      console.log(colors.bold(`${category.charAt(0).toUpperCase() + category.slice(1)}:`));
-      for (const hook of categoryHooks) {
-        const status = hook.enabled ? colors.green("✓") : colors.gray("○");
+    const enabledCount = hooks.filter((h) => h.enabled).length;
+
+    // For Aichaku-managed hooks, we can categorize them
+    if (hooksDir === ".aichaku-githooks") {
+      console.log(colors.bold(`\nFound hooks (${enabledCount} of ${hooks.length} enabled):\n`));
+
+      // Group by category
+      const categories = new Map<string, typeof hooks>();
+      for (const hook of hooks) {
+        if (!categories.has(hook.category)) {
+          categories.set(hook.category, []);
+        }
+        categories.get(hook.category)!.push(hook);
+      }
+
+      // Display by category
+      for (const [category, categoryHooks] of categories) {
+        console.log(colors.bold(`${category.charAt(0).toUpperCase() + category.slice(1)}:`));
+        for (const hook of categoryHooks) {
+          const status = hook.enabled ? colors.green("✓") : colors.gray("×");
+          const name = hook.enabled ? colors.white(hook.name) : colors.gray(hook.name);
+          console.log(`  ${status} ${name} - ${colors.gray(hook.description)}`);
+        }
+        console.log("");
+      }
+    } else {
+      // For non-Aichaku hooks, just list them naturally
+      console.log(colors.bold(`\nFound hooks (${enabledCount} of ${hooks.length} enabled):`));
+      for (const hook of hooks.sort((a, b) => a.name.localeCompare(b.name))) {
+        const status = hook.enabled ? colors.green("✓ enabled") : colors.gray("× disabled");
         const name = hook.enabled ? colors.white(hook.name) : colors.gray(hook.name);
-        console.log(`  ${status} ${name} - ${colors.gray(hook.description)}`);
+        console.log(`  ${status}  ${name}`);
       }
       console.log("");
     }
 
-    const enabledCount = hooks.filter((h) => h.enabled).length;
-    console.log(colors.gray(`${enabledCount} of ${hooks.length} hooks enabled`));
+    console.log(colors.gray(`\nAichaku templates available at:`));
+    console.log(colors.gray(`  ${templatesPath}`));
 
     if (enabledCount === 0) {
       console.log("\n💡 Enable all hooks: aichaku githooks --enable-all");
@@ -163,11 +209,19 @@ export async function runGitHooksCommand(options: GitHooksOptions): Promise<void
   // Default: show status
   const hooks = await manager.list();
   const enabledCount = hooks.filter((h) => h.enabled).length;
+  const hooksDir = await manager.getHooksDirectory();
 
   console.log(colors.blue("🪝 Git Hooks Status"));
-  console.log(`\nInstalled: ${colors.green("Yes")}`);
-  console.log(`Location: .aichaku-githooks/`);
-  console.log(`Enabled hooks: ${enabledCount} of ${hooks.length}`);
+
+  // Differentiate between aichaku-managed and other hooks
+  if (hooksDir === ".aichaku-githooks") {
+    console.log(`\n${colors.green("✓")} Found Aichaku-managed git hooks`);
+  } else if (hooksDir) {
+    console.log(`\n${colors.yellow("⚠")} Found existing git hooks in: ${hooksDir}/`);
+    console.log(colors.gray("  (not managed by Aichaku, but compatible)"));
+  }
+
+  console.log(`\nEnabled hooks: ${enabledCount} of ${hooks.length}`);
 
   console.log("\nAvailable commands:");
   console.log("  --list        List all hooks and their status");

@@ -1,7 +1,7 @@
 #!/bin/sh
 # Markdown linting hook - checks markdown quality and consistency
 
-. .githooks/lib/common.sh
+. .aichaku-githooks/lib/common.sh
 
 echo "    🔍 Linting Markdown..."
 

@@ -4,8 +4,8 @@
 
 set -e
 
-HOOKS_DIR=".githooks/hooks.d"
-LIB_DIR=".githooks/lib"
+HOOKS_DIR=".aichaku-githooks/hooks.d"
+LIB_DIR=".aichaku-githooks/lib"
 failed_hooks=()
 
 # Source common functions if available
@@ -46,7 +46,7 @@ if [ -n "$failed_hooks" ]; then
     echo
     echo "💡 Fix the issues above or:"
     echo "   • Use 'git commit --no-verify' to bypass hooks"
-    echo "   • Disable specific hooks: chmod -x .githooks/hooks.d/HOOK_NAME"
+    echo "   • Disable specific hooks: chmod -x .aichaku-githooks/hooks.d/HOOK_NAME"
     exit 1
 fi
 

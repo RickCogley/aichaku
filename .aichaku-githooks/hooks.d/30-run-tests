@@ -1,8 +1,10 @@
 #!/bin/sh
 # Test hook - runs project tests
-# Disabled by default - enable with: chmod +x .githooks/hooks.d/30-run-tests
+# DISABLED BY DEFAULT due to common test stability issues
+# Only enable if your test suite is stable and fast
+# Enable with: aichaku githooks --enable 30-run-tests
 
-. .githooks/lib/common.sh
+. .aichaku-githooks/lib/common.sh
 
 echo "    🧪 Running tests..."
 

@@ -2,7 +2,7 @@
 # Code formatting hook - formats source code files
 # Uses appropriate formatter based on project type
 
-. .githooks/lib/common.sh
+. .aichaku-githooks/lib/common.sh
 
 echo "    🎨 Formatting code..."
 files_changed=false

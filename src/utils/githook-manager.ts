@@ -1,5 +1,5 @@
 import { exists } from "@std/fs";
-import { dirname, join } from "@std/path";
+import { join } from "@std/path";
 import { ensureDir } from "@std/fs";
 import { colors } from "./ui.ts";
 
@@ -18,16 +18,74 @@ export class GitHookManager {
 
   constructor(projectPath: string) {
     this.projectPath = projectPath;
+    // Default to .aichaku-githooks for new installations
     this.hooksDir = join(projectPath, ".aichaku-githooks");
-    this.templatesDir = join(dirname(dirname(dirname(import.meta.url))), "docs", "core", "githook-templates")
-      .replace("file://", "");
+
+    // Get the aichaku installation directory
+    const aichakuDir = Deno.env.get("HOME") + "/.claude/aichaku";
+    this.templatesDir = join(aichakuDir, "docs", "core", "githook-templates");
+  }
+
+  /**
+   * Get the configured git hooks path from git config
+   */
+  private async getConfiguredHooksPath(): Promise<string | null> {
+    try {
+      const process = new Deno.Command("git", {
+        args: ["config", "--get", "core.hooksPath"],
+        cwd: this.projectPath,
+        stdout: "piped",
+        stderr: "piped",
+      });
+      const { stdout } = await process.output();
+      const hooksPath = new TextDecoder().decode(stdout).trim();
+      return hooksPath || null;
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * Ensure hooks directory is properly initialized
+   */
+  private async ensureHooksDir(): Promise<void> {
+    const configuredPath = await this.getConfiguredHooksPath();
+    if (configuredPath) {
+      this.hooksDir = join(this.projectPath, configuredPath);
+    }
+  }
+
+  /**
+   * Get the hooks directory path (relative to project root)
+   */
+  async getHooksDirectory(): Promise<string | null> {
+    const configuredPath = await this.getConfiguredHooksPath();
+    if (configuredPath) {
+      // Update our hooksDir to match what's actually configured
+      this.hooksDir = join(this.projectPath, configuredPath);
+      return configuredPath;
+    }
+    return null;
+  }
+
+  /**
+   * Get the templates directory path
+   */
+  getTemplatesPath(): string {
+    return this.templatesDir;
   }
 
   /**
    * Check if git hooks are already installed in the project
    */
   async isInstalled(): Promise<boolean> {
-    return await exists(this.hooksDir);
+    const configuredPath = await this.getConfiguredHooksPath();
+    if (configuredPath) {
+      // Update our hooksDir to match what's actually configured
+      this.hooksDir = join(this.projectPath, configuredPath);
+      return await exists(this.hooksDir);
+    }
+    return false;
   }
 
   /**
@@ -35,30 +93,41 @@ export class GitHookManager {
    */
   async checkConflicts(): Promise<{ hasConflicts: boolean; details: string[] }> {
     const conflicts: string[] = [];
+    const configuredPath = await this.getConfiguredHooksPath();
 
-    // Check for .githooks directory
-    if (await exists(join(this.projectPath, ".githooks"))) {
-      conflicts.push(".githooks directory already exists (possible conflict)");
+    // If hooks are already configured and exist, that's not a conflict - it's existing installation
+    if (configuredPath && await exists(join(this.projectPath, configuredPath))) {
+      // This is an existing installation, not a conflict
+      return {
+        hasConflicts: false,
+        details: [],
+      };
+    }
+
+    // Check for other hook directories that might conflict
+    const possibleHookDirs = [".githooks", ".aichaku-githooks", ".git-hooks"];
+    for (const dir of possibleHookDirs) {
+      if (await exists(join(this.projectPath, dir)) && dir !== configuredPath) {
+        conflicts.push(`${dir} directory exists but is not configured as core.hooksPath`);
+      }
     }
 
     // Check for .git/hooks directory with custom hooks
     const gitHooksPath = join(this.projectPath, ".git", "hooks");
     if (await exists(gitHooksPath)) {
-      // Check if core.hooksPath is set
+      // Check if there are actual hook files (not just samples)
       try {
-        const process = new Deno.Command("git", {
-          args: ["config", "--get", "core.hooksPath"],
-          cwd: this.projectPath,
-          stdout: "piped",
-          stderr: "piped",
-        });
-        const { stdout } = await process.output();
-        const hooksPath = new TextDecoder().decode(stdout).trim();
-        if (hooksPath && hooksPath !== ".aichaku-githooks") {
-          conflicts.push(`Git core.hooksPath is set to: ${hooksPath}`);
+        const entries = [];
+        for await (const entry of Deno.readDir(gitHooksPath)) {
+          if (entry.isFile && !entry.name.endsWith(".sample")) {
+            entries.push(entry.name);
+          }
+        }
+        if (entries.length > 0) {
+          conflicts.push(`Custom hooks exist in .git/hooks: ${entries.join(", ")}`);
         }
       } catch {
-        // No core.hooksPath set, which is fine
+        // Can't read directory, skip
       }
     }
 
@@ -160,8 +229,10 @@ export class GitHookManager {
    * Set git core.hooksPath configuration
    */
   private async setGitHooksPath(): Promise<void> {
+    // Extract just the relative path from the full hooksDir
+    const relativePath = this.hooksDir.replace(this.projectPath + "/", "");
     const process = new Deno.Command("git", {
-      args: ["config", "core.hooksPath", ".aichaku-githooks"],
+      args: ["config", "core.hooksPath", relativePath],
       cwd: this.projectPath,
     });
     await process.output();
@@ -171,6 +242,32 @@ export class GitHookManager {
    * Uninstall git hooks from the project
    */
   async uninstall(): Promise<void> {
+    await this.ensureHooksDir();
+
+    // Create backup if hooks exist
+    if (await exists(this.hooksDir)) {
+      const timestamp = new Date().toISOString().replace(/[:.]/g, "-").slice(0, -5);
+      const backupName = `githooks-backup-${timestamp}.zip`;
+
+      console.log(colors.blue(`📦 Creating backup: ${backupName}`));
+
+      // Create zip backup
+      const zipProcess = new Deno.Command("zip", {
+        args: ["-r", backupName, this.hooksDir.replace(this.projectPath + "/", "")],
+        cwd: this.projectPath,
+        stdout: "piped",
+        stderr: "piped",
+      });
+
+      const { success } = await zipProcess.output();
+      if (success) {
+        console.log(colors.green(`✅ Backup created: ${backupName}`));
+      } else {
+        console.log(colors.yellow("⚠️  Could not create backup (zip command failed)"));
+        console.log("Proceeding with uninstall anyway...");
+      }
+    }
+
     // Remove git core.hooksPath setting
     const process = new Deno.Command("git", {
       args: ["config", "--unset", "core.hooksPath"],
@@ -178,7 +275,7 @@ export class GitHookManager {
     });
     await process.output();
 
-    // Remove .aichaku-githooks directory
+    // Remove hooks directory
     if (await exists(this.hooksDir)) {
       await Deno.remove(this.hooksDir, { recursive: true });
     }
@@ -191,6 +288,8 @@ export class GitHookManager {
    */
   async list(): Promise<GitHook[]> {
     const hooks: GitHook[] = [];
+    // Ensure we have the correct hooks directory
+    await this.ensureHooksDir();
     const hooksDir = join(this.hooksDir, "hooks.d");
 
     if (!await exists(hooksDir)) {
@@ -232,6 +331,7 @@ export class GitHookManager {
    * Enable a specific hook
    */
   async enable(hookName: string): Promise<void> {
+    await this.ensureHooksDir();
     const hookPath = join(this.hooksDir, "hooks.d", hookName);
     if (!await exists(hookPath)) {
       throw new Error(`Hook not found: ${hookName}`);
@@ -244,6 +344,7 @@ export class GitHookManager {
    * Disable a specific hook
    */
   async disable(hookName: string): Promise<void> {
+    await this.ensureHooksDir();
     const hookPath = join(this.hooksDir, "hooks.d", hookName);
     if (!await exists(hookPath)) {
       throw new Error(`Hook not found: ${hookName}`);
@@ -282,6 +383,7 @@ export class GitHookManager {
    * Test run a specific hook
    */
   async test(hookName?: string): Promise<void> {
+    await this.ensureHooksDir();
     if (hookName) {
       const hookPath = join(this.hooksDir, "hooks.d", hookName);
       if (!await exists(hookPath)) {

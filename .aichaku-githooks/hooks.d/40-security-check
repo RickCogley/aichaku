@@ -1,8 +1,8 @@
 #!/bin/bash
 # Security check hook - runs security scans via MCP HTTP bridge or direct scanners
-# Enable with: chmod +x .githooks/hooks.d/40-security-check
+# Enable with: chmod +x .aichaku-githooks/hooks.d/40-security-check
 
-. .githooks/lib/common.sh
+. .aichaku-githooks/lib/common.sh
 
 echo "    🔒 Running security checks..."
 
