@@ -22,6 +22,7 @@ import { runReviewCommand } from "./src/commands/review.ts";
 import { runGitHubCommand } from "./src/commands/github.ts";
 import { cleanup } from "./src/commands/cleanup.ts";
 import { appDescription } from "./src/commands/app-description.ts";
+import { runGitHooksCommand } from "./src/commands/githooks-command.ts";
 import { VERSION } from "./mod.ts";
 import { displayVersionWarning } from "./src/utils/version-checker.ts";
 import { Brand } from "./src/utils/branded-messages.ts";
@@ -76,6 +77,8 @@ const args = parseArgs(Deno.args, {
     "install",
     "install-aichaku-reviewer",
     "install-github-operations",
+    "enable-all",
+    "disable-all",
     "start-all",
     "stop-all",
     "restart-all",
@@ -155,6 +158,7 @@ const args = parseArgs(Deno.args, {
     "pollInterval",
     "timeout",
     "ghVersion",
+    "test",
   ],
   alias: {
     h: "help",
@@ -181,7 +185,7 @@ if (args.version) {
 }
 
 // Commands that handle their own help
-const commandsWithOwnHelp = ["mcp", "hooks", "review", "github", "migrate"];
+const commandsWithOwnHelp = ["mcp", "hooks", "review", "github", "migrate", "githooks"];
 
 // Handle help flag or no command (but not for commands that handle their own help)
 if ((args.help && !commandsWithOwnHelp.includes(command || "")) || !command) {
@@ -209,6 +213,7 @@ ${Brand.tagline}
 - **mcp** - Manage MCP (Model Context Protocol) server for code review
 - **review** - Review files using MCP server (seamless hook integration)
 - **github** - GitHub operations via MCP (releases, workflows, repos)
+- **githooks** - Install and manage git hooks for code quality
 - **docs:lint** - Lint documentation against selected standards
 
 ### Maintenance
@@ -282,6 +287,11 @@ aichaku review --stats
 # GitHub operations
 aichaku github release upload dist/*
 aichaku github run list
+
+# Install git hooks for code quality
+aichaku githooks --install
+aichaku githooks --list
+aichaku githooks --enable-all
 \`\`\`
 
 ### Maintenance
@@ -557,6 +567,23 @@ try {
         console.error(result.message);
         Deno.exit(1);
       }
+      break;
+    }
+    case "githooks": {
+      const githooksOptions = {
+        path: args.path as string | undefined,
+        install: args.install as boolean | undefined,
+        uninstall: args.uninstall as boolean | undefined,
+        list: args.list as boolean | undefined,
+        enable: args.enable as string | undefined,
+        disable: args.disable as string | undefined,
+        enableAll: args["enable-all"] as boolean | undefined,
+        disableAll: args["disable-all"] as boolean | undefined,
+        test: args.test as boolean | string | undefined,
+        force: args.force as boolean | undefined,
+        help: args.help as boolean | undefined,
+      };
+      await runGitHooksCommand(githooksOptions);
       break;
     }
     case "version": {

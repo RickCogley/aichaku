@@ -14,6 +14,8 @@ const YELLOW = "\x1b[33m";
 const BLUE = "\x1b[34m";
 const MAGENTA = "\x1b[35m";
 const CYAN = "\x1b[36m";
+const WHITE = "\x1b[37m";
+const GRAY = "\x1b[90m";
 
 /**
  * Terminal color and formatting utilities
@@ -58,4 +60,14 @@ export const colors = {
    * Cyan text
    */
   cyan: (text: string): string => `${CYAN}${text}${RESET}`,
+
+  /**
+   * White text
+   */
+  white: (text: string): string => `${WHITE}${text}${RESET}`,
+
+  /**
+   * Gray text
+   */
+  gray: (text: string): string => `${GRAY}${text}${RESET}`,
 };
