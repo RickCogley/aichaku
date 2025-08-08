@@ -5,7 +5,7 @@ application:
   name: "Aichaku"
   type: "cli-tool" # web-application, api-service, cli-tool, mobile-app, desktop-app, library
   description: "AI-optimized project methodology installer for Claude Code - brings affection (愛着) to your development workflow"
-  version: "0.46.0"
+  version: "0.46.1"
 
   stack:
     language: "typescript"
