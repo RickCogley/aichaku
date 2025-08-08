@@ -5,6 +5,19 @@ All notable changes to aichaku (愛着) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.46.0] - 2025-08-08
+
+### Added
+
+- add git hooks integration with aichaku githooks command (b3ac08b)
+- update git hooks to exclude test files from strict checks (73ba0d7)
+- add enhanced pre-commit hooks from nagare (37d7991)
+- add docs:api task and enhance deno-expert documentation guidance (d458b08)
+
+### Fixed
+
+- add missing deno doc and fmt capabilities to deno-expert agent (89d3649)
+
 ## [0.45.1] - 2025-08-07
 
 ### Fixed
