@@ -34,7 +34,8 @@
   "agents": {
     "selected": [
       "aichaku-deno-expert",
-      "aichaku-typescript-expert"
+      "aichaku-typescript-expert",
+      "aichaku-vento-expert"
     ]
   }
 }
