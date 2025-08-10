@@ -5,6 +5,50 @@ All notable changes to aichaku (愛着) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.47.0] - 2025-08-10
+
+### Pull Request #3 (#3)
+
+#### Added
+
+- add Truth Protocol to all remaining agents (a0b3b00)
+
+- add Truth Protocol to documenter and typescript-expert agents (fabf53f)
+
+- implement core Truth Protocol for agent verification (8f8bb77)
+
+- implement Truth Protocol for test verification (test-expert) (541efca)
+
+#### Fixed
+
+- remove unused imports from truth-verifier tests (d3e4f06)
+
+- ensure Truth Protocol templates are used from installed location (f8bf3dc)
+
+### Direct Commits
+
+#### Fixed
+
+- restore active projects that are still under consideration (629de6c)
+
+- correct project status prefix from abandoned to done (7d65cc3)
+
+#### Changed
+
+- bump dependencies (b4903ca)
+
+- create Shape Up plan for agent truth protocol (5525061)
+
+- format (d165842)
+
+- bump nagare to 2.19.0 (c2c892d)
+
+- add vento expert agent (166dc6b)
+
+- clean up project directory - move completed and abandoned projects (d627e9b)
+
+- update version to 0.46.1 and regenerate files (6f21ea9)
+
 ## [0.46.1] - 2025-08-08
 
 ### Fixed
