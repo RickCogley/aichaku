@@ -5,6 +5,14 @@ All notable changes to aichaku (愛着) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.47.1] - 2025-08-10
+
+### Changed
+
+- bump dependencies (243028f)
+- format CLAUDE.md and update dependencies (ce64c4c)
+- bump aichaku and nagare (b6eb5df)
+
 ## [0.47.0] - 2025-08-10
 
 ### Pull Request #3 (#3)
