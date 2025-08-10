@@ -30,10 +30,10 @@ time when assumptions prove false.
 - 2025-08-09: Implemented core TruthVerifier class with tests (all passing)
 - 2025-08-09: Created TruthfulAgent base class (needs testing)
 - 2025-08-09: Updated 4 critical agents with Truth Protocol:
-  - ✅ orchestrator (gatekeeper role)
-  - ✅ documenter (HIGH RISK - most files)
-  - ✅ test-expert (HIGH RISK - test files)
-  - ✅ TypeScript-expert (HIGH PRIORITY - code files)
+  - ✅ orchestrator (gatekeeper role) - commit 8f8bb77
+  - ✅ test-expert (HIGH RISK - test files) - commit 541efca
+  - ✅ documenter (HIGH RISK - most files) - commit fabf53f (properly done)
+  - ✅ TypeScript-expert (HIGH PRIORITY - code files) - commit fabf53f (properly done)
 
 ## Implementation Status
 
