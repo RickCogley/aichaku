@@ -58,12 +58,15 @@ export async function fetchContent(
     const localPath = validatePath(relativePath, targetPath);
 
     // Check if file exists and skip if overwrite is false
+    let fileExists = false;
     try {
       const fileInfo = await Deno.stat(localPath);
-      if (fileInfo.isFile && !options.overwrite) {
+      fileExists = fileInfo.isFile;
+      if (fileExists && !options.overwrite) {
         successCount++;
         return; // Skip existing files unless overwrite is requested
       }
+      // If overwrite is true, continue to fetch and overwrite the file
     } catch {
       // File doesn't exist, proceed with download
     }

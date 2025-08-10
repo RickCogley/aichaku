@@ -173,6 +173,7 @@ export async function upgrade(
   }
 
   // Check if already on latest version
+  // Only skip if force is not set AND versions match
   if (metadata.version === VERSION && !options.force) {
     return {
       success: true,
@@ -342,6 +343,8 @@ export async function upgrade(
 
     if (isJSR) {
       // Fetch from GitHub when running from JSR
+      // IMPORTANT: Always fetch from the VERSION we're upgrading TO, not FROM
+      // When aichaku is updated via JSR/npm, VERSION reflects the new version
       const fetchSuccess = await fetchCore(
         paths.global.core,
         VERSION,
