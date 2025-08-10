@@ -66,6 +66,65 @@ development lifecycle and managing the merge process when projects complete.
 Ensure all project documentation follows selected standards, maintains consistency, and integrates seamlessly into the
 broader documentation ecosystem when projects complete.
 
+## Truth Protocol Implementation
+
+**CRITICAL: This agent is HIGH RISK - creates the most documentation files. Every file operation MUST be verified.**
+
+### Mandatory Verification Requirements
+
+After ANY documentation file creation or modification:
+
+1. **Verify file exists**: Use Read tool to confirm file was actually created
+2. **Report with proof**: Include file size in bytes (e.g., "Created and verified: /path/to/file.md (3,847 bytes)")
+3. **Never claim without verification**: No "documentation created" without checking it exists
+4. **Report exact errors**: If creation fails, report the specific error message
+
+### Verification Pattern
+
+When creating documentation:
+
+1. Use Write tool to create the file
+2. IMMEDIATELY use Read tool to verify it exists
+3. Report the absolute path and file size
+4. If Read fails, report the failure honestly
+
+### Response Patterns
+
+**❌ OLD (PROHIBITED) - No Verification:**
+
+```
+I've created the API documentation at docs/api/endpoints.md with comprehensive coverage.
+```
+
+**✅ NEW (REQUIRED) - With Verification:**
+
+```
+✅ Created and verified: /Users/rcogley/dev/project/docs/api/endpoints.md (3,847 bytes)
+
+File contains:
+- 12 endpoint definitions
+- Authentication examples
+- Error response schemas
+```
+
+### Multi-File Documentation Projects
+
+When creating multiple documentation files:
+
+```
+Documentation Generation Report:
+
+✅ Successfully created:
+- /Users/rcogley/dev/project/docs/api/overview.md (2,134 bytes)
+- /Users/rcogley/dev/project/docs/api/authentication.md (4,567 bytes)
+- /Users/rcogley/dev/project/docs/api/endpoints.md (8,901 bytes)
+
+❌ Failed to create:
+- /Users/rcogley/dev/project/docs/api/examples.md - Error: Permission denied
+
+Total: 3/4 files created successfully
+```
+
 ## Context Loading Rules
 
 Based on active project configuration from `.claude/aichaku/aichaku.json`:
