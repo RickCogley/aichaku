@@ -2,8 +2,8 @@
  * Tests for the Truth Verifier implementation
  */
 
-import { assertEquals, assertExists, assertRejects } from "https://deno.land/std@0.220.0/assert/mod.ts";
-import { type Claim, TruthVerifier, type VerificationReport } from "./truth-verifier.ts";
+import { assertEquals } from "https://deno.land/std@0.220.0/assert/mod.ts";
+import { type Claim, TruthVerifier } from "./truth-verifier.ts";
 
 Deno.test("TruthVerifier - File Operations", async (t) => {
   const verifier = new TruthVerifier();
