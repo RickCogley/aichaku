@@ -4,9 +4,10 @@
 
 The `aichaku upgrade --global` command has two critical issues:
 
-1. **Files aren't actually updated**: When upgrading (e.g., from v0.47.0 to v0.47.1), the command reports "files
-   verified/updated" but doesn't actually overwrite existing files with new versions. Users must use `--force` to get
-   the actual updates, which shouldn't be necessary.
+1. **Files aren't actually updated**: After updating the CLI (e.g., from v0.47.0 to v0.47.1), running
+   `aichaku upgrade --global` should download and overwrite all core files to match the new CLI version. Currently it
+   reports "files verified/updated" but doesn't actually overwrite existing files. Users must use `--force` to get the
+   actual updates, which shouldn't be necessary.
 
 2. **Confusing messaging**: The current output shows a "version mismatch" warning that suggests running the same command
    the user just ran. The wording doesn't clearly indicate that an upgrade is happening.
@@ -27,18 +28,20 @@ This is a critical bug fix that affects all users trying to stay current with Ai
 
 ## Solution
 
-### 1. Force Overwrite by Default
+### 1. Force Overwrite When Versions Differ
 
-Change the upgrade logic to ALWAYS overwrite files when versions differ:
+The core fix: ALWAYS download and overwrite files when the CLI version differs from installed files:
 
 ```typescript
-// When metadata.version !== VERSION, always overwrite
-const forceOverwrite = metadata.version !== VERSION || options.force;
+// When CLI version differs from installed version, force overwrite ALL files
+const shouldOverwrite = metadata.version !== VERSION || options.force;
 
 await fetchCore(paths.global.core, VERSION, {
   silent: options.silent,
-  overwrite: forceOverwrite, // Force when upgrading
+  overwrite: shouldOverwrite, // MUST overwrite to get updates
 });
+
+// Same for methodologies and standards - they ALL need fresh downloads
 ```
 
 ### 2. Improve Messaging
@@ -86,7 +89,7 @@ Change ambiguous "verified/updated" to be specific:
 
 ## Rabbit Holes to Avoid
 
-- Don't try to check latest version from JSR/GitHub (separate issue)
+- Don't implement version checking from JSR/GitHub (user already updated CLI)
 - Don't refactor the entire fetch system
 - Don't add progress bars or fancy UI
 - Don't try to replicate exact tree command ASCII art (our solution is better)
