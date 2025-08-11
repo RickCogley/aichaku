@@ -80,6 +80,9 @@ export default {
   },
 
   release: {
+    // Custom test command with required permissions
+    testCommand: "deno test --allow-read --allow-write --allow-env --allow-run",
+
     // Verify package appears on JSR after release
     verifyJsrPublish: true,
 
