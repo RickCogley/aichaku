@@ -31,4 +31,4 @@ export const APP_INFO = {
 
 export const APP_METADATA = {} as const;
 
-export const RELEASE_NOTES = {{ releaseNotesJson |> safe }} as const;
+export const RELEASE_NOTES = {{ if releaseNotesJson }}{{ releaseNotesJson |> safe }}{{ else }}{}{{ /if }} as const;
