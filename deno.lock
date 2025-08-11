@@ -3,27 +3,35 @@
   "specifiers": {
     "jsr:@davidbonnet/astring@1.8.6": "1.8.6",
     "jsr:@rick/nagare@2.19.2": "2.19.2",
+    "jsr:@std/assert@*": "1.0.13",
+    "jsr:@std/assert@1": "1.0.13",
     "jsr:@std/assert@^1.0.13": "1.0.13",
     "jsr:@std/async@^1.0.14": "1.0.14",
+    "jsr:@std/cli@1": "1.0.21",
     "jsr:@std/cli@1.0.21": "1.0.21",
     "jsr:@std/cli@^1.0.21": "1.0.21",
     "jsr:@std/crypto@^1.0.5": "1.0.5",
     "jsr:@std/fmt@1": "1.0.8",
     "jsr:@std/fs@1": "1.0.19",
+    "jsr:@std/fs@1.0.0": "1.0.0",
     "jsr:@std/fs@^1.0.19": "1.0.19",
     "jsr:@std/html@1.0.3": "1.0.3",
     "jsr:@std/internal@^1.0.6": "1.0.10",
     "jsr:@std/internal@^1.0.9": "1.0.10",
     "jsr:@std/json@^1.0.2": "1.0.2",
+    "jsr:@std/path@1": "1.1.1",
     "jsr:@std/path@1.0.0": "1.0.0",
     "jsr:@std/path@1.0.8": "1.0.8",
+    "jsr:@std/path@^1.0.2": "1.1.1",
     "jsr:@std/path@^1.1.1": "1.1.1",
     "jsr:@std/semver@1": "1.0.5",
     "jsr:@std/semver@^1.0.5": "1.0.5",
     "jsr:@std/streams@^1.0.9": "1.0.10",
+    "jsr:@std/yaml@1": "1.0.9",
     "jsr:@std/yaml@^1.0.9": "1.0.9",
     "jsr:@vento/vento@^1.14.0": "1.14.0",
     "npm:@modelcontextprotocol/sdk@1.17.1": "1.17.1_express@5.1.0_zod@3.25.76",
+    "npm:@types/estree@1.0.6": "1.0.6",
     "npm:@types/node@*": "22.15.15",
     "npm:estree-walker@3.0.3": "3.0.3",
     "npm:fuse.js@7.1.0": "7.1.0",
@@ -43,7 +51,7 @@
         "jsr:@std/fs@1",
         "jsr:@std/path@^1.1.1",
         "jsr:@std/semver@1",
-        "jsr:@std/yaml",
+        "jsr:@std/yaml@^1.0.9",
         "jsr:@vento/vento"
       ]
     },
@@ -64,6 +72,12 @@
     },
     "@std/fmt@1.0.8": {
       "integrity": "71e1fc498787e4434d213647a6e43e794af4fd393ef8f52062246e06f7e372b7"
+    },
+    "@std/fs@1.0.0": {
+      "integrity": "d72e4a125af7168d717a2ed1dca77a728b422b0d138fd20579e3fa41a77da943",
+      "dependencies": [
+        "jsr:@std/path@^1.0.2"
+      ]
     },
     "@std/fs@1.0.19": {
       "integrity": "051968c2b1eae4d2ea9f79a08a3845740ef6af10356aff43d3e2ef11ed09fb06",
@@ -111,6 +125,7 @@
         "jsr:@davidbonnet/astring",
         "jsr:@std/html",
         "jsr:@std/path@1.0.8",
+        "npm:@types/estree",
         "npm:estree-walker",
         "npm:meriyah"
       ]
@@ -133,6 +148,9 @@
         "zod@3.25.76",
         "zod-to-json-schema"
       ]
+    },
+    "@types/estree@1.0.6": {
+      "integrity": "sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw=="
     },
     "@types/estree@1.0.8": {
       "integrity": "sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w=="
@@ -261,7 +279,7 @@
     "estree-walker@3.0.3": {
       "integrity": "sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==",
       "dependencies": [
-        "@types/estree"
+        "@types/estree@1.0.8"
       ]
     },
     "etag@1.8.1": {
