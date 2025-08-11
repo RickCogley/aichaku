@@ -42,7 +42,8 @@ export async function fetchContent(
     }
   }
 
-  let successCount = 0;
+  let updatedCount = 0;
+  let verifiedCount = 0;
   let failureCount = 0;
   const failedFiles: string[] = [];
 
@@ -57,13 +58,13 @@ export async function fetchContent(
     const url = `${baseUrl}/${relativePath}`;
     const localPath = validatePath(relativePath, targetPath);
 
-    // Check if file exists and skip if overwrite is false
+    // Check if file exists
     let fileExists = false;
     try {
       const fileInfo = await Deno.stat(localPath);
       fileExists = fileInfo.isFile;
       if (fileExists && !options.overwrite) {
-        successCount++;
+        verifiedCount++;
         return; // Skip existing files unless overwrite is requested
       }
       // If overwrite is true, continue to fetch and overwrite the file
@@ -77,7 +78,11 @@ export async function fetchContent(
         const content = await response.text();
         await ensureDir(join(localPath, ".."));
         await Deno.writeTextFile(localPath, content);
-        successCount++;
+        if (fileExists) {
+          updatedCount++;
+        } else {
+          updatedCount++; // New files are also considered updates
+        }
       } else {
         failureCount++;
         failedFiles.push(relativePath);
@@ -128,8 +133,9 @@ export async function fetchContent(
   // Report results
   if (!options.silent) {
     const contentName = contentType === "methodologies" ? "methodology" : contentType;
+    const totalSuccess = updatedCount + verifiedCount;
 
-    if (successCount === 0 && failureCount > 0) {
+    if (totalSuccess === 0 && failureCount > 0) {
       console.error(`\n❌ Failed to fetch any ${contentName} files!`);
       console.error(`   ${failureCount} files could not be downloaded.`);
       if (failedFiles.length > 0 && failedFiles.length <= 5) {
@@ -139,23 +145,33 @@ export async function fetchContent(
       return false;
     } else if (failureCount > 0) {
       console.warn(
-        `\n⚠️  Partial success: ${successCount} files ready, ${failureCount} failed`,
+        `\n⚠️  Partial success: ${totalSuccess} files ready, ${failureCount} failed`,
       );
       if (failedFiles.length > 0) {
         console.warn("   Failed files:");
         failedFiles.forEach((file) => console.warn(`     - ${file}`));
       }
       return true; // Partial success is still considered success
-    } else if (successCount > 0) {
+    } else if (totalSuccess > 0) {
       const capitalizedContent = contentType.charAt(0).toUpperCase() +
         contentType.slice(1);
-      console.log(
-        `✨ ${capitalizedContent} ready (${successCount} files verified/updated)\n`,
-      );
+      if (updatedCount > 0 && verifiedCount > 0) {
+        console.log(
+          `✨ ${capitalizedContent} ready (${updatedCount} updated, ${verifiedCount} verified)\n`,
+        );
+      } else if (updatedCount > 0) {
+        console.log(
+          `✨ ${capitalizedContent} ready (${updatedCount} files updated)\n`,
+        );
+      } else {
+        console.log(
+          `✨ ${capitalizedContent} ready (${verifiedCount} files verified)\n`,
+        );
+      }
     }
   }
 
-  return successCount > 0;
+  return (updatedCount + verifiedCount) > 0;
 }
 
 /**
@@ -371,7 +387,7 @@ async function copyLocalFile(
   targetPath: string,
   contentType: ContentType,
   options: FetchOptions,
-  stats: { successCount: number; failureCount: number; failedFiles: string[] },
+  stats: { updatedCount: number; verifiedCount: number; failureCount: number; failedFiles: string[] },
 ): Promise<void> {
   // Security: Validate the relative path doesn't contain traversal sequences
   if (relativePath.includes("..")) {
@@ -383,11 +399,13 @@ async function copyLocalFile(
   const sourceFile = join(sourcePath, contentType, relativePath);
   const localPath = validatePath(relativePath, targetPath);
 
-  // Check if file exists and skip if overwrite is false
+  // Check if file exists
+  let fileExists = false;
   try {
     const fileInfo = await Deno.stat(localPath);
-    if (fileInfo.isFile && !options.overwrite) {
-      stats.successCount++;
+    fileExists = fileInfo.isFile;
+    if (fileExists && !options.overwrite) {
+      stats.verifiedCount++;
       return; // Skip existing files unless overwrite is requested
     }
   } catch {
@@ -398,7 +416,11 @@ async function copyLocalFile(
     const content = await Deno.readTextFile(sourceFile);
     await ensureDir(join(localPath, ".."));
     await Deno.writeTextFile(localPath, content);
-    stats.successCount++;
+    if (fileExists) {
+      stats.updatedCount++;
+    } else {
+      stats.updatedCount++; // New files are also considered updates
+    }
   } catch (error) {
     stats.failureCount++;
     stats.failedFiles.push(relativePath);
@@ -419,7 +441,7 @@ async function processLocalStructure(
   targetPath: string,
   contentType: ContentType,
   options: FetchOptions,
-  stats: { successCount: number; failureCount: number; failedFiles: string[] },
+  stats: { updatedCount: number; verifiedCount: number; failureCount: number; failedFiles: string[] },
 ): Promise<void> {
   for (const [key, value] of Object.entries(obj)) {
     const path = currentPath ? `${currentPath}/${key}` : key;
@@ -460,7 +482,8 @@ export async function fetchLocalContent(
     const structure = await getContentStructure(contentType, sourcePath, false);
 
     const stats = {
-      successCount: 0,
+      updatedCount: 0,
+      verifiedCount: 0,
       failureCount: 0,
       failedFiles: [] as string[],
     };
@@ -476,27 +499,39 @@ export async function fetchLocalContent(
     );
 
     // Report results
+    const totalSuccess = stats.updatedCount + stats.verifiedCount;
+
     if (!options.silent) {
       const contentName = contentType === "methodologies" ? "methodology" : contentType;
 
-      if (stats.successCount === 0 && stats.failureCount > 0) {
+      if (totalSuccess === 0 && stats.failureCount > 0) {
         console.error(`\n❌ Failed to copy any ${contentName} files!`);
         return false;
       } else if (stats.failureCount > 0) {
         console.warn(
-          `\n⚠️  Partial success: ${stats.successCount} files ready, ${stats.failureCount} failed`,
+          `\n⚠️  Partial success: ${totalSuccess} files ready, ${stats.failureCount} failed`,
         );
         return true; // Partial success is still considered success
-      } else if (stats.successCount > 0) {
+      } else if (totalSuccess > 0) {
         const capitalizedContent = contentType.charAt(0).toUpperCase() +
           contentType.slice(1);
-        console.log(
-          `✨ ${capitalizedContent} ready (${stats.successCount} files copied)\n`,
-        );
+        if (stats.updatedCount > 0 && stats.verifiedCount > 0) {
+          console.log(
+            `✨ ${capitalizedContent} ready (${stats.updatedCount} updated, ${stats.verifiedCount} verified)\n`,
+          );
+        } else if (stats.updatedCount > 0) {
+          console.log(
+            `✨ ${capitalizedContent} ready (${stats.updatedCount} files copied)\n`,
+          );
+        } else {
+          console.log(
+            `✨ ${capitalizedContent} ready (${stats.verifiedCount} files verified)\n`,
+          );
+        }
       }
     }
 
-    return stats.successCount > 0;
+    return totalSuccess > 0;
   } catch (error) {
     if (!options.silent) {
       console.error(
