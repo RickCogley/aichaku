@@ -80,9 +80,6 @@ export default {
   },
 
   release: {
-    // Custom test command with required permissions
-    testCommand: "deno test --allow-read --allow-write --allow-env --allow-run",
-
     // Verify package appears on JSR after release
     verifyJsrPublish: true,
 
@@ -160,15 +157,14 @@ export default {
           throw new Error("Type check failed");
         }
 
-        // TODO: Re-enable tests when we have test coverage // DevSkim: ignore DS176209 - Legitimate TODO for test coverage
-        // console.log("🧪 Running tests...");
-        // const testCmd = new Deno.Command("deno", {
-        //   args: ["test", "--allow-read", "--allow-write", "--allow-env"],
-        // });
-        // const testResult = await testCmd.output();
-        // if (!testResult.success) {
-        //   throw new Error("Tests failed");
-        // }
+        console.log("🧪 Running tests...");
+        const testCmd = new Deno.Command("deno", {
+          args: ["test", "--allow-read", "--allow-write", "--allow-env", "--allow-run"],
+        });
+        const testResult = await testCmd.output();
+        if (!testResult.success) {
+          throw new Error("Tests failed");
+        }
 
         console.log("✅ All pre-release checks passed");
       },
