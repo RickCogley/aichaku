@@ -23,6 +23,9 @@
 - [x] Remove --force flag from CLI parser for upgrade command
 - [x] Fix linting issues (unused parameter)
 - [x] Build and test changes
+- [x] Add confirmation prompt for global upgrades (with --yes flag to skip)
+- [x] Add comprehensive test suite for upgrade command
+- [x] Address security review recommendations
 
 ### In Progress 🔄
 
@@ -58,3 +61,6 @@ with circular warnings.
 - This is a critical bug affecting all users
 - Must maintain backward compatibility with --force flag
 - Tree command is optional (provide fallback)
+- Security review completed (2025-08-11): Added user confirmation prompt for global upgrades
+- User customizations in user/ folder are always preserved
+- System files (methodologies, standards, core) are upgraded for security updates
