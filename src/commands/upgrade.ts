@@ -1,7 +1,7 @@
 import { ensureDir, exists } from "jsr:@std/fs@1";
 import { join, resolve } from "jsr:@std/path@1";
 import { copy } from "jsr:@std/fs@1/copy";
-import { walk } from "jsr:@std/fs/walk";
+import { walk } from "jsr:@std/fs@1/walk";
 import { VERSION } from "../../mod.ts";
 import { fetchCore, fetchMethodologies, fetchStandards } from "./content-fetcher.ts";
 import { getAichakuPaths } from "../paths.ts";
