@@ -1,6 +1,6 @@
 # Implementation Plan: Fix Upgrade Process and Messaging
 
-## Phase 1: Fix Force Overwrite (CRITICAL)
+## Phase 1: Always Overwrite & Remove --force Flag (CRITICAL)
 
 ### Files to modify:
 
@@ -9,23 +9,24 @@
 
 ### Changes:
 
-1. **In upgrade.ts** (~line 345-350):
+1. **Remove --force flag from UpgradeOptions interface** (~line 19-27)
+2. **Remove all references to options.force throughout the file**
+3. **Always pass overwrite: true when fetching** (~line 345-350):
 
 ```typescript
-// Determine if we should force overwrite (when upgrading versions)
-const shouldForceOverwrite = metadata.version !== VERSION || options.force;
-
+// Always overwrite - that's what upgrade means!
 const fetchSuccess = await fetchCore(
   paths.global.core,
   VERSION,
   {
     silent: options.silent,
-    overwrite: shouldForceOverwrite, // Force when versions differ
+    overwrite: true, // Always overwrite during upgrade
   },
 );
 ```
 
-2. **Apply same logic to methodologies and standards fetching**
+4. **Apply same to methodologies and standards fetching** - always overwrite: true
+5. **Remove "Use --force to reinstall" from messages**
 
 ## Phase 2: Improve Version Mismatch Messaging
 
@@ -187,12 +188,33 @@ In `content-fetcher.ts`, maintain separate counts:
 
 Then report accurately: "23 files updated, 27 files verified"
 
+## Phase 7: Remove --force References from Documentation
+
+### Files to check and update:
+
+- Help text in upgrade.ts (showUpgradeHelp function)
+- README.md if it mentions --force for upgrade
+- Any other documentation files
+- Error messages that suggest using --force
+
+### Specific changes:
+
+1. **Remove from help text** (~line 845-870):
+   - Remove the `-f, --force` option description
+   - Update examples to not show --force
+
+2. **Update "already on latest" message** (~line 180):
+   ```typescript
+   message: `🪴 Aichaku: Already on latest version (v${VERSION}).`,
+   // Remove "Use --force to reinstall" part
+   ```
+
 ## Testing Checklist
 
 - [ ] Test upgrade from older version (should overwrite all files)
-- [ ] Test upgrade when already on latest (should skip gracefully)
-- [ ] Test with --force flag (should still work)
-- [ ] Test tree output on system with tree command
-- [ ] Test tree fallback on system without tree command
-- [ ] Verify Truth Protocol files are updated without --force
+- [ ] Test upgrade when already on latest (should still update files)
+- [ ] Verify --force flag is completely removed
+- [ ] Test tree output using Deno's walk
+- [ ] Verify Truth Protocol files are updated automatically
 - [ ] Check all messaging is clear and helpful
+- [ ] Confirm no references to --force remain

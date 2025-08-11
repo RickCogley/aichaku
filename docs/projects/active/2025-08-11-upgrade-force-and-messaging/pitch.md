@@ -28,20 +28,19 @@ This is a critical bug fix that affects all users trying to stay current with Ai
 
 ## Solution
 
-### 1. Force Overwrite When Versions Differ
+### 1. Always Overwrite When Upgrading
 
-The core fix: ALWAYS download and overwrite files when the CLI version differs from installed files:
+The core fix: ALWAYS download and overwrite files when upgrading (remove the need for --force):
 
 ```typescript
-// When CLI version differs from installed version, force overwrite ALL files
-const shouldOverwrite = metadata.version !== VERSION || options.force;
-
+// Always overwrite when running upgrade - that's the whole point!
 await fetchCore(paths.global.core, VERSION, {
   silent: options.silent,
-  overwrite: shouldOverwrite, // MUST overwrite to get updates
+  overwrite: true, // Always overwrite during upgrade
 });
 
 // Same for methodologies and standards - they ALL need fresh downloads
+// Remove the --force flag entirely - it's redundant
 ```
 
 ### 2. Improve Messaging
@@ -94,9 +93,13 @@ Change ambiguous "verified/updated" to be specific:
 - Don't add progress bars or fancy UI
 - Don't try to replicate exact tree command ASCII art (our solution is better)
 
+## Breaking Changes (Acceptable)
+
+- Remove `--force` flag (it becomes the default behavior)
+- This is acceptable because it fixes a bug and simplifies the interface
+
 ## No-Gos
 
-- Breaking existing `--force` flag behavior
 - Changing the fundamental upgrade workflow
 - Adding new dependencies
 
@@ -106,9 +109,17 @@ Change ambiguous "verified/updated" to be specific:
 - Show diff summary of what changed
 - Better error messages when network fails
 
+## Documentation Updates Required
+
+- Remove all references to `--force` flag in upgrade command
+- Update help text to remove `--force` option
+- Update any README or docs that mention the flag
+- Update error messages that suggest using `--force`
+
 ## Success Criteria
 
-1. Running `aichaku upgrade --global` actually updates all files when versions differ
+1. Running `aichaku upgrade --global` ALWAYS updates all files
 2. Clear messaging that doesn't suggest re-running the same command
 3. Real tree output showing actual file structure
-4. Users get Truth Protocol and other updates without needing `--force`
+4. Users get Truth Protocol and other updates automatically
+5. No `--force` flag needed or available
