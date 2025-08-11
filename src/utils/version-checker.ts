@@ -64,11 +64,9 @@ export async function checkVersionMatch(): Promise<VersionCheckResult> {
     let warningMessage: string | undefined;
 
     if (!isVersionMatch) {
-      warningMessage = `⚠️  Version mismatch detected:
-   CLI version:    v${cliVersion}
+      warningMessage = `⚠️  Upgrade available:
    Global files:   v${globalVersion}
-   
-   Run 'aichaku upgrade --global' to update global files to match CLI.`;
+   CLI version:    v${cliVersion}`;
     }
 
     return {

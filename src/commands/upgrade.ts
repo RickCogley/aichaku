@@ -175,7 +175,7 @@ export async function upgrade(
 
   // Check if already on latest version
   // No longer skip - always upgrade to ensure files are current
-  if (metadata.version === VERSION) {
+  if (metadata.version !== VERSION) {
     if (!options.silent) {
       console.warn(`⚠️  Upgrade available:`);
       console.warn(`   Global files:   v${metadata.version}`);

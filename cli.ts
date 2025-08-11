@@ -24,7 +24,6 @@ import { cleanup } from "./src/commands/cleanup.ts";
 import { appDescription } from "./src/commands/app-description.ts";
 import { runGitHooksCommand } from "./src/commands/githooks-command.ts";
 import { VERSION } from "./mod.ts";
-import { displayVersionWarning } from "./src/utils/version-checker.ts";
 import { Brand } from "./src/utils/branded-messages.ts";
 import { printFormatted } from "./src/utils/terminal-formatter.ts";
 
@@ -384,7 +383,7 @@ try {
       break;
     }
     case "upgrade": {
-      await displayVersionWarning("upgrade");
+      // Don't show version warning when running upgrade - user is already fixing it
       // Don't pass force flag to upgrade - it always overwrites now
       const upgradeOptions = {
         global: options.global,
