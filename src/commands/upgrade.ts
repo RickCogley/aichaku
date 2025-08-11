@@ -1,6 +1,7 @@
 import { ensureDir, exists } from "jsr:@std/fs@1";
 import { join, resolve } from "jsr:@std/path@1";
 import { copy } from "jsr:@std/fs@1/copy";
+import { walk } from "jsr:@std/fs/walk";
 import { VERSION } from "../../mod.ts";
 import { fetchCore, fetchMethodologies, fetchStandards } from "./content-fetcher.ts";
 import { getAichakuPaths } from "../paths.ts";
@@ -19,11 +20,11 @@ import { printFormatted } from "../utils/terminal-formatter.ts";
 interface UpgradeOptions {
   global?: boolean;
   projectPath?: string;
-  force?: boolean;
   silent?: boolean;
   dryRun?: boolean;
   check?: boolean;
   help?: boolean;
+  yes?: boolean; // Skip confirmation prompt
 }
 
 interface UpgradeResult {
@@ -173,14 +174,13 @@ export async function upgrade(
   }
 
   // Check if already on latest version
-  // Only skip if force is not set AND versions match
-  if (metadata.version === VERSION && !options.force) {
-    return {
-      success: true,
-      path: targetPath,
-      message: `🪴 Aichaku: Already on latest version (v${VERSION}). Use --force to reinstall.`,
-      action: "current",
-    };
+  // No longer skip - always upgrade to ensure files are current
+  if (metadata.version === VERSION) {
+    if (!options.silent) {
+      console.warn(`⚠️  Upgrade available:`);
+      console.warn(`   Global files:   v${metadata.version}`);
+      console.warn(`   CLI version:    v${VERSION}\n`);
+    }
   }
 
   if (options.dryRun) {
@@ -200,8 +200,29 @@ export async function upgrade(
   }
 
   try {
+    // Add confirmation prompt for global upgrades (unless silent mode or --yes flag)
+    if (isGlobal && !options.silent && !options.yes) {
+      console.log(`\n⚠️  This will upgrade and overwrite all Aichaku system files:`);
+      console.log(`   • methodologies/`);
+      console.log(`   • standards/`);
+      console.log(`   • docs/core/`);
+      console.log(`   • Writing to: ${targetPath}`);
+      console.log(`   • Your customizations in user/ will be preserved\n`);
+
+      const response = prompt("Ok to proceed? (y/N): ");
+      if (!response || !response.toLowerCase().startsWith("y")) {
+        console.log("❌ Upgrade cancelled by user");
+        return {
+          success: false,
+          path: targetPath,
+          message: "Upgrade cancelled by user",
+          action: "error",
+        };
+      }
+    }
+
     if (!options.silent) {
-      console.log(Brand.upgrading(metadata.version, VERSION));
+      Brand.success(`🪴 Aichaku: Seeding global files from v${metadata.version} to v${VERSION} to match CLI…`);
     }
 
     // Check for user customizations
@@ -222,13 +243,13 @@ export async function upgrade(
 
     if (isJSR) {
       // Fetch from GitHub when running from JSR
-      // First try to update in place (preserves any user modifications)
+      // Always overwrite - that's what upgrade means!
       const fetchSuccess = await fetchMethodologies(
         paths.global.methodologies,
         VERSION,
         {
           silent: options.silent,
-          overwrite: true, // Always overwrite during upgrades to get latest content
+          overwrite: true, // Always overwrite during upgrade
         },
       );
 
@@ -280,13 +301,13 @@ export async function upgrade(
     }
 
     if (isJSR) {
-      // Fetch from GitHub when running from JSR
+      // Always overwrite - that's what upgrade means!
       const fetchSuccess = await fetchStandards(
         paths.global.standards,
         VERSION,
         {
           silent: options.silent,
-          overwrite: true, // Always overwrite during upgrades to get latest content
+          overwrite: true, // Always overwrite during upgrade
         },
       );
 
@@ -342,7 +363,7 @@ export async function upgrade(
     }
 
     if (isJSR) {
-      // Fetch from GitHub when running from JSR
+      // Always overwrite - that's what upgrade means!
       // IMPORTANT: Always fetch from the VERSION we're upgrading TO, not FROM
       // When aichaku is updated via JSR/npm, VERSION reflects the new version
       const fetchSuccess = await fetchCore(
@@ -350,7 +371,7 @@ export async function upgrade(
         VERSION,
         {
           silent: options.silent,
-          overwrite: true, // Always overwrite during upgrades to get latest content
+          overwrite: true, // Always overwrite during upgrade
         },
       );
 
@@ -616,7 +637,6 @@ export async function upgrade(
 
         const integrateResult = await integrate({
           projectPath,
-          force: true,
           silent: options.silent,
         });
 
@@ -656,17 +676,21 @@ export async function upgrade(
     const homePath = Deno.env.get("HOME") || "";
     const currentDir = Deno.cwd();
 
+    // Use tree display instead of hardcoded structure
     const locationContext = isGlobal
-      ? `\n\n📁 Installation location: ${
-        targetPath.replace(homePath, "~")
-      }/\n   ├── methodologies/ (49 files verified/updated)\n   ├── standards/ (45 files verified/updated)\n   ├── user/ (preserved - your customizations)\n   └── config.json (metadata updated to v${VERSION})`
+      ? `\n\n📁 Global installation location: ${targetPath.replace(homePath, "~")}/`
       : `\n\n📁 Project updated: ${
         targetPath.replace(currentDir, ".")
       }/\n   ├── aichaku.json (metadata updated to v${VERSION})\n   ├── user/ (preserved - your customizations)\n   └── 🔗 → ~/.claude/aichaku/ (methodologies & standards)`;
 
+    // Display tree for global installations
+    if (isGlobal && !options.silent) {
+      await displayCustomTree(targetPath);
+    }
+
     // Create appropriate completion message based on upgrade type
     const completionMessage = isGlobal
-      ? "\n\n💡 All your projects now have the latest methodologies!"
+      ? "\n\n💡 All your projects now have the latest Aichaku core files!"
       : "\n\n💡 Your project now uses the latest methodologies from ~/.claude/aichaku/";
 
     // Check for new features and prompt for app description
@@ -701,6 +725,76 @@ export async function upgrade(
       action: "error",
     };
   }
+}
+
+/**
+ * Display a tree view of the installation directory using Deno's walk function.
+ * This provides a consistent cross-platform tree display with custom formatting.
+ */
+async function displayCustomTree(rootPath: string): Promise<void> {
+  const tree: Map<string, string[]> = new Map();
+  const maxDepth = 3; // Show 3 levels deep to see agents and important subdirs
+
+  // Collect all paths using Deno's walk
+  for await (const entry of walk(rootPath, { maxDepth, includeDirs: true, includeFiles: true })) {
+    const relativePath = entry.path.replace(rootPath + "/", "");
+    const parts = relativePath.split("/");
+
+    // Skip the root itself
+    if (parts.length === 0 || relativePath === "") continue;
+
+    // Build parent path
+    const parentPath = parts.slice(0, -1).join("/");
+    if (!tree.has(parentPath)) {
+      tree.set(parentPath, []);
+    }
+
+    // Add to parent's children
+    const name = parts[parts.length - 1];
+    const children = tree.get(parentPath)!;
+    children.push(entry.isDirectory ? name + "/" : name);
+  }
+
+  // Display tree recursively
+  function printTree(path: string, prefix: string, _isLast: boolean): void {
+    const children = tree.get(path) || [];
+    children.sort((a, b) => {
+      // Directories first
+      const aIsDir = a.endsWith("/");
+      const bIsDir = b.endsWith("/");
+      if (aIsDir && !bIsDir) return -1;
+      if (!aIsDir && bIsDir) return 1;
+      return a.localeCompare(b);
+    });
+
+    children.forEach((child, index) => {
+      const isLastChild = index === children.length - 1;
+      const connector = isLastChild ? "└── " : "├── ";
+      const name = child.endsWith("/") ? child.slice(0, -1) : child;
+
+      // Special highlighting for important directories
+      let displayName = name;
+      if (name === "agent-templates") {
+        displayName = `${name}/ (${tree.get(path + "/" + name)?.length || 0} agents)`;
+      } else if (name === "methodologies") {
+        displayName = `${name}/ (${tree.get(path + "/" + name)?.length || 0} items)`;
+      } else if (name === "standards") {
+        displayName = `${name}/ (${tree.get(path + "/" + name)?.length || 0} items)`;
+      }
+
+      console.log(`   ${prefix}${connector}${displayName}`);
+
+      // Recurse for directories
+      if (child.endsWith("/")) {
+        const newPrefix = prefix + (isLastChild ? "    " : "│   ");
+        const childPath = path ? path + "/" + name : name;
+        printTree(childPath, newPrefix, isLastChild);
+      }
+    });
+  }
+
+  // Start printing from root
+  printTree("", "", false);
 }
 
 function compareVersions(v1: string, v2: string): number {
@@ -855,10 +949,10 @@ Automatically migrates configurations and preserves customizations.
 
 ## Options
 - **-g, --global** - Upgrade global installation (~/.claude)
-- **-f, --force** - Force upgrade even if already at latest version
 - **-s, --silent** - Upgrade silently with minimal output
 - **-d, --dry-run** - Preview what would be upgraded without applying changes
 - **-c, --check** - Check for available updates without installing
+- **-y, --yes** - Skip confirmation prompt and proceed with upgrade
 - **-h, --help** - Show this help message
 
 ## Examples
@@ -875,9 +969,6 @@ aichaku upgrade --check
 
 # Preview upgrade changes
 aichaku upgrade --dry-run
-
-# Force upgrade
-aichaku upgrade --force
 \`\`\`
 
 ## What Gets Updated

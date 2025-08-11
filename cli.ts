@@ -37,6 +37,7 @@ const args = parseArgs(Deno.args, {
     "silent",
     "dry-run",
     "check",
+    "yes",
     "list",
     "show",
     "compare",
@@ -169,6 +170,7 @@ const args = parseArgs(Deno.args, {
     s: "silent",
     d: "dry-run",
     c: "check",
+    y: "yes",
   },
   collect: ["add", "remove", "search", "assets"],
   default: {
@@ -225,7 +227,6 @@ ${Brand.tagline}
 ## Options
 - **-g, --global** - Apply to global installation (~/.claude)
 - **-p, --path** - Project path (default: ./.claude)
-- **-f, --force** - Force overwrite existing files
 - **-s, --silent** - Silent mode - minimal output
 - **-d, --dry-run** - Preview changes without applying them
 - **-c, --check** - Check for updates without installing
@@ -328,6 +329,7 @@ const options = {
   dryRun: args["dry-run"],
   check: args.check,
   help: args.help,
+  yes: args.yes,
 };
 
 // Create command executor for shared commands
@@ -383,7 +385,17 @@ try {
     }
     case "upgrade": {
       await displayVersionWarning("upgrade");
-      const result = await upgrade(options);
+      // Don't pass force flag to upgrade - it always overwrites now
+      const upgradeOptions = {
+        global: options.global,
+        projectPath: options.projectPath,
+        silent: options.silent,
+        dryRun: options.dryRun,
+        check: options.check,
+        help: options.help,
+        yes: options.yes,
+      };
+      const result = await upgrade(upgradeOptions);
       if (!result.success) {
         console.error(`❌ ${result.message}`);
         Deno.exit(1);
