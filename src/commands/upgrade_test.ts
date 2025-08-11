@@ -716,7 +716,6 @@ Deno.test("upgrade recreates missing .aichaku-behavior file", async () => {
     }
 
     // Create CLAUDE.md to trigger behavior file recreation
-    const projectDir = join(tempDir, ".claude");
     const claudeMdPath = join(tempDir, "CLAUDE.md");
     await Deno.writeTextFile(claudeMdPath, "# Test CLAUDE.md");
 
