@@ -67,13 +67,13 @@ Replace confusing "version mismatch" with clear "upgrade available":
 
 ### 3. Use Real Tree Output
 
-Replace the hardcoded file structure with actual `tree` command output:
+Replace the hardcoded file structure with Deno's `walk` function for a consistent cross-platform tree display:
 
 ```typescript
-// After upgrade completes
-const treeOutput = await runCommand("tree -L 2 ~/.claude/aichaku/");
-console.log(`📁 Global installation location: ~/.claude/aichaku/`);
-console.log(treeOutput);
+// Use Deno's walk function for consistent tree display across all platforms
+import { walk } from "jsr:@std/fs/walk";
+await displayCustomTree(targetPath);
+// Shows actual directory structure with file counts and important subdirectories
 ```
 
 ### 4. Clarify File Operations
@@ -89,7 +89,7 @@ Change ambiguous "verified/updated" to be specific:
 - Don't try to check latest version from JSR/GitHub (separate issue)
 - Don't refactor the entire fetch system
 - Don't add progress bars or fancy UI
-- Keep using existing tree command if available
+- Don't try to replicate exact tree command ASCII art (our solution is better)
 
 ## No-Gos
 

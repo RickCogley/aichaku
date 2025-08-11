@@ -65,7 +65,7 @@ Brand.success(`🪴 Aichaku: Growing from v${metadata.version} to v${VERSION}...
 Brand.success(`🪴 Aichaku: Seeding global files from v${metadata.version} to v${VERSION} to match CLI…`);
 ```
 
-## Phase 4: Add Real Tree Output
+## Phase 4: Add Tree Output Using Deno's Walk
 
 ### In upgrade.ts (at end of upgrade function, ~line 450):
 
@@ -83,39 +83,25 @@ console.log(`   └── config.json (metadata updated to v${VERSION})`);
 
 ```typescript
 console.log(`📁 Global installation location: ${targetPath}/`);
-
-// Try to use system tree command first (fastest and prettiest)
-try {
-  const treeCmd = new Deno.Command("tree", {
-    args: ["-L", "3", "--dirsfirst", targetPath],
-  });
-  const output = await treeCmd.output();
-  if (output.success) {
-    const treeOutput = new TextDecoder().decode(output.stdout);
-    // Skip first line (it's the path again) and indent the rest
-    const lines = treeOutput.split("\n").slice(1);
-    console.log(lines.map((line) => "   " + line).join("\n"));
-  } else {
-    throw new Error("tree command failed");
-  }
-} catch {
-  // Fallback to Deno's walk function for a custom tree display
-  await displayCustomTree(targetPath);
-}
+await displayCustomTree(targetPath);
 ```
 
-### Add Custom Tree Display Function
+### Add Tree Display Function Using Deno's Walk
 
 Add this helper function to upgrade.ts:
 
 ```typescript
 import { walk } from "jsr:@std/fs/walk";
 
+/**
+ * Display a tree view of the installation directory using Deno's walk function.
+ * This provides a consistent cross-platform tree display with custom formatting.
+ */
 async function displayCustomTree(rootPath: string): Promise<void> {
   const tree: Map<string, string[]> = new Map();
-  const maxDepth = 3;
+  const maxDepth = 3; // Show 3 levels deep to see agents and important subdirs
 
-  // Collect all paths
+  // Collect all paths using Deno's walk
   for await (const entry of walk(rootPath, { maxDepth, includeDirs: true, includeFiles: true })) {
     const relativePath = entry.path.replace(rootPath + "/", "");
     const parts = relativePath.split("/");
