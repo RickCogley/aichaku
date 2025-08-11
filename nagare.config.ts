@@ -86,7 +86,7 @@ export default {
       custom: [
         {
           name: "Test Suite",
-          command: ["deno", "test", "--allow-read", "--allow-write", "--allow-env", "--allow-run"],
+          command: ["deno", "test", "--no-check", "--allow-read", "--allow-write", "--allow-env", "--allow-run"],
           description: "Runs all unit and integration tests with required permissions",
           fixable: false,
         },
@@ -170,15 +170,7 @@ export default {
           throw new Error("Type check failed");
         }
 
-        console.log("🧪 Running tests...");
-        const testCmd = new Deno.Command("deno", {
-          args: ["test", "--allow-read", "--allow-write", "--allow-env", "--allow-run"],
-        });
-        const testResult = await testCmd.output();
-        if (!testResult.success) {
-          throw new Error("Tests failed");
-        }
-
+        // Tests are now run via custom preflight check with --no-check flag
         console.log("✅ All pre-release checks passed");
       },
     ],
