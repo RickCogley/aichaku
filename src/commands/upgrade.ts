@@ -24,6 +24,7 @@ interface UpgradeOptions {
   dryRun?: boolean;
   check?: boolean;
   help?: boolean;
+  yes?: boolean; // Skip confirmation prompt
 }
 
 interface UpgradeResult {
@@ -199,6 +200,27 @@ export async function upgrade(
   }
 
   try {
+    // Add confirmation prompt for global upgrades (unless silent mode or --yes flag)
+    if (isGlobal && !options.silent && !options.yes) {
+      console.log(`\n⚠️  This will upgrade and overwrite all Aichaku system files:`);
+      console.log(`   • methodologies/`);
+      console.log(`   • standards/`);
+      console.log(`   • docs/core/`);
+      console.log(`   • Writing to: ${targetPath}`);
+      console.log(`   • Your customizations in user/ will be preserved\n`);
+
+      const response = prompt("Ok to proceed? (y/N): ");
+      if (!response || !response.toLowerCase().startsWith("y")) {
+        console.log("❌ Upgrade cancelled by user");
+        return {
+          success: false,
+          path: targetPath,
+          message: "Upgrade cancelled by user",
+          action: "error",
+        };
+      }
+    }
+
     if (!options.silent) {
       Brand.success(`🪴 Aichaku: Seeding global files from v${metadata.version} to v${VERSION} to match CLI…`);
     }
@@ -930,6 +952,7 @@ Automatically migrates configurations and preserves customizations.
 - **-s, --silent** - Upgrade silently with minimal output
 - **-d, --dry-run** - Preview what would be upgraded without applying changes
 - **-c, --check** - Check for available updates without installing
+- **-y, --yes** - Skip confirmation prompt and proceed with upgrade
 - **-h, --help** - Show this help message
 
 ## Examples

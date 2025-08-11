@@ -37,6 +37,7 @@ const args = parseArgs(Deno.args, {
     "silent",
     "dry-run",
     "check",
+    "yes",
     "list",
     "show",
     "compare",
@@ -169,6 +170,7 @@ const args = parseArgs(Deno.args, {
     s: "silent",
     d: "dry-run",
     c: "check",
+    y: "yes",
   },
   collect: ["add", "remove", "search", "assets"],
   default: {
@@ -327,6 +329,7 @@ const options = {
   dryRun: args["dry-run"],
   check: args.check,
   help: args.help,
+  yes: args.yes,
 };
 
 // Create command executor for shared commands
@@ -390,6 +393,7 @@ try {
         dryRun: options.dryRun,
         check: options.check,
         help: options.help,
+        yes: options.yes,
       };
       const result = await upgrade(upgradeOptions);
       if (!result.success) {
