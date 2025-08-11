@@ -27,13 +27,13 @@
 - [x] Add comprehensive test suite for upgrade command
 - [x] Address security review recommendations
 
+### Completed ✅ (continued)
+
+- [x] Track and report updated vs verified files separately (Phase 6)
+- [x] Test all upgrade scenarios (20 tests passing)
+
 ### In Progress 🔄
 
-- [ ] Track and report updated vs verified files separately (Phase 6)
-
-### Up Next 📋
-
-- [ ] Test all upgrade scenarios
 - [ ] Create PR for review
 
 ## Problem Summary
