@@ -225,7 +225,6 @@ ${Brand.tagline}
 ## Options
 - **-g, --global** - Apply to global installation (~/.claude)
 - **-p, --path** - Project path (default: ./.claude)
-- **-f, --force** - Force overwrite existing files
 - **-s, --silent** - Silent mode - minimal output
 - **-d, --dry-run** - Preview changes without applying them
 - **-c, --check** - Check for updates without installing
@@ -383,7 +382,16 @@ try {
     }
     case "upgrade": {
       await displayVersionWarning("upgrade");
-      const result = await upgrade(options);
+      // Don't pass force flag to upgrade - it always overwrites now
+      const upgradeOptions = {
+        global: options.global,
+        projectPath: options.projectPath,
+        silent: options.silent,
+        dryRun: options.dryRun,
+        check: options.check,
+        help: options.help,
+      };
+      const result = await upgrade(upgradeOptions);
       if (!result.success) {
         console.error(`❌ ${result.message}`);
         Deno.exit(1);

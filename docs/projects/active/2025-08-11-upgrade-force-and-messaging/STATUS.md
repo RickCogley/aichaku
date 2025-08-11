@@ -12,19 +12,26 @@
 - [x] Created Shape Up pitch defining the problem
 - [x] Created implementation plan with specific code changes
 - [x] Identified all files that need modification
+- [x] Create feature branch for development (fix/upgrade-force-and-messaging)
+- [x] Remove --force flag from UpgradeOptions interface
+- [x] Always pass overwrite: true when fetching (Phase 1)
+- [x] Update version mismatch messaging to "Upgrade available" (Phase 2)
+- [x] Change "Growing" message to "Seeding global files" (Phase 3)
+- [x] Implement real tree output using Deno's walk function (Phase 4)
+- [x] Update final completion message (Phase 5)
+- [x] Remove --force from help documentation (Phase 7)
+- [x] Remove --force flag from CLI parser for upgrade command
+- [x] Fix linting issues (unused parameter)
+- [x] Build and test changes
 
 ### In Progress 🔄
 
-- [ ] Create feature branch for development
-- [ ] Implement force overwrite when versions differ
+- [ ] Track and report updated vs verified files separately (Phase 6)
 
 ### Up Next 📋
 
-- [ ] Update version mismatch messaging
-- [ ] Change "Growing" message to "Seeding"
-- [ ] Implement real tree output
-- [ ] Track and report updated vs verified files separately
 - [ ] Test all upgrade scenarios
+- [ ] Create PR for review
 
 ## Problem Summary
 
