@@ -5,6 +5,54 @@ All notable changes to aichaku (愛着) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.48.0] - 2025-08-11
+
+### fix: upgrade command file overwrite and messaging improvements (#4)
+
+#### Added
+
+- track and report updated vs verified files separately (upgrade) (ef6e49d)
+
+- add confirmation prompt for global upgrades (upgrade) (3a96eb7)
+
+#### Fixed
+
+- remove --force flag and improve messaging (upgrade) (becaffe)
+
+#### Changed
+
+- mark upgrade project as complete - PR #4 created (a2b2bec)
+
+- update project status - all implementation complete (3dd45d6)
+
+- move completed agent-truth-protocol project to done folder (0501930)
+
+- update project status with confirmation prompt completion (bc5ab3b)
+
+- remove --force flag from upgrade command design (211c389)
+
+- clarify upgrade pitch - focus on actual file downloading (7f96dae)
+
+- simplify tree implementation to use only Deno&#39;s walk (65d490c)
+
+- improve tree display implementation using Deno std walk (ad33162)
+
+- create Shape Up project for upgrade force and messaging fix (1859bd6)
+
+### Direct Commits
+
+#### Fixed
+
+- add missing version constraint to walk import for JSR publish (5ccc47b)
+
+- remove unused variable in upgrade test (f2a82ed)
+
+- improve upgrade process to properly fetch and overwrite files (3fceb75)
+
+#### Changed
+
+- move completed upgrade project to done folder (635f5b3)
+
 ## [0.47.1] - 2025-08-10
 
 ### Changed
