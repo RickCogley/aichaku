@@ -33,7 +33,7 @@ export const BUILD_INFO = {
     major: {{ versionComponents.major |> safe }},
     minor: {{ versionComponents.minor |> safe }},
     patch: {{ versionComponents.patch |> safe }},
-    prerelease: {{ versionComponents.prerelease |> safe }},
+    prerelease: {{ if versionComponents.prerelease }}{{ versionComponents.prerelease |> safe }}{{ else }}null{{ /if }},
   },
 } as const;
 
