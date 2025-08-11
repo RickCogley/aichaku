@@ -80,6 +80,19 @@ export default {
   },
 
   release: {
+    // Disable default test runner and use custom one with permissions
+    preflightChecks: {
+      runTests: false, // Disable default
+      custom: [
+        {
+          name: "Test Suite",
+          command: ["deno", "test", "--allow-read", "--allow-write", "--allow-env", "--allow-run"],
+          description: "Runs all unit and integration tests with required permissions",
+          fixable: false,
+        },
+      ],
+    },
+
     // Verify package appears on JSR after release
     verifyJsrPublish: true,
 
