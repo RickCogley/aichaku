@@ -84,10 +84,10 @@ console.log(`   └── config.json (metadata updated to v${VERSION})`);
 ```typescript
 console.log(`📁 Global installation location: ${targetPath}/`);
 
-// Try to use tree command if available
+// Try to use system tree command first (fastest and prettiest)
 try {
   const treeCmd = new Deno.Command("tree", {
-    args: ["-L", "2", "--dirsfirst", targetPath],
+    args: ["-L", "3", "--dirsfirst", targetPath],
   });
   const output = await treeCmd.output();
   if (output.success) {
@@ -99,13 +99,82 @@ try {
     throw new Error("tree command failed");
   }
 } catch {
-  // Fallback to manual structure if tree isn't available
-  console.log(`   ├── methodologies/`);
-  console.log(`   ├── standards/`);
-  console.log(`   ├── docs/`);
-  console.log(`   │   └── core/`);
-  console.log(`   ├── user/`);
-  console.log(`   └── aichaku.json`);
+  // Fallback to Deno's walk function for a custom tree display
+  await displayCustomTree(targetPath);
+}
+```
+
+### Add Custom Tree Display Function
+
+Add this helper function to upgrade.ts:
+
+```typescript
+import { walk } from "jsr:@std/fs/walk";
+
+async function displayCustomTree(rootPath: string): Promise<void> {
+  const tree: Map<string, string[]> = new Map();
+  const maxDepth = 3;
+
+  // Collect all paths
+  for await (const entry of walk(rootPath, { maxDepth, includeDirs: true, includeFiles: true })) {
+    const relativePath = entry.path.replace(rootPath + "/", "");
+    const parts = relativePath.split("/");
+
+    // Skip the root itself
+    if (parts.length === 0 || relativePath === "") continue;
+
+    // Build parent path
+    const parentPath = parts.slice(0, -1).join("/");
+    if (!tree.has(parentPath)) {
+      tree.set(parentPath, []);
+    }
+
+    // Add to parent's children
+    const name = parts[parts.length - 1];
+    const children = tree.get(parentPath)!;
+    children.push(entry.isDirectory ? name + "/" : name);
+  }
+
+  // Display tree recursively
+  function printTree(path: string, prefix: string, isLast: boolean): void {
+    const children = tree.get(path) || [];
+    children.sort((a, b) => {
+      // Directories first
+      const aIsDir = a.endsWith("/");
+      const bIsDir = b.endsWith("/");
+      if (aIsDir && !bIsDir) return -1;
+      if (!aIsDir && bIsDir) return 1;
+      return a.localeCompare(b);
+    });
+
+    children.forEach((child, index) => {
+      const isLastChild = index === children.length - 1;
+      const connector = isLastChild ? "└── " : "├── ";
+      const name = child.endsWith("/") ? child.slice(0, -1) : child;
+
+      // Special highlighting for important directories
+      let displayName = name;
+      if (name === "agent-templates") {
+        displayName = `${name}/ (${tree.get(path + "/" + name)?.length || 0} agents)`;
+      } else if (name === "methodologies") {
+        displayName = `${name}/ (${tree.get(path + "/" + name)?.length || 0} items)`;
+      } else if (name === "standards") {
+        displayName = `${name}/ (${tree.get(path + "/" + name)?.length || 0} items)`;
+      }
+
+      console.log(`   ${prefix}${connector}${displayName}`);
+
+      // Recurse for directories
+      if (child.endsWith("/")) {
+        const newPrefix = prefix + (isLastChild ? "    " : "│   ");
+        const childPath = path ? path + "/" + name : name;
+        printTree(childPath, newPrefix, isLastChild);
+      }
+    });
+  }
+
+  // Start printing from root
+  printTree("", "", false);
 }
 ```
 
