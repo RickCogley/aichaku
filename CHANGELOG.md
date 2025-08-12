@@ -5,6 +5,15 @@ All notable changes to aichaku (愛着) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.48.2] - 2025-08-12
+
+### Changed
+
+- update deno.lock after release preparation (7e83207)
+- upgrade nagare to 2.19.4 (de1112e)
+- add comprehensive module documentation to CLI entrypoint (b65f7f5)
+- upgrade aichaku to 0.48.1 and nagare to 0.2.17 (4152bf6)
+
 ## [0.48.1] - 2025-08-12
 
 ### Changed
