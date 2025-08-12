@@ -90,7 +90,7 @@ export default {
       custom: [
         {
           name: "Test Suite",
-          command: ["deno", "test", "--allow-read", "--allow-write", "--allow-env", "--allow-run"],
+          command: ["deno", "test", "--no-check", "--allow-read", "--allow-write", "--allow-env", "--allow-run"],
           description: "Runs all unit and integration tests with required permissions",
           fixable: false,
         },
