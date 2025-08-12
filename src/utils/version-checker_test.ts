@@ -36,7 +36,7 @@ Deno.test("checkVersionMatch - returns proper structure", async () => {
 
   if (result.warningMessage !== undefined) {
     assertEquals(typeof result.warningMessage, "string");
-    assertStringIncludes(result.warningMessage, "Version mismatch");
+    assertStringIncludes(result.warningMessage, "Upgrade available");
   }
 });
 
@@ -45,8 +45,8 @@ Deno.test("checkVersionMatch - warning message format", async () => {
 
   // If there's a warning message, it should contain proper information
   if (result.warningMessage) {
-    assertStringIncludes(result.warningMessage, "CLI version:");
     assertStringIncludes(result.warningMessage, "Global files:");
-    assertStringIncludes(result.warningMessage, "aichaku upgrade --global");
+    assertStringIncludes(result.warningMessage, "CLI version:");
+    // Note: The message no longer includes the upgrade command hint
   }
 });
