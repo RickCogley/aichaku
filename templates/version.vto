@@ -11,12 +11,12 @@ export const VERSION = "{{ version |> safe }}";
 export const BUILD_INFO = {
   buildDate: "{{ buildDate |> safe }}",
   gitCommit: "{{ gitCommit |> safe }}",
-  buildEnvironment: "{{ buildEnvironment |> safe }}",
+  buildEnvironment: "{{ environment |> safe }}",
   versionComponents: {
     major: {{ versionComponents.major |> safe }},
     minor: {{ versionComponents.minor |> safe }},
     patch: {{ versionComponents.patch |> safe }},
-    prerelease: {{ if versionComponents.prerelease }}{{ versionComponents.prerelease |> safe }}{{ else }}null{{ /if }},
+    prerelease: {{ if versionComponents.prerelease }}"{{ versionComponents.prerelease |> safe }}"{{ else }}null{{ /if }},
   },
 } as const;
 
@@ -31,4 +31,4 @@ export const APP_INFO = {
 
 export const APP_METADATA = {} as const;
 
-export const RELEASE_NOTES = {{ if releaseNotesJson }}{{ releaseNotesJson |> safe }}{{ else }}{}{{ /if }} as const;
+export const RELEASE_NOTES = {{ releaseNotes |> jsonStringify |> safe }} as const;
