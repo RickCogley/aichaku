@@ -1,7 +1,67 @@
 #!/usr/bin/env -S deno run --allow-read --allow-write --allow-env --allow-net
 
 /**
- * aichaku CLI - Adaptive methodology support for Claude Code
+ * Aichaku CLI - Command-line interface for adaptive methodology support
+ *
+ * This module provides the command-line interface for Aichaku, enabling developers to
+ * manage methodologies, standards, and principles in their projects through simple commands.
+ * It integrates seamlessly with Claude Code to provide AI-optimized development workflows.
+ *
+ * @module cli
+ *
+ * @example Install and initialize
+ * ```bash
+ * # Install globally
+ * deno install -g -A -n aichaku jsr:@rick/aichaku/cli
+ *
+ * # Initialize globally (one-time setup)
+ * aichaku init --global
+ *
+ * # Initialize in a project
+ * cd your-project
+ * aichaku init
+ * ```
+ *
+ * @example Common commands
+ * ```bash
+ * # Add methodologies and standards
+ * aichaku methodologies --add shape-up
+ * aichaku standards --add tdd,owasp-web
+ * aichaku principles --add dry,solid
+ *
+ * # Integrate everything into CLAUDE.md
+ * aichaku integrate
+ *
+ * # Review code for compliance
+ * aichaku review src/auth.ts
+ *
+ * # Install git hooks for automation
+ * aichaku githooks --install
+ * ```
+ *
+ * ## Available Commands
+ *
+ * - `init` - Initialize Aichaku in your project or globally
+ * - `integrate` - Generate CLAUDE.md from your configuration
+ * - `methodologies` - Manage development methodologies (Shape Up, Scrum, etc.)
+ * - `standards` - Manage development standards (TDD, OWASP, etc.)
+ * - `principles` - Manage software principles (DRY, SOLID, etc.)
+ * - `agents` - Manage specialized AI agents
+ * - `review` - Review code for standards compliance
+ * - `githooks` - Install/manage git hooks for automation
+ * - `mcp` - Manage MCP (Model Context Protocol) servers
+ * - `upgrade` - Upgrade to the latest version
+ * - `help` - Show detailed help for any command
+ *
+ * ## Configuration
+ *
+ * Aichaku uses a cascading configuration system:
+ * 1. Global config: `~/.claude/aichaku/aichaku.json`
+ * 2. Project config: `./.aichaku/config.json`
+ * 3. CLAUDE.md: Generated from your selections
+ *
+ * @see {@link https://github.com/RickCogley/aichaku} GitHub repository
+ * @see {@link https://jsr.io/@rick/aichaku} JSR package
  */
 
 import { parseArgs } from "@std/cli/parse-args";
