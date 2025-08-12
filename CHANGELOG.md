@@ -5,6 +5,29 @@ All notable changes to aichaku (愛着) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.48.1] - 2025-08-12
+
+### Changed
+
+- update deno.lock after dependency updates (1588cb5)
+- update version checker tests to match new 'Upgrade available' messaging (7516a7b)
+- update nagare config with --no-check flag for tests (6f6d502)
+- bump dependencies (557cf6e)
+- bump nagare version (73ea92d)
+- update aichaku configuration (d5588bc)
+
+### Fixed
+
+- use external template file for version.ts generation (01c16e3)
+- use external template file for version.ts generation (54aaa3a)
+- handle empty releaseNotesJson in version template (cb3e947)
+- handle null prerelease in version template (5bb2b7f)
+- add custom version template for Nagare to maintain all exports (a4c1397)
+- configure nagare with custom test runner with permissions (a65427d)
+- enable tests in nagare preRelease hook with proper permissions (fd9f715)
+- add test command configuration to nagare.config.ts (5583d7c)
+- correct version mismatch messaging in upgrade command (c8645be)
+
 ## [0.48.0] - 2025-08-11
 
 ### fix: upgrade command file overwrite and messaging improvements (#4)
