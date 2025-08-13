@@ -2,8 +2,8 @@
   "version": "5",
   "specifiers": {
     "jsr:@davidbonnet/astring@1.8.6": "1.8.6",
-    "jsr:@rick/nagare@2.19.6": "2.19.6",
-    "jsr:@std/assert@^1.0.13": "1.0.13",
+    "jsr:@rick/nagare@2.19.7": "2.19.7",
+    "jsr:@std/assert@^1.0.13": "1.0.14",
     "jsr:@std/async@^1.0.14": "1.0.14",
     "jsr:@std/cli@1.0.21": "1.0.21",
     "jsr:@std/cli@^1.0.21": "1.0.21",
@@ -13,12 +13,12 @@
     "jsr:@std/fs@^1.0.19": "1.0.19",
     "jsr:@std/html@1.0.0": "1.0.0",
     "jsr:@std/html@1.0.3": "1.0.3",
-    "jsr:@std/internal@^1.0.6": "1.0.10",
+    "jsr:@std/internal@^1.0.10": "1.0.10",
     "jsr:@std/internal@^1.0.9": "1.0.10",
     "jsr:@std/json@^1.0.2": "1.0.2",
     "jsr:@std/path@1.0.0": "1.0.0",
     "jsr:@std/path@1.0.8": "1.0.8",
-    "jsr:@std/path@^1.1.1": "1.1.1",
+    "jsr:@std/path@^1.1.1": "1.1.2",
     "jsr:@std/semver@1": "1.0.5",
     "jsr:@std/semver@^1.0.5": "1.0.5",
     "jsr:@std/streams@^1.0.9": "1.0.10",
@@ -36,8 +36,8 @@
     "@davidbonnet/astring@1.8.6": {
       "integrity": "98b4914c8863cdf8c0ff83bb5c528caa67a8dca6020ad6234113499f00583e3a"
     },
-    "@rick/nagare@2.19.6": {
-      "integrity": "18945f5c2248e599abb5fcf213457a622e21acce6fd9d36dd4a14681c370773a",
+    "@rick/nagare@2.19.7": {
+      "integrity": "09e2dbdf85e0a8c83904195f5fbc8db292f6566f7478f32f8d68a9d875da32ee",
       "dependencies": [
         "jsr:@std/async",
         "jsr:@std/cli@1.0.21",
@@ -49,10 +49,10 @@
         "jsr:@vento/vento"
       ]
     },
-    "@std/assert@1.0.13": {
-      "integrity": "ae0d31e41919b12c656c742b22522c32fb26ed0cba32975cb0de2a273cb68b29",
+    "@std/assert@1.0.14": {
+      "integrity": "68d0d4a43b365abc927f45a9b85c639ea18a9fab96ad92281e493e4ed84abaa4",
       "dependencies": [
-        "jsr:@std/internal@^1.0.6"
+        "jsr:@std/internal@^1.0.10"
       ]
     },
     "@std/async@1.0.14": {
@@ -95,10 +95,10 @@
     "@std/path@1.0.8": {
       "integrity": "548fa456bb6a04d3c1a1e7477986b6cffbce95102d0bb447c67c4ee70e0364be"
     },
-    "@std/path@1.1.1": {
-      "integrity": "fe00026bd3a7e6a27f73709b83c607798be40e20c81dde655ce34052fd82ec76",
+    "@std/path@1.1.2": {
+      "integrity": "c0b13b97dfe06546d5e16bf3966b1cadf92e1cc83e56ba5476ad8b498d9e3038",
       "dependencies": [
-        "jsr:@std/internal@^1.0.9"
+        "jsr:@std/internal@^1.0.10"
       ]
     },
     "@std/semver@1.0.5": {
@@ -818,7 +818,7 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@rick/nagare@2.19.6",
+      "jsr:@rick/nagare@2.19.7",
       "jsr:@std/assert@^1.0.13",
       "jsr:@std/async@^1.0.14",
       "jsr:@std/cli@^1.0.21",
