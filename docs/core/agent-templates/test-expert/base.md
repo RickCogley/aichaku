@@ -162,6 +162,59 @@ Maintain proper test distribution:
 - **Integration Tests (20%)**: Component boundaries, real dependencies
 - **E2E Tests (10%)**: Critical user journeys only
 
+## Coverage Understanding
+
+### Coverage Types
+
+- **Line Coverage**: Tracks whether each executable line runs during tests - like highlighting executed lines
+- **Branch Coverage**: Ensures both paths of conditional logic get tested - verifies all decision paths
+- **Statement Coverage**: Counts individual statements rather than lines - multiple statements per line count separately
+- **Function Coverage**: Tracks whether each function gets called during testing - identifies untested functions
+
+### Coverage Goals and Strategy
+
+**Pragmatic Coverage Targets:**
+
+- Critical business logic: 85-95%
+- API endpoints: 80-90%
+- Data models: 80-90%
+- Utility functions: 70-80%
+- UI components: 60-70%
+- Configuration files: Skip or minimal
+
+**Benefits of High Coverage (80-90%):**
+
+- Early regression detection
+- Enforced edge case thinking
+- Refactoring confidence
+- Living documentation
+
+**Drawbacks of 100% Coverage:**
+
+- Diminishing returns on final 10-20%
+- Test brittleness with over-specification
+- Increased maintenance burden
+- False security without quality tests
+
+### What to Exclude from Coverage
+
+Consider excluding:
+
+- Generated code (protobuf, OpenAPI clients)
+- Third-party vendored code
+- Simple getters/setters without logic
+- Framework boilerplate
+- Debug utilities
+- Migration scripts
+
+Use exclusion comments:
+
+```javascript
+// Istanbul (JS): /* istanbul ignore next */
+// Python: # pragma: no cover
+// Go: // +build !test
+```
+
 ## Testing Patterns
 
 ### Unit Testing
@@ -200,6 +253,108 @@ Before approving any test implementation:
 3. Verify type safety with `deno check` or equivalent
 4. Ensure no security vulnerabilities in test code
 5. Validate test follows project standards
+
+## Coverage Measurement Commands
+
+### Deno
+
+```bash
+# Run tests with coverage collection
+deno test --coverage=cov_profile
+
+# Generate HTML report  
+deno coverage cov_profile --html
+
+# Generate lcov report for CI tools
+deno coverage cov_profile --lcov > coverage.lcov
+
+# View coverage in terminal
+deno coverage cov_profile
+```
+
+### Node.js with Jest
+
+```bash
+# Basic coverage report
+npm test -- --coverage
+
+# Generate HTML report
+npm test -- --coverage --coverageReporters=html
+
+# With coverage thresholds
+npm test -- --coverage --coverageThreshold='{"global":{"branches":80,"functions":80,"lines":80}}'
+```
+
+### Node.js with Vitest
+
+```bash
+# Run tests with coverage
+vitest run --coverage
+
+# Watch mode with coverage
+vitest --coverage
+```
+
+### Python with pytest
+
+```bash
+# Basic coverage report
+pytest --cov=myproject tests/
+
+# Generate HTML report
+pytest --cov=myproject --cov-report=html tests/
+
+# Set minimum coverage threshold
+pytest --cov=myproject --cov-fail-under=80 tests/
+```
+
+### Go
+
+```bash
+# Run tests with coverage
+go test -coverprofile=coverage.out ./...
+
+# View HTML coverage report
+go tool cover -html=coverage.out
+
+# Get coverage percentage
+go test -cover ./...
+
+# Detailed function-level coverage
+go tool cover -func=coverage.out
+```
+
+### Java with JaCoCo (Maven)
+
+```bash
+# Run tests and generate report
+mvn clean test
+mvn jacoco:report
+# Report available at target/site/jacoco/index.html
+```
+
+## CI/CD Coverage Integration
+
+### GitHub Actions Example
+
+```yaml
+- name: Run tests with coverage
+  run: deno test --coverage=coverage
+
+- name: Generate coverage report
+  run: deno coverage coverage --lcov > coverage.lcov
+
+- name: Upload coverage to Codecov
+  uses: codecov/codecov-action@v3
+  with:
+    file: ./coverage.lcov
+    fail_ci_if_error: true
+    minimum_coverage: 80
+```
+
+### Coverage Trends
+
+Track coverage over time rather than absolute numbers. A dropping trend signals technical debt accumulation.
 
 ## Guided Verification Patterns
 
@@ -295,6 +450,51 @@ const coverageOutput = await Bash({
 • Functions: 88.1% (52/59)
 • Lines: 83.7% (418/499)"
 ````
+
+## Coverage Best Practices
+
+### Focus on Quality Over Quantity
+
+Write tests that verify behavior, not implementation:
+
+```javascript
+// ❌ Poor: Tests implementation details
+test("uses array push method", () => {
+  const spy = jest.spyOn(Array.prototype, "push");
+  addItem(list, item);
+  expect(spy).toHaveBeenCalled();
+});
+
+// ✅ Good: Tests behavior
+test("adds item to list", () => {
+  const list = ["apple"];
+  addItem(list, "banana");
+  expect(list).toContain("banana");
+});
+```
+
+### Prioritize Branch Coverage
+
+Branch coverage often reveals more bugs than line coverage:
+
+```javascript
+// This function needs 4 tests for full branch coverage
+function processPayment(amount, user) {
+  if (amount > 0 && user.hasValidCard) {
+    // Test 1: amount > 0 AND hasValidCard = true
+    return chargeCard(amount);
+  } else if (amount > 0 && !user.hasValidCard) {
+    // Test 2: amount > 0 AND hasValidCard = false
+    return requestCardUpdate();
+  } else if (amount <= 0 && user.hasValidCard) {
+    // Test 3: amount <= 0 AND hasValidCard = true
+    return refundCard(Math.abs(amount));
+  } else {
+    // Test 4: amount <= 0 AND hasValidCard = false
+    return handleError();
+  }
+}
+```
 
 ## Anti-Patterns to Prevent
 
