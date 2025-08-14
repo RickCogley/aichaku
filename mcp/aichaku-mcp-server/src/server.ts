@@ -25,6 +25,7 @@ import { detectEnvironmentConfig, StatisticsManager } from "./statistics/mod.ts"
 import { type AnalyzeProjectArgs, analyzeProjectTool } from "./tools/analyze-project.ts";
 import { type GenerateDocumentationArgs, generateDocumentationTool } from "./tools/generate-documentation.ts";
 import { type CreateDocTemplateArgs, createDocTemplateTool } from "./tools/create-doc-template.ts";
+import { type VerifyClaimsArgs, verifyClaimsTool } from "./tools/verify-claims.ts";
 // Note: integrate command moved to main CLI
 
 const PACKAGE_JSON = {
@@ -152,6 +153,7 @@ class MCPCodeReviewer {
           analyzeProjectTool,
           generateDocumentationTool,
           createDocTemplateTool,
+          verifyClaimsTool,
           {
             name: "send_feedback",
             description: "Send feedback message that appears visibly in Claude Code console",
@@ -397,6 +399,45 @@ class MCPCodeReviewer {
                   ],
                 };
               }
+            }
+
+            case "verify_claims": {
+              if (!args) {
+                throw new Error("Arguments are required for verify_claims");
+              }
+              const result = await verifyClaimsTool.execute(args as unknown as VerifyClaimsArgs);
+
+              // Record statistics
+              await this.statisticsManager.recordInvocation(
+                name,
+                operationId,
+                args as Record<string, unknown>,
+                startTime,
+                result.trustScore === 100,
+                undefined,
+              );
+
+              // Format the response
+              let response = `# Truth Protocol Verification\n\n`;
+              response += `${result.summary}\n\n`;
+              response += `**Trust Score**: ${result.trustScore}%\n`;
+              response += `**Verified**: ${result.verified}/${result.verified + result.failed}\n\n`;
+
+              if (result.results.length > 0) {
+                response += `## Verification Results\n\n`;
+                for (const r of result.results) {
+                  response += `- ${r.message}\n`;
+                }
+              }
+
+              return {
+                content: [
+                  {
+                    type: "text",
+                    text: response,
+                  },
+                ],
+              };
             }
 
             case "get_statistics": {
