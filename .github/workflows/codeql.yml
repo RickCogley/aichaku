@@ -2,8 +2,6 @@ name: "CodeQL Analysis"
 
 on:
   push:
-    branches: [main, develop]
-  pull_request:
     branches: [main]
   schedule:
     # Run weekly on Monday at 3 AM UTC
