@@ -3,9 +3,11 @@
   "specifiers": {
     "jsr:@davidbonnet/astring@1.8.6": "1.8.6",
     "jsr:@rick/nagare@2.19.7": "2.19.7",
+    "jsr:@std/assert@*": "1.0.14",
     "jsr:@std/assert@1": "1.0.14",
     "jsr:@std/assert@^1.0.13": "1.0.14",
     "jsr:@std/async@^1.0.14": "1.0.14",
+    "jsr:@std/cli@1": "1.0.21",
     "jsr:@std/cli@1.0.21": "1.0.21",
     "jsr:@std/cli@^1.0.21": "1.0.21",
     "jsr:@std/crypto@^1.0.5": "1.0.5",
@@ -30,6 +32,7 @@
     "jsr:@std/yaml@^1.0.9": "1.0.9",
     "jsr:@vento/vento@^1.14.0": "1.14.0",
     "npm:@modelcontextprotocol/sdk@1.17.1": "1.17.1_express@5.1.0_zod@3.25.76",
+    "npm:@types/estree@1.0.6": "1.0.6",
     "npm:@types/node@*": "22.15.15",
     "npm:estree-walker@3.0.3": "3.0.3",
     "npm:fuse.js@7.1.0": "7.1.0",
@@ -127,6 +130,7 @@
         "jsr:@davidbonnet/astring",
         "jsr:@std/html@1.0.3",
         "jsr:@std/path@1.0.8",
+        "npm:@types/estree",
         "npm:estree-walker",
         "npm:meriyah@6.0.5"
       ]
@@ -150,8 +154,8 @@
         "zod-to-json-schema"
       ]
     },
-    "@types/estree@1.0.8": {
-      "integrity": "sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w=="
+    "@types/estree@1.0.6": {
+      "integrity": "sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw=="
     },
     "@types/node@22.15.15": {
       "integrity": "sha512-R5muMcZob3/Jjchn5LcO8jdKwSCbzqmPB6ruBxMcf9kbxtniZHP327s6C37iOfuw8mbKK3cAQa7sEl7afLrQ8A==",
@@ -325,7 +329,7 @@
         "router",
         "send",
         "serve-static",
-        "statuses@2.0.2",
+        "statuses",
         "type-is",
         "vary"
       ]
@@ -344,7 +348,7 @@
         "escape-html",
         "on-finished",
         "parseurl",
-        "statuses@2.0.2"
+        "statuses"
       ]
     },
     "forwarded@0.2.0": {
@@ -399,7 +403,7 @@
         "depd",
         "inherits",
         "setprototypeof",
-        "statuses@2.0.1",
+        "statuses",
         "toidentifier"
       ]
     },
@@ -541,7 +545,7 @@
         "ms",
         "on-finished",
         "range-parser",
-        "statuses@2.0.2"
+        "statuses"
       ]
     },
     "serve-static@2.2.0": {
@@ -603,9 +607,6 @@
     },
     "statuses@2.0.1": {
       "integrity": "sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ=="
-    },
-    "statuses@2.0.2": {
-      "integrity": "sha512-DvEy55V3DB7uknRo+4iOGT5fP1slR8wQohVdknigZPMpMstaKJQWhwiYBACJE3Ul2pTnATihhBYnRhZQHGBiRw=="
     },
     "toidentifier@1.0.1": {
       "integrity": "sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA=="

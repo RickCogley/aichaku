@@ -70,7 +70,8 @@
       "examples/**/*.ts",
       "src/commands/*-v2.ts",
       "src/utils/config-manager.test.ts",
-      "src/utils/migration-helper.ts"
+      "src/utils/migration-helper.ts",
+      "docs-site/"
     ],
     "lineWidth": 120,
     "proseWrap": "always",
@@ -92,7 +93,8 @@
       "examples/**/*.ts",
       "src/commands/*-v2.ts",
       "src/utils/config-manager.test.ts",
-      "src/utils/migration-helper.ts"
+      "src/utils/migration-helper.ts",
+      "docs-site/"
     ],
     "rules": {
       "tags": [
@@ -137,7 +139,8 @@
     "examples/**/*.ts",
     "src/commands/*-v2.ts",
     "src/utils/config-manager.test.ts",
-    "src/utils/migration-helper.ts"
+    "src/utils/migration-helper.ts",
+    "docs-site/"
   ],
   "compilerOptions": {
     "lib": [

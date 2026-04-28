@@ -5,7 +5,7 @@ you naturally work**
 
 [![JSR](https://jsr.io/badges/@rick/aichaku)](https://jsr.io/@rick/aichaku)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![API Documentation](https://img.shields.io/badge/API_docs-deno.dev-blue)](https://aichaku.esolia.deno.net/)
+[![API Documentation](https://img.shields.io/badge/docs-cloudflare-orange)](https://aichaku-docs.esolia.workers.dev/)
 
 ## ⚡ Quick Start
 
@@ -110,7 +110,7 @@ Explorer, Methodology Coach
 
 ## 📖 Documentation
 
-- **[API Docs](https://aichaku.esolia.deno.net/)** - Complete TypeScript reference
+- **[API Docs](https://aichaku-docs.esolia.workers.dev/)** - Complete TypeScript reference
 - **[GitHub](https://github.com/RickCogley/aichaku/tree/main/docs)** - Full documentation and guides
 - **[JSR Package](https://jsr.io/@rick/aichaku)** - Package registry
 

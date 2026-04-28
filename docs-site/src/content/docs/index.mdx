@@ -1,0 +1,45 @@
+---
+title: Aichaku (愛着)
+description: AI-optimized methodology helper for Claude Code. Brings affection (愛着) to your development workflow.
+template: splash
+hero:
+  title: Aichaku (愛着)
+  tagline: AI-optimized methodology helper for Claude Code. Brings affection to your development workflow.
+  actions:
+    - text: Get started
+      link: /tutorials/getting-started/
+      icon: right-arrow
+      variant: primary
+    - text: View on JSR
+      link: https://jsr.io/@rick/aichaku
+      icon: external
+    - text: GitHub
+      link: https://github.com/RickCogley/aichaku
+      icon: github
+---
+
+import { Card, CardGrid } from "@astrojs/starlight/components";
+
+<CardGrid>
+  <Card title="Tutorials" icon="open-book">
+    Step-by-step lessons. Start with [Getting Started](/tutorials/getting-started/) or [Set up an MCP server](/tutorials/setup-mcp-server/).
+  </Card>
+  <Card title="How-to guides" icon="setting">
+    Configure projects, MCP servers, agents, and standards. Start with [Configure a project](/how-to/configure-project/).
+  </Card>
+  <Card title="Reference" icon="document">
+    Technical reference — [MCP API](/reference/mcp-api/), [GitOps](/reference/gitops-strategy-guide/), and [test coverage](/reference/test-coverage-guide/).
+  </Card>
+  <Card title="Explanation" icon="information">
+    Understand the [architecture](/explanation/architecture/), [design philosophy](/explanation/design-philosophy/), and [core concepts](/explanation/core-concepts/).
+  </Card>
+  <Card title="Development" icon="seti:typescript">
+    Internals — [runtime validation](/development/runtime-validation-strategy/) and [shared command infrastructure](/development/shared-command-infrastructure/).
+  </Card>
+  <Card title="API Reference" icon="jsr">
+    Complete API generated from JSDoc by `deno doc`. <a href="/api/" target="_blank" rel="noopener">Open the API reference →</a>
+  </Card>
+  <Card title="JSR package" icon="external">
+    Install with `deno add jsr:@rick/aichaku`. <a href="https://jsr.io/@rick/aichaku" target="_blank" rel="noopener">View on JSR →</a>
+  </Card>
+</CardGrid>
