@@ -2,7 +2,7 @@
  * Tests for CommandExecutor - shared command infrastructure
  */
 
-import { assertEquals, assertRejects } from "jsr:@std/assert";
+import { assertEquals, assertRejects } from "jsr:@std/assert@1";
 import { CommandExecutor } from "./command-executor.ts";
 import { parseCommonArgs } from "./parseCommonArgs.ts";
 import {

@@ -3,7 +3,7 @@
  * Comprehensive coverage of all 28 command variants mentioned in the project
  */
 
-import { assertEquals } from "jsr:@std/assert";
+import { assertEquals } from "jsr:@std/assert@1";
 import { CommandExecutor } from "./command-executor.ts";
 import { parseCommonArgs } from "./parseCommonArgs.ts";
 import {

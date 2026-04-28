@@ -1,0 +1,65 @@
+# Build and deploy the Aichaku documentation site to Cloudflare Workers.
+#
+# Pipeline:
+#   1. Generate `deno doc --html` API reference into ./docs/api/
+#   2. Copy that into docs-site/public/api/ (via the `prebuild` script)
+#   3. Build the Astro Starlight site -> docs-site/dist/
+#   4. Wrangler deploys docs-site/dist/ as static assets
+
+name: Deploy Docs Site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs-site/**"
+      - "mod.ts"
+      - "cli.ts"
+      - "src/**"
+      - ".github/workflows/docs-deploy.yml"
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: "2.x"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: docs-site/package-lock.json
+
+      - name: Generate API reference (deno doc)
+        run: deno task docs:api
+
+      - name: Install docs-site dependencies
+        working-directory: docs-site
+        run: npm ci
+
+      - name: Build Starlight site
+        working-directory: docs-site
+        run: npm run build
+
+      - name: Deploy to Cloudflare Workers
+        working-directory: docs-site
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: npx wrangler deploy
