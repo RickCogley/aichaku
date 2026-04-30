@@ -1,5 +1,28 @@
 # aichaku (愛着)
 
+> ## ⚠️ This project is being retired
+>
+> Active development stopped in 2025-07. After audit (no external adopters, 0 JSR dependents, single external issue
+> ever), the maintainer has decided to retire aichaku and consolidate the value into smaller, focused tools. **The
+> simpler post-migration setup of devkit slash commands + the `esolia-standards` MCP works better for the actual usage
+> pattern.**
+>
+> See [#17](https://github.com/RickCogley/aichaku/issues/17) for the full retirement plan, and the salvage targets:
+>
+> - **Pre-commit hooks orchestrator** is being lifted into
+>   [`eSolia/devkit#84`](https://github.com/eSolia/devkit/issues/84)
+> - **Methodology cheat-sheets** (Shape Up / Scrum / Kanban / XP / Lean / Scrumban) are being imported into the
+>   `esolia-standards` MCP — see [`eSolia/codex#158`](https://github.com/eSolia/codex/issues/158)
+> - Smaller utility code (path-security, security-pattern catalog, Diátaxis linter) is tracked for on-demand lift in
+>   [`eSolia/devkit#85`](https://github.com/eSolia/devkit/issues/85)
+>
+> The repo will be archived once those land. Existing installs continue to work — git history and JSR versions are
+> preserved indefinitely. No new releases planned.
+>
+> If you have something on aichaku and need help migrating, open an issue before archive lands.
+
+---
+
 **Adaptive developer support for Claude Code that blends selected methodologies, standards, and principles based on how
 you naturally work**
 
