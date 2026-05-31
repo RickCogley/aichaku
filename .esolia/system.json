@@ -1,0 +1,20 @@
+{
+  "name": "aichaku",
+  "purpose": "Methodology-aware project tooling (being retired): its pre-commit and standards value is consolidating into devkit slash commands and the esolia-standards MCP.",
+  "repo": "RickCogley/aichaku",
+  "audience": "public",
+  "stack": ["deno", "typescript"],
+  "owners": ["RickCogley"],
+  "status": "sunset",
+  "sensitivity": {
+    "overview": "org",
+    "topology": "dev",
+    "security": "dev"
+  },
+  "exposes": [
+    { "name": "aichaku CLI", "kind": "library" }
+  ],
+  "links": {
+    "retirement": "https://github.com/RickCogley/aichaku/issues/17"
+  }
+}
