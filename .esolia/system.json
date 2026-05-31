@@ -1,6 +1,6 @@
 {
   "name": "aichaku",
-  "purpose": "Methodology-aware project tooling (being retired): its pre-commit and standards value is consolidating into devkit slash commands and the esolia-standards MCP.",
+  "purpose": "Methodology-aware project tooling, now retired: its pre-commit and standards capabilities have been superseded by eSolia's shared developer toolkit and the Standards MCP.",
   "repo": "RickCogley/aichaku",
   "audience": "public",
   "stack": ["deno", "typescript"],
